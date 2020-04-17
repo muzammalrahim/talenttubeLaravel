@@ -1,0 +1,37 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Backend Admin with Authentication
+Route::group(array('prefix' => 'admin', 'middleware' => 'auth'), function(){
+    Route::get('content/sortlist', 'ContentController@sortList');
+
+    Route::get('test', function () {    return view('admin.test'); });
+
+
+});
+
+
+Route::get('/', function () {
+    return view('welcome');
+});
+
+
+
+
+Auth::routes();
+
+Route::get('/home', function() {
+    return view('home');
+})->name('home')->middleware('auth');
