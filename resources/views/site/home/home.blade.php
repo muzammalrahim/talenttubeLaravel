@@ -25,7 +25,7 @@
    <!-- header_cont_bl -->
    <div class="bl">
       <div class="bl_logo">
-         <img id="logo_main_page" src="/images/site/header_impact.png" style="height:44px;" alt="" />
+         <img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" />
       </div>
       <div class="bl_join_done">
          <div class="slogan">Join the best Talent Matcher in the world.</div>
@@ -56,19 +56,19 @@
             <div class="bl_main_info">
                <div class="item">
                   <div class="pic">
-                     <img src="/images/site/homepage/pic_clock.png" width="128" height="128" alt="" />
+                     <img src="{{asset('/images/site/homepage/pic_clock.png')}}" width="128" height="128" alt="" />
                   </div>
                   <p>Signing up takes two minutes and is totally free.</p>
                </div>
                <div class="item">
                   <div class="pic">
-                     <img src="/images/site/homepage/pic_heart.png" width="128" height="104" alt="" />
+                     <img src="{{asset('/images/site/homepage/pic_heart.png')}}" width="128" height="104" alt="" />
                   </div>
                   <p>Our matching algorithm helps to find the right people.</p>
                </div>
                <div class="item">
                   <div class="pic">
-                     <img src="/images/site/homepage/pic_chat.png" width="128" height="112" alt="" />
+                     <img src="{{asset('/images/site/homepage/pic_chat.png')}}" width="128" height="112" alt="" />
                   </div>
                   <p>You can chat, see photos, have fun, and even meet!</p>
                </div>

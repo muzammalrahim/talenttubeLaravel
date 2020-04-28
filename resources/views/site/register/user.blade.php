@@ -30,7 +30,7 @@
     <!-- header_cont_bl -->
     <div class="bl">
         <div class="bl_logo">
-            <img id="logo_main_page" src="/images/site/header_impact.png" style="height:44px;" alt="" />
+            <img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" />
         </div>
 
         @include('site.register.user_step1')

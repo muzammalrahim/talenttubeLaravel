@@ -21,5 +21,5 @@
 
 
 <div class="header ">
-   <div id="bg_cover" class="cover show" style="background-image: url(/images/homepage_bg.jpg);"></div>
+   <div id="bg_cover" class="cover show" style="background-image: url({{asset('/images/homepage_bg.jpg')}});"></div>
 </div>
