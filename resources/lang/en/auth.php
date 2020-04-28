@@ -15,5 +15,7 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
+    'unauthorized_message' => 'You cannot access this page!',
+    'unauthorized_home_page' => 'Home Page',
 
 ];
