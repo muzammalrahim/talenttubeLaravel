@@ -101,7 +101,7 @@ $(function () {
         if(data.status == 1) {
             location.href = '/profile';
             $frmLoginSubmit.html(i18n.site.signInSuccess);
-			return false;
+										return false;
 		}else{
             $frmLoginInput.prop('disabled', false);
             $frmLoginSubmit.html(i18n.site.signIn);

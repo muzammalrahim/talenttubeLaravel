@@ -13,5 +13,11 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'ajax/geo_states',
+        'ajax/geo_cities',
+        'ajax/changeUserStatusText',
+        'ajax/update_about_field',
+        'ajax/uploadUserGallery',
+        'ajax/uploadVideo',
     ];
 }
