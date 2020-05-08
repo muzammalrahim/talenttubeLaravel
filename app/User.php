@@ -37,6 +37,8 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'language' => 'array',
+        'hobbies' => 'array',
     ];
 
 
@@ -44,5 +46,16 @@ class User extends Authenticatable
        return  $this->hasRole('admin');
     }
 
+ 
+
+    public function GeoCountry(){
+        return $this->belongsTo(GeoCountry::class, 'country','country_id');
+    }
+    public function GeoState(){
+        return $this->belongsTo(GeoState::class, 'state','state_id');
+    }
+    public function GeoCity(){
+        return $this->belongsTo(GeoCity::class, 'city','city_id');
+    }
 
 }

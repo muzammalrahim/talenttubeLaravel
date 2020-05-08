@@ -1,21 +1,13 @@
-.fl_right {
-    float: right;
-}
-.valign-middle {
-    vertical-align: middle;
-}
-.popup {
-    position: relative;
-}
-
+.fl_right { float: right; }
+.valign-middle { vertical-align: middle; }
+.valign-top { vertical-align: top; }
+.popup { position: relative; }
+.dblock{ display: block; }
 button.btn.pink:hover {
     background: #e7495c;
     color: #FFFFFF;
 }
-button.btn.pink {
-    background: #ff6d85;
-}
-
+button.btn.pink { background: #ff6d85; }
 button.btn {
     transition: background-color 0.3s ease;
     font-size: 18px;
@@ -25,5 +17,18 @@ button.btn {
     border: none;
     border-radius: 3px;
     cursor: pointer;
-
 }
+button.btn:disabled, button.btn.disabled {
+    transition: none;
+    background: #9f9f9f!important;
+    cursor: default;
+}
+.hide_it { display: none !important; } 
+.visible_it{ visibility: visible !important;  opacity: 1 !important; }
+.w100{ width: 100%; }
+.wauto{ width: auto !important; }
+.m0{ margin: 0px !important; }
+.p0{ padding: 0px !important; }
+
+
+.icon_green{ color: #8ccd01; }

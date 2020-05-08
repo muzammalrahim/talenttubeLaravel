@@ -14,6 +14,7 @@
                 {{ csrf_field() }}
                 {{-- <input type="hidden" name="ajax" class="ajax" value="1" /> --}}
                 <input id="form_login_user" type="text" name="email" class="inp placeholder" placeholder="Your email or username" />
+                <input type="hidden" name="login_type" value="site_ajax" />
                 <div class="error"></div>
                 <input id="form_login_pass"  type="password" name="password" class="inp placeholder" placeholder="Password" />
                 <div class="bl_remember">

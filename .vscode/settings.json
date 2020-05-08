@@ -1,5 +1,6 @@
 {
-	"editor.tabSize": 1,
 	"editor.detectIndentation": false,
-	"editor.insertSpaces": false
+	"editor.insertSpaces": false,
+	"editor.tabSize": 1,
+	"blade.format.enable": true
 }

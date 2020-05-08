@@ -168,9 +168,7 @@
 
 .bl_form_registration .location{ display: inline-block; }
 .bl_form_registration.bl_form_registration_step_1 .bl_location,
-.bl_form_registration.bl_form_registration_step_1 .bl_inp_pos{
-    opacity: 0;
-}
+.bl_form_registration.bl_form_registration_step_1 .bl_inp_pos{ opacity: 1; }
 .bl_form_registration  .bl_location.to_show, .bl_form_registration .bl_inp_pos.to_show{ opacity: 1; transition:opacity .35s linear;}
 .bl_form_registration .separator{ height: 25px; }
 .bl_form_registration .jq-selectbox.location .jq-selectbox__select{ margin: 0 9px 0 0; }
@@ -199,3 +197,30 @@
 .bl_form_registration .jq-selectbox__dropdown.drop_down li.selected:last-child{
 	border-radius: 0 0 3px 3px;
 }
+
+
+
+
+
+
+/*=========== Step 2 ===========*/
+body.step2 .header {
+    background-color: #142d69;
+    color: #FFFFFF;
+    min-height: auto;
+}
+.header {
+    min-width: 1000px;
+    width: 100%;
+    height: 96px;
+    margin: 0 0 40px;
+    color: #fff;
+    position: relative;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    z-index: 5;
+}
+body.step2 .content{  background: #254c8e!important; }
+
+

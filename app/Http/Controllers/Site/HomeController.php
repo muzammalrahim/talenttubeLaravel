@@ -7,6 +7,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use App\User;
+use DB;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File; 
+use Illuminate\Support\Facades\Response; 
+
 
 class HomeController extends Controller {
 
@@ -30,6 +38,8 @@ class HomeController extends Controller {
 
     public function join(Request $request){
         // dd( $request->toArray() );
+        $data['geo_country'] = get_Geo_Country();
+        // dd( $data['geo_country'] );
         if ( $request->get('type') === 'user' ){
             $data['title'] = 'Registeration';
             $view_name = 'site.register.user';
@@ -68,10 +78,17 @@ class HomeController extends Controller {
             if (Auth::attempt($userdata)){
                 // validation successful
                 // do whatever you want on success
-                return array(
-                    'status'    => 1,
-                    'message'   => 'login succesfully'
-                );
+																
+							if( $request->login_type == 'site_ajax' ){
+									return array(
+										'status'    => 1,
+										'message'   => 'login succesfully'
+									);
+							}else{
+								if( isAdmin() ){  return redirect('admin/adminDashboard');}
+								else{ return redirect('/profile'); }
+							}
+ 								
             }else{
                 // validation not successful, send back to form
                 return array(
@@ -84,5 +101,143 @@ class HomeController extends Controller {
         // dd( $request->toArray() );
         // exit;
      }
+
+
+
+
+     public function geo_states(Request $request){
+        $states = DB::table('geo_state')->where('country_id', $request->get('select_id'))->get();
+        $stat_html = '<option value="0">'.__('site.ChooseState').'</option>';
+        if($states){
+            foreach ($states as $key => $state) {
+                $stat_html .= '<option value="'.$state->state_id.'">'. $state->state_title .'</option>';
+            }
+        }
+        return response()->json([
+            'status' => 1,
+            'list' =>  $stat_html
+        ]); 
+    }
+     
+    public function geo_cities(Request $request){
+        $cities = DB::table('geo_city')->where('state_id', $request->get('select_id'))->get();
+        $cities_html = '<option value="0">'.__('site.choose_a_city').'</option>';
+        if($cities){
+            foreach ($cities as $key => $city) {
+                $cities_html .= '<option value="'.$city->city_id.'">'. $city->city_title .'</option>';
+            }
+        }
+        return response()->json([
+            'status' => 1,
+            'list' =>  $cities_html
+        ]); 
+    }
+
+    public function register(Request $request){
+        // dd( $request->toArray() );
+
+        // "_token" => "aoBTzArrllzmFQ8fw7zFhktY2lzW8jc1qbw2lH2T"
+        // "firstname" => "Creative"
+        // "surname" => "khan"
+        // "country" => "165"
+        // "state" => "1604"
+        // "city" => "29381"
+        // "email" => "creativedev22@gmail.com"
+        // "phone" => "0123456"
+        // "join_handle" => "creative"
+        // "join_password" => "12345678"
+        // "privacy_policy" => "1"
+
+        $rules = array(
+            'firstname' => 'required', 
+            'surname' => 'required',
+            'country' => 'required|integer',
+            'state' => 'required|integer',
+            'city' => 'required|integer',
+            'email' => 'bail|required|email|unique:users,email',
+            'phone' => '',
+            'username' => 'required|unique:users,username',
+            'password' => 'required|',
+        );
+        $validator = Validator::make( $request->all() , $rules);
+        // dd( $request->all() );
+    
+        if ($validator->fails()){
+             
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]); 
+        }else{
+            
+            $user = new User();
+            $user->name = $request->firstname;
+            $user->surname = $request->surname;
+            $user->email = $request->email;
+            $user->password = Hash::make($request->password);
+            $user->phone = $request->phone;
+            $user->country = $request->country;
+            $user->state = $request->state;
+            $user->city = $request->city;
+            $user->username = $request->username;
+            $user->email_verified_at = null;
+            $user->email_verification   = hash_hmac('sha256', str_random(40), 'creativeTalent');
+
+            if( $user->save() ){
+                $user->roles()->attach([config('app.user_role')]); 
+                $success_message = '<div class="slogan">'.__('site.Register_Success').'</div>';
+                $success_message .= '<div class="slogan">'.__('site.Verify_Email').'</div>';
+                $success_message .= '<p>Redirecting to User info page.</p>';
+
+                return response()->json([
+                    'status' => 1,
+                    'message' => $success_message,
+                    'redirect' => route('profile')
+                    // 'redirect' => route('step2')
+                ]); 
+            }else{
+
+
+            }
+        }
+    }
+
+
+    function step2(){
+        $data['title'] = 'Registeration';
+        $view_name = 'site.register.user_step2';
+        return view($view_name, $data);
+    }
+
+    function imgshow($userid, $slug){
+       // dd(' image show ',$userid, $slug);
+       $path_var = 'images/user/'.$userid.'/gallery/'.$slug; 
+       $path = storage_path($path_var); 
+        if (!File::exists($path)) {
+            return response()->json(['error' => $path_var.' can not be found.']); 
+        } 
+        $file = File::get($path);
+        $type = File::mimeType($path);
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+        return $response;
+				}
+				
+
+
+				function fileshow($userid, $slug){
+					$path_var = 'images/user/'.$userid.'/private/'.$slug; 
+					$path = storage_path($path_var); 
+						if (!File::exists($path)) {
+										return response()->json(['error' => $path_var.' can not be found.']); 
+						} 
+						$file = File::get($path);
+						$type = File::mimeType($path);
+						$response = Response::make($file, 200);
+						$response->header("Content-Type", $type);
+						return $response;
+		}
+		
+
 
 }

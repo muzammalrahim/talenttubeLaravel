@@ -35,8 +35,8 @@
                <label class="valign-middle">I am a</label>
                <div class="bl_select">
                   <select id="bl_join_done_orientation" name="type" class="select_main select_index">
-                     <option value="user">Job Seeker</option>
-                     <option value="employer" selected="selected">Employer</option>
+                     <option value="user" selected="selected">Job Seeker</option>
+                     <option value="employer" >Employer</option>
                   </select>
                </div>
                <button type="submit" class="btn pink">Continue</button>
