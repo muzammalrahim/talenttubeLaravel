@@ -28,12 +28,12 @@
         </div> --}}
 
 
-        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" name="frmTransaction" id="frmTransaction">
+        {{-- <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" name="frmTransaction" id="frmTransaction">
             <input type="hidden" name="business" value="sb-wx2ex1797607@business.example.com">
             <input type="hidden" name="cmd" value="_xclick">
              <input type="hidden" name="item_name" value="Purchase Credit">
             <input type="hidden" name="item_number" value="{{$user->id}}">
-            {{-- <input type="hidden" name="amount" value="10"> --}}
+
             <input type="hidden" name="currency_code" value="USD">
             <input type="hidden" name="cancel_return" value="{{route('paymentCancel')}}">
             <input type="hidden" name="return" value="{{route('paymentStatus')}}">
@@ -45,7 +45,7 @@
 
 
             <input type="submit" name="Purchase" />
-        </form>
+        </form> --}}
 
 
 
