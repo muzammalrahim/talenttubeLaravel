@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 // use App\Product;
 use App\Payment;
+use App\TestLog;
 
 class PaymentController extends Controller {
 
@@ -12,6 +13,21 @@ class PaymentController extends Controller {
     public function payment(Request $request){
         //   $product = Product::find($request->id);
         //   return view('payment',compact('product'));
+    }
+
+    public function paymentReturn(Request $request){
+        dump('  paymentReturn ');
+        dd($request->toArray());
+    }
+
+    public function notifyPayment(Request $request){
+        dump('  notifyPayment ');
+
+        $log = new TestLog();
+        $log->log = json_encode( $request->toArray(), true );
+        $log->save();
+
+        dd($request->toArray());
     }
 
 
