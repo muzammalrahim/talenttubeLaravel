@@ -11,10 +11,26 @@ function isAdmin(){
     return ( $user )?($user->isAdmin()):false;
 }
 
+function isEmployer($user = null){
+    $user = ( $user == null )?(Auth::user()) : $user;
+    return ( $user )?($user->isEmployer()):false;
+}
+
 
 function get_Geo_Country(){
     $countries = DB::table('geo_country')->get();
     return $countries;
+}
+
+
+function get_Geo_State($country){
+    $states = DB::table('geo_state')->where('country_id', $country)->get();
+    return $states;
+}
+
+function get_Geo_City($country, $state){
+    $cities = DB::table('geo_city')->where('country_id', $country)->where('state_id', $state)->get();
+    return $cities;
 }
 
 
@@ -37,7 +53,7 @@ function getMonths(){
 			11		=> 'November',
 			12		=> 'December',
 	);
- 
+
 }
 
 
@@ -125,11 +141,11 @@ function getLanguages(){
         "78"	=>	'தமிழ்',
    );
 
-   return $language_array; 
+   return $language_array;
 }
 
 function getLanguage($lang_id){
-	$languages = getLanguages(); 
+	$languages = getLanguages();
 	return (isset($languages[$lang_id]) && !empty($languages[$lang_id]))?($languages[$lang_id]):$lang_id;
 }
 
@@ -158,11 +174,11 @@ function getHobbies(){
 }
 
 function getHobby($hobby_id){
-		$hobbies = getHobbies(); 
+		$hobbies = getHobbies();
 		if(isset($hobbies[$hobby_id]) && !empty($hobbies[$hobby_id])){
 			return $hobbies[$hobby_id];
 		}else{
-			return $hobby_id; 
+			return $hobby_id;
 		}
 }
 
@@ -175,7 +191,7 @@ function getFamilyType(){
     4 => 'My kids live elsewhere',
     5 => 'I do not have kids',
     6 => 'I want more kids',
-    7 => 'Open to the idea but unsure'); 
+    7 => 'Open to the idea but unsure');
 }
 
 function getEducationDropdown(){
@@ -187,10 +203,46 @@ function getEducationDropdown(){
         'bachelor'          =>  'Bachelor degree',
         'graduate'          =>  'Graduate degree',
         'phd'               =>  'PH.D/Post Doctoral'
-    ); 
+    );
 }
 
 function getEducationName($education){
     $educationList = getEducationDropdown();
     if (isset($educationList[$education])){ return $educationList[$education]; }
+}
+
+
+
+
+function my_sanitize_number($number) {
+    return filter_var($number, FILTER_SANITIZE_NUMBER_INT);
+}
+
+function my_sanitize_decimal($decimal) {
+    return filter_var($decimal, FILTER_SANITIZE_NUMBER_FLOAT);
+}
+
+function my_sanitize_string($string) {
+    $string = strip_tags($string);
+    $string = addslashes($string);
+    return filter_var($string, FILTER_SANITIZE_STRING);
+}
+
+function my_sanitize_html($string) {
+    $string = strip_tags($string, '<a><strong><em><hr><br><p><u><ul><ol><li><dl><dt><dd><table><thead><tr><th><tbody><td><tfoot>');
+    $string = addslashes($string);
+    return filter_var($string, FILTER_SANITIZE_STRING);
+}
+
+function my_sanitize_url($url) {
+    return filter_var($url, FILTER_SANITIZE_URL);
+}
+
+// function my_sanitize_slug($string) {
+//     $string = str_slug($string);
+//     return filter_var($string, FILTER_SANITIZE_URL);
+// }
+
+function my_sanitize_email($string) {
+    return filter_var($string, FILTER_SANITIZE_EMAIL);
 }

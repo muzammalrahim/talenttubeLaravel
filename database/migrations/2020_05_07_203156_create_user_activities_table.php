@@ -14,18 +14,17 @@ class CreateUserActivitiesTable extends Migration
     public function up()
     {
         Schema::create('user_activities', function (Blueprint $table) {
-												$table->id();
-												$table->unsignedbigInteger('user_id');
+            $table->id();
+            $table->unsignedbigInteger('user_id');
 
-												$table->string('title');
-												$table->string('type');
-												$table->dateTime('date');
-												$table->text('description');
-												$table->timestamps();
-												
+            $table->string('title');
+            $table->string('type');
+            $table->dateTime('date');
+            $table->text('description');
+            $table->timestamps();
 
-												$table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

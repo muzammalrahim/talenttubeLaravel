@@ -1,0 +1,148 @@
+
+
+.newJob{ }
+.form_field{
+    margin: 10px 0px;
+    vertical-align: top;
+}
+.field_error{ display: none; }
+.form_label{
+    width: 25%;
+    display: inline-block;
+    vertical-align: top;
+    padding: 6px 0px;
+}
+.form_input{
+    display: inline-block;
+    width: 74%;
+}
+
+
+.newJob select{ min-width: 200px; }
+.newJob .jq-selectbox__dropdown {
+    min-width: 250px;
+}
+
+.newJob .selectbox{ display: inline-block;   }
+.field_error.to_show {
+    display: block;
+    color: red;
+    font-size: 12px;
+}
+
+/*=========== employer jobs page =============*/
+.job_row {
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 1px -1px, rgba(0, 0, 0, 0.14) 0px 1px 1px 0px, rgba(0, 0, 0, 0.12) 0px 1px 3px 0px;
+    /* padding: 16px; */
+    border-radius: 4px;
+    margin-bottom: 10px !important;
+    background: rgba(0, 0, 0, 0.09);
+    font-size: 12px;
+}
+.job_heading {
+    /* margin-bottom: 8px; */
+    /* padding: 10px; */
+    border-bottom: 1px solid #ced1da;
+    background: #d5dce6;
+}
+h3.job_title {
+    margin: 5px 0px 3px 0px;
+    font-weight: 600;
+}
+
+.job_footer {
+    border-bottom: 1px solid #ced1da;
+    background: rgba(0, 0, 0, 0.05);
+}
+.w_25p{
+    width: 24%;
+    display: inline-block;
+}
+
+.w_80p{
+    width: 80%;
+    display: inline-block;
+}
+.job_detail{ margin: 10px 0px 20px 0px; }
+
+.jbtn{
+    cursor: pointer;
+    padding: 4px 12px;
+    border-radius: 4px;
+    transition: 0.3s all;
+}
+
+
+/*=========== User jobs Apply page =============*/
+.jbtn.graybtn {
+    background: #eee;
+    box-shadow: inset 0 1px 0 #d5dce6, 0 1px 2px #333;
+}
+.jbtn.graybtn:hover,
+.jbtn.graybtn.active {
+    box-shadow: inset 0 1px 0 #d5dce6, 0 1px 2px #333;
+    color: white;
+    background: #ff9800cc;
+}
+.form_qstn {
+    line-height: 25px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #a6a6a6;
+}
+
+.jobApplyModal .cont{min-height: 40px;}
+
+/*=========== JobSeekers Listing page =============*/
+.w_box{ box-sizing: border-box; }
+.w_30p{ width: 30%; }
+.w_70p{ width: 70%; }
+.w_50p{ width: 50%; }
+.jobSeekers_list {
+    width: 100%;
+    display: block;
+}
+.jobSeeker_row {
+    box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
+    background: #ffffffcc;
+}
+.js_photo{
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
+.jobSeeker_row:nth-child(even) { background: #eee; }
+
+.js_name h4{ font-size: 15px; }
+.js_label{ font-weight: 700; }
+
+.js_field {
+    margin-bottom: 4px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    padding: 4px;
+    line-height: 15px;
+    font-size: 13px;
+}
+.js_field p {
+    line-height: 17px;
+    font-size: 13px;
+    padding-bottom: 4px;
+}
+
+span.js_tag {
+    border: 1px solid #d5dce6;
+    padding: 2px 5px;
+    border-radius: 4px;
+    display: inline-block;
+}
+.js_actionBtn {
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+}
+.js_actionBtn .jbtn{
+    padding: 3px 10px;
+    font-size: 12px;
+    margin: 1px;
+}

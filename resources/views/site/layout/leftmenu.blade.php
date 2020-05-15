@@ -6,7 +6,18 @@
     </div>
     <div id="colfix_l" class="cont col_fix">
         <ul class="nav">
-            <li><a id="narrow_menu_link_26" href="browser.html" class="column_narrow_search_results"><span class="icon"></span>Browse matches</a></li>
+
+            {{-- @dump($user) --}}
+            @if (isEmployer($user))
+                <li><a href="{{route('employerJobs')}}" class="column_narrow_search_results"><span class="icon"></span>My jobs</a></li>
+                <li><a href="{{route('newJob')}}" class="column_narrow_search_results"><span class="icon"></span>Add New job</a></li>
+                <li><a href="{{route('jobSeekers')}}" class="column_narrow_search_results"><span class="icon"></span>Job Seekers</a></li>
+            @else
+                <li><a href="{{route('jobApplications')}}" class="column_narrow_search_results"><span class="icon"></span>My jobs Application</a></li>
+                <li><a href="{{route('jobs')}}" class="column_narrow_search_results"><span class="icon"></span>Browse jobs</a></li>
+            @endif
+
+
 
             <li>
                 <a id="narrow_menu_link_27" href="messages.html" class="column_narrow_messages  ">
@@ -85,18 +96,6 @@
             </li>
 
         </ul>
-
-        {{-- <div class="bl_visited_photo">
-            <strong>Recently visited</strong>
-            <ul class="list_photo">
-                <li>
-                    <a title="anotherjobseeker" href="anotherjobseeker">
-                        <img src="./_files/photo/38_24_s.jpg" alt="" />
-                    </a>
-                </li>
-            </ul>
-            <div class="cl"></div>
-        </div> --}}
 
         <div id="bl_banner_l_empty" class="bl_banner_empty"></div>
     </div>

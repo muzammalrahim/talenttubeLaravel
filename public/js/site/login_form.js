@@ -99,7 +99,7 @@ $(function () {
         console.log(' loginResponse ', data);
 
         if(data.status == 1) {
-            location.href = '/profile';
+            location.href = data.redirect; // '/laravel/public/profile';
             $frmLoginSubmit.html(i18n.site.signInSuccess);
 										return false;
 		}else{
