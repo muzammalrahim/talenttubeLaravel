@@ -146,7 +146,7 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::get('credit',       'Site\EmployerController@credit')->name('credit');
 
 
-    // Route::get('paymentStatus', 'Site\PaymentController@paymentInfo')->name('paymentStatus');
+    Route::get('paymentStatus', 'Site\PaymentController@paymentInfo')->name('paymentStatus');
     Route::get('paymentCancel', function () { return 'Payment has been canceled'; })->name('paymentCancel');
     Route::get('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
     Route::get('paymentReturn', 'Site\PaymentController@paymentReturn')->name('paymentReturn');
