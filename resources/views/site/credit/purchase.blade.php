@@ -18,38 +18,12 @@
             <span class="txt">Refill your credits now to uses a lot of wonderful features!</span>
         </div>
 
-        {{-- <div class="credit_select_bx">
-
-            <input type="radio" value="1" name="creditAmount" class="radioClick"> 100 credits for $1.00<br>
-            <input type="radio" value="5" name="creditAmount" class="radioClick"> 550 credits for $5.00<br>
-            <input type="radio" value="10" name="creditAmount" class="radioClick"> 1250 credits for $10.00<br>
-            <input type="radio" value="20" name="creditAmount" class="radioClick"> 2750 credits for $20.00<br>
-
-        </div> --}}
 
 
-        {{-- <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" name="frmTransaction" id="frmTransaction">
-            <input type="hidden" name="business" value="sb-wx2ex1797607@business.example.com">
-            <input type="hidden" name="cmd" value="_xclick">
-             <input type="hidden" name="item_name" value="Purchase Credit">
-            <input type="hidden" name="item_number" value="{{$user->id}}">
-
-            <input type="hidden" name="currency_code" value="USD">
-            <input type="hidden" name="cancel_return" value="{{route('paymentCancel')}}">
-            <input type="hidden" name="return" value="{{route('paymentStatus')}}">
-
-            <input type="radio" value="1" name="amount" class="radioClick"> 100 credits for $1.00<br>
-            <input type="radio" value="5" name="amount" class="radioClick"> 550 credits for $5.00<br>
-            <input type="radio" value="10" name="amount" class="radioClick"> 1250 credits for $10.00<br>
-            <input type="radio" value="20" name="amount" class="radioClick"> 2750 credits for $20.00<br>
-
-
-            <input type="submit" name="Purchase" />
-        </form> --}}
 
 
         {{-- <form action="http://139.59.44.29/notifyPayment" method="POST"> --}}
-        <form action="http://localhost:8000/notifyPayment" method="POST">
+        {{-- <form action="http://localhost:8000/notifyPayment" method="POST">
 
           <input name="mc_gross"                type="hidden" value="10.00" />
           <input name="protection_eligibility"  type="hidden" value="Eligible" />
@@ -94,9 +68,8 @@
           <input name="payment_gross"           type="hidden" value="10.00" />
           <input name="ipn_track_id"            type="hidden" value="9bd3e5495a176" />
 
-          {{-- <input name="test" type="submit" value="test" /> --}}
           <input type="submit" name="Test purchase" />
-        </form>
+        </form> --}}
 
 
 
@@ -117,7 +90,8 @@
                 <input type="hidden" name="notify_url" value="{{route('notifyPayment')}}">
                 {{-- <input type="hidden" name="notify_url" value="http://139.59.44.29/notifyPayment"> --}}
                 <input type="hidden" name="cancel_return" value="{{route('paymentCancel')}}">
-                <input type="hidden" name="return" value="{{route('paymentReturn')}}">
+                {{-- <input type="hidden" name="return" value="{{route('paymentReturn')}}"> --}}
+                <input type="hidden" name="return" value="{{route('employerProfile')}}">
 
 
                 <input type="submit" name="Purchase" />
