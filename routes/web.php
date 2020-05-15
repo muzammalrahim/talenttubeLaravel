@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('test', 'Site\SiteUserController@test')->name('test');
 
+Route::post('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
+Route::get('paymentReturn', 'Site\PaymentController@paymentReturn')->name('paymentReturn');
+
+
+
 
 Auth::routes();
 Route::get('/clear', function() {
@@ -155,9 +160,6 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::get('employer/{username}',   'Site\EmployerController@index');
 });
 
-
-Route::get('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
-Route::get('paymentReturn', 'Site\PaymentController@paymentReturn')->name('paymentReturn');
 
 
 // Front End without Authentication
