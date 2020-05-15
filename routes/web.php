@@ -148,13 +148,16 @@ Route::group(array('middleware' => 'auth'), function(){
 
     Route::get('paymentStatus', 'Site\PaymentController@paymentInfo')->name('paymentStatus');
     Route::get('paymentCancel', function () { return 'Payment has been canceled'; })->name('paymentCancel');
-    Route::get('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
-    Route::get('paymentReturn', 'Site\PaymentController@paymentReturn')->name('paymentReturn');
+
 
 
 
     Route::get('employer/{username}',   'Site\EmployerController@index');
 });
+
+
+Route::get('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
+Route::get('paymentReturn', 'Site\PaymentController@paymentReturn')->name('paymentReturn');
 
 
 // Front End without Authentication
