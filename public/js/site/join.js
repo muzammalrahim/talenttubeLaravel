@@ -8,6 +8,9 @@ var allCities={},
     nameLengthMax=0;
 var isUploadPhotoJoinAjax=false,
     isUploadPhotoJoin=false;
+
+var step2_formData = new FormData();
+
 // var isUploadPhotoJoinAjax=false, isUploadPhotoJoin=false;
 var currentPage = 'join.php';
 $(function(){
@@ -151,11 +154,11 @@ $(function(){
         disabledControl(true, '#step-1');
         // url: base_url + '/ajax/' + type,
         $.post(base_url+'/register',dataFrm,
-                function(data){ 
+                function(data){
                     console.log(' register data ', data);
                     if(!data.status){
                         disabledControl(false, '#step-1');
-                        const keys = Object.keys(data.validator); 
+                        const keys = Object.keys(data.validator);
                         for (const key of keys) {
                             // console.log('key = ', key);
                             // console.log('data.validator.key = ',  data.validator[key] );
@@ -174,9 +177,9 @@ $(function(){
                             setTimeout(() => {
                                 location.href = data.redirect;
                             }, 3000);
-                        }); 
+                        });
                     }
-                   
+
                         // if (!showErrorResponseForm(data,['name','password','captcha','recaptcha'])) {
                         //     if(!isFrmSubmitStep2){
                         //         $jq('#password').val('');
@@ -195,13 +198,121 @@ $(function(){
                         //     $jq('#frm_register_submit').html(joinLangParts.next);
                         // }
                         $jq('#frm_register_submit').prop('disabled',false);
-                        
+
         })
 
-        
+
     });
 
-    
+
+
+
+    $jq('#frm_emp_register_submit').click(function(){
+        event.preventDefault();
+        var dataFrm={},
+        isFrmSubmit=true,
+        validate_for = true;
+
+        if($jq('#frm_register_submit').is('.disabled')){
+           $jq('#agree').change();
+           return false;
+        }
+        if(setDisabledSubmitJoin(false,true,true)){  return false; }
+        $jq('#frm_register_submit').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
+        $jq('input:not([type="search"]), select', '#emp-step-1').each(function(){
+
+            dataFrm[this.name]  = $.trim(this.value);
+
+            var trim_value = $.trim(this.value);
+            var is_required = ($(this).attr('required') == 'required')?true:false;
+
+            // console.log(' this.name ', this, this.name );
+            // console.log(' requied  ', $(this).attr('required') );
+            // console.log(' trim_value  ',  trim_value );
+            // console.log(' is_required  ',  is_required );
+
+
+            if ( is_required && trim_value == '') {
+                console.log(' validation error  ');
+                var field_name = this.name;
+                $('#'+field_name+'_error').removeClass('to_hide').addClass('to_show').text('Required');
+                validate_for = false;
+            }
+
+        })
+        // disabledControl(true, '#step-1');
+
+        // check if all field not empty
+        // var requiredField = ['']
+
+        if(!validate_for){ return false; }
+
+        $.post(base_url+'/register/employer',dataFrm,
+        function(data){
+            console.log(' register data ', data);
+
+            if(!data.status){
+                // disabledControl(false, '#emp-step-1');
+                const keys = Object.keys(data.validator);
+                for (const key of keys) {
+                    if($('#'+key+'_error').length > 0){
+                        $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(data.validator[key][0]);
+                    }
+                }
+                $jq('#frm_register_submit').html(i18n.site.Next_btn);
+            }else{
+                $jq('#emp-step-1').fadeOut(400,function(){
+                    $jq('#frm_register_submit_2').prop('disabled',true);
+                    $jq('#success-step-1').show(1).addClass('to_show').html(data.message);
+                    $jq('#frm_register_submit').html(i18n.site.Next_btn);
+                    // setTimeout(() => {
+                    //     location.href = data.redirect;
+                    // }, 5000);
+                });
+            }
+
+            $jq('#frm_register_submit').prop('disabled',false);
+
+        })
+    });
+
+
+
+
+    $jq('#resendVerificationEmail').on('change propertychange input',validateResendEmail);
+    function validateResendEmail(){
+        console.log(' validateResendEmail ');
+        var val=$.trim($jq('#resendVerificationEmail').val());
+        if( val == '' ){
+            $jq('#resendVerificationEmail_error').removeClass('to_hide').addClass('to_show').text('Required');
+            return false;
+        }else if(!checkEmail(val)){
+           $jq('#resendVerificationEmail_error').removeClass('to_hide').addClass('to_show').text('Incorrect Email Address')
+           return false;
+        } else {
+            $jq('#resendVerificationEmail_error').removeClass('to_show').addClass('to_hide');
+            $jq('#emp_email_verification_resend').prop('disabled',false);
+            return true;
+        }
+
+    }
+
+    $jq('#emp_email_verification_resend').click(function(){
+        event.preventDefault();
+        console.log(' emp_email_verification_resend ');
+        $jq('#emp_email_verification_resend').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
+
+        var dataFrm = $('#employer_verification_resend').serializeArray();
+        $.post(base_url+'/employer/verification',dataFrm,
+        function(data){
+            console.log(' verification/data = ', data);
+            if(data){
+                $('#employer_verification_resend').html(data.data);
+            }
+        })
+    });
+
+
     /* STEP 1 */
     /* STEP 2 */
     var isFrmSubmitStep2=false;
@@ -237,39 +348,83 @@ $(function(){
     //     })
     // })
 
-   
+
     /* STEP 2 */
 
     /* STEP 4 */
     /* Captcha */
     var isFrmSubmitStep3=false;
-    $jq('#captcha').on('change propertychange input', function(){
-        var val=trim($jq('#captcha').val());
-        if(val){
-            hideError('captcha',true,'#frm_card_join');
-        }else{
-            var msg=isFrmSubmitStep3?joinLangParts.incorrect_captcha:'&nbsp;';
-            showError('captcha',msg,'#frm_card_join');
-        }
-    }).keydown(function(e){
-        if (e.keyCode==13&&!$jq('#join_done').prop('disabled')) {
-            $jq('#join_done').click();
-            return false;
-        }
-    })
+    // $jq('#captcha').on('change propertychange input', function(){
+    //     var val=trim($jq('#captcha').val());
+    //     if(val){
+    //         hideError('captcha',true,'#frm_card_join');
+    //     }else{
+    //         var msg=isFrmSubmitStep3?joinLangParts.incorrect_captcha:'&nbsp;';
+    //         showError('captcha',msg,'#frm_card_join');
+    //     }
+    // }).keydown(function(e){
+    //     if (e.keyCode==13&&!$jq('#join_done').prop('disabled')) {
+    //         $jq('#join_done').click();
+    //         return false;
+    //     }
+    // })
     /* Captcha */
+
+
 
     $jq('.fl_basic').on('change propertychange input', function(){
         hideError(this.id,false,'#frm_card_join');
         //setDisabledSubmitJoin('#frm_card_join');
     })
 
-    $jq('#join_done').click(checkCaptcha);
+
+    $jq('#join_done').click(function(){
+        console.log(' join_done ', dataAnswerJoin);
+        step2_formData.append('questions',JSON.stringify(dataAnswerJoin));
+        console.log(' step2_formData ', step2_formData.entries());
+
+        step2_formData.append('about_me', $.trim($('#about_me').val()));
+        step2_formData.append('interested_in', $.trim($jq('#interested_in').val()));
+
+        $jq('#join_done').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
+
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            url: base_url+'/employer/step2',
+            type : 'POST',
+            data : step2_formData,
+            processData: false,
+            contentType: false,
+            success : function(resp) {
+                console.log('resp ', resp);
+                $jq('#join_done').html('Done').prop('disabled',false);
+
+                if(resp.status){
+                    setTimeout(() => {
+                        location.href = resp.redirect;
+                    }, 3000);
+                }else{
+                    $('.step2_error').removeClass('to_hide').addClass('to_show').text('Error Adding Employer Information');
+                    if(resp.validator != undefined){
+                        const keys = Object.keys(resp.validator);
+                        for (const key of keys) {
+                            if($('#'+key+'_error').length > 0){
+                                $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(resp.validator[key][0]);
+                            }
+                        }
+                    }
+
+                }
+            }
+        });
+
+
+    });
 
     $('input.file','#photo_upload').click(function(){
         $jq('#photo_upload_error').removeClass('to_show');
         $jq('#photo_upload').data('id','');
-        $jq('#photo_upload_reset').click();
+        // $jq('#photo_upload_reset').click();
     });
 
     function showUploadPhotoError(error){
@@ -279,6 +434,19 @@ $(function(){
         $jq('.file').show();
         $jq('#photo_upload_error').html(error).attr('title',error).addClass('to_show');
     }
+
+    $jq('.upload_file').on('click',function(){
+        console.log(' upload_file ');
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = e => {
+            var file = e.target.files[0];
+            console.log(' onchange file  ', file );
+            step2_formData.append('file',file);
+            $jq('.bl_card_profile .name').text(file.name);
+        }
+        input.click();
+    });
 
     var fileNameUpload='';
     $jq('#photo_upload').submit(function(e){
@@ -344,68 +512,68 @@ $(function(){
     });
 
     var isFrmSubmitStep3Ajax=false;
-    function checkCaptcha(){
-        var isError=false;
-        if (!isUploadPhotoJoin) {
-            $jq('#photo_upload_error').html(l('upload_profile_photo')).attr('title',l('upload_profile_photo')).addClass('to_show');
-            isError=true;
-        }
-        $jq('input, textarea', '#frm_card_join').each(function(){
-            var val=$.trim(this.value), is=(val==0||val=='');
-            if(is)showError(this.id);
-            isError|=is;
-        })
-        if(isRecaptcha){
-            if(grecaptcha.getResponse(recaptchaWd)==''){
-                isError = true;
-                showError('captcha','','#frm_card_join');
-            }
-        }
-        if(isError){
-           return false;
-        }
+    // function checkCaptcha(){
+    //     var isError=false;
+    //     if (!isUploadPhotoJoin) {
+    //         $jq('#photo_upload_error').html(l('upload_profile_photo')).attr('title',l('upload_profile_photo')).addClass('to_show');
+    //         isError=true;
+    //     }
+    //     $jq('input, textarea', '#frm_card_join').each(function(){
+    //         var val=$.trim(this.value), is=(val==0||val=='');
+    //         if(is)showError(this.id);
+    //         isError|=is;
+    //     })
+    //     if(isRecaptcha){
+    //         if(grecaptcha.getResponse(recaptchaWd)==''){
+    //             isError = true;
+    //             showError('captcha','','#frm_card_join');
+    //         }
+    //     }
+    //     if(isError){
+    //        return false;
+    //     }
 
-        if(isFrmSubmitStep3Ajax) return false;
-        isFrmSubmitStep3Ajax=true;
-        isFrmSubmitStep3=true;
-        var val=isRecaptcha?grecaptcha.getResponse(recaptchaWd):trim($jq('#captcha').val());
-        $jq('#join_done').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
-        disabledControl(true, '#frm_card_join');
-        var data={captcha:val,photo:fileNameUpload};
-        $('.fl_basic').each(function(){
-            data[this.name]=this.value;
-        })
-        data.join_answers=dataAnswerJoin;
-        data.users_like=joinLikeUser;
-        $.post(urlMain+'join2.php?cmd=check_captcha&ajax=1',data,
-        function(data){
-            isFrmSubmitStep3Ajax=false;
-            data=getDataAjax(data,'data');
-            $jq('#join_done').html(joinLangParts.done).prop('disabled',false);
-            if(data!==false){
-                var $data=$(data),
-                    $exEmail=$data.filter('.exists_email'),
-                    $waitApproval=$data.filter('.wait_approval'),
-                    $redirect=$data.filter('.redirect');
-                if ($exEmail[0]) {
-                    alertCustomRedirect($exEmail.html(),joinLangParts.existsEmail)
-                }else if ($waitApproval[0]) {
-                    alertCustomRedirect($waitApproval.html(),joinLangParts.noConfirmationAccount)
-                }else if ($redirect[0]) {
-                    redirectUrl($redirect.text());
-                }else if ($data.filter('.error_captcha')[0]) {
-                    disabledControl(false, '#frm_card_join');
-                    if(isRecaptcha){
-                        grecaptcha.reset(recaptchaWd);
-                    }else{
-                        $jq('#img_join_captcha').click();
-                        $jq('#captcha').val('').focus();
-                    }
-                    showError('captcha','','#frm_card_join');
-                }
-            }
-        })
-    }
+    //     if(isFrmSubmitStep3Ajax) return false;
+    //     isFrmSubmitStep3Ajax=true;
+    //     isFrmSubmitStep3=true;
+    //     var val=isRecaptcha?grecaptcha.getResponse(recaptchaWd):trim($jq('#captcha').val());
+    //     $jq('#join_done').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
+    //     disabledControl(true, '#frm_card_join');
+    //     var data={captcha:val,photo:fileNameUpload};
+    //     $('.fl_basic').each(function(){
+    //         data[this.name]=this.value;
+    //     })
+    //     data.join_answers=dataAnswerJoin;
+    //     data.users_like=joinLikeUser;
+    //     $.post(urlMain+'join2.php?cmd=check_captcha&ajax=1',data,
+    //     function(data){
+    //         isFrmSubmitStep3Ajax=false;
+    //         data=getDataAjax(data,'data');
+    //         $jq('#join_done').html(joinLangParts.done).prop('disabled',false);
+    //         if(data!==false){
+    //             var $data=$(data),
+    //                 $exEmail=$data.filter('.exists_email'),
+    //                 $waitApproval=$data.filter('.wait_approval'),
+    //                 $redirect=$data.filter('.redirect');
+    //             if ($exEmail[0]) {
+    //                 alertCustomRedirect($exEmail.html(),joinLangParts.existsEmail)
+    //             }else if ($waitApproval[0]) {
+    //                 alertCustomRedirect($waitApproval.html(),joinLangParts.noConfirmationAccount)
+    //             }else if ($redirect[0]) {
+    //                 redirectUrl($redirect.text());
+    //             }else if ($data.filter('.error_captcha')[0]) {
+    //                 disabledControl(false, '#frm_card_join');
+    //                 if(isRecaptcha){
+    //                     grecaptcha.reset(recaptchaWd);
+    //                 }else{
+    //                     $jq('#img_join_captcha').click();
+    //                     $jq('#captcha').val('').focus();
+    //                 }
+    //                 showError('captcha','','#frm_card_join');
+    //             }
+    //         }
+    //     })
+    // }
 
     $jq('.btn_question').click(function(){
         questionAnswer($(this).data('action'));
@@ -413,6 +581,7 @@ $(function(){
 
     $('.card_question.first').css('z-index',4);
     function questionAnswer(action){
+        console.log(' questionAnswer ', action, dataAnswerJoin);
         if(isAnswerSend)return;
         isAnswerSend=true;
         var $el=$('.card_question.first:not(.answer)');
@@ -566,7 +735,7 @@ function refreshCaptcha(captcha){
 function changeUploadPhoto($el){
     $jq('.file').hide();
     $jq('#photo_upload').data('id', $el[0].id);
-    $jq('#photo_upload_submit').click();
+    // $jq('#photo_upload_submit').click();
 }
 
 function birthDateToAge() {

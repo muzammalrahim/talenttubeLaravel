@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('test', 'Site\SiteUserController@test')->name('test');
- 
+
 
 Auth::routes();
 Route::get('/clear', function() {
@@ -26,7 +26,7 @@ Route::get('/clear', function() {
 });
 
 
- 
+
 
 // Route::get('images/user/{userid}/{any}', [
 //     'as'         => 'images.show',
@@ -55,7 +55,7 @@ Route::post('admin/login', 'Admin\AdminController@login');
 Route::get('logout', function(){
     Auth::logout();
     return redirect('/');
-})->name('logout'); 
+})->name('logout');
 
 
 
@@ -88,17 +88,15 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 Route::group(array('middleware' => 'auth'), function(){
     // Route::get('profile', 'Site\HomeController@profile')->name('profile');
     // Route::get('profile', 'Site\HomeController@profile')->name('profile');
-    Route::get('profile', function () { 
-        // dd();
-        return redirect(Auth::user()->username);
-    })->name('profile');
-     
-    Route::get('{username}', 'Site\SiteUserController@index')->name('username');
+
+    Route::get('profile', function () { return redirect('user/'.Auth::user()->username); })->name('profile');
+
+    Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
     Route::post('saveUserProfile', 'Site\SiteUserController@updateUserProfile')->name('saveUserProfile');
     Route::post('saveUserPersonalSetting', 'Site\SiteUserController@saveUserPersonalSetting')->name('saveUserPersonalSetting');
-    
-   
 
+
+    // User
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
     Route::get('ajax/getUserPersonalInfo', 'Site\SiteUserController@getUserPersonalInfo');
     Route::post('ajax/update_about_field', 'Site\SiteUserController@updateAboutField');
@@ -106,33 +104,80 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('ajax/deleteGallery/{id}', 'Site\SiteUserController@deleteGallery');
     Route::post('ajax/setGalleryPrivateAccess/{id}', 'Site\SiteUserController@setGalleryPrivateAccess');
     Route::post('ajax/setImageAsProfile/{id}', 'Site\SiteUserController@setImageAsProfile');
-
     Route::post('ajax/userUploadResume', 'Site\SiteUserController@userUploadResume')->name('userUploadResume');
     Route::post('ajax/removeAttachment/', 'Site\SiteUserController@removeAttachment')->name('removeAttachment');
 
-    // activity 
+
+
+    // activity  user/employer
     Route::post('ajax/saveNewActivity', 'Site\SiteUserController@saveNewActivity')->name('saveNewActivity');
 
-    // video 
+    // video user/employer
     Route::post('ajax/uploadVideo', 'Site\SiteUserController@uploadVideo')->name('uploadVideo');
     Route::post('ajax/deleteVideo', 'Site\SiteUserController@deleteVideo')->name('deleteVideo');
-    
+
+
+
+    // Employer
+    Route::get('employer/profile', function () { return redirect('employer/'.Auth::user()->username); })->name('employerProfile');
+    Route::get('employer/step2',       'Site\EmployerController@step2Employer')->name('step2Employer');
+    Route::post('employer/step2',      'Site\EmployerController@Step2');
+    Route::get('jobSeekers',          'Site\EmployerController@jobSeekers')->name('jobSeekers');
+    Route::post('ajax/blockJobSeeker/{id}', 'Site\EmployerController@blockJobSeeker')->name('blockJobSeeker');
+    Route::post('ajax/likeJobSeeker/{id}', 'Site\EmployerController@likeJobSeeker')->name('likeJobSeeker');
+
+    // job
+    Route::get('employer/job/new',    'Site\EmployerController@newJob')->name('newJob');
+    Route::post('ajax/job/new',    'Site\EmployerController@addNewJob')->name('addNewJob');
+    Route::get('employer/jobs',    'Site\EmployerController@jobs')->name('employerJobs');
+    Route::get('employer/jobs/{id}',    'Site\EmployerController@jobEdit')->name('employerJobEdit');
+    Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
+
+    Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
+    Route::post('ajax/deleteJob/{id}', 'Site\SiteUserController@deleteJob')->name('deleteJob');
+    Route::get('jobApplications', 'Site\SiteUserController@jobApplications')->name('jobApplications');
+
+    Route::get('ajax/jobApplyInfo/{id}', 'Site\SiteUserController@jobApplyInfo')->name('jobApplyInfo');
+    Route::post('ajax/jobApplySubmit', 'Site\SiteUserController@jobApplySubmit')->name('jobApplySubmit');
+    Route::post('ajax/deleteJobApplication/{id}', 'Site\SiteUserController@deleteJobApplication')->name('deleteJobApplication');
+
+
+    // Credits
+    Route::get('credit',       'Site\EmployerController@credit')->name('credit');
+
+
+    Route::get('paymentStatus', 'Site\PaymentController@paymentInfo')->name('paymentStatus');
+    // Route::get('payment', array('as'=>'payment','uses'=>'PaymentController@payment'));
+    Route::get('paymentCancel', function () { return 'Payment has been canceled'; })->name('paymentCancel');
+
+
+
+    Route::get('employer/{username}',   'Site\EmployerController@index');
 });
 
 
 // Front End without Authentication
+
 Route::get('/', 'Site\HomeController@index')->name('homepage');
+
+// Login.
 Route::post('login', 'Site\HomeController@loginUser')->name('login');
 Route::post('join', 'Site\HomeController@join')->name('join');
 
+// User Registeration.
 Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
 Route::get('step2', 'Site\HomeController@step2')->name('step2');
 
 
+//Employer Registeration.
+Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer'); // user_register
+Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
+Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
+Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
+
+
 
 Route::get('/unauthorized', function () { return view('unauthorized'); });
- 
-
 Route::post('ajax/geo_states', 'Site\HomeController@geo_states')->name('ajax_geo_states');
 Route::post('ajax/geo_cities', 'Site\HomeController@geo_cities')->name('ajax_geo_cities');
 

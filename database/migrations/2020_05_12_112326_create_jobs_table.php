@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateVideosTable extends Migration
+class CreateJobsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,22 @@ class CreateVideosTable extends Migration
      */
     public function up()
     {
-        Schema::create('videos', function (Blueprint $table) {
+        Schema::create('jobs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedbigInteger('user_id');
             $table->string('title');
-            $table->string('file');
+            $table->text('description');
+            $table->string('experience');
             $table->string('type');
-            $table->integer('status');
+            $table->integer('country');
+            $table->integer('state');
+            $table->integer('city');
+            $table->integer('vacancies');
+            $table->text('salary');
+            $table->text('gender');
+            $table->text('age');
+            $table->dateTime('expiration');
             $table->timestamps();
+            $table->unsignedbigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
@@ -32,6 +40,6 @@ class CreateVideosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('videos');
+        Schema::dropIfExists('jobs');
     }
 }

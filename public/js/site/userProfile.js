@@ -3,21 +3,21 @@ var CProfile = function() {
     var $this=this;
     var pp_profile_edit_main=$jq('#pp_profile_main_editor');
     // var $userProfileEditPopup=$('#pp_profile_main_editor').modalPopup({shClass: ''});
-    var userProfileEditPopup; 
-    var hideErrortListner = false; 
+    var userProfileEditPopup;
+    var hideErrortListner = false;
 
     /* Edit looking for */
     /* Edit main */
     this.showMainEditor = function(){
-        this.userProfileEditPopup = $('#pp_profile_main_editor').modalPopup({shClass: ''}); 
+        this.userProfileEditPopup = $('#pp_profile_main_editor').modalPopup({shClass: ''});
         this.userProfileEditPopup.open();
- 
+
         if(!this.hideErrortListner){
-            this.hideErrortListner = true; 
+            this.hideErrortListner = true;
             $('input,select',pp_profile_edit_main).on('change', this.hideElementError );
             var that = this;
-            $('.pp_body').on('click', function(e){ 
-                console.log('pp_body click '); 
+            $('.pp_body').on('click', function(e){
+                console.log('pp_body click ');
                 if(e.target == this && that.userProfileEditPopup.is(':visible')) {
                     $('.icon_close', this.userProfileEditPopup).click()
                     console.log(' hideMainEditor  ');
@@ -33,7 +33,7 @@ var CProfile = function() {
     }
 
     this.hideElementError = function(){
-        console.log(' event ', this); 
+        console.log(' event ', this);
         var elem = $(this);
         var attr = $(this).attr('name');
         if (typeof attr !== typeof undefined && attr !== false) {
@@ -46,14 +46,14 @@ var CProfile = function() {
     this.GetLocation = function(type){
         console.log(' GetStateList ');
         // $('.geo', pp_profile_edit_main_frm).change(function() {
-        //     console.log(' geo chagne '); 
+        //     console.log(' geo chagne ');
         // var type=$(this).data('location');
         var pp_profile_edit_main_frm=$('#frm_profile_edit_main', pp_profile_edit_main)
         pp_profile_edit_main_country=$('#country', pp_profile_edit_main_frm),
         pp_profile_edit_main_state=$('#state', pp_profile_edit_main_frm),
         pp_profile_edit_main_city=$('#city', pp_profile_edit_main_frm);
         // console.log(' pp_profile_edit_main_country.value ', pp_profile_edit_main_country.val());
-        
+
         $.ajax({
             type: 'POST',
                 url: base_url+'/ajax/'+type,
@@ -91,13 +91,13 @@ var CProfile = function() {
        var pp_profile_edit_main_day = $('#profile_edit_main_day');
        pp_profile_edit_main_day.trigger('refresh');
     }
- 
+
     this.saveProfile =  function (){
        console.log(' saveProfile ');
         var frm_profile_edit_main = $('#frm_profile_edit_main').serializeArray();
         console.log(' frm_profile_edit_main ', frm_profile_edit_main);
-        this.disabledProfileEditMain(true);  
-        var that = this; 
+        this.disabledProfileEditMain(true);
+        var that = this;
         $.ajax({
             type: 'POST',
             url: base_url+'/saveUserProfile',
@@ -111,7 +111,7 @@ var CProfile = function() {
                     that.hideMainEditor();
                 }else{
                     if(data.validator != undefined){
-                        const keys = Object.keys(data.validator); 
+                        const keys = Object.keys(data.validator);
                         for (const key of keys) {
                             if($('#'+key+'_error').length > 0){
                                 $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(data.validator[key][0]);
@@ -131,10 +131,10 @@ var CProfile = function() {
 
 
    this.disabledProfileEditMain = function(is){
-        var   pp_profile_edit_main_frm=$('#frm_profile_edit_main', pp_profile_edit_main),    
+        var   pp_profile_edit_main_frm=$('#frm_profile_edit_main', pp_profile_edit_main),
          pp_profile_edit_main_btn_save= $('.frm_editor_save', pp_profile_edit_main),
          pp_profile_edit_main_btn_cancel=$('.frm_editor_cancel', pp_profile_edit_main);
-        
+
         if(is){
             pp_profile_edit_main_btn_save.html(getLoader('pp_profile_edit_main_loader')).prop('disabled',is);
         }else{
@@ -158,7 +158,7 @@ var CProfile = function() {
             type: 'POST',
             url: base_url+'/ajax/changeUserStatusText',
             data: {'status': statusText},
-            success: function(data){ 
+            success: function(data){
             }
         });
     }
@@ -183,13 +183,13 @@ var CProfile = function() {
         var $field=$jq('#basic_editor_text_'+field);
         if($field.data('desc')==$field.val())$field.val('');
         // $this.cacheData[field+'_value']=$field.val();
-        $field.addClass('active').prop('disabled',false).oneTransEnd(function(){ 
+        $field.addClass('active').prop('disabled',false).oneTransEnd(function(){
             $field.focus();
         }).addClass('focus');
         $editor.addClass('to_show');
     }
 
-    
+
     this.closeBasicFieldEditor = function(field){
         var $field = $jq('#basic_editor_text_'+field);
         var val = $field.val();
@@ -197,7 +197,7 @@ var CProfile = function() {
         // if(!trim($field.val())&&$field.data('desc')){
         //     val=$field.data('desc');
         // }
-       
+
         if ($field.val()) {
             $field.prop('disabled',false).removeClass('focus');
             $jq('#basic_editor_'+field).removeClass('to_show');
@@ -230,7 +230,7 @@ var CProfile = function() {
         $.post(base_url+'/ajax/'+cmd,data,function(res){
             $loader.remove();
             console.log(' post response  ', res );
-            if(res.status==1){ $jq('#basic_editor_text_'+field).val(res.data).trigger('autosize'); } 
+            if(res.status==1){ $jq('#basic_editor_text_'+field).val(res.data).trigger('autosize'); }
         });
     }
 
@@ -247,7 +247,7 @@ var CProfile = function() {
 
     this.cancelGalleryConfirm = function(){ $.modal.close(); }
     this.deleteGallery = function(){
-        var gallery_id =  $('#deleteConfirmId').val(); 
+        var gallery_id =  $('#deleteConfirmId').val();
         $.modal.close();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
@@ -280,16 +280,16 @@ var CProfile = function() {
 
     this.deleteAttachment = function(){
         $.modal.close();
-        var attachment_id = $('#deleteAttachmentId').val(); 
+        var attachment_id = $('#deleteAttachmentId').val();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/removeAttachment/',
             data: {attachment_id: attachment_id},
             success: function(data){
-                console.log(' data ', data); 
+                console.log(' data ', data);
                 if(data.status == 1){
-                    $('.attachment_file.attachment_'+attachment_id).remove(); 
+                    $('.attachment_file.attachment_'+attachment_id).remove();
                 }
             }
         });
@@ -303,14 +303,14 @@ var CProfile = function() {
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/setImageAsProfile/'+gallery_id,
-            success: function(res){ 
-                console.log(' res ', res); 
+            success: function(res){
+                console.log(' res ', res);
                 if(res.status == 1){
-                    // $('.attachment_file.attachment_'+attachment_id).remove(); 
-                    var data = res.data; 
-                    var pp_html =  '<a class="show_photo_gallery" href="'+data.large+'" data-lcl-thumb="'+data.small+'">'; 
-                        pp_html +=  '<img class="photo" id="pic_main_img" src="'+data.large+'">'; 
-                        pp_html += '</a>'; 
+                    // $('.attachment_file.attachment_'+attachment_id).remove();
+                    var data = res.data;
+                    var pp_html =  '<a class="show_photo_gallery" href="'+data.large+'" data-lcl-thumb="'+data.small+'">';
+                        pp_html +=  '<img class="photo" id="pic_main_img" src="'+data.large+'">';
+                        pp_html += '</a>';
                         $('.bl_pic .pic').html(pp_html);
                 }
             }
@@ -323,54 +323,54 @@ var CProfile = function() {
         event.preventDefault();
         if(activity_type === 'academic'){
             console.log(' addNewActivity ', activity_type);
-            var activity_form = $('.new_activity_form').serialize(); 
+            var activity_form = $('.new_activity_form').serialize();
             $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
             $.ajax({
                 type: 'POST',
                 url: base_url+'/ajax/saveNewActivity',
                 data: activity_form,
-                success: function(res){ 
-                    console.log(' res ', res); 
+                success: function(res){
+                    console.log(' res ', res);
                     if(res.validator != undefined){
-                        const keys = Object.keys(res.validator); 
+                        const keys = Object.keys(res.validator);
                         for (const key of keys) {
                             if($('.act_validation #'+key+'_error').length > 0){
                                 $('.act_validation #'+key+'_error').removeClass('to_hide').addClass('to_show').text(res.validator[key][0]);
                             }
                         }
-                    }else if(res.status == 1){ 
-                         
-                    } 
+                    }else if(res.status == 1){
+
+                    }
                 }
             });
         }
     }
 
-    // video upload option 
+    // video upload option
     this.SelectVideoFile = function(){
         var input = document.createElement('input');
         input.type = 'file';
-        input.onchange = e => { 
-            var file = e.target.files[0]; 
-            console.log(' onchange file  ', file ); 
+        input.onchange = e => {
+            var file = e.target.files[0];
+            console.log(' onchange file  ', file );
             var formData = new FormData();
             formData.append('video',file);
-            var that        = this; 
+            var that        = this;
             var item_id     =  Math.floor((Math.random() * 1000) + 1);
-            var video_item = ''; 
-            video_item  += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">'; 
+            var video_item = '';
+            video_item  += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">';
             video_item  +=  '<a class="show_photo_gallery video_link" href="">';
             // video_item  +=   '<img src="'+base_url+'/images/site/icons/cv.png" style="opacity: 1; display: inline;" title="vvtt11" class="photo" id="video_v_1" data-video-id="v_1">';
             video_item  +=  '</a>';
-            video_item  +=  '<span class="v_title">Video title</span>'; 
+            video_item  +=  '<span class="v_title">Video title</span>';
             video_item  +=  '<span title="Delete video" class="icon_delete">';
             video_item  +=      '<span class="icon_delete_photo"></span>';
             video_item  +=      '<span class="icon_delete_photo_hover"></span>';
             video_item  +=  '</span>';
             video_item  +=  '<div class="v_error error hide_it"></div>';
             video_item  +=  '<div class="v_progress"></div>';
-            video_item  += '</div>'; 
-           
+            video_item  += '</div>';
+
             $('.list_videos_public').append(video_item);
             var updateForm = document.querySelector('form');
             $.ajaxSetup({
@@ -393,7 +393,7 @@ var CProfile = function() {
                     $('#v_'+item_id+' .v_title').text(res.data.title);
                     $('#v_'+item_id+' .video_link').attr('href', base_url+'/'+res.data.file);
                 }else {
-                    console.log(' video error ');   
+                    console.log(' video error ');
                     if(res.validator != undefined){
                         $('#v_'+item_id+' .error').removeClass('hide_it').addClass('to_show').text(res.validator['video'][0]);
                     }
@@ -403,9 +403,9 @@ var CProfile = function() {
             request.send(formData);
         }
         input.click();
-        
+
     }
-    // video upload end here. 
+    // video upload end here.
 
 
     this.delteVideo = function(video_id){
@@ -421,16 +421,16 @@ var CProfile = function() {
 
     this.deleteVideoConfirm = function(){
         $.modal.close();
-        var video_id = $('#deleteVideoConfirmId').val(); 
+        var video_id = $('#deleteVideoConfirmId').val();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/deleteVideo',
             data: {video_id: video_id},
             success: function(data){
-                console.log(' data ', data); 
+                console.log(' data ', data);
                 if(data.status == 1){
-                    $('#v_'+video_id).remove(); 
+                    $('#v_'+video_id).remove();
                 }
             }
         });
@@ -439,8 +439,8 @@ var CProfile = function() {
 }
 
 
-$(function () { 
-    UProfile = new CProfile(); 
+$(function () {
+    UProfile = new CProfile();
 });
 
 
@@ -468,7 +468,7 @@ $(document).ready(function() {
                             }
                         }
                     });
-                    
+
                 }
             });
         });
@@ -479,13 +479,13 @@ $(document).ready(function() {
         event.preventDefault();
         $.modal.close();
     });
-    
-    // submit personal profile form. 
+
+    // submit personal profile form.
     $(document).on('click','.frm_editor_save', function(){
         event.preventDefault();
         $('.ppform_save_loader').removeClass('hide_it');
-        var ppform =  $('#frm_profile_edit_personal').serialize(); 
-        var that = this; 
+        var ppform =  $('#frm_profile_edit_personal').serialize();
+        var that = this;
         $.ajax({
             type: 'POST',
             url: base_url+'/saveUserPersonalSetting',
@@ -497,7 +497,7 @@ $(document).ready(function() {
                     $.modal.close();
                 }else{
                     if(data.validator != undefined){
-                        const keys = Object.keys(data.validator); 
+                        const keys = Object.keys(data.validator);
                         for (const key of keys) {
                             if($('#'+key+'_error').length > 0){
                                 $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(data.validator[key][0]);
@@ -516,39 +516,39 @@ $(document).ready(function() {
     });
 
 
-    // tab script 
+    // tab script
      $('.customTab li.switch_tab a').on('click',function(){
          console.log(' tab switch click  ');
-         var tab = $(this); 
-         var tabId = $(this).attr('href'); 
+         var tab = $(this);
+         var tabId = $(this).attr('href');
          $('.tabs_content .tab_link.target').removeClass('target');
          $('.tabs_content a'+tabId).addClass('target');
-         
+
          $('.tab .switch_tab.selected').removeClass('selected');
          $(this).parent().addClass('selected');
-     }); 
+     });
 
 
      $('.uploadProgressModalBtn').on('click', function() {
             var input = document.createElement('input');
 			input.type = 'file';
-			input.onchange = e => { 
-				var file = e.target.files[0]; 
-				console.log(' onchange file  ', file ); 
+			input.onchange = e => {
+				var file = e.target.files[0];
+				console.log(' onchange file  ', file );
                 var formData = new FormData();
                 formData.append('file',file);
-                var that = this; 
+                var that = this;
                var item_id =  Math.floor((Math.random() * 1000) + 1);
-            var gallery_item = '<div class="item profile_photo_frame photo_item_'+item_id+'" id="'+item_id+'">'; 
-                gallery_item += '<a class="show_photo_gallery" style="opacity:0;">'; 
+            var gallery_item = '<div class="item profile_photo_frame photo_item_'+item_id+'" id="'+item_id+'">';
+                gallery_item += '<a class="show_photo_gallery" style="opacity:0;">';
                 gallery_item += '<img data-photo-id="'+item_id+'" class="photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"\>';
-                gallery_item += '</a>';  
-                gallery_item += '<div class="uploadingImage">';  
+                gallery_item += '</a>';
+                gallery_item += '<div class="uploadingImage">';
                 gallery_item += '<span>FileName: '+file.name+'</span>';
                 gallery_item += '<span>FileSize: '+file.size+'</span>';
                 gallery_item += '<span>FileType: '+file.type+'</span>';
-                gallery_item += '</div>';  
-                gallery_item += '</div>';  
+                gallery_item += '</div>';
+                gallery_item += '</div>';
                 $('.list_photos_trans').append(gallery_item);
 			    $.ajax({
 			       url: base_url+'/ajax/uploadUserGallery',
@@ -562,27 +562,29 @@ $(document).ready(function() {
                             $('.photo_item_'+item_id).find('a').css('opacity', '1');
                             $('.photo_item_'+item_id).find('img').attr('src',resp.image);
                             $('.photo_item_'+item_id).find('.uploadingImage').remove();
-					  } 
+					  }
 			       }
 			    });
 			}
             input.click();
     });
 
-  
-    lc_lightbox('.show_photo_gallery', {
-        wrap_class: 'lcl_fade_oc',
-        gallery : true,	
-        thumb_attr: 'data-lcl-thumb', 
-        mousewheel: false,
-        fullscreen: false,
+    if($('.show_photo_gallery').length > 0){
+        lc_lightbox('.show_photo_gallery', {
+            wrap_class: 'lcl_fade_oc',
+            gallery : true,
+            thumb_attr: 'data-lcl-thumb',
+            mousewheel: false,
+            fullscreen: false,
 
-        socials: false,
-        skin: 'dark',
-        radius: 0,
-        padding	: 0,
-        border_w: 0,
-    });	
+            socials: false,
+            skin: 'dark',
+            radius: 0,
+            padding	: 0,
+            border_w: 0,
+        });
+    }
+
 
     $('.submit-document').on('submit',(function(e) {
         e.preventDefault();
@@ -610,17 +612,17 @@ $(document).ready(function() {
 
                     if( attachments.length > 0 ){
                         for (let ai = 0; ai < attachments.length; ai++) {
-                            
-                            
-                            attach_html += '<div class="attachment_'+attachments[ai].id+' attachment_file">'; 
-                            attach_html +=   '<div class="attachment"><img src="'+base_url+'/images/site/icons/cv.png" /></div>'; 
-                            attach_html +=   '<span class="attach_title">'+attachments[ai].name+'</span>'; 
+
+
+                            attach_html += '<div class="attachment_'+attachments[ai].id+' attachment_file">';
+                            attach_html +=   '<div class="attachment"><img src="'+base_url+'/images/site/icons/cv.png" /></div>';
+                            attach_html +=   '<span class="attach_title">'+attachments[ai].name+'</span>';
                             attach_html +=   '<div class="attach_btns">';
                             attach_html +=      '<a class="attach_btn downloadAttachBtn" href="'+base_url+'/'+attachments[ai].file+'">Download</a>';
-                            attach_html +=      '<a class="attach_btn removeAttachBtn" data-attachmentid="'+attachments[ai].id+'" onclick="UProfile.confirmAttachmentDelete('+attachments[ai].id+');">Remvoe</a>'; 
+                            attach_html +=      '<a class="attach_btn removeAttachBtn" data-attachmentid="'+attachments[ai].id+'" onclick="UProfile.confirmAttachmentDelete('+attachments[ai].id+');">Remvoe</a>';
                             attach_html +=    '</div>';
-                            attach_html +=  '</div>'; 
-                            
+                            attach_html +=  '</div>';
+
                         }
                     }
 
@@ -649,8 +651,8 @@ $(document).ready(function() {
 
 
 
- 
- 
+
+
 
 
 
@@ -669,8 +671,8 @@ $(document).ready(function() {
 
 
 // Profile.setTabs('#tabs-1');
-            
-            
+
+
 // $(location.hash).addClass('target');
 
 // $('.submit-document').on('submit',(function(e) {

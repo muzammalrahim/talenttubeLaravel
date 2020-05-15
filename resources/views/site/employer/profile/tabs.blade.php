@@ -17,7 +17,7 @@
     <a id="tabs-1" class="tab_link tab_a target"></a>
     <div class="tab_about tab_cont">
         <div class="col_left">
-
+            
             <div class="bl">
                 <div class="title">
                     <div id="basic_anchor_about_me" class="title_icon_edit">About me
@@ -25,9 +25,9 @@
                     </div>
                     <div class="cl"></div>
                 </div>
-                <textarea id="basic_editor_text_about_me" class="basic_textarea" maxlength="1000" disabled=""
+                <textarea id="basic_editor_text_about_me" class="basic_textarea" maxlength="1000" disabled="" 
                     style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 100px; opacity: 1;">{{$user->about_me}}</textarea>
-
+                
                 <div id="basic_editor_about_me" class="frm_edit">
                     <button id="basic_editor_save_about_me" class="btn small pink" onclick="UProfile.saveBasicFieldEditor('about_me'); return false;">Save</button>
                     <button id="basic_editor_cancel_about_me" class="btn small white_frame" onclick="UProfile.closeBasicFieldEditor('about_me'); return false;">Cancel</button>
@@ -35,10 +35,10 @@
                 </div>
                 {{-- <script>Profile.handlerBasicFieldEditor('about_me');</script> --}}
             </div>
-
-
-
-
+            
+            
+            
+            
             <div class="bl">
                 <div class="title">
                     <div id="basic_anchor_interested_in" class="title_icon_edit">Interested in
@@ -46,15 +46,15 @@
                     </div>
                     <div class="cl"></div>
                 </div>
-                <textarea id="basic_editor_text_interested_in" data-desc="" data-type="textarea" class="basic_textarea" maxlength="1000"
+                <textarea id="basic_editor_text_interested_in" data-desc="" data-type="textarea" class="basic_textarea" maxlength="1000" 
                 style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 100px; opacity: 1;">{{$user->interested_in}}</textarea>
                 <div id="basic_editor_interested_in" class="frm_edit">
                     <button id="basic_editor_save_interested_in" class="btn small pink" onclick="UProfile.saveBasicFieldEditor('interested_in'); return false;">Save</button>
                     <button id="basic_editor_cancel_interested_in" class="btn small white_frame" onclick="UProfile.closeBasicFieldEditor('interested_in'); return false;">Cancel</button>
                     <div class="cl"></div>
                 </div>
-            </div>
-
+            </div> 
+            
 
 
 					<div class="bl">
@@ -73,7 +73,7 @@
 									</div>
 							 @endforeach
 						</div>
-
+						
 						<div class="add_new_activity academic" style="visibility:hidden;opacity:0;">
 						<form method="POST" name="new_activity_form" class="new_activity_form act_validation">
 								<div class="activity_title">Add new Activity</div>
@@ -112,7 +112,7 @@
 									</div>
 								</div>
 
-
+								 
 
 								<div class="act_btn act_field">
 									<span class="act_label"></span>
@@ -124,7 +124,7 @@
 							</form>
 						</div>
 
-
+					 
 
 				</div>
 
@@ -134,7 +134,7 @@
 
 
         <div class="col_right">
-
+ 
             <div class="bl">
                 <div class="title">
                     <div class="title_icon_edit">
@@ -149,35 +149,35 @@
                     <tr><th>Eye color</th><td>{{$user->eye}}</td></tr>
                     <tr><th>Kids</th><td>{{$user->family}}</td></tr>
                     <tr><th>Education</th><td>{{getEducationName($user->education)}}</td></tr>
-
+                    
 																				{{-- @dump($user) --}}
 																				@if (!empty( $user->language))
                         @foreach ($user->language as $lang )
                             <tr><th>Language</th><td>{{getLanguage($lang)}}</td></tr>
                         @endforeach
                     @endif
-
+                   
                     @if (!empty( $user->hobbies))
                         @foreach ($user->hobbies as $hobby )
                             <tr><th>Hobbies</th><td>{{getHobby($hobby)}}</td></tr>
                         @endforeach
                     @endif
-
+                
                     </tbody>
                 </table>
             </div>
-
+            
         </div>
     </div>
     <!-- /tab_about -->
 
     <!-- tab_photos -->
     <a id="tabs-2" class="tab_link tab_a "></a>
-    <div class="tab_photos tab_cont">
+    <div class="tab_photos tab_cont"> 
         @include('site.user.profile.album.album')
     </div>
     <!-- /tab_photos -->
-
+     
 
     </div>
 </div>
