@@ -48,7 +48,7 @@
         </form> --}}
 
 
-        <form action="http://139.59.44.29/notifyPayment" method="POST">
+        {{-- <form action="http://139.59.44.29/notifyPayment" method="POST">
             <input name="mc_gross" type="hidden" value="500.00" />
             <input name="custom" type="hidden" value="some custom data" />
             <input name="address_status" type="hidden" value="confirmed" />
@@ -99,7 +99,7 @@
             <input name="payment_gross" type="hidden" value="0.02" />
             <input name="subscr_id" type="hidden" value="PP-1234" />
             <input name="test" type="submit" value="test" />
-        </form>
+        </form> --}}
 
 
 
@@ -116,8 +116,8 @@
 
                 {{-- <input type="hidden" name="no_shipping" value="1"> --}}
                 <input type="hidden" name="currency_code" value="USD">
-                {{-- <input type="hidden" name="notify_url" value="{{route('notifyPayment')}}"> --}}
-                <input type="hidden" name="notify_url" value="http://139.59.44.29/notifyPayment">
+                <input type="hidden" name="notify_url" value="{{route('notifyPayment')}}">
+                {{-- <input type="hidden" name="notify_url" value="http://139.59.44.29/notifyPayment"> --}}
                 <input type="hidden" name="cancel_return" value="{{route('paymentCancel')}}">
                 <input type="hidden" name="return" value="{{route('paymentReturn')}}">
 
