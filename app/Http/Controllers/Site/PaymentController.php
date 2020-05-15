@@ -36,23 +36,31 @@ class PaymentController extends Controller {
 
         if ( $request->payment_status == 'Completed' ){
 
-            dump( 'Completed' );
+            // dump( 'Completed' );
 
                 $txn_id = $request->txn_id;
 
                 $payment_exist = Payment::where('transaction_id',$txn_id)->first();
+
+
                 if (empty($payment_exist)){
+
+                    $user_id = (int) $request->item_number;
+                    $amount  = (int) $request->payment_gross;
+
 
                     $payment = new Payment;
                     $payment->transaction_id = $txn_id;
                     $payment->currency_code = $request->mc_currency;
                     $payment->payment_status = $request->payment_status;
                     $payment->user_id = $request->item_number;
+                    $payment->amount = $amount;
                     $payment->save();
                     $payment_id = $payment->id;
 
-                    $user_id = (int) $request->item_number;
-                    $amount  = (int) $request->payment_gross;
+                    // dd(  $payment );
+
+
                     $user = User::find($user_id);
                     if(!empty($user)){
                         // dump( 'user exist ' );
