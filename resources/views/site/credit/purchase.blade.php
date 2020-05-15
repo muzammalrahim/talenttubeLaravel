@@ -49,8 +49,9 @@
 
 
 
-        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" target="_top">
+        <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" >
                 <input type="hidden" name="business" value="sb-wx2ex1797607@business.example.com">
+                <input type="hidden" name="cmd" value="_xclick">
                 <input type="hidden" name="item_name" value="Purchase Credit">
                 <input type="hidden" name="item_number" value="{{$user->id}}">
 
@@ -59,14 +60,14 @@
                 <input type="radio" value="10" name="amount" class="radioClick"> 1250 credits for $10.00<br>
                 <input type="radio" value="20" name="amount" class="radioClick"> 2750 credits for $20.00<br>
 
-                <input type="hidden" name="no_shipping" value="1">
+                {{-- <input type="hidden" name="no_shipping" value="1"> --}}
                 <input type="hidden" name="currency_code" value="USD">
                 <input type="hidden" name="notify_url" value="{{route('notifyPayment')}}">
                 <input type="hidden" name="cancel_return" value="{{route('paymentCancel')}}">
                 <input type="hidden" name="return" value="{{route('paymentReturn')}}">
 
-                <input type="hidden" name="cmd" value="_xclick">
-                <input type="submit" name="pay_now" id="pay_now" Value="Pay Now">
+
+                <input type="submit" name="Purchase" />
         </form>
 
 

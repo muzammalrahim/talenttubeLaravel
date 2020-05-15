@@ -202,3 +202,5 @@ Route::get('/js/lang.js', function () {
 })->name('assets.lang');
 
 
+
+Route::get('textLog', 'Site\HomeController@textLog')->name('textLog');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Home;
 use App\Http\Controllers\Controller;
 use App\Mail\EmailVerificationCode;
+use App\TestLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -350,5 +351,12 @@ class HomeController extends Controller {
 		}
 
 
+
+
+    function textLog(){
+
+        $log = TestLog::get();
+        dd( $log->toArray() );
+    }
 
 }
