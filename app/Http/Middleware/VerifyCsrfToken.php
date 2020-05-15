@@ -19,5 +19,6 @@ class VerifyCsrfToken extends Middleware
         'ajax/update_about_field',
         'ajax/uploadUserGallery',
         'ajax/uploadVideo',
+        'notifyPayment',
     ];
 }

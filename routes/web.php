@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 Route::get('test', 'Site\SiteUserController@test')->name('test');
 
 Route::post('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
+// Route::get('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
+
 Route::get('paymentReturn', 'Site\PaymentController@paymentReturn')->name('paymentReturn');
 
 
