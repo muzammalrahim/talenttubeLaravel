@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddCreditToUsers extends Migration
+class AddColumnCreditToUsers extends Migration
 {
     /**
      * Run the migrations.
@@ -28,7 +28,6 @@ class AddCreditToUsers extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->integer('credit')->nullable();
         });
     }
 }
