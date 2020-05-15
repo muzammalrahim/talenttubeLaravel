@@ -32,29 +32,54 @@ class PaymentController extends Controller {
         $log->log = json_encode( $request->toArray(), true );
         $log->save();
 
-								// dd($request->toArray());
+        dump($request->toArray());
+
         if ( $request->payment_status == 'Completed' ){
-                $user_id = (int) $request->item_number;
 
-                $amount  = (int) $request->payment_gross;
-                $user = User::find($user_id);
-                if(!empty($user)){
-                        $credit = 0;
-                        if($amount == 1){
-                            $credit = 100;
-                        }else if($amount == 5){
-                            $credit = 500;
-                        }else if($amount == 10){
-                            $credit = 1000;
-                        }else if($amount == 20){
-                            $credit = 2000;
-                        }
+            dump( 'Completed' );
 
-                        $user->credit = $user->credit + 	$credit;
-                        $user->save();
+                $txn_id = $request->txn_id;
 
+                $payment_exist = Payment::where('transaction_id',$txn_id)->first();
+                if (empty($payment_exist)){
+
+                    $payment = new Payment;
+                    $payment->transaction_id = $txn_id;
+                    $payment->currency_code = $request->mc_currency;
+                    $payment->payment_status = $request->payment_status;
+                    $payment->user_id = $request->item_number;
+                    $payment->save();
+                    $payment_id = $payment->id;
+
+                    $user_id = (int) $request->item_number;
+                    $amount  = (int) $request->payment_gross;
+                    $user = User::find($user_id);
+                    if(!empty($user)){
+                        // dump( 'user exist ' );
+                        // dump( $user  );
+                            $credit = 0;
+                            if($amount == 1){
+                                $credit = 100;
+                            }else if($amount == 5){
+                                $credit = 550;
+                            }else if($amount == 10){
+                                $credit = 1250;
+                            }else if($amount == 20){
+                                $credit = 2750;
+                            }
+
+                            $user->credit = $user->credit + $credit;
+                            $user->save();
+
+                            // dump( 'credit' );
+                            // dump( $credit );
+                    }
 
                 }
+
+
+
+
 
 
         }
