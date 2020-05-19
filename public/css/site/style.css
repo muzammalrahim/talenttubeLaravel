@@ -4357,3 +4357,5 @@ ul.pp_small_decor_r_show li:last-child a.selected:hover span{ background: url(..
 
 .add_loader_transparent:not(.no_transparent){color: transparent!important; text-shadow: none!important; position:relative!important; transition:none!important;}
 .add_loader_transparent > *:not(.css_loader):not(button):not(.no_transparent){opacity: 0!important; color: transparent!important; text-shadow: none!important; transition:none!important;}
+
+.login_form_errors { color: #ff5f4e; }

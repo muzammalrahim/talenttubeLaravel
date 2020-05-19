@@ -177,6 +177,7 @@ return [
         App\Providers\PermissionsServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
+        Srmklive\PayPal\Providers\PayPalServiceProvider::class,
     ],
 
     /*
@@ -229,7 +230,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        'Image' => Intervention\Image\Facades\Image::class
+        'Image' => Intervention\Image\Facades\Image::class,
+        'PayPal' => Srmklive\PayPal\Facades\PayPal::class
     ],
 
 

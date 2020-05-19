@@ -87,6 +87,10 @@ class User extends Authenticatable
         return $query->where('type','user');
     }
 
+    function scopeEmployer($query){
+        return $query->where('type','employer');
+    }
+
     // function getProfileImage(){
     //     $profileGallery   = UserGallery::where('user_id',$this->id)->where('status',1)->where('profile',1)->first();
     //     $profile_image   = asset('images/user/'.$this->id.'/gallery/'.$profileGallery->image);
@@ -107,5 +111,22 @@ class User extends Authenticatable
     // function block(){
     //     return $this->hasMany('')
     // }
+
+
+
+    //====================================================================================================================================//
+    // Get listing of employers.
+    //====================================================================================================================================//
+    function getEmployers( $request, $user ){
+        $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
+        if(!empty($block)){
+            $data = $this->with('profileImage')->where('type','employer')->whereNotIn('id', $block)->get();
+        }else{
+            $data = $this->with('profileImage')->where('type','employer')->get();
+        }
+        return $data;
+    }
+
+
 
 }
