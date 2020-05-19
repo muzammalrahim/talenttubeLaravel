@@ -7,7 +7,7 @@
          @if (Auth::check())
             <a  class="btn_sign" href="{{route('profile')}}">Sign in</a>
         @else
-            <a id="pp_sign_in_open" class="btn_sign" href="">Sign in</a>
+            <a id="pp_sign_in_open" class="btn_sign">Sign in</a>
         @endif
 
 

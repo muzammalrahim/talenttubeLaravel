@@ -15,6 +15,7 @@
             @else
                 <li><a href="{{route('jobApplications')}}" class="column_narrow_search_results"><span class="icon"></span>My jobs Application</a></li>
                 <li><a href="{{route('jobs')}}" class="column_narrow_search_results"><span class="icon"></span>Browse jobs</a></li>
+                <li><a href="{{route('employers')}}" class="column_narrow_search_results"><span class="icon"></span>Employers</a></li>
             @endif
 
 

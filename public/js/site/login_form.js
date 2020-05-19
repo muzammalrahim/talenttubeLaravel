@@ -81,6 +81,7 @@ $(function () {
 
     $frmLogin.submit(function(event) {
         event.preventDefault();
+        $('.login_form_errors').removeClass('to_show').addClass('to_hide').text('');
         if(isFrmLoginSubmitAjax)return false;
         isFrmLoginSubmitAjax=true;
         $frmLoginUser.val($.trim($frmLoginUser.val()));
@@ -101,11 +102,12 @@ $(function () {
         if(data.status == 1) {
             location.href = data.redirect; // '/laravel/public/profile';
             $frmLoginSubmit.html(i18n.site.signInSuccess);
-										return false;
+			return false;
 		}else{
             $frmLoginInput.prop('disabled', false);
             $frmLoginSubmit.html(i18n.site.signIn);
             showErrorLoginFrom('#form_login_user', data.message, $frmLoginInput);
+            $('.login_form_errors').removeClass('to_hide').addClass('to_show').text(data.message);
 			return false;
         }
 	}

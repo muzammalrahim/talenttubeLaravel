@@ -12,8 +12,11 @@
 .visible_it{ visibility: visible !important;  opacity: 1 !important; }
 
 .w100{ width: 100%; }
+.w49{ width: 49%; }
 .wauto{ width: auto !important; }
 .h100{ height: 100% !important; }
+
+.box_border{box-sizing: border-box; }
 
 .margin_auto{ margin: 0 auto; }
 .m0{ margin: 0px !important; }
@@ -56,3 +59,6 @@ button.btn:disabled, button.btn.disabled {
     cursor: default;
 }
 
+
+
+.color_red{ color: #ff5f4e; }

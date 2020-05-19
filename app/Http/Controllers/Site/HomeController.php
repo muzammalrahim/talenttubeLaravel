@@ -75,6 +75,22 @@ class HomeController extends Controller {
             'email' =>  $request->get('email') ,
             'password' => $request->get('password')
             );
+
+            if( $request->login_type == 'site_ajax' ){
+                // check user verification before login
+                $userData = User::where('email', $request->get('email'))->first();
+                if( !empty($userData) ){
+                    // check if employer is verified by admin
+                    if ( $userData->email_verified_at == null){
+                        return array(
+                            'status'    => 1,
+                            'message'   => 'not verified account',
+                            'redirect' =>   route('employerNotVerified')
+                        );
+                    }
+                }
+            }
+
             // attempt to do the login
             if (Auth::attempt($userdata)){
                 // validation successful
@@ -84,9 +100,8 @@ class HomeController extends Controller {
                     // check if its employee or user.
                     if (isEmployer()){
                         $user = Auth::user();
-                        // check if user has answer the initial question in step2.
+                        // check if employer has answer the initial question in step2.
                         $redirect_url = ($user->step2)?(route('employerProfile')):(route('step2Employer'));
-
                         return array(
                             'status'    => 1,
                             'message'   => 'login succesfully',
@@ -228,9 +243,9 @@ class HomeController extends Controller {
         $rules = array(
             'firstname' => 'required',
             'surname' => 'required',
-            'country' => 'required|integer',
-            'state' => 'required|integer',
-            'city' => 'required|integer',
+            'geo_country' => 'required|integer',
+            'geo_states' => 'required|integer',
+            'geo_cities' => 'required|integer',
             'email' => 'bail|required|email|unique:users,email',
             'username' => 'required|unique:users,username',
             'password' => 'required',
@@ -248,9 +263,9 @@ class HomeController extends Controller {
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->phone = $request->phone;
-            $user->country = $request->country;
-            $user->state = $request->state;
-            $user->city = $request->city;
+            $user->country = $request->geo_country;
+            $user->state = $request->geo_states;
+            $user->city = $request->geo_cities;
             $user->username = $request->username;
             $user->email_verified_at = null;
             $user->email_verification   = hash_hmac('sha256', str_random(40), 'creativeTalent');
@@ -273,6 +288,7 @@ class HomeController extends Controller {
 
     //============== Employer registeration. ==============//
     function employerNotVerified(){
+        // dd(' employerNotVerified ');
         $data['title'] = '';
         $view_name = 'site.register.employer_notvarified';
         return view($view_name, $data);

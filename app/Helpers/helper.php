@@ -17,6 +17,18 @@ function isEmployer($user = null){
 }
 
 
+function hasBlockYou($me, $user){
+    // $user = ( $user == null )?(Auth::user()) : $user;
+    // return ( $user )?($user->isEmployer()):false;
+
+    $hasBlock = false;
+    if ( empty($me) || empty($user) ){ return $hasBlock; }
+
+    $userBlock = BlockUser::where()
+
+
+}
+
 function get_Geo_Country(){
     $countries = DB::table('geo_country')->get();
     return $countries;

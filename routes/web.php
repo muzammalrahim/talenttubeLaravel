@@ -91,6 +91,38 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 
 
 
+
+
+
+
+// Front End without Authentication
+
+Route::get('/', 'Site\HomeController@index')->name('homepage');
+
+// Login.
+Route::post('login', 'Site\HomeController@loginUser')->name('login');
+Route::post('join', 'Site\HomeController@join')->name('join');
+
+// User Registeration.
+Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
+Route::get('step2', 'Site\HomeController@step2')->name('step2');
+
+
+//Employer Registeration.
+Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer'); // user_register
+Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
+Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
+Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
+
+
+
+Route::get('/unauthorized', function () { return view('unauthorized'); });
+Route::post('ajax/geo_states', 'Site\HomeController@geo_states')->name('ajax_geo_states');
+Route::post('ajax/geo_cities', 'Site\HomeController@geo_cities')->name('ajax_geo_cities');
+
+
+
+
 // Front End  with Authentication
 Route::group(array('middleware' => 'auth'), function(){
     // Route::get('profile', 'Site\HomeController@profile')->name('profile');
@@ -133,6 +165,15 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('ajax/blockJobSeeker/{id}', 'Site\EmployerController@blockJobSeeker')->name('blockJobSeeker');
     Route::post('ajax/likeJobSeeker/{id}', 'Site\EmployerController@likeJobSeeker')->name('likeJobSeeker');
 
+    Route::get('employers',         'Site\JobSeekerController@employers')->name('employers');
+    Route::get('employerInfo/{id}', 'Site\JobSeekerController@employerInfo')->name('employerInfo');
+
+    Route::post('ajax/blockEmployer/{id}', 'Site\JobSeekerController@blockEmployer')->name('blockEmployer');
+    Route::post('ajax/likeEmployer/{id}', 'Site\JobSeekerController@likeEmployer')->name('likeEmployer');
+
+
+
+
     // job
     Route::get('employer/job/new',    'Site\EmployerController@newJob')->name('newJob');
     Route::post('ajax/job/new',    'Site\EmployerController@addNewJob')->name('addNewJob');
@@ -162,32 +203,6 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::get('employer/{username}',   'Site\EmployerController@index');
 });
 
-
-
-// Front End without Authentication
-
-Route::get('/', 'Site\HomeController@index')->name('homepage');
-
-// Login.
-Route::post('login', 'Site\HomeController@loginUser')->name('login');
-Route::post('join', 'Site\HomeController@join')->name('join');
-
-// User Registeration.
-Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
-Route::get('step2', 'Site\HomeController@step2')->name('step2');
-
-
-//Employer Registeration.
-Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer'); // user_register
-Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
-Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
-Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
-
-
-
-Route::get('/unauthorized', function () { return view('unauthorized'); });
-Route::post('ajax/geo_states', 'Site\HomeController@geo_states')->name('ajax_geo_states');
-Route::post('ajax/geo_cities', 'Site\HomeController@geo_cities')->name('ajax_geo_cities');
 
 
 

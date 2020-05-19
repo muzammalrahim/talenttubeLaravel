@@ -24,7 +24,8 @@
                         <div class="cl"></div>
                     </div>
 
-                    <div class="bl">
+                    <div class="geo_location_cont">
+                    <div class="bl ">
                         <label>I am from</label>
                         <div id="css_loader_location" class="css_loader css_loader_location hidden">
                             <div class="spinner spinnerw center">
@@ -43,7 +44,7 @@
                             </div>
                         </div>
                         <div class="bl_location">
-                        <select name="country" id="country" class="location country geo"
+                        {{-- <select name="geo_country" id="country" class="location country geo"
                             data-search-unique-id="true"
                             data-location="geo_states"
                             data-search="true"
@@ -63,11 +64,40 @@
                         <select name="city" id="city" class="location city" data-search="true" data-search-placeholder="Enter manually..." data-search-not-found="No matches...">
                             <option value="0">Choose a City</option>
                         </select>
+                        --}}
+
+                        <div class="col-md-6 w49 dinline_block box_border">
+                        <select name="geo_country" id="country" class="geo select_main geo_country width-200 " onchange="CommonScript.GetLocation('geo_states',this);">
+                            <option value="">Select Country</option>
+                            @foreach ($geo_country as $country)
+                                <option value="{{$country->country_id}}">{{$country->country_title}}</option>
+                            @endforeach
+                        </select>
+                        </div>
+
+                        <div class="col-md-6 w49 dinline_block box_border">
+                        <select name="geo_states" class="form_select geo_states " onchange="CommonScript.GetLocation('geo_cities',this);">
+                            <option value="">Select State</option>
+                        </select>
+                        </div>
+
                         </div>
 
                         <div id="city_error" class="error to_hide">&nbsp;</div>
                     <div class="cl"></div>
                     </div>
+
+
+                    <div class="bl">
+                        <div class="bl_inp_pos w100">
+                            <select name="geo_cities" class="form_select geo_cities w100" >
+                                <option value="">Select City</option>
+                            </select>
+                            <div id="geo_cities_error" class="error to_hide">&nbsp;</div>
+                        </div>
+                    </div>
+                    </div>
+
 
                     <div class="bl">
                         <label>E-mail</label>
