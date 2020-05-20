@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class BlockUser extends Model {
     //
+    public function user(){
+        return $this->belongsTo(User::class, 'block');
+    }
+
 
     function addEntry($user, $block){
        $record = $this->where('user_id', $user->id)->where('block',$block)->first();

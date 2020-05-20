@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Response;
 use App\User;
 use App\UserGallery;
 use App\Attachment;
+use App\BlockUser;
 use App\UserActivity;
 use App\Video;
 use App\Jobs;
@@ -257,13 +258,19 @@ class SiteUserController extends Controller
             $user->education =  $request->education;
             $user->language = $request->language;
             $user->hobbies = $request->hobbies;
-
             try {
                 $user->save();
+
+                $data = array();
+                $data['user'] = $user;
+                $view = view('site.user.profile.personalInfoTable', $data);
+                $html = $view->render();
+
                 return response()->json([
                     'status' => 1,
                     'validator' => 'record Succesfully saved',
-                    'data' =>  $user
+                    'data' =>  $user,
+                    'html' =>  $html
                 ]);
             } catch (\Exception $e) {
                 return response()->json([
@@ -305,10 +312,31 @@ class SiteUserController extends Controller
         $userGallery->status = 1;
         $userGallery->save();
 
+        $html  = '<div id="'.$userGallery->id.'" class="item profile_photo_frame gallery_'.$userGallery->id.'">';
+        $html .=    '<a data-offset-id="'.$userGallery->id.'" class="show_photo_gallery" href="'.asset('images/user/'.$user->id.'/gallery/'.$userGallery->image).'" data-lcl-thumb="'.asset('images/user/'.$user->id.'/gallery/small/'.$userGallery->image).'" >';
+        $html .=       '<img data-photo-id="'.$userGallery->id.'"  id="photo_'.$userGallery->id.'"   class="photo" data-src="'.asset('images/user/'.$user->id.'/gallery/'.$userGallery->image).'" src="'.asset('images/user/'.$user->id.'/gallery/small/'.$userGallery->image).'">';
+        $html .=    '<a/>';
+
+        $html .=    '<span onclick="UProfile.confirmPhotoDelete('.$userGallery->id.');" title="Delete photo" class="icon_delete">';
+        $html .=        '<span class="icon_delete_photo"></span>';
+        $html .=        '<span class="icon_delete_photo_hover"></span>';
+        $html .=    '</span>';
+
+        $html .=    '<span onclick="UProfile.setPrivateAccess('.$userGallery->id.')"  title="Make private" class="icon_private">';
+        $html .=        '<span class="icon_private_photo"></span>';
+        $html .=        '<span class="icon_private_photo_hover"></span>';
+        $html .=    '</span>';
+
+        $html .=    '<span onclick="UProfile.setAsProfile('.$userGallery->id.')" title="Make Profile" class="icon_image_profile"><span class=""></span></span>';
+
+        $html .= '</div>';
+
+
         $output = array(
             'status' => '1',
             'success' => 'Image uploaded successfully',
-            'image'  =>  asset('images/user/' . $user->id . '/gallery/small/' . $fileName) // Storage::disk('user')->url( $user->id. '/gallery/smalls/'.$fileName)
+            'image'  =>  asset('images/user/' . $user->id . '/gallery/small/' . $fileName), // Storage::disk('user')->url( $user->id. '/gallery/smalls/'.$fileName)
+            'html'  => $html
         );
         return response()->json($output);
     }
@@ -524,15 +552,40 @@ class SiteUserController extends Controller
             $activity->date = $request->year . '-' . $month . '-01 00:00:00';  // 2020-05-08 00:00:00
             $activity->description = $description;
             $activity->save();
+
+            $activity_html  = '<div class="activity_'.$activity->id.' activity">';
+            $activity_html .=   '<div class="activity_title">'.$activity->title.' ('.$activity->date->format('F Y').') </div>';
+            $activity_html .=   '<div class="activity_desc">'.$activity->description.'</div>';
+            $activity_html .=   '<div class="act_action"><span class="close_icon activityRemove" data-id="'.$activity->id.'"></span></div>';
+            $activity_html .= '</div>';
+
             $output = array(
                 'status' => '1',
                 'message' => 'Activity Saved.',
-                'data' => $activity
+                'data' => $activity,
+                'activity_html' => $activity_html
             );
             return response()->json($output);
         }
     }
 
+
+    //====================================================================================================================================//
+    // POST Ajax request to remove activity.
+    //====================================================================================================================================//
+    public function removeActivity(Request $request)
+    {
+        $user = Auth::user();
+        $activity_id = (int) $request->id;
+        // remove activity if its associated with this user.
+       $delete =  UserActivity::where('user_id',$user->id)->where('id',$activity_id)->delete();
+        if ($delete){
+            return response()->json([
+                'status' => '1',
+                'message' => 'Activity Deleted'
+            ]);
+        }
+    }
 
 
 
@@ -540,8 +593,7 @@ class SiteUserController extends Controller
     // Add new user activity.
     // POST Ajax request submitted from profile area.
     //====================================================================================================================================//
-    public function uploadVideo(Request $request)
-    {
+    public function uploadVideo(Request $request){
 
         $user = Auth::user();
         $video = $request->file('video');
@@ -574,9 +626,22 @@ class SiteUserController extends Controller
             $video->file =  $user->id . '/private/videos/' . $fileName;
             $video->save();
 
+            $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;">';
+            $html .=    '<a onclick="UProfile.showVideoModal(\''.asset('images/user/'.$video->file).'\')" class="video_link" target="_blank">';
+            $html .=        '<span class="v_title">'.$video->title.'</span>';
+            $html .=    '</a>';
+            $html .=    '<span title="Delete video" class="icon_delete" data-vid="12" onclick="UProfile.delteVideo('.$video->id.')">';
+            $html .=        '<span class="icon_delete_photo"></span>';
+            $html .=        '<span class="icon_delete_photo_hover"></span>';
+            $html .=    '</span>';
+
+            $html .=    '<div class="v_error error hide_it"></div>';
+            $html .=  '</div>';
+
             return response()->json([
                 'status' => '1',
-                'data'   => $video
+                'data'   => $video,
+                'html'  =>  $html
             ]);
         } else {
             return response()->json([
@@ -595,19 +660,14 @@ class SiteUserController extends Controller
     // Delete user video.
     // POST Ajax request submitted from profile video area.
     //====================================================================================================================================//
-    public function deleteVideo(Request $request)
-    {
-
+    public function deleteVideo(Request $request){
         $user = Auth::user();
         $video_id = $request->video_id;
-
         if (!empty($video_id)) {
             $video = Video::find($video_id);
             if ($video->user_id === $user->id) {
                 $exists = Storage::disk('user')->exists($video->file);
-                if ($exists) {
-                    Storage::disk('user')->delete($video->file);
-                }
+                if ($exists) { Storage::disk('user')->delete($video->file); }
                 $video->delete();
                 $output = array(
                     'status' => '1',
@@ -626,14 +686,12 @@ class SiteUserController extends Controller
     // GET // Job Search/Listing layout.
     //====================================================================================================================================//
     public function jobs(){
-
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
-        $data['jobs'] = Jobs::get();
+        $data['jobs'] = Jobs::with('applicationCount')->get();
         return view('site.jobs.jobs', $data);
-
     }
 
 
@@ -769,6 +827,34 @@ class SiteUserController extends Controller
     }
 
 
+
+
+    //====================================================================================================================================//
+    // Get // layout for Block User List.
+    //====================================================================================================================================//
+    public function blockList(){
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Block Users';
+        $data['classes_body'] = 'blockUsers';
+        $data['blockUsers'] = BlockUser::with('user')->where('user_id',$user->id)->get();
+        return view('site.user.blockUsers', $data);
+    }
+
+
+    //====================================================================================================================================//
+    // Ajax Post // Remove user from user block User List.
+    //====================================================================================================================================//
+    public function unBlockUser(Request $request){
+        // dd( $request->toArray() );
+        $user = Auth::user();
+        $blockUserId = (int) $request->id;
+        BlockUser::where('user_id',$user->id)->where('block',$blockUserId)->delete();
+        return response()->json([
+            'status' => 1,
+            'message' => 'User Unblocked Succesfully'
+        ]);
+    }
 
 
 

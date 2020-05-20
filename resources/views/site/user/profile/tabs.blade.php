@@ -67,9 +67,10 @@
 
 						<div class="activity_list">
 							 @foreach ($activities as $activity)
-									<div class="activity_1 activity">
+									<div class="activity activity_{{$activity->id}}">
 											<div class="activity_title"> {{$activity->title}} ({{ $activity->date->format('F Y')}}) </div>
-											<div class="activity_desc">{{$activity->description}}</div>
+                                            <div class="activity_desc">{{$activity->description}}</div>
+                                            <div class="act_action"><span  onclick="UProfile.removeActivity('academic',{{$activity->id}});" class="close_icon activityRemove" data-id="{{$activity->id}}"></span></div>
 									</div>
 							 @endforeach
 						</div>
@@ -97,7 +98,7 @@
 										<select id="act_year" name="year" class="select_main year" data-search="false">
 										@for ($y=now()->year; $y > 1945; $y--)
 										 <option value="{{$y}}">{{$y}}</option>
-                    @endfor
+                                        @endfor
 									</select>
 									<div id="month_error" class="error to_hide">&nbsp;</div>
 									<div id="year_error" class="error to_hide">&nbsp;</div>
@@ -143,28 +144,9 @@
                     </div>
                     <div class="cl"></div>
                 </div>
-                <table id="personal_items">
-                    <tbody>
-                    <tr><th>Sexuality</th><td>{{$user->gender}}</td></tr>
-                    <tr><th>Eye color</th><td>{{$user->eye}}</td></tr>
-                    <tr><th>Kids</th><td>{{$user->family}}</td></tr>
-                    <tr><th>Education</th><td>{{getEducationName($user->education)}}</td></tr>
 
-																				{{-- @dump($user) --}}
-																				@if (!empty( $user->language))
-                        @foreach ($user->language as $lang )
-                            <tr><th>Language</th><td>{{getLanguage($lang)}}</td></tr>
-                        @endforeach
-                    @endif
+                @include('site.user.profile.personalInfoTable')
 
-                    @if (!empty( $user->hobbies))
-                        @foreach ($user->hobbies as $hobby )
-                            <tr><th>Hobbies</th><td>{{getHobby($hobby)}}</td></tr>
-                        @endforeach
-                    @endif
-
-                    </tbody>
-                </table>
             </div>
 
         </div>

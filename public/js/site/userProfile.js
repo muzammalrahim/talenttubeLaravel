@@ -317,10 +317,16 @@ var CProfile = function() {
         });
     }
 
-    this.showNewActivity    = function(activity_type){  $('.add_new_activity').addClass('visible_it'); }
+    this.showNewActivity    = function(activity_type){
+        $('.add_new_activity').addClass('visible_it');
+        $('.add_new_activity input[name="title"]').val('');
+        $('.add_new_activity textarea').val('');
+
+    }
     this.cancelNewActivity  = function(){ event.preventDefault();  $('.add_new_activity').removeClass('visible_it'); }
     this.saveNewActivity    = function(activity_type){
         event.preventDefault();
+        var thisClass = this;
         if(activity_type === 'academic'){
             console.log(' addNewActivity ', activity_type);
             var activity_form = $('.new_activity_form').serialize();
@@ -339,11 +345,28 @@ var CProfile = function() {
                             }
                         }
                     }else if(res.status == 1){
-
+                        $('.activity_list').append(res.activity_html);
+                        thisClass.cancelNewActivity();
                     }
                 }
             });
         }
+    }
+    this.removeActivity = function(type, activity_id){
+        console.log(' removeActivity ', activity_id);
+        $('.activity.activity_'+activity_id+' .act_action').remove();
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/removeActivity',
+            data: {id: activity_id, type: type},
+            success: function(res){
+                console.log(' res ', res);
+                if(res.status == 1){
+                    $('.activity.activity_'+activity_id).remove();
+                }
+            }
+        });
     }
 
     // video upload option
@@ -371,7 +394,7 @@ var CProfile = function() {
             video_item  +=  '<div class="v_progress"></div>';
             video_item  += '</div>';
 
-            $('.list_videos_public').append(video_item);
+            $('.list_videos').append(video_item);
             var updateForm = document.querySelector('form');
             $.ajaxSetup({
                 headers: {
@@ -390,8 +413,9 @@ var CProfile = function() {
                console.log(' jsonResponse ', res);
                $('#v_'+item_id+' .v_progress').remove();
                 if(res.status == 1) {
-                    $('#v_'+item_id+' .v_title').text(res.data.title);
-                    $('#v_'+item_id+' .video_link').attr('href', base_url+'/'+res.data.file);
+                    // $('#v_'+item_id+' .v_title').text(res.data.title);
+                    // $('#v_'+item_id+' .video_link').attr('href', base_url+'/'+res.data.file);
+                    $('#v_'+item_id).replaceWith(res.html);
                 }else {
                     console.log(' video error ');
                     if(res.validator != undefined){
@@ -436,6 +460,26 @@ var CProfile = function() {
         });
     }
 
+
+
+    this.showVideoModal = function(video_url){
+        console.log(' showVideoModal ', video_url);
+        var videoElem  = '<video controls>';
+        videoElem     += '<source src="'+video_url+'" type="video/mp4">';
+        videoElem     += 'Your browser does not support the video tag';
+        videoElem     += '</video>';
+
+        $('#videoShowModal .videoBox').html(videoElem);
+
+        $('#videoShowModal').modal({
+            fadeDuration: 200,
+            fadeDelay: 2.5,
+            escapeClose: false,
+            clickClose: false,
+        });
+
+    }
+
 }
 
 
@@ -446,12 +490,8 @@ $(function () {
 
 
 $(document).ready(function() {
-    $('#personalInfoModalBtn').on('click', function() {
-        $('#personalInfoModal').modal({
-            fadeDuration: 200,
-            fadeDelay: 2.5
-        });
 
+    if($('#personalInfoModal').length > 0){
         $('#personalInfoModal').on($.modal.OPEN, function(event, modal) {
             console.log(' after open ');
             $.ajax({
@@ -471,6 +511,14 @@ $(document).ready(function() {
 
                 }
             });
+        });
+    }
+
+
+    $('#personalInfoModalBtn').on('click', function() {
+        $('#personalInfoModal').modal({
+            fadeDuration: 200,
+            fadeDelay: 2.5
         });
     });
 
@@ -495,6 +543,7 @@ $(document).ready(function() {
                 $('.ppform_save_loader').addClass('hide_it');
                 if( data.status ){
                     $.modal.close();
+                    $('#personal_items').replaceWith(data.html);
                 }else{
                     if(data.validator != undefined){
                         const keys = Object.keys(data.validator);
@@ -559,9 +608,9 @@ $(document).ready(function() {
 			       success : function(resp) {
 			           console.log('upload_chat_front resp ', resp);
 			          if(resp.status == 1){
-                            $('.photo_item_'+item_id).find('a').css('opacity', '1');
-                            $('.photo_item_'+item_id).find('img').attr('src',resp.image);
-                            $('.photo_item_'+item_id).find('.uploadingImage').remove();
+                            $('.photo_item_'+item_id).replaceWith(resp.html);
+                            // $('.photo_item_'+item_id).find('img').attr('src',resp.image);
+                            // $('.photo_item_'+item_id).find('.uploadingImage').remove();
 					  }
 			       }
 			    });

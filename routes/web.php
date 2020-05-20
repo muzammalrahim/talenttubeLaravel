@@ -150,11 +150,15 @@ Route::group(array('middleware' => 'auth'), function(){
 
     // activity  user/employer
     Route::post('ajax/saveNewActivity', 'Site\SiteUserController@saveNewActivity')->name('saveNewActivity');
+    Route::post('ajax/removeActivity', 'Site\SiteUserController@removeActivity')->name('removeActivity');
 
     // video user/employer
     Route::post('ajax/uploadVideo', 'Site\SiteUserController@uploadVideo')->name('uploadVideo');
     Route::post('ajax/deleteVideo', 'Site\SiteUserController@deleteVideo')->name('deleteVideo');
 
+    Route::get('block',         'Site\SiteUserController@blockList')->name('blockList');
+
+    Route::post('ajax/unBlockUser', 'Site\SiteUserController@unBlockUser')->name('unBlockUser');
 
 
     // Employer
@@ -170,6 +174,8 @@ Route::group(array('middleware' => 'auth'), function(){
 
     Route::post('ajax/blockEmployer/{id}', 'Site\JobSeekerController@blockEmployer')->name('blockEmployer');
     Route::post('ajax/likeEmployer/{id}', 'Site\JobSeekerController@likeEmployer')->name('likeEmployer');
+
+
 
 
 
@@ -192,8 +198,6 @@ Route::group(array('middleware' => 'auth'), function(){
 
     // Credits
     Route::get('credit',       'Site\EmployerController@credit')->name('credit');
-
-
     Route::get('paymentStatus', 'Site\PaymentController@paymentInfo')->name('paymentStatus');
     Route::get('paymentCancel', function () { return 'Payment has been canceled'; })->name('paymentCancel');
 

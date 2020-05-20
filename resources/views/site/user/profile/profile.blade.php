@@ -1,11 +1,14 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('site.user.usermaster')
 
+@section('custom_css')
+    <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+@stop
 
 @section('content')
 <div class="cont bl_profile">
     <div class="bl_pic_info  my_profile">
-        
+
         {{-- @dump($profileImage) --}}
         {{-- @dump($profileImage['imagepath']) --}}
         {{-- @dump( $user_profile->image ) --}}
@@ -15,8 +18,8 @@
             <div class="pic">
                 <div class="profile_pic_one to_show">
                     <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
-                        <img  data-offset-id="23" class="photo" 
-                            id="pic_main_img" 
+                        <img  data-offset-id="23" class="photo"
+                            id="pic_main_img"
                             src="{{$profile_image}}"
                             title="">
                     </a>
@@ -31,7 +34,7 @@
                     </div> --}}
                 </div>
                    {{-- <div id="profile_status_online" title="On the site now!" class="status_online to_show"></div> --}}
-            </div>   
+            </div>
         </div>
 
         {{-- @dump($user) --}}
@@ -49,7 +52,7 @@
                 </ul>
                 <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div>
             </div>
-            
+
             <div class="status">
                 <div id="profile_status" class="status_text" style="min-height: 24.0078px; min-width: 163.008px;">
                     <span class="statusText">{{($user->statusText)?($user->statusText):'Enter Your Status'}}</span>
@@ -57,28 +60,28 @@
                 </div>
                 <div id="profile_status_edit" class="icon_edit" onclick="UProfile.enableStatusTextEdit();" style="opacity: 1;"><span></span></div>
             </div>
-            
-            
+
+
             <div class="title_interest">
                 <strong>I am looking for</strong>
                 <div class="icon_edit"><span onclick="Profile.showLookingForEditor();"></span></div>
             </div>
             <ul class="list_interest">
-                <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Job Seeker</span></li> 
+                <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Job Seeker</span></li>
                 <li><span class="basic_info">•</span><span id="info_looking_for_ages">Ages 18-100</span></li>
                 <li><span class="basic_info">•</span><span id="info_looking_for_near_me">Near me</span></li>
             </ul>
         </div>
         <div class="cl"></div>
     </div>
-    
-    
+
+
     @include('site.user.profile.tabs')
-   
+
 <div class="cl"></div>
 </div>
 
- 
+
 
 @include('site.user.profile.profileEditPopup')
 @include('site.user.profile.profilePersonalInfo')
@@ -88,16 +91,15 @@
 
 
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
 @stop
 
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> 
+<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
-<script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> 
+<script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
 @stop
 

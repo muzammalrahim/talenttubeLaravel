@@ -26,6 +26,7 @@ class CreateJobsTable extends Migration
             $table->text('salary');
             $table->text('gender');
             $table->text('age');
+            $table->text('questions');
             $table->dateTime('expiration');
             $table->timestamps();
             $table->unsignedbigInteger('user_id');

@@ -18,14 +18,12 @@ function isEmployer($user = null){
 
 
 function hasBlockYou($me, $user){
-    // $user = ( $user == null )?(Auth::user()) : $user;
-    // return ( $user )?($user->isEmployer()):false;
 
-    $hasBlock = false;
+    $hasBlock = true;
     if ( empty($me) || empty($user) ){ return $hasBlock; }
-
-    $userBlock = BlockUser::where()
-
+    $userBlock = App\BlockUser::where('user_id',$me->id)->where('block',$user->id)->first();
+    if ($userBlock === null){ $hasBlock = false; }
+    return $hasBlock;
 
 }
 

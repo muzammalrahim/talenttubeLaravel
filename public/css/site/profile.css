@@ -76,10 +76,10 @@ width: 100px;
     border-radius: 5px;
 }
 .attachment img { width: 100%; }
-.attachment_file{  
+.attachment_file{
     display: inline-block;
     text-align: center;
-    border: 1px solid #7d7d7d; 
+    border: 1px solid #7d7d7d;
     margin: 10px;
 }
 span.attach_title {
@@ -112,8 +112,9 @@ span.icon_image_profile {
     height: 25px;
     border-radius: 5px;
     cursor: pointer;
+    background: rgba(0, 0, 0, 0.21);
 }
- 
+
 .profile_pic_spinner{
     font-size: 32px;
     margin: 0 auto;
@@ -168,6 +169,7 @@ span.icon_image_profile {
     padding: 10px 0px;
     margin: 20px 0px;
     border-radius: 5px;
+    position: relative;
 }
 
 .activity_title {
@@ -181,7 +183,12 @@ span.icon_image_profile {
     margin: 10px;
     font-size: 13px;
 }
-
+.activityRemove {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    cursor: pointer;
+}
 
 /*=== upload video ===== */
 #video_upload_select{ background: #FF5722;  }
@@ -207,9 +214,24 @@ span.v_title {
     width: 100%;
     line-height: 16px;
 }
-.v_progress{ 
+.v_progress{
         position: absolute;
     bottom: 0;
     background: black;
     padding: 6px;
  }
+
+ .videoShowModal .pp_info_start{ width: auto; }
+ div#videoShowModal {
+    width: auto;
+    max-width: inherit;
+}
+.item_video .video_link {
+    border: 1px solid white;
+    display: inline-block;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}

@@ -5,20 +5,20 @@
         </a>
     </div>
     <div id="colfix_l" class="cont col_fix">
-        <ul class="nav">
+        <ul class="nav leftmenu">
 
             {{-- @dump($user) --}}
             @if (isEmployer($user))
-                <li><a href="{{route('employerJobs')}}" class="column_narrow_search_results"><span class="icon"></span>My jobs</a></li>
-                <li><a href="{{route('newJob')}}" class="column_narrow_search_results"><span class="icon"></span>Add New job</a></li>
-                <li><a href="{{route('jobSeekers')}}" class="column_narrow_search_results"><span class="icon"></span>Job Seekers</a></li>
+                <li><a href="{{route('employerJobs')}}" class="column_narrow_search_results {{(request()->is('employer/jobs*'))?'active':''}}"><span class="icon"></span>My jobs</a></li>
+                <li><a href="{{route('newJob')}}" class="column_narrow_search_results {{(request()->is('employer/job/new'))?'active':''}}"><span class="icon"></span>Add New job</a></li>
+                <li><a href="{{route('jobSeekers')}}" class="column_narrow_search_results {{(request()->is('jobSeekers'))?'active':''}}"><span class="icon"></span>Job Seekers</a></li>
             @else
-                <li><a href="{{route('jobApplications')}}" class="column_narrow_search_results"><span class="icon"></span>My jobs Application</a></li>
-                <li><a href="{{route('jobs')}}" class="column_narrow_search_results"><span class="icon"></span>Browse jobs</a></li>
-                <li><a href="{{route('employers')}}" class="column_narrow_search_results"><span class="icon"></span>Employers</a></li>
+                <li><a href="{{route('jobApplications')}}" class="column_narrow_search_results {{(request()->is('jobApplications'))?'active':''}}"><span class="icon"></span>My jobs Application</a></li>
+                <li><a href="{{route('jobs')}}" class="column_narrow_search_results {{(request()->is('jobs'))?'active':''}}"><span class="icon"></span>Browse jobs</a></li>
+                <li><a href="{{route('employers')}}" class="column_narrow_search_results {{(request()->is('employers'))?'active':''}}"><span class="icon"></span>Employers</a></li>
             @endif
 
-
+                <li><a href="{{route('blockList')}}" class="column_narrow_search_results {{(request()->is('block'))?'active':''}}"><span class="icon"></span>Block User List</a></li>
 
             <li>
                 <a id="narrow_menu_link_27" href="messages.html" class="column_narrow_messages  ">

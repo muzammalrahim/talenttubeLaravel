@@ -11,10 +11,8 @@
     <div class="head icon_head_browse_matches">My Jobs</div>
 
     <div class="add_new_job">
-        @dump($jobs)
-        <div class="job_row_heading jobs_filter">
-
-        </div>
+        {{-- @dump($jobs) --}}
+        <div class="job_row_heading jobs_filter"></div>
 
         @if ($jobs->count() > 0)
         @foreach ($jobs as $job)
@@ -56,23 +54,24 @@
 
             <div class="job_footer p10">
                 <div class="w_25p">
-                    <div class="j_label bold">Job Views</div>
-                    <div class="j_value">120</div>
+                    <div class="j_label bold">Expire on</div>
+                    <div class="j_value">{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</div>
                 </div>
 
-                <div class="w_25p">
+
+                {{-- <div class="w_25p">
                     <div class="j_label bold">Job Likes</div>
                     <div class="j_value">300</div>
-                </div>
+                </div> --}}
 
                 <div class="w_25p">
-                    <div class="j_label bold">Application</div>
-                    <div class="j_value">10</div>
+                    <div class="j_label bold">Applications</div>
+                    <div class="j_value">{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</div>
                 </div>
 
 
-                <div class="w_25p">
-                    <div class="j_button"><a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Apply</a></div>
+                <div class="w_25p fl_right">
+                    <div class="j_button fl_right"><a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Apply</a></div>
                     {{-- <div class="j_button">Delete</div> --}}
                 </div>
             </div>

@@ -66,15 +66,13 @@
 
 
                 <tr>
-                    <th>
-                        <div class="name">Education</div>
-                    </th>
+                    <th><div class="name">Education</div></th>
                     <td>
                         <div class="field">
                             <div id="pp_4_education-styler" class="select_main" >
                                 <select data-placeholder="" id="pp_4_education" name="education" class="select_main" >
                                    @foreach ($educationDropdown as $key => $education )
-                                       <option value="{{$key}}" {{($user->education == $fkey)?'selected="selected"':''}} >{{$education}}</option>
+                                       <option value="{{$key}}" {{($user->education == $key)?'selected="selected"':''}} >{{$education}}</option>
                                    @endforeach
                                 </select>
                                 <div id="education_error" class="error to_hide">&nbsp;</div>
@@ -84,20 +82,31 @@
                 </tr>
 
                 <tr>
-                    <th class="field_checkbox">
-                        <div class="name">Language</div>
-                    </th>
+                    <th class="field_checkbox"><div class="name">Language</div></th>
+
                     <td>
                         <div class="field field_checkbox">
                             <div id="pp_4_language_0-styler" data-checkbox="language" class="user_languages select_main" >
-                                <select data-placeholder="" id="pp_4_language_0" data-checkbox="language" name="language[]" class="select_main" >
-                                    @if (count($languages) > 0 )
-                                    @foreach ($languages as $lkey => $lang )
-                                         <option value="{{$lkey}}" {{  (isset($user->language) &&(in_array($fkey,$user->language))  )?'selected="selected"':''}} >{{$lang}}</option>
-                                     @endforeach
-                                    @endif
+                                @if (!empty($user->language) && count($user->language)> 0 )
+                                    @foreach ($user->language as $ulang)
+                                    <select data-placeholder="" id="pp_4_language_0" data-checkbox="language" name="language[]" class="select_main" >
+                                        @if (count($languages) > 0 )
+                                        @foreach ($languages as $lkey => $lang )
+                                            <option value="{{$lkey}}" {{($lkey == $ulang)?'selected="selected"':''}} >{{$lang}}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                    @endforeach
+                                @else
+                                    <select data-placeholder="" id="pp_4_language_0" data-checkbox="language" name="language[]" class="select_main" >
+                                        @if (count($languages) > 0 )
+                                        @foreach ($languages as $lkey => $lang )
+                                            <option value="{{$lkey}}">{{$lang}}</option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+                                @endif
 
-                                </select>
                             </div>
 
                             <div id="link_add_language" data-type-add="language" class="field link_add" style="display:block;">
@@ -112,13 +121,25 @@
                         <div class="name">Hobbies</div>
                     </th>
                     <td>
+                         {{-- @dump($user->hobbies) --}}
                         <div class="field field_checkbox">
                             <div id="pp_4_hobbies_0-styler" data-checkbox="hobbies" class="user_hobbies select_main" >
-                                <select data-placeholder="" id="pp_4_hobbies_0" data-checkbox="hobbies" name="hobbies[]" class="select_main" >
-                                   @foreach ($hobbies as $hkey => $hobby )
-                                       <option value="{{$hkey}}" {{ (isset($user->hobbies) &&  (in_array($hkey,$user->hobbies)) )?'selected="selected"':''}}>{{$hobby}}</option>
-                                   @endforeach
-                                </select>
+                                @if (!empty($user->hobbies) && count($user->hobbies)> 0 )
+                                    @foreach ($user->hobbies as $uhkey => $uhobby)
+                                        <select data-placeholder="" id="pp_4_hobbies_{{$uhkey}}" data-checkbox="hobbies" name="hobbies[]" class="select_main" >
+                                            @foreach ($hobbies as $hkey => $hobby )
+                                                <option value="{{$hkey}}" {{ ($hkey == $uhobby)?'selected="selected"':''}}>{{$hobby}}</option>
+                                            @endforeach
+                                        </select>
+                                        <span onclick="UProfile.removeHobby('{{$uhkey}}');" class="close_icon activityRemove" data-id="6"></span>
+                                    @endforeach
+                                @else
+                                    <select data-placeholder="" id="pp_4_hobbies_0" data-checkbox="hobbies" name="hobbies[]" class="select_main" >
+                                        @foreach ($hobbies as $hkey => $hobby )
+                                            <option value="{{$hkey}}">{{$hobby}}</option>
+                                        @endforeach
+                                    </select>
+                                @endif
                             </div>
                             <div id="link_add_hobbies" data-type-add="hobbies" class="field link_add" style="display:block;">
                                 <div class="add_field"><span>+ Add</span></div>
@@ -218,165 +239,5 @@
             }, 1);
         });
 
-
-
-
-    /*
-        var lastValueCheckboxPersonal;
-        $('body').on('change', 'select[data-checkbox]', function(e) {
-            var el = $(this),
-                type = el.data('checkbox'),
-                id = el.attr('id'),
-                val = el.val();
-            if (val != 0) {
-                $('[id != "' + id + '"][data-checkbox=' + type + ']').each(function() {
-                    if ($(this).val() == val) {
-                        alertCustom('You have already chosen this option, please choose another.');
-                        el.val(lastValueCheckboxPersonal).trigger('refresh');
-                        return false;
-                    }
-                })
-            }
-            setDisabledSavePersonal();
-        })
-
-        var pp_profile_personal_editor = $('#pp_profile_personal_editor'),
-            pp_profile_personal_editor_frm = $('#frm_profile_edit_personal', pp_profile_personal_editor),
-            pp_profile_personal_editor_btn_save = $('.frm_editor_save', pp_profile_personal_editor),
-            pp_profile_personal_editor_btn_cancel = $('.frm_editor_cancel', pp_profile_personal_editor),
-            isSaveEditPersonal = false;
-
-        $('.icon_close, .frm_editor_cancel', pp_profile_personal_editor).click(function() {
-            if (this.hash == '#close') {
-                if (isSaveEditPersonal) {
-                    Profile.closePopupEditor('pp_profile_personal_editor');
-                } else if (isModifiedPersonalInfo()) {
-                    confirmCustom(l('are_you_sure'), function() {
-                        Profile.closePopupEditor('pp_profile_personal_editor', resetPersonalInfo);
-                    }, l('close_window'));
-                } else {
-                    Profile.closePopupEditor('pp_profile_personal_editor', resetPersonalInfo);
-                }
-            } else {
-                if (isModifiedPersonalInfo()) {
-                    resetPersonalInfo();
-                } else {
-                    Profile.closePopupEditor('pp_profile_personal_editor', resetPersonalInfo);
-                }
-            }
-            return false;
-        })
-
-        var ppPersonalInfo = {};
-
-        function isModifiedPersonalInfo() {
-            var is = 0;
-            $('input:not(.ajax), select', pp_profile_personal_editor_frm).each(function() {
-                is |= (this.value != ppPersonalInfo[this.id]);
-            })
-            return is;
-        }
-
-        function setPersonalInfo() {
-            $('input:not(.ajax), select', pp_profile_personal_editor_frm).each(function() {
-                ppPersonalInfo[this.id] = this.value
-            })
-        }
-
-        setPersonalInfo();
-
-        function resetPersonalInfo() {
-            $('input:not(.ajax), select', pp_profile_personal_editor_frm).each(function() {
-                var $el = $(this);
-                if ($el.is('.select_main')) {
-                    var val = ppPersonalInfo[this.id];
-                    if (!ppPersonalInfo[this.id]) {
-                        val = 0;
-                    }
-                    $el.val(val).trigger('refresh');
-                } else {
-                    this.value = ppPersonalInfo[this.id]
-                }
-            })
-            pp_profile_personal_editor_btn_cancel.text('Cancel');
-            pp_profile_personal_editor_btn_save.prop('disabled', true);
-            setTimeout(function() {
-                removeEmptyCheckbox()
-            }, 10);
-        }
-
-        $('input:not(.ajax), select', pp_profile_personal_editor_frm).on('change propertychange input', setDisabledSavePersonal);
-
-        function setDisabledSavePersonal() {
-            if (isModifiedPersonalInfo()) {
-                pp_profile_personal_editor_btn_cancel.text('Reset');
-                pp_profile_personal_editor_btn_save.prop('disabled', false);
-            } else {
-                pp_profile_personal_editor_btn_save.prop('disabled', true);
-                pp_profile_personal_editor_btn_cancel.text('Cancel');
-            }
-        }
-
-        function disabledProfileEditPersonal(is) {
-            if (is) {
-                pp_profile_personal_editor_btn_save.html(getLoader('pp_profile_edit_main_loader')).prop('disabled', is);
-            } else {
-                pp_profile_personal_editor_btn_save.html('Save').prop('disabled', true);
-                pp_profile_personal_editor_btn_cancel.text('Cancel');
-            }
-            $('input', pp_profile_personal_editor_frm).prop('disabled', is)
-            $('select.select_main', pp_profile_personal_editor_frm).prop('disabled', is).each(function() {
-                $(this).trigger('refresh')
-            });
-            pp_profile_personal_editor_btn_cancel.prop('disabled', is);
-        }
-
-        pp_profile_personal_editor_btn_save.click(function() {
-            pp_profile_personal_editor_frm.submit();
-        })
-
-        pp_profile_personal_editor_frm.submit(function() {
-            if (!isModifiedPersonalInfo()) return false;
-            isSaveEditPersonal = true;
-            $(this).ajaxSubmit({
-                success: profileEditPersonalResponse
-            });
-            disabledProfileEditPersonal(true);
-            return false;
-        })
-
-        function profileEditPersonalResponse(res) {
-            var data = checkDataAjax(res);
-            if (data !== false) {
-                $jq('#personal_items').html($(data).html());
-                Profile.closePopupEditorDelay('pp_profile_personal_editor', function() {
-                    disabledProfileEditPersonal(false);
-                    removeEmptyCheckbox();
-                })
-                setPersonalInfo();
-            } else {
-                disabledProfileEditPersonal(false);
-            }
-            isSaveEditPersonal = false;
-        }
-
-    */
-    /*
-        function removeEmptyCheckbox() {
-            var typeArr = {};
-            $('select[data-checkbox]').each(function() {
-                var el = $(this),
-                    type = el.data('checkbox');
-                var countSelect = $('select[data-checkbox=' + type + ']').length;
-                if (countSelect > 1 && this.value == 0 && typeArr[type]) {
-                    el.closest('.').remove();
-                    delete ppPersonalInfo[this.id];
-                }
-                typeArr[type] = 1;
-                $('#link_add_' + type).show();
-            })
-        }
-    */
-    // Profile.initClosePpEditorButton(pp_profile_personal_editor);
         </script>
 </div>

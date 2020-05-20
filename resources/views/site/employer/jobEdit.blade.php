@@ -10,7 +10,7 @@
 <div class="newJobCont">
     <div class="head icon_head_browse_matches">Add New Job</div>
 
-    @dump($job)
+    {{-- @dump($job) --}}
 
     <div class="job_edit">
     <form method="POST" name="edit_job_form" class="edit_job_form jobEdut job_validation">
@@ -143,6 +143,28 @@
             </div>
         </div>
 
+
+        <div class="job_age form_field">
+            <span class="form_label">Job Questions:</span>
+            <div class="form_input">
+                <div class="jobQuestions">
+
+                   @php
+                    $questions = json_decode($job->questions, true);
+                   @endphp
+                   @if (!empty($questions) && count($questions) > 0)
+                    @foreach ($questions as $question)
+                        <div class="question mb10 relative">
+                            <input type="text" name="questions[]" class="w100" value="{{$question}}"/>
+                            <span class="close_icon jobQuestion"></span>
+                        </div>
+                    @endforeach
+                   @endif
+                </div>
+                <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn">Add+</a></div>
+            </div>
+        </div>
+
         <div class="form_field">
             <span class="form_label"></span>
             <div class="form_input">
@@ -192,6 +214,16 @@ $(document).ready(function() {
         dateFormat: "yy-mm-dd"
     });
 
+
+    $('.addQuestion').on('click',function(){
+        console.log(' addQuestion clck  ');
+        var question = '<div class="question mb10 relative"><input type="text" name="questions[]" class="w100" /><span class="close_icon jobQuestion"></span></div>';
+        $('.jobQuestions').append(question);
+    });
+
+    $(document).on('click','.close_icon.jobQuestion',function(){
+        $(this).closest('.question').remove();
+    });
 
 
     // Update New job button click //

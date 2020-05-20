@@ -20,12 +20,16 @@
 
 .margin_auto{ margin: 0 auto; }
 .m0{ margin: 0px !important; }
+.m5{ margin: 5px; }
 .mb10{ margin-bottom: 10px !important; }
 .mb20{ margin-bottom: 20px !important; }
+.mt20{ margin-top: 20px !important; }
 
 .p0{ padding: 0px !important; }
 .p10{ padding: 10px !important;  }
 .p20{ padding: 20px !important;  }
+
+.bottom_10{ bottom: 10px !important; }
 
 .icon_green{ color: #8ccd01; }
 .bold{ font-weight: bold; }
@@ -62,3 +66,31 @@ button.btn:disabled, button.btn.disabled {
 
 
 .color_red{ color: #ff5f4e; }
+
+
+.cmodal .spinner_loader,
+.cmodal .apiMessage{ display: none;}
+.cmodal.showLoader .spinner_loader{ display: block !important;}
+.cmodal.showLoader .img_chat,
+.cmodal.showLoader .double_btn{ display: none !important; }
+
+.cmodal.showMessage .img_chat,
+.cmodal.showMessage .confirm_btn{ display: none !important; }
+.cmodal.showMessage .apiMessage{ display: block !important; }
+
+
+.cmodal .spinner_loader{
+    position: relative;
+    width: 100%;
+    min-height: 50px;
+    font-size: 22px;
+}
+
+.modal.cmodal .pp_confirm .btn {
+    display: inline-block;
+    float: none !important;
+    padding: 0;
+    border-radius: 3px !important;
+    max-width: 48%;
+}
+

@@ -23,7 +23,7 @@
                 </div>
 
                 <p class="mt-2 mb-1 text-center">
-                    <a  href="{!! route('home') !!}">
+                    <a  href="{!! route('homepage') !!}">
                         {{ __('auth.unauthorized_home_page') }}
                     </a>
                 </p>

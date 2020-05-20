@@ -66,15 +66,15 @@
                 <div>{{$job->description}}</div>
             </div>
 
-            <div class="job_footer p10">
+            <div class="job_footer p10 relative">
                 <div class="w_25p">
                     <div class="j_label bold">Submitted</div>
                     {{-- @dump($applications->created_at->format('yy-mm-dd')) --}}
                     <div class="j_value">{{$application->created_at->format('yy-m-d')}}</div>
                 </div>
 
-                <div class="w_25p fl_right text_right">
-                    <div class="j_button"><a class="confirmJobAppRemoval" data-jobid="{{$application->id}}">Remove</a></div>
+                <div class="js_actionBtn bottom_10">
+                    <button class="confirmJobAppRemoval redbtn jbtn" data-jobid="{{$application->id}}">Remove</button>
                 </div>
             </div>
 
@@ -91,19 +91,36 @@
 
 
 <div style="display:none;">
-<div id="confirmJobAppDeleteModal" class="modal p0 confirmJobAppDeleteModal wauto">
+<div id="confirmJobAppDeleteModal" class="modal cmodal p0 confirmJobAppDeleteModal wauto">
     <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
         <div class="cont">
             <div class="title">Delete Job Application?</div>
+            <div class="spinner_loader">
+                <div class="spinner center">
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                </div>
+            </div>
+            <div class="apiMessage mt20"></div>
             <div class="img_chat">
                 <div class="icon">
                     <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
                 </div>
-                <div class="msg">This action can not be undone. Are you sure you wish to continue?</div>
+                <div class="msg">Are you sure you wish to continue?</div>
             </div>
             <div class="double_btn">
                 <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
-                <button class="confirm_jobAppDelete_ok btn small marsh">OK</button>
+                <button class="confirm_jobAppDelete_ok confirm_btn btn small marsh">OK</button>
                 <input type="hidden" name="deleteConfirmJobAppId" id="deleteConfirmJobAppId" value=""/>
                 <div class="cl"></div>
             </div>
@@ -118,20 +135,12 @@
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
-{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
-
-
 @stop
 
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
-
 <script type="text/javascript">
 $(document).ready(function() {
     console.log(' new job doc ready  ');
@@ -141,6 +150,7 @@ $(document).ready(function() {
     $('.confirmJobAppRemoval').on('click',function(){
         var job_id = $(this).attr('data-jobid');
         console.log(' confirmJobAppRemoval click  job_id ', job_id, $(this) );
+        $('.modal.cmodal').removeClass('showLoader').removeClass('showMessage');
         $('#confirmJobAppDeleteModal').modal({
             fadeDuration: 200,
             fadeDelay: 2.5,
@@ -151,20 +161,22 @@ $(document).ready(function() {
     });
 
     $(document).on('click','.confirm_jobAppDelete_ok',function(){
-        $('.confirmJobAppDeleteModal  .img_chat').html(getLoader('jobDeleteloader'));
-        $(this).prop('disabled',true);
-        var job_app_id =  $('#deleteConfirmJobAppId').val();
+        // $('.confirmJobAppDeleteModal  .img_chat').html(getLoader('jobDeleteloader'));
+        // $(this).prop('disabled',true);
         // $.modal.close();
+        $('.confirmJobAppDeleteModal').addClass('showLoader');
+        var job_app_id = $('#deleteConfirmJobAppId').val();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/deleteJobApplication/'+job_app_id,
             success: function(data){
+                $('.confirmJobAppDeleteModal').removeClass('showLoader').addClass('showMessage');
                 if( data.status == 1 ){
-                    $('.confirmJobAppDeleteModal .img_chat').html(data.message);
+                    $('.confirmJobAppDeleteModal .apiMessage').html(data.message);
                     $('.jobApp_'+job_app_id).remove();
                 }else{
-                    $('.confirmJobAppDeleteModal .img_chat').html(data.error);
+                    $('.confirmJobAppDeleteModal .apiMessage').html(data.error);
                 }
             }
         });

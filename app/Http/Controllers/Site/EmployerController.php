@@ -176,7 +176,23 @@ class EmployerController extends Controller {
         $user = Auth::user();
         // dd( $request->toArray() );
         $requestData = $request->all();
-        foreach ($requestData as $rk => $rv) { $requestData[$rk] = my_sanitize_string($rv); }
+
+        $requestData['title']         = my_sanitize_string($request->title);
+        $requestData['description']   =  my_sanitize_string($request->description);
+        $requestData['experience']    =  my_sanitize_string($request->experience);
+        $requestData['type']          =  my_sanitize_string($request->type);
+        $requestData['geo_country']   =  my_sanitize_number($request->geo_country);
+        $requestData['geo_states']   =  my_sanitize_number($request->geo_states);
+        $requestData['geo_cities']   =  my_sanitize_number($request->geo_cities);
+        $requestData['vacancies']   =  my_sanitize_number($request->vacancies);
+        $requestData['salary']   =  my_sanitize_string($request->salary);
+        $requestData['gender']   =  my_sanitize_string($request->gender);
+        $requestData['expiration']   =  my_sanitize_string($request->expiration);
+        $requestData['age']   =  my_sanitize_string($request->age);
+
+        foreach ($requestData['questions'] as $rk => $rv) { $requestData['questions'][$rk] = my_sanitize_string($rv); }
+        $requestData['questions']       =  json_encode( $requestData['questions']);
+
         $rules = array(
             "title" => "required|string|max:255",
             "description" => "required|string",
@@ -188,6 +204,7 @@ class EmployerController extends Controller {
             "vacancies"  => "integer",
             "salary"  => "string|max:255",
             "gender" => "required|in:male,female,any",
+            "expiration" => "string|max:60",
             "age" => "string|max:20",
         );
         $validator = Validator::make( $requestData , $rules);
@@ -212,6 +229,7 @@ class EmployerController extends Controller {
             $job->age =  $requestData['age'];
             $job->user_id =  $user->id;
             $job->expiration =  $requestData['expiration'].' 00:00:00';
+            $job->questions =  $requestData['questions'];
             $job->save();
 
             return response()->json([
@@ -232,7 +250,7 @@ class EmployerController extends Controller {
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
-        $data['jobs'] = Jobs::where('user_id',$user->id)->get();
+        $data['jobs'] = Jobs::with('applicationCount')->where('user_id',$user->id)->get();
         return view('site.employer.myjobs', $data);
     }
 
