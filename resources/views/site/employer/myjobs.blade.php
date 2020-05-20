@@ -11,7 +11,7 @@
     <div class="head icon_head_browse_matches">My Jobs</div>
 
     <div class="add_new_job">
-        @dump($jobs)
+        {{-- @dump($jobs) --}}
         <div class="job_row_heading jobs_filter">
 
         </div>
@@ -56,24 +56,18 @@
 
             <div class="job_footer p10">
                 <div class="w_25p">
-                    <div class="j_label bold">Job Views</div>
-                    <div class="j_value">120</div>
+                    <div class="j_label bold">Expire on</div>
+                    <div class="j_value">{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</div>
                 </div>
 
                 <div class="w_25p">
-                    <div class="j_label bold">Job Likes</div>
-                    <div class="j_value">300</div>
+                    <div class="j_label bold">Applications</div>
+                    <div class="j_value">{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</div>
                 </div>
 
-                <div class="w_25p">
-                    <div class="j_label bold">Application</div>
-                    <div class="j_value">10</div>
-                </div>
-
-
-                <div class="w_25p">
-                    <div class="j_button dinline_block"><a class="graybtn jbtn" href="{{route('employerJobEdit',['id' => $job->id])}}">Edit</a></div>
-                    <div class="j_button dinline_block"><a class="myJobDeleteBtn graybtn jbtn"  data-jobid="{{$job->id}}">Delete</a></div>
+                <div class="w_25p fl_right">
+                    <div class="j_button dinline_block fl_right m5"><a class="graybtn jbtn" href="{{route('employerJobEdit',['id' => $job->id])}}">Edit</a></div>
+                    <div class="j_button dinline_block fl_right m5"><a class="myJobDeleteBtn graybtn jbtn"  data-jobid="{{$job->id}}">Delete</a></div>
                 </div>
             </div>
 

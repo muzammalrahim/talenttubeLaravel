@@ -13,13 +13,16 @@
     {{-- @dump($employers) --}}
     <div class="add_new_job">
 
-        <div class="job_row_heading jobs_filter">
+        <div class="job_row_heading jobs_filter"></div>
 
-        </div>
-
-        @if ($employers->count() > 0)
+        @if ($blockUsers->count() > 0)
         <div class="employers_list">
-        @foreach ($employers as $js)
+        @foreach ($blockUsers as $blockuser)
+
+        @php
+        $js = $blockuser->user;
+        @endphp
+
         <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
 
             <div class="jobSeeker_box relative dinline_block w100">
@@ -80,13 +83,7 @@
             </div>
             {{-- @dump($likeUsers) --}}
             <div class="js_actionBtn">
-                <a class="graybtn jbtn" href="{{route('employerInfo', ['id' => $js->id])}}">Detail</a>
-                <a class="jsBlockUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Block</a>
-                @if (in_array($js->id,$likeUsers))
-                <a class="active graybtn jbtn" data-jsid="{{$js->id}}">Liked</a>
-                @else
-                <a class="jsLikeUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Like</a>
-                @endif
+                <a class="jsUnBlockUserBtn graybtn jbtn" data-jsid="{{$js->id}}">UnBlock</a>
             </div>
 
             </div>
@@ -107,7 +104,7 @@
 <div id="confirmJobSeekerBlockModal" class="modal cmodal p0 confirmJobSeekerBlockModal wauto">
     <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
         <div class="cont">
-            <div class="title">Block Job Seeker?</div>
+            <div class="title">UnBlock User?</div>
             <div class="spinner_loader">
                 <div class="spinner center">
                     <div class="spinner-blade"></div>
@@ -149,28 +146,20 @@
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
-{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
-
-
 @stop
 
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
-
 <script type="text/javascript">
 $(document).ready(function() {
 
- $(document).on('click','.jsBlockUserBtn',function(){
+ $(document).on('click','.jsUnBlockUserBtn',function(){
      var jobseeker_id = $(this).data('jsid');
      console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
-     $('.modal.cmodal').removeClass('showLoader').removeClass('showMessage');
      $('#jobSeekerBlockId').val(jobseeker_id);
+     $('.modal.cmodal').removeClass('showLoader').removeClass('showMessage');
      $('#confirmJobSeekerBlockModal').modal({
         fadeDuration: 200,
         fadeDelay: 2.5,
@@ -185,16 +174,19 @@ $(document).ready(function() {
 
     // $('.confirmJobSeekerBlockModal  .img_chat').html(getLoader('blockJobSeekerLoader'));
     $('.confirmJobSeekerBlockModal').addClass('showLoader');
-    // var btn = $(this); //
-    // btn.prop('disabled',true);
+   // $('.confirmJobSeekerBlockModal  .loader').html(getLoader('blockJobSeekerLoader'));
+
+    var btn = $(this); //
+   //  btn.prop('disabled',true);
 
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.ajax({
         type: 'POST',
-        url: base_url+'/ajax/blockEmployer/'+jobseeker_id,
+        url: base_url+'/ajax/unBlockUser',
+        data: {id: jobseeker_id},
         success: function(data){
-            // btn.prop('disabled',false);
-            $('.confirmJobSeekerBlockModal').removeClass('showLoader').addClass('showMessage');
+           // btn.prop('disabled',false);
+           $('.confirmJobSeekerBlockModal').removeClass('showLoader').addClass('showMessage');
             if( data.status == 1 ){
                 $('.confirmJobSeekerBlockModal .apiMessage').html(data.message);
                 $('.jobSeeker_row.js_'+jobseeker_id).remove();
@@ -206,27 +198,6 @@ $(document).ready(function() {
 });
 
 
-$(document).on('click','.jsLikeUserBtn',function(){
-    var btn = $(this);
-    var jobseeker_id = $(this).data('jsid');
-    console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
-    // $(this).html(getLoader('blockJobSeekerLoader'));
-    $(this).html('..');
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/ajax/likeEmployer/'+jobseeker_id,
-        success: function(data){
-            btn.prop('disabled',false);
-            if( data.status == 1 ){
-                btn.html('Liked').addClass('active');
-                // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-            }else{
-                btn.html('error');
-            }
-        }
-    });
-});
 
 
 

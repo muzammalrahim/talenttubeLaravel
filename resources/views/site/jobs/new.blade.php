@@ -128,6 +128,20 @@
             </div>
         </div>
 
+
+
+        <div class="job_age form_field">
+            <span class="form_label">Job Questions:</span>
+            <div class="form_input">
+                <div class="jobQuestions">
+                   <div class="question mb10 relative"><input type="text" name="questions[]" class="w100" /><span class="close_icon jobQuestion"></span></div>
+                </div>
+                <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn">Add+</a></div>
+            </div>
+        </div>
+
+
+
         <div class="form_field">
             <span class="form_label"></span>
             <div class="form_input">
@@ -177,11 +191,17 @@ $(document).ready(function() {
         dateFormat: "yy-mm-dd"
     });
 
-    /*
-    $('.saveNewJob').on('click',function(){
-        console.log(' saveNewJob clck  ');
+
+    $('.addQuestion').on('click',function(){
+        console.log(' addQuestion clck  ');
+        var question = '<div class="question mb10 relative"><input type="text" name="questions[]" class="w100" /><span class="close_icon jobQuestion"></span></div>';
+        $('.jobQuestions').append(question);
     });
-    */
+
+    $(document).on('click','.close_icon.jobQuestion',function(){
+        $(this).closest('.question').remove();
+    });
+
 });
 </script>
 @stop

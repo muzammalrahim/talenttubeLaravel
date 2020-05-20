@@ -1,7 +1,7 @@
 
 
-@include('site.user.profile.album.gallery')
-@include('site.user.profile.album.private')
+@include('site.employer.profile.album.gallery')
+@include('site.employer.profile.album.private')
 
 
 
@@ -16,12 +16,10 @@
     </div>
     <div class="cl"></div>
 
-
-
     @if ($videos->count() > 0 )
         @foreach ($videos as $video)
             <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-                <a class="video_link" href="{{asset('images/user/'.$video->file)}}" data-lcl-thumb="{{'images/user/'.asset($video->file)}}" target="_blank">
+                <a onclick="UProfile.showVideoModal('{{asset('images/user/'.$video->file)}}')" class="video_link" target="_blank">
                 <span class="v_title">{{$video->title}}</span>
                 </a>
                 <span title="Delete video" class="icon_delete" data-vid="{{$video->id}}" onclick="UProfile.delteVideo({{$video->id}})">
@@ -35,5 +33,18 @@
     @endif
 
 
+    <div style="display:none;">
+        <div id="videoShowModal" class="modal p0 videoShowModal">
+            <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+                <div class="cont">
+                    <div class="videoBox"></div>
+                    {{-- <div class="double_btn">
+                        <button class="confirm_close btn small dgrey" onclick="UProfile.cancelVideoModal(); return false;">Close</button>
+                        <div class="cl"></div>
+                    </div> --}}
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>

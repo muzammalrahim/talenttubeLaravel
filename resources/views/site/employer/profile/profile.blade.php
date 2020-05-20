@@ -1,6 +1,9 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('site.employer.employermaster')
 
+@section('custom_css')
+    <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+@stop
 
 @section('content')
 <div class="cont bl_profile">
@@ -73,22 +76,21 @@
     </div>
 
 
-    @include('site.user.profile.tabs')
+    @include('site.employer.profile.tabs')
 
 <div class="cl"></div>
 </div>
 
 
 
-@include('site.user.profile.profileEditPopup')
-@include('site.user.profile.profilePersonalInfo')
+@include('site.employer.profile.profileEditPopup')
+@include('site.employer.profile.profilePersonalInfo')
 
 
 @stop
 
 
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">

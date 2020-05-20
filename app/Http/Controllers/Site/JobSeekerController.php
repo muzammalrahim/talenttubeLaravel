@@ -132,14 +132,26 @@ class JobSeekerController extends Controller {
         if(empty($employer) || !isEmployer($employer) ){ return redirect(route('employers')); }
 
         // check if this employer has not block you.
-        hasBlockYou($user, $employer)
+       if(hasBlockYou($user, $employer)){ return view('unauthorized', $data); }
+
+        $jobs                = Jobs::where('user_id',$employerId)->get();
+        $employer_gallery    = UserGallery::Public()->Active()->where('user_id',$employerId)->get();
+        $employer_video      = Video::where('user_id', $employerId)->get();
 
         $data['title']          = 'Employer Info';
         $data['classes_body']   = 'employerInfo';
         $data['employer']       = $employer;
+        $data['likeUsers']      = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        $data['jobs']           = $jobs;
+        $data['galleries']        = $employer_gallery;
+        $data['videos']          = $employer_video;
+
 
         return view('site.user.employerInfo', $data);
+
     }
+
+
 
 
 
