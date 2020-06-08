@@ -76,16 +76,16 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('users/edit/{id}', 'Admin\UserController@edit')->name('users.edit');
     Route::post('users/create', 'Admin\UserController@store')->name('users.store');
     Route::patch('users/update/{id}', 'Admin\UserController@update')->name('users.update');
-
     Route::get('users/getList', 'Admin\UserController@getDatatable')->name('users.dataTable');
 
-    Route::get('employers', 'Admin\UserController@employers');
+
+    Route::get('employers', 'Admin\UserController@employers')->name('adminEmployers');
     Route::get('employers/edit/{id}', 'Admin\UserController@editEmployer')->name('employers.edit');
     Route::patch('employers/update/{id}', 'Admin\UserController@updateEmployer')->name('employers.update');
+    Route::get('employers/create', 'Admin\UserController@createEmployer')->name('employers.create');
+    Route::post('employers/create', 'Admin\UserController@storeEmployer')->name('employers.store');
 
     Route::get('employers/getList', 'Admin\UserController@getEmployerDatatable')->name('employers.dataTable');
-
-
 });
 
 
