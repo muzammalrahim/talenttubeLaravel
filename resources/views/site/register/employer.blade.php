@@ -32,7 +32,7 @@
     <!-- header_cont_bl -->
     <div class="bl" style="background: rgba(0, 0, 0, 0.5);">
         <div class="bl_logo">
-            <img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" />
+             <a href="{{route('homepage')}}"><img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" /></a>
         </div>
 
         @include('site.register.employer_step1')

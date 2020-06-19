@@ -2,15 +2,16 @@
 <div class="head_top absolute">
    <div class="bl">
       <div class="fl_right">
-         <span class="link">Have an account?</span>
-
          @if (Auth::check())
-            <a  class="btn_sign" href="{{route('profile')}}">Sign in</a>
+            @if (isEmployer())
+              <a  class="btn_sign" href="{{route('employerProfile')}}">Dashboard</a>
+            @else
+              <a  class="btn_sign" href="{{route('profile')}}">Dashboard</a>
+            @endif
         @else
+            <span class="link">Have an account?</span>
             <a id="pp_sign_in_open" class="btn_sign">Sign in</a>
         @endif
-
-
 
       </div>
       <div class="cl"></div>

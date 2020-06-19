@@ -43,6 +43,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'language' => 'array',
         'hobbies' => 'array',
+        'industry_experience' => 'array'
     ];
 
 
@@ -104,6 +105,10 @@ class User extends Authenticatable
     }
 
 
+    function vidoes(){
+        return $this->hasMany('App\Video','user_id');
+    }
+
     // function like(){
     //     return $this->belongsTo('App\LikeUser','user_id');
     // }
@@ -125,6 +130,13 @@ class User extends Authenticatable
             $data = $this->with('profileImage')->where('type','employer')->get();
         }
         return $data;
+    }
+
+
+
+    function tags(){
+        // return $this->hasMany('App\UserTags','user_id');
+        return $this->belongsToMany('App\Tags', 'user_tags','user_id','tag_id');
     }
 
 

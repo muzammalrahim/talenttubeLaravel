@@ -51,6 +51,22 @@ var CommonScript = function() {
     //     event.preventDefault();
     // }
 
+
+    profileVideoShow =  function(video_url){
+        console.log(' showVideoModal ', video_url);
+        var videoElem  = '<video id="player" controls>';
+        videoElem     += '<source src="'+video_url+'" type="video/mp4">';
+        videoElem     += '</video>';
+        $('#videoShowModal .videoBox').html(videoElem);
+        $('#videoShowModal').modal({
+            fadeDuration: 200,
+            fadeDelay: 2.5,
+            escapeClose: false,
+            clickClose: false,
+        }); 
+       //  const player = new Plyr('#player');
+    }
+
 }
 
 

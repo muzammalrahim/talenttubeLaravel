@@ -60,6 +60,21 @@ return [
             'root' => storage_path('images/user'),
         ],
 
+        'media' => [
+            'driver' => 'local',
+            'root' => storage_path('media'),
+        ],
+
+        'publicMedia' => [
+            'driver' => 'local',
+            'root' => storage_path('media/public'),
+        ],
+
+        'privateMedia' => [
+            'driver' => 'local',
+            'root' => storage_path('media/private'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),

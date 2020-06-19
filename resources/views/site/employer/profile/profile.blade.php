@@ -45,10 +45,10 @@
         <div class="info">
             <div class="name"><a id="profile_name" style="cursor:default;" class="edit_main_title"  onclick="return false;">{{$user->name}} {{$user->surname}}</a></div>
             <div class="bl_list_info">
-                <ul class="list_info">
+                <ul class="list_info userProfileLocation">
                     <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li>
                     <li id="list_info_location">{{($user->GeoCity)?($user->GeoCity->city_title):''}},  {{($user->GeoState)?($user->GeoState->state_title):''}}, {{($user->GeoCountry)?($user->GeoCountry->country_title):''}}</li>
-                    <li><span class="basic_info">•</span><span id="list_info_gender">Job Seeker</span></li>
+                    <li><span class="basic_info">•</span><span id="list_info_gender">Employer</span></li>
                 </ul>
                 <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div>
             </div>
@@ -92,14 +92,13 @@
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site/plyr.css') }}">
 @stop
 
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
 <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
+<script src="{{ asset('js/site/plyr.polyfilled.js') }}"></script>
 @stop
 

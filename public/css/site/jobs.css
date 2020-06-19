@@ -4,17 +4,21 @@
 .form_field{
     margin: 10px 0px;
     vertical-align: top;
+    display: table;
+    width: 100%;
 }
 .field_error{ display: none; }
 .form_label{
-    width: 25%;
+    width: 15%;
     display: inline-block;
     vertical-align: top;
     padding: 6px 0px;
+    float: left;
 }
 .form_input{
     display: inline-block;
-    width: 74%;
+    width: 85%;
+    float: left;
 }
 
 
@@ -29,6 +33,25 @@
     color: red;
     font-size: 12px;
 }
+
+.jobQuestions .jq-selectbox__select {
+    background: #eee;
+    min-width: 100px;
+}
+
+.jobQuestions  .jq-selectbox__dropdown {
+    min-width: 136px;
+    background: #b3b3b3;
+    border-radius: 0px;
+}
+
+.jobQuestions .job_question  {
+    background: #f3f5f973;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+ 
+
 
 /*=========== employer jobs page =============*/
 .job_row {
@@ -84,7 +107,6 @@ h3.job_title {
     color: white;
     background: #ff9800cc;
 }
-
 .jbtn.redbtn {
     box-shadow: inset 0 1px 0 #d5dce6, 0 1px 2px #333;
     background: #ff5f4e;
@@ -97,17 +119,13 @@ h3.job_title {
     background: #ff9800cc;
     color: white;
 }
-
 .form_qstn {
     line-height: 25px;
     font-size: 13px;
     font-weight: 700;
-    color: #a6a6a6;
+    color: #7d7d7d;
 }
-
 .jobApplyModal .cont{min-height: 40px;}
-
-
 .w_box{ box-sizing: border-box; }
 .w_30p{ width: 30%; }
 .w_70p{ width: 70%; }
@@ -126,6 +144,12 @@ h3.job_title {
     width: 150px;
     height: 150px;
 }
+.js_profile_photo{ 
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    border-radius: 50%;
+    width: 55px !important;
+    height: 55px !important;
+} 
 .jobSeeker_row:nth-child(even) { background: #eee; }
 
 .js_name h4{ font-size: 15px; }
@@ -169,7 +193,8 @@ span.js_tag {
     box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
     border-radius: 4px;
     width: 150px;
-    height: 150px;
+    /*height: 150px;*/
+    height: auto;
     margin: 10px;
 }
 .emp_profile_photo_frame a{

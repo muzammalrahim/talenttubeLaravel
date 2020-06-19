@@ -45,7 +45,7 @@
         <div class="info">
             <div class="name"><a id="profile_name" style="cursor:default;" class="edit_main_title"  onclick="return false;">{{$user->name}} {{$user->surname}}</a></div>
             <div class="bl_list_info">
-                <ul class="list_info">
+                <ul class="list_info userProfileLocation">
                     <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li>
                     <li id="list_info_location">{{($user->GeoCity)?($user->GeoCity->city_title):''}},  {{($user->GeoState)?($user->GeoState->state_title):''}}, {{($user->GeoCountry)?($user->GeoCountry->country_title):''}}</li>
                     <li><span class="basic_info">•</span><span id="list_info_gender">Job Seeker</span></li>
@@ -62,7 +62,7 @@
             </div>
 
 
-            <div class="title_interest">
+           {{--  <div class="title_interest">
                 <strong>I am looking for</strong>
                 <div class="icon_edit"><span onclick="Profile.showLookingForEditor();"></span></div>
             </div>
@@ -70,7 +70,7 @@
                 <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Job Seeker</span></li>
                 <li><span class="basic_info">•</span><span id="info_looking_for_ages">Ages 18-100</span></li>
                 <li><span class="basic_info">•</span><span id="info_looking_for_near_me">Near me</span></li>
-            </ul>
+            </ul> --}}
         </div>
         <div class="cl"></div>
     </div>

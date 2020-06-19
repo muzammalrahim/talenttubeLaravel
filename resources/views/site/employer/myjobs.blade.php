@@ -62,7 +62,7 @@
 
                 <div class="w_25p">
                     <div class="j_label bold">Applications</div>
-                    <div class="j_value">{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</div>
+                    <div class="j_value"><a href="{{route('empJobApplications',['id' => $job->id])}}">{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</a></div>
                 </div>
 
                 <div class="w_25p fl_right">
