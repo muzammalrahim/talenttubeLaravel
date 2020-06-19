@@ -108,8 +108,7 @@ function getLanguages(){
         "69"	=>	'Norsk bokmål',  "70"	=>	'Norsk nynorsk',     "71"	=>	'Oromoo',        "72"	=>	'ਪੰਜਾਬੀ',
         "73"	=>	'پښتو',        "74"	=>	'संस्कृत',             "75"	=>	'Sidaamu Afo',   "76"	=>	'Soomaali',
         "77"	=>	'Kiswahili',     "78"	=>	'தமிழ்'
-    );
-
+    ); 
    return $language_array;
 }
 
@@ -149,6 +148,7 @@ function getHobby($hobby_id){
 		}else{
 			return $hobby_id;
 		}
+
 }
 
 function getFamilyType(){
@@ -1952,11 +1952,10 @@ function my_sanitize_email($string) {
     return filter_var($string, FILTER_SANITIZE_EMAIL);
 }
 
+ 
 function remove_spaces($string) {
     return  str_replace(' ', '', $string);
 }
-
-
 
 
 function assetGallery($access,$userId,$type,$file){
@@ -1966,10 +1965,8 @@ function assetGallery($access,$userId,$type,$file){
     }else{
         $path .= 'media/public/';
     }
-
     $path .= $userId.'/gallery/'.(($type)?($type.'/'):'').$file;
     return asset( $path );
-
 }   
 
 
@@ -1996,14 +1993,12 @@ function generateVideoThumbs($video){
 }
 
 
-
 function assetVideo($video){
     // $vPath  = ($video->status == 2)?('media/private/'):('media/public/');
     $vPath  = 'stream/';
     $vPath .= $video->file;
     return asset( $vPath );
 } 
-
 
 
 function getQualificationNames($qualification_array_json){
@@ -2017,9 +2012,75 @@ function getQualificationNames($qualification_array_json){
            }
        }
     }
-
     // dd($qualification_names);
     return $qualification_names;
 }
 
 
+// Added by Hassan
+function getEyeColor(){
+    return array(
+        0            =>  'Light Brown',
+        1            =>  'Hazel',
+        2            =>  'Brown',
+        3            =>  'Black',
+        4            =>  'Blue',
+        5            =>  'Green'
+    );
+}
+
+function getYears(){
+    return array(
+            1       => '1996',
+            2       => '1997',
+            3       => '1998',
+            4       => '1999',
+            5       => '2000',
+            6       => '2001',
+            7       => '2002',
+            8       => '2003',
+            9       => '2004',
+            10      => '2005',
+            11      => '2006',
+            12      => '2007',
+    );
+}
+
+function getDays(){
+    return array(
+            1       => '1',
+            2       => '2',
+            3       => '3',
+            4       => '4',
+            5       => '5',
+            6       => '6',
+            7       => '7',
+            8       => '8',
+            9       => '9',
+            10      => '10',
+            11      => '11',
+            12      => '12',
+            13      => '13',
+            14      => '14',
+            15      => '15',
+            16      => '16',
+            17      => '17',
+            18      => '18',
+            19      => '19',
+            20      => '20',
+            21      => '21',
+            22      => '22',
+            23      => '23',
+            24      => '24',
+            25      => '25',
+            26      => '26',
+            27      => '27',
+            28      => '28',
+            29      => '29',
+            30      => '30',
+            31      => '31',
+
+    );
+}
+// Added by Hassan
+ 

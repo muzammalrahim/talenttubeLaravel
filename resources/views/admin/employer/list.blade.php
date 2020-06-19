@@ -3,10 +3,19 @@
 @section('title',$title)
 
 @section('content_header')
-<h1 class="m-0 text-dark">{{$content_header}}</h1>
+<div class="block row">
+    <div class="col-md-6"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
+    <div class="col-md-6">
+        <div class="float-right">
+            <a href="{!! route('employers.create') !!}" class="btn btn-block btn-success">Add New</a>
+        </div>
+    </div>
+</div>
 @stop
 
 @section('content')
+
+
 
 <table class="table table-bordered" id="dataTable">
     <thead>

@@ -115,16 +115,29 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('users/edit/{id}', 'Admin\UserController@edit')->name('users.edit');
     Route::post('users/create', 'Admin\UserController@store')->name('users.store');
     Route::patch('users/update/{id}', 'Admin\UserController@update')->name('users.update');
-
     Route::get('users/getList', 'Admin\UserController@getDatatable')->name('users.dataTable');
 
-    Route::get('employers', 'Admin\UserController@employers');
+
+    Route::get('employers', 'Admin\UserController@employers')->name('adminEmployers');
+
     Route::get('employers/edit/{id}', 'Admin\UserController@editEmployer')->name('employers.edit');
     Route::patch('employers/update/{id}', 'Admin\UserController@updateEmployer')->name('employers.update');
+    Route::get('employers/create', 'Admin\UserController@createEmployer')->name('employers.create');
+    Route::post('employers/create', 'Admin\UserController@storeEmployer')->name('employers.store');
 
     Route::get('employers/getList', 'Admin\UserController@getEmployerDatatable')->name('employers.dataTable');
 
+       // Route added by Hassaan
 
+    Route::get('jobs','Admin\AdminJobsController@jobs')->name('adminJobs');
+    Route::get('jobs/getList', 'Admin\AdminJobsController@getDatatable')->name('jobs.dataTable');
+    Route::get('jobs/create', 'Admin\AdminJobsController@createJobs')->name('jobs.create');
+    Route::get('jobs/edit/{id}', 'Admin\AdminJobsController@edit')->name('jobs.edit');
+    Route::patch('jobs/update/{id}', 'Admin\AdminJobsController@updateJob')->name('jobs.update');
+    // Route::get('jobs/create', 'Admin\AdminJobsController@createJob')->name('jobs.create');
+    // Route::get('jobs/create', 'Admin\AdminJobsController@createJob')->name('jobs.');
+    
+    // End here
 });
 
 
@@ -217,6 +230,9 @@ Route::group(array('middleware' => 'auth'), function(){
 
 
     // job
+
+ 
+
     Route::get('employer/job/new',    'Site\EmployerController@newJob')->name('newJob');
     Route::post('ajax/job/new',    'Site\EmployerController@addNewJob')->name('addNewJob');
     Route::get('employer/jobs',    'Site\EmployerController@jobs')->name('employerJobs');
@@ -225,9 +241,10 @@ Route::group(array('middleware' => 'auth'), function(){
     
     Route::post('employer/jobAppFilter', 'Site\EmployerController@jobAppFilter')->name('jobAppFilter');
 
-    Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
  
+    Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
     Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
+    
     Route::post('ajax/deleteJob/{id}', 'Site\SiteUserController@deleteJob')->name('deleteJob');
     Route::get('jobApplications', 'Site\SiteUserController@jobApplications')->name('jobApplications');
 
