@@ -38,6 +38,7 @@ function get_Geo_State($country){
     return $states;
 }
 
+
 function get_Geo_City($country, $state){
     $cities = DB::table('geo_city')->where('country_id', $country)->where('state_id', $state)->get();
     return $cities;
@@ -70,16 +71,16 @@ function getMonths(){
 function getLanguages(){
 
     $language_array = array(
-        "0"	=>	'Please Choose',
-        "1"	=>	'English',
-        "2"	=>	'Deutsch',
-        "3"	=>	'Français',
-        "4"	=>	'Español',
-        "5"	=>	'Italiano',
-        "6"	=>	'‏עברית‏',
-        "7"	=>	'中文(简体)',
-        "8"	=>	'Qafar',
-        "9"	=>	'Afrikaans',
+        "0" 	=>	'Please Choose',
+        "1"	    =>	'English',
+        "2"     =>	'Deutsch',
+        "3" 	=>	'Français',
+        "4"	    =>	'Español',
+        "5" 	=>	'Italiano',
+        "6" 	=>	'‏עברית‏',
+        "7"	    =>	'中文(简体)',
+        "8"	    =>	'Qafar',
+        "9"	    =>	'Afrikaans',
         "10"	=>	'اردو',
         "11"	=>	'العربية',
         "12"	=>	'Азәрбајҹан',
@@ -190,6 +191,7 @@ function getHobby($hobby_id){
 		}else{
 			return $hobby_id;
 		}
+
 }
 
 function getFamilyType(){
@@ -256,3 +258,75 @@ function my_sanitize_url($url) {
 function my_sanitize_email($string) {
     return filter_var($string, FILTER_SANITIZE_EMAIL);
 }
+
+// Added by Hassan
+function getEyeColor(){
+    return array(
+        0            =>  'Light Brown',
+        1            =>  'Hazel',
+        2            =>  'Brown',
+        3            =>  'Black',
+        4            =>  'Blue',
+        5            =>  'Green'
+    );
+}
+
+function getYears(){
+    return array(
+            1       => '1996',
+            2       => '1997',
+            3       => '1998',
+            4       => '1999',
+            5       => '2000',
+            6       => '2001',
+            7       => '2002',
+            8       => '2003',
+            9       => '2004',
+            10      => '2005',
+            11      => '2006',
+            12      => '2007',
+    );
+
+}
+
+function getDays(){
+    return array(
+            1       => '1',
+            2       => '2',
+            3       => '3',
+            4       => '4',
+            5       => '5',
+            6       => '6',
+            7       => '7',
+            8       => '8',
+            9       => '9',
+            10      => '10',
+            11      => '11',
+            12      => '12',
+            13      => '13',
+            14      => '14',
+            15      => '15',
+            16      => '16',
+            17      => '17',
+            18      => '18',
+            19      => '19',
+            20      => '20',
+            21      => '21',
+            22      => '22',
+            23      => '23',
+            24      => '24',
+            25      => '25',
+            26      => '26',
+            27      => '27',
+            28      => '28',
+            29      => '29',
+            30      => '30',
+            31      => '31',
+
+    );
+
+}
+
+
+
+// Added by Hassan
