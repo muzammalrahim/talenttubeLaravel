@@ -124,7 +124,7 @@ class JobSeekerController extends Controller {
     //====================================================================================================================================//
     public function employerInfo($employerId){
         $user = Auth::user();
-        if (isEmployer($user)){ return redirect(route('jobSeekers')); }
+        if (isEmployer($user)){ return redirect(route('employers')); }
         $data['user'] = $user;
         $employer = User::Employer()->where('id',$employerId)->first();
 
@@ -149,6 +149,42 @@ class JobSeekerController extends Controller {
 
         return view('site.user.employerInfo', $data);
 
+    }
+
+
+    //====================================================================================================================================//
+    // Get // layout for JobSeeker Detail.
+    // Access from Employer
+    //====================================================================================================================================//
+    public function jobSeekerInfo($jobSeekerId){
+        $user = Auth::user();
+        // if not employer then do not allowed him. 
+        if (!isEmployer($user)){ return redirect(route('jobSeekers')); }
+
+        $data['user'] = $user;
+         
+
+        $jobSeeker = User::JobSeeker()->where('id',$jobSeekerId)->first();
+
+        // check if jobseeker not exist then redirect to jobseeker list.
+        if(empty($jobSeeker) || isEmployer($jobSeeker) ){ return redirect(route('jobSeekers')); }
+
+        // check if this employer has not block you.
+       if(hasBlockYou($user, $jobSeeker)){ return view('unauthorized', $data); }
+
+        // $jobs                = Jobs::where('user_id',$employerId)->get();
+        $galleries    = UserGallery::Public()->Active()->where('user_id',$jobSeekerId)->get();
+        $videos      = Video::where('user_id', $jobSeekerId)->get();
+
+        $data['title']          = 'JobSeeker Info';
+        $data['classes_body']   = 'jobSeekerInfo';
+        $data['jobSeeker']       = $jobSeeker;
+        $data['likeUsers']       = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        // $data['jobs']           = $jobs;
+        $data['galleries']        = $galleries;
+        $data['videos']          = $videos;
+
+        return view('site.user.jobSeekerInfo', $data);
     }
 
 

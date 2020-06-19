@@ -27,10 +27,13 @@
                         <td>
                             <div class="fieldX">
                                 <div id="profile_edit_main_orientation-styler">
+                                    {{-- 
                                     <select id="profile_edit_main_orientation" name="orientation" class="select_main">
-                                        <option value="1" selected="selected">Job Seeker</option>
-                                        <option value="2">Employer</option>
-                                    </select>
+                                        <option value="1" {{(!isTypeEmployer($user))?'selected="selected"'}} >Job Seeker</option>
+                                        <option value="2" {{(isTypeEmployer($user))?'selected="selected"'}} >Employer</option>
+                                    </select> 
+                                    --}}
+                                    {{(isTypeEmployer($user))?'Employer':'Job Seeker'}}
                                 </div>
                             </div>
                         </td>
@@ -103,12 +106,16 @@
 									<div class="name">&nbsp;</div>
 								</th>
 								<td>
+
 									<div class="field">
-                                        <div id="state-styler" data-location="geo_cities">
-                                            <select name="state" id="state" data-location="geo_cities" class="geo select_main" onchange="UProfile.GetLocation('geo_cities');">
-												<option value="0">Choose State</option>
-											</select>
-                                            <div id="state_error" class="error to_hide">&nbsp;</div>
+                      <div id="state-styler" data-location="geo_cities">
+                      	<select name="state" id="state" data-location="geo_cities" class="geo select_main" onchange="UProfile.GetLocation('geo_cities');" data-search="true">
+                      		<option value="0">Choose State</option>
+                      		 @foreach ($geo_state as $state)
+                              <option value="{{$state->state_id}}" {{($user->state == $state->state_id)?'selected="selected"':''}}>{{$state->state_title}}</option>
+                           @endforeach
+												</select>
+                       <div id="state_error" class="error to_hide">&nbsp;</div>
 										</div>
 									</div>
 								</td>
@@ -121,9 +128,12 @@
 									<div id="profile_edit_main_location" class="field">
 										<div id="city-styler">
 											<select name="city" id="city" class="select_main">
-                                                <option value="0">Choose City</option>
-                                            </select>
-                                            <div id="city_error" class="error to_hide">&nbsp;</div>
+	                        <option value="0">Choose City</option>
+	                        @foreach ($geo_city as $city)
+                              <option value="{{$city->city_id}}" {{($user->city == $city->city_id)?'selected="selected"':''}}>{{$city->city_title}}</option>
+                           @endforeach
+	                    </select>
+                      <div id="city_error" class="error to_hide">&nbsp;</div>
 										</div>
 									</div>
 									<div class="error_frm"></div>

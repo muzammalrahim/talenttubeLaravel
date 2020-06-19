@@ -7,12 +7,13 @@
 
 
 .dblock{ display: block; }
+.dtable{ display: table; }
 .dinline_block{ display: inline-block; }
 .hide_it { display: none !important; }
 .visible_it{ visibility: visible !important;  opacity: 1 !important; }
 
-.w100{ width: 100%; }
-.w49{ width: 49%; }
+.w100{ width: 100% !important; }
+.w49{ width: 49% !important; }
 .wauto{ width: auto !important; }
 .h100{ height: 100% !important; }
 
@@ -28,6 +29,7 @@
 .p0{ padding: 0px !important; }
 .p10{ padding: 10px !important;  }
 .p20{ padding: 20px !important;  }
+.pb20{ padding-bottom: 20px !important;  }
 
 .bottom_10{ bottom: 10px !important; }
 
@@ -66,7 +68,9 @@ button.btn:disabled, button.btn.disabled {
 
 
 .color_red{ color: #ff5f4e; }
+.color_white{ color: white; }
 
+.pointer{cursor: pointer;}
 
 .cmodal .spinner_loader,
 .cmodal .apiMessage{ display: none;}
@@ -77,8 +81,6 @@ button.btn:disabled, button.btn.disabled {
 .cmodal.showMessage .img_chat,
 .cmodal.showMessage .confirm_btn{ display: none !important; }
 .cmodal.showMessage .apiMessage{ display: block !important; }
-
-
 .cmodal .spinner_loader{
     position: relative;
     width: 100%;
@@ -94,3 +96,22 @@ button.btn:disabled, button.btn.disabled {
     max-width: 48%;
 }
 
+
+.goldstar,
+.silverstar {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+}
+.silverstar img { height: 40px; }
+
+.js_profile_video {
+    position: absolute;
+    left: 0px;
+    top: 20px;
+    width: 55px;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.OrangeBtn{ background: #ff5f4e;  }

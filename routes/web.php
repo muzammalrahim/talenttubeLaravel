@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Auth;
 
 
 Route::get('test', 'Site\SiteUserController@test')->name('test');
+Route::get('test2', 'Site\HomeController@test2')->name('test2');
+Route::get('phpini', 'Site\HomeController@phpini')->name('phpini');
+
 
 Route::post('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
 // Route::get('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
@@ -22,17 +25,18 @@ Route::post('notifyPayment', 'Site\PaymentController@notifyPayment')->name('noti
 Route::get('paymentReturn', 'Site\PaymentController@paymentReturn')->name('paymentReturn');
 
 
-
-
 Auth::routes();
 Route::get('/clear', function() {
     $cache = Artisan::call('cache:clear');
     $view = Artisan::call('view:clear');
+    $route = Artisan::call('route:clear');
+    $config = Artisan::call('config:clear');
+
     dump(' cache = '.$cache);
+    dump(' route = '.$route);
+    dump(' config = '.$config);
     dd(' view = '.$view);
 });
-
-
 
 
 // Route::get('images/user/{userid}/{any}', [
@@ -54,6 +58,42 @@ Route::get('images/user/{userid}/private/{any}', [
 ])->where('any', '.*');
 
 
+// Media access video streaming 
+// Route::get('media/private/{userid}/videos/{any}', [
+//     'as'         => 'videoStream.show',
+//     'middleware' => 'auth',
+//     'uses'       => 'Site\HomeController@videoStream',
+// ])->where('any', '.*');
+
+
+// Media access video streaming 
+Route::get('stream/{userid}/videos/{any}', [
+    'as'         => 'videoStream.show',
+    'middleware' => 'auth',
+    'uses'       => 'Site\HomeController@videoStream',
+])->where('any', '.*');
+
+
+//Media access gallery  
+Route::get('media/public/{userid}/{any}', [
+    // 'as'         => 'files.show',
+    'uses'       => 'Site\HomeController@fileshow2',
+    // 'middleware' => 'auth',
+])->where('any', '.*');
+
+Route::get('media/private/{userid}/{any}', [
+    'as'         => 'privateFile.show',
+    'middleware' => 'auth',
+    'uses'       => 'Site\HomeController@privateFileshow',
+])->where('any', '.*');
+
+
+
+
+
+
+
+
 // Backend Admin with out Authentication
 Route::get('admin', 'Admin\AdminController@index');
 Route::post('admin/login', 'Admin\AdminController@login');
@@ -70,7 +110,6 @@ Route::get('logout', function(){
 Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), function(){
 
     Route::get('dashboard','Admin\AdminController@dashboard')->name('adminDashboard');
-
     Route::get('users', 'Admin\UserController@index')->name('users');
     Route::get('users/create', 'Admin\UserController@create')->name('users.create');
     Route::get('users/edit/{id}', 'Admin\UserController@edit')->name('users.edit');
@@ -101,11 +140,16 @@ Route::get('/', 'Site\HomeController@index')->name('homepage');
 
 // Login.
 Route::post('login', 'Site\HomeController@loginUser')->name('login');
-Route::post('join', 'Site\HomeController@join')->name('join');
+Route::post('join', 'Site\HomeController@join')->name('join'); 
+Route::get('join', function () {
+    return redirect('/');
+});
+
+
 
 // User Registeration.
 Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
-Route::get('step2', 'Site\HomeController@step2')->name('step2');
+// Route::get('step2', 'Site\HomeController@step2')->name('step2');
 
 
 //Employer Registeration.
@@ -113,8 +157,6 @@ Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('
 Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
 Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
 Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
-
-
 
 Route::get('/unauthorized', function () { return view('unauthorized'); });
 Route::post('ajax/geo_states', 'Site\HomeController@geo_states')->name('ajax_geo_states');
@@ -129,13 +171,14 @@ Route::group(array('middleware' => 'auth'), function(){
     // Route::get('profile', 'Site\HomeController@profile')->name('profile');
 
     Route::get('profile', function () { return redirect('user/'.Auth::user()->username); })->name('profile');
-
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
     Route::post('saveUserProfile', 'Site\SiteUserController@updateUserProfile')->name('saveUserProfile');
     Route::post('saveUserPersonalSetting', 'Site\SiteUserController@saveUserPersonalSetting')->name('saveUserPersonalSetting');
 
-
     // User
+    Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
+    Route::post('step2',      'Site\SiteUserController@Step2');
+    
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
     Route::get('ajax/getUserPersonalInfo', 'Site\SiteUserController@getUserPersonalInfo');
     Route::post('ajax/update_about_field', 'Site\SiteUserController@updateAboutField');
@@ -145,8 +188,9 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('ajax/setImageAsProfile/{id}', 'Site\SiteUserController@setImageAsProfile');
     Route::post('ajax/userUploadResume', 'Site\SiteUserController@userUploadResume')->name('userUploadResume');
     Route::post('ajax/removeAttachment/', 'Site\SiteUserController@removeAttachment')->name('removeAttachment');
-
-
+    Route::get('ajax/getTags/{category}/{offset?}', 'Site\SiteUserController@getTags');
+    Route::get('ajax/searchTags', 'Site\SiteUserController@searchTags')->name('searchTags');
+    Route::post('ajax/addNewTag', 'Site\SiteUserController@addNewTag')->name('addNewTag');
 
     // activity  user/employer
     Route::post('ajax/saveNewActivity', 'Site\SiteUserController@saveNewActivity')->name('saveNewActivity');
@@ -155,11 +199,8 @@ Route::group(array('middleware' => 'auth'), function(){
     // video user/employer
     Route::post('ajax/uploadVideo', 'Site\SiteUserController@uploadVideo')->name('uploadVideo');
     Route::post('ajax/deleteVideo', 'Site\SiteUserController@deleteVideo')->name('deleteVideo');
-
     Route::get('block',         'Site\SiteUserController@blockList')->name('blockList');
-
     Route::post('ajax/unBlockUser', 'Site\SiteUserController@unBlockUser')->name('unBlockUser');
-
 
     // Employer
     Route::get('employer/profile', function () { return redirect('employer/'.Auth::user()->username); })->name('employerProfile');
@@ -168,25 +209,24 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::get('jobSeekers',          'Site\EmployerController@jobSeekers')->name('jobSeekers');
     Route::post('ajax/blockJobSeeker/{id}', 'Site\EmployerController@blockJobSeeker')->name('blockJobSeeker');
     Route::post('ajax/likeJobSeeker/{id}', 'Site\EmployerController@likeJobSeeker')->name('likeJobSeeker');
-
     Route::get('employers',         'Site\JobSeekerController@employers')->name('employers');
     Route::get('employerInfo/{id}', 'Site\JobSeekerController@employerInfo')->name('employerInfo');
-
+    Route::get('jobSeekerInfo/{id}', 'Site\JobSeekerController@jobSeekerInfo')->name('jobSeekerInfo');
     Route::post('ajax/blockEmployer/{id}', 'Site\JobSeekerController@blockEmployer')->name('blockEmployer');
     Route::post('ajax/likeEmployer/{id}', 'Site\JobSeekerController@likeEmployer')->name('likeEmployer');
-
-
-
-
 
 
     // job
     Route::get('employer/job/new',    'Site\EmployerController@newJob')->name('newJob');
     Route::post('ajax/job/new',    'Site\EmployerController@addNewJob')->name('addNewJob');
     Route::get('employer/jobs',    'Site\EmployerController@jobs')->name('employerJobs');
-    Route::get('employer/jobs/{id}',    'Site\EmployerController@jobEdit')->name('employerJobEdit');
-    Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
+    Route::get('employer/jobsEdit/{id}',    'Site\EmployerController@jobEdit')->name('employerJobEdit');
+    Route::get('employer/job/{id}/applications', 'Site\EmployerController@empJobApplications')->name('empJobApplications');
+    
+    Route::post('employer/jobAppFilter', 'Site\EmployerController@jobAppFilter')->name('jobAppFilter');
 
+    Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
+ 
     Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
     Route::post('ajax/deleteJob/{id}', 'Site\SiteUserController@deleteJob')->name('deleteJob');
     Route::get('jobApplications', 'Site\SiteUserController@jobApplications')->name('jobApplications');
@@ -194,17 +234,20 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::get('ajax/jobApplyInfo/{id}', 'Site\SiteUserController@jobApplyInfo')->name('jobApplyInfo');
     Route::post('ajax/jobApplySubmit', 'Site\SiteUserController@jobApplySubmit')->name('jobApplySubmit');
     Route::post('ajax/deleteJobApplication/{id}', 'Site\SiteUserController@deleteJobApplication')->name('deleteJobApplication');
+    Route::get('ajax/getJobAppQA/{id}', 'Site\EmployerController@getJobAppQA')->name('getJobAppQA');
+
+    // Route::get('employer/jobapplications', 'Site\EmployerController@empJobApplications')->name('empJobApplications');
+    
 
 
     // Credits
     Route::get('credit',       'Site\EmployerController@credit')->name('credit');
     Route::get('paymentStatus', 'Site\PaymentController@paymentInfo')->name('paymentStatus');
     Route::get('paymentCancel', function () { return 'Payment has been canceled'; })->name('paymentCancel');
-
-
-
-
     Route::get('employer/{username}',   'Site\EmployerController@index');
+
+
+
 });
 
 

@@ -13,6 +13,7 @@ class AdminController extends Controller
 
     use AuthenticatesUsers;
 
+    // testing 
     /**
      * Display a listing of the resource.
      *

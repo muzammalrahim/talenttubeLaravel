@@ -22,7 +22,7 @@
 
 <!-- main -->
 <div class="main  above ">
-  
+    <input type="hidden" id="userType" name="userType" value="user" />
     <!-- header -->
     <div class="header">  
         <div id="join_step" class="step">
@@ -30,10 +30,14 @@
                 <li class="selected">1</li>
                 <li style="display:none;">2</li>
                 <li style="display:none;">3</li>
+                <li style="display:none;">4</li>
+                <li style="display:none;">5</li>
+                <li style="display:none;">6</li>
+                <li style="display:none;">7</li>
             </ul>
             
         </div>
-        <div class="slogan"><span id="join_slogan">Answer 5 questions to calculate your best matches.</span></div>
+        <div class="slogan"><span id="join_slogan">Answer 6 questions to calculate your best matches.</span></div>
         
         <div class="logo">
             <a href="./index"><img src="{{asset('/images/site/logo.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
@@ -44,7 +48,7 @@
 
      
     <div class="content">
-        <div class="cont_vc">
+        <div class="mw50 dtable margin_auto">
             
             <div id="full_step_1" class="bl_card_question" style="display:none;">
                 <div class="card_question_cont">
@@ -55,24 +59,28 @@
                         <div class="question_vh"><img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /><span>Yes</span></div>
                     </div>
                     
-                    <div data-field="work_type" class="card_question ">
-                        <div class="count">5 of 5</div><div class="question_txt">Are you open to temporary and contract work?</div>
+                    <div data-field="graduate_intern" class="card_question ">
+                        <div class="count">6 of 6</div><div class="question_txt">Are you seeking a Graduate Program or Internship?</div>
+                    </div>
+
+                    <div data-field="part_time" class="card_question ">
+                        <div class="count">5 of 6</div><div class="question_txt">Are you open to Part Time or Casual work?</div>
                     </div>
                     
-                    <div data-field="job_type" class="card_question ">
-                        <div class="count">4 of 5</div><div class="question_txt">Are you looking for Full Time Employment?</div>
+                    <div data-field="temporary_contract" class="card_question ">
+                        <div class="count">4 of 6</div><div class="question_txt">Are you open to temporary and contract work?</div>
                     </div>
                     
-                    <div data-field="relocate" class="card_question ">
-                        <div class="count">3 of 5</div><div class="question_txt">Are you looking or willing to relocate for your next job opportunity?</div>
+                    <div data-field="fulltime" class="card_question ">
+                        <div class="count">3 of 6</div><div class="question_txt">Are you looking for Full Time Employment?</div>
                     </div>
                     
-                    <div data-field="casual_part" class="card_question ">
-                        <div class="count">2 of 5</div><div class="question_txt">Are you open to Part Time or Casual work?</div>
+                    <div data-field="relocation" class="card_question ">
+                        <div class="count">2 of 6</div><div class="question_txt">Are you looking or willing to relocate for your next job opportunity?</div>
                     </div>
                     
-                    <div data-field="resident " class="card_question first">
-                        <div class="count">1 of 5</div><div class="question_txt">Are you a Permanent Resident or Citizen of Australia or New Zealand?</div>
+                    <div data-field="resident" class="card_question first">
+                        <div class="count">1 of 6</div><div class="question_txt">Are you a Permanent Resident or Citizen of Australia or New Zealand?</div>
                     </div>
                     
                     <div class="card_decor_left1"></div>
@@ -88,83 +96,230 @@
             <!-- step 1 end -->
 
 
-
-
-            <div id="full_step_3" class="bl_card_profile"  style="display:none;">
+           <div id="full_step_3" class="bl_card_profile"  style="display:none;">
                 <div class="card_profile">
                     <div class="part_photo">
-                        <div class="upload_file">
-                            <form id="photo_upload" data-id="" method="post" enctype="multipart/form-data" action="join2.php">
-                                <div class="upload">
-                                    <img id="photo_img" class="pic" src="">
-                                    <div id="photo_loader" class="bl photo_loader to_hide">
-                                        <div class="css_loader photo_upload_loader">
-                                            <div class="spinner spinnerw center">
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                                <div class="spinner-blade"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="bl photo_add">Add a photo</div>
-                                    <input id="photo_upload_file" name="photo_upload_file" class="file" accept="image/jpeg,image/png,image/gif" onchange="changeUploadPhoto($(this));" type="file">
-                                </div>
-                                <div class="upload_pic">
-                                    <input id="photo_upload_file_bind" name="photo_upload_file_bind" accept="image/jpeg,image/png,image/gif" class="file" onchange="changeUploadPhoto($(this));" type="file">
-                                </div>
-                                <input id="photo_upload_reset" style="display:none;" type="reset" value="">
-                                <input id="photo_upload_submit" style="display:none;" type="submit">
-                            </form>
-                        </div>
-                        <div id="photo_upload_error" class="error" title=""></div>
+                        <div class="upload_file"><div class="upload"><div class="bl photo_add">Add a Photo</div></div></div>
                         <div class="name"></div>
-                        <div class="name_info">2020, </div>
+                        <div class="name_info error to_hide"></div>
+                        <div class="recent_job m5 mt20 relative">
+                             <div class="title">Your current or most recent job title and employer</div>
+                             <input type="text" id="recentJob" name="recentJob" value="" />
+                             <div id="recentJob_error" class="error to_hide">Required field!</div>
+                        </div>
+
                     </div>
-            
+
                     <div id="frm_card_join" class="card_profile_info card_join">
-                        
+
                         <div class="bl bl_basic">
                         <div class="title">About me</div>
                         <div id="about_me_error" class="error to_hide">Required field!</div>
-                        
-                        <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Tell us something about you" maxlength="1000"></textarea>
-                        
-                        
+                        <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="1000"></textarea>
                         </div>
-                        
+
                         <div class="bl bl_basic">
                         <div class="title">Interested in</div>
                         <div id="interested_in_error" class="error to_hide">Required field!</div>
-                        
-                        <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="Whom would you like to find?" maxlength="1000"></textarea>
-                        
-                        
+
+                        <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="1000"></textarea>
                         </div>
-                        
-                        
-                        <!--<div class="bl">
-                            <div title="" class="capcha capcha_img" onclick="refreshCaptcha();">
-                                <img id="img_join_captcha" src="./_server/securimage/securimage_show_custom.php?sid=1588094172" alt="" />
-                            </div>
-                            <div class="bl_inp_pos">
-                                <input id="captcha" name="captcha" class="inp capcha placeholder" type="text" placeholder="Enter the symbols you see" value="" />
-                                <div id="captcha_error" class="error to_hide">Captcha is incorrect!</div>
-                            </div>
-                            <div class="cl"></div>
-                        </div>-->
-                        
-                        
-                        <button id="join_done" class="btn turquoise small btn_join_submit">Done</button>
+
+                        <button id="user_step3_done" class="btn turquoise small btn_join_submit">Done</button>
                     </div>
+                </div>
+            </div>
+
+
+
+            <div id="full_step_4" class="bl_card_qualification wauto"  style="display:none;">
+                <div class="ind_exp">
+                    <div class="ind_exp_h">
+                        <p>Please select the highest level of tertiary studies you have completed or currently enrolled in and completing (You can only select 1 option)</p>
+                    </div>
+
+                    <div class="qualification_selected_type mb20 center">
+                        <div class="qualification_type_cont">
+                            <select class="qualification_type" id="qualification_type" name="qualification_type" data-placeholder="Select Qalification & Trades">
+                                 <option value="">Select Qalification & Trades</option>
+                                 <option value="certificate">Certificate or Advanced Diploma</option>
+                                 <option value="trade">Trade Certificate </option>
+                                 <option value="degree">University Degree</option>
+                                 <option value="post_degree">University Post Graduate (Masters or PHD) </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="select_qualification_list" style="display: none;">
+                        <div class="qualification_list">
+                            <div class="qualification_ul_cont">
+                                <ul class="qualification_ul item_ul">
+                                     @php
+                                        $qualifications = getQualificationsList();
+                                    @endphp
+
+                                     @if (!empty($qualifications))
+                                      @foreach ($qualifications as $qkey => $quaf)
+                                        <li class="{{$quaf['type']}}" data-id="{{$quaf['id']}}"> {{$quaf['title']}} </li>
+                                      @endforeach                                                 
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="join_btn mt20 center">
+                        <div class="join_industry_error"></div>
+                        <button id="user_step4_done" class="btn turquoise small btn_join_submit" disabled="true">Done</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div id="full_step_5" class="bl_card_indExp"  style="display:none;">
+                <div class="ind_exp">
+                    <div class="ind_exp_h">
+                        <p>Please select from the industries and role types below, that best describe the type of candidates you’d like to match with. You can select up to 5 and change these at any time
+                        </p>
+                    </div>
+
+                    <div class="industry_list">
+                        <div class="industry_ul_cont">
+                            <ul class="industry_ul item_ul">
+                                 @php
+                                    $industries = getIndustries();
+                                @endphp
+
+                                 @if (!empty($industries))
+                                  @foreach ($industries as $ikey => $industry)
+                                    <li data-id="{{$ikey}}"> {{$industry}} </li>
+                                  @endforeach                                                 
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="join_btn mt20 center">
+                        <div class="join_industry_error"></div>
+                        <button id="user_step5_done" class="btn turquoise small btn_join_submit industryExpBtn_done" disabled="true">Done</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+              <div id="full_step_6" class="bl_card_indExp center"  style="display:none;">
+                <div class="ind_exp">
+                    <div class="ind_exp_h">
+                        <p>What’s a rough idea of the salary range you are open to?</p>
+                    </div>
+
+                    <div class="salary_list">
+                        <div class="salary_list_cont">
+                            <ul class="salary_ul item_ul">
+                                 @php
+                                    $salaries = getSalariesRange();
+                                @endphp
+
+                                 @if (!empty($salaries))
+                                  @foreach ($salaries as $ikey => $salary)
+                                    <li data-id="{{$ikey}}"> {{$salary}} </li>
+                                  @endforeach                                                 
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="join_btn mt20 center">
+                        <button id="user_step6_done" class="btn turquoise small btn_join_submit " disabled="true">Done</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div id="full_step_7" class="bl_card_indExp"  style="display:none;">
+                <div class="ind_exp">
+                    <div class="ind_exp_h">
+                        <p>Almost done, candidates! To help Employers connect with you, we’ve created a tagging system. This allows Employers to search for specific candidates via a search system. In the below section, we encourage you to create as many tags that best describe your key attributes as a Job Seeker.</p>
+                        <div class="taging_h_info">
+                            <p>Be sure to tag the following:</p>
+                            <p>*Names of organisations and companies you’ve worked for, including charities and not for profits</p>
+                            <p>*Job Titles you have held</p>
+                            <p>*Skills you have (eg; customer service, java Developer, sales, book keeping, etc)</p>
+                            <p>*Institutions you’ve studied, including the names of schools, colleges, universities and others</p>
+                            <p>*The names of courses you’re studying or have completed</p>
+                            <p>*The name of qualifications you have (eg; RG146, RSA, etc)</p>
+                            <p>*Languages you speak (other than English)</p>
+                            <p>*Hobbies and personal interests are fine as well</p>
+                        </div>
+                    </div>
+
+                    <div class="user_tagging">
+                       @include('site.layout.tagging')
+                    </div>
+
+                    <div class="join_btn mt20 center">
+                        <button id="user_step7_done" class="btn turquoise small btn_join_submit " disabled="true">Done</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+            <div id="full_step_8" class="bl_card_Final full_step_8"  style="display:none;">
+                <div class="ind_exp">
+                    <div class="ind_exp_h">
+                        <p>Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:</p>
+                        <div class="step2_uplod_info">
+                            <p>1. Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
+                            
+                            <p>2. Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. </p>
+                        </div>
+
+                        <p class="info">You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
+                    </div>
+
+                    <div class="userUpload">
+                       <div class="userResumeCont">
+                        <div class="userResume">
+                         <div class="title_private_photos title_videos">Resume & Contact Details</div>
+                            <form id="frm_upload" class=" submit-document" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
+                              {{csrf_field()}} <br>
+                              <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">
+                              <button class="btn violet save-resume-btn valign-top" name="submit" style="padding: 5px;">Save</button>
+                            </form>
+                            <div class="private_attachments"></div>
+                        </div>
+                       </div>
+
+                       <div class="userVideoCont">
+                           <div class="userVideo">
+                           <div class="title_private_photos title_videos">Upload Videos</div>
+                           <div id="list_videos_public" class="list_videos_public">
+                            <div id="photo_add_video" class="item add_photo add_video_public item_video">
+                                <a class="add_photo" >
+                                    <img id="video_upload_select" class="transparent is_video" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
+                                </a>
+                            </div>
+                           </div>
+                            
+                           <div class="list_videos"></div>
+                           </div>
+                       </div>
+                    </div>
+
+                    <div class="join_done"></div>
+
+                    <div class="join_btn mt20 center">
+                        <button id="user_step8_done" class="btn turquoise small btn_join_submit">Done</button>
+                    </div>
+
                 </div>
             </div>
 
@@ -195,6 +350,9 @@
 <script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script>
 
+<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+
+ 
 <script type="text/javascript">
     $(function(){
         $('#full_step_1').delay(150).fadeIn(500);
@@ -204,6 +362,9 @@
 @stop
 
 @section('custom_footer_css')
+<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+
+
 <style>
 .header, .main.above .wrapper {
     background: #5b0079;

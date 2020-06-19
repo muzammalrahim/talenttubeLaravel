@@ -109,7 +109,7 @@
             </div>
         </div>
 
-        <div class="job_gender form_field">
+        {{-- <div class="job_gender form_field">
             <span class="form_label">Gender :</span>
             <div class="form_input">
                 <select name="gender" class="form_select " >
@@ -119,15 +119,15 @@
                 </select>
                 <div id="gender_error" class="error field_error to_hide">&nbsp;</div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="job_age form_field">
+      {{--   <div class="job_age form_field">
             <span class="form_label">Age :</span>
             <div class="form_input">
                 <input type="text" name="age" value="{{$job->age}}" class="" />
                 <div id="age_error" class="error field_error to_hide">&nbsp;</div>
             </div>
-        </div>
+        </div> --}}
 
 
         <div class="job_age form_field">
@@ -143,7 +143,7 @@
             </div>
         </div>
 
-
+        {{-- 
         <div class="job_age form_field">
             <span class="form_label">Job Questions:</span>
             <div class="form_input">
@@ -163,7 +163,8 @@
                 </div>
                 <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn">Add+</a></div>
             </div>
-        </div>
+        </div> 
+        --}}
 
         <div class="form_field">
             <span class="form_label"></span>

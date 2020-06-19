@@ -11,6 +11,7 @@ use App\UserActivity;
 use App\Video;
 use App\Jobs;
 use App\LikeUser;
+use App\JobsApplication;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -40,12 +41,14 @@ class EmployerController extends Controller {
             $profile_image   = UserGallery::where('user_id',$user->id)->where('status',1)->where('profile',1)->first();
             if(!$profile_image){
                 if( $user_gallery->count() > 0){
-                    $profile_image   = asset('images/user/'.$user->id.'/'.$user_gallery->first()->image);
+                    // $profile_image   = asset('images/user/'.$user->id.'/'.$user_gallery->first()->image);
+                    $profile_image   = assetGallery($user_gallery->first()->access,$user->id,'',$user_gallery->first()->image);
                 }else{
                     $profile_image   = asset('images/site/icons/nophoto.jpg');
                 }
             }else{
-				$profile_image   = asset('images/user/'.$user->id.'/gallery/'.$profile_image->image);
+				// $profile_image   = asset('images/user/'.$user->id.'/gallery/'.$profile_image->image);
+                $profile_image   = assetGallery($profile_image->access,$user->id,'',$profile_image->image);
 			}
 
             $attachments = Attachment::where('user_id', $user->id)->get();
@@ -55,6 +58,8 @@ class EmployerController extends Controller {
             $data['user'] =  $user;
             $data['user_gallery'] = $user_gallery;
             $data['geo_country'] = get_Geo_Country();
+             $data['geo_state'] = !empty($user->country)?(get_Geo_State($user->country)):null;
+            $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null; 
             $data['profile_image']    = $profile_image;
             $data['title'] = 'profile';
             $data['classes_body'] = 'profile';
@@ -96,6 +101,7 @@ class EmployerController extends Controller {
         $requestData['about_me']        = my_sanitize_string($request->about_me);
         $requestData['interested_in']   =  my_sanitize_string($request->interested_in);
         $requestData['questions']       =  json_decode( $request->questions, true );
+        $requestData['industry_experience']= json_decode(stripslashes($request->industry_experience), true);
 
         // dd( $request->all() );
         // dd(  $requestData );
@@ -105,10 +111,12 @@ class EmployerController extends Controller {
             }
         }
 
+        // card_step2_validation
         $rules = array(
-            'about_me' => 'string',
-            'interested_in' => 'string',
-            "questions.*"  => "string",
+            'about_me' => 'required|max:150',
+            'interested_in' => 'required|max:150',
+            "questions"  => "required",
+            "industry_experience"  => "required",
         );
         $validator = Validator::make( $requestData , $rules);
 
@@ -123,19 +131,26 @@ class EmployerController extends Controller {
             $user->interested_in    = $requestData['interested_in'];
             $user->questions        = json_encode($requestData['questions']);
             $user->step2            = 1;
+            $user->industry_experience = $requestData['industry_experience'];
             $user->save();
 
             if(!empty($request->file('file'))){
+
                 $image = $request->file('file');
                 $fileName   = time() . '.' . $image->getClientOriginalExtension();
+                
+                $file_thumb  = $user->id.'/gallery/small/'.$fileName;
+                $file_path   = $user->id.'/gallery/'.$fileName;
+
                 $img = Image::make($image->getRealPath());
-                $img->resize(120, 120, function ($constraint) { $constraint->aspectRatio();});
+                $img->resize(120, 120, function ($constraint) { $constraint->aspectRatio(); });
                 $img->stream();
-                Storage::disk('user')->put( $user->id. '/gallery/small/'.$fileName, $img, 'public');
+                Storage::disk('publicMedia')->put( $file_thumb , $img);
 
                 $img = Image::make($image->getRealPath());
                 $img->stream();
-                Storage::disk('user')->put( $user->id. '/gallery/'.$fileName, $img, 'public');
+
+                Storage::disk('publicMedia')->put($file_path, $img, 'public');
 
                 $userGallery = new UserGallery();
                 $userGallery->user_id = $user->id;
@@ -149,6 +164,7 @@ class EmployerController extends Controller {
                     'message' => 'data saved succesfully',
                     'redirect' => route('employerProfile')
                 ]);
+            
             }
         }
     }
@@ -165,6 +181,12 @@ class EmployerController extends Controller {
         $data['user'] = $user;
         $data['title'] = 'Add New Job';
         $data['classes_body'] = 'newJob';
+
+
+        // $jobs =  Jobs::find(12);
+        // dd( json_decode($jobs->questions()->first()->options, true) );
+        // dd( $jobs->questions()->first()->options );
+
         $data['geo_country'] = get_Geo_Country();
         return view('site.jobs.new', $data);
     }
@@ -174,9 +196,12 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function addNewJob(Request $request){
         $user = Auth::user();
-        // dd( $request->toArray() );
-        $requestData = $request->all();
+        
+        // dd( $request->toArray() );  
+        // dd( $request->jq );
+        // Jobs::find(12)->addJobQuestions($requestData['jq']); 
 
+        $requestData = $request->all();
         $requestData['title']         = my_sanitize_string($request->title);
         $requestData['description']   =  my_sanitize_string($request->description);
         $requestData['experience']    =  my_sanitize_string($request->experience);
@@ -186,13 +211,30 @@ class EmployerController extends Controller {
         $requestData['geo_cities']   =  my_sanitize_number($request->geo_cities);
         $requestData['vacancies']   =  my_sanitize_number($request->vacancies);
         $requestData['salary']   =  my_sanitize_string($request->salary);
-        $requestData['gender']   =  my_sanitize_string($request->gender);
         $requestData['expiration']   =  my_sanitize_string($request->expiration);
-        $requestData['age']   =  my_sanitize_string($request->age);
+        // $requestData['gender']   =  my_sanitize_string($request->gender);
+        // $requestData['age']   =  my_sanitize_string($request->age);
 
-        foreach ($requestData['questions'] as $rk => $rv) { $requestData['questions'][$rk] = my_sanitize_string($rv); }
-        $requestData['questions']       =  json_encode( $requestData['questions']);
 
+        // sanitize all questions data. 
+        foreach ($requestData['jq'] as $jqk => $jqv) { 
+            
+            // dump($requestData['jq']);
+            // dump($jqk);
+            // dd($jqv['title']);
+
+            $requestData['jq'][$jqk]['title'] = my_sanitize_string($jqv['title']); 
+            if(!empty($jqv['option'])){
+                foreach ($jqv['option'] as $jqok => $jqov) {
+                    $requestData['jq'][$jqk]['option'][$jqok]['text'] = my_sanitize_string($requestData['jq'][$jqk]['option'][$jqok]['text']);  
+                }
+            }
+        }
+        
+        // Jobs::find(12)->addJobQuestions($requestData['jq']); 
+     
+
+        // $requestData['questions']       =  json_encode( $requestData['questions']);
         $rules = array(
             "title" => "required|string|max:255",
             "description" => "required|string",
@@ -203,9 +245,9 @@ class EmployerController extends Controller {
             "geo_cities"  => "integer",
             "vacancies"  => "integer",
             "salary"  => "string|max:255",
-            "gender" => "required|in:male,female,any",
+            // "gender" => "required|in:male,female,any",
             "expiration" => "string|max:60",
-            "age" => "string|max:20",
+            // "age" => "string|max:20",
         );
         $validator = Validator::make( $requestData , $rules);
         if ($validator->fails()){
@@ -225,12 +267,14 @@ class EmployerController extends Controller {
             $job->city =  $requestData['geo_cities'];
             $job->vacancies =  $requestData['vacancies'];
             $job->salary =  $requestData['salary'];
-            $job->gender =  $requestData['gender'];
-            $job->age =  $requestData['age'];
+            // $job->gender =  $requestData['gender'];
+            // $job->age =  $requestData['age'];
             $job->user_id =  $user->id;
             $job->expiration =  $requestData['expiration'].' 00:00:00';
-            $job->questions =  $requestData['questions'];
+            // $job->questions =  $requestData['questions'];
             $job->save();
+
+            $job->addJobQuestions($requestData['jq']); 
 
             return response()->json([
                 'status' => 1,
@@ -242,6 +286,8 @@ class EmployerController extends Controller {
     }
 
 
+   
+
     //====================================================================================================================================//
     // Get // Show list of jobs posted by employer.
     //====================================================================================================================================//
@@ -250,7 +296,7 @@ class EmployerController extends Controller {
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
-        $data['jobs'] = Jobs::with('applicationCount')->where('user_id',$user->id)->get();
+        $data['jobs'] = Jobs::with('applicationCount')->where('user_id',$user->id)->orderBy('created_at', 'DESC')->get();
         return view('site.employer.myjobs', $data);
     }
 
@@ -270,6 +316,69 @@ class EmployerController extends Controller {
         $data['geo_cities'] = get_Geo_City($job->country, $job->state);
         return view('site.employer.jobEdit', $data);
     }
+
+
+    //====================================================================================================================================//
+    // Get // layout for purchasing Credits.
+    //====================================================================================================================================//
+    function empJobApplications($id){
+        $user = Auth::user();
+        if(isEmployer($user)){
+
+            $job =  Jobs::find($id);
+
+            // $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id',$id)->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC')->paginate(1);
+
+            // $data['applications'] = $applications;
+            $data['job']   = $job;
+            $data['user']   = $user;
+            $data['title']  = 'Job Detail';
+            $data['classes_body'] = 'jobdetail';
+            return view('site.employer.jobApplication', $data);
+        }
+    }
+
+
+     //====================================================================================================================================//
+    // Get // layout for purchasing Credits.
+    //====================================================================================================================================//
+    function jobAppFilter(Request $request){
+        // dd($request->toArray());
+        $user = Auth::user();
+        if(isEmployer($user)){
+            // $job =  Jobs::find($id);
+
+            $job_id = $request->job_id;
+
+            $keyword = my_sanitize_string($request->ja_filter_keyword);
+            $country = $request->ja_filter_country;
+            $qualification_type = $request->ja_filter_qualification_type;
+            $salaryRange = $request->ja_filter_salary;
+          
+            $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id','=',$job_id);
+
+            if(!empty($country) || !empty($qualification_type) || !empty($salaryRange) || !empty($keyword)){
+                $applications = $applications->whereHas('jobseeker', function ($query) use($country, $qualification_type, $salaryRange, $keyword){
+                    if(!empty($country)){ $query->where('country', '=', $country);  }   
+                    if(!empty($salaryRange)){ $query->where('salaryRange', '>=', $salaryRange); }
+                    if(!empty($keyword)){ 
+                         $query->where('username', 'LIKE', "%{$keyword}%");
+                    }
+                    return $query; 
+                });  
+            }
+
+            $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC')->paginate(1);
+            // dd( $applications->toArray());
+            $data['applications'] = $applications;
+            // $data['job']   = $job;
+            $data['user']   = $user;
+            $data['title']  = 'Job Detail';
+            $data['classes_body'] = 'jobdetail';
+            return view('site.employer.jobApplicationAjax', $data);
+        }
+    }
+
 
 
     //====================================================================================================================================//
@@ -469,6 +578,19 @@ class EmployerController extends Controller {
             $data['user']   =  $user;
             $data['classes_body'] = 'credit';
             return view('site.credit.purchase', $data);
+        }
+    }
+
+
+    //====================================================================================================================================//
+    // Get // layout for job application question answer.
+    //====================================================================================================================================//
+    public function getJobAppQA($id){
+        $user = Auth::user();
+        if(isEmployer($user)){
+            $jobsApplication = JobsApplication::with('answers.question')->where('id',$id)->first();
+            $data['application'] = $jobsApplication;
+            return view('site.layout.parts.jobApplicationQA', $data);
         }
     }
 

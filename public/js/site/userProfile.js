@@ -109,6 +109,7 @@ var CProfile = function() {
                 $this.disabledProfileEditMain(false);
                 if( data.status ){
                     that.hideMainEditor();
+                    $('ul.list_info.userProfileLocation').replaceWith(data.html_location);
                 }else{
                     if(data.validator != undefined){
                         const keys = Object.keys(data.validator);
@@ -264,6 +265,10 @@ var CProfile = function() {
             type: 'POST',
             url: base_url+'/ajax/setGalleryPrivateAccess/'+gallery_id,
             success: function(data){
+                if(data.status == 1){
+                    var access_type = (data.access == 2)?'private':'public';
+                    $('.item.profile_photo_frame.gallery_'+gallery_id).removeClass('private').addClass(access_type);
+                }
             }
         });
     }
@@ -464,10 +469,18 @@ var CProfile = function() {
 
     this.showVideoModal = function(video_url){
         console.log(' showVideoModal ', video_url);
-        var videoElem  = '<video controls>';
+        var videoElem  = '<video id="player" controls>';
         videoElem     += '<source src="'+video_url+'" type="video/mp4">';
-        videoElem     += 'Your browser does not support the video tag';
+        // videoElem     += '<source src="https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4" type="video/mp4">';
+        // videoElem     += '<source src="https://www.w3schools.com/html/mov_bbb.mp4">';
+        // videoElem     += 'Your browser does not support the video tag';
         videoElem     += '</video>';
+
+        // var videoElem  = '<video id="player" playsinline controls>'; 
+        // videoElem     +=    '<source src="'+video_url+'" type="video/mp4" />'; 
+        // videoElem     += '</video>'; 
+
+
 
         $('#videoShowModal .videoBox').html(videoElem);
 
@@ -476,7 +489,10 @@ var CProfile = function() {
             fadeDelay: 2.5,
             escapeClose: false,
             clickClose: false,
-        });
+        }); 
+
+
+       //  const player = new Plyr('#player');
 
     }
 
@@ -502,6 +518,7 @@ $(document).ready(function() {
                     $('#frm_profile_edit_personal input, #frm_profile_edit_personal select').on('change', function(){
                         var elem = $(this);
                         var attr = $(this).attr('name');
+                        attr =  attr.replace("[]", "");
                         if (typeof attr !== typeof undefined && attr !== false) {
                             if($('#'+attr+'_error').length > 0){
                                 $('#'+attr+'_error').removeClass('to_show').addClass('to_hide').text('');
@@ -689,9 +706,42 @@ $(document).ready(function() {
     }));
 
 
-    // $(document).on('click','.removeAttachBtn', function(){
-    //     console.log(' removeAttachBtn click  ');
+    
+
+    // var vloop = null;
+    // var num = 0; 
+    // $('.item.item_video').on('mouseenter', function(){
+    //     console.log(' mouseover '); 
+    //     var video_thumb = $(this).find('img'); 
+    //      vloop = setInterval(function() {
+    //         // loop - one, two, trÃ­
+    //          console.log(' change video image  ', num); 
+    //         if(num == 3) {
+    //             num = 1;
+    //         } else {
+    //             num++;
+    //         }
+            
+    //         console.log(' video_thumb ', video_thumb); 
+
+    //         video_thumb.attr('src', video_thumb.attr('data-thumb'+num));
+    //         // set the image source on the element
+    //         // $this.attr("src", imgSrc.replace(/(\d\.jpg|\w*\.jpg)$/, +num + '.jpg'));
+
+    //     }, 500);
+
+
+    // }).on('mouseleave',function(){
+    //     console.log(' mouseout >>  '); 
+    //     clearInterval(vloop);
     // });
+
+
+ 
+
+
+
+
 
 });
 

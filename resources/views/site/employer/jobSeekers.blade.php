@@ -80,8 +80,8 @@
             </div>
             {{-- @dump($likeUsers) --}}
             <div class="js_actionBtn">
+                <a class="graybtn jbtn" href="{{route('jobSeekerInfo', ['id' => $js->id])}}">Detail</a>
                 <a class="jsBlockUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Block</a>
-
                 @if (in_array($js->id,$likeUsers))
                 <a class="active graybtn jbtn" data-jsid="{{$js->id}}">Liked</a>
                 @else

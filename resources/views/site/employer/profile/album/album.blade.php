@@ -19,8 +19,9 @@
     @if ($videos->count() > 0 )
         @foreach ($videos as $video)
             <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-                <a onclick="UProfile.showVideoModal('{{asset('images/user/'.$video->file)}}')" class="video_link" target="_blank">
-                <span class="v_title">{{$video->title}}</span>
+                <a onclick="UProfile.showVideoModal('{{assetVideo($video)}}')" class="video_link" target="_blank">
+                    <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
+                   {!! generateVideoThumbs($video) !!}
                 </a>
                 <span title="Delete video" class="icon_delete" data-vid="{{$video->id}}" onclick="UProfile.delteVideo({{$video->id}})">
                     <span class="icon_delete_photo"></span>
@@ -38,10 +39,7 @@
             <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
                 <div class="cont">
                     <div class="videoBox"></div>
-                    {{-- <div class="double_btn">
-                        <button class="confirm_close btn small dgrey" onclick="UProfile.cancelVideoModal(); return false;">Close</button>
-                        <div class="cl"></div>
-                    </div> --}}
+                    
                 </div>
             </div>
         </div>

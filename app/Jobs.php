@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\JobsQuestions;
 
 class Jobs extends Model {
 
@@ -30,5 +31,51 @@ class Jobs extends Model {
         // ->groupBy('category_id');
 
     }
+
+ 
+
+    public function questions(){
+        return $this->hasMany('App\JobsQuestions', 'job_id');
+    }
+
+
+
+    function addJobQuestions($questions){
+       
+        if(!empty($questions)){
+            foreach ($questions as $qkey => $qv) {
+                // dd($qv); 
+                $newQuestion = new JobsQuestions(); 
+                $newQuestion->title = $qv['title'];  
+                // $newQuestion->options = json_encode($qv['option']);
+
+                $options_list = array();
+                $preffer_list = array();
+                $goldstar_list = array();
+
+                if(!empty($qv['option'])){
+                    foreach ($qv['option'] as $opKey => $opValue) {
+                        array_push($options_list,  $opValue['text']);
+
+                        if(isset($opValue['preffer'])){
+                             array_push($preffer_list,  $opValue['text']);
+                        }
+
+                        if(isset($opValue['goldstar'])){
+                             array_push($goldstar_list,  $opValue['text']);
+                        }
+                    }
+                } 
+
+                 $newQuestion->options = json_encode($options_list);
+                 $newQuestion->preffer = json_encode($preffer_list);
+                 $newQuestion->goldstar = json_encode($goldstar_list);
+
+                $this->questions()->save($newQuestion); 
+            }
+        }
+
+    }
+
 
 }

@@ -20,6 +20,11 @@ use App\UserActivity;
 use App\Video;
 use App\Jobs;
 use App\JobsApplication;
+use App\TagCategory;
+use App\Tags;
+use App\JobsAnswers;
+use App\JobsQuestions;
+
 
 class SiteUserController extends Controller
 {
@@ -30,24 +35,21 @@ class SiteUserController extends Controller
     }
 
 
-    public function index(Request $request)
-    {
+   
+    public function index(Request $request) {
         $user = Auth::user();
 
-
         if ($request->username ===  $user->username) {
-
-
             $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
             $profile_image   = UserGallery::where('user_id', $user->id)->where('status', 1)->where('profile', 1)->first();
             if (!$profile_image) {
                 if ($user_gallery->count() > 0) {
-                    $profile_image   = asset('images/user/' . $user->id . '/' . $user_gallery->first()->image);
+                   $profile_image   = assetGallery($user_gallery->first()->access,$user->id,'',$user_gallery->first()->image);
                 } else {
                     $profile_image   = asset('images/site/icons/nophoto.jpg');
                 }
             } else {
-                $profile_image   = asset('images/user/' . $user->id . '/gallery/' . $profile_image->image);
+                $profile_image   = assetGallery($profile_image->access,$user->id,'',$profile_image->image);
             }
 
 
@@ -59,6 +61,10 @@ class SiteUserController extends Controller
             $data['user'] =  $user;
             $data['user_gallery'] = $user_gallery;
             $data['geo_country'] = get_Geo_Country();
+            
+            $data['geo_state'] = !empty($user->country)?(get_Geo_State($user->country)):null;
+            $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null; 
+
             $data['profile_image']    = $profile_image;
             $data['title'] = 'profile';
             $data['classes_body'] = 'profile';
@@ -74,6 +80,131 @@ class SiteUserController extends Controller
             return view('site.404');
         }
     }
+
+
+    
+    //====================================================================================================================================//
+    // Display Step2 form for Employer, on first time registeration.
+    //====================================================================================================================================//
+    public function step2User(){
+        // dd(' step2Employer ');
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'User';
+        $data['classes_body'] = 'userStep2';
+        // $data['content'] = 'this is page content';
+
+        $tagCategories = TagCategory::get();
+        $tags = Tags::orderBy('usage', 'DESC')->limit(30)->get();
+
+        // dump(  $tags );
+        // dd(  $tagCategories );
+        
+        $data['tags'] = $tags;
+        $data['tagCategories'] = $tagCategories;
+        
+        return view('site.register.user_step2', $data);
+
+    }
+
+    //====================================================================================================================================//
+    //Ajax Post from step2 layout  // Add user step2 data.
+    //====================================================================================================================================//
+    public function Step2(Request $request){
+        
+        $requestData = $request->all();
+        $requestData['questions']       = json_decode( $request->questions, true );
+        $requestData['about_me']        = my_sanitize_string($request->about_me);
+        $requestData['interested_in']   = my_sanitize_string($request->interested_in);
+        $requestData['recentJob']       = my_sanitize_string($request->recentJob);
+        $requestData['industry_experience'] = my_sanitize_array_string(json_decode(stripslashes($request->industry_experience),true));
+        $requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
+        $requestData['salaryRange'] = my_sanitize_string($request->salaryRange);
+        $requestData['tags'] = my_sanitize_string($request->tags);
+        $requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
+
+        // dump($requestData['tags']);
+        // dump($requestData['industry_experience']);
+        // dd( $request->toArray() );
+
+        // dd( $request->all() );
+        // dd(  $requestData );
+        if( !empty($requestData['questions']) ){
+            foreach($requestData['questions'] as $qk => $qv){
+                $requestData['questions'][$qk] = my_sanitize_string($qv);
+            }
+        }
+
+        // card_step2_validation
+        $rules = array(
+            'questions'  => 'required',
+            'about_me' => 'required|max:150',
+            'interested_in' => 'required|max:150',
+            'recentJob'  => 'required',
+            'industry_experience'  => 'required',
+            'qualification'  => 'required',
+            'salaryRange'  => 'required',
+            'tags'  => 'required',
+           
+        );
+        $validator = Validator::make( $requestData , $rules);
+
+        if ($validator->fails()){
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        }else{
+
+            // dump( ' validation success ' ); 
+            // dd( $request->all() );
+
+
+            $user = Auth::user();
+            $user->questions        = $requestData['questions'];
+            $user->about_me         = $requestData['about_me'];
+            $user->interested_in    = $requestData['interested_in'];
+            $user->recentJob        = $requestData['recentJob'];
+            $user->industry_experience = $requestData['industry_experience'];
+            $user->qualification    = $requestData['qualification'];
+            $user->salaryRange      = $requestData['salaryRange'];
+            $user->step2            = 1;
+            $user->save();
+            $user->tags()->sync($requestData['tags']); 
+
+            if(!empty($request->file('file'))){
+                $image = $request->file('file');
+                $fileName   = time() . '.' . $image->getClientOriginalExtension();
+                
+                $file_thumb  = $user->id.'/gallery/small/'.$fileName;
+                $file_path   = $user->id.'/gallery/'.$fileName;
+
+                $img = Image::make($image->getRealPath());
+                $img->resize(120, 120, function ($constraint) { $constraint->aspectRatio(); });
+                $img->stream();
+                Storage::disk('publicMedia')->put( $file_thumb , $img);
+
+                $img = Image::make($image->getRealPath());
+                $img->stream();
+
+                Storage::disk('publicMedia')->put($file_path, $img, 'public');
+
+                $userGallery = new UserGallery();
+                $userGallery->user_id = $user->id;
+                $userGallery->image = $fileName;
+                $userGallery->status = 1;
+                $userGallery->profile = 1;
+                $userGallery->save();
+
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'data saved succesfully',
+                    'redirect' => route('profile')
+                ]);
+            }
+        }
+    }
+
 
 
     //====================================================================================================================================//
@@ -134,10 +265,29 @@ class SiteUserController extends Controller
             $user->byear = $request->year;
 
             try {
+
                 $user->save();
+
+                $html_userProfileLocation  = '<ul class="list_info userProfileLocation">'; 
+                $html_userProfileLocation .= '<li><span id="list_info_age">'.$user->age.'</span><span class="basic_info">•</span></li>'; 
+                $html_userProfileLocation .= '<li id="list_info_location">'; 
+                $html_userProfileLocation .= ($user->GeoCity)?($user->GeoCity->city_title):'';
+                $html_userProfileLocation .= ', ';
+                $html_userProfileLocation .= ($user->GeoState)?($user->GeoState->state_title):'';
+                $html_userProfileLocation .= ', ';
+                $html_userProfileLocation .= ($user->GeoCountry)?($user->GeoCountry->country_title):''; 
+                $html_userProfileLocation .= '</li>';
+
+
+
+                $html_userProfileLocation .= '<li><span class="basic_info">•</span><span id="list_info_gender">'.(isTypeEmployer($user)?'Employer':'Job Seeker').'</span></li>';
+                $html_userProfileLocation .= '</ul>';
+
+
                 return response()->json([
                     'status' => 1,
-                    'validator' => 'record Succesfully saved'
+                    'validator' => 'record Succesfully saved',
+                    'html_location' => $html_userProfileLocation
                 ]);
             } catch (\Exception $e) {
                 return response()->json([
@@ -294,17 +444,24 @@ class SiteUserController extends Controller
         $image = $request->file('file');
 
         $fileName   = time() . '.' . $image->getClientOriginalExtension();
+        $file_thumb  = $user->id.'/gallery/small/'.$fileName;
+        $file_path   = $user->id.'/gallery/'.$fileName;
 
         $img = Image::make($image->getRealPath());
         $img->resize(120, 120, function ($constraint) {
             $constraint->aspectRatio();
         });
         $img->stream();
-        Storage::disk('user')->put($user->id . '/gallery/small/' . $fileName, $img, 'public');
+
+        // Storage::disk('user')->put($user->id . '/gallery/small/' . $fileName, $img, 'public');
+        Storage::disk('publicMedia')->put( $file_thumb , $img);
 
         $img = Image::make($image->getRealPath());
         $img->stream();
-        Storage::disk('user')->put($user->id . '/gallery/' . $fileName, $img, 'public');
+
+        // Storage::disk('user')->put($user->id . '/gallery/' . $fileName, $img, 'public');
+        Storage::disk('publicMedia')->put($file_path, $img, 'public');
+         
 
         $userGallery = new UserGallery();
         $userGallery->user_id = $user->id;
@@ -313,8 +470,14 @@ class SiteUserController extends Controller
         $userGallery->save();
 
         $html  = '<div id="'.$userGallery->id.'" class="item profile_photo_frame gallery_'.$userGallery->id.'">';
-        $html .=    '<a data-offset-id="'.$userGallery->id.'" class="show_photo_gallery" href="'.asset('images/user/'.$user->id.'/gallery/'.$userGallery->image).'" data-lcl-thumb="'.asset('images/user/'.$user->id.'/gallery/small/'.$userGallery->image).'" >';
-        $html .=       '<img data-photo-id="'.$userGallery->id.'"  id="photo_'.$userGallery->id.'"   class="photo" data-src="'.asset('images/user/'.$user->id.'/gallery/'.$userGallery->image).'" src="'.asset('images/user/'.$user->id.'/gallery/small/'.$userGallery->image).'">';
+        
+
+        // $html .=    '<a data-offset-id="'.$userGallery->id.'" class="show_photo_gallery" href="'.asset('images/user/'.$user->id.'/gallery/'.$userGallery->image).'" data-lcl-thumb="'.asset('images/user/'.$user->id.'/gallery/small/'.$userGallery->image).'" >';
+        // $html .=       '<img data-photo-id="'.$userGallery->id.'"  id="photo_'.$userGallery->id.'"   class="photo" data-src="'.asset('images/user/'.$user->id.'/gallery/'.$userGallery->image).'" src="'.asset('images/user/'.$user->id.'/gallery/small/'.$userGallery->image).'">';
+        // $html .=    '<a/>';
+
+        $html .=    '<a data-offset-id="'.$userGallery->id.'" class="show_photo_gallery" href="'.assetGallery(1,$user->id,'',$userGallery->image).'" data-lcl-thumb="'.assetGallery(1,$user->id,'small',$userGallery->image).'" >';
+        $html .=       '<img data-photo-id="'.$userGallery->id.'"  id="photo_'.$userGallery->id.'"   class="photo" data-src="'.assetGallery(1,$user->id,'',$userGallery->image).'" src="'.assetGallery(1,$user->id,'small',$userGallery->image).'">';
         $html .=    '<a/>';
 
         $html .=    '<span onclick="UProfile.confirmPhotoDelete('.$userGallery->id.');" title="Delete photo" class="icon_delete">';
@@ -362,8 +525,17 @@ class SiteUserController extends Controller
                 );
                 return response()->json($output);
             } else {
-                Storage::disk('user')->delete($user->id . '/gallery/' . $gallery_image->image);
-                Storage::disk('user')->delete($user->id . '/gallery/small/' . $gallery_image->image);
+               
+                $g_path = (($gallery_image->access == 2)?('/private/'):('/public/')).$gallery_image->user_id.'/gallery/'.$gallery_image->image;
+                $gt_path = (($gallery_image->access == 2)?('/private/'):('/public/')).$gallery_image->user_id.'/gallery/small/'.$gallery_image->image;
+
+                // Storage::disk('user')->delete($user->id . '/gallery/' . $gallery_image->image);
+                // Storage::disk('user')->delete($user->id . '/gallery/small/' . $gallery_image->image);
+                // dd( $g_path,  $gt_path , $gallery_image);
+
+                Storage::disk('media')->delete($g_path);
+                Storage::disk('media')->delete($gt_path);
+
                 $gallery_image->delete();
                 $output = array(
                     'status' => '1',
@@ -394,11 +566,45 @@ class SiteUserController extends Controller
                 );
                 return response()->json($output);
             } else {
-                $gallery_image->access = 2;
+                $old_access = $gallery_image->access; 
+                $gallery_image->access = ($gallery_image->access == 1)?2:1;
                 $gallery_image->save();
+
+                // move image to specific folder on base of access (private/public)  
+                if($old_access == 2){
+                    $path       = '/private/'.$gallery_image->user_id.'/gallery/'.$gallery_image->image;
+                    $newPath    = '/public/'.$gallery_image->user_id.'/gallery/'.$gallery_image->image;
+                }else{
+                    $path       = '/public/'.$gallery_image->user_id.'/gallery/'.$gallery_image->image;
+                    $newPath    = '/private/'.$gallery_image->user_id.'/gallery/'.$gallery_image->image;
+                }
+
+                $image_file = Storage::disk('media')->get($path);
+                Storage::disk('media')->put($newPath, $image_file); 
+                Storage::disk('media')->delete($path);
+
+
+
+                // move small image to specific folder on base of access (private/public)  
+                if($old_access == 2){
+                    $path       = '/private/'.$gallery_image->user_id.'/gallery/small/'.$gallery_image->image;
+                    $newPath    = '/public/'.$gallery_image->user_id.'/gallery/small/'.$gallery_image->image;
+                }else{
+                    $path       = '/public/'.$gallery_image->user_id.'/gallery/small/'.$gallery_image->image;
+                    $newPath    = '/private/'.$gallery_image->user_id.'/gallery/small/'.$gallery_image->image;
+                }
+
+                $image_file = Storage::disk('media')->get($path);
+                Storage::disk('media')->put($newPath, $image_file); 
+                Storage::disk('media')->delete($path);
+               
+
+                // dd($path, $newPath); 
+
                 $output = array(
                     'status' => '1',
-                    'message' => 'Image succesfully updated'
+                    'message' => 'Image succesfully updated',
+                    'access' => $gallery_image->access
                 );
                 return response()->json($output);
             }
@@ -432,8 +638,8 @@ class SiteUserController extends Controller
                     'status' => '1',
                     'message' => 'Image succesfully updated',
                     'data'  =>  array(
-                        'small' => asset('images/user/' . $user->id . '/gallery/small/' . $gallery_image->image),
-                        'large' => asset('images/user/' . $user->id . '/gallery/' . $gallery_image->image)
+                        'small' => assetGallery($gallery_image->access,$user->id,'small',$gallery_image->image),
+                        'large' => assetGallery($gallery_image->access,$user->id,'',$gallery_image->image)
                     )
                 );
                 return response()->json($output);
@@ -617,18 +823,30 @@ class SiteUserController extends Controller
 
             $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
             $storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
+           
+            // store video in private folder by default. 
+            $storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video)); 
+
+
+        
 
             $video = new Video();
             $video->title = $fileName;
             $video->type = $mime;
             $video->user_id = $user->id;
-            $video->status = 1;
-            $video->file =  $user->id . '/private/videos/' . $fileName;
+            $video->status = 2;
+            // $video->file =  $user->id . '/private/videos/' . $fileName;
+            $video->file = $user->id.'/videos/'.$fileName;
             $video->save();
 
+            // generate video thumbs. 
+            $video->generateThumbs();
+
+
             $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;">';
-            $html .=    '<a onclick="UProfile.showVideoModal(\''.asset('images/user/'.$video->file).'\')" class="video_link" target="_blank">';
-            $html .=        '<span class="v_title">'.$video->title.'</span>';
+            $html .=    '<a onclick="UProfile.showVideoModal(\''.assetVideo($video).'\')" class="video_link" target="_blank">';
+            $html .=        '<div class="v_title_shadow"><span class="v_title">'.$video->title.'</span></div>';
+            $html .=        generateVideoThumbs($video);
             $html .=    '</a>';
             $html .=    '<span title="Delete video" class="icon_delete" data-vid="12" onclick="UProfile.delteVideo('.$video->id.')">';
             $html .=        '<span class="icon_delete_photo"></span>';
@@ -666,8 +884,11 @@ class SiteUserController extends Controller
         if (!empty($video_id)) {
             $video = Video::find($video_id);
             if ($video->user_id === $user->id) {
-                $exists = Storage::disk('user')->exists($video->file);
-                if ($exists) { Storage::disk('user')->delete($video->file); }
+
+                // $exists = Storage::disk('user')->exists($video->file);
+                // if ($exists) { Storage::disk('user')->delete($video->file); }
+                $video->deleteFiles();
+
                 $video->delete();
                 $output = array(
                     'status' => '1',
@@ -690,7 +911,7 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
-        $data['jobs'] = Jobs::with('applicationCount')->get();
+        $data['jobs'] = Jobs::with('applicationCount')->orderBy('created_at', 'DESC')->get();
         return view('site.jobs.jobs', $data);
     }
 
@@ -703,7 +924,9 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         // $data['title'] = 'Jobs';
         // $data['classes_body'] = 'jobs';
-        $data['job'] = Jobs::find($job_id);
+        $data['job'] = Jobs::with('questions')->find($job_id);
+        // dd( $data['job']  ); 
+        // dd( $data['job']->questions()->count() ); 
         return view('site.jobs.applyInfo', $data);
     }
 
@@ -713,11 +936,24 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     public function jobApplySubmit(Request $request){
         $user = Auth::user();
-        // dd($request->toArray());
+        
+       
+        
         $requestData = $request->all();
+        $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
+        
+        // if(isset($requestData['applyAnswer']) && !empty($requestData['applyAnswer'])){
+        //     foreach ($requestData['applyAnswer'] as $rk => $rv) { $requestData['applyAnswer'][$rk] = my_sanitize_string($rv); }  
+        //
 
-        $requestData['applyProposal'] = my_sanitize_string( $requestData['applyProposal'] );
-        foreach ($requestData['applyAnswer'] as $rk => $rv) { $requestData['applyAnswer'][$rk] = my_sanitize_string($rv); }
+        if(isset($requestData['answer']) && !empty($requestData['answer'])){
+            foreach ($requestData['answer'] as $ansK => $ansV) { 
+                $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']); 
+                $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']); 
+            }  
+        }
+
+
 
         $job = Jobs::find($requestData['job_id']);
         // check to confirm job with id exist
@@ -740,9 +976,66 @@ class SiteUserController extends Controller
             $newJobApplication->user_id = $user->id;
             $newJobApplication->job_id = $job->id;
             $newJobApplication->status = 'pending';
-            $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
-            $newJobApplication->answers  = json_encode( $requestData['applyAnswer'] );
+            // $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
+            // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
             $newJobApplication->save();
+
+            // if jobApplication is succesfully added then add job answers. 
+            if( $newJobApplication->id > 0 ){
+                
+                if(isset($requestData['answer']) && !empty($requestData['answer'])){
+                    foreach ($requestData['answer'] as $ansK => $ansV) { 
+                        // $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']); 
+                        // $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']); 
+
+                        $jobQuestion = JobsQuestions::find($ansV['question_id']);
+
+                        // check if jqb question exist 
+                        if(!empty($jobQuestion)){
+
+                            // get the goldstar and preffer option 
+                            $goldstar = !empty($jobQuestion->goldstar)?(json_decode($jobQuestion->goldstar, true)):(array()); 
+                            $preffer  = !empty($jobQuestion->preffer)?(json_decode($jobQuestion->preffer, true)):(array());
+
+                            // dump('goldstar', $goldstar);
+                            // dump('preffer', $preffer);
+                            // dump('ansV', $ansV);
+                           
+                            $jobAnswer              = new JobsAnswers(); 
+                            $jobAnswer->question_id = $ansV['question_id'];
+                            $jobAnswer->user_id     = $user->id;
+                            $jobAnswer->answer      = $ansV['option'];
+
+                            $newJobApplicationUpdate = false; 
+
+                            if(in_array($jobAnswer->answer,  $goldstar)){
+                                $newJobApplication->goldstar = $newJobApplication->goldstar+1;
+                                $newJobApplicationUpdate = true; 
+                            }
+                            
+                            if(in_array($jobAnswer->answer,  $preffer)){
+                                $newJobApplication->preffer = $newJobApplication->preffer+1;
+                                $newJobApplicationUpdate = true; 
+                            }
+
+                            if( $newJobApplicationUpdate ){  $newJobApplication->save(); }
+
+
+                            $newJobApplication->answers()->save($jobAnswer); 
+
+                        }
+
+                      
+
+                    }  
+                }
+
+               
+
+            }
+
+
+             // dd($request->toArray());
 
             if ($newJobApplication) {
                 return response()->json([
@@ -856,6 +1149,104 @@ class SiteUserController extends Controller
         ]);
     }
 
+
+    //====================================================================================================================================//
+    // Ajax Get // get list of tags based on tag category.
+    //====================================================================================================================================//
+    function getTags(TagCategory $category, $offset = 0){
+        // dd($category->toArray());
+         // dd($tagsCount);
+
+        if($category) { 
+
+          $limit = 30;  
+          // $limit = 2;  
+          $skip = $offset * $limit; 
+
+          $tags      = Tags::where('category_id',$category->id)->orderBy('usage', 'DESC')->skip($skip)->limit($limit)->get();
+          $tagsCount = Tags::where('category_id',$category->id)->count();
+          
+          $moreTagExist = (($tagsCount >  $limit) && (($skip + $limit) < $tagsCount))?1:0;
+
+
+          $tagsListHtml  = '<input type="hidden" name="tagPagination" value="0" />'; 
+          $tagsListHtml .= '<ul class="tagList">'; 
+          if(!empty($tags) & ($tags->count() > 0)){
+            foreach ($tags as $tkey => $tag) {
+                $tagsListHtml .=  '<li class="tag tagItem" data-id="'.$tag->id.'"><i class="tagIcon '.$tag->icon.'"></i>'.$tag->title.'</li>';
+            }
+ 
+            if( $moreTagExist ){
+               $tagsListHtml .=  '<li class=""><a class="loadMoreTags" data-offset="'.($offset+1).'">More interests<i class="tagIcon fa fa-redo"></i></a></li>'; 
+            }
+          }
+          $tagsListHtml .= '</ul>'; 
+          return response()->json([
+            'status' => 1,
+            'data' => $tagsListHtml
+          ]);
+        }
+    }
+
+
+    //====================================================================================================================================//
+    // Ajax Get // return list of tags based on search keyword.
+    //====================================================================================================================================//
+    function searchTags(Request $request){
+        $search = $request->search; 
+        if (!empty($search)){
+            $exclude = !empty($request->exclude)?($request->exclude):(array());
+            $tags = Tags::where('title', 'like', '%'.$search.'%')->whereNotIn('id',$exclude)->orderBy('usage', 'DESC')->limit(100)->get();
+           // dd($tags->toArray());
+           return response()->json([
+            'status' => 1,
+            'data' => $tags
+          ]);
+        }
+    }
+
+
+    //====================================================================================================================================//
+    // Ajax Post // add new tag.
+    //====================================================================================================================================//
+    function addNewTag(Request $request){
+        // dd( $request->toArray() );
+        $rules = array(
+            'newTagtitle'    => 'required|regex:/[a-zA-Z0-9\s]+/|max:20',
+            'newTagCategory' => 'required|exists:tag_categories,id',
+            'newTagIcon'     => 'required',
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        } else {
+
+            $exist = Tag::where('title',$request->newTagtitle)->where('category_id',$request->newTagCategory)->first();
+            if($exist){
+                return response()->json([
+                    'status' => 0,
+                    'error' =>  'Tag with Title ('.$request->newTagtitle.') and Category ('.$request->newTagCategory.') already Exist',
+                ]);
+             }
+
+            $newTag = new Tags();
+            $newTag->title = $request->newTagtitle;
+            $newTag->category_id = $request->newTagCategory;
+            $newTag->icon = $request->newTagIcon;
+            $newTag->usage = 0;
+            $newTag->save(); 
+
+            return response()->json([
+                'status' => 1,
+                'data'   => $newTag 
+            ]);
+
+        }
+    }
+    
 
 
 }

@@ -81,7 +81,7 @@ button.btn.like_frame:hover span.like_hover{ opacity: 1; }
 
 .card_profile .part_photo .upload_pic{ transition: background-color 0.3s ease; cursor: pointer; overflow: hidden; width: 53px; height: 53px; box-sizing: border-box; display: inline-block; background-color: #00d8bc; background-image: url(../images/icon_upgrade_card_photo.png); background-position: 50% 50%; background-repeat: no-repeat; border-radius: 50%; border: 3px solid #fff; position: absolute; bottom: 2px; right: 2px; }
 .card_profile .part_photo .upload_file:hover .upload_pic{ background-color: #00b697; }
-.card_profile .part_photo .name{ font-size: 24px; line-height: 28px; margin: 0 0 5px; }
+.card_profile .part_photo .name{ font-size: 14px; line-height: 18px; margin: 0 0 5px; }
 .card_profile .part_photo .name_info{ font-size: 16px; line-height: 20px; color: #9c9c9c; }
 .card_profile .card_profile_info{ vertical-align: top; width: 430px; display: table-cell; box-sizing: border-box; padding: 30px; }
 .card_profile .card_profile_info .title{ font-size: 24px; line-height: 28px; margin: 0 0 15px; }

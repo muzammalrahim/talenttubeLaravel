@@ -22,7 +22,7 @@
 
 <!-- main -->
 <div class="main  above ">
-
+    <input type="hidden" id="userType" name="userType" value="employer" />
     <!-- header -->
     <div class="header">
         <div id="join_step" class="step">
@@ -33,7 +33,7 @@
             </ul>
 
         </div>
-        <div class="slogan"><span id="join_slogan">Answer 5 questions to calculate your best matches.</span></div>
+        <div class="slogan"><span id="join_slogan">Answer 6 questions to calculate your best matches.</span></div>
 
         <div class="logo">
             <a href="./index"><img src="{{asset('/images/site/logo.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
@@ -55,24 +55,28 @@
                         <div class="question_vh"><img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /><span>Yes</span></div>
                     </div>
 
-                    <div data-field="work_type" class="card_question ">
-                        <div class="count">5 of 5</div><div class="question_txt">Are you open to temporary and contract work?</div>
+                    <div data-field="graduate_intern" class="card_question ">
+                        <div class="count">6 of 6</div><div class="question_txt">Does you company hire Graduates or Intern?</div>
                     </div>
 
-                    <div data-field="job_type" class="card_question ">
-                        <div class="count">4 of 5</div><div class="question_txt">Are you looking for Full Time Employment?</div>
+                    <div data-field="part_time" class="card_question ">
+                        <div class="count">5 of 6</div><div class="question_txt">Are you open to Part Time or Casual workers?</div>
                     </div>
 
-                    <div data-field="relocate" class="card_question ">
-                        <div class="count">3 of 5</div><div class="question_txt">Are you looking or willing to relocate for your next job opportunity?</div>
+                    <div data-field="temporary_contract" class="card_question ">
+                        <div class="count">4 of 6</div><div class="question_txt">Does you organisation offer temporary or contract type work?</div>
                     </div>
 
-                    <div data-field="casual_part" class="card_question ">
-                        <div class="count">2 of 5</div><div class="question_txt">Are you open to Part Time or Casual work?</div>
+                    <div data-field="fulltime" class="card_question ">
+                        <div class="count">3 of 6</div><div class="question_txt">Are you looking for Full Time candidates?</div>
                     </div>
 
-                    <div data-field="resident " class="card_question first">
-                        <div class="count">1 of 5</div><div class="question_txt">Are you a Permanent Resident or Citizen of Australia or New Zealand?</div>
+                    <div data-field="relocation" class="card_question ">
+                        <div class="count">2 of 6</div><div class="question_txt">Are you willing to repay relocation expenses for a strong candidate?</div>
+                    </div>
+
+                    <div data-field="resident" class="card_question first">
+                        <div class="count">1 of 6</div><div class="question_txt">Does your organisation ever hire candidates who are not Permanent Resident or Citizen?</div>
                     </div>
 
                     <div class="card_decor_left1"></div>
@@ -88,25 +92,20 @@
             <!-- step 1 end -->
 
 
-
-
             <div id="full_step_3" class="bl_card_profile"  style="display:none;">
                 <div class="card_profile">
                     <div class="part_photo">
-                        <div class="upload_file"><div class="upload"><div class="bl photo_add">Add a photo</div></div></div>
+                        <div class="upload_file"><div class="upload"><div class="bl photo_add">Add Company Logo</div></div></div>
                         <div class="name"></div>
-                        <div class="name_info">2020,</div>
+                        <div class="name_info error to_hide"></div>
                     </div>
 
                     <div id="frm_card_join" class="card_profile_info card_join">
 
                         <div class="bl bl_basic">
-                        <div class="title">About me</div>
+                        <div class="title">About Our Organisation</div>
                         <div id="about_me_error" class="error to_hide">Required field!</div>
-
-                        <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Tell us something about you" maxlength="1000"></textarea>
-
-
+                        <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Give us a brief overview of what your company does" maxlength="1000"></textarea>
                         </div>
 
                         <div class="bl bl_basic">
@@ -116,15 +115,55 @@
                         <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="Whom would you like to find?" maxlength="1000"></textarea>
                         </div>
 
-                        <div class="bl bl_basic">
-                            <div class="error to_hide step2_error"></div>
-                        </div>
-
-                        <button id="join_done" class="btn turquoise small btn_join_submit">Done</button>
+                        <button id="step3_done" class="btn turquoise small btn_join_submit">Done</button>
                     </div>
                 </div>
             </div>
 
+
+            <div id="full_step_4" class="bl_card_indExp"  style="display:none;">
+                <div class="ind_exp">
+                    <div class="ind_exp_h">
+                        <p>Please select from the industries and role types below, that best describe the type of candidates you’d like to match with. You can select up to 5 and change these at any time
+                        </p>
+                    </div>
+
+                   {{--  <div class="industry_selected_list mb20">
+                        <div class="industry_selected_ul_cont">
+                            <ul class="industry_selected_ul item_selected_ul">
+
+                            </ul>
+                        </div>
+                    </div> --}}
+
+                    <div class="industry_list">
+                        <div class="industry_ul_cont">
+                            <ul class="industry_ul item_ul">
+                                 @php
+                                    $industries = getIndustries();
+                                @endphp
+
+                                 @if (!empty($industries))
+                                  @foreach ($industries as $ikey => $industry)
+                                    <li data-id="{{$ikey}}"> {{$industry}} </li>
+                                  @endforeach                                                 
+                                @endif
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="join_btn mt20 center">
+                        <div class="join_industry_error"></div>
+                        <button id="join_done" class="btn turquoise small btn_join_submit industryExpBtn_done" disabled="true">Done</button>
+                    </div>
+
+                </div>
+            </div>
+
+
+            <div id="full_step_error" class="step_error to_hide"> 
+                <div class="error"></div>
+            </div>
 
 
 
