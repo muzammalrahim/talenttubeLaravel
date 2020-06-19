@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Admin;
-
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
@@ -14,7 +13,7 @@ class UserController extends Controller
     public function __construct(){
     	$this->middleware('auth');
     }
-
+    
     /**
      * Display a listing of the resource.
      *
@@ -31,7 +30,6 @@ class UserController extends Controller
         $data['content_header'] = 'Employers List';
         return view('admin.employer.list', $data);
     }
-
 
     /** ================ This method returns the datatables data to view ================ */
     public function getDatatable(){
@@ -65,13 +63,11 @@ class UserController extends Controller
       ->toJson();
     }
 
-
     /** ================   ================ */
     public function create(){
         $data['record']   = FALSE;
         $data['title']  = 'User';
         $data['content_header'] = 'Add new User';
-
         $data['countries'] = get_Geo_Country();
         $data['educationDropdown'] = getEducationDropdown();
         $data['languages'] = getLanguages();
@@ -81,22 +77,16 @@ class UserController extends Controller
         $data['Days'] = getDays();
         $data['Months'] = getMonths();
         $data['years'] = getYears();
-
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = array();
         $data['cities'] = array();
-
-
-
         return view('admin.user.edit', $data);
     }
-
 
      public function createEmployer(){
         $data['record']   = FALSE;
         $data['title']  = 'Employer';
         $data['content_header'] = 'Add new Employer';
-
         $data['countries'] = get_Geo_Country();
         $data['educationDropdown'] = getEducationDropdown();
         $data['languages'] = getLanguages();
@@ -106,18 +96,11 @@ class UserController extends Controller
         $data['Days'] = getDays();
         $data['Months'] = getMonths();
         $data['years'] = getYears();
-
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = array();
         $data['cities'] = array();
-
-
-
         return view('admin.employer.edit', $data);
     }
-
-
-    // 
 
     /** ================   ================ */
     public function edit(User $id){
@@ -135,18 +118,10 @@ class UserController extends Controller
         $data['Months'] = getMonths();
         $data['years'] = getYears();
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
-
-
         $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
         $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
-
-       // dd(  $data['educationDropdown'] ); 
-
         return view('admin.user.edit', $data);
     }
-
-   // public function getEducationDropdown(){$education = "test"};
-
 
     /** ================  ================ */
     public function editEmployer(User $id){
@@ -165,8 +140,6 @@ class UserController extends Controller
         $data['Months'] = getMonths();
         $data['years'] = getYears();
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
-
-
         $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
         $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
 
@@ -175,16 +148,12 @@ class UserController extends Controller
         return view('admin.employer.edit', $data);
     }
 
-
-
-    
-
     public function update(Request $request, $id){
         $user = User::find($id);
         if (!$user){
             return redirect(route('users'))->withErrors(['token' => 'User with id '.$id.' does not exist']);
         }
-        // dd($request);
+
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'email',
@@ -240,8 +209,6 @@ class UserController extends Controller
         }
     }
 
-
-
     public function updateEmployer(Request $request, $id){
         //dd($request->toArray());
         $user = User::find($id);
@@ -296,9 +263,6 @@ class UserController extends Controller
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
-
-// dd($request->toArray());
-
         $user->questions = json_encode($request->questions);
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
@@ -308,7 +272,6 @@ class UserController extends Controller
             return redirect(route('adminEmployers'))->withSuccess( __('admin.record_updated_successfully'));
         }
     }
-
 
     public function store(Request $request){
         $this->validate($request, [
@@ -359,13 +322,10 @@ class UserController extends Controller
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
-
         $user->questions = json_encode($request->questions);
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
-
-
         if( $user->save() ){
             $user->roles()->attach([config('app.user_role')]);
             return redirect(route('users'))->withSuccess( __('admin.record_updated_successfully'));
@@ -422,7 +382,6 @@ class UserController extends Controller
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
-
         $user->questions = json_encode($request->questions);
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
@@ -432,22 +391,9 @@ class UserController extends Controller
             return redirect(route('users'))->withSuccess( __('admin.record_updated_successfully'));
         }
     }
-
-
-
-
     public function show($id){
 
     }
-
-
-
-
-
-
-
-
-
 
 
     public function destroy($id)
