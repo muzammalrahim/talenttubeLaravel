@@ -25,15 +25,44 @@
 
 <table class="table table-bordered" id="dataTable">
     <thead>
-        <tr>
+        <tr style = "text-align: center">
             <th>id.</th>
             <th>name</th>
             <th>email</th>
             <th>created_at</th>
             <th>action</th>
+            
         </tr>
     </thead>
   </table>
+
+  <div id="deleteModaluser" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+                 <!-- Modal content-->
+        <div class="modal-content">
+             <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+             </div>
+             <div class="modal-body">
+
+                <div class="modalContentUser">
+                    <p>Do you want to Delete <b><span id="delConfirmIdUser"></span></b> User ?</p>
+                    
+                </div>
+
+                <div class="modelProcessingUser" style="display: none;">
+                        <h4>Deleting User...</h4>    
+                 </div>
+
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-danger" id="removeuser" style="margin: 0 auto">Yes</button>
+              <input type="hidden" name="deleteConfirmUser" id="deleteConfirmUser" value="">
+             </div>
+
+        </div>
+    </div>
+</div>
 
 
 @stop
@@ -41,6 +70,27 @@
 
 @section('css')
     <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
+
+    <style type="text/css">
+        
+        .modal.showProcessing  .modalContentUser{
+         display: none;  
+
+        }
+        
+        .modal.showProcessing  .modelProcessingUser{ 
+            display: block !important;  
+        }
+
+        #delConfirmIdUser{
+            color:red;
+        }
+
+        td{
+          text-align: center;
+        }
+    </style>
+
 @stop
 
 

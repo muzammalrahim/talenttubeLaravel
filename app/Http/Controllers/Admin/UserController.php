@@ -6,6 +6,7 @@ use App\User;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Hash;
+// use App\Users;
 
 class UserController extends Controller
 {
@@ -40,8 +41,10 @@ class UserController extends Controller
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
-            $rhtml = '<a href="'.route('users.edit',['id' =>$records->id]).'">'.__('common.edit').'</a>';
-            return $rhtml;
+            $rhtml = '<a href="'.route('users.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px;"><i class="far fa-edit"></i></button></a>';
+
+            $rhtml .= '<button id="userdel" type="button" class="btn btn-danger btn-sm" data-type="User" user-id='. $records->id.' user-title="'.$records->name.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
+                return $rhtml;
         }
       })
       ->toJson();
@@ -56,8 +59,10 @@ class UserController extends Controller
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
-            $rhtml = '<a href="'.route('employers.edit',['id' =>$records->id]).'">'.__('common.edit').'</a>';
-            return $rhtml;
+            $rhtml = '<a href="'.route('employers.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px"><i class="far fa-edit"></i></button></a>';
+
+            $rhtml .= '<button id="empdel" type="button" class="btn btn-danger btn-sm" data-type="Employer" emp-id='. $records->id.' emp-title="'.$records->name.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
+                return $rhtml;
         }
       })
       ->toJson();
@@ -326,6 +331,7 @@ class UserController extends Controller
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
+        $user->type = "user";
         if( $user->save() ){
             $user->roles()->attach([config('app.user_role')]);
             return redirect(route('users'))->withSuccess( __('admin.record_updated_successfully'));
@@ -333,7 +339,7 @@ class UserController extends Controller
     }
 
     public function storeEmployer(Request $request){
-        dd( $request->toArray() );
+        // dd( $request->toArray() );
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'email',
@@ -386,18 +392,43 @@ class UserController extends Controller
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
+        $user->type = "employer";
+        
         if( $user->save() ){
-            $user->roles()->attach([config('app.user_role')]);
-            return redirect(route('users'))->withSuccess( __('admin.record_updated_successfully'));
+            $user->roles()->attach([config('app.employer_role')]);
+            return redirect(route('adminEmployers'))->withSuccess( __('admin.record_updated_successfully'));
         }
     }
     public function show($id){
 
     }
 
+    // Destroy User
 
-    public function destroy($id)
-    {
-
+    public function destroyUser($id){
+      $user = User::find($id);
+      if(!empty($user)){
+        $user->delete();
+          return response()->json([
+                'status' => 1,
+                'message' => 'Job Succesfully Deleted',
+          ]);
+      }
     }
+
+    // Destroy User end here
+
+    // Destroy Employer
+public function destroyemployers($id){
+      $user = User::find($id);
+      if(!empty($user)){
+        $user->delete();
+          return response()->json([
+                'status' => 1,
+                'message' => 'Job Succesfully Deleted',
+          ]);
+      }
+    }
+
+    // end here
 }

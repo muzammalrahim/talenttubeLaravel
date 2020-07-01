@@ -20,7 +20,7 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-5"><h4 class="card-title mb-0">{{ __('admin.admin.user_management') }} <small class="text-muted">Edit User</small></h4></div>
+                <div class="col-sm-5"><h4 class="card-title mb-0">{{ __('admin.Employer_management') }} <small class="text-muted">Edit Employer</small></h4></div>
             </div>
             <hr>
             <div class="row mt-4 mb-4">
@@ -67,7 +67,6 @@
                         {{ Form::select('country', $countries, null, ['placeholder' => 'Select Country']) }}
                         </div>
                     </div>
-
 
                     <div class="form-group row state_dd">
                         {{ Form::label('state', null, ['class' => 'col-md-2 form-control-label']) }}

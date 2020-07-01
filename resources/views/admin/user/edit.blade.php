@@ -1,6 +1,5 @@
 @extends('adminlte::page')
 
-
 @section('title',$title)
 
 @section('content_header')
@@ -8,11 +7,8 @@
 
 @section('content')
 
-
 <div class="container">
-
     @include('admin.errors',[ 'error' => $errors, 'record' => $record ])
-
     @if ($record)
         {!! Form::model($record, array('url' => route('users.update',['id' => $record->id]), 'method'=>'PATCH', 'files' => true, 'name'=>'formUser', 'novalidate'=>'')) !!}
     @else
@@ -31,14 +27,14 @@
                     <div class="form-group row">
                           {{ Form::label('ID', null, ['class' => 'col-md-2 form-control-label']) }}
                           <div class="col-md-10">
-                            {{ Form::text('id', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Id','required'=> 'false', 'disabled'=> true)) }}
+                            {{ Form::text('id', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'Id','required'=> 'false', 'disabled'=> true)) }}
                           </div>
                     </div>
 
                     <div class="form-group row">
                         {{ Form::label('name', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                          {{ Form::text('name', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'name','required'=> 'false')) }}
+                          {{ Form::text('name', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'name','required'=> 'false')) }}
                         </div>
                     </div>
 
@@ -70,7 +66,7 @@
                         {{ Form::select('country', $countries, null, ['placeholder' => 'Select Country']) }}
                         </div>
                     </div>
-
+        
                     <div class="form-group row state_dd">
                         {{ Form::label('state', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
@@ -429,6 +425,7 @@ div.langSelect>select, div.hobbySelect>select {
     width: 88%;
     float: left;
     margin-bottom: 16px;
+    margin-right: 27px;  
 }
 
 @media only screen and (max-width: 1409px) {
@@ -440,7 +437,6 @@ div.langSelect>select, div.hobbySelect>select {
 
 .btn-danger{
     margin-bottom: 16px;
-    margin-left: 27px;
 }
 
 </style>
