@@ -15,15 +15,16 @@
 
     @if ($user_gallery)
         @foreach ($user_gallery as $gallery)
-            <div id="{{$gallery->id}}" class="item profile_photo_frame gallery_{{$gallery->id}}">
-                <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-                    href="{{asset('images/user/'.$user->id.'/gallery/'.$gallery->image)}}" 
-                    data-lcl-thumb="{{asset('images/user/'.$user->id.'/gallery/small/'.$gallery->image)}}"
+            <div id="{{$gallery->id}}" class="item profile_photo_frame gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
+               <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
+                    href="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
+                    data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}"
                     >
-                    <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo" 
-                    data-src="{{asset('images/user/'.$user->id.'/gallery/'.$gallery->image)}}"   
-                    src="{{asset('images/user/'.$user->id.'/gallery/small/'.$gallery->image)}}" >
+                    <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo"
+                    data-src="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
+                    src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}" >
                 </a>
+                <div class="gallery_action">
                 <span onclick="UProfile.confirmPhotoDelete({{$gallery->id}});" title="Delete photo" class="icon_delete">
                     <span class="icon_delete_photo"></span>
                     <span class="icon_delete_photo_hover"></span>
@@ -32,9 +33,10 @@
                     <span class="icon_private_photo"></span>
                     <span class="icon_private_photo_hover"></span>
                 </span>
-																<span onclick="UProfile.setAsProfile({{$gallery->id}})" title="Make Profile" class="icon_image_profile">
-																		<span class=""></span>
-																</span>
+            	<span onclick="UProfile.setAsProfile({{$gallery->id}})" title="Make Profile" class="icon_image_profile">
+            			<span class=""></span>
+            	</span>
+                </div>
 
             </div>
         @endforeach

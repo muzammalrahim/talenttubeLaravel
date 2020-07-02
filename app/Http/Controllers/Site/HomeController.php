@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Mail;
+use FFMpeg;
 
 
 class HomeController extends Controller {
@@ -40,15 +41,19 @@ class HomeController extends Controller {
     public function profile(){}
 
     public function join(Request $request){
-        // dd( $request->toArray() );
-        $data['geo_country'] = get_Geo_Country();
-        // dd( $data['geo_country'] );
+         
+        $data['geo_country']    = get_Geo_Country();
+        $data['geo_state']      = get_Geo_State(default_Country_id());
+        $data['geo_cities']     = get_Geo_City(default_Country_id(),  $data['geo_state']->first()->state_id);
+        
         if ( $request->get('type') === 'user' ){
             $data['title'] = 'Registeration';
             $view_name = 'site.register.user';
             return view($view_name, $data);
         }else {
+            
             $data['title'] = 'Registeration';
+
             $view_name = 'site.register.employer';
             return view($view_name, $data);
         }
@@ -96,10 +101,9 @@ class HomeController extends Controller {
                 // validation successful
                 // do whatever you want on success
                 if( $request->login_type == 'site_ajax' ){
-
+                     $user = Auth::user();
                     // check if its employee or user.
                     if (isEmployer()){
-                        $user = Auth::user();
                         // check if employer has answer the initial question in step2.
                         $redirect_url = ($user->step2)?(route('employerProfile')):(route('step2Employer'));
                         return array(
@@ -108,10 +112,12 @@ class HomeController extends Controller {
                             'redirect' =>  $redirect_url
                         );
                     }else{
+                        // check if user has answer the initial question in step2.
+                        $redirect_url = ($user->step2)?(route('username',$user->username)):(route('step2User'));
                         return array(
                             'status'    => 1,
                             'message'   => 'login succesfully',
-                            'redirect' => ''
+                            'redirect' =>  $redirect_url
                         );
                     }
 
@@ -165,7 +171,7 @@ class HomeController extends Controller {
     }
 
     public function register(Request $request){
-        // dd( $request->toArray() );
+        
 
         // "_token" => "aoBTzArrllzmFQ8fw7zFhktY2lzW8jc1qbw2lH2T"
         // "firstname" => "Creative"
@@ -186,9 +192,11 @@ class HomeController extends Controller {
             'state' => 'required|integer',
             'city' => 'required|integer',
             'email' => 'bail|required|email|unique:users,email',
-            'phone' => '',
+            'phone' => 'required|min:10|max:10',
             'username' => 'required|unique:users,username',
-            'password' => 'required|',
+            'password' => 'required|confirmed|min:6',
+            'password_confirmation' => 'required|min:6',
+
         );
         $validator = Validator::make( $request->all() , $rules);
         // dd( $request->all() );
@@ -201,6 +209,8 @@ class HomeController extends Controller {
             ]);
         }else{
 
+            // dd( $request->toArray() );
+
             $user = new User();
             $user->name = $request->firstname;
             $user->surname = $request->surname;
@@ -212,13 +222,17 @@ class HomeController extends Controller {
             $user->city = $request->city;
             $user->username = $request->username;
             $user->email_verified_at = null;
+            // $user->email_verified_at = date("Y-m-d H:i:s");
             $user->email_verification   = hash_hmac('sha256', str_random(40), 'creativeTalent');
+            $user->type   = 'user';
 
             if( $user->save() ){
                 $user->roles()->attach([config('app.user_role')]);
                 $success_message = '<div class="slogan">'.__('site.Register_Success').'</div>';
                 $success_message .= '<div class="slogan">'.__('site.Verify_Email').'</div>';
-                $success_message .= '<p>Redirecting to User info page.</p>';
+                // $success_message .= '<p>Redirecting to User info page.</p>';
+
+                $mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
 
                 return response()->json([
                     'status' => 1,
@@ -227,8 +241,10 @@ class HomeController extends Controller {
                     // 'redirect' => route('step2')
                 ]);
             }else{
-
-
+                return response()->json([
+                    'status' => 0,
+                    'validator' =>  array('Error Creative User.')
+                ]);
             }
         }
     }
@@ -241,14 +257,15 @@ class HomeController extends Controller {
     public function registerEmployer(Request $request){
         // dd( $request->toArray() );
         $rules = array(
-            'firstname' => 'required',
-            'surname' => 'required',
-            'geo_country' => 'required|integer',
-            'geo_states' => 'required|integer',
-            'geo_cities' => 'required|integer',
+            'firstname' => 'required|alpha_num|max:12',
+            'surname' => 'required|alpha_num|max:12',
+            'country' => 'required|integer',
+            'state' => 'required|integer',
+            'city' => 'required|integer',
             'email' => 'bail|required|email|unique:users,email',
-            'username' => 'required|unique:users,username',
-            'password' => 'required',
+            'companyname' => 'required|string|max:12',
+            'password' => 'required|confirmed|min:6',
+            'password_confirmation' => 'required|min:6',
         );
         $validator = Validator::make( $request->all() , $rules);
         if ($validator->fails()){
@@ -263,11 +280,17 @@ class HomeController extends Controller {
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->phone = $request->phone;
-            $user->country = $request->geo_country;
-            $user->state = $request->geo_states;
-            $user->city = $request->geo_cities;
-            $user->username = $request->username;
+            $user->country = $request->country;
+            $user->state = $request->state;
+            $user->city = $request->city;
+
+            $username = $request->firstname."-".$request->surname;
+            $username = remove_spaces($username);
+
+            $user->username = $username;
+            $user->company = $request->companyname;
             $user->email_verified_at = null;
+            // $user->email_verified_at = date("Y-m-d H:i:s");
             $user->email_verification   = hash_hmac('sha256', str_random(40), 'creativeTalent');
             $user->type   = 'employer';
 
@@ -276,6 +299,9 @@ class HomeController extends Controller {
                 $success_message = '<div class="slogan">'.__('site.Register_Success').'</div>';
                 $success_message .= '<div class="slogan">'.__('site.Verify_Email').'</div>';
                 // $success_message .= '<p>Redirecting to User info page.</p>';
+                
+                $mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
+
                 return response()->json([
                     'status' => 1,
                     'message' => $success_message,
@@ -299,7 +325,6 @@ class HomeController extends Controller {
         // dd( $request->toArray() );
 
         if(!empty($request->email)){
-
             $user = User::where('email',$request->email)->first();
             if (!$user){
                 return response()->json([
@@ -315,10 +340,29 @@ class HomeController extends Controller {
                     // dd( $user->email );
 
                    $mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
-                   dd( $mail_status );
+                   // dd( $mail_status );
+                    return response()->json([
+                    'status' => 1,
+                    'message' => '<div style="color:white;"><p>Verification Email Send Succesfully.</p></div>'
+                ]);
                 }
                 // dd( $user->toArray() );
             }
+        }
+    }
+
+    //============== Employer AccountVerification. ==============//
+    function accountVerification($id,$code){
+        $user = User::where('id', $id)->where('email_verification', $code)->first();
+        if(!empty($user)){
+            $user->email_verified_at = date("Y-m-d H:i:s");
+            $user->email_verification = null;
+            $user->save();
+            // return redirect(route('homepage'));
+            echo 'Email Verified succesfully';
+            exit;
+        }else{
+            return view('unauthorized');
         }
     }
 
@@ -349,22 +393,98 @@ class HomeController extends Controller {
         $response = Response::make($file, 200);
         $response->header("Content-Type", $type);
         return $response;
-				}
+	}
 
 
 
-				function fileshow($userid, $slug){
-					$path_var = 'images/user/'.$userid.'/private/'.$slug;
-					$path = storage_path($path_var);
-						if (!File::exists($path)) {
-										return response()->json(['error' => $path_var.' can not be found.']);
-						}
-						$file = File::get($path);
-						$type = File::mimeType($path);
-						$response = Response::make($file, 200);
-						$response->header("Content-Type", $type);
-						return $response;
-		}
+	function fileshow($userid, $slug){
+		$path_var = 'images/user/'.$userid.'/private/'.$slug;
+		$path = storage_path($path_var);
+			if (!File::exists($path)) {
+							return response()->json(['error' => $path_var.' can not be found.']);
+			}
+			$file = File::get($path);
+			$type = File::mimeType($path);
+			$response = Response::make($file, 200);
+			$response->header("Content-Type", $type);
+			return $response;
+	}
+
+
+    function fileshow2($userid, $slug){
+        // dd(' fileshow2 ');
+        $path_var = 'media/public/'.$userid.'/'.$slug;
+        $path = storage_path($path_var);
+        if (!File::exists($path)) {
+            return response()->json(['error' => $path_var.' can not be found.']);
+        }
+        $file = File::get($path);
+        $type = File::mimeType($path);
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+        return $response;
+    }
+
+    function privateFileshow($userid, $slug){
+        $path_var = 'media/private/'.$userid.'/'.$slug;
+        $path = storage_path($path_var);
+            // dd( $path_var ); 
+        if (!File::exists($path)) {
+            return response()->json(['error' => $path_var.' can not be found.']);
+        }
+        $file = File::get($path);
+        $type = File::mimeType($path);
+        $response = Response::make($file, 200);
+        $response->header("Content-Type", $type);
+        return $response;
+    }
+
+
+
+    // Provide a streaming file with support for scrubbing
+    // $contentType, $path
+    function videoStream($userid, $slug) {
+
+        $path_var = 'media/private/'.$userid.'/videos/'.$slug;
+        $path = storage_path($path_var);
+
+        $video_path = 'somedirectory/somefile.mp4';
+        $stream = new \App\Helpers\VideoStream($path);
+        $stream->start(); 
+
+        // $path_var = 'media/private/'.$userid.'/videos/'.$slug;
+        // $path = storage_path($path_var);
+        // $fullsize = filesize($path);
+        
+        // $size = $fullsize;
+        // $stream = fopen($path, "r");
+        // $response_code = 200;
+        // $headers = array("Content-type" => 'video/mp4');
+        
+        // // Check for request for part of the stream
+        // $range = Request::header('Range');
+        // if($range != null) {
+        //     $eqPos = strpos($range, "=");
+        //     $toPos = strpos($range, "-");
+        //     $unit = substr($range, 0, $eqPos);
+        //     $start = intval(substr($range, $eqPos+1, $toPos));
+        //     $success = fseek($stream, $start);
+        //     if($success == 0) {
+        //         $size = $fullsize - $start;
+        //         $response_code = 206;
+        //         $headers["Accept-Ranges"] = $unit;
+        //         $headers["Content-Range"] = $unit . " " . $start . "-" . ($fullsize-1) . "/" . $fullsize;
+        //     }
+        // }
+        
+        // $headers["Content-Length"] = $size;
+
+        // return Response::stream(function () use ($stream) {
+        //     fpassthru($stream);
+        // }, $response_code, $headers);
+
+    }
+
 
 
 
@@ -374,5 +494,98 @@ class HomeController extends Controller {
         $log = TestLog::get();
         dd( $log->toArray() );
     }
+
+
+     public function phpini(){
+        phpinfo();
+     }
+
+     public function test2(){
+        dump('test2');
+
+
+        $user_path = Storage::disk('privateMedia');
+      
+
+        $video_file = FFMpeg::fromFilesystem($user_path)->open('/27/videos/video-1590992473.mp4');
+
+        dump($user_path);
+        dd($video_file);
+
+        // $ffmpeg = FFMpeg\FFMpeg::create(array(
+        //     'ffmpeg.binaries'  => 'C:/ffmpeg/bin/ffmpeg.exe',
+        //     'ffprobe.binaries' => 'C:/ffmpeg/bin/ffprobe.exe'
+        // ));
+        //  dd( $ffmpeg );
+
+        // $ffmpeg = FFMpeg\FFMpeg::create(array(
+        //     'ffmpeg.binaries'  => '/usr/bin/ffmpeg',
+        //     'ffprobe.binaries' => '/usr/bin/ffprobe'
+        // ));
+        //  dd( $ffmpeg );
+
+
+        // $path = '19/private/videos/video-1589261510.mp4';
+        // $path = storage_path('images/test.mp4');
+        // if (!File::exists($path)) { dd(' file not exist '); }
+
+
+
+        // $video_file = Storage::disk('user')->get($path);
+        $user_path = Storage::disk('user');
+        $video_file = FFMpeg::fromFilesystem($user_path)->open('test.mp4');
+
+        //dump('video_file = ', $video_file);
+
+        $duration = $video_file->getDurationInSeconds(); 
+        dump('duration',  $duration ); 
+
+
+        $thumbnailIntervalTimeArr = $this->getThumbnailIntervalTimeArr($duration); 
+
+        dump('thumbnailIntervalTimeArr',  $thumbnailIntervalTimeArr ); 
+
+
+        $counter = 1;
+        foreach ($thumbnailIntervalTimeArr as $interval){
+            // $framePath = $this->contentBasePath."/frame_$counter.jpg";
+            // $video_file->frame(FFMpeg\Coordinate\TimeCode::fromSeconds($interval))->save($framePath);
+            //  // use code listen below code is optional to generate the thumbnail image from frame
+            // $counter++;
+
+
+            $image = $video_file->getFrameFromSeconds($interval)->export()->save('FrameAt'.$interval.'sec.png');   
+           
+            // dump(' image ', $image); 
+
+
+            $counter++;
+        }
+
+
+
+        // ->getFrameFromSeconds(10)
+        // ->export()
+        // ->toFilesystem('user')
+        // ->save('19/private/videos/FrameAt10sec.png');
+
+        // $media = FFMpeg::open('steve_howe.mp4');
+        // $frame = $media->getFrameFromString('00:00:13.37');
+
+        // // or
+
+        // $timecode = new FMpeg\Coordinate\TimeCode(...);
+        // $frame = $media->getFrameFromTimecode($timecode);
+
+     }
+
+
+
+     private function getThumbnailIntervalTimeArr($duration){ 
+                $durationInSec = intval($duration); 
+                $intervalArr = range(0,$duration, $duration/4); 
+                return array_slice($intervalArr, 1, -1); 
+        }
+
 
 }

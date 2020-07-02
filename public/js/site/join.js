@@ -11,11 +11,18 @@ var isUploadPhotoJoinAjax=false,
 
 var step2_formData = new FormData();
 
+var dataIndustryExp = [];
+var userQualificationList = [];
+var userSalaryRange = '';
+var profile_img_selected = false; 
+var userSelectedTagsList = [];
+
 // var isUploadPhotoJoinAjax=false, isUploadPhotoJoin=false;
 var currentPage = 'join.php';
 $(function(){
     /* STEP 1 */
-    $('.geo', '#step-1').change(function() {
+    $('.geo', '#step-1').change(function() {  
+        console.log(' change  ', this);
         var type=$(this).data('location');
         $.ajax({type: 'POST',
                 url: base_url + '/ajax/' + type,
@@ -57,6 +64,10 @@ $(function(){
 
     $('select.i_am').change(function() {
         setDisabledSubmitJoin();
+    })
+
+    $('#phone').change(function() {
+         setDisabledSubmitJoin();
     })
 
     /* Email */
@@ -174,9 +185,9 @@ $(function(){
                             $jq('#frm_register_submit_2').prop('disabled',true);
                             $jq('#success-step-1').show(1).addClass('to_show').html(data.message);
                             $jq('#frm_register_submit').html(i18n.site.Next_btn);
-                            setTimeout(() => {
-                                location.href = data.redirect;
-                            }, 3000);
+                            // setTimeout(() => {
+                            //     location.href = data.redirect;
+                            // }, 3000);
                         });
                     }
 
@@ -219,7 +230,7 @@ $(function(){
         }
         if(setDisabledSubmitJoin(false,true,true)){  return false; }
         $jq('#frm_register_submit').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
-        $jq('input:not([type="search"]), select', '#emp-step-1').each(function(){
+        $jq('input:not([type="search"]), select', '#step-1.emp-step-1').each(function(){
 
             dataFrm[this.name]  = $.trim(this.value);
 
@@ -261,7 +272,7 @@ $(function(){
                 }
                 $jq('#frm_register_submit').html(i18n.site.Next_btn);
             }else{
-                $jq('#emp-step-1').fadeOut(400,function(){
+                $jq('#step-1.emp-step-1').fadeOut(400,function(){
                     $jq('#frm_register_submit_2').prop('disabled',true);
                     $jq('#success-step-1').show(1).addClass('to_show').html(data.message);
                     $jq('#frm_register_submit').html(i18n.site.Next_btn);
@@ -306,9 +317,10 @@ $(function(){
         $.post(base_url+'/employer/verification',dataFrm,
         function(data){
             console.log(' verification/data = ', data);
-            if(data){
-                $('#employer_verification_resend').html(data.data);
-            }
+            console.log(' message = ', data.message);
+            console.log(' employer_verification_resend = ', $('#employer_verification_resend') );
+
+            $('#employer_verification_resend').html(data.message);
         })
     });
 
@@ -378,34 +390,377 @@ $(function(){
     })
 
 
-    $jq('#join_done').click(function(){
-        console.log(' join_done ', dataAnswerJoin);
+    $jq('#step3_done').click(function(){
+        console.log(' step3_done ', dataAnswerJoin);
         step2_formData.append('questions',JSON.stringify(dataAnswerJoin));
         console.log(' step2_formData ', step2_formData.entries());
 
-        step2_formData.append('about_me', $.trim($('#about_me').val()));
-        step2_formData.append('interested_in', $.trim($jq('#interested_in').val()));
+        $jq('#about_me_error,#interested_in_error,.part_photo .name_info').addClass('to_hide');
+        $jq('#about_me,#interested_in,.upload_file').removeClass('validation_error');
 
-        $jq('#join_done').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
+        //validation 
+        var s3_validation = true; 
+        var about_me = $.trim($('#about_me').val());
+        var interested_in = $.trim($jq('#interested_in').val());
+        
+        if ( about_me == ''){
+            s3_validation = false; 
+            $jq('#about_me_error').removeClass('to_hide').text('Required');
+            $jq('#about_me').addClass('validation_error');
+        } 
 
+        if (interested_in == ''){
+            s3_validation = false; 
+            $jq('#interested_in_error').removeClass('to_hide').text('Required');
+            $jq('#interested_in').addClass('validation_error');
+        }
+
+        if(!profile_img_selected){
+            s3_validation = false; 
+            $jq('.part_photo .name_info').removeClass('to_hide').text('Required');
+            $jq('.upload_file').addClass('validation_error');
+        }
+
+        if(s3_validation){
+            step2_formData.append('about_me', about_me);
+            step2_formData.append('interested_in', interested_in );
+            showEmployStep4();
+        }
+
+    });
+
+
+
+     $jq('#user_step3_done').click(function(){
+        console.log(' user_step3_done ', dataAnswerJoin);
+        step2_formData.append('questions',JSON.stringify(dataAnswerJoin));
+        console.log(' step2_formData ', step2_formData.entries());
+
+        $jq('#about_me_error,#interested_in_error,.part_photo .name_info,#recentJob_error').addClass('to_hide');
+        $jq('#about_me,#interested_in,.upload_file,#recentJob').removeClass('validation_error');
+
+        //validation 
+        var s3_validation = true; 
+        var about_me = $.trim($('#about_me').val());
+        var interested_in = $.trim($jq('#interested_in').val());
+        var recentJob = $.trim($jq('#recentJob').val());
+        
+        if ( about_me == ''){
+            s3_validation = false; 
+            $jq('#about_me_error').removeClass('to_hide').text('Required');
+            $jq('#about_me').addClass('validation_error');
+        } 
+
+        if (interested_in == ''){
+            s3_validation = false; 
+            $jq('#interested_in_error').removeClass('to_hide').text('Required');
+            $jq('#interested_in').addClass('validation_error');
+        }
+
+        if (recentJob == ''){
+            s3_validation = false; 
+            $jq('#recentJob_error').removeClass('to_hide').text('Required');
+            $jq('#recentJob').addClass('validation_error');
+        }
+
+        if(!profile_img_selected){
+            s3_validation = false; 
+            $jq('.part_photo .name_info').removeClass('to_hide').text('Required');
+            $jq('.upload_file').addClass('validation_error');
+        }
+
+        if(s3_validation){
+            step2_formData.append('about_me', about_me);
+            step2_formData.append('interested_in', interested_in );
+            step2_formData.append('recentJob', recentJob );
+            showUserStep4();
+        }
+
+    });
+
+
+
+function showUserStep4(){
+    
+    $jq('#join_slogan').text('Qualification'); 
+    $jq('#join_step ul li').removeClass('selected'); 
+    $jq('#join_step ul li:eq(2)').addClass('selected').css('display','block'); 
+     $jq('#full_step_3').fadeOut(400,function(){
+        $jq('#full_step_4').fadeIn(400,function(){
+        });
+     }); 
+
+     $jq('#qualification_type').on('change',function(){
+        console.log(' qualification_type '); 
+        userQualificationList = [];
+        jQuery('.qualification_ul li.selected').removeClass('selected');
+        var qualif_type = $jq(this).val(); 
+        console.log(' qualif_type ', qualif_type); 
+        if(qualif_type != ''){
+            $jq('.select_qualification_list').removeClass('trade').removeClass('degree');
+            $jq('.select_qualification_list').addClass( (qualif_type == 'trade')?'trade':'degree'); 
+            $jq('.select_qualification_list').fadeIn(400,function(){});
+        }else{
+            $jq('.select_qualification_list').fadeOut(400,function(){});
+        }
+
+     });
+}
+
+
+function showEmployStep4(){
+    
+    $jq('#join_slogan').text('Industry Experience'); 
+    $jq('#join_step ul li').removeClass('selected'); 
+    $jq('#join_step ul li:eq(2)').addClass('selected').css('display','block'); 
+
+     $jq('#full_step_3').fadeOut(400,function(){
+        $jq('#full_step_4').fadeIn(400,function(){
+            // var $baseField=$jq('#full_step_3').find('.placeholder_always');
+            // if($baseField[0])$baseField.eq(0).focus();
+        });
+     })
+}
+    
+    // add the selected one to Employer Industry list selection.  
+    jQuery('.industry_ul').on('click','li', function(){
+        var industry_id = jQuery(this).attr('data-id');
+        if (dataIndustryExp.indexOf(industry_id) == -1){
+            if(dataIndustryExp.length < 5 ){
+                dataIndustryExp.push(industry_id);
+                jQuery(this).addClass('selected');
+            }  
+        }else{
+            dataIndustryExp.splice(dataIndustryExp.indexOf(industry_id),1);
+            jQuery(this).removeClass('selected');
+        }
+        $('.join_industry_error').removeClass('error').text('');
+        console.log('dataIndustryExp ', dataIndustryExp );
+        if (dataIndustryExp.length > 0){
+             jQuery('.industryExpBtn_done').prop('disabled',false);
+        }else{
+            jQuery('.industryExpBtn_done').prop('disabled',true);
+        }
+    });
+
+  
+     // add the selected one to User Qualification selection list.  
+    jQuery('.qualification_ul').on('click','li', function(){
+        $('.join_industry_error').removeClass('error').text('');
+         var qualification_id = jQuery(this).attr('data-id');
+         if ( userQualificationList.indexOf(qualification_id) == -1 ){
+             if(userQualificationList.length < 5 ){
+               userQualificationList.push(qualification_id);
+               jQuery(this).addClass('selected');
+             }
+         }else{
+            userQualificationList.splice(userQualificationList.indexOf(qualification_id),1);
+            jQuery(this).removeClass('selected');
+        }
+
+        if (userQualificationList.length > 0){
+             jQuery('#user_step4_done').prop('disabled',false);
+        }else{
+            jQuery('#user_step4_done').prop('disabled',true);
+        }
+        console.log('userQualificationList ', userQualificationList );
+    });
+
+
+    // add the selected one to User Qualification selection list.  
+    jQuery('.salary_ul').on('click','li', function(){
+         var salary_id = jQuery(this).attr('data-id');
+         jQuery('.salary_ul li.selected').removeClass('selected');
+         jQuery(this).addClass('selected');
+         userSalaryRange = salary_id; 
+         if (userSalaryRange != '' ){ jQuery('#user_step6_done').prop('disabled',false); }
+        console.log('userSalaryRange ', userSalaryRange );
+    });
+
+
+    // tagging system Script
+    jQuery('.tagCategory.tagItem').on('click',function(){
+        console.log(' tagCategory tagItem click '); 
+        jQuery('.tagCategory.tagItem').removeClass('selected');
+        jQuery(this).addClass('selected'); 
+
+        jQuery('.tagListCont .tagListBox').html('');
+        jQuery('.tagListCont').addClass('loadingList');
+
+
+        var tagCatId = jQuery(this).attr('data-id');
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
-            url: base_url+'/employer/step2',
-            type : 'POST',
-            data : step2_formData,
-            processData: false,
-            contentType: false,
+            url: base_url+'/ajax/getTags/'+tagCatId,
+            type : 'GET',
             success : function(resp) {
-                console.log('resp ', resp);
-                $jq('#join_done').html('Done').prop('disabled',false);
+               console.log('getTags ', resp);
+               jQuery('.tagListCont').removeClass('loadingList');
+               if(resp.status){   
+                    jQuery('.tagListCont .tagListBox').html(resp.data);
+               }
+            }
+        });
 
+    });
+
+
+     jQuery('.tagListBox').on('click','li a.loadMoreTags', function(){
+        console.log(' loadMoreTags click '); 
+        jQuery('.tagListCont .tagListBox').html('');
+        jQuery('.tagListCont').addClass('loadingList');
+        var offset = jQuery(this).attr('data-offset');
+        var tagCatId = jQuery('.tagCategory.tagItem.selected').attr('data-id');
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            url: base_url+'/ajax/getTags/'+tagCatId+'/'+offset,
+            type : 'GET',
+            success : function(resp) {
+               console.log('getTags ', resp);
+               jQuery('.tagListCont').removeClass('loadingList');
+               if(resp.status){   
+                    jQuery('.tagListCont .tagListBox').html(resp.data);
+               }
+            }
+        });
+    });
+
+
+
+    
+    jQuery('html').click(function(e) {
+      //if clicked element is not your element and parents aren't your div
+      if (e.target.id != 'newTag' && $(e.target).parents('#newTag').length == 0) {
+         jQuery('.tagSuggestionCont').hide(); 
+      }else{
+         console.log(' 2 focusin out '); 
+         jQuery('.tagSuggestionCont').show();
+      }
+    });
+
+    // jQuery('.newTag').focusin(function(){
+    //     console.log(' focusin out '); 
+    //     jQuery('.tagSuggestionCont').show();
+    // });
+
+    jQuery('.newTag input').on('keyup',function() {
+        var query =  jQuery.trim(jQuery(this).val()); 
+        console.log(' newTag keyup ', query);
+        if ( query == '' ){
+           jQuery('.tagSuggestionCont').hide();
+           jQuery('ul.tagSuggestion').html('');
+        }
+
+        jQuery.ajax({
+            url: base_url+"/ajax/searchTags",
+            type:"GET", 
+            data:{'search':query, 'exclude': userSelectedTagsList},
+            success:function (resp) {
+                console.log(' resp ', resp);   
+                //$('#country_list').html(data);
                 if(resp.status){
-                    setTimeout(() => {
-                        location.href = resp.redirect;
-                    }, 3000);
+                    console.log(' resp data ', resp.data);
+                    if(resp.data.length > 0){
+                        jQuery('.tagSuggestionCont').show();
+                        var suggestionArray = resp.data;
+                        var suggestion = ''; 
+                        jQuery.each( suggestionArray, function( index, value ){
+                            suggestion += '<li class="suggestTagItem tagItem" data-id="'+value.id+'"><i class="tagIcon fa fa-box-open"></i><span>'+value.title+'</span></li>';
+                        });
+                        jQuery('ul.tagSuggestion').html(suggestion);
+                    }
+                }
+            }
+        })
+        // end of ajax call
+    });
+
+    jQuery('.tagSuggestionCont').on('click','.suggestTagItem', function(){
+        addNewTag(this);
+    });
+
+
+    jQuery('.tagListBox').on('click','.tag.tagItem', function(){
+        addNewTag(this);
+        // jQuery(this).remove();
+    });
+
+    var addNewTag = function(elem){
+        var tagId = jQuery(elem).attr('data-id');
+        console.log('suggestTagItem click ', tagId); 
+        if (userSelectedTagsList.indexOf(tagId) == -1){
+             userSelectedTagsList.push(tagId);
+             var tag_clone = elem;
+             console.log(' tag_clone ', tag_clone);
+            jQuery('.selectTagList ul').append(tag_clone);
+        }
+        console.log(' userSelectedTagsList ', userSelectedTagsList);
+        if (userSelectedTagsList.length > 0 ){
+            jQuery('#user_step7_done').prop('disabled',false);
+        }else{
+           jQuery('#user_step7_done').prop('disabled',true);
+        }
+    } 
+
+
+    jQuery('.selectTagList').on('click','li.tagItem', function(){
+        console.log(' selectTagList click '); 
+        var tagId = jQuery(this).attr('data-id');
+         if ( userSelectedTagsList.indexOf(tagId) != -1 ){
+              userSelectedTagsList.splice(userSelectedTagsList.indexOf(tagId),1);
+              jQuery(this).remove();
+         }
+    });
+
+   
+
+    jQuery('button#addNewTag').on('click',function(){
+        console.log(' button#addNewTag '); 
+        var newTagTitle = jQuery.trim(jQuery('.newTagInput input').val());
+        jQuery('.addNewTagModal .form_input input').val(newTagTitle);
+        jQuery('.addNewTagModalBox').removeClass('loading');
+        jQuery('.addNewTagModal .apiMessage').hide();
+        jQuery('.addNewTagModal .error').html('&nbsp;');
+
+       jQuery('#addNewTagModal').modal({
+            fadeDuration: 200,
+            fadeDelay: 2.5,
+            escapeClose: false,
+            clickClose: false,
+        });
+    });
+
+
+    jQuery('.addNewTagModal .newTagAdd').on('click',function(){
+        console.log(' newTagAdd click '); 
+        jQuery('.addNewTagModalBox').addClass('loading');
+        
+        var newTagTitle = jQuery('.addNewTagModal .form_input input').val();
+        var newTagCat   = jQuery('.addNewTagModal .form_input select[name="newTagCategory"]').val();
+        var newTagIcon  = jQuery('.addNewTagModal .form_input select[name="newTagIcon"]').val();
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        jQuery.ajax({
+            url: base_url+"/ajax/addNewTag",
+            type:"POST", 
+            data:{'newTagtitle':newTagTitle, 'newTagCategory': newTagCat, 'newTagIcon': newTagIcon},
+            success:function (resp) {
+                console.log(' resp ', resp);   
+                //$('#country_list').html(data);
+                if(resp.status){
+                    console.log(' resp data ', resp.data);
+                    var newTagElem = resp.data;
+                    var newTagHtml = '<li class="tagItem" data-id="'+newTagElem.id+'"><i class="tagIcon fa '+newTagElem.icon+'"></i><span>'+newTagElem.title+'</span></li>';                    
+                    var dom_nodes = jQuery(jQuery.parseHTML(newTagHtml));
+                    addNewTag(dom_nodes);
+
+                    // jQuery('.selectTagList ul').append(newTagHtml); 
+                    jQuery('.addNewTagModal .apiMessage').html('Tag Succesfully Added').show();
+                    setTimeout(function() {
+                        jQuery.modal.close();
+                    }, 1000);
                 }else{
-                    $('.step2_error').removeClass('to_hide').addClass('to_show').text('Error Adding Employer Information');
-                    if(resp.validator != undefined){
+                    jQuery('.addNewTagModalBox').removeClass('loading');
+                     if(resp.validator != undefined){
                         const keys = Object.keys(resp.validator);
                         for (const key of keys) {
                             if($('#'+key+'_error').length > 0){
@@ -414,12 +769,262 @@ $(function(){
                         }
                     }
 
+                   if(resp.error != undefined){
+                     $('.addNewTagModalBox .apiMessage').show().text(resp.error);
+                      setTimeout(function() {
+                        jQuery('.addNewTagModal .apiMessage').html('').hide();
+                    }, 3000);
+
+                   }
+
+                }
+            }
+        })
+
+    });
+
+    
+
+  
+    jQuery('.submit-document').on('submit',(function(e){
+        e.preventDefault();
+        var formData = new FormData(this);
+        formData.append('submit', true);
+        jQuery.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        jQuery.ajax({
+            type:'POST',
+            url: '/ajax/userUploadResume',
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+            beforeSend:function(){
+                jQuery('.save-resume-btn').html('Saving... <i class="fa fa-spinner fa-spin"></i>');
+            },
+            success:function(data){
+                jQuery('.save-resume-btn').html('Save');
+                console.log("success data ", data);
+                if(data && data.attachments) {
+                    var attachments = data.attachments;
+                    var attach_html = '';
+                    if( attachments.length > 0 ){
+                        for (let ai = 0; ai < attachments.length; ai++) {
+                            attach_html += '<div class="attachment_'+attachments[ai].id+' attachment_file">';
+                            attach_html +=   '<div class="attachment"><img src="'+base_url+'/images/site/icons/cv.png" /></div>';
+                            attach_html +=   '<span class="attach_title">'+attachments[ai].name+'</span>';
+                            attach_html +=   '<div class="attach_btns">';
+                            attach_html +=      '<a class="attach_btn downloadAttachBtn" href="'+base_url+'/'+attachments[ai].file+'">Download</a>';
+                            attach_html +=      '<a class="attach_btn removeAttachBtn" data-attachmentid="'+attachments[ai].id+'" onclick="UProfile.confirmAttachmentDelete('+attachments[ai].id+');">Remvoe</a>';
+                            attach_html +=    '</div>';
+                            attach_html +=  '</div>';
+                        }
+                    }
+                    jQuery('.private_attachments').html(attach_html);
+                }
+                console.log(data);
+            },
+            error: function(data){
+                console.log("error");
+                console.log(data);
+            }
+        });
+    }));
+
+
+    jQuery('#photo_add_video').on('click', function(){
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = e => {
+            var file = e.target.files[0];
+            console.log(' onchange file  ', file );
+            var formData = new FormData();
+            formData.append('video',file);
+            var that        = this;
+            var item_id     =  Math.floor((Math.random() * 1000) + 1);
+            var video_item = '';
+            video_item  += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">';
+            video_item  +=  '<a class="show_photo_gallery video_link" href="">';
+            video_item  +=  '</a>';
+            video_item  +=  '<span class="v_title">Video title</span>';
+            video_item  +=  '<span title="Delete video" class="icon_delete">';
+            video_item  +=      '<span class="icon_delete_photo"></span>';
+            video_item  +=      '<span class="icon_delete_photo_hover"></span>';
+            video_item  +=  '</span>';
+            video_item  +=  '<div class="v_error error hide_it"></div>';
+            video_item  +=  '<div class="v_progress"></div>';
+            video_item  += '</div>';
+
+            $('.list_videos').append(video_item);
+            var updateForm = document.querySelector('form');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var request = new XMLHttpRequest();
+            request.upload.addEventListener('progress', function(e){
+               var percent = Math.round((e.loaded / e.total) * 100);
+                 console.log(' progress-bar ', percent+'%' );
+                 $('#v_'+item_id+' .v_progress').css('width',  percent+'%');
+            }, false);
+            request.addEventListener('load', function(e){
+               console.log(' load e ', e);
+               var res = JSON.parse(e.target.responseText);
+               console.log(' jsonResponse ', res);
+               $('#v_'+item_id+' .v_progress').remove();
+                if(res.status == 1) {
+                    // $('#v_'+item_id+' .v_title').text(res.data.title);
+                    // $('#v_'+item_id+' .video_link').attr('href', base_url+'/'+res.data.file);
+                    $('#v_'+item_id).replaceWith(res.html);
+                }else {
+                    console.log(' video error ');
+                    if(res.validator != undefined){
+                        $('#v_'+item_id+' .error').removeClass('hide_it').addClass('to_show').text(res.validator['video'][0]);
+                    }
+                }
+            }, false);
+            request.open('post',base_url+'/ajax/uploadVideo');
+            request.send(formData);
+        }
+        input.click();
+
+    
+    });
+
+
+
+    $jq('#user_step4_done').click(function(){
+        $jq('#join_slogan').text('Industry Experience'); 
+        $jq('#join_step ul li').removeClass('selected'); 
+        $jq('#join_step ul li:eq(3)').addClass('selected').css('display','block'); 
+         $jq('#full_step_4').fadeOut(400,function(){
+            $jq('#full_step_5').fadeIn(400,function(){
+            });
+         }); 
+    }); 
+    
+    $jq('#user_step5_done').click(function(){
+        $jq('#join_slogan').text('Salary Range'); 
+        $jq('#join_step ul li').removeClass('selected'); 
+        $jq('#join_step ul li:eq(4)').addClass('selected').css('display','block'); 
+         $jq('#full_step_5').fadeOut(400,function(){
+            $jq('#full_step_6').fadeIn(400,function(){
+            });
+         }); 
+    }); 
+
+    $jq('#user_step6_done').click(function(){
+        $jq('#join_slogan').text('Tagging'); 
+        $jq('#join_step ul li').removeClass('selected'); 
+        $jq('#join_step ul li:eq(5)').addClass('selected').css('display','block'); 
+         $jq('#full_step_6').fadeOut(400,function(){
+            $jq('#full_step_7').fadeIn(400,function(){
+            });
+         }); 
+    });
+
+    $jq('#user_step7_done').click(function(){
+        $jq('#join_slogan').text('Final Section'); 
+        $jq('#join_step ul li').removeClass('selected'); 
+        $jq('#join_step ul li:eq(6)').addClass('selected').css('display','block'); 
+         $jq('#full_step_7').fadeOut(400,function(){
+            $jq('#full_step_8').fadeIn(400,function(){
+            });
+         }); 
+    }); 
+
+    jQuery('#user_step8_done').click(function(){
+        console.log(' user_step8_done ', dataAnswerJoin);
+        $jq('#full_step_8').html(getLoader('css_loader_btn', false, true));
+       
+        step2_formData.append('industry_experience', JSON.stringify(dataIndustryExp));
+        step2_formData.append('qualification', JSON.stringify(userQualificationList));
+        step2_formData.append('salaryRange', userSalaryRange);
+        step2_formData.append('tags', userSelectedTagsList);
+        
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            url: base_url+'/step2',
+            type : 'POST',
+            data : step2_formData,
+            processData: false,
+            contentType: false,
+            success : function(resp) {
+                console.log('resp ', resp);
+                $jq('#join_done').html('Done').prop('disabled',false);
+                if(resp.status){
+                    setTimeout(() => {
+                        location.href = resp.redirect;
+                    }, 1000);
+                }else{
+                    $jq('#full_step_8').html('<div class="full_step_error center"><p>Error Updating data.</p></div>');
+                    if(resp.validator != undefined){
+                        const keys = Object.keys(resp.validator);
+                        for (const key of keys) {
+                            var error_html = '<p>'+resp.validator[key][0]+'</p>'; 
+                            $('.full_step_error').append(error_html);
+                        }
+                    }else if(resp.error != undefined ){
+                        var error_html = '<p>'+resp.error+'</p>'; 
+                        $('.full_step_error').append(error_html);
+                    }
+
+                    $('.full_step_error').append('<h3 class="mt20"><a class="pointer" onclick="location.reload()" style="color: #ffa200;">Click here to update</a></h3>');
                 }
             }
         });
+    });
 
+
+      $jq('#join_done').click(function(){
+        console.log(' join_done ', dataAnswerJoin);
+        
+            $jq('#join_done').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
+            step2_formData.append('industry_experience', JSON.stringify(dataIndustryExp));
+            console.log(' step2_formData ', step2_formData.entries());
+
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.ajax({
+                url: base_url+'/employer/step2',
+                type : 'POST',
+                data : step2_formData,
+                processData: false,
+                contentType: false,
+                success : function(resp) {
+                    console.log('resp ', resp);
+                    $jq('#join_done').html('Done').prop('disabled',false);
+
+                    if(resp.status){
+                        setTimeout(() => {
+                            location.href = resp.redirect;
+                        }, 3000);
+                    }else{
+                        $('.full_step_error').removeClass('to_hide').addClass('to_show').text('Error Adding Employer Information');
+                        if(resp.validator != undefined){
+                            const keys = Object.keys(resp.validator);
+                            for (const key of keys) {
+                                // if($('#'+key+'_error').length > 0){
+                                //     $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(resp.validator[key][0]);
+                                // }
+                                var error_html = '<p>'+validator[key][0]+'</p>'; 
+                                $('.full_step_error .error').append(error_html);
+                            }
+                        }
+
+                    }
+                }
+            });
+         
+
+              
+     
+
+        
 
     });
+
+
+
 
     $('input.file','#photo_upload').click(function(){
         $jq('#photo_upload_error').removeClass('to_show');
@@ -439,11 +1044,31 @@ $(function(){
         console.log(' upload_file ');
         var input = document.createElement('input');
         input.type = 'file';
-        input.onchange = e => {
+        input.setAttribute('accept', 'image/x-png,image/gif,image/jpeg');
+        input.onchange = e => { 
+
+            $jq('.part_photo .name_info').addClass('to_hide').text('');
+            $jq('.upload_file').removeClass('validation_error');
+
             var file = e.target.files[0];
             console.log(' onchange file  ', file );
             step2_formData.append('file',file);
             $jq('.bl_card_profile .name').text(file.name);
+
+            // check file type 
+            if( file.type == 'image/jpeg' || file.type == 'image/gif' || file.type == 'image/png' || file.type == 'image/x-png' ) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    profile_img_selected = true; 
+                    $jq('.bl.photo_add').text('');
+                    $jq('.bl.photo_add').css('background-image','url("'+e.target.result+'")');
+                    $jq('.bl.photo_add').css('background-position','center');
+                    $jq('.bl.photo_add').css('background-size','cover');   
+                };
+                // read the image file as a data URL.
+                reader.readAsDataURL(file);
+            }
+
         }
         input.click();
     });
@@ -589,7 +1214,8 @@ $(function(){
         if($el[0]){
             dataAnswerJoin[$el.data('field')]=action?'yes':'no';
         }
-        if(!c){
+        // dev22 test 
+        if(!c || true){
             $jq('#step_loader').fadeIn(400);
             $jq('#full_step_1').fadeOut(400,function(){
                 // getListUsersLike();
@@ -756,6 +1382,8 @@ function validateBirthday(){
 
 function setDisabledSubmitJoin(context, setError, notSubmitDisabled){
 
+        console.log(' setDisabledSubmitJoin '); 
+
         notSubmitDisabled=notSubmitDisabled||0;
         context=context||'#step-1';
         setError=setError||0;
@@ -788,9 +1416,7 @@ function setDisabledSubmitJoin(context, setError, notSubmitDisabled){
         }else if(context=='#frm_card_join'){
             is=0;
             /*is|=isError;
-            if(isJoinWithPhotoOnly){
-                is|=!isUploadPhotoJoin;
-            }
+            if(isJoinWithPhotoOnly){ is|=!isUploadPhotoJoin; }
             if(isRecaptcha){is|=(grecaptcha.getResponse(recaptchaWd)=='')}
             $sb=$jq('.btn_join_submit');
             notSubmitDisabled=true;*/
@@ -854,6 +1480,12 @@ function joinLike(uid,$btn){
 }
 
 function showStep3(){
+    
+    var step3_slogan =  ($('#userType').val() == 'user')?('Update your profile'):('Give us a brief overview');  
+    $jq('#join_slogan').text(step3_slogan); 
+    $jq('#join_step ul li').removeClass('selected'); 
+    $jq('#join_step ul li:eq(1)').addClass('selected').css('display','block'); 
+
     $jq('#full_step_3').fadeIn(400,function(){
         var $baseField=$jq('#full_step_3').find('.placeholder_always');
         if($baseField[0])$baseField.eq(0).focus();
@@ -862,6 +1494,7 @@ function showStep3(){
 
 var isAnswerSend=false;
 var dataAnswerJoin={};
+
 // function getListUsersLike(){
 //     $.post('search_results.php?join_search_page=1&ajax=1',
 //            {with_photo:1,

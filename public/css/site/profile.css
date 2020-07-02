@@ -194,6 +194,12 @@ span.icon_image_profile {
 #video_upload_select{ background: #FF5722;  }
 .item_video{ background: #e8542b; }
 
+.v_title_shadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.1);
+}
 span.v_title {
     text-align: center;
     color: white;
@@ -234,4 +240,9 @@ span.v_title {
     width: 100%;
     height: 100%;
     cursor: pointer;
+}
+
+.item_video:hover .v_title_shadow { display:none; }
+.item_video:hover .video_link {
+    border-bottom: 3px solid red;
 }

@@ -29,8 +29,8 @@ class EmailVerificationCode extends Mailable
      */
     public function build(){
         // return $this->view('view.name');
-        // $from_address = config('mail.from.address');
-        return $this->from('admin@talenttube.com')->view('emails.employer.emailVerificationCode');
+        // $from_address = config('mail.from.address'); 
+        return $this->from('admin@creativedev22.xyz')->view('emails.employer.emailVerificationCode');
 
     }
 }

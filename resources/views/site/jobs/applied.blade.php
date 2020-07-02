@@ -11,7 +11,7 @@
     <div class="head icon_head_browse_matches">My Jobs Application</div>
 
     <div class="add_new_job">
-        @dump($applications)
+        {{-- @dump($applications) --}}
         <div class="job_row_heading jobs_filter">
 
         </div>

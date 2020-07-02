@@ -90,12 +90,12 @@
 								<div class="act_date act_field">
 									<span class="act_label">Date :</span>
 									<div class="act_field_input">
-									<select id="act_month" name="month" class="select_main month" data-search="false">
+									<select id="act_month" name="month" class="select_main month" data-search="true">
 										@foreach (getMonths() as $mkey => $month)
 												<option value="{{$mkey}}">{{$month}}</option>
 										@endforeach
 									</select>
-										<select id="act_year" name="year" class="select_main year" data-search="false">
+										<select id="act_year" name="year" class="select_main year" data-search="true">
 										@for ($y=now()->year; $y > 1945; $y--)
 										 <option value="{{$y}}">{{$y}}</option>
                                         @endfor

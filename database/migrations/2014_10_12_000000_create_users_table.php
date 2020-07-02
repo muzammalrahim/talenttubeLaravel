@@ -30,6 +30,13 @@ class CreateUsersTable extends Migration
             $table->integer('bmonth');
             $table->integer('byear');
             $table->string('statusText');
+
+            $table->string('company');
+            $table->string('industry_experience');
+            $table->string('recentJob');
+            $table->string('qualification');
+            $table->string('salaryRange');
+
             $table->rememberToken();
             $table->timestamps();
         });

@@ -23,7 +23,7 @@
     <!-- header_cont_bl -->
     <div class="bl" style="background: rgba(0, 0, 0, 0.5);">
         <div class="bl_logo">
-            <img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" />
+             <a href="{{route('homepage')}}"><img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" /></a>
         </div>
 
         <div id="success-step-1" class="hide to_show"><div class="slogan">Please verify your email address.</div></div>
