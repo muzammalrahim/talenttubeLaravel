@@ -13,6 +13,20 @@ use App\BlockUser;
 
 class User extends Authenticatable
 {
+
+
+
+    // added by Hassan
+    protected $attributes = [
+    'username' => 0,
+
+    ];     
+
+    protected $table = 'users';
+
+     // added by Hassan
+
+
     use Notifiable;
     use HasPermissionsTrait; //Import The Trait
 

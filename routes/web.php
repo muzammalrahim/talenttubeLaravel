@@ -117,26 +117,43 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::patch('users/update/{id}', 'Admin\UserController@update')->name('users.update');
     Route::get('users/getList', 'Admin\UserController@getDatatable')->name('users.dataTable');
 
+    // for deleting 
+
+    Route::post('users/delete/{id}', 'Admin\UserController@destroyUser')->name('users.destroy');
+
 
     Route::get('employers', 'Admin\UserController@employers')->name('adminEmployers');
 
     Route::get('employers/edit/{id}', 'Admin\UserController@editEmployer')->name('employers.edit');
     Route::patch('employers/update/{id}', 'Admin\UserController@updateEmployer')->name('employers.update');
+    
     Route::get('employers/create', 'Admin\UserController@createEmployer')->name('employers.create');
+
     Route::post('employers/create', 'Admin\UserController@storeEmployer')->name('employers.store');
 
     Route::get('employers/getList', 'Admin\UserController@getEmployerDatatable')->name('employers.dataTable');
+
+    // for deleting 
+
+    Route::post('employers/delete/{id}', 'Admin\UserController@destroyemployers')->name('employers.destroy');
+
 
        // Route added by Hassaan
 
     Route::get('jobs','Admin\AdminJobsController@jobs')->name('adminJobs');
     Route::get('jobs/getList', 'Admin\AdminJobsController@getDatatable')->name('jobs.dataTable');
+
     Route::get('jobs/create', 'Admin\AdminJobsController@createJobs')->name('jobs.create');
-    Route::get('jobs/edit/{id}', 'Admin\AdminJobsController@edit')->name('jobs.edit');
+    Route::post('jobs/store', 'Admin\AdminJobsController@storeNewJob')->name('jobs.store');
+
+    Route::get('jobs/edit/{id}', 'Admin\AdminJobsController@editJob')->name('jobs.edit');
     Route::patch('jobs/update/{id}', 'Admin\AdminJobsController@updateJob')->name('jobs.update');
-    // Route::get('jobs/create', 'Admin\AdminJobsController@createJob')->name('jobs.create');
-    // Route::get('jobs/create', 'Admin\AdminJobsController@createJob')->name('jobs.');
+
     
+    // for deleting 
+
+    Route::post('jobs/delete/{id}', 'Admin\AdminJobsController@destroyJob')->name('jobs.destroy');
+
     // End here
 });
 

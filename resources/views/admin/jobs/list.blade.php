@@ -25,7 +25,7 @@
 
 <table class="table table-bordered" id="dataTable">
     <thead>
-        <tr>
+        <tr style = "text-align: center">
             <th>id.</th>
             <th>title</th>
             <th>country</th>
@@ -35,10 +35,37 @@
             <th>created_at</th>
             {{-- <th>created_by</th> --}}
             <th>action</th>
-
         </tr>
     </thead>
   </table>
+
+<div id="deleteModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+                 <!-- Modal content-->
+        <div class="modal-content">
+             <div class="modal-header">
+                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+             </div>
+             <div class="modal-body">
+
+                <div class="modalContent">
+                    <p>Do you want to Delete <b><span id="delConfirmId"></span></b> Job ?</p>
+                    
+                </div>
+
+                <div class="modelProcessing" style="display: none;">
+                        <h4>Deleting job...</h4>    
+                 </div>
+
+             </div>
+             <div class="modal-footer">
+                 <button type="button" class="btn btn-danger" id="removejob" style="margin: 0 auto">Yes</button>
+              <input type="hidden" name="deleteConfirm" id="deleteConfirm" value="">
+             </div>
+
+        </div>
+    </div>
+</div>
 
 
 @stop
@@ -46,6 +73,20 @@
 
 @section('css')
     <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
+    <style type="text/css">
+        
+        .modal.showProcessing  .modalContent{ display: none;  }
+        .modal.showProcessing  .modelProcessing{ display: block !important;  }
+
+        #delConfirmId{
+            color:red;
+        }
+
+        td{
+            text-align: center;
+        }
+    </style>
+
 @stop
 
 @section('plugins.Datatables') @stop
@@ -69,7 +110,7 @@
                 { data: 'experience', name: 'experience' },
                 { data: 'created_at', name: 'created_at' },
                 // { data: 'created_by', name: 'created_by' },
-                { data: 'action', name: 'action' },
+                { data: 'action', name: 'action'},
             ]
         });
     });

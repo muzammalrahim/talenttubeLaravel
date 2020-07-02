@@ -2082,5 +2082,14 @@ function getDays(){
 
     );
 }
+
+
+function getJobTypes(){
+    return array(
+    'full_time' => 'Full Time',
+    'part_time' => 'Part Time',
+    'occassional_time' => 'Occassinal Time',
+    );
+}
 // Added by Hassan
  
