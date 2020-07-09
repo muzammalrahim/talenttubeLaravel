@@ -13,7 +13,10 @@
 .visible_it{ visibility: visible !important;  opacity: 1 !important; }
 
 .w100{ width: 100% !important; }
+.w80{ width: 80% !important; }
+.w20{ width: 20% !important; }
 .w49{ width: 49% !important; }
+.w50{ width: 50% !important; }
 .wauto{ width: auto !important; }
 .h100{ height: 100% !important; }
 
@@ -87,7 +90,6 @@ button.btn:disabled, button.btn.disabled {
     min-height: 50px;
     font-size: 22px;
 }
-
 .modal.cmodal .pp_confirm .btn {
     display: inline-block;
     float: none !important;
@@ -95,8 +97,6 @@ button.btn:disabled, button.btn.disabled {
     border-radius: 3px !important;
     max-width: 48%;
 }
-
-
 .goldstar,
 .silverstar {
     position: absolute;
@@ -104,7 +104,6 @@ button.btn:disabled, button.btn.disabled {
     left: -20px;
 }
 .silverstar img { height: 40px; }
-
 .js_profile_video {
     position: absolute;
     left: 0px;
@@ -113,5 +112,4 @@ button.btn:disabled, button.btn.disabled {
     border-radius: 4px;
     padding: 4px;
 }
-
 .OrangeBtn{ background: #ff5f4e;  }

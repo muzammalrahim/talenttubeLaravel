@@ -170,7 +170,7 @@ class AdminJobsController extends Controller
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = get_Geo_State($records->country)->pluck('state_title','state_id')->toArray();
         $data['cities'] = get_Geo_City($records->country,$records->state)->pluck('city_title','city_id')->toArray();
-        return view('admin.jobs.edit', $data);
+        return view('admin.jobs.edit', $data); // admin/jobs/edit
     }
 
     /**
@@ -182,19 +182,21 @@ class AdminJobsController extends Controller
      */
  public function updateJob(Request $request, $id){
 
-        // dd( $request->toArray() );
+        dump( $request->toArray() );
         // dd( $id );
-        // $this->validate($request, [
-        //     'name' => 'required|max:255',
-        //     'country' => 'max:15',
-        //     'state' => 'max:15',
-        //     'city' => 'max:15',
-        //     'gender' => 'max:15',
-        //     'experience' => 'max:15',
-        //     'type' => 'max:15',
-        //     'expiration' => 'max:15',   
-        //     'created_by' => 'max:15',    
-        // ]);
+        $this->validate($request, [
+            'title' => 'required|max:255|min:100',
+            'country' => 'max:15',
+            'state' => 'max:15',
+            'city' => 'max:150|min:100',
+           
+            'experience' => 'max:15',
+            'job_type' => 'max:15',
+            'expiration' => 'max:15',   
+            'created_by' => 'max:15',    
+        ]);
+
+        dd('validation done e');
 
         $job = Jobs::find($id);
         $job->title = $request->title;

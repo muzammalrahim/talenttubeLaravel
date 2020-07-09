@@ -134,9 +134,8 @@
 
 
 
-
+        {{-- 
         <div class="col_right">
-
             <div class="bl">
                 <div class="title">
                     <div class="title_icon_edit">
@@ -145,12 +144,10 @@
                     </div>
                     <div class="cl"></div>
                 </div>
-
                 @include('site.user.profile.personalInfoTable')
-
             </div>
-
         </div>
+         --}}
     </div>
     <!-- /tab_about -->
 

@@ -55,6 +55,7 @@ function get_Geo_City($country, $state){
 
 
 function default_Country_id(){ return 14; }
+function default_State_id(){ return 129; }
 
 
 
@@ -1966,6 +1967,17 @@ function assetGallery($access,$userId,$type,$file){
         $path .= 'media/public/';
     }
     $path .= $userId.'/gallery/'.(($type)?($type.'/'):'').$file;
+    return asset( $path );
+}   
+
+function assetGallery2($gallery, $type){
+    $path = '';
+    if ($gallery->access == 2){
+        $path .= 'media/private/';
+    }else{
+        $path .= 'media/public/';
+    }
+    $path .= $gallery->user_id.'/gallery/'.(($type)?($type.'/'):'').$gallery->image;
     return asset( $path );
 }   
 

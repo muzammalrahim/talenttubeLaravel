@@ -57,85 +57,79 @@
 
 
 
-					<div class="bl">
-						<div class="title">
-								<div id="basic_anchor_interested_in">Academics
-									<span class="fa fa-plus icon_green" onclick="UProfile.showNewActivity('academic');"></span>
-								</div>
-								<div class="cl"></div>
-						</div>
-
-						<div class="activity_list">
-							 @foreach ($activities as $activity)
-									<div class="activity activity_{{$activity->id}}">
-											<div class="activity_title"> {{$activity->title}} ({{ $activity->date->format('F Y')}}) </div>
-                                            <div class="activity_desc">{{$activity->description}}</div>
-                                            <div class="act_action"><span  onclick="UProfile.removeActivity('academic',{{$activity->id}});" class="close_icon activityRemove" data-id="{{$activity->id}}"></span></div>
-									</div>
-							 @endforeach
-						</div>
-
-						<div class="add_new_activity academic" style="visibility:hidden;opacity:0;">
-						<form method="POST" name="new_activity_form" class="new_activity_form act_validation">
-								<div class="activity_title">Add new Activity</div>
-
-								<div class="act_title act_field">
-									<span class="act_label">Title :</span>
-									<div class="act_field_input">
-											<input type="text" value="" name="title" class="w100" />
-											<div id="title_error" class="error to_hide">&nbsp;</div>
-									</div>
-								</div>
-
-								<div class="act_date act_field">
-									<span class="act_label">Date :</span>
-									<div class="act_field_input">
-									<select id="act_month" name="month" class="select_main month" data-search="true">
-										@foreach (getMonths() as $mkey => $month)
-												<option value="{{$mkey}}">{{$month}}</option>
-										@endforeach
-									</select>
-										<select id="act_year" name="year" class="select_main year" data-search="true">
-										@for ($y=now()->year; $y > 1945; $y--)
-										 <option value="{{$y}}">{{$y}}</option>
-                                        @endfor
-									</select>
-									<div id="month_error" class="error to_hide">&nbsp;</div>
-									<div id="year_error" class="error to_hide">&nbsp;</div>
-									</div>
-								</div>
-
-								<div class="act_desc act_field">
-									<span class="act_label">Description :</span>
-									<div class="act_field_input">
-										<textarea name="act_description" class="act_editor w100" maxlength="1000" style="min-height: 120px;"></textarea>
-										<div id="act_description_error" class="error to_hide">&nbsp;</div>
-									</div>
-								</div>
-
-
-
-								<div class="act_btn act_field">
-									<span class="act_label"></span>
-									<iput type="type" value="academic" />
-									<button class="btn small white_frame" onclick="UProfile.cancelNewActivity()">Cancel</button>
-									<button class="btn small turquoise" onclick="UProfile.saveNewActivity('academic')">Save</button>
-								</div>
-
-							</form>
-						</div>
-
-
-
+			{{-- 
+            <div class="bl">
+				<div class="title">
+					<div id="basic_anchor_interested_in">Academics
+						<span class="fa fa-plus icon_green" onclick="UProfile.showNewActivity('academic');"></span>
+					</div>
+					<div class="cl"></div>
 				</div>
+
+				<div class="activity_list">
+					 @foreach ($activities as $activity)
+						<div class="activity activity_{{$activity->id}}">
+							<div class="activity_title"> {{$activity->title}} ({{ $activity->date->format('F Y')}}) </div>
+                            <div class="activity_desc">{{$activity->description}}</div>
+                            <div class="act_action"><span  onclick="UProfile.removeActivity('academic',{{$activity->id}});" class="close_icon activityRemove" data-id="{{$activity->id}}"></span></div>
+						</div>
+					 @endforeach
+				</div>
+
+				<div class="add_new_activity academic" style="visibility:hidden;opacity:0;">
+				<form method="POST" name="new_activity_form" class="new_activity_form act_validation">
+						<div class="activity_title">Add new Activity</div>
+						<div class="act_title act_field">
+							<span class="act_label">Title :</span>
+							<div class="act_field_input">
+								<input type="text" value="" name="title" class="w100" />
+								<div id="title_error" class="error to_hide">&nbsp;</div>
+							</div>
+						</div>
+
+						<div class="act_date act_field">
+							<span class="act_label">Date :</span>
+							<div class="act_field_input">
+							<select id="act_month" name="month" class="select_main month" data-search="true">
+								@foreach (getMonths() as $mkey => $month)
+										<option value="{{$mkey}}">{{$month}}</option>
+								@endforeach
+							</select>
+								<select id="act_year" name="year" class="select_main year" data-search="true">
+								@for ($y=now()->year; $y > 1945; $y--)
+								 <option value="{{$y}}">{{$y}}</option>
+                                @endfor
+							</select>
+							<div id="month_error" class="error to_hide">&nbsp;</div>
+							<div id="year_error" class="error to_hide">&nbsp;</div>
+							</div>
+						</div>
+
+						<div class="act_desc act_field">
+							<span class="act_label">Description :</span>
+							<div class="act_field_input">
+								<textarea name="act_description" class="act_editor w100" maxlength="1000" style="min-height: 120px;"></textarea>
+								<div id="act_description_error" class="error to_hide">&nbsp;</div>
+							</div>
+						</div>
+
+						<div class="act_btn act_field">
+							<span class="act_label"></span>
+							<iput type="type" value="academic" />
+							<button class="btn small white_frame" onclick="UProfile.cancelNewActivity()">Cancel</button>
+							<button class="btn small turquoise" onclick="UProfile.saveNewActivity('academic')">Save</button>
+						</div>
+
+					</form>
+				</div>
+		    </div> 
+            --}}
 
         </div>
 
 
-
-
+        {{-- 
         <div class="col_right">
-
             <div class="bl">
                 <div class="title">
                     <div class="title_icon_edit">
@@ -150,9 +144,7 @@
                     <tr><th>Eye color</th><td>{{$user->eye}}</td></tr>
                     <tr><th>Kids</th><td>{{$user->family}}</td></tr>
                     <tr><th>Education</th><td>{{getEducationName($user->education)}}</td></tr>
-
-																				{{-- @dump($user) --}}
-																				@if (!empty( $user->language))
+                    @if (!empty( $user->language))
                         @foreach ($user->language as $lang )
                             <tr><th>Language</th><td>{{getLanguage($lang)}}</td></tr>
                         @endforeach
@@ -163,12 +155,13 @@
                             <tr><th>Hobbies</th><td>{{getHobby($hobby)}}</td></tr>
                         @endforeach
                     @endif
-
                     </tbody>
                 </table>
             </div>
-
         </div>
+        --}}
+
+
     </div>
     <!-- /tab_about -->
 

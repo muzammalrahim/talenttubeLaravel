@@ -390,6 +390,8 @@ $(document).ready(function(){
         }
     });
   }
+
+  
 }); 
 </script>
 <!-- added by Hassan -->

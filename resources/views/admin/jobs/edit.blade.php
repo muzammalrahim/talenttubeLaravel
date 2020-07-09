@@ -9,6 +9,24 @@
 
 <div class="container">
 
+    @include('admin.errors',[ 'error' => $errors, 'record' => $record ])
+
+    {{--
+    @dump( $errors )
+    @dump( $errors->has('title') )
+    @dump( $errors->get('title')[0] )
+    @dump( $errors->getBag('title')   ) 
+   
+    @if($errors->has('title'))
+        <div class="error">{{ $errors->first('title') }}</div>
+    @endif
+
+    @error('title')
+        <div class="error">{{ $message }}</div>
+    @enderror
+    --}}
+
+
     @if ($record->id)
         {!! Form::model($record->id, array('url' => route('jobs.update',['id' => $record->id]), 'method'=>'PATCH', 'files' => true, 'name'=>'formUser', 'novalidate'=>'')) !!}
     @else
