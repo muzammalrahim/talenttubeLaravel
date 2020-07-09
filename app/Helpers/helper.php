@@ -228,7 +228,6 @@ function getIndustries(){
     return  $industries_list; 
 }
 
-
 function getQualificationsList(){
     return 
     array(
@@ -320,8 +319,8 @@ function getQualificationsList(){
         array( 
             'id' => '18',
             'type' => 'degree',
-            'title' => '
-        Landscaping, Horticulture, Floristry & Pest Control'),
+            'title' => 'Landscaping, Horticulture, Floristry & Pest Control'
+        ),
         array( 
             'id' => '19',
             'type' => 'degree',
@@ -2016,6 +2015,20 @@ function getQualificationNames($qualification_array_json){
     return $qualification_names;
 }
 
+function getQualificationsData($qualification_array_json){
+    $qualification_names = array();
+    $getQualificationsList = getQualificationsList();
+    if (!empty($qualification_array_json)){
+       $qualification_array =  json_decode($qualification_array_json,true);
+       foreach ($getQualificationsList  as $qkey => $qvalue) {
+           if(in_array($qvalue['id'], $qualification_array)){
+                $qualification_names[] = $qvalue; 
+           }
+       }
+    }
+    return $qualification_names;
+}
+
 
 // Added by Hassan
 function getEyeColor(){
@@ -2091,5 +2104,44 @@ function getJobTypes(){
     'occassional_time' => 'Occassinal Time',
     );
 }
+
+function getUserRegisterQuestions(){
+    $userquestion = array(
+        'graduate_intern' => 'Are you seeking a Graduate Program or Internship?',
+        'part_time' => 'Are you open to Part Time or Casual work?',
+        'temporary_contract' => 'Are you open to temporary and contract work?',
+        'fulltime' => 'Are you looking for Full Time Employment?',
+        'relocation' => 'Are you looking or willing to relocate for your next job opportunity?',
+        'resident' => 'Are you a Permanent Resident or Citizen of Australia or New Zealand?',
+
+    ); 
+    return $userquestion;
+}
+
+function getEmpRegisterQuestions(){
+    $empquestion = array(
+        'graduate_intern' => 'Does you company hire Graduates or Intern??',
+        'part_time' => 'Are you open to Part Time or Casual workers?<',
+        'temporary_contract' => 'Does you organisation offer temporary or contract type work?',
+        'fulltime' => 'Are you looking for Full Time candidates?',
+        'relocation' => 'Are you willing to repay relocation expenses for a strong candidate?',
+        'resident' => 'Does your organisation ever hire candidates who are not Permanent Resident or Citizen?',
+    ); 
+    return $empquestion;
+}
+
+// function getCompany(){
+//     $company = array(
+//         0 => 'Please Choose',
+//         1 => 'BHP Group Limited',
+//         2 => 'Westpac Banking Corp',
+//         3 => 'National Australia Bank',
+//         4 => 'ANZ Banking Group Limited',
+//         5 => 'Woolworths Group Limited',
+
+//     ); 
+//     return $company;
+// }
+
 // Added by Hassan
  
