@@ -207,9 +207,6 @@ class AdminJobsController extends Controller
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = get_Geo_State($records->country)->pluck('state_title','state_id')->toArray();
         $data['cities'] = get_Geo_City($records->country,$records->state)->pluck('city_title','city_id')->toArray();
-
-        // dd( $records->user_id ); 
-
         $data['type']  = getJobTypes();
         $data['user_id']  = User::where('type','employer')->pluck('name','id')->toArray();
         return view('admin.jobs.edit', $data);
@@ -223,7 +220,6 @@ class AdminJobsController extends Controller
      * @return \Illuminate\Http\Response
      */
  public function updateJob(Request $request, $id){
-
         // dump( $request->toArray() );
         // dd( $id );
         $this->validate($request, [
@@ -236,7 +232,6 @@ class AdminJobsController extends Controller
             'expiration' => 'max:19',   
             'created_by' => 'max:19',    
         ]);
-
         $job = Jobs::find($id);
         $job->title = $request->title;
         $job->country = $request->country;

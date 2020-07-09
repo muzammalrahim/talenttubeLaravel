@@ -51,6 +51,12 @@ class Jobs extends Model {
         return $this->hasMany('App\JobsQuestions', 'job_id');
     }
 
+    public function jobEmployerLogo(){
+        // return $this->belongsTo(User::class, 'state','state_id');
+        // return $this->hasOne('App\UserGallery', 'user_id', 'user_id')->selectRaw('job_id, count(*) as aggregate')->groupBy('job_id');
+        return $this->hasOne('App\UserGallery', 'user_id', 'user_id')->where('profile',1);
+    }
+
 
 
     function addJobQuestions($questions){

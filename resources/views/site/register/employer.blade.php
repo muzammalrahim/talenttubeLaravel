@@ -69,6 +69,8 @@
 
 <script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
+
 <script src="{{ asset('js/site/common.js') }}"></script>
 @stop
 
