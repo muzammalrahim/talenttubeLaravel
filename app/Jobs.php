@@ -7,6 +7,19 @@ use App\JobsQuestions;
 
 class Jobs extends Model {
 
+    // added by Hassan
+    protected $attributes = [
+    'description' => 0,
+    'vacancies' => 0,
+    'salary' => 0,
+    'gender' => 0,
+    'age' => 0,
+    ];     
+
+    protected $table = 'jobs';
+
+     // added by Hassan
+
     protected $casts = [
         'expiration' => 'datetime'
     ];

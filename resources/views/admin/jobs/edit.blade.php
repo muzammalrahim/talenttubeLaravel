@@ -8,30 +8,13 @@
 @section('content')
 
 <div class="container">
-
     @include('admin.errors',[ 'error' => $errors, 'record' => $record ])
-
-    {{--
-    @dump( $errors )
-    @dump( $errors->has('title') )
-    @dump( $errors->get('title')[0] )
-    @dump( $errors->getBag('title')   ) 
-   
-    @if($errors->has('title'))
-        <div class="error">{{ $errors->first('title') }}</div>
-    @endif
-
-    @error('title')
-        <div class="error">{{ $message }}</div>
-    @enderror
-    --}}
-
-
-    @if ($record->id)
-        {!! Form::model($record->id, array('url' => route('jobs.update',['id' => $record->id]), 'method'=>'PATCH', 'files' => true, 'name'=>'formUser', 'novalidate'=>'')) !!}
+    @if ($record)
+        {!! Form::model($record, array('url' => route('jobs.update',['id' => $record->id]), 'method'=>'PATCH', 'files' => true, 'name'=>'formUser', 'novalidate'=>'')) !!}
     @else
-        {!! Form::open(array('url' => route('jobs.edit'), 'method' => 'POST', 'files' => true, 'name'=>'formUser', 'novalidate'=>'')) !!}
+        {!! Form::open(array('url' => route('jobs.store'), 'method' => 'POST', 'files' => true, 'name'=>'formJob', 'novalidate'=>'')) !!}
     @endif
+    
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -44,56 +27,49 @@
                     <div class="form-group row">
                           {{ Form::label('ID', null, ['class' => 'col-md-2 form-control-label']) }}
                           <div class="col-md-10">
-                            {{ Form::text('id', $value = $record->id, $attributes = array('class'=>'form-control', 'placeholder' => 'Id','required'=> 'false','disabled'=> true)) }}
+                            {{ Form::text('id', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Id','required'=> 'false','disabled'=> true)) }}
                           </div>
                     </div>
 
-                    <div class="form-group row">
-                        {{ Form::label('Job Title', null, ['class' => 'col-md-2 form-control-label']) }}
+                     <div class="form-group row">
+                        {{ Form::label('title', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                          {{ Form::text('title', $value = $record->title , $attributes = array('class'=>'form-control', 'placeholder' => 'name','required'=> 'false')) }}
+                          {{ Form::text('title', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'title','required'=> 'true')) }}
                         </div>
                     </div>
-                
+            
                      <div class="form-group row country_dd">
                         {{ Form::label('country', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                        {{ Form::select('country', $countries, $record->country, ['placeholder' => 'Select Country']) }}
+                        {{ Form::select('country', $countries, ($record)?($record->country):null, ['placeholder' => 'Select Country']) }}
                         </div>
                     </div>
 
                      <div class="form-group row state_dd">
                         {{ Form::label('state', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                            {{ Form::select('state', $states, $record->state, ['placeholder' => 'Select state']) }}
+                            {{ Form::select('state', $states ?? '', ($record)?($record->state):null, ['placeholder' => 'Select state']) }}
                         </div>
                     </div>
 
-                    <div class="form-group row city_dd">
+                     <div class="form-group row city_dd">
                         {{ Form::label('city', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                        {{ Form::select('city', $cities, $record->city, ['placeholder' => 'Select city']) }}
-                        </div>
-                    </div>
-
-                    <div class="form-group row">
-                        {{ Form::label('Gender', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                          {{ Form::text('gender', $value = $record->gender, $attributes = array('class'=>'form-control', 'placeholder' => 'Gender','required'=> 'false')) }}
+                        {{ Form::select('city', $cities, ($record)?($record->city):null, ['placeholder' => 'Select state']) }}
                         </div>
                     </div>
 
                     <div class="form-group row">
                         {{ Form::label('Experience', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                          {{ Form::text('experience', $value = $record->experience , $attributes = array('class'=>'form-control', 'placeholder' => 'Experience','required'=> 'false')) }}
+                          {{ Form::text('experience', $value, $attributes = array('class'=>'form-control', 'placeholder' => 'Experience','required'=> 'false')) }}
                         </div>
                     </div>
-
+                        
                     <div class="form-group row ">
-                        {{ Form::label('Job Type', null, ['class' => 'col-md-2 form-control-label']) }}
+                        {{ Form::label('Type', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                        {{ Form::select('job_type', $job_type, $record->job_type, ['placeholder' => 'Job Type']) }}
+                        {{ Form::select('type', $type, $record->type, ['placeholder' => 'Job Type']) }}
                         </div>
                     </div>
 
@@ -110,13 +86,12 @@
                           {{ Form::text('created_at', $value = $record->created_at , $attributes = array('class'=>'form-control', 'placeholder' => 'Created At','required'=> 'false')) }}
                         </div>
                     </div>
-
-                    <div class="form-group row">
-                        {{ Form::label('created_by', null, ['class' => 'col-md-2 form-control-label']) }}
+                    
+                    <div class="form-group row ">
+                        {{ Form::label('Created By', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                        {{ Form::select('employers', $employers, $record->employers, ['placeholder' => 'Select employers']) }}
+                        {{ Form::select('user_id', $user_id, null, ['placeholder' => 'Select Employer']) }}
                         </div>
-                    </div>
 
                 </div><!--col-->
             </div><!--row-->
@@ -141,13 +116,11 @@
     <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
 @stop
 
-@section('plugins.Datatables')
-
-@stop
+@section('js')
+    <script src="{{ asset('js/admin_custom.js') }}"></script>
 
 {{-- country city state --}}
-
-    <script type="text/javascript">
+<script type="text/javascript">
     $(document).ready(function(){
    $(document).on('change','.country_dd', function(){
      console.log(' country_dd ',this);
@@ -196,8 +169,16 @@
   }
 }); 
 </script>
+{{-- country state city--}}
 
-{{-- country state city --}}
+    <!-- added by Hassan -->
+    <script type="text/javascript"> var base_url = '{!! url('/') !!}';</script>
+@stop
+
+@section('plugins.Datatables')
+
+@stop
+
 
 <style>
     

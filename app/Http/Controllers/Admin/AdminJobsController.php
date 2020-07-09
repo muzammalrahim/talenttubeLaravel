@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Auth;
 use App\Jobs;
 use App\User;
 
+
+// use Yajra\Datatables\Datatables;
+// use Illuminate\Support\Facades\Hash;
+
 class AdminJobsController extends Controller
 {
 
@@ -53,7 +57,7 @@ class AdminJobsController extends Controller
         $data['content_header'] = 'Jobs';
         $data['classes_body'] = 'jobs';
         $data['jobs'] = Jobs::with('applicationCount')->get();
-       
+
         // dd($data); 
 
        return view('admin.jobs.list', $data);
@@ -66,10 +70,12 @@ class AdminJobsController extends Controller
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
-            $rhtml = '<a href="'.route('jobs.edit',['id' =>$records->id]).'">'.__('common.edit').'</a>';
-            // $records->GeoCountry->country_title
+            $rhtml = '<a href="'.route('jobs.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
+
+            $rhtml .= '<button id="itemdel" type="button" class="btn btn-danger btn-sm" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
             return $rhtml;
         }
+
       })
       ->editColumn('country', function ($records) {
           return ($records->GeoCountry)?($records->GeoCountry->country_title):'';
@@ -83,65 +89,96 @@ class AdminJobsController extends Controller
       ->toJson();
     }
 
-    // from user controller
-
-    public function storeJob(Request $request){
-        dd( $request->toArray() );
-        $this->validate($request, [
-            'title' => 'required|max:255',
-            'phone' => 'max:15',
-            'country' => 'max:15',
-            'state' => 'max:15',
-            'city' => 'max:15',
-            'created_at' => 'max:250',
-
-        ]);
-        $user = new Job();
-        $user->name = $request->name;
-        $user->phone = $request->phone;
-        $user->country = $request->country;
-        $user->state = $request->state;
-        $user->city = $request->city;
-        $user->created_at = $request->created_at;
-        if( $user->save() ){
-            $user->roles()->attach([config('app.user_role')]);
-            return redirect(route('users'))->withSuccess( __('admin.record_updated_successfully'));
-        }
-    }
-
 // Storing job in database
-    public function store(Request $request){
-        dump( $request->toArray() );
-        $this->validate($request, [
-            'email'         => 'required|max:255|email',
-            'password'      => 'required',
-        ]);
-        if (Auth::attempt(['email' => $email, 'password' => $password])) {
-            // Success
-            return redirect()->intended('/panel');
-        } else {
-            // Go back on error (or do what you want)
-            return redirect()->back();
-        }
 
+    public function store(Request $request)
+        {
+
+        // dd( $request->toArray() );
+        // dd( $id );
+        // $this->validate($request, [
+        //     'name' => 'required|max:255',
+        //     'country' => 'max:15',
+        //     'state' => 'max:15',
+        //     'city' => 'max:15',
+        //     'experience' => 'max:15',
+        //     'type' => 'max:15',
+        //     'expiration' => 'max:15',   
+        //     'user_id' => 'max:15',    
+        // ]);
+
+        $job = new Jobs();
+        $job->title = $request->title;
+        $job->country = $request->country;
+        $job->state = $request->state;
+        $job->city = $request->city;
+        $job->experience = $request->experience;
+        $job->type = $request->type;
+        $job->expiration = $request->expiration;
+        $job->created_at = $request->created_at;
+        $job->user_id = $request->user_id;
+    
+        if( $job->save() ){
+            return redirect(route('adminJobs'))->withSuccess( __('admin.record_updated_successfully'));
+        }
     }
+    
 
 // Storing job in database
 
 // create job
     
-     public function createJob(){
-        $data['record']   = FALSE;
-        $data['title']  = 'Job';
-        $data['content_header'] = 'Add new Job';
-        $data['countries'] = get_Geo_Country();
+     public function createJobs(Request $request) 
+     {
+        $records = FALSE;
+        $data['content_header'] = 'Edit User';
+        $data['record'] = $records;
+        $data['title']  = 'Jobs';
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = array();
         $data['cities'] = array();
-
-        return view('admin.jobs.edit', $data);
+        $data['experience'] = Jobs::select('experience')->pluck('experience')->toArray();
+        $data['employers']  = User::where('type','employer')->pluck('name','id')->toArray();
+        $data['type']  = getJobTypes();
+        $data['user_id']  = User::where('type','employer')->pluck('name','id')->toArray();
+        return view('admin.jobs.create', $data);
     }
 
+    // from user controller
+
+    public function storeNewJob(Request $request){
+
+        // dd( $request->toArray() );
+
+        $this->validate($request, [
+            'title' => 'required|max:255',
+            'country' => 'max:15',
+            'state' => 'max:15',
+            'city' => 'max:15',
+            'experience' => 'max:250',
+            'type' => 'max:250',
+            'expiration' => 'max:250',
+            'created_at' => 'max:250',
+            'user_id' => 'max:250',
+
+        ]);
+        $job = new Jobs();
+        $job->title = $request->title;       
+        $job->country = $request->country;
+        $job->state = $request->state;
+        $job->city = $request->city;
+        $job->experience = $request->experience;
+        $job->type = $request->type;
+        $job->expiration = $request->expiration;
+        $job->created_at = $request->created_at;
+        $job->user_id = $request->user_id;
+
+        if( $job->save() ){
+            // $job->roles()->attach([config('app.user_role')]);
+            return redirect(route('adminJobs'))->withSuccess( __('admin.record_updated_successfully'));
+
+        }
+    }
 // create job 
 
     /**
@@ -159,18 +196,20 @@ class AdminJobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editJob($id)
     {
         $records = Jobs::where('id',$id)->first();
-        $data['content_header'] = 'Edit User';
+
+        // dd(); 
+        $data['content_header'] = 'Edit Job';
         $data['record'] = $records;
         $data['title']  = 'Jobs';
-        $data['employers']  = User::where('type','employer')->pluck('name','id')->toArray();
-        $data['job_type']  = Jobs::select('type')->pluck('type')->toArray();
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = get_Geo_State($records->country)->pluck('state_title','state_id')->toArray();
         $data['cities'] = get_Geo_City($records->country,$records->state)->pluck('city_title','city_id')->toArray();
-        return view('admin.jobs.edit', $data); // admin/jobs/edit
+        $data['type']  = getJobTypes();
+        $data['user_id']  = User::where('type','employer')->pluck('name','id')->toArray();
+        return view('admin.jobs.edit', $data);
     }
 
     /**
@@ -181,34 +220,28 @@ class AdminJobsController extends Controller
      * @return \Illuminate\Http\Response
      */
  public function updateJob(Request $request, $id){
-
-        dump( $request->toArray() );
+        // dump( $request->toArray() );
         // dd( $id );
         $this->validate($request, [
-            'title' => 'required|max:255|min:100',
+            'title' => 'required|max:255',
             'country' => 'max:15',
             'state' => 'max:15',
-            'city' => 'max:150|min:100',
-           
+            'city' => 'max:15',
             'experience' => 'max:15',
-            'job_type' => 'max:15',
-            'expiration' => 'max:15',   
-            'created_by' => 'max:15',    
+            // 'type' => 'max:15',
+            'expiration' => 'max:19',   
+            'created_by' => 'max:19',    
         ]);
-
-        dd('validation done e');
-
         $job = Jobs::find($id);
         $job->title = $request->title;
         $job->country = $request->country;
         $job->state = $request->state;
         $job->city = $request->city;
-        $job->gender = $request->gender;
         $job->experience = $request->experience;
-        // $job->job_type = $request->job_type;
+        $job->type = $request->type;
         $job->expiration = $request->expiration;
         $job->created_at = $request->created_at;
-        // $job->created_by = $request->created_by;
+        $job->user_id = $request->user_id;
     
         if( $job->save() ){
             return redirect(route('adminJobs'))->withSuccess( __('admin.record_updated_successfully'));
@@ -221,9 +254,47 @@ class AdminJobsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroyJob($id){
+      $job = Jobs::find($id);
+      if(!empty($job)){
+        $job->delete();
+          return response()->json([
+                'status' => 1,
+                'message' => 'Job Succesfully Deleted',
+          ]);
+      }
     }
+
+    // deleting job
+
+         public function deleteJob(Request $request, $id){
+           $this->validate($request, [
+            'title' => 'required|max:255',
+            'country' => 'max:15',
+            'state' => 'max:15',
+            'city' => 'max:15',
+            'experience' => 'max:15',
+            // 'type' => 'max:15',
+            'expiration' => 'max:19',   
+            'created_by' => 'max:19',    
+        ]);
+
+        $job = Jobs::find($id);
+        $job->title = $request->title;
+        $job->country = $request->country;
+        $job->state = $request->state;
+        $job->city = $request->city;
+        $job->experience = $request->experience;
+        $job->type = $request->type;
+        $job->expiration = $request->expiration;
+        $job->created_at = $request->created_at;
+        $job->created_by = $request->created_by;
+    
+        if( $job->save() ){
+            return redirect(route('adminJobs'))->withSuccess( __('admin.record_updated_successfully'));
+        }
+    }
+
+    // deleting job ends
 
 }

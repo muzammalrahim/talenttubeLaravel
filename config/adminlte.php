@@ -212,14 +212,14 @@ return [
             'can'  => 'manage-blog',
         ],
         [
-            'text'        => 'Employers',
+            'text'        => 'Approved Employers',
             'url'         => 'admin/employers',
             'icon'        => 'far fa-fw fa-file',
             // 'label'       => 4,
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Users',
+            'text'        => 'Approved Job Seekers',
             'url'         => 'admin/users',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
