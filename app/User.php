@@ -19,7 +19,6 @@ class User extends Authenticatable
     // added by Hassan
     protected $attributes = [
     'username' => 0,
-
     ];     
 
     protected $table = 'users';

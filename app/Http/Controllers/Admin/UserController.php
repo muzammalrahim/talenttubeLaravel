@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\UserGallery;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Hash;
@@ -21,8 +22,8 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        $data['title'] = 'Users';
-        $data['content_header'] = 'Users List';
+        $data['title'] = 'Job Seekers';
+        $data['content_header'] = 'Job Seekers';
         return view('admin.user.list', $data);
     }
 
@@ -35,18 +36,22 @@ class UserController extends Controller
     /** ================ This method returns the datatables data to view ================ */
     public function getDatatable(){
       $records = array();
-      $records = User::select(['id', 'name', 'email', 'created_at'])
+      $records = User::select(['id', 'name', 'city','email','phone', 'created_at'])
         ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
         ->orderBy('created_at', 'desc');
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $rhtml = '<a href="'.route('users.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px;"><i class="far fa-edit"></i></button></a>';
-
             $rhtml .= '<button id="userdel" type="button" class="btn btn-danger btn-sm" data-type="User" user-id='. $records->id.' user-title="'.$records->name.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
                 return $rhtml;
-        }
-      })
+        }})
+       ->addColumn('profile', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<button id="userinfo" type="button" class="btn btn-primary btn-sm btnUserInfo" user-id='. $records->id.' >Info</button>';
+            return $rhtml;
+        }})
+      ->rawColumns(['profile', 'action'])
       ->toJson();
     }
 
@@ -65,6 +70,7 @@ class UserController extends Controller
                 return $rhtml;
         }
       })
+
       ->toJson();
     }
 
@@ -74,7 +80,13 @@ class UserController extends Controller
         $data['title']  = 'User';
         $data['content_header'] = 'Add new User';
         $data['countries'] = get_Geo_Country();
-        $data['educationDropdown'] = getEducationDropdown();
+
+        // $data['educationDropdown'] = getEducationDropdown();
+
+        $data['qualificationList'] = getQualificationsList();
+
+
+
         $data['languages'] = getLanguages();
         $data['hobbies'] = getHobbies();
         $data['familyType'] = getFamilyType();
@@ -85,6 +97,13 @@ class UserController extends Controller
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = array();
         $data['cities'] = array();
+        
+        $data['userquestion'] = getUserRegisterQuestions();
+
+        $data['industry_experience'] = getIndustries();
+        $data['salaryRange'] = getSalariesRange();
+
+
         return view('admin.user.edit', $data);
     }
 
@@ -104,28 +123,50 @@ class UserController extends Controller
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = array();
         $data['cities'] = array();
+
+        
+        $data['empquestion'] = getEmpRegisterQuestions();
+
+
+
         return view('admin.employer.edit', $data);
     }
 
     /** ================   ================ */
-    public function edit(User $id){
-        $user = $id; 
-        $data['record']   = $id;
-        $data['title']  = 'User';
-        $data['content_header'] = 'Edit User';
-        $data['countries'] = get_Geo_Country();
-        $data['educationDropdown'] = getEducationDropdown();
-        $data['languages'] = getLanguages();
-        $data['hobbies'] = getHobbies();
-        $data['familyType'] = getFamilyType();
-        $data['eyeColor'] = getEyeColor();
-        $data['Days'] = getDays();
-        $data['Months'] = getMonths();
-        $data['years'] = getYears();
-        $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
-        $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
-        $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
-        return view('admin.user.edit', $data);
+    public function edit($id){
+            
+        $user = User::with('profileImage')->where('id',$id)->first();
+        if(empty($user)){ return redirect(route('users.create')); } 
+        if($user->type == 'employer'){ 
+            return redirect(route('employers.edit', ['id' => $user->id]));
+        }else if($user->type == 'user'){
+            $data['record']   = $user;
+            $data['title']  = 'User';
+            $data['content_header'] = 'Edit User';
+            $data['countries'] = get_Geo_Country();
+
+
+            // $data['educationDropdown'] = getEducationDropdown();
+
+            $data['qualificationList'] = getQualificationsList();
+
+            $data['languages'] = getLanguages();
+            $data['hobbies'] = getHobbies();
+            $data['familyType'] = getFamilyType();
+            $data['eyeColor'] = getEyeColor();
+            $data['Days'] = getDays();
+            $data['Months'] = getMonths();
+            $data['years'] = getYears();
+            $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
+            $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
+            $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
+
+            $data['userquestion'] = getUserRegisterQuestions();
+            $data['industriesList'] = getIndustries();
+            $data['salaryRange'] = getSalariesRange();
+            return view('admin.user.edit', $data);
+        }
+        // admin/user/edit
     }
 
     /** ================  ================ */
@@ -147,6 +188,7 @@ class UserController extends Controller
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
         $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
+        $data['questionsList'] = getEmpRegisterQuestions();
 
         // edit end
 
@@ -154,6 +196,9 @@ class UserController extends Controller
     }
 
     public function update(Request $request, $id){
+
+        
+
         $user = User::find($id);
         if (!$user){
             return redirect(route('users'))->withErrors(['token' => 'User with id '.$id.' does not exist']);
@@ -170,7 +215,7 @@ class UserController extends Controller
             'bday' => 'max:2',
             'bmonth' => 'max:2',
             'byear' => 'max:4',
-            'statusText' => 'max:25',
+            'statusText' => 'max:125',
             'gender' => 'max:25',
             'eye' => 'max:15',
             'family' => 'max:15',
@@ -179,12 +224,11 @@ class UserController extends Controller
             'hobbies' => 'max:15',
             'about_me' => 'max:500',
             'interested_in' => 'max:250',
-            'questions' => 'max:250',
+            'userquestion' => 'max:250',
             'created_at' => 'max:250',
             'updated_at' => 'max:250',
             'credit' => 'max:250',
-        ]);
-
+        ]);     
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
@@ -199,15 +243,34 @@ class UserController extends Controller
         $user->gender = $request->gender;
         $user->eye = $request->eye;
         $user->family = $request->family;
-        $user->education = $request->education;
+
+        // $user->education = $request->education;
+
+        $user->qualification = $request->qualifications;
+
+
         $user->language = $request->language;
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
-        $user->questions = $request->questions;
+
+         // dd(  $request->toArray() );
+
+        $user->questions = json_encode($request->questions); 
+        
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
+
+        $user->industry_experience = $request->industry_experience;
+        $user->recentJob = $request->recentJob;
+        $user->salaryRange = $request->salaryRange;
+        
+
+
+
+
+
 
         if( $user->save() ){
             return redirect(route('users'))->withSuccess( __('admin.record_updated_successfully'));
@@ -268,10 +331,15 @@ class UserController extends Controller
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
+
         $user->questions = json_encode($request->questions);
+
+        $user->company = $request->company;
+
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
+
 
         if( $user->save() ){
             return redirect(route('adminEmployers'))->withSuccess( __('admin.record_updated_successfully'));
@@ -279,6 +347,8 @@ class UserController extends Controller
     }
 
     public function store(Request $request){
+
+
         $this->validate($request, [
             'name' => 'required|max:255',
             'email' => 'email',
@@ -291,7 +361,7 @@ class UserController extends Controller
             'bday' => 'max:2',    
             'bmonth' => 'max:2',
             'byear' => 'max:4',
-            'statusText' => 'max:25',
+            'statusText' => 'max:125',
             'gender' => 'max:25',
             'eye' => 'max:15',
             'family' => 'max:15',
@@ -322,15 +392,34 @@ class UserController extends Controller
         $user->gender = $request->gender;
         $user->eye = $request->eye;
         $user->family = $request->family;
-        $user->education = $request->education;
+
+        // $user->education = $request->education;
+
+        $user->qualification = $request->qualifications;
+
+
+        // 
+
         $user->language = $request->language;
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
-        $user->questions = json_encode($request->questions);
+            
+
+       
+        // $user->questions = implode(',',$request->questions);
+
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
+
+        $user->industry_experience = $request->industry_experience;
+        $user->recentJob = $request->recentJob;
+        $user->salaryRange = $request->salaryRange;
+
+
+
+
         $user->type = "user";
         if( $user->save() ){
             $user->roles()->attach([config('app.user_role')]);
@@ -391,6 +480,10 @@ class UserController extends Controller
         $user->questions = json_encode($request->questions);
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
+
+        $user->company = $request->company;
+
+
         $user->credit = $request->credit;
         $user->type = "employer";
         
@@ -414,6 +507,25 @@ class UserController extends Controller
                 'message' => 'Job Succesfully Deleted',
           ]);
       }
+
+
+
+      // $html  = '<div>';
+      // $html. = '  <p>Hellow</p>';
+      // $html. = '</div>';
+      // return $html;
+    
+    }
+
+    public function profilePopup(Request $request){
+
+     $user = User::find($request->id); 
+     if($user){
+        $gallery =  UserGallery::where('user_id',$request->id)->get();
+        $data['user'] = $user;
+        $data['gallery'] = $gallery;
+        return view('admin.user.profilePopup', $data);
+     }
     }
 
     // Destroy User end here

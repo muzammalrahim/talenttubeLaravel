@@ -117,9 +117,15 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::patch('users/update/{id}', 'Admin\UserController@update')->name('users.update');
     Route::get('users/getList', 'Admin\UserController@getDatatable')->name('users.dataTable');
 
-    // for deleting 
 
+
+
+    // for deleting 
     Route::post('users/delete/{id}', 'Admin\UserController@destroyUser')->name('users.destroy');
+
+
+    // user Info
+    Route::get('users/userinfo', 'Admin\UserController@profilePopup')->name('users.profilePopup');
 
 
     Route::get('employers', 'Admin\UserController@employers')->name('adminEmployers');

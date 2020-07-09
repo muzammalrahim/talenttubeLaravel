@@ -35,8 +35,8 @@ $(document).on('click', '#itemdel', function() {
         	console.log(' data ', data);
             if(data.status === 1 )
              $('#deleteModal').modal('hide');
-           $(".modelProcessing").hide();
-           $(".modalContent p").show();
+             $(".modelProcessing").hide();
+             $(".modalContent p").show();
              $("#removejob").prop("disabled", false);
             jQuery('#dataTable').DataTable().ajax.reload();
         }
@@ -85,3 +85,15 @@ $('#removeuser').on('click', function() {
     });
     
 });
+
+// JavaScript For Next and Previous Tab
+
+ $('.btnNext').click(function(){
+  $('.nav-tabs > .active').next('li').find('a').trigger('click');
+});
+
+  $('.btnPrevious').click(function(){
+  $('.nav-tabs > .active').prev('li').find('a').trigger('click');
+});
+
+// JavaScript For Next and Previous Tab End 

@@ -70,7 +70,8 @@ class AdminJobsController extends Controller
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
-            $rhtml = '<a href="'.route('jobs.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px"><i class="far fa-edit"></i></button></a>';
+            $rhtml = '<a href="'.route('jobs.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
+
             $rhtml .= '<button id="itemdel" type="button" class="btn btn-danger btn-sm" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
             return $rhtml;
         }
