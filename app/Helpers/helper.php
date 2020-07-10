@@ -6,6 +6,13 @@ function checkRole($roles){
     echo "test helper working ";
 }
 
+function onlyAdmin(){
+    $user = Auth::user(); 
+    if (!$user->isAdmin()){
+        echo view('unauthorized'); exit;   
+    }
+}
+
 function isAdmin(){
     $user = Auth::user();
     return ( $user )?($user->isAdmin()):false;
@@ -1999,6 +2006,10 @@ function generateVideoThumbs($video){
             }
         }
     }
+
+   if (!empty($video->file)) 
+    $html .= ' data-src="'.assetVideo($video).'"'; 
+
    $html .= '/>';
    return $html; 
 }
@@ -2009,6 +2020,11 @@ function assetVideo($video){
     $vPath  = 'stream/';
     $vPath .= $video->file;
     return asset( $vPath );
+} 
+
+function assetResume($resume){
+    if(isset($resume->file))
+        return asset('images/user/'.$resume->file); 
 } 
 
 

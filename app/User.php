@@ -60,7 +60,7 @@ class User extends Authenticatable
     ];
 
 
-    function isAdmin(){
+    function isAdmin(){ 
        return  $this->hasRole('admin');
     }
 
@@ -115,6 +115,11 @@ class User extends Authenticatable
         // return $this->hasMany('App\UserGallery','user_id')->where('status',1)->where('profile',1);
         return $this->hasOne('App\UserGallery','user_id')->where('status',1)->where('profile',1);
         // return $this->hasMany('App\UserGallery','user_id'); //->limit(1);
+    }
+    
+
+    function Gallery(){ 
+        return $this->hasMany('App\UserGallery','user_id');  
     }
 
 
