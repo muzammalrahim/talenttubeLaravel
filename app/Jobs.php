@@ -16,7 +16,7 @@ class Jobs extends Model {
     'age' => 0,
     ];     
 
-    protected $table = 'jobs';
+    protected $table = 'jobs_data';
 
      // added by Hassan
 
@@ -49,6 +49,12 @@ class Jobs extends Model {
 
     public function questions(){
         return $this->hasMany('App\JobsQuestions', 'job_id');
+    }
+
+    public function jobEmployerLogo(){
+        // return $this->belongsTo(User::class, 'state','state_id');
+        // return $this->hasOne('App\UserGallery', 'user_id', 'user_id')->selectRaw('job_id, count(*) as aggregate')->groupBy('job_id');
+        return $this->hasOne('App\UserGallery', 'user_id', 'user_id')->where('profile',1);
     }
 
 

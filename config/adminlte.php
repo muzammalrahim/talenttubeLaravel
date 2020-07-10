@@ -212,6 +212,19 @@ return [
             'can'  => 'manage-blog',
         ],
         [
+            'text'        => 'Approved Job Seekers',
+            'url'         => 'admin/users/verified',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'Pending Job Seekers',
+            'url'         => 'admin/users/pending',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+        // ['header' => 'account_settings'],
+        [
             'text'        => 'Approved Employers',
             'url'         => 'admin/employers',
             'icon'        => 'far fa-fw fa-file',
@@ -219,8 +232,9 @@ return [
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Approved Job Seekers',
-            'url'         => 'admin/users',
+
+            'text'        => 'Pending Employers',
+            'url'         => 'admin/pending_Employers',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
@@ -230,42 +244,18 @@ return [
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
-
-        [
-            'text'        => 'Job Applications',
-            'url'         => 'admin/job_applications',
-            'icon'        => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-
         [
             'text'        => 'Pending Jobs',
             'url'         => 'admin/pending_jobs',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
-
-        [
-            'text'        => 'Pending Job Seekers',
-            'url'         => 'admin/pending_jobSeekers',
-            'icon'        => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-
-        [
-            'text'        => 'Pending Employers',
-            'url'         => 'admin/pending_Employers',
-            'icon'        => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-
         [
             'text'        => 'Search by Jobs',
             'url'         => 'admin/searchByJobs',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
-
         [
             'text'        => 'Filter By Advance Search',
             'url'         => 'admin/filterByAdvanceSearch',

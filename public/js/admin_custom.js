@@ -1,3 +1,29 @@
+function getLoader(cl,isHide,isWhite){
+    cl=cl||'';
+    isHide&&cl+' hidden';
+    var spinner_html = `<div class="spinner center">
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    </div>`;
+    var $loader = $("<div>").html(spinner_html).addClass(cl).removeAttr('id');
+     
+    isWhite&&$loader.find('.spinner').addClass('spinnerw');
+    var key='loader_'+cl;
+     
+    return $loader;
+}
+
+
 $(document).ready(function() {
     $(".alert-autoclose").fadeTo(5000, 500).slideUp(500, function() {
         $(".alert-autoclose").slideUp(500);

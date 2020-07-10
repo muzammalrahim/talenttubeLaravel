@@ -21,73 +21,36 @@
                     <div class="cl"></div>
                 </div>
 
-                <div class="bl">
-                    <label>I am from</label>
-                    <div id="css_loader_location" class="css_loader css_loader_location hidden">
-                        <div class="spinner spinnerw center">
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
-                            <div class="spinner-blade"></div>
+                {{-- bl_location --}}
+                <div class="bl bl_location">
+                <label>I am from</label>
+                    <div class="location_filed">
+                        <div class="location_input dtable w100">
+                            <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
+                            <button type="button" id="location_search_load" class="btn btn-success location_search_btn w20 fl_left">Search</button>
+                        </div>
+                        <div class="location_latlong dtable w100">
+                            <input type="text" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+                            <input type="text" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+
+                            <input type="hidden" name="location_name" id="location_name"  value="">
+                            <input type="hidden" name="location_city" id="location_city"  value="">
+                            <input type="hidden" name="location_state" id="location_state"  value="">
+                            <input type="hidden" name="location_country" id="location_country"  value="">
+                        </div>
+
+                        <div class="location_map_box dtable w100">
+                            <div class="location_map" id="location_map"></div>
                         </div>
                     </div>
-                    <div class="bl_location">
-                    
-                    <div class="w49 dinline_block">
-                    <select name="country" id="country" class="location country geo w100"
-                        data-search-unique-id="true"
-                        data-location="geo_states"
-                        data-search="true"
-                        data-search-placeholder="Enter manually..."
-                        data-search-not-found="No matches..." >
-                        @foreach ($geo_country as $country)
-                            <option  id="option_country_{{$country->country_id}}"  value="{{$country->country_id}}" {{(default_Country_id() == $country->country_id)?('selected="selected"'):('')}}>{{$country->country_title}}</option>
-                        @endforeach
-                    </select>
-                    </div>
-                    
-                    <div class="w49 dinline_block">
-                    <select name="state" id="state" 
-                        data-location="geo_cities" 
-                        class="location state geo w100" 
-                        data-search="true" 
-                        data-search-placeholder="Enter manually..." 
-                        data-search-not-found="No matches...">
-                            <option  value="2527" >Alabama</option>
-                            <option  value="2575" >West Virginia</option>
-                            <option  value="2576" >Wisconsin</option>
-                            <option  value="2577" >Wyoming</option>
-                            @foreach ($geo_state as $state)
-                                <option  id="option_state_{{$state->state_id}}"  value="{{$state->state_id}}">{{$state->state_title}}</option>
-                            @endforeach
-                    </select>
-                    </div>
 
-                    <div class="separator"></div>
-                    <select name="city" id="city" 
-                        class="location city w100" 
-                        data-search="true" 
-                        data-search-placeholder="Enter manually..." 
-                        data-search-not-found="No matches..."
-                        data-placeholder="Select City">
-                        @foreach ($geo_cities as $city)
-                                <option  id="option_city_{{$city->city_id}}"  value="{{$city->city_id}}">{{$city->city_title}}</option>
-                        @endforeach
-                    </select>
-                    </div>
+                    <span id="location_city_error" class="error to_hide">Location City Field is Required</span>
+                    <span id="location_state_error" class="error to_hide">Location State Field is Required</span>
+                    <span id="location_country_error" class="error to_hide">Location Country Field is Required</span>
 
-
-                    <div id="city_error" class="error to_hide">&nbsp;</div>
-                <div class="cl"></div>
+                    <div class="cl"></div>
                 </div>
+                {{-- bl_location --}}
 
                 <div class="bl">
                     <label>E-mail</label>
@@ -143,7 +106,7 @@
                     </div>
                 </div>
 
-                <span class="sign">
+                <span class="sign center">
                     <input id="agree" name="privacy_policy" value="1" type="checkbox"/>
                     <label for="agree">I agree to the</label>
                     <a href="" onclick="infoOpen('terms'); return false;">Terms</a>
@@ -154,7 +117,7 @@
 
                 <button id="frm_register_submit" class="btn pink disabled" disabled>Next</button>
                 <span id="agree_error" class="error to_hide">You need to agree to the terms</span>
-
+               
             </div>
             </form>
 
@@ -164,6 +127,8 @@
 
 
 
-<div id="success-step-1" class="hide">
+
     
 </div>
+
+<div id="success-step-1" class="hide">

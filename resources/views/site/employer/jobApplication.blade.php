@@ -18,8 +18,8 @@
 
         <div class="searchFieldLocation mb10 dblock">
             <div class="searchFieldLabel dinline_block">Location: </div>
-            <div class="searchField filterCountry">
-                <select name="ja_filter_country"  data-placeholder="Select Country">
+            <div class="searchField filterCountry country_dd">
+                <select name="ja_filter_country" class=""  data-placeholder="Select Country">
                     <option value="">Select Country</option>
                      @foreach(get_Geo_Country() as $country)
                        <option value="{{$country->country_id}}" >{{$country->country_title}}</option>
@@ -27,16 +27,16 @@
                 </select>
             </div>
 
-             <div class="searchField filterState">
-                <select name="ja_filter_state">
+             <div class="searchField filterState state_dd">
+                <select name="ja_filter_state" class="">
                     {{--  @foreach(get_Geo_State($job->state) as $state)
                        <option value="{{$state->state_id}}" >{{$state->state_title}}</option>
                     @endforeach --}}
                 </select>
             </div>
 
-            <div class="searchField filterState">
-                <select name="ja_filter_city">
+            <div class="searchField filterState city_dd">
+                <select name="ja_filter_city" class="">
                     {{--  @foreach(get_Geo_City($job->country, $job->state) as $city)
                        <option value="{{$city->city_id}}">{{$city->city_title}}</option>
                     @endforeach --}}
@@ -124,6 +124,167 @@
 
 @stop
 
+
+
+@section('custom_js')
+<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
+<script src="{{ asset('js/site/common.js') }}"></script>
+{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
+{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
+{{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
+
+<script type="text/javascript">
+$(document).ready(function() {
+
+    console.log(' new job doc ready ');
+    // trigger date picker. 
+    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+
+    // job Delete confirmation modal popup open. 
+    $('.myJobDeleteBtn').on('click',function(){
+        var job_id = $(this).attr('data-jobid');
+        console.log(' confirmJobAppRemoval click  job_id ', job_id, $(this) );
+        $('#confirmJobDeleteModal').modal({
+            fadeDuration: 200,
+            fadeDelay: 2.5,
+            escapeClose: false,
+            clickClose: false,
+        });
+        $('#deleteConfirmJobId').val(job_id);
+    });
+
+    // confirmation job delete ok trigger. 
+    $(document).on('click','.confirm_jobDelete_ok',function(){
+        $('.confirmJobDeleteModal  .img_chat').html(getLoader('jobDeleteloader'));
+        $(this).prop('disabled',true);
+        var job_id =  $('#deleteConfirmJobId').val();
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/deleteJob/'+job_id,
+            success: function(data){
+                if( data.status == 1 ){
+                    $('.confirmJobDeleteModal .img_chat').html(data.message);
+                    $('.job_row.job_'+job_id).remove();
+                }else{
+                    $('.confirmJobDeleteModal .img_chat').html(data.error);
+                }
+            }
+        });
+    });
+
+    // Show Job Application Question Answers. 
+    $(document).on('click','.ja_load_qa',function(){
+        var job_app_id = $(this).attr('data-appid');
+        $(this).html(getLoader('jobDeleteloader'));
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'GET',
+            url: base_url+'/ajax/getJobAppQA/'+job_app_id,
+            success: function(data){
+                $('.job_app_'+job_app_id+' .job_app_qa_box').html(data).show();
+                $('.job_app_'+job_app_id+' .ja_load_qa').remove();
+            }
+        });
+    });
+
+    // Top Filter form submit load data throug ajax. 
+    $('#job_applications_filter_form').on('submit',function(event){
+        console.log(' job_applications_filter_form submit '); 
+        event.preventDefault();
+        getData();
+    });
+    
+    // Bottom pagination load data throug ajax. 
+    $(document).on('click','.job_pagination .page-item .page-link',function(e){
+        console.log(' page-link click ', $(this) ); 
+        e.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        $('#paginate').val(page);
+        getData();
+    });
+
+    // function to send ajax call for getting data throug filter/Pagination selection. 
+    var getData = function(){
+        var url = '{{route('jobAppFilter')}}';
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.post(url, $('#job_applications_filter_form').serialize(), function(data){
+            $('.job_applications').html(data);
+        });
+    }
+
+    // initially when page load trigger the ajax call to get data. 
+    getData();
+
+
+
+
+
+  // on country dorop down change update the state drop down. 
+   $(document).on('change','.country_dd', function(){
+     console.log(' country_dd ',this);
+     var country_id = $('.country_dd select').val();
+     var type = 'geo_states';
+     console.log(' country_id ', country_id)
+     get_Location('geo_states',country_id,0);
+   });
+   // country_dd end
+
+   // on state drop down change update the city dropdown 
+    $(document).on('change','.state_dd', function(){
+     console.log(' state_dd ',this);
+     var country_id = $('.country_dd select').val();
+     var city_id = $('.state_dd select').val();
+     var type = 'geo_cities';
+     get_Location('geo_cities',country_id,city_id);
+   });
+   // country_dd end
+
+
+  // get country/state dropdown data ajax.  
+  get_Location = function(type, country_id, state_id){
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/ajax/'+type,
+        data: { cmd:type,
+                select_id: (type == 'geo_states')?country_id:state_id,
+                filter:'1',
+                list: 0
+        },
+        beforeSend: function(){
+            // $jq('.geo, #city', pp_profile_edit_main_frm).prop('disabled', true).trigger('refresh');
+            // preloader
+        },
+        success: function(data){
+            console.log(data);
+            if (data.status) {
+                var option ='<option value="0">Select City</option>';
+                switch (type) {
+                    case 'geo_states':
+                        $('.state_dd select').html(data.list).trigger('refresh');
+                        $('.city_dd select').html(option).trigger('refresh');
+                        break
+                    case 'geo_cities':
+                        $('.city_dd select').html(data.list).trigger('refresh');
+                        break
+                }
+                formStyler();
+            }
+        }
+    });
+  }
+
+  formStyler =  function(){
+    $('#job_applications_filter_form input, #job_applications_filter_form select').styler({ selectSearch: true,});
+  } 
+
+});
+</script>
+@stop
+
+
+
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
@@ -168,94 +329,3 @@ button.ja_load_qa { background: #40c7db; }
 </style>
 
 @stop
-
-@section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
-
-<script type="text/javascript">
-$(document).ready(function() {
-
-    console.log(' new job doc ready ');
-    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
-
-    $('.myJobDeleteBtn').on('click',function(){
-        var job_id = $(this).attr('data-jobid');
-        console.log(' confirmJobAppRemoval click  job_id ', job_id, $(this) );
-        $('#confirmJobDeleteModal').modal({
-            fadeDuration: 200,
-            fadeDelay: 2.5,
-            escapeClose: false,
-            clickClose: false,
-        });
-        $('#deleteConfirmJobId').val(job_id);
-    });
-
-    $(document).on('click','.confirm_jobDelete_ok',function(){
-        $('.confirmJobDeleteModal  .img_chat').html(getLoader('jobDeleteloader'));
-        $(this).prop('disabled',true);
-        var job_id =  $('#deleteConfirmJobId').val();
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-        $.ajax({
-            type: 'POST',
-            url: base_url+'/ajax/deleteJob/'+job_id,
-            success: function(data){
-                if( data.status == 1 ){
-                    $('.confirmJobDeleteModal .img_chat').html(data.message);
-                    $('.job_row.job_'+job_id).remove();
-                }else{
-                    $('.confirmJobDeleteModal .img_chat').html(data.error);
-                }
-            }
-        });
-    });
-
-
-    $(document).on('click','.ja_load_qa',function(){
-        var job_app_id = $(this).attr('data-appid');
-        $(this).html(getLoader('jobDeleteloader'));
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-        $.ajax({
-            type: 'GET',
-            url: base_url+'/ajax/getJobAppQA/'+job_app_id,
-            success: function(data){
-                $('.job_app_'+job_app_id+' .job_app_qa_box').html(data).show();
-                $('.job_app_'+job_app_id+' .ja_load_qa').remove();
-            }
-        });
-    });
-
-
-    $('#job_applications_filter_form').on('submit',function(event){
-        console.log(' job_applications_filter_form submit '); 
-        event.preventDefault();
-        getData();
-    });
-    
-    $(document).on('click','.job_pagination .page-item .page-link',function(e){
-        console.log(' page-link click ', $(this) ); 
-        e.preventDefault();
-        var page = $(this).attr('href').split('page=')[1];
-        $('#paginate').val(page);
-        getData();
-    });
-
-    var getData = function(){
-        var url = '{{route('jobAppFilter')}}';
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-        $.post(url, $('#job_applications_filter_form').serialize(), function(data){
-            $('.job_applications').html(data);
-        });
-    }
-
-    // $('.job_pagination').show();
-    getData();
-
-});
-</script>
-@stop
-

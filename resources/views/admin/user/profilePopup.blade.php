@@ -1,20 +1,22 @@
 
 
 <div class="profilePopup">
-	ID : {{$user->id}}
-	Name : {{$user->name}}
-	
-	<div style="text-align: left;">
-		 
-		
+	<div class="profileImg">
+		@if($user->profileImage)
+			<img src="{{assetGallery2($user->profileImage,'')}}" />
+		@endif
+	</div>
 
-		@php
-			$gs = $gallery->first();
-		@endphp
-		{{-- @dump($gs->toArray())  --}}
-
-		<img src="{{assetGallery($gs->access,$gs->user_id,'small',$gs->image) }}" />
-
-
+	<div class="profleMediaGalleryBox" style="text-align: left;">
+		 @if($user->Gallery)
+			<div class="profleMediaGallery">
+					@foreach ($user->Gallery as $gallery)
+					 <div class="profleMediaGalleryImage">
+					 	<img src="{{assetGallery2($gallery,'small')}}" data-fullpath="{{assetGallery2($gallery,'')}}" />
+					 </div>
+					@endforeach
+			</div>
+			
+		@endif
 	</div>
 </div>

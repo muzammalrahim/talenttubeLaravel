@@ -911,7 +911,7 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
-        $data['jobs'] = Jobs::with('applicationCount')->orderBy('created_at', 'DESC')->get();
+        $data['jobs'] = Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
         return view('site.jobs.jobs', $data);
     }
 
@@ -1224,7 +1224,7 @@ class SiteUserController extends Controller
             ]);
         } else {
 
-            $exist = Tag::where('title',$request->newTagtitle)->where('category_id',$request->newTagCategory)->first();
+            $exist = Tags::where('title',$request->newTagtitle)->where('category_id',$request->newTagCategory)->first();
             if($exist){
                 return response()->json([
                     'status' => 0,

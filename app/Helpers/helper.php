@@ -6,6 +6,13 @@ function checkRole($roles){
     echo "test helper working ";
 }
 
+function onlyAdmin(){
+    $user = Auth::user(); 
+    if (!$user->isAdmin()){
+        echo view('unauthorized'); exit;   
+    }
+}
+
 function isAdmin(){
     $user = Auth::user();
     return ( $user )?($user->isAdmin()):false;
@@ -55,6 +62,7 @@ function get_Geo_City($country, $state){
 
 
 function default_Country_id(){ return 14; }
+function default_State_id(){ return 129; }
 
 
 
@@ -1968,6 +1976,17 @@ function assetGallery($access,$userId,$type,$file){
     return asset( $path );
 }   
 
+function assetGallery2($gallery, $type){
+    $path = '';
+    if ($gallery->access == 2){
+        $path .= 'media/private/';
+    }else{
+        $path .= 'media/public/';
+    }
+    $path .= $gallery->user_id.'/gallery/'.(($type)?($type.'/'):'').$gallery->image;
+    return asset( $path );
+}   
+
 
 
 function generateVideoThumbs($video){
@@ -1987,6 +2006,10 @@ function generateVideoThumbs($video){
             }
         }
     }
+
+   if (!empty($video->file)) 
+    $html .= ' data-src="'.assetVideo($video).'"'; 
+
    $html .= '/>';
    return $html; 
 }
@@ -1997,6 +2020,11 @@ function assetVideo($video){
     $vPath  = 'stream/';
     $vPath .= $video->file;
     return asset( $vPath );
+} 
+
+function assetResume($resume){
+    if(isset($resume->file))
+        return asset('images/user/'.$resume->file); 
 } 
 
 

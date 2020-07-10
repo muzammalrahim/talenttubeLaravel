@@ -40,21 +40,24 @@ class HomeController extends Controller {
 
     public function profile(){}
 
+
+
+    //====================================================================================================================================//
+    // Get // layout for User/Employer Registeration.
+    //====================================================================================================================================//
     public function join(Request $request){
          
         $data['geo_country']    = get_Geo_Country();
         $data['geo_state']      = get_Geo_State(default_Country_id());
-        $data['geo_cities']     = get_Geo_City(default_Country_id(),  $data['geo_state']->first()->state_id);
+        $data['geo_cities']     = get_Geo_City(default_Country_id(), default_State_id());
         
         if ( $request->get('type') === 'user' ){
             $data['title'] = 'Registeration';
-            $view_name = 'site.register.user';
+            $view_name = 'site.register.user'; // site/register/user
             return view($view_name, $data);
         }else {
-            
             $data['title'] = 'Registeration';
-
-            $view_name = 'site.register.employer';
+            $view_name = 'site.register.employer'; // site/register/employer
             return view($view_name, $data);
         }
     }
@@ -188,9 +191,9 @@ class HomeController extends Controller {
         $rules = array(
             'firstname' => 'required',
             'surname' => 'required',
-            'country' => 'required|integer',
-            'state' => 'required|integer',
-            'city' => 'required|integer',
+            'location_city' => 'required',
+            'location_state' => 'required',
+            'location_city' => 'required',
             'email' => 'bail|required|email|unique:users,email',
             'phone' => 'required|min:10|max:10',
             'username' => 'required|unique:users,username',
@@ -217,9 +220,12 @@ class HomeController extends Controller {
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->phone = $request->phone;
-            $user->country = $request->country;
-            $user->state = $request->state;
-            $user->city = $request->city;
+            $user->country = $request->location_country;
+            $user->state = $request->location_state;
+            $user->city = $request->location_city;
+            $user->location = $request->location_name;
+            $user->location_lat = $request->location_lat;
+            $user->location_long = $request->location_long;
             $user->username = $request->username;
             $user->email_verified_at = null;
             // $user->email_verified_at = date("Y-m-d H:i:s");
@@ -259,11 +265,12 @@ class HomeController extends Controller {
         $rules = array(
             'firstname' => 'required|alpha_num|max:12',
             'surname' => 'required|alpha_num|max:12',
-            'country' => 'required|integer',
-            'state' => 'required|integer',
-            'city' => 'required|integer',
+            'location_city' => 'required',
+            'location_state' => 'required',
+            'location_city' => 'required',
             'email' => 'bail|required|email|unique:users,email',
-            'companyname' => 'required|string|max:12',
+            'phone' => 'required|min:10|max:10',
+            'companyname' => 'required|string|max:25',
             'password' => 'required|confirmed|min:6',
             'password_confirmation' => 'required|min:6',
         );
@@ -280,13 +287,14 @@ class HomeController extends Controller {
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->phone = $request->phone;
-            $user->country = $request->country;
-            $user->state = $request->state;
-            $user->city = $request->city;
-
+            $user->country = $request->location_country;
+            $user->state = $request->location_state;
+            $user->city = $request->location_city;
+            $user->location = $request->location_name;
+            $user->location_lat = $request->location_lat;
+            $user->location_long = $request->location_long;
             $username = $request->firstname."-".$request->surname;
             $username = remove_spaces($username);
-
             $user->username = $username;
             $user->company = $request->companyname;
             $user->email_verified_at = null;

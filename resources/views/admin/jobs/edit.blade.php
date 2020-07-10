@@ -8,9 +8,7 @@
 @section('content')
 
 <div class="container">
-    
     @include('admin.errors',[ 'error' => $errors, 'record' => $record ])
-    
     @if ($record)
         {!! Form::model($record, array('url' => route('jobs.update',['id' => $record->id]), 'method'=>'PATCH', 'files' => true, 'name'=>'formUser', 'novalidate'=>'')) !!}
     @else
