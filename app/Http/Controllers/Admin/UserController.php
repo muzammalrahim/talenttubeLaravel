@@ -52,6 +52,19 @@ class UserController extends Controller
             return $rhtml;
         }})
       ->rawColumns(['profile', 'action'])
+
+      // Testing View Video
+
+      ->addColumn('profile', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<button id="uservideo" type="button" class="btn btn-primary btn-sm btnUserVideo" user-id='. $records->id.' >Info</button>';
+            return $rhtml;
+        }})
+      ->rawColumns(['video', 'action'])
+
+      // Testing Video End her
+
+
       ->toJson();
     }
 
@@ -531,7 +544,8 @@ class UserController extends Controller
     // Destroy User end here
 
     // Destroy Employer
-public function destroyemployers($id){
+
+    public function destroyemployers($id){
       $user = User::find($id);
       if(!empty($user)){
         $user->delete();

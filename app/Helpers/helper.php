@@ -2130,18 +2130,7 @@ function getEmpRegisterQuestions(){
     return $empquestion;
 }
 
-// function getCompany(){
-//     $company = array(
-//         0 => 'Please Choose',
-//         1 => 'BHP Group Limited',
-//         2 => 'Westpac Banking Corp',
-//         3 => 'National Australia Bank',
-//         4 => 'ANZ Banking Group Limited',
-//         5 => 'Woolworths Group Limited',
 
-//     ); 
-//     return $company;
-// }
 
 // Added by Hassan
  

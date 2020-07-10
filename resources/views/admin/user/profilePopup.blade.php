@@ -11,7 +11,7 @@
 		@php
 			$gs = $gallery->first();
 		@endphp
-		@dump($gs->toArray()) 
+		{{-- @dump($gs->toArray())  --}}
 
 		<img src="{{assetGallery($gs->access,$gs->user_id,'small',$gs->image) }}" />
 

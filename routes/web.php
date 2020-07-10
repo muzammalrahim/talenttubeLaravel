@@ -161,6 +161,15 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::post('jobs/delete/{id}', 'Admin\AdminJobsController@destroyJob')->name('jobs.destroy');
 
     // End here
+
+    // Job Application Start here 
+
+    Route::get('job_applications','Admin\AdminJobsController@job_applications')->name('job_applications');
+    Route::get('job_applications/getjobapps', 'Admin\AdminJobsController@getJobAppDatatable')->name('job.jobAppDatatable');
+    Route::get('job_applications/edit/{id}', 'Admin\AdminJobsController@editJobApp')->name('job_applications.edit');
+
+
+    // Job Application End Here
 });
 
 

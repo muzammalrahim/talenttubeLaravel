@@ -5,32 +5,35 @@
 @section('content_header')
 
 <div class="block row">
-    <div class="col-md-3"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
+    <div class="col-md-2"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
 
     {{-- testing --}}
+
     <div class="block row col-md-8 text-white">
 
-      <div class="col-md-2">
+      <div class="col-md-3">
             <a class="btn btn-block btn-primary ">Bulk Compile CV</a>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-3">
             <a class="btn btn-block btn-primary ">Bulk Export CSV</a>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-3">
             <a class="btn btn-block btn-primary ">Bulk Email</a>
 
       </div>
-      <div class="col-md-2">
+      <div class="col-md-3">
             <a class="btn btn-block btn-primary ">Bulk Apply To Job</a>
 
       </div>
 
     </div>
+
     {{-- testing --}}
-    <div class="col-md-1">
-     {{--    <div class="float-right">
+
+    <div class="col-md-2">
+        <div class="float-right">
             <a href="{!! route('users.create') !!}" class="btn btn-block btn-success">Add New</a>
-        </div> --}}
+        </div>
     </div>
 
 </div>
@@ -115,8 +118,6 @@
                 <div class="modalContentUser text-center">
 
                     <i class="fa fa-spinner fa-pulse" style="font-size: 35px;"></i>
-
-
                     
                 </div>
 
@@ -225,36 +226,6 @@ $(document).on('click', '#userinfo', function() {
 
 });
 
-  // Ajax for deleting User
-
-// $('#userinfo').on('click', function() {
-//     // var deliduser = $('#deleteConfirmUser').val();
-//     console.log("User Delete"+deliduser);
-
-    // $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    // $.ajax({
-    //     type: 'POST',
-    //     url: 'users/delete/' + deliduser,
-    //     data: {deliduser},
-    //     beforeSend: function(){
-    //        // $(".modelProcessingUser").show();
-    //        $(".modalContentUser p").hide();
-    //        $("#userinfo").prop("disabled", true);            
-    //     },
-    //     success: function(data) {
-    //       console.log(' data ', data);
-    //         if(data.status === 1 )
-    //          $('#ModaluserInfo').modal('hide');
-    //        // $(".modelProcessingUser").hide();
-    //        $(".modalContentUser p").show();
-    //          $("#userinfo").prop("disabled", false);
-    //         jQuery('#dataTable').DataTable().ajax.reload();
-    //     }
-    // });
-    
-// });
-
-// End Here userinfo
 
     });
 </script>

@@ -232,6 +232,13 @@ return [
         ],
 
         [
+            'text'        => 'Job Applications',
+            'url'         => 'admin/job_applications',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
+        [
             'text'        => 'Pending Jobs',
             'url'         => 'admin/pending_jobs',
             'icon'        => 'far fa-fw fa-file',
