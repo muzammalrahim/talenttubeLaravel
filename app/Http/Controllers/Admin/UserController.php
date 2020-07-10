@@ -110,6 +110,7 @@ class UserController extends Controller
             $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserVideoInfo" user-id='. $records->id.' >Info</button>';
             return $rhtml;
         }})
+ 
         ->addColumn('resume', function ($records) {
         if (isAdmin()){
             $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserResumeInfo" user-id='. $records->id.' >Info</button>';
@@ -602,6 +603,7 @@ class UserController extends Controller
     }
 
 
+ 
     //===============================================================================================================//
     // return user uploaded videos for user lising page popup .
     //===============================================================================================================//

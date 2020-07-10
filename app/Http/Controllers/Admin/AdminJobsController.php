@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 use \Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use App\Jobs;
+use App\JobsApplication;
 use App\User;
-
 
 // use Yajra\Datatables\Datatables;
 // use Illuminate\Support\Facades\Hash;
@@ -296,5 +296,73 @@ class AdminJobsController extends Controller
     }
 
     // deleting job ends
+
+
+    // Job Application Functions and dataTable 
+
+        public function job_applications(){
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Job Applications';
+        $data['content_header'] = 'Job Applications';
+        $data['classes_body'] = 'jobs';
+        $data['jobs'] = Jobs::with('applicationCount')->get();
+
+        // dd($data); 
+
+       return view('admin.job_applications.list', $data);
+    }
+      // Job Application editting function
+
+      public function editJobApp($id)
+    {
+        $records = JobsApplication::where('id',$id)->first();
+        
+        // dump($records->toArray());
+        // dump($records->job->toArray());
+        // dump($records->job->questions->toArray());
+        // dump();
+        // dd(); 
+        $data['content_header'] = 'Edit Job Application';
+        $data['record'] = $records;
+        $data['title']  = 'Job Application';
+        $data['answers']  = $records->answers->keyBy('question_id')->toArray();
+        return view('admin.job_applications.edit', $data);
+    }
+
+      // Job Application editting function End Here
+
+// Getting Job Application DataTable Start
+    function getJobAppDatatable(){
+      
+       // $records =  JobsApplication::select(['id', 'status','job_id','goldstar','user_id','preffer'])->get(); 
+       // dd($records->first()->jobseeker());
+
+       $records =  JobsApplication::with(['jobseeker','job']); 
+       
+      
+       // ->with(['GeoCountry','GeoState','GeoCity'])
+      // ->orderBy('created_at', 'desc');
+      return datatables($records)
+
+      ->addColumn('action', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<a href="'.route('job_applications.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
+              return $rhtml;
+        }
+      })
+      ->editColumn('user_id', function ($records) {
+          return ($records->jobseeker)?($records->jobseeker->name.' '.$records->jobseeker->surname.' ('.$records->user_id.')'):'';
+      })
+      ->editColumn('job_id', function ($records) {
+         return  ($records->job)?($records->job->title.' ('.$records->job_id.')'):'';
+      })
+      ->editColumn('city', function ($records) {
+         return  ($records->GeoCity)?($records->GeoCity->city_title):'';
+      })
+      ->toJson();
+    }
+
+    // Job Application and dataTable  End Here
 
 }

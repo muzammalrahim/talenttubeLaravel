@@ -18,80 +18,53 @@
     <div class="card">
         <div class="card-body">
             <div class="row">
-                <div class="col-sm-5"><h4 class="card-title mb-0">{{ __('admin.jobs.edit_job') }} <small class="text-muted">Edit Jobs</small></h4></div>
+                <div class="col-sm-5"><h4 class="card-title mb-0">{{ __('Job Management') }} <small class="text-muted">Edit Jobs</small></h4></div>
             </div>
             <hr>
             <div class="row mt-4 mb-4">
                 <div class="col">
 
-                    <div class="form-group row">
-                          {{ Form::label('ID', null, ['class' => 'col-md-2 form-control-label']) }}
-                          <div class="col-md-10">
-                            {{ Form::text('id', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Id','required'=> 'false','disabled'=> true)) }}
-                          </div>
-                    </div>
+                    {{-- Adding Tab Start --}}
 
-                     <div class="form-group row">
-                        {{ Form::label('title', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                          {{ Form::text('title', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'title','required'=> 'true')) }}
-                        </div>
-                    </div>
-            
-                     <div class="form-group row country_dd">
-                        {{ Form::label('country', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                        {{ Form::select('country', $countries, ($record)?($record->country):null, ['placeholder' => 'Select Country']) }}
-                        </div>
-                    </div>
+          <div class="col-12 col-sm-6 col-lg-12">
+            <div class="card card-primary card-tabs">
+              
+              <div class="card-header p-0 pt-1 tabColor"style="background: #6c757d;">
+                <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
 
-                     <div class="form-group row state_dd">
-                        {{ Form::label('state', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                            {{ Form::select('state', $states ?? '', ($record)?($record->state):null, ['placeholder' => 'Select state']) }}
-                        </div>
-                    </div>
+                  <li class="nav-item col-lg-6">
+                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true"><b>Job Information</b></a>
+                  </li>
 
-                     <div class="form-group row city_dd">
-                        {{ Form::label('city', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                        {{ Form::select('city', $cities, ($record)?($record->city):null, ['placeholder' => 'Select state']) }}
-                        </div>
-                    </div>
+                  <li class="nav-item col-lg-6">
+                    <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false"><b>Job Questions</b></a>
+                  </li>
 
-                    <div class="form-group row">
-                        {{ Form::label('Experience', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                          {{ Form::text('experience', $value, $attributes = array('class'=>'form-control', 'placeholder' => 'Experience','required'=> 'false')) }}
-                        </div>
-                    </div>
-                        
-                    <div class="form-group row ">
-                        {{ Form::label('Type', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                        {{ Form::select('type', $type, $record->type, ['placeholder' => 'Job Type']) }}
-                        </div>
-                    </div>
+              {{--     <li class="nav-item col-lg-3">
+                    <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false"><b>Questions</b></a>
+                  </li>
 
-                    <div class="form-group row">
-                        {{ Form::label('Expiration', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                          {{ Form::text('expiration', $value = $record->expiration , $attributes = array('class'=>'form-control', 'placeholder' => 'Expiration','required'=> 'false')) }}
-                        </div>
-                    </div>
+                  <li class="nav-item col-lg-3">
+                    <a class="nav-link" id="custom-tabs-one-private-tab" data-toggle="pill" href="#custom-tabs-one-private" role="tab" aria-controls="custom-tabs-one-private" aria-selected="false"><b>Private Gallery</b></a>
+                  </li> --}}
 
-                    <div class="form-group row">
-                        {{ Form::label('Created At', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                          {{ Form::text('created_at', $value = $record->created_at , $attributes = array('class'=>'form-control', 'placeholder' => 'Created At','required'=> 'false')) }}
-                        </div>
-                    </div>
-                    
-                    <div class="form-group row ">
-                        {{ Form::label('Created By', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                        {{ Form::select('user_id', $user_id, null, ['placeholder' => 'Select Employer']) }}
-                        </div>
+                </ul>
+              </div>
+
+              <div class="card-body">
+                  
+                <div class="tab-content" id="custom-tabs-one-tabContent">
+
+                  @include('admin.jobs.tabs.tab1')
+                  @include('admin.jobs.tabs.tab2')
+                  
+                </div> <!-- tab-content end -->
+              </div>
+              
+              <!-- /.card -->
+            </div>
+          </div>
+                    {{-- Adding Tab End --}}
 
                 </div><!--col-->
             </div><!--row-->
@@ -167,7 +140,33 @@
         }
     });
   }
+
+
+  // Next and Previous tab button start
+ $('#custom-tabs-one-home .btnNext').on('click', function (e) {
+  e.preventDefault()
+  $('#custom-tabs-one-profile-tab').tab('show')
+});
+
+ $('#custom-tabs-one-profile .btnPrevious').on('click', function (e) {
+  e.preventDefault()
+  $('#custom-tabs-one-home-tab').tab('show')
+});
+
+
+
+  // Next and Previous tab button start
+
 }); 
+
+// For Scrolling to top start
+
+   function scrollToTop() { 
+          window.scrollTo(0, 0); 
+      } 
+
+// For Scrolling to top end
+
 </script>
 {{-- country state city--}}
 

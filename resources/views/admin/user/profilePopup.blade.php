@@ -1,7 +1,6 @@
 
 
 <div class="profilePopup">
-
 	<div class="profileImg">
 		@if($user->profileImage)
 			<img src="{{assetGallery2($user->profileImage,'')}}" />

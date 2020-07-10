@@ -9,7 +9,6 @@
 
     {{-- testing --}}
     <div class="block row col-md-10 text-white">
-
       <div class="col-md-2">
         <select class="filter_status browser-default custom-select">
             <option value="">Select Status</option>
@@ -23,13 +22,13 @@
       <div class="col-md-2"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
       <div class="col-md-2"><a href="{{route('bulkEmail.new')}}" class="btn btn-block btn-primary ">Bulk Email</a></div>
       {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
-
     </div>
     {{-- testing --}}
-    <div class="col-md-1">
-     {{--    <div class="float-right">
+
+    <div class="col-md-2">
+        <div class="float-right">
             <a href="{!! route('users.create') !!}" class="btn btn-block btn-success">Add New</a>
-        </div> --}}
+        </div>
     </div>
 
 </div>
@@ -98,6 +97,7 @@
 {{-- User Deleting Pop Up End Here --}}
 
 {{-- User Info Pop Up --}}
+
 <div id="ModaluserInfo" class="modal fade ModaluserInfo" role="dialog">
   <div class="modal-dialog">
     <!-- Modal content-->
@@ -311,6 +311,7 @@ $(document).on('click', '.btnUserInfo', function() {
     });
 
 });
+
 
 
 //========================================================================//

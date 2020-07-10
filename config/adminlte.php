@@ -232,6 +232,7 @@ return [
             'label_color' => 'success',
         ],
         [
+
             'text'        => 'Pending Employers',
             'url'         => 'admin/pending_Employers',
             'icon'        => 'far fa-fw fa-file',

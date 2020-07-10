@@ -69,8 +69,6 @@
               <!-- /.card -->
             </div>
           </div>
-    
-
                     {{-- Adding Tab End --}}
 
 

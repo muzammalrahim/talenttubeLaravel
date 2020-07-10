@@ -8,12 +8,12 @@ class JobsQuestions extends Model
 {
     //
 
- 		// protected $fillable = ['questions'];
-	  // protected $casts = [
-   //      'options' => 'array',
-   //      'preffer' => 'array',
-   //      'goldstar' => 'array',
-   //  ];
+ 	// protected $fillable = ['questions'];
+	protected $casts = [
+        'options' => 'array',
+        'preffer' => 'array',
+        'goldstar' => 'array',
+    ];
 
 
 }
