@@ -133,6 +133,9 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 
 
     Route::get('employers', 'Admin\UserController@employers')->name('adminEmployers');
+    Route::get('employers/verified', 'Admin\UserController@verifiedEmployers')->name('adminVerifiedEmployers');
+    Route::get('employers/pending', 'Admin\UserController@pendingEmployers')->name('adminPendingEmployers');
+
     Route::get('employers/edit/{id}', 'Admin\UserController@editEmployer')->name('employers.edit');
     Route::patch('employers/update/{id}', 'Admin\UserController@updateEmployer')->name('employers.update');
     Route::get('employers/create', 'Admin\UserController@createEmployer')->name('employers.create');
@@ -178,6 +181,10 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('job_applications','Admin\AdminJobsController@job_applications')->name('job_applications');
     Route::get('job_applications/getjobapps', 'Admin\AdminJobsController@getJobAppDatatable')->name('job.jobAppDatatable');
     Route::get('job_applications/edit/{id}', 'Admin\AdminJobsController@editJobApp')->name('job_applications.edit');
+    Route::patch('job_applications/update/{id}', 'Admin\AdminJobsController@updateJobApp')->name('job_applications.update');
+   
+    Route::post('jobApplication/exportCSV', 'Admin\AdminJobsController@ExportCSV')->name('jobApplication.exportCSV');
+    Route::get('job/exportApplicationCSV/{id}', 'Admin\AdminJobsController@ExportApplicationCSV')->name('job.exportApplicationCSV');
 
 
     // Job Application End Here

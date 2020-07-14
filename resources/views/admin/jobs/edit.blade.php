@@ -179,23 +179,28 @@
 @stop
 
 
-<style>
-    
-    select{
-        display: block;
-        width: 100%;
-        height: calc(2.25rem + 2px);
-        padding: .375rem .75rem;
-        font-size: 1rem;
-        font-weight: 400;
-        line-height: 1.5;
-        color: #495057;
-        background-color: #fff;
-        background-clip: padding-box;
-        border: 1px solid #ced4da;
-        border-radius: .25rem;
-        box-shadow: inset 0 0 0 transparent;
-        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
-    }
+<style type="">
+select{
+    display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    box-shadow: inset 0 0 0 transparent;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.questionbox {
+    background: rgba(0, 0, 0, 0.08);
+    margin: 10px 0px;
+    padding: 10px;
+}
+.option_goldstar, .option_preffer { display: inline-block; }
 
 </style>
