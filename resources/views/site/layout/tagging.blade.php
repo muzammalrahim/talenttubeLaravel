@@ -1,7 +1,7 @@
 <!-- Tagging system -->
 <div class="tagging_cont p10">
 	<div class="selectedTags p10">
-		<div class="selectTagHead"><p>Interests</p></div>
+		<div class="selectTagHead"><h3>Skills, Qualifications, Studies & Experience</h3></div>
 		<div class="selectTagList">
 			<ul></ul>
 		</div>
@@ -118,7 +118,7 @@
 		            	</div>
 
 
-		            	<div class="new_tag_icon form_field">
+		            {{-- 	<div class="new_tag_icon form_field">
 		            			<span class="form_label">Icon :</span>
 		            			<div class="form_input">
 		            				 <select name="newTagIcon" class="">
@@ -133,7 +133,8 @@
 		            				 </select>
 		            				<div id="newTagIcon_error" class="error field_error to_hide">&nbsp;</div>
 		            			</div>
-		            	</div>
+		            	</div> --}}
+		            	
 		            </div>
 
 		            <div class="double_btn center">

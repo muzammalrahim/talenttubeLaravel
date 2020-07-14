@@ -10,35 +10,35 @@
     <div class="form-group row">
       {{ Form::label('job', null, ['class' => 'col-md-2 form-control-label']) }}
       <div class="col-md-10">
-        {{ Form::text('job', $value = $record->job->title , $attributes = array('class'=>'form-control', 'placeholder' => 'Job Title','required'=> 'false')) }}
+        {{ Form::text('job', $value = $record->job->title , $attributes = array('class'=>'form-control', 'placeholder' => 'Job Title','required'=> 'false', 'disabled'=> true)) }}
       </div>
     </div>
 
     <div class="form-group row">
       {{ Form::label('status', null, ['class' => 'col-md-2 form-control-label']) }}
       <div class="col-md-10">
-        {{ Form::text('status', $value = $record->status , $attributes = array('class'=>'form-control', 'placeholder' => 'Expiration','required'=> 'false')) }}
+        {{ Form::select('status', jobStatusArray(), null, ['placeholder' => 'Select Status']) }}
       </div>
     </div>
 
     <div class="form-group row">
       {{ Form::label('job_seeker', null, ['class' => 'col-md-2 form-control-label']) }}
       <div class="col-md-10">
-        {{ Form::text('status', $value = $record->jobseeker->name.' '.$record->jobseeker->surname.' ('.$record->user_id.')', $attributes = array('class'=>'form-control', 'placeholder' => 'status','required'=> 'false')) }}
+        {{ Form::text('user_id', $value = $record->jobseeker->name.' '.$record->jobseeker->surname.' ('.$record->user_id.')', $attributes = array('class'=>'form-control', 'placeholder' => 'status','required'=> 'false', 'disabled'=> true)) }}
       </div>
     </div>
 
     <div class="form-group row">
       {{ Form::label('gold star', null, ['class' => 'col-md-2 form-control-label']) }}
       <div class="col-md-10">
-        {{ Form::text('goldstar', $value = $record->goldstar , $attributes = array('class'=>'form-control', 'placeholder' => 'Gold Star','required'=> 'false')) }}
+        {{ Form::text('goldstar', $value = $record->goldstar , $attributes = array('class'=>'form-control', 'placeholder' => 'Gold Star','required'=> 'false', 'disabled'=> true)) }}
       </div>
     </div>
 
     <div class="form-group row">
       {{ Form::label('Preffer', null, ['class' => 'col-md-2 form-control-label']) }}
       <div class="col-md-10">
-        {{ Form::text('preffer', $value = $record->preffer , $attributes = array('class'=>'form-control', 'placeholder' => 'Preffer','required'=> 'false')) }}
+        {{ Form::text('preffer', $value = $record->preffer , $attributes = array('class'=>'form-control', 'placeholder' => 'Preffer','required'=> 'false', 'disabled'=> true)) }}
       </div>
     </div>
 

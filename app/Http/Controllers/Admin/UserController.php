@@ -49,7 +49,24 @@ class UserController extends Controller
     public function employers() {
         $data['title'] = 'Employers';
         $data['content_header'] = 'Employers List';
+        $data['filter_status'] = null; 
         return view('admin.employer.list', $data);
+        // admin/employer/list 
+    }
+
+    public function verifiedEmployers() {
+        $data['title'] = 'Employers';
+        $data['content_header'] = 'Employers List';
+        $data['filter_status'] = 'verified';
+        return view('admin.employer.list', $data);
+        // admin/employer/list 
+    }
+    public function pendingEmployers() {
+        $data['title'] = 'Employers';
+        $data['content_header'] = 'Employers List';
+        $data['filter_status'] = 'pending';
+        return view('admin.employer.list', $data);
+        // admin/employer/list 
     }
 
     /** ================ This method returns the datatables data to view ================ */
@@ -71,26 +88,6 @@ class UserController extends Controller
      }
 
       return datatables($records)
-
-      // ->filter(function ($instance) use ($request) {
-      //       dd($request);
-      //       if (!empty($request->get('status'))) {
-      //           $instance->collection = $instance->collection->filter(function ($row) use ($request) {
-      //               return Str::contains($row['verified'], $request->get('status')) ? true : false;
-      //           });
-      //       }
-      //       // if (!empty($request->get('search'))) {
-      //       //     $instance->collection = $instance->collection->filter(function ($row) use ($request) {
-      //       //         if (Str::contains(Str::lower($row['email']), Str::lower($request->get('search')))){
-      //       //             return true;
-      //       //         }else if (Str::contains(Str::lower($row['name']), Str::lower($request->get('search')))) {
-      //       //             return true;
-      //       //         }
-
-      //       //         return false;
-      //       //     });
-      //       // }
-      // })
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $rhtml = '<a href="'.route('users.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px;"><i class="far fa-edit"></i></button></a>';
@@ -116,33 +113,46 @@ class UserController extends Controller
             $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserResumeInfo" user-id='. $records->id.' >Info</button>';
             return $rhtml;
         }})
-        // ->editColumn('id', function ($records) {
-        // if (isAdmin()){
-        //     $rhtml = '<input type="checkbox" name="cbx[]" id="cbx_'.$records->id.'" value="'.$records->id.'"><label for="cbx_'.$records->id.'"> ('.$records->id.')</label><br>';
-        //     return $rhtml;
-        // }})
       ->removeColumn('verified')
       ->rawColumns(['profile','videoInfo','resume','action'])
       ->toJson();
     }
 
     /** ================ This method returns the datatables data to view ================ */
-    public function getEmployerDatatable(){
+    public function getEmployerDatatable(Request $request){
       $records = array();
-      $records = User::select(['id', 'name', 'email', 'created_at'])
+      $records = User::select(['id', 'name', 'email', 'created_at','verified'])
         ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
         ->orderBy('created_at', 'desc');
+
+     if(isset($request->status) && !empty($request->status)){
+        if($request->status == 'verified')
+            $records = $records->where('verified','1');
+        if($request->status == 'pending')
+            $records = $records->where('verified','0');
+     }
+
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $rhtml = '<a href="'.route('employers.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px"><i class="far fa-edit"></i></button></a>';
 
             $rhtml .= '<button id="empdel" type="button" class="btn btn-danger btn-sm" data-type="Employer" emp-id='. $records->id.' emp-title="'.$records->name.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
-                return $rhtml;
+
+            if(!$records->verified){
+                 $rhtml .= '<button type="button" class="btn btn-danger btn-sm btnVerifyUser m-1" user-id='. $records->id.'">Verify</button>';
+            }
+            return $rhtml;
         }
       })
-
+      ->addColumn('profile', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserInfo" user-id='. $records->id.' >Info</button>';
+            return $rhtml;
+      }})
+      ->rawColumns(['profile','action'])
       ->toJson();
+
     }
 
     /** ================   ================ */
@@ -631,7 +641,7 @@ class UserController extends Controller
     public function confirmAccount(Request $request){
       onlyAdmin();
       if(!empty($request->cbx) && is_array($request->cbx)){
-        $result =  User::whereIn('id', $request->cbx)->update(array('verified' => 1));
+        $result =  User::whereIn('id', $request->cbx)->update(array('verified' => 1, 'email_verified_at' => date("Y-m-d H:i:s")));
         if($result > 0){
             return response()->json([
                 'status' => 1,

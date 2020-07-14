@@ -162,27 +162,19 @@ class AdminEmailsController extends Controller {
     public function GeneratePDF(Request $request) {
       if(!empty($request->cbx)){
            // dd($request->toArray()); 
-           $data['title'] = 'Welcome to ItSolutionStuff.com';
-           $users = User::select(
-              'id', 'name','surname',
-              'email','username','phone',
-              'country','state','city',
-              'about_me','interested_in',
-              'recentJob','salaryRange')
-           ->whereIn('id', $request->cbx)
-           ->get();
-
+           $data['title'] = 'Generate PDF';
+           $users = User::whereIn('id', $request->cbx)->get();
             $data['users'] = $users;
 
            if($request->test){
             return view('admin.pdf.bulkJobSeeker', $data);
            }else{
-            $pdf = PDF::loadView('admin.pdf.bulkJobSeeker', $data);
+            $pdf = PDF::loadView('admin.pdf.bulkJobSeeker', $data); 
+            $pdf->setPaper('A4'); 
+
             return $pdf->download('JobSeekers.pdf');
+            // admin/pdf/bulkJobSeeker 
            }
-
-            
-
       }
     }
      

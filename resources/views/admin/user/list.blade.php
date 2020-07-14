@@ -45,7 +45,7 @@
 @include('admin.success')
 
 
-<table class="table table-bordered" id="dataTable">
+<table class="table table-bordered cbxDataTable" id="dataTable">
     <thead>
         <tr style = "text-align: center">
             {{-- <th>select</th> --}}
@@ -230,23 +230,7 @@ jQuery(function() {
       window.location.href = newpath;
    });
 
-   // Handle click on "Select all" control
-   $('#cbx_all').on('click', function(){
-      // Check/uncheck all checkboxes in the table
-      var rows = table.rows({ 'search': 'applied' }).nodes();
-      $('input[type="checkbox"]', rows).prop('checked', this.checked);
-   });
-
-   // Handle click on checkbox to set state of "Select all" control
-   $('#dataTable tbody').on('change', 'input[type="checkbox"]', function(){ 
-      console.log(' dataTable tbody '); 
-      // If checkbox is not checked
-      if(!this.checked){
-         var el = $('#cbx_all').get(0);
-         // If "Select all" control is checked and has 'indeterminate' property
-         if(el && el.checked){el.checked=false;}
-      }
-   });
+ 
     
    // $('#frm-example').on('submit', function(e){
    //    var form = this;

@@ -12,7 +12,7 @@
     @include('admin.errors',[ 'error' => $errors, 'record' => $record ])
     
     @if ($record)
-        {!! Form::model($record, array('url' => route('jobs.update',['id' => $record->id]), 'method'=>'PATCH', 'files' => true, 'name'=>'formUser', 'novalidate'=>'')) !!}
+        {!! Form::model($record, array('url' => route('job_applications.update',['id' => $record->id]), 'method'=>'PATCH', 'files' => true, 'name'=>'formUser', 'novalidate'=>'')) !!}
     @else
         {!! Form::open(array('url' => route('jobs.store'), 'method' => 'POST', 'files' => true, 'name'=>'formJob', 'novalidate'=>'')) !!}
     @endif

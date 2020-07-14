@@ -43,24 +43,12 @@
     <div class="modal-dialog">
                  <!-- Modal content-->
         <div class="modal-content">
-             <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-             </div>
+             <div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button></div>
              <div class="modal-body">
-
-                <div class="modalContent">
-                    <p>Do you want to Delete <b><span id="delConfirmId"></span></b> Job ?</p>
-                    
-                </div>
-
-                <div class="modelProcessing" style="display: none;">
-                        <h4>Deleting job...</h4>    
-                 </div>
-
+                <div class="modalContent"></div>
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-danger" id="removejob" style="margin: 0 auto">Yes</button>
-              <input type="hidden" name="deleteConfirm" id="deleteConfirm" value="">
              </div>
 
         </div>
@@ -94,25 +82,77 @@
 @section('js')
 <script src="{{ asset('js/admin_custom.js') }}"></script>
 <script>
-    jQuery(function() {
-        jQuery('#dataTable').DataTable({
-            processing: true,
-            serverSide: true,
-            ajax: '{!! route('jobs.dataTable') !!}',
-            columns: [
-                { data: 'id', name: 'id' },
-                { data: 'title', name: 'title' },
-                // { data: 'description', name: 'description' },
-                // { data: 'type', name: 'type' },
-                { data: 'country', name: 'country' },
-                { data: 'state', name: 'state' },
-                { data: 'city', name: 'city' },
-                { data: 'experience', name: 'experience' },
-                { data: 'created_at', name: 'created_at' },
-                // { data: 'created_by', name: 'created_by' },
-                { data: 'action', name: 'action'},
-            ]
-        });
+jQuery(function() {
+
+jQuery('#dataTable').DataTable({
+    processing: true,
+    serverSide: true,
+    ajax: '{!! route('jobs.dataTable') !!}',
+    columns: [
+        { data: 'id', name: 'id' },
+        { data: 'title', name: 'title' },
+        // { data: 'description', name: 'description' },
+        // { data: 'type', name: 'type' },
+        { data: 'country', name: 'country' },
+        { data: 'state', name: 'state' },
+        { data: 'city', name: 'city' },
+        { data: 'experience', name: 'experience' },
+        { data: 'created_at', name: 'created_at' },
+        // { data: 'created_by', name: 'created_by' },
+        { data: 'action', name: 'action'},
+    ]
+});
+
+ 
+//========================================================================//
+// Click to open model to confirm before delte. 
+//========================================================================// 
+$(document).on('click', '.btnJobDelete', function() {
+    console.log(' btnJobDelete ');
+  var item_id = parseInt($(this).attr('data-id'));
+  var job_title = $(this).attr('data-title');
+  // $('#deleteConfirmId').val(item_id);
+  
+  var   delete_modalContent =  '<div style="text-align:center;">'; 
+        delete_modalContent += '<input type="hidden" name="deleteConfirmId" id="deleteConfirmId" value="'+item_id+'"  />'; 
+        delete_modalContent += '<p>Are you sure to delete job "'+job_title+'"</p>';
+        delete_modalContent += '</div>';
+
+
+  $('#deleteModal .modalContent').html(delete_modalContent);
+  $('#deleteModal').modal('show');
+   
+
+});
+
+ // btnJobDelete
+ // Ajax for deleting User
+$('#removejob').on('click', function() {
+    var del_id = $('#deleteConfirmId').val();
+    console.log("job Delete"+del_id);
+    var html = '<div class="modelProcessing"><h4>Deleting Job...</h4></div>';
+    $('#deleteModal .modalContent').html(html);
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.ajax({
+        type: 'POST',
+        url:  'jobs/delete/' + del_id,
+        data: {del_id},
+        beforeSend: function(){ 
+           $("#removejob").prop("disabled", true);            
+        },
+        success: function(data) {
+          console.log(' data ', data);
+            if(data.status === 1 )
+             $('#deleteModal').modal('hide');
+             $("#removejob").prop("disabled", false);
+            jQuery('#dataTable').DataTable().ajax.reload();
+        }
     });
+});
+
+
+
+
+});
 </script>
 @stop
