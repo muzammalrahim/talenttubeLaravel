@@ -5,12 +5,12 @@ return [
     'default_disk' => 'local',
 
     'ffmpeg' => [
-        'binaries' => 'C:/ffmpeg/bin/ffmpeg.exe', //env('FFMPEG_BINARIES', 'C:/ffmpeg/bin/ffmpeg.exe'),
+        'binaries' =>  env('FFMPEG_BINARIES', '/usr/bin/ffmpeg'),
         'threads' => 12,
     ],
 
     'ffprobe' => [
-        'binaries' => 'C:/ffmpeg/bin/ffprobe.exe', //env('FFPROBE_BINARIES', 'C:/ffmpeg/bin/ffprobe.exe'),
+        'binaries' =>  env('FFPROBE_BINARIES', '/usr/bin/ffprobe'),
     ],
 
     'timeout' => 3600,

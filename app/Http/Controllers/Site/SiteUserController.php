@@ -911,7 +911,7 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
-        $data['jobs'] = Jobs::with('applicationCount')->orderBy('created_at', 'DESC')->get();
+        $data['jobs'] = Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
         return view('site.jobs.jobs', $data);
     }
 
@@ -928,6 +928,7 @@ class SiteUserController extends Controller
         // dd( $data['job']  ); 
         // dd( $data['job']->questions()->count() ); 
         return view('site.jobs.applyInfo', $data);
+        // site/jobs/applyInfo 
     }
 
 
@@ -936,15 +937,9 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     public function jobApplySubmit(Request $request){
         $user = Auth::user();
-        
-       
-        
+
         $requestData = $request->all();
         $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
-        
-        // if(isset($requestData['applyAnswer']) && !empty($requestData['applyAnswer'])){
-        //     foreach ($requestData['applyAnswer'] as $rk => $rv) { $requestData['applyAnswer'][$rk] = my_sanitize_string($rv); }  
-        //
 
         if(isset($requestData['answer']) && !empty($requestData['answer'])){
             foreach ($requestData['answer'] as $ansK => $ansV) { 
@@ -952,7 +947,6 @@ class SiteUserController extends Controller
                 $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']); 
             }  
         }
-
 
 
         $job = Jobs::find($requestData['job_id']);
@@ -975,7 +969,7 @@ class SiteUserController extends Controller
             $newJobApplication = new JobsApplication();
             $newJobApplication->user_id = $user->id;
             $newJobApplication->job_id = $job->id;
-            $newJobApplication->status = 'pending';
+            $newJobApplication->status = 'applied';
             // $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
             // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
             $newJobApplication->save();
@@ -994,8 +988,26 @@ class SiteUserController extends Controller
                         if(!empty($jobQuestion)){
 
                             // get the goldstar and preffer option 
-                            $goldstar = !empty($jobQuestion->goldstar)?(json_decode($jobQuestion->goldstar, true)):(array()); 
-                            $preffer  = !empty($jobQuestion->preffer)?(json_decode($jobQuestion->preffer, true)):(array());
+                            // $goldstar = !empty($jobQuestion->goldstar)?(json_decode($jobQuestion->goldstar, true)):(array()); 
+                            // $preffer  = !empty($jobQuestion->preffer)?(json_decode($jobQuestion->preffer, true)):(array());
+
+                            $goldstar = array();
+                            if(!empty($jobQuestion->goldstar)){
+                                if(!is_array($jobQuestion->goldstar)){
+                                   $goldstar = json_decode($jobQuestion->goldstar, true); 
+                                }else{
+                                   $goldstar =  $jobQuestion->goldstar;
+                                }
+                            }
+
+                            $preffer = array(); 
+                            if(!empty($jobQuestion->preffer)){
+                                if(!is_array($jobQuestion->preffer)){
+                                   $preffer = json_decode($jobQuestion->preffer, true); 
+                                }else{
+                                     $preffer = $jobQuestion->preffer;
+                                }
+                            }
 
                             // dump('goldstar', $goldstar);
                             // dump('preffer', $preffer);
@@ -1214,7 +1226,7 @@ class SiteUserController extends Controller
         $rules = array(
             'newTagtitle'    => 'required|regex:/[a-zA-Z0-9\s]+/|max:20',
             'newTagCategory' => 'required|exists:tag_categories,id',
-            'newTagIcon'     => 'required',
+            // 'newTagIcon'     => 'required',
         );
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -1224,7 +1236,7 @@ class SiteUserController extends Controller
             ]);
         } else {
 
-            $exist = Tag::where('title',$request->newTagtitle)->where('category_id',$request->newTagCategory)->first();
+            $exist = Tags::where('title',$request->newTagtitle)->where('category_id',$request->newTagCategory)->first();
             if($exist){
                 return response()->json([
                     'status' => 0,
@@ -1235,7 +1247,7 @@ class SiteUserController extends Controller
             $newTag = new Tags();
             $newTag->title = $request->newTagtitle;
             $newTag->category_id = $request->newTagCategory;
-            $newTag->icon = $request->newTagIcon;
+            // $newTag->icon = $request->newTagIcon;
             $newTag->usage = 0;
             $newTag->save(); 
 

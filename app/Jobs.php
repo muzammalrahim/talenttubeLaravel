@@ -16,7 +16,7 @@ class Jobs extends Model {
     'age' => 0,
     ];     
 
-    protected $table = 'jobs';
+    protected $table = 'jobs_data';
 
      // added by Hassan
 
@@ -38,17 +38,21 @@ class Jobs extends Model {
 
     public function applicationCount() {
         return $this->hasOne(JobsApplication::class, 'job_id')->selectRaw('job_id, count(*) as aggregate')->groupBy('job_id');
-
         // return $this->hasOne('Product') // or App\Product or any namespace you use
         // ->selectRaw('category_id, count(*) as aggregate')
         // ->groupBy('category_id');
-
     }
 
  
 
     public function questions(){
         return $this->hasMany('App\JobsQuestions', 'job_id');
+    }
+
+    public function jobEmployerLogo(){
+        // return $this->belongsTo(User::class, 'state','state_id');
+        // return $this->hasOne('App\UserGallery', 'user_id', 'user_id')->selectRaw('job_id, count(*) as aggregate')->groupBy('job_id');
+        return $this->hasOne('App\UserGallery', 'user_id', 'user_id')->where('profile',1);
     }
 
 
@@ -80,9 +84,13 @@ class Jobs extends Model {
                     }
                 } 
 
-                 $newQuestion->options = json_encode($options_list);
-                 $newQuestion->preffer = json_encode($preffer_list);
-                 $newQuestion->goldstar = json_encode($goldstar_list);
+                 // $newQuestion->options = json_encode($options_list);
+                 // $newQuestion->preffer = json_encode($preffer_list);
+                 // $newQuestion->goldstar = json_encode($goldstar_list);
+
+                 $newQuestion->options =  $options_list;
+                 $newQuestion->preffer =  $preffer_list;
+                 $newQuestion->goldstar = $goldstar_list;
 
                 $this->questions()->save($newQuestion); 
             }

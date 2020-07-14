@@ -45,6 +45,7 @@
                     <option value="temporary">Temporary</option>
                     <option value="casual">Casual</option>
                     <option value="part_time">Part Time</option>
+                    <option value="full_time">Full Time</option>
                 </select>
                 <div id="type_error" class="error field_error to_hide">&nbsp;</div>
             </div>
@@ -60,20 +61,24 @@
                 <select name="geo_country" id="country" class="geo select_main geo_country width-200" onchange="CommonScript.GetLocation('geo_states',this);">
                         <option value="">Select Country</option>
                     @foreach ($geo_country as $country)
-                        <option value="{{$country->country_id}}">{{$country->country_title}}</option>
+                        <option value="{{$country->country_id}}" {{(default_Country_id() == $country->country_id)?('selected="selected"'):('')}}>{{$country->country_title}}</option>
                     @endforeach
                 </select>
 
 
 
                 <select name="geo_states" class="form_select geo_states" onchange="CommonScript.GetLocation('geo_cities',this);">
-                    <option value="">Select State</option>
+                     @foreach ($geo_state as $state)
+                        <option  id="option_state_{{$state->state_id}}"  value="{{$state->state_id}}" {{(default_State_id() == $state->state_id)?('selected="selected"'):('')}}>{{$state->state_title}}</option>
+                    @endforeach
                 </select>
 
 
 
                 <select name="geo_cities" class="form_select geo_cities" >
-                    <option value="">Select City</option>
+                    @foreach ($geo_cities as $city)
+                        <option  id="option_city_{{$city->city_id}}"  value="{{$city->city_id}}">{{$city->city_title}}</option>
+                    @endforeach
                 </select>
 
 

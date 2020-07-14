@@ -25,20 +25,18 @@
                     <span class="">{{$question['title']}}</span>
                 </div>
                 <div class="form_qstn_options">
-                    @php
-                        $q_options = !empty($question['options'])?(json_decode($question['options'],true)):array();
-                    @endphp
-                        {{-- @dump(  $q_options ) --}} 
-                        {{-- <input type="text" value="" name="applyAnswer[]" class="w100"> --}}
-                    {{-- @dd( $question ) --}}
+                    @if(!empty($question->options))
 
-                    @if(!empty($q_options))
-                         <select name="answer[{{$question['id']}}][option]">
-                            @foreach($q_options as $option)
-                            {{-- <option value="{{$option['text']}}">{{$option['text']}} {{(isset($option['preffer']))?'(preffer)':''}} {{(isset($option['goldstar']))?'(goldstar)':''}} </option> --}}
-                            <option value="{{$option}}">{{$option}}</option>
+                 {{--    @dump($question)
+                    @dump($question->options)
+                    @dump(is_array($question->options)) --}}
+
+                        <select name="answer[{{$question['id']}}][option]">
+                            @foreach($question->options as $option)
+                                <option value="{{$option}}">{{$option}}</option>
                             @endforeach
                         </select>
+
                     @endif
                 </div>
             </div>

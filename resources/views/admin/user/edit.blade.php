@@ -238,6 +238,7 @@ $(document).ready(function(){
     });
   }
 
+
 // Tab next click 
 $('#custom-tabs-one-home .btnNext').on('click', function (e) {
   e.preventDefault()
@@ -327,7 +328,6 @@ $('#custom-tabs-one-private .btnPrevious').on('click', function (e) {
  })
 
    // Add Qualification End
-
 }); 
 
 // For Scrolling to top start

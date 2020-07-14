@@ -206,24 +206,36 @@ return [
             'search' => true,
             'topnav' => true,
         ],
+        [   'header'      => 'Job Seekers'],
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
+            'text'        => 'Approved Job Seekers',
+            'url'         => 'admin/users/verified',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
         ],
         [
+            'text'        => 'Pending Job Seekers',
+            'url'         => 'admin/users/pending',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
+        [   'header'      => 'Employers'],
+        [
             'text'        => 'Approved Employers',
-            'url'         => 'admin/employers',
+            'url'         => 'admin/employers/verified',
             'icon'        => 'far fa-fw fa-file',
             // 'label'       => 4,
             'label_color' => 'success',
         ],
         [
-            'text'        => 'Approved Job Seekers',
-            'url'         => 'admin/users',
+            'text'        => 'Pending Employers',
+            'url'         => 'admin/employers/pending',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
+
+        [   'header'      => 'Jobs'],
         [
             'text'        => 'Jobs',
             'url'         => 'admin/jobs',
@@ -232,46 +244,24 @@ return [
         ],
 
         [
-            'text'        => 'Job Applications',
+            'text'        => 'Jobs Applications',
             'url'         => 'admin/job_applications',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
 
-        [
-            'text'        => 'Pending Jobs',
-            'url'         => 'admin/pending_jobs',
-            'icon'        => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-
-        [
-            'text'        => 'Pending Job Seekers',
-            'url'         => 'admin/pending_jobSeekers',
-            'icon'        => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-
-        [
-            'text'        => 'Pending Employers',
-            'url'         => 'admin/pending_Employers',
-            'icon'        => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-
-        [
-            'text'        => 'Search by Jobs',
-            'url'         => 'admin/searchByJobs',
-            'icon'        => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
-
-        [
-            'text'        => 'Filter By Advance Search',
-            'url'         => 'admin/filterByAdvanceSearch',
-            'icon'        => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
+        // [
+        //     'text'        => 'Search by Jobs',
+        //     'url'         => 'admin/searchByJobs',
+        //     'icon'        => 'far fa-fw fa-file',
+        //     'label_color' => 'success',
+        // ],
+        // [
+        //     'text'        => 'Filter By Advance Search',
+        //     'url'         => 'admin/filterByAdvanceSearch',
+        //     'icon'        => 'far fa-fw fa-file',
+        //     'label_color' => 'success',
+        // ],
 
 
 

@@ -1,3 +1,28 @@
+function getLoader(cl,isHide,isWhite){
+    cl=cl||'';
+    isHide&&cl+' hidden';
+    var spinner_html = `<div class="spinner center">
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    <div class="spinner-blade"></div>
+    </div>`;
+    var $loader = $("<div>").html(spinner_html).addClass(cl).removeAttr('id');
+     
+    isWhite&&$loader.find('.spinner').addClass('spinnerw');
+    var key='loader_'+cl;
+     
+    return $loader;
+}
+
 $(document).ready(function() {
     $(".alert-autoclose").fadeTo(5000, 500).slideUp(500, function() {
         $(".alert-autoclose").slideUp(500);
@@ -5,44 +30,42 @@ $(document).ready(function() {
 });
 
 // Job Deleting Code
+// $(document).on('click', '#itemdel', function() {
+// 	var jobdelid = parseInt($(this).attr('data-id'));
 
-$(document).on('click', '#itemdel', function() {
-	var jobdelid = parseInt($(this).attr('data-id'));
-
-	var jobtitle = $(this).attr('data-title');
-	$('#deleteConfirm').val(jobdelid);
-	$('#deleteModal').modal('show');
-	$('#delConfirmId').html(jobtitle);
-});
+// 	var jobtitle = $(this).attr('data-title');
+// 	$('#deleteConfirm').val(jobdelid);
+// 	$('#deleteModal').modal('show');
+// 	$('#delConfirmId').html(jobtitle);
+// });
 
 	// Job Deleting ajax
+   // $('#removejob').on('click', function() {
+   // 	var delid = $('#deleteConfirm').val();
+   // 	console.log("Jobs Delete"+delid);
 
-   $('#removejob').on('click', function() {
-   	var delid = $('#deleteConfirm').val();
-   	console.log("Jobs Delete"+delid);
+   // 	$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+   //  $.ajax({
+   //      type: 'POST',
+   //      url: 'jobs/delete/' + delid,
+   //      data: {delid},
+   //      beforeSend: function(){
+   //         $(".modelProcessing").show();
+   //         $(".modalContent p").hide();
+   //         $("#removejob").prop("disabled", true);            
+   //      },
+   //      success: function(data) {
+   //      	console.log(' data ', data);
+   //          if(data.status === 1 )
+   //           $('#deleteModal').modal('hide');
+   //           $(".modelProcessing").hide();
+   //           $(".modalContent p").show();
+   //           $("#removejob").prop("disabled", false);
+   //          jQuery('#dataTable').DataTable().ajax.reload();
+   //      }
+   //  });
 
-   	$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: 'jobs/delete/' + delid,
-        data: {delid},
-        beforeSend: function(){
-           $(".modelProcessing").show();
-           $(".modalContent p").hide();
-           $("#removejob").prop("disabled", true);            
-        },
-        success: function(data) {
-        	console.log(' data ', data);
-            if(data.status === 1 )
-             $('#deleteModal').modal('hide');
-             $(".modelProcessing").hide();
-             $(".modalContent p").show();
-             $("#removejob").prop("disabled", false);
-            jQuery('#dataTable').DataTable().ajax.reload();
-        }
-    });
-
-    });
+   //  });
 
 	// Job Deleting ajax end
 
@@ -58,7 +81,6 @@ $(document).on('click', '#userdel', function() {
 });
 
   // Ajax for deleting User
-
 $('#removeuser').on('click', function() {
     var deliduser = $('#deleteConfirmUser').val();
     console.log("User Delete"+deliduser);
@@ -66,7 +88,7 @@ $('#removeuser').on('click', function() {
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.ajax({
         type: 'POST',
-        url: 'users/delete/' + deliduser,
+        url:  'delete/' + deliduser,
         data: {deliduser},
         beforeSend: function(){
            $(".modelProcessingUser").show();
@@ -83,8 +105,8 @@ $('#removeuser').on('click', function() {
             jQuery('#dataTable').DataTable().ajax.reload();
         }
     });
-    
 });
+
 
 // JavaScript For Next and Previous Tab
 
@@ -92,8 +114,34 @@ $('#removeuser').on('click', function() {
   $('.nav-tabs > .active').next('li').find('a').trigger('click');
 });
 
-  $('.btnPrevious').click(function(){
+$('.btnPrevious').click(function(){
   $('.nav-tabs > .active').prev('li').find('a').trigger('click');
 });
+
+
+
+
+ // Handle click on "Select all" control
+ $('#cbx_all').on('click', function(event){
+   var checked_status = this.checked;
+   console.log(' checked_status ', checked_status, this );   
+    // Check/uncheck all checkboxes in the table
+    // var rows =  jQuery('#dataTable').DataTable().rows().nodes();
+    $('input[type="checkbox"]', jQuery('.cbxDataTable')).prop('checked', checked_status);
+    // event.preventDefault();
+ });
+
+ // Handle click on checkbox to set state of "Select all" control
+ $('.cbxDataTable tbody').on('change', 'input[type="checkbox"]', function(event){ 
+    console.log(' dataTable tbody '); 
+    // If checkbox is not checked
+    if(!this.checked){
+       var el = $('#cbx_all').get(0);
+       // If "Select all" control is checked and has 'indeterminate' property
+       if(el && el.checked){el.checked=false;}
+    }
+     // event.preventDefault();
+ });
+
 
 // JavaScript For Next and Previous Tab End 

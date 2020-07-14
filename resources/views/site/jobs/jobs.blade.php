@@ -17,7 +17,7 @@
         @if ($jobs->count() > 0)
         @foreach ($jobs as $job)
         <div class="job_row">
-
+ 
             <div class="job_heading p10">
                 <h3 class=" job_title"><a>{{$job->title}}</a></h3>
                 <div class="job_location">
@@ -26,10 +26,19 @@
             </div>
 
             <div class="job_info row p10 dblock">
-                <div class="w_25p">
+                
+                <div class="w_25p companyLogo">
+                    @php 
+                        $user_gallery  =  $job->jobEmployerLogo;   
+                        $profile_image =  !empty($user_gallery)?(assetGallery2($user_gallery,'small')):(asset('images/site/icons/nophoto.jpg'));
+                    @endphp
+                    <img class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
+                </div>
+
+                {{-- <div class="w_25p">
                     <div class="j_label bold">Job Type</div>
                     <div class="j_value">{{$job->type}}</div>
-                </div>
+                </div> --}}
 
                 <div class="w_25p">
                     <div class="j_label bold">Job Experience</div>
@@ -69,6 +78,10 @@
                     <div class="j_value">{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</div>
                 </div>
 
+                 <div class="w_25p jobsType">
+                    <div class="j_label bold">Job Type</div>
+                    <div class="j_value">{{$job->type}}</div>
+                </div>
 
                 <div class="w_25p fl_right">
                     <div class="j_button fl_right"><a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Apply</a></div>

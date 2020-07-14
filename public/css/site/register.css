@@ -131,7 +131,7 @@
     display: block;
 }
 .bl_form_registration .part .bl{ text-align: left; margin: 0 0 18px; position: relative; display: block; padding: 0; }
-.bl_form_registration .part .bl label{ display: block; color: #fff; margin: 0 0 6px; }
+.bl_form_registration .part .bl label{ color: #fff; margin: 0 0 6px; }
 .bl_form_registration .part .bl input.inp{ height: 34px; margin: 0; padding: 0 21px 0 11px; }
 .bl_form_registration .part .bl input.inp.city{ width: 151px; }
 .bl_form_registration .part .bl input.inp.email{ /*width: 317px;*/ }
@@ -197,15 +197,40 @@
 .bl_form_registration .jq-selectbox__dropdown.drop_down{ border-radius: 0 0 3px 3px; }
 .bl_form_registration .jq-selectbox__dropdown.drop_down li:last-child,
 .bl_form_registration .jq-selectbox__dropdown.drop_down li:last-child:hover,
-.bl_form_registration .jq-selectbox__dropdown.drop_down li.selected:last-child{
-	border-radius: 0 0 3px 3px;
-}
-
+.bl_form_registration .jq-selectbox__dropdown.drop_down li.selected:last-child{ border-radius: 0 0 3px 3px; }
 .geo_cities.w100 .jq-selectbox__dropdown,
 .geo_cities.w100 .jq-selectbox__select { width: 317px; }
+.location_search_btn {
+    height: auto !important;
+    border: 1px solid rgba(0,0,0,0.2) !important;
+    color: #fff !important;
+    background-color: #46a546;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    padding: 7px 12px !important;
+    font-size: 13px !important;
+    line-height: 18px;
+    text-align: center;
+    margin: 0px !important; }
 
-
-
+input#location_search {
+    border-radius: 4px 0px 0px 4px !important;
+}
+.location_lat, .location_long {
+    margin-top: 5px;
+    padding: 4px 13px;
+}
+.location_filed {
+    display: table;
+    width: 100%;
+}
+div#location_map {
+    height: 250px;
+    margin: 2px;
+    border-radius: 4px;
+}
+.location_map_box {
+    border-radius: 4px;
+}
 /*=========== Step 2 ===========*/
 .mw50{max-width: 50%;}
 body.step2 .header {

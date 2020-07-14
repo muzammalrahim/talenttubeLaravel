@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Auth;
 use App\Jobs;
 use App\JobsApplication;
 use App\User;
+use App\JobsAnswers;
+
+use App\Exports\JobApplicationExport;
+use App\Exports\JobAllApplicationExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 use Yajra\Datatables\Datatables;
 // use Illuminate\Support\Facades\Hash;
@@ -18,11 +23,9 @@ class AdminJobsController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //===============================================================================================================//
+    // .
+    //===============================================================================================================//
     public function index() {
 
         if (Auth::check()) {
@@ -63,6 +66,10 @@ class AdminJobsController extends Controller
        return view('admin.jobs.list', $data);
     }
 
+    
+    //===============================================================================================================//
+    // Ajax GET // Jobs list for dataTable
+    //===============================================================================================================//
     function getDatatable(){
          $records = Jobs::select(['id', 'title','country','state','city','experience','salary','created_at'])
          ->with(['GeoCountry','GeoState','GeoCity'])
@@ -72,7 +79,12 @@ class AdminJobsController extends Controller
         if (isAdmin()){
             $rhtml = '<a href="'.route('jobs.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
 
-            $rhtml .= '<button id="itemdel" type="button" class="btn btn-danger btn-sm" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
+            $rhtml .= '<button type="button" class="btn btn-danger btn-sm btnJobDelete" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
+
+            $rhtml .= '<a href="'.route('job.exportApplicationCSV',['id' => $records->id]).'" type="button" class="btn btn-success btn-sm" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" >CSV Export</a>';
+
+             $rhtml .= '<a href="'.route('job_applications').'?job_id='.$records->id.'" type="button" class="btn btn-success btn-sm" data-id='.$records->id.'>Applications</a>';
+
             return $rhtml;
         }
 
@@ -89,10 +101,11 @@ class AdminJobsController extends Controller
       ->toJson();
     }
 
-// Storing job in database
-
-    public function store(Request $request)
-        {
+   
+    //===============================================================================================================//
+    // .
+    //===============================================================================================================//
+    public function store(Request $request){
 
         // dd( $request->toArray() );
         // dd( $id );
@@ -124,10 +137,8 @@ class AdminJobsController extends Controller
     }
     
 
-// Storing job in database
-
-// create job
-    
+ 
+      
      public function createJobs(Request $request) 
      {
 
@@ -182,25 +193,11 @@ class AdminJobsController extends Controller
 
         }
     }
-// create job 
+    // create job 
+ 
+    public function show($id){ }
 
-    /**
-     * Display the specified resource.
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id){
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function editJob($id)
-    {
+    public function editJob($id){
         $records = Jobs::where('id',$id)->first();
 
         // dd(); 
@@ -210,23 +207,14 @@ class AdminJobsController extends Controller
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = get_Geo_State($records->country)->pluck('state_title','state_id')->toArray();
         $data['cities'] = get_Geo_City($records->country,$records->state)->pluck('city_title','city_id')->toArray();
-
-        // dd( $records->user_id ); 
-
         $data['type']  = getJobTypes();
         $data['user_id']  = User::where('type','employer')->pluck('name','id')->toArray();
         return view('admin.jobs.edit', $data);
+        // admin/jobs/edit
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
- public function updateJob(Request $request, $id){
-
+     
+    public function updateJob(Request $request, $id){
         // dump( $request->toArray() );
         // dd( $id );
         $this->validate($request, [
@@ -234,12 +222,11 @@ class AdminJobsController extends Controller
             'country' => 'max:15',
             'state' => 'max:15',
             'city' => 'max:15',
-            'experience' => 'max:15',
+            'experience' => 'max:100',
             // 'type' => 'max:15',
-            'expiration' => 'max:19',   
+            'expiration' => 'max:100',   
             'created_by' => 'max:19',    
         ]);
-
         $job = Jobs::find($id);
         $job->title = $request->title;
         $job->country = $request->country;
@@ -275,7 +262,7 @@ class AdminJobsController extends Controller
 
     // deleting job
 
-         public function deleteJob(Request $request, $id){
+  public function deleteJob(Request $request, $id){
            $this->validate($request, [
             'title' => 'required|max:255',
             'country' => 'max:15',
@@ -306,55 +293,66 @@ class AdminJobsController extends Controller
     // deleting job ends
 
 
-    // Job Application Functions and dataTable 
-
-        public function job_applications(){
+  // Job Application Functions and dataTable 
+  public function job_applications(Request $request){
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Job Applications';
         $data['content_header'] = 'Job Applications';
         $data['classes_body'] = 'jobs';
+        $data['request'] = $request;
         $data['jobs'] = Jobs::with('applicationCount')->get();
-
         // dd($data); 
+        return view('admin.job_applications.list', $data);
+        // admin/job_applications/list
+  }
 
-       return view('admin.job_applications.list', $data);
-    }
-      // Job Application editting function
+  // Job Application editting function
+  public function editJobApp($id) {
+        $records = JobsApplication::findOrFail($id);
 
-      public function editJobApp($id)
-    {
-        $records = JobsApplication::where('id',$id)->first();
-        
-        // dump($records->toArray());
-        // dump($records->job->toArray());
-        // dump($records->job->questions->toArray());
-        // dump();
-        // dd(); 
         $data['content_header'] = 'Edit Job Application';
         $data['record'] = $records;
         $data['title']  = 'Job Application';
-        $data['answers']  = $records->answers->keyBy('question_id')->toArray();
+        $data['answers']  = !empty($records->answers)?($records->answers->keyBy('question_id')->toArray()):array();
         return view('admin.job_applications.edit', $data);
-    }
+        // admin/job_applications/edit
+  }
+
+
+
+  //===============================================================================================================//
+  // .
+  //===============================================================================================================//
+  public function updateJobApp(Request $request, $id) {
+
+      $jobApp = JobsApplication::find($id);
+      $jobApp->status = $request->status;
+      if( $jobApp->save() ){
+         if(!empty($request->user_answers)){
+            foreach ($request->user_answers as $akey => $anvalue) {
+              $JobsAnswers = JobsAnswers::find($akey);
+              if($JobsAnswers){
+                $JobsAnswers->answer = $anvalue; 
+                $JobsAnswers->save();
+              } 
+            }
+          }
+          return redirect(route('job_applications'))->withSuccess( __('admin.record_updated_successfully'));
+      }
+  }
 
 // Job Application editting function End Here 
 
+  // Getting Job Application DataTable Start
+  public function getJobAppDatatable(Request $request){
+      $records =  JobsApplication::with(['jobseeker','job']); 
 
+      if(!empty($request->filter_job)){
+        $records = $records->where('job_id',$request->filter_job); 
+      }
 
-// Getting Job Application DataTable Start
-    function getJobAppDatatable(){
-      
-       // $records =  JobsApplication::select(['id', 'status','job_id','goldstar','user_id','preffer'])->get(); 
-       // dd($records->first()->jobseeker());
-
-       $records =  JobsApplication::with(['jobseeker','job']); 
-       
-      
-       // ->with(['GeoCountry','GeoState','GeoCity'])
-      // ->orderBy('created_at', 'desc');
       return datatables($records)
-
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $rhtml = '<a href="'.route('job_applications.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
@@ -376,6 +374,7 @@ class AdminJobsController extends Controller
 
     // Job Application and dataTable  End Here
 
+
     // filtering function
 // public function filter(Request $request)
 //    {
@@ -395,6 +394,32 @@ class AdminJobsController extends Controller
 
 // }
     // filtering end here
+
+
+
+
+    //===============================================================================================================//
+    // .
+    //===============================================================================================================//
+    public function ExportCSV(Request $request) {
+      // dd($request->toArray()); 
+      if(!empty($request->cbx)){
+         $jsExport = new JobApplicationExport($request->cbx); 
+        return Excel::download($jsExport, 'jobApplications.xlsx');
+      }
+    }
+
+
+    //===============================================================================================================//
+    // .
+    //===============================================================================================================//
+    public function ExportApplicationCSV(Request $request) {
+      if(!empty($request->id)){
+         $jsExport = new JobAllApplicationExport($request->id); 
+        return Excel::download($jsExport, 'JobAllApplications.xlsx');
+      }
+    }
+
 
 
 

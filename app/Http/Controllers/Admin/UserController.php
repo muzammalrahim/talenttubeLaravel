@@ -4,9 +4,13 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\UserGallery;
+use App\Attachment;
 use Illuminate\Http\Request;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Hash;
+use \Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
+
 // use App\Users;
 
 class UserController extends Controller
@@ -24,67 +28,131 @@ class UserController extends Controller
     public function index() {
         $data['title'] = 'Job Seekers';
         $data['content_header'] = 'Job Seekers';
+        $data['filter_status'] = '';
         return view('admin.user.list', $data);
+    }
+
+    public function pendingUsers() {
+        $data['title'] = 'Job Seekers';
+        $data['content_header'] = 'Job Seekers';
+        $data['filter_status'] = 'pending';
+        return view('admin.user.list', $data); // admin/user/list
+    }
+
+    public function verifiedUsers() {
+        $data['title'] = 'Job Seekers';
+        $data['content_header'] = 'Job Seekers';
+        $data['filter_status'] = 'verified';
+        return view('admin.user.list', $data); // admin/user/list
     }
 
     public function employers() {
         $data['title'] = 'Employers';
         $data['content_header'] = 'Employers List';
+        $data['filter_status'] = null; 
         return view('admin.employer.list', $data);
+        // admin/employer/list 
+    }
+
+    public function verifiedEmployers() {
+        $data['title'] = 'Employers';
+        $data['content_header'] = 'Employers List';
+        $data['filter_status'] = 'verified';
+        return view('admin.employer.list', $data);
+        // admin/employer/list 
+    }
+    public function pendingEmployers() {
+        $data['title'] = 'Employers';
+        $data['content_header'] = 'Employers List';
+        $data['filter_status'] = 'pending';
+        return view('admin.employer.list', $data);
+        // admin/employer/list 
     }
 
     /** ================ This method returns the datatables data to view ================ */
-    public function getDatatable(){
+    public function getDatatable(Request $request){
       $records = array();
-      $records = User::select(['id', 'name', 'city','email','phone', 'created_at'])
+
+       // dd($request->toArray());
+      $records = User::select(['id', 'name', 'city','email','phone','verified','created_at'])
         ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
         ->orderBy('created_at', 'desc');
+     if(isset($request->status) && !empty($request->status)){
+
+        if($request->status == 'verified')
+            $records = $records->where('verified','1');
+
+        if($request->status == 'pending')
+            $records = $records->where('verified','0');
+     
+     }
+
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $rhtml = '<a href="'.route('users.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px;"><i class="far fa-edit"></i></button></a>';
             $rhtml .= '<button id="userdel" type="button" class="btn btn-danger btn-sm" data-type="User" user-id='. $records->id.' user-title="'.$records->name.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
-                return $rhtml;
+            if(!$records->verified){
+                 $rhtml .= '<button type="button" class="btn btn-danger btn-sm btnVerifyUser m-1" user-id='. $records->id.'">Verify</button>';
+            }
+            return $rhtml;
         }})
        ->addColumn('profile', function ($records) {
         if (isAdmin()){
-            $rhtml = '<button id="userinfo" type="button" class="btn btn-primary btn-sm btnUserInfo" user-id='. $records->id.' >Info</button>';
+            $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserInfo" user-id='. $records->id.' >Info</button>';
             return $rhtml;
         }})
-      ->rawColumns(['profile', 'action'])
-
-      // Testing View Video
-
-      ->addColumn('profile', function ($records) {
+        ->addColumn('videoInfo', function ($records) {
         if (isAdmin()){
-            $rhtml = '<button id="uservideo" type="button" class="btn btn-primary btn-sm btnUserVideo" user-id='. $records->id.' >Info</button>';
+            $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserVideoInfo" user-id='. $records->id.' >Info</button>';
             return $rhtml;
         }})
-      ->rawColumns(['video', 'action'])
-
-      // Testing Video End her
-
-
+ 
+        ->addColumn('resume', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserResumeInfo" user-id='. $records->id.' >Info</button>';
+            return $rhtml;
+        }})
+      ->removeColumn('verified')
+      ->rawColumns(['profile','videoInfo','resume','action'])
       ->toJson();
     }
 
     /** ================ This method returns the datatables data to view ================ */
-    public function getEmployerDatatable(){
+    public function getEmployerDatatable(Request $request){
       $records = array();
-      $records = User::select(['id', 'name', 'email', 'created_at'])
+      $records = User::select(['id', 'name', 'email', 'created_at','verified'])
         ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
         ->orderBy('created_at', 'desc');
+
+     if(isset($request->status) && !empty($request->status)){
+        if($request->status == 'verified')
+            $records = $records->where('verified','1');
+        if($request->status == 'pending')
+            $records = $records->where('verified','0');
+     }
+
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $rhtml = '<a href="'.route('employers.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px"><i class="far fa-edit"></i></button></a>';
 
             $rhtml .= '<button id="empdel" type="button" class="btn btn-danger btn-sm" data-type="Employer" emp-id='. $records->id.' emp-title="'.$records->name.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
-                return $rhtml;
+
+            if(!$records->verified){
+                 $rhtml .= '<button type="button" class="btn btn-danger btn-sm btnVerifyUser m-1" user-id='. $records->id.'">Verify</button>';
+            }
+            return $rhtml;
         }
       })
-
+      ->addColumn('profile', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserInfo" user-id='. $records->id.' >Info</button>';
+            return $rhtml;
+      }})
+      ->rawColumns(['profile','action'])
       ->toJson();
+
     }
 
 
@@ -467,12 +535,10 @@ class UserController extends Controller
             return redirect(route('adminEmployers'))->withSuccess( __('admin.record_updated_successfully'));
         }
     }
-    public function show($id){
 
-    }
+    public function show($id){}
 
     // Destroy User
-
     public function destroyUser($id){
       $user = User::find($id);
       if(!empty($user)){
@@ -482,24 +548,14 @@ class UserController extends Controller
                 'message' => 'Job Succesfully Deleted',
           ]);
       }
-    
     }
 
     // Destroy User end here
 
     public function profilePopup(Request $request){
-
-     $user = User::find($request->id); 
-     if($user){
-        $gallery =  UserGallery::where('user_id',$request->id)->get();
-        $data['user'] = $user;
-        $data['gallery'] = $gallery;
-        return view('admin.user.profilePopup', $data);
-     }
     }
 
     // Destroy Employer
-
     public function destroyemployers($id){
       $user = User::find($id);
       if(!empty($user)){
@@ -510,6 +566,64 @@ class UserController extends Controller
           ]);
       }
     }
+
+    public function profilePopup(Request $request){
+     $user = User::with(['Gallery','profileImage'])->where('id',$request->id)->first(); 
+     if($user){
+        // $gallery =  UserGallery::where('user_id',$request->id)->get();
+        $data['user'] = $user;
+        
+        return view('admin.user.profilePopup', $data);
+        // admin/user/profilePopup
+     }
+    }
+
+ 
+    //===============================================================================================================//
+    // return user uploaded videos for user lising page popup .
+    //===============================================================================================================//
+    public function profileVideoPopup(Request $request){
+     $user = User::with('vidoes')->where('id',$request->id)->first(); 
+     if($user){
+        $data['user'] = $user;
+        return view('admin.user.profileVideoPopup', $data);
+        // admin/user/profileVideoPopup
+     }
+    }
+
+
+    //===============================================================================================================//
+    // return JobSeeker uploaded Resume link.
+    //===============================================================================================================//
+    public function resumeData(Request $request){
+     $resume = Attachment::where('user_id',$request->id)->first(); 
+     if(!empty($resume))
+        return assetResume($resume);
+    }
+    
+    //===============================================================================================================//
+    // make all selected checkbox user account verified/enabled.
+    //===============================================================================================================//
+    public function confirmAccount(Request $request){
+      onlyAdmin();
+      if(!empty($request->cbx) && is_array($request->cbx)){
+        $result =  User::whereIn('id', $request->cbx)->update(array('verified' => 1, 'email_verified_at' => date("Y-m-d H:i:s")));
+        if($result > 0){
+            return response()->json([
+                'status' => 1,
+                'message' => '<h3 class="text-center">('.$result.') JobSeekers Succesfully Approved</h3>',
+          ]);
+        }
+      }    
+    }
+
+
+ 
+
+   
+
+
+
 
     // end here
 }
