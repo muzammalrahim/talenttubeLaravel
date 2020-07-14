@@ -37,6 +37,7 @@
 		   </div> 
 	    </div>
 
+     <a class="btn btn-primary btnNext text-white" style="float:right;"onclick="scrollToTop()">Next</a>
 	 <a class="btn btn-primary btnPrevious text-white"onclick="scrollToTop()" >Previous</a>
 
 </div>

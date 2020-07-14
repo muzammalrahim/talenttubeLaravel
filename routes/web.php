@@ -168,6 +168,10 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('job_applications/getjobapps', 'Admin\AdminJobsController@getJobAppDatatable')->name('job.jobAppDatatable');
     Route::get('job_applications/edit/{id}', 'Admin\AdminJobsController@editJobApp')->name('job_applications.edit');
 
+    // for filtering 
+    Route::post('job_applications/search', 'Admin\AdminJobsController@filter')->name('job_applications.filter');
+
+
 
     // Job Application End Here
 });

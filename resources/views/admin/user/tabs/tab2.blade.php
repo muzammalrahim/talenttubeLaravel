@@ -32,6 +32,8 @@
 
                 </div>
 
+
+
                     {{-- <div class="col-md-3">
                         @dump($record->profileImage->image)
 
@@ -49,6 +51,7 @@
 
                          {{-- Img Putting End here --}}
 
+                           
                     
 
                     <div class="mb-2 bg-secondary text-white text-center"><b>Qualification</b></div>
@@ -58,6 +61,7 @@
                         {{ Form::label('qualification', null, ['class' => 'col-md-2 form-control-label']) }}
 
                         <div class="col-md-10 qualificationList">
+
                            @php 
                             $qualificationsData =  ($record->qualification)?(getQualificationsData($record->qualification)):(array());
                            @endphp
@@ -76,18 +80,9 @@
 
                     <div class="mb-2 bg-secondary text-white text-center"><b>Industry</b></div>
 
-                        {{-- <div class="form-group row">
-                            {{ Form::label('industry', null, ['class' => 'col-md-2 form-control-label']) }}
-                             <div class="col-md-10">
-                            {{ Form::select('industry_experience', $industry_experience, null, ['placeholder' => 'Select industry']) }}
-                            </div> 
-                        </div> --}}
-
-                        {{-- Testing Industry --}}
-
                     <div class="form-group row">
                      
-                        {{ Form::label('industry_test', null, ['class' => 'col-md-2 form-control-label']) }}
+                        {{ Form::label('industry', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
                         <div class="IndusList">
                           @if(!empty($record->industry_experience))
@@ -123,8 +118,6 @@
                     </div>
 
                     <div class="mb-2 bg-secondary text-white text-center"><b>Tags</b></div>
-
-
 
                     <div class="form-group row">
                   
@@ -178,15 +171,6 @@
                         </div> 
                     </div>
 
-                    
-
-                    
-
-
-
-
-                    
-
                     <div class="form-group row">
                         {{ Form::label('created_at', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
@@ -211,6 +195,5 @@
                       <a class="btn btn-primary btnPrevious text-white"onclick="scrollToTop()" >Previous</a>
                      <a class="btn btn-primary btnNext text-white" style="float:right;"onclick="scrollToTop()">Next</a>
 
-
-                  </div>
+</div>
 

@@ -34,12 +34,24 @@
               <div class="card-header p-0 pt-1 tabColor"style="background: #6c757d;">
                 <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
 
-                  <li class="nav-item col-lg-6">
+                  <li class="nav-item col-lg-3">
                     <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true"><b>Job Application Information</b></a>
                   </li>
 
-                  <li class="nav-item col-lg-6">
+                  <li class="nav-item col-lg-3">
                     <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false"><b>Job Questions</b></a>
+                  </li>
+
+                  <li class="nav-item col-lg-2">
+                    <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false"><b>Job Info</b></a>
+                  </li>
+
+                  <li class="nav-item col-lg-2">
+                    <a class="nav-link" id="custom-tabs-one-private-tab" data-toggle="pill" href="#custom-tabs-one-private" role="tab" aria-controls="custom-tabs-one-private" aria-selected="false"><b>Employer Info</b></a>
+                  </li>
+
+                   <li class="nav-item col-lg-2">
+                    <a class="nav-link" id="custom-tabs-one-seeker-tab" data-toggle="pill" href="#custom-tabs-one-seeker" role="tab" aria-controls="custom-tabs-one-seeker" aria-selected="false"><b>Job Seeker Info</b></a>
                   </li>
 
                 </ul>
@@ -51,6 +63,10 @@
 
                   @include('admin.job_applications.tabs.tab1')
                   @include('admin.job_applications.tabs.tab2')
+                  @include('admin.job_applications.tabs.tab3')
+                  @include('admin.job_applications.tabs.tab4')
+                  @include('admin.job_applications.tabs.tab5')
+
                   
                 </div> <!-- tab-content end -->
               </div>
@@ -99,6 +115,38 @@
         $('#custom-tabs-one-home-tab').tab('show')
       });
 
+      $('#custom-tabs-one-profile .btnNext').on('click', function (e) {
+        e.preventDefault()
+        $('#custom-tabs-one-messages-tab').tab('show')
+      });
+
+      $('#custom-tabs-one-messages .btnPrevious').on('click', function (e) {
+        e.preventDefault()
+        $('#custom-tabs-one-profile-tab').tab('show')
+      });
+
+      $('#custom-tabs-one-messages .btnNext').on('click', function (e) {
+        e.preventDefault()
+        $('#custom-tabs-one-private-tab').tab('show')
+      });
+
+      $('#custom-tabs-one-private .btnPrevious').on('click', function (e) {
+        e.preventDefault()
+        $('#custom-tabs-one-messages-tab').tab('show')
+      });
+
+      $('#custom-tabs-one-private .btnNext').on('click', function (e) {
+        e.preventDefault()
+        $('#custom-tabs-one-seeker-tab').tab('show')
+      });
+
+      $('#custom-tabs-one-seeker .btnPrevious').on('click', function (e) {
+        e.preventDefault()
+        $('#custom-tabs-one-private-tab').tab('show')
+      });
+
+
+
       function scrollToTop() { 
         window.scrollTo({top: 0, behavior: 'smooth' }); 
       }
@@ -139,7 +187,4 @@ span.goldStar .fa {
     color: gold;
 }
 
- 
-
- 
 </style>

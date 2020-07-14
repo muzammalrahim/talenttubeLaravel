@@ -5,12 +5,21 @@
 @section('content_header')
 
 <div class="block row">
-    <div class="col-md-6"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
-  {{--   <div class="col-md-6">
-        <div class="float-right">
-            <a href="{!! route('jobs.create') !!}" class="btn btn-block btn-success">Add New</a>
+    <div class="col-md-3"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
+
+    <div class="col-md-9">
+        <div class="float-left">
+            <div class="form-group">
+                <select name="filter_status" id="filter_status" class="form-control" required>
+                    <option value="" class="filter-input "data-colmn ="0">Search Status</option>
+                    <option value="pending" class="filter-input "data-colmn ="1" onclick="filter()">Pending</option>
+                    <option value="approved" class="filter-input "data-colmn ="2">Approved</option>
+                </select>
+         
+
         </div>
-    </div> --}}
+    </div>
+
 </div>
 
 @stop
@@ -23,7 +32,7 @@
 @include('admin.errors')
 @include('admin.success')
 
-<table class="table table-bordered text-center" id="JobAppDatatable"t>
+<table class="table table-bordered text-center " id="JobAppDatatable">
     <thead>
         <tr style = "text-align: center">
             <th >id.</th>
@@ -111,6 +120,44 @@
                 { data: 'action', name: 'action'},
             ]
         });
+
+
+
+
+
+    // fill_datatable();
+
+    // function fill_datatable(filter_status = '')
+    // {
+    //     var dataTable = $('#JobAppDatatable').DataTable({
+    //         processing: true,
+    //         serverSide: true,
+    //         ajax:{
+    //             url: "{{ route('job_applications.filter') }}",
+    //             data:{filter_status:filter_status}
+    //         },
+    //         columns: [
+    //             {
+    //                 data:'status',
+    //                 name:'status'
+    //             },
+    //             ]
+
+    //             });
+    // }
+
+        //  $('#filter').click(function(){
+        // var filter_status = $('#filter_status').val();
+
+          // filtering end here
+
     });
+
+
+
+    // For filtering
+
+  
+
 </script>
 @stop
