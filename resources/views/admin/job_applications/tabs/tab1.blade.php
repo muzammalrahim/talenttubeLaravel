@@ -1,7 +1,7 @@
 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
 
     <div class="form-group row">
-      {{ Form::label('Job ID', null, ['class' => 'col-md-2 form-control-label']) }}
+      {{ Form::label('ID', null, ['class' => 'col-md-2 form-control-label']) }}
       <div class="col-md-10">
         {{ Form::text('id', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Id','required'=> 'false','disabled'=> true)) }}
       </div>

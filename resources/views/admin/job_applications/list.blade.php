@@ -5,12 +5,21 @@
 @section('content_header')
 
 <div class="block row">
-    <div class="col-md-6"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
-  {{--   <div class="col-md-6">
-        <div class="float-right">
-            <a href="{!! route('jobs.create') !!}" class="btn btn-block btn-success">Add New</a>
+    <div class="col-md-3"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
+
+    <div class="col-md-9">
+        <div class="float-left">
+            <div class="form-group">
+                <select name="filter_status" id="filter_status" class="form-control" required>
+                    <option value="" class="filter-input "data-colmn ="0">Search Status</option>
+                    <option value="pending" class="filter-input "data-colmn ="1" onclick="filter()">Pending</option>
+                    <option value="approved" class="filter-input "data-colmn ="2">Approved</option>
+                </select>
+         
+
         </div>
-    </div> --}}
+    </div>
+
 </div>
 
 @stop
@@ -22,6 +31,7 @@
 
 @include('admin.errors')
 @include('admin.success')
+
 
 {{-- @dump( $jobs->toArray() ) --}}
 
@@ -49,6 +59,7 @@
 
 
 <table class="table table-bordered text-center cbxDataTable" id="dataTable"t>
+
     <thead>
         <tr style = "text-align: center">
             <th><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th>
@@ -111,6 +122,7 @@
 @section('js')
 <script src="{{ asset('js/admin_custom.js') }}"></script>
 <script>
+
 jQuery(function() {
     var tableObj = jQuery('#dataTable').DataTable({
         processing: true,

@@ -186,6 +186,10 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::post('jobApplication/exportCSV', 'Admin\AdminJobsController@ExportCSV')->name('jobApplication.exportCSV');
     Route::get('job/exportApplicationCSV/{id}', 'Admin\AdminJobsController@ExportApplicationCSV')->name('job.exportApplicationCSV');
 
+    // for filtering 
+    Route::post('job_applications/search', 'Admin\AdminJobsController@filter')->name('job_applications.filter');
+
+
 
     // Job Application End Here
 });

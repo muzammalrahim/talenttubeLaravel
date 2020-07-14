@@ -155,18 +155,18 @@ class UserController extends Controller
 
     }
 
+
+
     /** ================   ================ */
     public function create(){
+
+    
+
         $data['record']   = FALSE;
         $data['title']  = 'User';
         $data['content_header'] = 'Add new User';
         $data['countries'] = get_Geo_Country();
-
-        // $data['educationDropdown'] = getEducationDropdown();
-
         $data['qualificationList'] = getQualificationsList();
-
-
 
         $data['languages'] = getLanguages();
         $data['hobbies'] = getHobbies();
@@ -178,13 +178,12 @@ class UserController extends Controller
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = array();
         $data['cities'] = array();
-        
         $data['userquestion'] = getUserRegisterQuestions();
-
         $data['industry_experience'] = getIndustries();
         $data['salaryRange'] = getSalariesRange();
 
-
+        
+            
         return view('admin.user.edit', $data);
     }
 
@@ -204,12 +203,7 @@ class UserController extends Controller
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = array();
         $data['cities'] = array();
-
-        
         $data['empquestion'] = getEmpRegisterQuestions();
-
-
-
         return view('admin.employer.edit', $data);
     }
 
@@ -225,12 +219,7 @@ class UserController extends Controller
             $data['title']  = 'User';
             $data['content_header'] = 'Edit User';
             $data['countries'] = get_Geo_Country();
-
-
-            // $data['educationDropdown'] = getEducationDropdown();
-
             $data['qualificationList'] = getQualificationsList();
-
             $data['languages'] = getLanguages();
             $data['hobbies'] = getHobbies();
             $data['familyType'] = getFamilyType();
@@ -241,10 +230,10 @@ class UserController extends Controller
             $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
             $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
             $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
-
             $data['userquestion'] = getUserRegisterQuestions();
             $data['industriesList'] = getIndustries();
             $data['salaryRange'] = getSalariesRange();
+            $data['questionsList'] = getIndustries();
             return view('admin.user.edit', $data);
         }
         // admin/user/edit
@@ -300,7 +289,7 @@ class UserController extends Controller
             'gender' => 'max:25',
             'eye' => 'max:15',
             'family' => 'max:15',
-            'educaion' => 'max:15',
+            // 'educaion' => 'max:15',
             'language' => 'max:15',
             'hobbies' => 'max:15',
             'about_me' => 'max:500',
@@ -327,9 +316,6 @@ class UserController extends Controller
 
         // $user->education = $request->education;
 
-        $user->qualification = $request->qualifications;
-
-
         $user->language = $request->language;
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
@@ -342,25 +328,20 @@ class UserController extends Controller
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
-
+        $user->qualification = $request->qualification;
         $user->industry_experience = $request->industry_experience;
         $user->recentJob = $request->recentJob;
         $user->salaryRange = $request->salaryRange;
-        
-
-
-
-
-
-
         if( $user->save() ){
             return redirect(route('users'))->withSuccess( __('admin.record_updated_successfully'));
         }
     }
 
     public function updateEmployer(Request $request, $id){
-        //dd($request->toArray());
+
+        // dd($request->toArray());
         $user = User::find($id);
+
         if (!$user){
             return redirect(route('adminEmployers'))->withErrors(['token' => 'Employers with id '.$id.' does not exist']);
         }
@@ -390,7 +371,6 @@ class UserController extends Controller
             'updated_at' => 'max:250',
             'credit' => 'max:250',
 
-
         ]);
 
         $user->name = $request->name;
@@ -412,15 +392,11 @@ class UserController extends Controller
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
-
         $user->questions = json_encode($request->questions);
-
         $user->company = $request->company;
-
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
-
 
         if( $user->save() ){
             return redirect(route('adminEmployers'))->withSuccess( __('admin.record_updated_successfully'));
@@ -446,7 +422,7 @@ class UserController extends Controller
             'gender' => 'max:25',
             'eye' => 'max:15',
             'family' => 'max:15',
-            'educaion' => 'max:15',
+            // 'educaion' => 'max:15',
             'language' => 'max:15',
             'hobbies' => 'max:15',
             'about_me' => 'max:250',
@@ -477,30 +453,19 @@ class UserController extends Controller
         // $user->education = $request->education;
 
         $user->qualification = $request->qualifications;
-
-
-        // 
-
         $user->language = $request->language;
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
-            
-
        
         // $user->questions = implode(',',$request->questions);
 
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
-
         $user->industry_experience = $request->industry_experience;
         $user->recentJob = $request->recentJob;
         $user->salaryRange = $request->salaryRange;
-
-
-
-
         $user->type = "user";
         if( $user->save() ){
             $user->roles()->attach([config('app.user_role')]);
@@ -561,10 +526,7 @@ class UserController extends Controller
         $user->questions = json_encode($request->questions);
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
-
         $user->company = $request->company;
-
-
         $user->credit = $request->credit;
         $user->type = "employer";
         
@@ -588,6 +550,11 @@ class UserController extends Controller
       }
     }
 
+    // Destroy User end here
+
+    public function profilePopup(Request $request){
+    }
+
     // Destroy Employer
     public function destroyemployers($id){
       $user = User::find($id);
@@ -600,7 +567,6 @@ class UserController extends Controller
       }
     }
 
-
     public function profilePopup(Request $request){
      $user = User::with(['Gallery','profileImage'])->where('id',$request->id)->first(); 
      if($user){
@@ -611,7 +577,6 @@ class UserController extends Controller
         // admin/user/profilePopup
      }
     }
-
 
  
     //===============================================================================================================//
@@ -625,6 +590,7 @@ class UserController extends Controller
         // admin/user/profileVideoPopup
      }
     }
+
 
     //===============================================================================================================//
     // return JobSeeker uploaded Resume link.

@@ -15,7 +15,7 @@ use App\Exports\JobApplicationExport;
 use App\Exports\JobAllApplicationExport;
 use Maatwebsite\Excel\Facades\Excel;
 
-// use Yajra\Datatables\Datatables;
+use Yajra\Datatables\Datatables;
 // use Illuminate\Support\Facades\Hash;
 
 class AdminJobsController extends Controller
@@ -141,9 +141,11 @@ class AdminJobsController extends Controller
       
      public function createJobs(Request $request) 
      {
+
         $records = FALSE;
         $data['content_header'] = 'Edit User';
         $data['record'] = $records;
+
         $data['title']  = 'Jobs';
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
         $data['states'] = array();
@@ -152,6 +154,7 @@ class AdminJobsController extends Controller
         $data['employers']  = User::where('type','employer')->pluck('name','id')->toArray();
         $data['type']  = getJobTypes();
         $data['user_id']  = User::where('type','employer')->pluck('name','id')->toArray();
+ 
         return view('admin.jobs.create', $data);
     }
 
@@ -339,6 +342,7 @@ class AdminJobsController extends Controller
       }
   }
 
+// Job Application editting function End Here 
 
   // Getting Job Application DataTable Start
   public function getJobAppDatatable(Request $request){
@@ -367,7 +371,29 @@ class AdminJobsController extends Controller
       ->toJson();
     }
 
+
     // Job Application and dataTable  End Here
+
+
+    // filtering function
+// public function filter(Request $request)
+//    {
+
+//      if(request()->ajax())
+//      {
+//       if(!empty($request->filter_status))
+//       {
+//        $records =  JobsApplication::with(['jobseeker','job']);
+//         select('id', 'status','title', 'goldstar', 'preffer')
+//          ->where('status', $request->filter_status)
+//          ->get();
+      
+//    }
+
+//  }
+
+// }
+    // filtering end here
 
 
 
@@ -396,4 +422,6 @@ class AdminJobsController extends Controller
 
 
 
+
 }
+
