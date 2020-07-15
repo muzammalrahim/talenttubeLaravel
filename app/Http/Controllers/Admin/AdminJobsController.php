@@ -84,6 +84,7 @@ class AdminJobsController extends Controller
             $rhtml .= '<a href="'.route('job.exportApplicationCSV',['id' => $records->id]).'" type="button" class="btn btn-success btn-sm" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" >CSV Export</a>';
 
              $rhtml .= '<a href="'.route('job_applications').'?job_id='.$records->id.'" type="button" class="btn btn-success btn-sm" data-id='.$records->id.'>Applications</a>';
+             $rhtml .= '<a href="'.route('jobs.pdfExport',['id' => $records->id]).'" type="button" class="btn btn-success btn-sm" data-id='.$records->id.'>PDF</a>';
 
             return $rhtml;
         }
@@ -417,6 +418,33 @@ class AdminJobsController extends Controller
       if(!empty($request->id)){
          $jsExport = new JobAllApplicationExport($request->id); 
         return Excel::download($jsExport, 'JobAllApplications.xlsx');
+      }
+    }
+
+
+    //===============================================================================================================//
+    // .
+    //===============================================================================================================//
+    public function pdfExport(Request $request, $id) {
+      if(!empty($id)){
+
+          $job = Jobs::find($id); 
+          $applications = JobsApplication::where('job_id',$id)->get(); 
+          // dump( $job ); 
+          // dd( $applications ); 
+           $data['title'] = 'Generate PDF';
+           $data['job'] = $job;
+           $data['applications'] = $applications;
+
+           if($request->test){
+            return view('admin.pdf.jobWithApplication', $data);
+           }else{
+            $pdf = PDF::loadView('admin.pdf.jobWithApplication', $data); 
+            $pdf->setPaper('A4'); 
+
+            return $pdf->download('JobApplications.pdf');
+            // admin/pdf/jobWithApplication 
+           }
       }
     }
 

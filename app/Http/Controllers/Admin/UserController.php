@@ -227,9 +227,11 @@ class UserController extends Controller
             $data['Days'] = getDays();
             $data['Months'] = getMonths();
             $data['years'] = getYears();
+            
             $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
             $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
             $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
+
             $data['userquestion'] = getUserRegisterQuestions();
             $data['industriesList'] = getIndustries();
             $data['salaryRange'] = getSalariesRange();
@@ -256,8 +258,8 @@ class UserController extends Controller
         $data['Months'] = getMonths();
         $data['years'] = getYears();
         $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
-        $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
-        $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
+        $data['states'] = ($user->country)?(get_Geo_State($user->country)->pluck('state_title','state_id')->toArray()):array();
+        $data['cities'] = ($user->country && $user->state)?(get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray()):array();
         $data['questionsList'] = getEmpRegisterQuestions();
 
         // edit end
@@ -549,12 +551,9 @@ class UserController extends Controller
           ]);
       }
     }
-
     // Destroy User end here
 
-    public function profilePopup(Request $request){
-    }
-
+    
     // Destroy Employer
     public function destroyemployers($id){
       $user = User::find($id);

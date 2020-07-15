@@ -152,6 +152,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('jobs/create', 'Admin\AdminJobsController@createJobs')->name('jobs.create');
     Route::post('jobs/store', 'Admin\AdminJobsController@storeNewJob')->name('jobs.store');
     Route::get('jobs/edit/{id}', 'Admin\AdminJobsController@editJob')->name('jobs.edit');
+    Route::get('jobs/{id}', 'Admin\AdminJobsController@pdfExport')->name('jobs.pdfExport');
     Route::patch('jobs/update/{id}', 'Admin\AdminJobsController@updateJob')->name('jobs.update');
 
     

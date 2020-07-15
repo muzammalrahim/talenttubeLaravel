@@ -161,10 +161,10 @@ class AdminEmailsController extends Controller {
     //===============================================================================================================//
     public function GeneratePDF(Request $request) {
       if(!empty($request->cbx)){
-           // dd($request->toArray()); 
+           
            $data['title'] = 'Generate PDF';
            $users = User::whereIn('id', $request->cbx)->get();
-            $data['users'] = $users;
+           $data['users'] = $users;
 
            if($request->test){
             return view('admin.pdf.bulkJobSeeker', $data);
@@ -175,6 +175,7 @@ class AdminEmailsController extends Controller {
             return $pdf->download('JobSeekers.pdf');
             // admin/pdf/bulkJobSeeker 
            }
+           
       }
     }
      

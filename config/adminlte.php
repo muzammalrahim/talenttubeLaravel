@@ -250,6 +250,15 @@ return [
             'label_color' => 'success',
         ],
 
+
+        [   'header'      => 'Emails'],
+        [
+            'text'        => 'Bulk Emails List',
+            'url'         => 'admin/bulkEmail/list',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
         // [
         //     'text'        => 'Search by Jobs',
         //     'url'         => 'admin/searchByJobs',
