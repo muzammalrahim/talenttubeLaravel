@@ -9,6 +9,11 @@
             <li id="tabs-2_switch" class="switch_tab ">
                 <a href="#tabs-2" title=""><span>Albums</span></a>
             </li>
+
+            <li id="tabs-3_switch" class="switch_tab ">
+                <a href="#tabs-3" title=""><span>Questions</span></a>
+            </li>
+
         </ul>
     </div>
 
@@ -54,6 +59,43 @@
                     <div class="cl"></div>
                 </div>
             </div>
+
+{{-- Qualification --}}
+                
+                    
+                {{-- @dump($user->qualification) --}}
+            <div class="bl">
+                <div class="title">
+                    <div id="basic_anchor_interested_in" class="title_icon_edit">Qualification
+                    </div>
+                    <div class="cl"></div>
+                </div>
+                <textarea id="basic_editor_text_Qualification" data-desc="" data-type="textarea" class="basic_textarea" maxlength="1000"
+                style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 100px; opacity: 1;">{{implode(', ',getQualificationNames($user->qualification))}}</textarea>
+               </div>
+
+{{-- Qualification End here --}}
+
+{{-- Industry Experience --}}
+
+                {{-- @dump($user->industry_experience) --}}
+
+            <div class="bl">
+                <div class="title">
+                    <div id="basic_anchor_industry_experience">Industry Experience
+                    </div>
+                    <div class="cl"></div>
+                </div>
+                @if(isset($user->industry_experience))
+                @foreach ($user->industry_experience as $ind)
+                     <p>{{getIndustryName($ind)}} </p>
+                @endforeach
+                @endif
+            
+            </div>
+
+{{-- Industry Experience End here --}}
+
 
 
 
@@ -130,6 +172,8 @@
 
 				</div>
 
+
+
         </div>
 
 
@@ -157,6 +201,33 @@
         @include('site.user.profile.album.album')
     </div>
     <!-- /tab_photos -->
+
+<!-- Tab question-->
+    <a id="tabs-3" class="tab_link tab_a"></a>
+        <div class="tab_photos tab_cont">
+            
+            {{-- @dump($user->questions) --}}
+
+            @php  
+                $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
+            @endphp
+            {{-- @dump($userQuestions) --}}
+            @if(!empty(getUserRegisterQuestions()))
+            @foreach (getUserRegisterQuestions() as $qk => $empq)
+
+                {{($empq)}}
+                    <b><p>
+                        @if(!empty($userQuestions[$qk]))
+
+                        {{$userQuestions[$qk]}}
+
+                        @endif
+                    </p></b>
+            @endforeach
+            @endif
+        </div>
+
+<!-- Tab question-->
 
 
     </div>

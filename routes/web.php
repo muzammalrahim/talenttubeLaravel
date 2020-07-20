@@ -270,6 +270,14 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::get('block',         'Site\SiteUserController@blockList')->name('blockList');
     Route::post('ajax/unBlockUser', 'Site\SiteUserController@unBlockUser')->name('unBlockUser');
 
+    // Like Route and unlike route
+    Route::get('like',         'Site\SiteUserController@likeList')->name('likeList');
+    Route::post('ajax/unLikeUser', 'Site\SiteUserController@unLikeUser')->name('unLikeUser');
+
+    
+
+
+
     // Employer
     Route::get('employer/profile', function () { return redirect('employer/'.Auth::user()->username); })->name('employerProfile');
     Route::get('employer/step2',       'Site\EmployerController@step2Employer')->name('step2Employer');

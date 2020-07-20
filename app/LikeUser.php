@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class LikeUser extends Model
 {
-    //
+    public function user(){
+        return $this->belongsTo(User::class, 'like');
+    }
 
 
     function addEntry($user, $like){

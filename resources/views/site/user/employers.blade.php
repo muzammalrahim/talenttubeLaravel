@@ -4,6 +4,11 @@
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <style>
+    .js_location {
+    font-size: 11px !important;
+    }
+</style> --}}
 @stop
 
 @section('content')
@@ -36,16 +41,16 @@
                 </div>
                 <div class="js_info center">
                     <div class="js_name"><h4 class="bold">{{$js->name}} {{$js->surname}}</h4></div>
-                    <div class="js_status_label">{{$js->statusText}}</div>
-                    <div class="js_location">Location: {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </div>
+                    {{-- <div class="js_status_label">{{$js->statusText}}</div> --}}
+                    
                 </div>
             </div>
 
             <div class="js_info w_70p w_box dblock fl_left">
 
-                <div class="js_education js_field">
-                    <span class="js_label">Education:</span>{{getEducationName($js->education)}}
-                </div>
+              {{--   <div class="js_education js_field">
+                    <span class="js_label">Qualification:</span>{{implode(', ',getQualificationNames($js->qualification))}}
+                </div> --}}
                 <div class="js_about js_field">
                     <span class="js_label">About me:</span>
                     <p class="js_about_me"> {{$js->about_me}}</p>
@@ -54,8 +59,11 @@
                     <span class="js_label">Interested in:</span>
                     <p>{{$js->interested_in}}</p>
                 </div>
+                <div class="js_location js_field"><span class="js_label">Location:</span>
+                <p class="js_location"> {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </p>
+                </div>
 
-                <div class="js_languages js_field">
+                {{-- <div class="js_languages js_field">
                     <span class="js_label">Languages:</span>
                     <div class="js_tags dinline_block">
                         @if ($js->language)
@@ -75,7 +83,7 @@
                         @endforeach
                         @endif
                     </div>
-                </div>
+                </div> --}}
 
             </div>
             {{-- @dump($likeUsers) --}}

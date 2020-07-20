@@ -15,8 +15,10 @@ use App\Exports\JobApplicationExport;
 use App\Exports\JobAllApplicationExport;
 use Maatwebsite\Excel\Facades\Excel;
 
+
 use Yajra\Datatables\Datatables;
 // use Illuminate\Support\Facades\Hash;
+use PDF;
 
 class AdminJobsController extends Controller
 {
@@ -429,7 +431,7 @@ class AdminJobsController extends Controller
       if(!empty($id)){
 
           $job = Jobs::find($id); 
-          $applications = JobsApplication::where('job_id',$id)->get(); 
+          $applications = JobsApplication::with('jobseeker')->where('job_id',$id)->get(); 
           // dump( $job ); 
           // dd( $applications ); 
            $data['title'] = 'Generate PDF';
@@ -441,7 +443,6 @@ class AdminJobsController extends Controller
            }else{
             $pdf = PDF::loadView('admin.pdf.jobWithApplication', $data); 
             $pdf->setPaper('A4'); 
-
             return $pdf->download('JobApplications.pdf');
             // admin/pdf/jobWithApplication 
            }

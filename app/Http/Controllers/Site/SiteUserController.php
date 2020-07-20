@@ -24,6 +24,7 @@ use App\TagCategory;
 use App\Tags;
 use App\JobsAnswers;
 use App\JobsQuestions;
+use App\LikeUser;
 
 
 class SiteUserController extends Controller
@@ -1146,6 +1147,18 @@ class SiteUserController extends Controller
         return view('site.user.blockUsers', $data);
     }
 
+    
+
+    //=====================Like Function ==============================================//
+
+    public function likeList(){
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Like Users';
+        $data['classes_body'] = 'likeUsers';
+        $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
+        return view('site.user.likeUsers', $data);
+    }
 
     //====================================================================================================================================//
     // Ajax Post // Remove user from user block User List.
@@ -1160,6 +1173,22 @@ class SiteUserController extends Controller
             'message' => 'User Unblocked Succesfully'
         ]);
     }
+
+    //====================================================================================================================================//
+    // Ajax Post // Remove user from user Like User List.
+    //====================================================================================================================================//
+
+    public function unLikeUser(Request $request){
+        // dd( $request->toArray() );
+        $user = Auth::user();
+        $likeUserId = (int) $request->id;
+        LikeUser::where('user_id',$user->id)->where('like',$likeUserId)->delete();
+        return response()->json([
+            'status' => 1,
+            'message' => 'User unLiked Succesfully'
+        ]);
+    }
+
 
 
     //====================================================================================================================================//

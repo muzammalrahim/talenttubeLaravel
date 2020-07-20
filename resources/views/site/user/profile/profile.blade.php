@@ -3,6 +3,11 @@
 
 @section('custom_css')
     <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+    <style>
+        .job{
+            margin:10px;
+        }
+    </style>
 @stop
 
 @section('content')
@@ -60,6 +65,26 @@
                 </div>
                 <div id="profile_status_edit" class="icon_edit" onclick="UProfile.enableStatusTextEdit();" style="opacity: 1;"><span></span></div>
             </div>
+
+            <div class="job">
+
+                <span style="margin-right: 34px;">
+                    Recent Job:
+                </span>
+              <b>  {{$user->recentJob}}</b>
+    
+            </div>
+
+            {{-- Salary Range --}}
+
+                {{-- @dump($user->salaryRange) --}}
+
+            <div class="job">
+                <span>Expecting Salary: </span>
+               <b>{{'USD: '}}{{number_format($user->salaryRange),2}}</b>
+            </div>
+
+{{-- Salary Range End here --}}
 
 
            {{--  <div class="title_interest">

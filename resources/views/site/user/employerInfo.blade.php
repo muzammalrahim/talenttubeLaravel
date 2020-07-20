@@ -34,14 +34,14 @@
                     <div class="js_info center">
                         <div class="js_name"><h4 class="bold">{{$js->name}} {{$js->surname}}</h4></div>
                         <div class="js_status_label">{{$js->statusText}}</div>
-                        <div class="js_location">Location: {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </div>
+                      {{--   <div class="js_location">Location: {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </div> --}}
                     </div>
                 </div>
 
                 <div class="js_info w_70p w_box dblock fl_left">
-                    <div class="js_education js_field">
+                   {{--  <div class="js_education js_field">
                         <span class="js_label">Education:</span>{{getEducationName($js->education)}}
-                    </div>
+                    </div> --}}
                     <div class="js_about js_field">
                         <span class="js_label">About me:</span>
                         <p class="js_about_me"> {{$js->about_me}}</p>
@@ -51,7 +51,11 @@
                         <p>{{$js->interested_in}}</p>
                     </div>
 
-                    <div class="js_languages js_field">
+                    <div class="js_location js_field"><span class="js_label">Location:</span>
+                    <p class="js_location"> {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </p>
+                    </div>
+
+                    {{-- <div class="js_languages js_field">
                         <span class="js_label">Languages:</span>
                         <div class="js_tags dinline_block">
                             @if ($js->language)
@@ -71,7 +75,7 @@
                             @endforeach
                             @endif
                         </div>
-                    </div>
+                    </div> --}}
 
                 </div>
 
@@ -102,6 +106,9 @@
 
             <li id="tabs-2_switch" class="switch_tab ">
                 <a href="#tabs-2" title=""><span>Albums</span></a>
+            </li>
+            <li id="tabs-3_switch" class="switch_tab ">
+                <a href="#tabs-3" title=""><span>Questions</span></a>
             </li>
         </ul>
     </div>
@@ -221,12 +228,48 @@
                 @endforeach
             @endif
             </div>
+            {{-- @dump($employer->questions) --}}
+
         </div>
         <!-- /videos -->
 
     </div>
     <!-- /tab_album -->
 
+            {{-- Added by Hassan --}}
+
+    <a id="tabs-3" class="tab_link tab_a "></a>
+    <div class="tab_photos tab_cont">
+        <div class="galleryCont">
+
+            @php  
+                $empQuestions = !empty($employer->questions)?(json_decode($employer->questions, true)):(array()); 
+            @endphp
+
+                {{-- @dump($empQuestions) --}}
+
+                    @if(!empty(getEmpRegisterQuestions()))
+                        @foreach (getEmpRegisterQuestions() as $qk => $empq)
+
+                                {{($empq)}}
+                                <b><p>
+                                    @if(!empty($empQuestions[$qk]))
+                                    {{$empQuestions[$qk]}}
+                                    @elseif(empty($empQuestions[$qk]))
+                                    {{'Not Answered'}}
+                                    @endif
+                                </p></b>
+                         @endforeach
+                    @endif
+            {{-- @dump($employer->questions) --}}
+            
+        </div>
+        <!-- /photos -->
+
+    </div>
+         <!--Tab question -->
+
+            {{-- End here --}}
 
     </div>
 </div>

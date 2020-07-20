@@ -761,8 +761,8 @@ function getUserRegisterQuestions(){
 
 function getEmpRegisterQuestions(){
     $empquestion = array(
-        'graduate_intern' => 'Does you company hire Graduates or Intern??',
-        'part_time' => 'Are you open to Part Time or Casual workers?<',
+        'graduate_intern' => 'Does your company hire Graduates or Intern?',
+        'part_time' => 'Are you open to Part Time or Casual workers?',
         'temporary_contract' => 'Does you organisation offer temporary or contract type work?',
         'fulltime' => 'Are you looking for Full Time candidates?',
         'relocation' => 'Are you willing to repay relocation expenses for a strong candidate?',

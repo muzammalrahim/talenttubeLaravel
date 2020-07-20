@@ -16,7 +16,13 @@
                 <li><a href="{{route('employers')}}" class="column_narrow_search_results {{(request()->is('employers'))?'active':''}}"><span class="icon"></span>Employers</a></li>
             @endif
 
-                <li><a href="{{route('blockList')}}" class="column_narrow_search_results {{(request()->is('block'))?'active':''}}"><span class="icon"></span>Block User List</a></li>
+                <li><a href="{{route('blockList')}}" class="column_narrow_search_results {{(request()->is('block'))?'active':''}}"><span class="icon"></span>Block Users</a></li>
+
+                {{-- Like User List --}}
+
+                <li><a href="{{route('likeList')}}" class="column_narrow_search_results {{(request()->is('like'))?'active':''}}"><span class="icon"></span>Like Users</a></li>
+                
+                {{-- Liker User List End --}}
 
             <li>
                 <a id="narrow_menu_link_27" href="messages.html" class="column_narrow_messages  ">
