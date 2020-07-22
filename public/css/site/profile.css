@@ -246,3 +246,11 @@ span.v_title {
 .item_video:hover .video_link {
     border-bottom: 3px solid red;
 }
+
+
+.smallSpinner.recentJobSpinner {
+    position: relative;
+    width: 20px;
+    height: 10px;
+    display: inline-block;
+}

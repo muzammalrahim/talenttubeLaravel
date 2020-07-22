@@ -73,6 +73,11 @@ class SiteUserController extends Controller
             $data['attachments'] = $attachments;
             $data['activities'] = $activities;
             $data['videos'] = $videos;
+            
+            // Getting Salaries
+             $data['salaryRange'] = getSalariesRange();
+
+
 
 
             $view_name = 'site.user.profile.profile';
@@ -314,6 +319,45 @@ class SiteUserController extends Controller
             $user->save();
         }
     }
+
+    //====================================================================================================================================//
+    // chagne JobSeeker recent job text.
+    // Ajax / triggered from User profile page.
+    //====================================================================================================================================//
+    public function updateRecentJob(Request $request)
+    {
+        $rules = array('recentjob' => 'string|max:100');
+        $validator = Validator::make($request->all(), $rules);
+        if (!$validator->fails()) {
+            $user = Auth::user();
+            $user->recentJob = $request->recentjob;
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $user->recentJob
+            ]);
+        }
+    }
+
+ // Ajax For updating Salary Range.
+    //====================================================================================================================================//
+
+
+    public function updateSalaryRange(Request $request)
+    {
+        $rules = array('salaryRange' => 'string|max:100');
+        $validator = Validator::make($request->all(), $rules);
+        if (!$validator->fails()) {
+            $user = Auth::user();
+            $user->salaryRange = $request->salaryRange;
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $user->salaryRange
+            ]);
+        }
+    }
+
 
 
     //====================================================================================================================================//

@@ -163,11 +163,67 @@ var CProfile = function() {
             }
         });
     }
-
+    
     this.enableStatusTextEdit = function(){
         $('.statusText').addClass('hide_it');
         $('#statusText').removeClass('hide_it');
     }
+
+    this.updateRecentJob = function(){
+        var recentJobField = $('.recentJobField').val();
+        $('.recentJobValue').removeClass('hide_it').text(recentJobField);
+        $('.recentJobField').addClass('hide_it');
+        $('.recentJobEdit').after(getLoader('smallSpinner recentJobSpinner'));
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/updateRecentJob',
+            data: {'recentjob': recentJobField},
+            success: function(data){
+                if(data.status){
+                    $('.recentJobSpinner').remove();
+                }
+            }
+        });
+    }
+
+    this.enableRecentJobEdit = function(){
+        $('.recentJobValue').addClass('hide_it');
+        $('.recentJobField').removeClass('hide_it');
+    }
+
+// Edit Salary Range 
+
+
+    this.updateSalaryRange = function(){
+        var salaryRangeField = $('.salaryRangeField').val();
+        $('.salaryRangeValue').removeClass('hide_it').text(salaryRangeField);
+        $('.salaryRangeField').addClass('hide_it');
+        $('.salaryRangeEdit').after(getLoader('smallSpinner salaryRangeSpinner'));
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/updateSalaryRange',
+            data: {'salaryRange': salaryRangeField},
+            success: function(data){
+                if(data.status){
+                    $('.salaryRangeSpinner').remove();
+                }
+            }
+        });
+    }
+
+    this.enableSalaryRangeEdit = function(){
+        $('.salaryRangeValue').addClass('hide_it');
+        $('.salaryRangeField').removeClass('hide_it');
+    }
+
+// Edit Salary Range end here
+  
 
 
     // this.showBasicFieldEditor = function(item){
@@ -706,7 +762,7 @@ $(document).ready(function() {
     }));
 
 
-    
+   
 
     // var vloop = null;
     // var num = 0; 

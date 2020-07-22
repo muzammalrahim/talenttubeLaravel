@@ -248,6 +248,14 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('step2',      'Site\SiteUserController@Step2');
     
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
+    Route::post('ajax/updateRecentJob', 'Site\SiteUserController@updateRecentJob');
+    
+    // Edit Salary Range
+
+    Route::post('ajax/updateSalaryRange', 'Site\SiteUserController@updateSalaryRange');
+    
+    // Edit salary Range End here
+    
     Route::get('ajax/getUserPersonalInfo', 'Site\SiteUserController@getUserPersonalInfo');
     Route::post('ajax/update_about_field', 'Site\SiteUserController@updateAboutField');
     Route::post('ajax/uploadUserGallery', 'Site\SiteUserController@uploadUserGallery');

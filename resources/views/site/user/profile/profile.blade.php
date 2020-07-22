@@ -7,7 +7,11 @@
         .job{
             margin:10px;
         }
+        .jq-selectbox.jqselect.salaryRangeField.dropup.opened , .jq-selectbox__select {
+    width: 100px;
+}
     </style>
+
 @stop
 
 @section('content')
@@ -67,22 +71,58 @@
             </div>
 
             <div class="job">
+                <span style="margin-right: 34px;">Recent Job:</span>
+                <input type="text" class="hide_it recentJobField" name="recentJobField" value="{{$user->recentJob}}"  onchange="UProfile.updateRecentJob()"/>
+                <span  class="recentJobValue">{{$user->recentJob}}</span>  
+                <i class="fas fa-edit recentJobEdit" style="cursor: pointer;" onclick="UProfile.enableRecentJobEdit()"></i>
+            </div>
+{{-- Salary Range --}}
 
-                <span style="margin-right: 34px;">
-                    Recent Job:
-                </span>
-              <b>  {{$user->recentJob}}</b>
-    
+
+                {{-- <div class="job">
+                <span>Expecting Salary:</span>
+                <input type="text" class="hide_it salaryRangeField" name="salaryRangeField" value="{{$user->salaryRange}}"  onchange="UProfile.updateSalaryRange()"/>
+
+                <b> {{'USD: '}}<span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
+                <i class="fas fa-edit salaryRangeEdit" style="cursor: pointer;" onclick="UProfile.enableSalaryRangeEdit()"></i>
+                </div> --}}
+
+
+            {{-- @dump($salaryRange) --}}
+
+                    {{-- @dump($salaryRange) --}}
+
+{{--            <div class="job">
+                <span>Expecting Salary:</span>
+                <select type="select" class="hide_it salaryRangeField" name="salaryRangeField" value="{{$user->salaryRange}}"  onchange="UProfile.updateSalaryRange()"/> 
+                    @foreach($salaryRange as $key => $salary)
+                        <option value="{{$key}}">
+                            {{$salary}}
+                        </option>
+                    @endforeach
+                </select>
+                <b> {{'USD: '}}<span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
+                <i class="fas fa-edit salaryRangeEdit" style="cursor: pointer;" onclick="UProfile.enableSalaryRangeEdit()"></i>
+            </div>
+ --}}
+                    
+        {{--                 {{ Form::select('salaryRange', $salaryRange, null, ['placeholder' => 'Select Salary Range']) }}
+           
+            <select class="form-control" id="category" name="category" onclick ="getSalariesRange();">
+             @foreach($salaryRange as $sel)
+             <option value=" {{$sel}}"> </option>
+             @endforeach 
+             </select>  --}}
+
+             <div class="form-group row">
+                {{ Form::label('Salary Range', null, ['class' => 'col-md-2 form-control-label']) }}
+                 <div class="col-md-10">
+                {{ Form::select('salaryRange', $salaryRange, null, ['placeholder' => 'Select Salary Range']) }}
+                </div> 
             </div>
 
-            {{-- Salary Range --}}
 
-                {{-- @dump($user->salaryRange) --}}
-
-            <div class="job">
-                <span>Expecting Salary: </span>
-               <b>{{'USD: '}}{{number_format($user->salaryRange),2}}</b>
-            </div>
+          
 
 {{-- Salary Range End here --}}
 
@@ -126,5 +166,7 @@
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
 <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
+
+
 @stop
 

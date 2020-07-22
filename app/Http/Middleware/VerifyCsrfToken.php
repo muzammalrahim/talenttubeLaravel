@@ -16,6 +16,7 @@ class VerifyCsrfToken extends Middleware
         'ajax/geo_states',
         'ajax/geo_cities',
         'ajax/changeUserStatusText',
+        'ajax/updateRecentJob',
         'ajax/update_about_field',
         'ajax/uploadUserGallery',
         'ajax/uploadVideo',
