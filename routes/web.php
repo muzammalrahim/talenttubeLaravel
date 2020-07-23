@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('test', 'Site\SiteUserController@test')->name('test');
 Route::get('test2', 'Site\HomeController@test2')->name('test2');
+Route::get('test3', 'Site\HomeController@test3')->name('test3');
 Route::get('phpini', 'Site\HomeController@phpini')->name('phpini');
 
 
@@ -274,7 +275,10 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::get('employer/profile', function () { return redirect('employer/'.Auth::user()->username); })->name('employerProfile');
     Route::get('employer/step2',       'Site\EmployerController@step2Employer')->name('step2Employer');
     Route::post('employer/step2',      'Site\EmployerController@Step2');
-    Route::get('jobSeekers',          'Site\EmployerController@jobSeekers')->name('jobSeekers');
+
+    Route::get('jobSeekers',        'Site\EmployerController@jobSeekers')->name('jobSeekers');
+    Route::post('jobSeekersFilter', 'Site\EmployerController@jobSeekersFilter')->name('jobSeekersFilter');
+
     Route::post('ajax/blockJobSeeker/{id}', 'Site\EmployerController@blockJobSeeker')->name('blockJobSeeker');
     Route::post('ajax/likeJobSeeker/{id}', 'Site\EmployerController@likeJobSeeker')->name('likeJobSeeker');
     Route::get('employers',         'Site\JobSeekerController@employers')->name('employers');

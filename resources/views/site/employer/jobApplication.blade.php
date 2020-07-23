@@ -68,6 +68,50 @@
             </select>
         </div>
 
+
+        <div class="searchField_questions mb10">
+            <div class="searchFieldLabel dinline_block">Filter by Question: </div>
+            <div class="toggleSwitchButton dinline_block p10">
+                <label class="switch"><input type="checkbox" name="filter_by_questions"></label>
+            </div>
+
+            <div class="filter_question_cont hide_it">
+         
+             
+               {{--  @php 
+                    $userQuestion = getUserRegisterQuestions();
+                    dump($job->questions->toArray())
+                @endphp  --}}
+            
+
+
+                 <div class="questionFilter">
+                 @if(varExist('questions', $job))
+                 @foreach ($job->questions as $qkey =>  $jq)
+                    <div class="jobFilterQuestion">
+                        <span class="fjq_counter">Question {{($qkey+1)}}: </span>
+                        <span class="fjq_title">{{$jq->title}}</span>
+                        <div class="fjq_options">
+                            @if($jq->options)
+                            <select class="filter_question select_aw" name="filter_question[{{$jq->id}}]" >
+                                <option value="">Select</option>
+                                @foreach ($jq->options as $qk => $jqopt)
+                                    <option value="{{$jqopt}}">{{$jqopt}}</option>
+                                @endforeach
+                            </select>
+                            @endif
+                        </div>
+                    </div>
+                 @endforeach
+                 @endif
+                 </div>
+
+            </div>
+
+        </div>
+
+
+
         <div class="searchField_keyword dblock mb10">
             <div class="searchFieldLabel dinline_block">Keyword: </div>
             <input type="text" name="ja_filter_keyword">
@@ -213,7 +257,7 @@ $(document).ready(function() {
             $('.job_applications').html(data);
         });
     }
-
+    
     // initially when page load trigger the ajax call to get data. 
     getData();
 
@@ -279,6 +323,18 @@ $(document).ready(function() {
     $('#job_applications_filter_form input, #job_applications_filter_form select').styler({ selectSearch: true,});
   } 
 
+
+
+//====================================================================================================================================//
+// Enable/Disabled Filtering by Questions.
+//====================================================================================================================================//
+$('input[name="filter_by_questions"]').change(function() {
+    console.log(' filter_by_questions '); 
+    (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));  
+     // $('input, select').styler({ selectSearch: true, });
+});
+
+
 });
 </script>
 @stop
@@ -311,21 +367,27 @@ button.ja_load_qa { background: #40c7db; }
 }
 .searchFieldLabel { min-width: 100px; }
 .searchField { display: inline-block; }
-.job_pagination li.page-item {
-    display: inline-block;
-    border: 1px solid #ff5f4e;
-    border-radius: 4px;
-    vertical-align: text-bottom;
+
+.jobFilterQuestion {margin: 10px 0px;}
+.jobFilterQuestion .fjq_title {
+        display: inline-block;
+    float: left;
+    padding: 0px 8px;
+    background: rgb(0 0 0 / 3%);
+    border: 1px solid rgb(0 0 0 / 11%);
+    height: 33px;
+    line-height: 33px;
 }
-.job_pagination li.page-item span {
-    text-align: center;
-    padding: 9px;
-    display: table-cell;
+
+.jobFilterQuestion .fjq_counter {
+    float: left;
+    padding: 0px 8px; 
+    border: 1px solid rgb(0 0 0 / 11%);
+    height: 33px;
+    line-height: 33px;
+    border-right: 0px;
 }
-.job_pagination li.page-item.active {
-    color: white;
-    background: #ff5f4e;
-}
+
 </style>
 
 @stop

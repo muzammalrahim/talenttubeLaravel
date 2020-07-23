@@ -122,6 +122,7 @@ class SiteUserController extends Controller
         $requestData['salaryRange'] = my_sanitize_string($request->salaryRange);
         $requestData['tags'] = my_sanitize_string($request->tags);
         $requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
+        $requestData['qualification_type']        = my_sanitize_string($request->qualification_type);
 
         // dump($requestData['tags']);
         // dump($requestData['industry_experience']);
@@ -169,8 +170,10 @@ class SiteUserController extends Controller
             $user->qualification    = $requestData['qualification'];
             $user->salaryRange      = $requestData['salaryRange'];
             $user->step2            = 1;
+            $user->qualificationType= $requestData['qualification_type'];
             $user->save();
             $user->tags()->sync($requestData['tags']); 
+            $user->qualificationRelation()->sync($requestData['qualification']); 
 
             if(!empty($request->file('file'))){
                 $image = $request->file('file');

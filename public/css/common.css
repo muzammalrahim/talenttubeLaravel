@@ -10,6 +10,7 @@
 .dtable{ display: table; }
 .dinline_block{ display: inline-block; }
 .hide_it { display: none !important; }
+.not_visible { visibility: hidden !important; opacity: 0 !important; }
 .visible_it{ visibility: visible !important;  opacity: 1 !important; }
 
 .w100{ width: 100% !important; }
@@ -100,10 +101,18 @@ button.btn:disabled, button.btn.disabled {
 .goldstar,
 .silverstar {
     position: absolute;
-    top: -20px;
-    left: -20px;
+    top: 10px;
+    left: -18px;
 }
-.silverstar img { height: 40px; }
+/*.silverstar img { height: 40px; }*/
+.goldstar img, .silverstar img {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+    width: 18px;
+    display: block;
+}
+
 .js_profile_video {
     position: absolute;
     left: 0px;
@@ -113,3 +122,76 @@ button.btn:disabled, button.btn.disabled {
     padding: 4px;
 }
 .OrangeBtn{ background: #ff5f4e;  }
+.select_aw .drop_down { width: 100% !important; }
+
+/*===========custom pagination css ===========*/
+.cpagination li.page-item {
+    display: inline-block;
+    border: 1px solid #ff5f4e;
+    border-radius: 4px;
+    vertical-align: text-bottom;
+}
+.cpagination li.page-item span {
+    text-align: center;
+    padding: 9px;
+    display: table-cell;
+}
+.cpagination li.page-item.active {
+    color: white;
+    background: #ff5f4e;
+}
+
+
+.location_map {
+    height: 250px;
+    margin: 2px;
+    border-radius: 4px;
+}
+
+
+
+/*=========== toggleSwitchButton css ===========*/
+/*.toggleSwitchButton .switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+.toggleSwitchButton .switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggleSwitchButton .slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.toggleSwitchButton .slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.toggleSwitchButton input:checked + .slider { background-color: #2196F3;}
+.toggleSwitchButton input:focus + .slider { box-shadow: 0 0 1px #2196F3;}
+.toggleSwitchButton input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+} 
+.toggleSwitchButton .slider.round { border-radius: 34px; }
+.toggleSwitchButton .slider.round:before { border-radius: 50%; }
+*/
+
