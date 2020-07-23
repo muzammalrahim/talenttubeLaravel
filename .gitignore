@@ -13,5 +13,6 @@ yarn-error.log
 /storage/images/user
 sftp-config.json
 *.zip
+storage/media/*
 storage/media/.*
 /storage/media/.*
