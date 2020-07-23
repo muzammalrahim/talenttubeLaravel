@@ -24,6 +24,7 @@ use App\TagCategory;
 use App\Tags;
 use App\JobsAnswers;
 use App\JobsQuestions;
+use App\LikeUser;
 
 
 class SiteUserController extends Controller
@@ -72,6 +73,11 @@ class SiteUserController extends Controller
             $data['attachments'] = $attachments;
             $data['activities'] = $activities;
             $data['videos'] = $videos;
+            
+            // Getting Salaries
+             $data['salaryRange'] = getSalariesRange();
+
+
 
 
             $view_name = 'site.user.profile.profile';
@@ -313,6 +319,45 @@ class SiteUserController extends Controller
             $user->save();
         }
     }
+
+    //====================================================================================================================================//
+    // chagne JobSeeker recent job text.
+    // Ajax / triggered from User profile page.
+    //====================================================================================================================================//
+    public function updateRecentJob(Request $request)
+    {
+        $rules = array('recentjob' => 'string|max:100');
+        $validator = Validator::make($request->all(), $rules);
+        if (!$validator->fails()) {
+            $user = Auth::user();
+            $user->recentJob = $request->recentjob;
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $user->recentJob
+            ]);
+        }
+    }
+
+ // Ajax For updating Salary Range.
+    //====================================================================================================================================//
+
+
+    public function updateSalaryRange(Request $request)
+    {
+        $rules = array('salaryRange' => 'string|max:100');
+        $validator = Validator::make($request->all(), $rules);
+        if (!$validator->fails()) {
+            $user = Auth::user();
+            $user->salaryRange = $request->salaryRange;
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $user->salaryRange
+            ]);
+        }
+    }
+
 
 
     //====================================================================================================================================//
@@ -1146,6 +1191,18 @@ class SiteUserController extends Controller
         return view('site.user.blockUsers', $data);
     }
 
+    
+
+    //=====================Like Function ==============================================//
+
+    public function likeList(){
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Like Users';
+        $data['classes_body'] = 'likeUsers';
+        $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
+        return view('site.user.likeUsers', $data);
+    }
 
     //====================================================================================================================================//
     // Ajax Post // Remove user from user block User List.
@@ -1160,6 +1217,22 @@ class SiteUserController extends Controller
             'message' => 'User Unblocked Succesfully'
         ]);
     }
+
+    //====================================================================================================================================//
+    // Ajax Post // Remove user from user Like User List.
+    //====================================================================================================================================//
+
+    public function unLikeUser(Request $request){
+        // dd( $request->toArray() );
+        $user = Auth::user();
+        $likeUserId = (int) $request->id;
+        LikeUser::where('user_id',$user->id)->where('like',$likeUserId)->delete();
+        return response()->json([
+            'status' => 1,
+            'message' => 'User unLiked Succesfully'
+        ]);
+    }
+
 
 
     //====================================================================================================================================//

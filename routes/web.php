@@ -248,6 +248,14 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('step2',      'Site\SiteUserController@Step2');
     
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
+    Route::post('ajax/updateRecentJob', 'Site\SiteUserController@updateRecentJob');
+    
+    // Edit Salary Range
+
+    Route::post('ajax/updateSalaryRange', 'Site\SiteUserController@updateSalaryRange');
+    
+    // Edit salary Range End here
+    
     Route::get('ajax/getUserPersonalInfo', 'Site\SiteUserController@getUserPersonalInfo');
     Route::post('ajax/update_about_field', 'Site\SiteUserController@updateAboutField');
     Route::post('ajax/uploadUserGallery', 'Site\SiteUserController@uploadUserGallery');
@@ -269,6 +277,14 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('ajax/deleteVideo', 'Site\SiteUserController@deleteVideo')->name('deleteVideo');
     Route::get('block',         'Site\SiteUserController@blockList')->name('blockList');
     Route::post('ajax/unBlockUser', 'Site\SiteUserController@unBlockUser')->name('unBlockUser');
+
+    // Like Route and unlike route
+    Route::get('like',         'Site\SiteUserController@likeList')->name('likeList');
+    Route::post('ajax/unLikeUser', 'Site\SiteUserController@unLikeUser')->name('unLikeUser');
+
+    
+
+
 
     // Employer
     Route::get('employer/profile', function () { return redirect('employer/'.Auth::user()->username); })->name('employerProfile');

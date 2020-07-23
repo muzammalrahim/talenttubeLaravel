@@ -9,6 +9,11 @@
             <li id="tabs-2_switch" class="switch_tab ">
                 <a href="#tabs-2" title=""><span>Albums</span></a>
             </li>
+
+            <li id="tabs-3_switch" class="switch_tab ">
+                <a href="#tabs-3" title=""><span>Questions</span></a>
+            </li>
+
         </ul>
     </div>
 
@@ -20,7 +25,7 @@
 
             <div class="bl">
                 <div class="title">
-                    <div id="basic_anchor_about_me" class="title_icon_edit">About me
+                    <div id="basic_anchor_about_me" class="title_icon_edit">About Us
                         <span id="basic_pen_about_me" onclick="UProfile.showBasicFieldEditor('about_me');"></span>
                     </div>
                     <div class="cl"></div>
@@ -54,6 +59,37 @@
                     <div class="cl"></div>
                 </div>
             </div>
+
+            {{-- Company --}}
+
+     {{--        <div class="bl">
+                <div class="title">
+                    <div id="basic_anchor_questions" class="title">Questions
+                    </div>
+                </div> --}}
+
+              {{--        @php  
+                        $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
+                    @endphp --}}
+
+                        {{-- @dump($userQuestions) --}}
+{{-- 
+                            @if(!empty(getEmpRegisterQuestions()))
+                            @foreach (getEmpRegisterQuestions() as $qk => $empq)
+
+                                {{($empq)}}
+                                    <b><p>
+                                        {{$userQuestions[$qk]}}
+                                    </p></b>
+                            @endforeach
+                            @endif
+ --}}
+
+                 {{--            @dump(getEmpRegisterQuestions()); --}}
+        
+            {{-- </div> --}}
+
+            {{-- End here --}}
 
 
 
@@ -170,7 +206,35 @@
     <div class="tab_photos tab_cont">
         @include('site.employer.profile.album.album')
     </div>
+
+
     <!-- /tab_photos -->
+
+
+{{-- Tab Question --}}
+    
+    <a id="tabs-3" class="tab_link tab_a"></a>
+    <div class="tab_about tab_cont">
+        
+         @php  
+            $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
+        @endphp
+
+            {{-- @dump($userQuestions) --}}
+
+            @if(!empty(getEmpRegisterQuestions()))
+            @foreach (getEmpRegisterQuestions() as $qk => $empq)
+
+                {{($empq)}}
+                    <b><p>
+                        {{$userQuestions[$qk]}}
+                    </p></b>
+            @endforeach
+            @endif
+    </div>
+
+{{-- End Here --}}
+
 
 
     </div>

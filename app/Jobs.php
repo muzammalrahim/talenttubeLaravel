@@ -56,6 +56,9 @@ class Jobs extends Model {
     }
 
 
+    public function jobEmployer(){
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
     function addJobQuestions($questions){
        

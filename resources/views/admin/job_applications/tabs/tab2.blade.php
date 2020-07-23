@@ -37,7 +37,7 @@
 				         
 				         </p>
 				    @endforeach
-							    @endif
+			    @endif
 
 		   </div> 
 	    </div>
