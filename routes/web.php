@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Auth;
 Route::get('test', 'Site\SiteUserController@test')->name('test');
 Route::get('test2', 'Site\HomeController@test2')->name('test2');
 Route::get('test3', 'Site\HomeController@test3')->name('test3');
+Route::get('welcom', function () { return view('welcome'); }); 
+
 Route::get('phpini', 'Site\HomeController@phpini')->name('phpini');
 
 
