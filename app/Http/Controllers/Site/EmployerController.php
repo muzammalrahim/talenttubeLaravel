@@ -370,7 +370,7 @@ class EmployerController extends Controller {
                 });  
             }
 
-            //Filter by Question 
+            //Filter by Question  
             if(varExist('filter_by_questions', $request) && ( $request->filter_by_questions == 'on')){
               // dd( $request->filter_question );
               foreach ($request->filter_question as $fqKey => $fqValue) {
