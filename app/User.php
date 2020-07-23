@@ -6,7 +6,7 @@ use App\Permissions\HasPermissionsTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use JustBetter\PaginationWithHavings\PaginationWithHavings;
 
 use App\BlockUser;
 
@@ -14,7 +14,7 @@ use App\BlockUser;
 class User extends Authenticatable
 {
 
-
+     use PaginationWithHavings;
 
     // added by Hassan
     protected $attributes = [
@@ -83,18 +83,76 @@ class User extends Authenticatable
 
 
     function getJobSeekers( $request, $user ){
-        // $data = $this->where('type','user')->get();
-        // dd($this->id);
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
-        // dd($block);
+        
         if(!empty($block)){
-            $data = $this->with('profileImage')->where('type','user')->whereNotIn('id', $block)->get();
+            $data = $this->with('profileImage')->where('type','user')->whereNotIn('id', $block);
         }else{
-            $data = $this->with('profileImage')->where('type','user')->get();
+            $data = $this->with('profileImage')->where('type','user');
         }
 
+       
+        // Filter by salaryRange. 
+        if (isset($request->filter_salary) && !empty($request->filter_salary)){ 
+            $data->where('salaryRange', '>=', $request->filter_salary); 
+        }
+
+        // Filter by google map location radius. 
+        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){  
+            if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
+                $data =  $this->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
+            }
+        }
+         
+        // DB::enableQueryLog();
+
+        // print_r( $data->toSql() );exit; 
+
+        // $data =  $data->paginate(2);
         return $data;
     }
+
+
+
+
+    private function findByLatLongRadius($query, $latitude, $longitude, $radius = 5) {
+    /*
+     * using eloquent approach, make sure to replace the "Restaurant" with your actual model name
+     * replace 6371000 with 6371 for kilometer and 3956 for miles
+     */
+ 
+
+
+        
+        $query = $query->selectRaw("*,
+                     ( 6371 * acos( cos(radians('".$latitude."'')) 
+                     * cos( radians(location_lat))
+                     * cos( radians(location_long) - radians('".$longitude."'')) 
+                     + sin( radians('".$latitude."'')) 
+                     * sin( radians( location_lat )))
+                     ) AS distance")
+        ->having("distance", "<", $radius)
+        ->orderBy("distance",'asc'); 
+
+        return $query;
+
+        // $restaurants = Restaurant::selectRaw("id, name, address, latitude, longitude, rating, zone ,
+        //              ( 6371000 * acos( cos( radians(?) ) *
+        //                cos( radians( latitude ) )
+        //                * cos( radians( longitude ) - radians(?)
+        //                ) + sin( radians(?) ) *
+        //                sin( radians( latitude ) ) )
+        //              ) AS distance", [$latitude, $longitude, $latitude])
+        // ->where('active', '=', 1)
+        // ->having("distance", "<", $radius)
+        // ->orderBy("distance",'asc')
+        // ->offset(0)
+        // ->limit(20)
+        // ->get();
+
+        // return $restaurants;
+    }
+
 
 
     function scopeJobSeeker($query){
@@ -155,6 +213,11 @@ class User extends Authenticatable
     function tags(){
         // return $this->hasMany('App\UserTags','user_id');
         return $this->belongsToMany('App\Tags', 'user_tags','user_id','tag_id');
+    }
+
+    function qualificationRelation(){
+        // return $this->hasMany('App\UserTags','user_id');
+        return $this->belongsToMany('App\Qualification', 'user_qualifications','user_id','qualification_id');
     }
 
 

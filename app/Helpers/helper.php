@@ -241,6 +241,16 @@ function getIndustryName($name){
     if(isset($industries[$name])){ return $industries[$name]; }
 }
 
+function getQualificationsType(){
+    $return = array(
+        'certificate' => 'Certificate or Advanced Diploma',
+        'trade' => 'Trade Certificate',
+        'degree' => 'University Degree',
+        'post_degree' => 'University Post Graduate (Masters or PHD) ',
+    );
+}
+
+
 function getQualificationsList(){
     return 
     array(
@@ -799,3 +809,6 @@ function jobStatusArray(){
     return $status_array; 
 }
  
+
+
+function varExist($var, $obj){ return (isset($obj->$var) && !empty($obj->$var));  }

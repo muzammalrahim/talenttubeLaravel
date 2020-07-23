@@ -757,6 +757,7 @@ function showEmployStep4(){
                     jQuery('.addNewTagModal .apiMessage').html('Tag Succesfully Added').show();
                     setTimeout(function() {
                         jQuery.modal.close();
+                        jQuery('.newTagInput input').val(''); 
                     }, 1000);
                 }else{
                     jQuery('.addNewTagModalBox').removeClass('loading');
@@ -941,6 +942,7 @@ function showEmployStep4(){
         step2_formData.append('qualification', JSON.stringify(userQualificationList));
         step2_formData.append('salaryRange', userSalaryRange);
         step2_formData.append('tags', userSelectedTagsList);
+        step2_formData.append('qualification_type', jQuery('#qualification_type').val());
         
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({

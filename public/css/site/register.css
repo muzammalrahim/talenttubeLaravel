@@ -679,3 +679,4 @@ div#list_videos_public {
     padding: 6px;
 }
 
+.card_profile .part_photo .name{ display: none !important; }

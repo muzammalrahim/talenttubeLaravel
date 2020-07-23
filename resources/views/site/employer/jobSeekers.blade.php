@@ -247,4 +247,3 @@ $(document).on('click','.jsLikeUserBtn',function(){
 });
 </script>
 @stop
-

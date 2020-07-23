@@ -24,33 +24,33 @@
                 
                 {{-- Liker User List End --}}
 
-            <li>
+            {{-- <li>
                 <a id="narrow_menu_link_27" href="messages.html" class="column_narrow_messages  ">
                     <span class="icon"></span>Messages
                     <span id="narrow_messages" class="count "></span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li>
+            {{-- <li>
                 <a id="narrow_menu_link_28" href="./hot_or_not" class="column_narrow_hot_or_not  ">
                     <span class="icon"></span>Talent Matcher
                 </a>
-            </li>
+            </li> --}}
 
-            <li>
+           {{--  <li>
                 <a id="narrow_menu_link_35" href="chatroom.html" class="column_narrow_general_chat  ">
                     <span class="icon"></span>Chat rooms
                     <span id="narrow_general_chat_count" class="count "></span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li>
+           {{--  <li>
                 <a id="narrow_menu_link_20" href="profile-vister.html" class="column_narrow_profile_visitors  ">
                     <span class="icon"></span>Profile visitors
                     <span id="narrow_visitors_count" class="count ">4</span>
 
                 </a>
-            </li>
+            </li> --}}
 
             <li>
                 <a id="narrow_menu_link_31" href="./mutual_likes" class="column_narrow_mutual_likes  ">
@@ -59,38 +59,38 @@
                 </a>
             </li>
 
-            <li>
+            {{-- <li>
                 <a id="" href="interest-parties.html" class="column_narrow_who_likes_you  ">
                     <span class="icon"></span>Interested Parties
                     <span id="narrow_who_likes_you_count" class="count "></span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li>
+           {{--  <li>
                 <a id="narrow_menu_link_52" href="./page?id=52" class="Jobs  inactive">
                     <span class="icon"></span>JOBS
                 </a>
-            </li>
-
+            </li> --}}
+{{-- 
             <li>
                 <a id="narrow_menu_link_30" href="myinterest.html" class="column_narrow_whom_you_like  ">
                     <span class="icon"></span>My Interest
                     <span id="narrow_whom_you_like_count" class="count "></span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li>
+           {{--  <li>
                 <a id="narrow_menu_link_32" href="private-resume.html" class="column_narrow_can_see_your_private_photos  ">
                     <span class="icon"></span>Private Resume access
                     <span id="narrow_private_photo_count" class="count "></span>
                 </a>
-            </li>
+            </li> --}}
 
-            <li>
+           {{--  <li>
                 <a id="narrow_menu_link_23" href="./" class="column_narrow_invite  ">
                     <span class="icon"></span>Invite friends
                 </a>
-            </li>
+            </li> --}}
 
             <li>
                 <a id="user_block_list" href="block.html" class="column_narrow_blocked menu_selected inactive">

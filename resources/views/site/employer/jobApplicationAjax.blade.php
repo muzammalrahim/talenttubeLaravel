@@ -31,4 +31,4 @@
     <div class="cl"></div>
 
 
-    <div class="job_pagination">{!! $applications->render() !!}</div>
+    <div class="job_pagination cpagination">{!! $applications->render() !!}</div>

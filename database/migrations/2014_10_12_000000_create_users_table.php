@@ -35,6 +35,7 @@ class CreateUsersTable extends Migration
             $table->string('industry_experience');
             $table->string('recentJob');
             $table->string('qualification');
+            $table->string('qualificationType');
             $table->string('salaryRange');
 
             $table->rememberToken();

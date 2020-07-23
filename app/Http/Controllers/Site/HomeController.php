@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\Qualification;
 use DB;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -175,7 +176,6 @@ class HomeController extends Controller {
 
     public function register(Request $request){
         
-
         // "_token" => "aoBTzArrllzmFQ8fw7zFhktY2lzW8jc1qbw2lH2T"
         // "firstname" => "Creative"
         // "surname" => "khan"
@@ -202,18 +202,13 @@ class HomeController extends Controller {
 
         );
         $validator = Validator::make( $request->all() , $rules);
-        // dd( $request->all() );
-
+        
         if ($validator->fails()){
-
             return response()->json([
                 'status' => 0,
                 'validator' =>  $validator->getMessageBag()->toArray()
             ]);
         }else{
-
-            // dd( $request->toArray() );
-
             $user = new User();
             $user->name = $request->firstname;
             $user->surname = $request->surname;
@@ -589,11 +584,41 @@ class HomeController extends Controller {
 
 
 
+
+
      private function getThumbnailIntervalTimeArr($duration){ 
                 $durationInSec = intval($duration); 
                 $intervalArr = range(0,$duration, $duration/4); 
                 return array_slice($intervalArr, 1, -1); 
         }
 
+
+    public function test3(){
+       // $qualifications =  getQualificationsList(); 
+       // // dd( $qualifications ); 
+       // foreach ($qualifications as $key => $qualification) {
+       //     $qual = new Qualification(); 
+       //     $qual->type = $qualification['type']; 
+       //     $qual->title = $qualification['title']; 
+       //     $qual->save();  
+       // }
+
+        $jobseekers = User::where('type','user')->get(); 
+        // dd($jobseekers); 
+        foreach ($jobseekers as $key => $js) {
+            
+            if(!empty($js->qualification)){
+
+                $qualif =  json_decode($js->qualification); 
+                // dump( $js->qualification ); 
+                // dump( $qualif ); 
+                // dump( getQualificationsData(array($qualif[0]))); 
+                // dump( getQualificationsData($js->qualification) ); 
+                
+
+
+            }
+        }
+    }
 
 }

@@ -336,7 +336,7 @@ class EmployerController extends Controller {
             $data['user']   = $user;
             $data['title']  = 'Job Detail';
             $data['classes_body'] = 'jobdetail';
-            return view('site.employer.jobApplication', $data);
+            return view('site.employer.jobApplication', $data); // site/employer/jobApplication
         }
     }
 
@@ -370,6 +370,21 @@ class EmployerController extends Controller {
                 });  
             }
 
+            //Filter by Question  
+            if(varExist('filter_by_questions', $request) && ( $request->filter_by_questions == 'on')){
+              // dd( $request->filter_question );
+              foreach ($request->filter_question as $fqKey => $fqValue) {
+                   
+                    if(!empty($fqValue)){
+                         // dump($fqKey, $fqValue  );
+                        $applications = $applications->whereHas('answers', function($q) use($fqKey,$fqValue) {
+                            $q->where('question_id', '=',  $fqKey)->where('answer', '=',  $fqValue); 
+                            return $q;
+                        });
+                    }
+                }  
+            }
+
             $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC')->paginate(1);
             // dd( $applications->toArray());
             $data['applications'] = $applications;
@@ -378,6 +393,8 @@ class EmployerController extends Controller {
             $data['title']  = 'Job Detail';
             $data['classes_body'] = 'jobdetail';
             return view('site.employer.jobApplicationAjax', $data);
+
+            // site/employer/jobApplicationAjax
         }
     }
 
@@ -456,47 +473,108 @@ class EmployerController extends Controller {
         $data['title']          = 'Job Seekers';
         $data['classes_body']   = 'jobSeekers';
         $jobSeekersObj          = new User();
-
-
-    //    $userList =  User::with('profileImage')
-    //    ->where('type','user')
-    //    ->join('block_users', 'users.id', '!=', 'block_users.block')
-    //    ->where('block_users.user_id',$user->id)
-    //    ->toSql();
-    //    ->get();
-        // dd( $userList->toArray() );
-        // dd( $userList );
-
-
-        // $q->where('price_date', function($q) use ($start_date){
-        //     $q->from('benchmarks_table_name')
-        //         ->selectRaw('min(price_date)')
-        //         ->where('price_date', '>=', $start_date)
-        //         ->where('ticker', $this->ticker);
-        // });
-
-        // $userList = User::with('profileImage')
-        //             ->where('type','user')
-        //             ->whereNotIn('id', function($query) {
-        //                 $query->select('block')->from('block_users')->where('user_id','id');
-        //             })
-        // // ->toSql();
-        // ->get();
-
-        // dd(  $userList  );
-        // dd(  $userList->toArray()  );
-
-        // $user = User::whereNotIn('id', function($query) {
-        //     $query->select('user_id')->from('role_user');
-        // })->get();
-
-
         $jobSeekers             = $jobSeekersObj->getJobSeekers($request, $user);
-        $likeUsers                  = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+
+        $data['likeUsers'] = $likeUsers;
+        $data['jobSeekers'] = null; // $jobSeekers;
+        return view('site.employer.jobSeekers.index', $data); // site/employer/jobSeekers
+    }
+
+
+    //====================================================================================================================================//
+    // Ajax // Post // filter jobseeker result data.
+    //====================================================================================================================================//
+    public function jobSeekersFilter(Request $request){
+        $user = Auth::user();
+        if (!isEmployer($user)){ 
+            return response()->json([
+                'status' => 0,
+                'error' => 'You are not allwoed to access this information',
+            ]);
+        }
+
+        $data['user']           = $user;
+        
+
+        // $jobSeekersObj          = new User();
+        // $jobSeekers             = $jobSeekersObj->getJobSeekers($request, $user);
+
+        $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
+        $query = User::with('profileImage')->where('type','user'); 
+        if(!empty($block)){
+            $query = $query->whereNotIn('id', $block);
+        } 
+    
+        // Filter by salaryRange. 
+        if (isset($request->filter_salary) && !empty($request->filter_salary)){ 
+            $query = $query->where('salaryRange', '>=', $request->filter_salary); 
+        }
+
+        // Filter by google map location radius. 
+        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){  
+            if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
+                // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
+                 $latitude = $request->location_lat; 
+                 $longitude = $request->location_long; 
+                 $radius = $request->filter_location_radius; 
+
+                 $query = $query->selectRaw("*,
+                     ( 6371 * acos( cos(radians('".$latitude."')) 
+                     * cos( radians(location_lat))
+                     * cos( radians(location_long) - radians('".$longitude."')) 
+                     + sin( radians('".$latitude."')) 
+                     * sin( radians( location_lat )))
+                     ) AS distance")
+                ->having("distance", "<", $radius)
+                ->orderBy("distance",'asc'); 
+
+            }
+        } 
+
+        // Filter by Keyword filter_keyword
+        if(varExist('filter_keyword', $request)){
+            $keyword = $request->filter_keyword;
+            $query = $query->where(function($q) use($keyword) {
+                        $q->where('username','LIKE', "%{$keyword}%")
+                        ->orWhere('name','LIKE', "%{$keyword}%")
+                        ->orWhere('email','LIKE', "%{$keyword}%")
+                        ->orWhere('about_me','LIKE', "%{$keyword}%")
+                        ->orWhere('interested_in','LIKE', "%{$keyword}%")
+                        ->orWhere('recentJob','LIKE', "%{$keyword}%");
+                }); 
+        }
+
+
+        // Filter by Keyword filter_keyword
+        if(varExist('filter_qualification_type', $request)){
+            $query = $query->where('qualificationType', '=', $request->filter_qualification_type); 
+        }
+
+        // Filter by Question
+        if(varExist('filter_question', $request) && varExist('filter_question_value', $request) ){
+            
+            // SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
+            $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%'; 
+            $query = $query->where('questions', 'LIKE', $question_like); 
+        }
+
+        // DB::enableQueryLog();
+        // print_r( $query->toSql() );exit; 
+        $jobSeekers =  $query->paginate(2);
+        // $jobSeekers =  $query->get();
+
+        
+        // dd(DB::getQueryLog());
+
+        // return $data;
+    
+
 
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = $jobSeekers;
-        return view('site.employer.jobSeekers', $data);
+        return view('site.employer.jobSeekers.list', $data); // site/employer/jobSeekers
     }
 
 
