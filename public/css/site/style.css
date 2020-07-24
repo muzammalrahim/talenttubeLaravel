@@ -811,7 +811,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
 
 .tabs_profile .col_left .bl .bl_frm_edit{ position: relative; }
 .tabs_profile .col_left .bl .frm_edit{overflow:hidden; padding: 15px 0 0; height: 0px; margin-bottom: -15px; transition: all .3s; -webkit-transition: all .3s;  padding-right: 8px;}
-.tabs_profile .col_left .bl .frm_edit.to_show{ height:35px; margin-bottom: 0px;}
+.tabs_profile .col_left .bl .frm_edit.to_show{ height:48px; margin-bottom: 0px;}
 .tabs_profile .col_left .bl .frm_edit textarea{ width: 100%; min-height: 120px; margin: 0 0 15px; padding: 10px 13px 10px; line-height: 24px; }
 .tabs_profile .col_left .bl .frm_edit input{ width: 100%; margin: 0 0 15px; padding: 10px 13px 10px; line-height: 24px; }
 

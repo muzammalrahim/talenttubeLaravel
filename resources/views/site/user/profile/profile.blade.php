@@ -1,18 +1,7 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('site.user.usermaster')
 
-@section('custom_css')
-    <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-    <style>
-        .job{
-            margin:10px;
-        }
-        .jq-selectbox.jqselect.salaryRangeField.dropup.opened , .jq-selectbox__select {
-    width: 100px;
-}
-    </style>
 
-@stop
 
 @section('content')
 <div class="cont bl_profile">
@@ -56,19 +45,19 @@
             <div class="bl_list_info">
                 <ul class="list_info userProfileLocation">
                     <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li>
-                    <li id="list_info_location">{{($user->GeoCity)?($user->GeoCity->city_title):''}},  {{($user->GeoState)?($user->GeoState->state_title):''}}, {{($user->GeoCountry)?($user->GeoCountry->country_title):''}}</li>
+                    <li id="list_info_location">{{userLocation($user)}}</li>
                     <li><span class="basic_info">•</span><span id="list_info_gender">Job Seeker</span></li>
                 </ul>
                 <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div>
             </div>
 
-            <div class="status">
+        {{--     <div class="status">
                 <div id="profile_status" class="status_text" style="min-height: 24.0078px; min-width: 163.008px;">
                     <span class="statusText">{{($user->statusText)?($user->statusText):'Enter Your Status'}}</span>
                     <input class="hide_it" type="text" id="statusText" value="{{($user->statusText)?($user->statusText):''}}" onchange="UProfile.updateStatusText()" />
                 </div>
                 <div id="profile_status_edit" class="icon_edit" onclick="UProfile.enableStatusTextEdit();" style="opacity: 1;"><span></span></div>
-            </div>
+            </div> --}}
 
             <div class="job">
                 <span style="margin-right: 34px;">Recent Job:</span>
@@ -81,50 +70,28 @@
 
                 {{-- <div class="job">
                 <span>Expecting Salary:</span>
+
                 <input type="text" class="hide_it salaryRangeField" name="salaryRangeField" value="{{$user->salaryRange}}"  onchange="UProfile.updateSalaryRange()"/>
+
 
                 <b> {{'USD: '}}<span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
                 <i class="fas fa-edit salaryRangeEdit" style="cursor: pointer;" onclick="UProfile.enableSalaryRangeEdit()"></i>
                 </div> --}}
 
+{{-- @dump($salaryRange) --}}
 
-            {{-- @dump($salaryRange) --}}
+{{-- New Salary Range --}}
 
-                    {{-- @dump($salaryRange) --}}
-
-{{--            <div class="job">
+                <div class="job">
                 <span>Expecting Salary:</span>
-                <select type="select" class="hide_it salaryRangeField" name="salaryRangeField" value="{{$user->salaryRange}}"  onchange="UProfile.updateSalaryRange()"/> 
-                    @foreach($salaryRange as $key => $salary)
-                        <option value="{{$key}}">
-                            {{$salary}}
-                        </option>
-                    @endforeach
-                </select>
+                {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, ['placeholder' => 'Select Salary Range', 'onchange' => 'UProfile.updateSalaryRange()', 'id' => 'salaryRangeFieldnew', 'class' => 'hide_it salaryRangeField']) }}
+
                 <b> {{'USD: '}}<span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
-                <i class="fas fa-edit salaryRangeEdit" style="cursor: pointer;" onclick="UProfile.enableSalaryRangeEdit()"></i>
-            </div>
- --}}
-                    
-        {{--                 {{ Form::select('salaryRange', $salaryRange, null, ['placeholder' => 'Select Salary Range']) }}
-           
-            <select class="form-control" id="category" name="category" onclick ="getSalariesRange();">
-             @foreach($salaryRange as $sel)
-             <option value=" {{$sel}}"> </option>
-             @endforeach 
-             </select>  --}}
+                <i class="fas fa-edit salaryRangeEdit" onclick="UProfile.enableSalaryRangeEdit()"></i>
+                </div>
 
-             <div class="form-group row">
-                {{ Form::label('Salary Range', null, ['class' => 'col-md-2 form-control-label']) }}
-                 <div class="col-md-10">
-                {{ Form::select('salaryRange', $salaryRange, null, ['placeholder' => 'Select Salary Range']) }}
-                </div> 
-            </div>
-
-
-          
-
-{{-- Salary Range End here --}}
+{{-- New Salary Range End Here --}}
+    
 
 
            {{--  <div class="title_interest">
@@ -159,6 +126,52 @@
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+<style>
+.job{margin:10px; }
+.jq-selectbox.jqselect.salaryRangeField.dropup.opened{ width: 100px;}
+.jq-selectbox__select {
+    min-width: 120px;
+}
+.jq-selectbox__select-text{
+        display: table;
+}
+div.jq-selectbox__dropdown.drop_down>ul {
+    width: 136px;
+}
+div.jq-selectbox__dropdown.drop_down>ul>li {
+    font-size: 11px;
+}
+.fa-edit{
+    cursor: pointer;
+    font-size: 14px;
+    color: mediumseagreen;
+}
+select{
+        display: block;
+        width: 100%;
+        height: calc(2.75rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1.5rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        margin: 5px 0px 5px 0px ;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        box-shadow: inset 0 0 0 transparent;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+div.bl.qualificationBox>div.title.qualificationList>.QualificationSelect{
+    font-size: 14px;
+}
+div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {
+    font-size: 12px;
+}
+</style>
 @stop
 
 @section('custom_js')
@@ -166,6 +179,43 @@
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
 <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
+<script type="text/javascript">
+
+  $(document).ready(function(){
+   
+   // $(document).on('click','.removeQualification', function(){
+   //  $(this).closest('.QualificationSelect').remove();
+   // });
+
+   // For deleting old qual which was added by user
+   $('.qualificationBox').on('click','.removeQualification', function(){
+      console.log('removeQualification');
+     $(this).closest('.QualificationSelect').remove();
+   });
+
+
+   $(document).on('click','.addQualification', function(){
+    console.log(' addQualification ');
+
+  
+     
+    
+    // Add Qualification end here 
+    var newQualificationHtml = '<div class="QualificationSelect"><select name="qualification[]" class="userQualification">'; 
+    @if(!empty($qualificationList))
+        @foreach($qualificationList as $lk=>$qualification)
+            newQualificationHtml += '<option value="{{$qualification['id']}}">{{$qualification['title']}}</option>'; 
+        @endforeach
+    @endif
+    newQualificationHtml += '</select>';  
+    newQualificationHtml += '<span class="removeQualification  btn btn-danger">Remove</span>';
+    newQualificationHtml += '</div>';
+    $('.qualificationList').append(newQualificationHtml);
+   });
+ })
+
+
+</script>
 
 
 @stop

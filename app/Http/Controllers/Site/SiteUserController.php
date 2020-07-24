@@ -75,10 +75,9 @@ class SiteUserController extends Controller
             $data['videos'] = $videos;
             
             // Getting Salaries
-             $data['salaryRange'] = getSalariesRange();
-
-
-
+            $data['salaryRange'] = getSalariesRange();
+            $data['qualificationList'] = getQualificationsList();
+            
 
             $view_name = 'site.user.profile.profile';
             return view($view_name, $data);
@@ -92,6 +91,7 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     // Display Step2 form for Employer, on first time registeration.
     //====================================================================================================================================//
+
     public function step2User(){
         // dd(' step2Employer ');
         $user = Auth::user();
@@ -354,6 +354,42 @@ class SiteUserController extends Controller
             return response()->json([
                     'status' => 1,
                     'data' => $user->salaryRange
+            ]);
+        }
+    }
+
+    //====================================================================================================================================//
+    // Ajax For updating Qualification.
+    // Called from JobSeeker Profile page. 
+    //====================================================================================================================================//
+    public function updateQualification(Request $request){
+        
+        // dd($request->toArray());
+        // dump($request->qualification);
+
+        // $data = $request->validate([
+        //     "qualification"    => "required|array|min:13",
+        //     "qualification.*"  => "required|string|distinct|min:3",
+        // ]);
+
+        $requestData = $request->all();  
+        // $requestData['qualification'][2] = 'test not integer'; 
+        $rules = array(
+                    'qualification'    => 'required|array', 
+                    'qualification.*'  => 'required|integer'
+                );
+        $validator = Validator::make($requestData, $rules); 
+
+        // dd( $validator->errors() ); 
+
+        if (!$validator->fails()) {
+            $user = Auth::user();
+            $user->qualification = $request->qualification;
+            $user->save();
+            
+            return response()->json([
+                    'status' => 1,
+                    'data' => $user->qualification
             ]);
         }
     }

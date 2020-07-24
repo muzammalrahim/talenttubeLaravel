@@ -62,19 +62,35 @@
 
 {{-- Qualification --}}
                 
-                    
                 {{-- @dump($user->qualification) --}}
-            <div class="bl">
-                <div class="title">
-                    <div id="basic_anchor_interested_in" class="title_icon_edit">Qualification
+            <div class="bl qualificationBox">
+                <div class="title qualificationList">
+                    <div id="basic" class="title_icon_edit">Qualification <i class="editQualification fas fa-edit"></i>
                     </div>
                     <div class="cl"></div>
+                    @php
+                        $qualificationsData =  ($user->qualification)?(getQualificationsData($user->qualification)):(array());
+                    @endphp
+                      @if(!empty($qualificationsData))
+                         @foreach($qualificationsData as $qualification)
+                            <div class="QualificationSelect">
+                                <input type="hidden" name="qualification[]" class="userQualification" value="{{$qualification['id']}}">
+                                <p>{{$qualification['title']}}</p>
+
+                                <span class="removeQualification btn btn-sm btn-danger">Remove</span>
+
+                            </div>
+                         @endforeach
+                       @endif
                 </div>
-                <textarea id="basic_editor_text_Qualification" data-desc="" data-type="textarea" class="basic_textarea" maxlength="1000"
-                style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 100px; opacity: 1;">{{implode(', ',getQualificationNames($user->qualification))}}</textarea>
-               </div>
+                 <a class="addQualification btn btn-sm btn-primary text-white"style = "cursor:pointer;">Add New</a>
+                 <a class="btn btn-sm btn-success" onclick="UProfile.updateQualifications()">Save</a>
+         </div>
+
 
 {{-- Qualification End here --}}
+
+
 
 {{-- Industry Experience --}}
 
@@ -88,16 +104,13 @@
                 </div>
                 @if(isset($user->industry_experience))
                 @foreach ($user->industry_experience as $ind)
-                     <p>{{getIndustryName($ind)}} </p>
+                     <p>{{getIndustryName($ind)}}</p> 
                 @endforeach
                 @endif
             
             </div>
 
 {{-- Industry Experience End here --}}
-
-
-
 
 					<div class="bl">
 						<div class="title">
@@ -155,8 +168,6 @@
 										<div id="act_description_error" class="error to_hide">&nbsp;</div>
 									</div>
 								</div>
-
-
 
 								<div class="act_btn act_field">
 									<span class="act_label"></span>
