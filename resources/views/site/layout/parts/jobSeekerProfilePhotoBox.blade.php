@@ -4,8 +4,15 @@
 @php
 $profile_image  = asset('images/site/icons/nophoto.jpg');
 $profile_image_gallery    = $js->profileImage()->first();
+
+// dump($profile_image_gallery); 
+
  if ($profile_image_gallery) {
-    $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+    // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+
+    $profile_image   = assetGallery2($profile_image_gallery,'small');
+     // dump($profile_image); 
+
  } 
 @endphp
 
@@ -32,7 +39,7 @@ $profile_image_gallery    = $js->profileImage()->first();
     <div class="js_info center">
         <div class="js_name"><h4 class="bold">{{$js->name}} {{$js->surname}}</h4></div>
         <div class="js_status_label">{{$js->statusText}}</div>
-        <div class="js_location">Location: {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </div>
+        <div class="js_location">Location: {{userLocation($js)}}</div>
     </div>
 </div>
 

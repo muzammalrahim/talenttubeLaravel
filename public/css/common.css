@@ -195,3 +195,7 @@ button.btn:disabled, button.btn.disabled {
 .toggleSwitchButton .slider.round:before { border-radius: 50%; }
 */
 
+.toggleSwitchButton {
+    display: inline-block;
+    margin: 10px;
+}

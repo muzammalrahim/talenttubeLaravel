@@ -349,43 +349,14 @@ class EmployerController extends Controller {
         $user = Auth::user();
         if(isEmployer($user)){
             // $job =  Jobs::find($id);
-
-            $job_id = $request->job_id;
-
-            $keyword = my_sanitize_string($request->ja_filter_keyword);
-            $country = $request->ja_filter_country;
-            $qualification_type = $request->ja_filter_qualification_type;
-            $salaryRange = $request->ja_filter_salary;
           
-            $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id','=',$job_id);
+            // $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id','=',$job_id);
 
-            if(!empty($country) || !empty($qualification_type) || !empty($salaryRange) || !empty($keyword)){
-                $applications = $applications->whereHas('jobseeker', function ($query) use($country, $qualification_type, $salaryRange, $keyword){
-                    if(!empty($country)){ $query->where('country', '=', $country);  }   
-                    if(!empty($salaryRange)){ $query->where('salaryRange', '>=', $salaryRange); }
-                    if(!empty($keyword)){ 
-                         $query->where('username', 'LIKE', "%{$keyword}%");
-                    }
-                    return $query; 
-                });  
-            }
+            $applications = new JobsApplication();
+            $applications = $applications->getFilterApplication($request);
 
-            //Filter by Question  
-            if(varExist('filter_by_questions', $request) && ( $request->filter_by_questions == 'on')){
-              // dd( $request->filter_question );
-              foreach ($request->filter_question as $fqKey => $fqValue) {
-                   
-                    if(!empty($fqValue)){
-                         // dump($fqKey, $fqValue  );
-                        $applications = $applications->whereHas('answers', function($q) use($fqKey,$fqValue) {
-                            $q->where('question_id', '=',  $fqKey)->where('answer', '=',  $fqValue); 
-                            return $q;
-                        });
-                    }
-                }  
-            }
+           
 
-            $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC')->paginate(1);
             // dd( $applications->toArray());
             $data['applications'] = $applications;
             // $data['job']   = $job;
@@ -519,6 +490,7 @@ class EmployerController extends Controller {
                  $latitude = $request->location_lat; 
                  $longitude = $request->location_long; 
                  $radius = $request->filter_location_radius; 
+                 $radius_sign = ($radius <= 50)?'<':'>'; 
 
                  $query = $query->selectRaw("*,
                      ( 6371 * acos( cos(radians('".$latitude."')) 
@@ -527,7 +499,7 @@ class EmployerController extends Controller {
                      + sin( radians('".$latitude."')) 
                      * sin( radians( location_lat )))
                      ) AS distance")
-                ->having("distance", "<", $radius)
+                ->having("distance", $radius_sign, $radius)
                 ->orderBy("distance",'asc'); 
 
             }
@@ -670,7 +642,7 @@ class EmployerController extends Controller {
         if(isEmployer($user)){
             $jobsApplication = JobsApplication::with('answers.question')->where('id',$id)->first();
             $data['application'] = $jobsApplication;
-            return view('site.layout.parts.jobApplicationQA', $data);
+            return view('site.layout.parts.jobApplicationQA', $data); // site/layout/parts/jobApplicationQA
         }
     }
 

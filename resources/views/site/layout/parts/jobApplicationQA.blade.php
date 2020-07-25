@@ -1,6 +1,7 @@
  
 <div class="application_qa">
 @php
+    // dd( $application  );
     // dd( $application->answers->first()  );
     $answers = $application->answers;     
 @endphp

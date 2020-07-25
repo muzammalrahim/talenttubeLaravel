@@ -144,7 +144,7 @@ $(document).on('click','.jsLikeUserBtn',function(){
 $('#jobSeeker_filter_form').on('submit',function(event){
     console.log(' jobSeeker_filter_form submit '); 
     event.preventDefault();
-     $('#paginate').val('');
+    $('#paginate').val('');
     getData();
 });
 
@@ -468,11 +468,5 @@ $('input[name="filter_by_questions"]').change(function() {
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-<style type="text/css">
-.toggleSwitchButton{
-        display: inline-block;
-    margin: 10px;
-}
-</style>
+<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">com
 @stop
