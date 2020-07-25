@@ -191,16 +191,46 @@ var CProfile = function() {
         $('.recentJobField').removeClass('hide_it');
     }
 
-// Edit Salary Range 
 
 
-    this.updateSalaryRange = function(){
-        var salaryRangeField = $('.salaryRangeField').val();
-        $('.salaryRangeValue').removeClass('hide_it').text(salaryRangeField);
-        $('.salaryRangeField').addClass('hide_it');
-        $('.salaryRangeEdit').after(getLoader('smallSpinner salaryRangeSpinner'));
+// Edit Qualification
+
+    this.updateQualifications = function(){
 
         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get(); 
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/updateQualification',
+            data: {'qualification': qualification},
+            success: function(data){
+                if(data.status){
+                 // console.log('success')
+                    // $('.salaryRangeSpinner').remove();
+                    // $('.salaryRangeField').addClass('hide_it');
+                }
+            }
+        });
+}
+
+// End Qualification 
+
+// Edit Salary Range end here
+
+// New Edit Salary Range'
+        this.updateSalaryRange = function(){
+        var salaryRangeField = $('#salaryRangeFieldnew option:selected').val();
+        // var salaryRangeField = this.val
+        // console.log(salaryRangeField);
+        $('.salaryRangeValue').removeClass('hide_it').text(salaryRangeField);
+        $('#salaryRangeFieldnew').addClass('hide_it');
+        $('.salaryRangeEdit').after(getLoader('smallSpinner salaryRangeSpinner'));
+
+           $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
@@ -212,18 +242,26 @@ var CProfile = function() {
             success: function(data){
                 if(data.status){
                     $('.salaryRangeSpinner').remove();
+                    $('.salaryRangeField').addClass('hide_it');
                 }
             }
         });
-    }
+ }
 
     this.enableSalaryRangeEdit = function(){
         $('.salaryRangeValue').addClass('hide_it');
         $('.salaryRangeField').removeClass('hide_it');
+        // var  abc = $('');
+        // console.log(abc);
     }
 
-// Edit Salary Range end here
-  
+    // Edit Qualification Start 
+
+
+
+// Edit Qualification end here
+
+// New Edit Salary Range End Here
 
 
     // this.showBasicFieldEditor = function(item){

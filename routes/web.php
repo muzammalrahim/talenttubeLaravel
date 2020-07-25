@@ -256,6 +256,8 @@ Route::group(array('middleware' => 'auth'), function(){
     // Edit Salary Range
 
     Route::post('ajax/updateSalaryRange', 'Site\SiteUserController@updateSalaryRange');
+    Route::post('ajax/updateQualification', 'Site\SiteUserController@updateQualification')->name('updateQualification');
+
     
     // Edit salary Range End here
     
