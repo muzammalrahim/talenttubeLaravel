@@ -332,9 +332,9 @@ $('#custom-tabs-one-private .btnPrevious').on('click', function (e) {
 
 // For Scrolling to top start
 
-   function scrollToTop() { 
-          window.scrollTo(0, 0); 
-      } 
+function scrollToTop() { 
+      window.scrollTo(0, 0); 
+  } 
 
 // For Scrolling to top end
 

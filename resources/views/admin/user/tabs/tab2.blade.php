@@ -84,6 +84,8 @@
                      
                         {{ Form::label('industry', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
+
+    
                         <div class="IndusList">
                           @if(!empty($record->industry_experience))
                             @foreach($record->industry_experience as $industry )

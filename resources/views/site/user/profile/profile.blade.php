@@ -147,6 +147,15 @@ div.jq-selectbox__dropdown.drop_down>ul>li {
     font-size: 14px;
     color: mediumseagreen;
 }
+.fa-trash{
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+    color: #a94442;
+}
+div#basic_anchor_Questions {
+    font-size: 20px;
+}
 select{
         display: block;
         width: 100%;
@@ -165,11 +174,25 @@ select{
         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
 
-div.bl.qualificationBox>div.title.qualificationList>.QualificationSelect{
+.QualificationSelect{
     font-size: 14px;
 }
 div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {
     font-size: 12px;
+}
+.spinner.center{
+    position: relative;
+    opacity: 1;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.qualificationBox.editQualif .hide_it {
+    display: block !important;
+}
+.title.IndusListBox.edit .hide_it {
+    display: block !important;
 }
 </style>
 @stop
@@ -183,9 +206,14 @@ div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {
 
   $(document).ready(function(){
    
-   // $(document).on('click','.removeQualification', function(){
-   //  $(this).closest('.QualificationSelect').remove();
-   // });
+ // Enable Editing Qualification 
+  $(".editQualification").click(function(){
+        $(this).closest('.qualificationBox').addClass('editQualif');
+      // $(".QualificationSelect i").toggleClass("hide_it");
+      // $(".qualificationBox a").toggleClass("hide_it");
+
+  });
+ // Enable Editing Qualification  End here 
 
    // For deleting old qual which was added by user
    $('.qualificationBox').on('click','.removeQualification', function(){
@@ -193,13 +221,9 @@ div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {
      $(this).closest('.QualificationSelect').remove();
    });
 
-
    $(document).on('click','.addQualification', function(){
     console.log(' addQualification ');
 
-  
-     
-    
     // Add Qualification end here 
     var newQualificationHtml = '<div class="QualificationSelect"><select name="qualification[]" class="userQualification">'; 
     @if(!empty($qualificationList))
@@ -208,12 +232,54 @@ div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {
         @endforeach
     @endif
     newQualificationHtml += '</select>';  
-    newQualificationHtml += '<span class="removeQualification  btn btn-danger">Remove</span>';
+    newQualificationHtml += '<i class="fa fa-trash removeQualification"></i>';
     newQualificationHtml += '</div>';
     $('.qualificationList').append(newQualificationHtml);
    });
+
+
  })
 
+
+ $(".editIndustry").click(function(){
+    $(this).closest('.IndusListBox').addClass('edit');   
+  });
+
+
+ 
+
+// add and remove Industry code
+$(document).ready(function(){
+   $(document).on('click','.removeIndustry', function(){
+    $(this).closest('.IndustrySelect').remove();
+   });
+
+   $(document).on('click','.addIndus', function(){
+    console.log(' addIndus ');
+    var newIndusHtml = '<div class="IndusSelect"><select name="industry_experience[]">'; 
+
+    @if(!empty($industriesList))
+        @foreach($industriesList as $lk=>$lv)
+            newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>'; 
+        @endforeach
+    @endif
+
+    newIndusHtml += '</select>';  
+    newIndusHtml += '<span class="removeIndus btn btn-danger">Remove</span>';
+    newIndusHtml += '</div>';
+
+    $('.indusList').append(newIndusHtml);
+   });
+}); 
+
+// add and remove Industry code end here
+
+    $(document).ready(function(){
+    $(".removeIndus ").click(function(){
+    $(".IndusList").removeClass("indusSelect");
+
+});  
+});
 
 </script>
 

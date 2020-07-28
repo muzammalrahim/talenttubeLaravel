@@ -3,7 +3,6 @@
     <div class="form-group row">
         {{ Form::label('questions', null, ['class' => 'col-md-2 form-control-label']) }}
         <div class="col-md-10">
-
       
         @php  
             $userQuestions = !empty($record->questions)?(json_decode($record->questions, true)):(array()); 

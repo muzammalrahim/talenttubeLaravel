@@ -41,9 +41,6 @@
                 {{-- <script>Profile.handlerBasicFieldEditor('about_me');</script> --}}
             </div>
 
-
-
-
             <div class="bl">
                 <div class="title">
                     <div id="basic_anchor_interested_in" class="title_icon_edit">Interested in
@@ -64,55 +61,62 @@
                 
                 {{-- @dump($user->qualification) --}}
             <div class="bl qualificationBox">
-                <div class="title qualificationList">
-                    <div id="basic" class="title_icon_edit">Qualification <i class="editQualification fas fa-edit"></i>
-                    </div>
-                    <div class="cl"></div>
-                    @php
-                        $qualificationsData =  ($user->qualification)?(getQualificationsData($user->qualification)):(array());
-                    @endphp
-                      @if(!empty($qualificationsData))
-                         @foreach($qualificationsData as $qualification)
-                            <div class="QualificationSelect">
-                                <input type="hidden" name="qualification[]" class="userQualification" value="{{$qualification['id']}}">
-                                <p>{{$qualification['title']}}</p>
+                 
+                
+<div class="title qualificationList">
+  <div id="basic" class="title_icon_edit">Qualification <i class="editQualification fas fa-edit "></i>
+  </div> <p class="loader SaveQualification"style="float: left;"></p>
+  <div class="cl"></div>
+  
+    <div class="jobSeekerQualificationList">
+       @include('site.layout.parts.jobSeekerQualificationList')
+    </div>  
+</div>
 
-                                <span class="removeQualification btn btn-sm btn-danger">Remove</span>
 
-                            </div>
-                         @endforeach
-                       @endif
-                </div>
-                 <a class="addQualification btn btn-sm btn-primary text-white"style = "cursor:pointer;">Add New</a>
-                 <a class="btn btn-sm btn-success" onclick="UProfile.updateQualifications()">Save</a>
-         </div>
-
+                 <a class="addQualification btn btn-sm btn-primary text-white hide_it"style = "cursor:pointer;">Add New</a>
+                 <a class="btn btn-sm btn-success hide_it" onclick="UProfile.updateQualifications()">Save</a>
+            </div>
 
 {{-- Qualification End here --}}
-
 
 
 {{-- Industry Experience --}}
 
                 {{-- @dump($user->industry_experience) --}}
 
-            <div class="bl">
+    {{--         <div class="bl">
                 <div class="title">
-                    <div id="basic_anchor_industry_experience">Industry Experience
+                    <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
                     </div>
                     <div class="cl"></div>
                 </div>
+
                 @if(isset($user->industry_experience))
                 @foreach ($user->industry_experience as $ind)
                      <p>{{getIndustryName($ind)}}</p> 
                 @endforeach
-                @endif
+                @endif 
             
-            </div>
+            </div> --}}
 
 {{-- Industry Experience End here --}}
 
-					<div class="bl">
+                <div class="title IndusListBox">
+                    <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
+                    </div>
+
+                        <div class="IndusList">
+                         @include('site.layout.parts.jobSeekerIndustryList')
+                        </div> 
+                        <span class="addIndus btn btn-primary"style = "cursor:pointer;">+ Add</span> 
+                </div>
+ {{-- Testing Industry Experience --}}
+
+
+{{-- Testing Indstry Experience End Here --}}
+
+					{{-- <div class="bl">
 						<div class="title">
 								<div id="basic_anchor_interested_in">Academics
 									<span class="fa fa-plus icon_green" onclick="UProfile.showNewActivity('academic');"></span>
@@ -181,7 +185,7 @@
 
 
 
-				</div>
+				</div> --}}
 
 
 
@@ -214,29 +218,69 @@
     <!-- /tab_photos -->
 
 <!-- Tab question-->
-    <a id="tabs-3" class="tab_link tab_a"></a>
-        <div class="tab_photos tab_cont">
+<a id="tabs-3" class="tab_link tab_a"></a>
+    <div class="tab_photos tab_cont">
+
+
+
             
             {{-- @dump($user->questions) --}}
 
+           {{--  @php  
+                $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
+            @endphp --}}
+            {{-- @dump($userQuestions) --}}
+            {{-- @if(!empty(getUserRegisterQuestions()))
+            @foreach (getUserRegisterQuestions() as $qk => $userq)
+
+
+
+                {{($userq)}} --}}
+               {{--      <b><p>
+                        @if(!empty($userQuestions[$qk]))
+                        {{$userQuestions[$qk]}}
+                        @endif
+                    </p></b> --}}
+
+{{-- 
+            @endforeach
+            @endif
+ --}}
+            {{-- adding new  --}}
+
+        <div class="questionsOfUser">
+            <div id="basic_anchor_Questions" class="title_icon_edit">Questions <i class="editQuestions fas fa-edit "></i>
+            </div>
             @php  
                 $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
             @endphp
-            {{-- @dump($userQuestions) --}}
-            @if(!empty(getUserRegisterQuestions()))
-            @foreach (getUserRegisterQuestions() as $qk => $empq)
-
-                {{($empq)}}
-                    <b><p>
-                        @if(!empty($userQuestions[$qk]))
-
-                        {{$userQuestions[$qk]}}
-
-                        @endif
-                    </p></b>
-            @endforeach
-            @endif
+             @if(!empty($userquestion))
+                {{--  @dd($userquestion) --}}
+                @foreach($userquestion as $qk => $question)
+                <div>
+                <p>{{$question}} </p>
+                    <select name="{{$qk}}" class="jobSeekerRegQuestion">
+                        <option value="yes"
+                        {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
+                        >Yes</option>
+                        <option value="no"
+                        {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'no'))?'selected':''}}
+                        >No</option>
+                    </select>
+                </div>
+                @endforeach
+             @endif
+                  <div class="col-md-12 text-center">
+                      <a class="btn btn-sm btn-success" onclick="UProfile.updateQuestions()">Save</a>
+                  </div>  
+                 
         </div>
+            {{-- adding new end here --}}
+
+</div>
+
+
+
 
 <!-- Tab question-->
 
