@@ -252,13 +252,15 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
     Route::post('ajax/updateRecentJob', 'Site\SiteUserController@updateRecentJob');
     
-    // Edit Salary Range
+    // Added by Hassan
 
     Route::post('ajax/updateSalaryRange', 'Site\SiteUserController@updateSalaryRange');
     Route::post('ajax/updateQualification', 'Site\SiteUserController@updateQualification')->name('updateQualification');
+    Route::post('ajax/updateQuestions', 'Site\SiteUserController@updateQuestions');
 
     
-    // Edit salary Range End here
+    // Added by Hassan
+
     
     Route::get('ajax/getUserPersonalInfo', 'Site\SiteUserController@getUserPersonalInfo');
     Route::post('ajax/update_about_field', 'Site\SiteUserController@updateAboutField');

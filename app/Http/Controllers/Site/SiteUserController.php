@@ -75,10 +75,11 @@ class SiteUserController extends Controller
             $data['videos'] = $videos;
             
             // Getting Salaries
-            $data['salaryRange'] = getSalariesRange();
+            $data['salaryRange'] = getSalariesRange(); 
             $data['qualificationList'] = getQualificationsList();
-            
-
+            // $data['industry_experience'] = getIndustries();
+            $data['industriesList'] = getIndustries();
+            $data['userquestion'] = getUserRegisterQuestions();
             $view_name = 'site.user.profile.profile'; // site/user/profile/profile
             return view($view_name, $data);
         } else {
@@ -388,19 +389,53 @@ class SiteUserController extends Controller
             $user = Auth::user();
             $user->qualification = $request->qualification;
             $user->save();
+
+            $data['user'] = User::find($user->id); 
+            $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
+            $QualificationHtml = $QualificationView->render();
+            
             
             return response()->json([
                     'status' => 1,
-                    'data' => $user->qualification
+                    'data' => $QualificationHtml,
             ]);
         }
     }
 
+ // Ajax For updating Questions.
+    //====================================================================================================================================//
 
+
+    public function updateQuestions(Request $request){
+        
+        // dump($request->questions); 
+        $user = Auth::user();
+
+        // dd($user->questions); 
+        
+        $rules = array('questions' => 'string|max:100');
+        // $validator = Validator::make($request->all(), $rules);
+        // if (!$validator->fails()) {
+            
+            // dd($user);
+            // $user->questions = $request->questions;
+            $user->questions = json_encode($request->questions);
+
+
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $user->questions
+            ]);
+        // }
+    }
+
+ // Ajax For updating Questions End here.
+    //====================================================================================================================================//
 
     //====================================================================================================================================//
     // chagne the about me text on user profile.
-    // triggered from User profile page.
+    // triggered from User profile page. 
     //====================================================================================================================================//
     public function updateAboutField(Request $request)
     {

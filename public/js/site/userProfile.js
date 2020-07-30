@@ -174,6 +174,7 @@ var CProfile = function() {
         $('#statusText').removeClass('hide_it');
     }
 
+
     this.updateRecentJob = function(){
         var recentJobField = $('.recentJobField').val();
         $('.recentJobValue').removeClass('hide_it').text(recentJobField);
@@ -208,32 +209,50 @@ var CProfile = function() {
             }
         });
         var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get(); 
+
+        $('.SaveQualification').after(getLoader('smallSpinner SaveQualificationSpinner'));
+
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/updateQualification',
             data: {'qualification': qualification},
-            success: function(data){
-                if(data.status){
-                 // console.log('success')
-                    // $('.salaryRangeSpinner').remove();
+            success: function(resp){
+                if(resp.status){
+                    $('.SaveQualificationSpinner').remove();
+                    $('.jobSeekerQualificationList').html(resp.data);
+                    $('.qualificationBox').removeClass('editQualif');   
+                    // $(".QualificationSelect i").toggleClass("hide_it");
+                    // $(".qualificationBox a").toggleClass("hide_it");
+
+                    // var newQualifHtml = ''; 
+                    // newQualifHtml += '<div class="QualificationSelect">'; 
+                    // newQualifHtml += '<input type="hidden" name="qualification[]" class="userQualification" value="5">'; 
+                    // newQualifHtml += ''
+                    //             <p>Chemistry, Pharmacology, Radiography &amp; Forensic Science <i class="fa fa-trash removeQualification"></i></p>
+                    //         </div>
+
+                    // $(".qualificationBox").load(location.href+" .qualificationBox>*","");
+                    // location.reload(); 
+                    // $('.SaveQualification').hide();
                     // $('.salaryRangeField').addClass('hide_it');
                 }
+           
             }
         });
 }
 
+
+
 // End Qualification 
 
-// Edit Salary Range end here
-
-// New Edit Salary Range'
+// Edit Salary Range'
         this.updateSalaryRange = function(){
         var salaryRangeField = $('#salaryRangeFieldnew option:selected').val();
         // var salaryRangeField = this.val
         // console.log(salaryRangeField);
         $('.salaryRangeValue').removeClass('hide_it').text(salaryRangeField);
         $('#salaryRangeFieldnew').addClass('hide_it');
-        $('.salaryRangeEdit').after(getLoader('smallSpinner salaryRangeSpinner'));
+        
 
            $.ajaxSetup({
             headers: {
@@ -260,13 +279,43 @@ var CProfile = function() {
         // console.log(abc);
     }
 
-    // Edit Qualification Start 
+// Edit Salary Range End Here 
 
+//  ======================================= Edit Questions Start =======================================
 
+    this.updateQuestions = function(){
+        var items = {}; 
+        $('select.jobSeekerRegQuestion').each(function(index,el){  
+        // console.log(index, $(el).attr('name')  , $(el).val()   );  
+            // items.push({name:  $(el).attr('name') , value: $(el).val()});
+            var elem_name = $(el).attr('name'); 
+            var elem_val = $(el).val(); 
+            items[elem_name] = elem_val; 
+            // items.push({elem_name : elem_val });
+        });
 
-// Edit Qualification end here
+        // console.log(items);
 
-// New Edit Salary Range End Here
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/updateQuestions',
+            data: {'questions': items},
+            success: function(data){
+                // console.log('come'+data);
+                if(data){
+                    // $('.recentJobSpinner').remove();
+                }
+            }
+        });
+    }
+
+//  ======================================= Edit Questions End  =======================================
 
 
     // this.showBasicFieldEditor = function(item){

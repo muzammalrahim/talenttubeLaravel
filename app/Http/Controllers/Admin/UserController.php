@@ -180,6 +180,7 @@ class UserController extends Controller
         $data['cities'] = array();
         $data['userquestion'] = getUserRegisterQuestions();
         $data['industry_experience'] = getIndustries();
+        
         $data['salaryRange'] = getSalariesRange();
 
         
