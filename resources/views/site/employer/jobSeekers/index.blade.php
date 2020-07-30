@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="newJobCont">
-    <div class="head icon_head_browse_matches">Job Seekers List 2</div>
+    <div class="head icon_head_browse_matches">Job Seekers List</div>
 
     
     <div class="add_new_job jobSeekersListingCont">

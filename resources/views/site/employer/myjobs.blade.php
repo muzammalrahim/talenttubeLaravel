@@ -9,12 +9,8 @@
 @section('content')
 <div class="newJobCont">
     <div class="head icon_head_browse_matches">My Jobs</div>
-
     <div class="add_new_job">
-        {{-- @dump($jobs) --}}
-        <div class="job_row_heading jobs_filter">
-
-        </div>
+        <div class="job_row_heading jobs_filter"></div>
 
         @if ($jobs->count() > 0)
         @foreach ($jobs as $job)
@@ -23,7 +19,8 @@
             <div class="job_heading p10">
                 <h3 class=" job_title"><a>{{$job->title}}</a></h3>
                 <div class="job_location">
-                    <span>Location : </span>{{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
+                    <span>Location : </span>
+                    {{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
                 </div>
             </div>
 
@@ -65,7 +62,8 @@
                     <div class="j_value"><a href="{{route('empJobApplications',['id' => $job->id])}}">{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</a></div>
                 </div>
 
-                <div class="w_25p fl_right">
+                <div class="w50 fl_right">
+                    <div class="j_button dinline_block fl_right m5"><a class="jobDetailBtn graybtn jbtn " href="{{route('jobDetail',['id' => $job->id])}}">Detail</a></div>
                     <div class="j_button dinline_block fl_right m5"><a class="graybtn jbtn" href="{{route('employerJobEdit',['id' => $job->id])}}">Edit</a></div>
                     <div class="j_button dinline_block fl_right m5"><a class="myJobDeleteBtn graybtn jbtn"  data-jobid="{{$job->id}}">Delete</a></div>
                 </div>

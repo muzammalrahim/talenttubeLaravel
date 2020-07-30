@@ -85,7 +85,7 @@
 									<div class="name">Location</div>
 								</th>
 								<td>
-									<div class="field">
+									{{-- <div class="field">
                                         <div id="country-styler" data-location="geo_states">
                                             <select name="country" id="country" data-location="geo_states" class="geo select_main" onchange="UProfile.GetLocation('geo_states');" >
                                                 <option value="0">Select Country</option>
@@ -95,7 +95,7 @@
                                             </select>
                                             <div id="country_error" class="error to_hide">&nbsp;</div>
 										</div>
-									</div>
+									</div> --}}
 								</td>
 							</tr>
 							<tr>

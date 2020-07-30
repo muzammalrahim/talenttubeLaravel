@@ -6,139 +6,73 @@
 		<div class="cont">
 			<div class="bl_frm bl_frm_editor" style="height: auto; opacity: 1; transition: height 0.3s linear 0s, opacity 0.3s linear 0s;">
 				<form id="frm_profile_edit_main" name="frm_profile_edit_main" method="post">
-                    {{ csrf_field() }}
+					{{ csrf_field() }}
 					<input type="hidden" name="cmd" value="profile_edit_main_save" class="ajax">
 					<input type="hidden" name="ajax" class="ajax" value="0">
-					<table class="tb_frm frm_edit_main">
+					<table class="tb_frmX frm_edit_main">
 						<tbody>
 						<tr>
-                            <th><div class="name">Name or nickname</div></th>
-                            <td>
-                               {{-- @dump($user)  --}}
-                            <div class="field">
-                                <input id="profile_edit_main_nickname" class="inp nickname" name="nickname" type="text" value="{{$user->name}}" 
-                                title="The username needs to be between 3 and 20 symbols in length.">
-                                <div id="nickname_error" class="error to_hide">&nbsp;</div>
-                            </div>
-                            </td>
+							<th><div class="name">Company Name</div></th>
+							<td>
+                <div class="field">
+                    <input id="profile_edit_main_nickname" class="inp nickname" name="nickname" type="text" value="{{$user->name}}" 
+                    title="The username needs to be between 3 and 20 symbols in length.">
+                    <div id="nickname_error" class="error to_hide">&nbsp;</div>
+                </div>
+              </td>
 						</tr>
 						<tr>
-                        <th><div class="name">I am a</div></th>
-                        <td>
-                            <div class="fieldX">
-                                <div id="profile_edit_main_orientation-styler">
-                                    {{-- 
-                                    <select id="profile_edit_main_orientation" name="orientation" class="select_main">
-                                        <option value="1" {{(!isTypeEmployer($user))?'selected="selected"'}} >Job Seeker</option>
-                                        <option value="2" {{(isTypeEmployer($user))?'selected="selected"'}} >Employer</option>
-                                    </select> 
-                                    --}}
-                                    {{(isTypeEmployer($user))?'Employer':'Job Seeker'}}
-                                </div>
-                            </div>
-                        </td>
+            <th><div class="name">I am a</div></th>
+            <td>
+                <div class="fieldX">
+                    <div id="profile_edit_main_orientation-styler">
+                        {{(isTypeEmployer($user))?'Employer':'Job Seeker'}}
+                    </div>
+                </div>
+            </td>
 						</tr>
+							{{-- Location --}}
 							<tr>
-								<th>
-									<div class="name">Birthday</div>
-								</th>
+								<th><div class="name">Location</div></th>
 								<td>
-									<div id="profile_edit_main_birthday" class="field birthday">
-										<div id="profile_edit_main_day-styler" >
-											<select id="profile_edit_main_day" name="day" class="select_main day">
-                                                @for ($i=1; $i < 31; $i++)
-                                                    <option value="{{$i}}" {{($user->bday == $i)?'selected="selected"':''}}>{{$i}}</option>
-                                                @endfor
-											</select>
-                                            <div id="day_error" class="error to_hide">&nbsp;</div>
-										</div>
-										<div id="profile_edit_main_month-styler">
-                                            <select id="profile_edit_main_month" name="month" class="select_main month" 
-                                                onchange="updateDay('month','frm_profile_edit_main','year','month','day', UProfile.refreshSelectBirthdayEditMain)"
-                                                data-search="false">
-												<option value="1"  {{($user->bmonth == 1)?'selected="selected"':''}} >January</option>
-												<option value="2" {{($user->bmonth == 2)?'selected="selected"':''}}>February</option>
-												<option value="3" {($user->bmonth == 3)?'selected="selected"':''}} >March</option>
-												<option value="4" {($user->bmonth == 4)?'selected="selected"':''}} >April</option>
-												<option value="5" {($user->bmonth == 5)?'selected="selected"':''}} >May</option>
-												<option value="6" {($user->bmonth == 6)?'selected="selected"':''}} >June</option>
-												<option value="7" {($user->bmonth == 7)?'selected="selected"':''}} >July</option>
-												<option value="8" {($user->bmonth == 8)?'selected="selected"':''}} >August</option>
-												<option value="9" {($user->bmonth == 9)?'selected="selected"':''}} >September</option>
-												<option value="10" {{($user->bmonth == 10)?'selected="selected"':''}} >October</option>
-												<option value="11" {{($user->bmonth == 11)?'selected="selected"':''}} >November</option>
-												<option value="12" {{($user->bmonth == 12)?'selected="selected"':''}}>December</option>
-                                            </select>
-                                            <div id="month_error" class="error to_hide">&nbsp;</div>
-										</div>
-										<div id="profile_edit_main_year-styler">
-                                            <select id="profile_edit_main_year" name="year" class="select_main year" 
-                                            onchange="updateDay('year','frm_profile_edit_main','year','month','day', UProfile.refreshSelectBirthdayEditMain)">
-                                            @for ($y=now()->year; $y > 1945; $y--)
-                                                <option value="{{$y}}" {{($user->byear == $y)?'selected="selected"':''}}>{{$y}}</option>
-                                            @endfor
-                                            </select>
-                                            <div id="year_error" class="error to_hide">&nbsp;</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<div class="name">Location</div>
-								</th>
-								<td>
-									<div class="field">
-                                        <div id="country-styler" data-location="geo_states">
-                                            <select name="country" id="country" data-location="geo_states" class="geo select_main" onchange="UProfile.GetLocation('geo_states');" >
-                                                <option value="0">Select Country</option>
-                                                @foreach ($geo_country as $country)
-                                                    <option value="{{$country->country_id}}" {{($user->country == $country->country_id)?'selected="selected"':''}}>{{$country->country_title}}</option>
-                                                @endforeach
-                                            </select>
-                                            <div id="country_error" class="error to_hide">&nbsp;</div>
-										</div>
-									</div>
-								</td>
-							</tr>
-							<tr>
-								<th>
-									<div class="name">&nbsp;</div>
-								</th>
-								<td>
+									<div class="locationContainer">
+										<div class="bl bl_location">
+                     
+                        <div class="location_filed">
+                            <div class="location_input dtable w100">
+                                <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" 
+                                value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
+                               {{--  <button type="button" id="location_search_load" class="btn btn-success location_search_btn w20 fl_left">Search</button> --}}
+                            </div>
+                            <div class="location_latlong dtable w100">
+                                <input type="text" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="{{$user->location_lat}}" placeholder="Lat" readonly="true" aria-invalid="false">
+                                <input type="text" class="location_long w50 fl_left" name="location_long" id="location_long" value="{{$user->location_long}}" placeholder="Long" readonly="true" aria-invalid="false">
 
-									<div class="field">
-                      <div id="state-styler" data-location="geo_cities">
-                      	<select name="state" id="state" data-location="geo_cities" class="geo select_main" onchange="UProfile.GetLocation('geo_cities');" data-search="true">
-                      		<option value="0">Choose State</option>
-                      		 @foreach ($geo_state as $state)
-                              <option value="{{$state->state_id}}" {{($user->state == $state->state_id)?'selected="selected"':''}}>{{$state->state_title}}</option>
-                           @endforeach
-												</select>
-                       <div id="state_error" class="error to_hide">&nbsp;</div>
-										</div>
+                                <input type="hidden" name="location_name" id="location_name"  value="">
+                                <input type="hidden" name="location_city" id="location_city"  value="">
+                                <input type="hidden" name="location_state" id="location_state"  value="">
+                                <input type="hidden" name="location_country" id="location_country"  value="">
+                            </div>
+
+                            <div class="location_map_box dtable w100">
+                                <div class="location_map" id="location_map"></div>
+                            </div>
+                        </div>
+
+                        <span id="location_city_error" class="error to_hide hide_it">Location City Field is Required</span>
+                        <span id="location_state_error" class="error to_hide hide_it">Location State Field is Required</span>
+                        <span id="location_country_error" class="error to_hide hide_it">Location Country Field is Required</span>
+
+                        <div class="cl"></div>
+                    </div>
 									</div>
 								</td>
 							</tr>
-							<tr>
-								<th>
-									<div class="name">&nbsp;</div>
-								</th>
-								<td>
-									<div id="profile_edit_main_location" class="field">
-										<div id="city-styler">
-											<select name="city" id="city" class="select_main">
-	                        <option value="0">Choose City</option>
-	                        @foreach ($geo_city as $city)
-                              <option value="{{$city->city_id}}" {{($user->city == $city->city_id)?'selected="selected"':''}}>{{$city->city_title}}</option>
-                           @endforeach
-	                    </select>
-                      <div id="city_error" class="error to_hide">&nbsp;</div>
-										</div>
-									</div>
-									<div class="error_frm"></div>
-								</td>
-							</tr>
+							{{-- Location end --}}
+
+
+
+
 						</tbody>
 					</table>
 				</form>
@@ -173,4 +107,6 @@
 		</div>
 	</div>
 </div>
+
+
 </div>

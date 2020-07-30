@@ -62,6 +62,10 @@
 
 <script src="{{ asset('js/site/userProfile.js') }}"></script>
 
+
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/site/location_gmap.js') }}"></script> --}}
+
 @yield('custom_footer_css')
 @yield('custom_js')
 

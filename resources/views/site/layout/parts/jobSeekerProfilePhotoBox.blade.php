@@ -33,8 +33,9 @@ $profile_image_gallery    = $js->profileImage()->first();
                 @endforeach
             </div>
         </div>
-        {{-- <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}"> --}}
+        @if($js->vidoes->count() > 0)
         <a onclick="profileVideoShow('{{assetVideo($js->vidoes->first())}}')" class="js_video_link" target="_blank">{!! generateVideoThumbs($js->vidoes->first()) !!}</a>
+        @endif
     </div>
     <div class="js_info center">
         <div class="js_name"><h4 class="bold">{{$js->name}} {{$js->surname}}</h4></div>

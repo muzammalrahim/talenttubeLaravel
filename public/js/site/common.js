@@ -84,6 +84,11 @@ $(function () {
 
 $(document).ready(function(){
 
+    //====================================================================================================================================//
+        // Initlize Datepicker 
+    //====================================================================================================================================//
+    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+
     // Save New job button click //
     /////////////////////////////////////////////////////////////////
     $('.saveNewJob').on('click',function() {
@@ -126,6 +131,143 @@ $(document).ready(function(){
 
 
 
+
+    //====================================================================================================================================//
+    // Function to like user.
+    //====================================================================================================================================//
+    $(document).on('click','.jsLikeUserBtn',function(){
+        var btn = $(this);
+        var jobseeker_id = $(this).data('jsid');
+        console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
+        // $(this).html(getLoader('blockJobSeekerLoader'));
+        $(this).html('..');
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
+            success: function(data){
+                btn.prop('disabled',false);
+                if( data.status == 1 ){
+                    btn.html('Liked');
+                    btn.addClass('active');
+                    // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+                }else{
+                    btn.html('error');
+                }
+            }
+        });
+    });
+
+
+
+
+
+
+    // ========== Function to show popup when click on jobApplyBtn ==========//
+    $('#jobApplyModal').on($.modal.OPEN, function(event, modal) {
+        var job_id = $('#openModalJobId').val();
+        console.log(' job_id ', job_id);
+        console.log(' after open ', event);
+        $.ajax({
+        type: 'GET',
+            url: base_url+'/ajax/jobApplyInfo/'+job_id,
+            success: function(data){
+                $('#jobApplyModal .cont').html(data);
+            }
+        });
+    });
+
+    $('.jobApplyBtn').on('click',function(){
+        var job_id = $(this).attr('data-jobid');
+        $('#openModalJobId').val(job_id);
+        $('#jobApplyModal .cont').html(getLoader('css_loader loader_edit_popup'));
+        $('#jobApplyModal').modal({
+            fadeDuration: 200,
+            fadeDelay: 2.5
+        });
+    });
+    //========== jobApplyBtn clck end. ==========
+
+    // ========== Function to submit job application ==========//
+    $(document).on('click','.submitApplication',function(){
+        event.preventDefault();
+        console.log(' submitApplication submit click ');        
+        $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
+        var applyFormData = $('#job_apply_form').serializeArray()
+        $.ajax({
+        type: 'POST',
+            url: base_url+'/ajax/jobApplySubmit',
+            data: applyFormData,
+            success: function(data){
+                $('.submitApplication').html('Submit').prop('disabled',false);
+                console.log(' data ', data );
+                if (data.status == 1){
+                     $('#job_apply_form').html(data.message);
+                }else {
+                     $('#job_apply_form').html(data.error);
+                }
+            }
+        });
+    });
+    //========== jobSubmitApplyBtn clck end. ==========
+
+
+    $(document).on('keyup','textarea[name="application_description"]',function(){
+         console.log(' application_description changed '); 
+         var application_description = $.trim($('textarea[name="application_description"]').val());
+         $('.characterCount .count').text(application_description.length);
+         if(application_description.length < 250){
+            $('.submitApplication').prop('disabled', true);
+            $('.characterCount').removeClass('hide_it');
+         }else{
+            $('.submitApplication').prop('disabled', false);
+            $('.characterCount').addClass('hide_it');
+         }
+         
+         console.log(' application_description ', application_description); 
+    }); 
+ 
+ 
+
+
+
+
+
+//====================================================================================================================================//
+// Function to display sub qualification on base of qualification type. 
+//====================================================================================================================================//
+$(document).on('change','select.filter_qualification_type', function() {
+    var degreeType =  $(this).val();
+     if (degreeType != ''){ degreeType = (degreeType == 'trade')?'trade':'degree';}
+     $(this).closest('.searchField_qualification').attr('class','searchField_qualification '+degreeType);
+     $('.dot_list li').removeClass('active');
+     $('.searchField_qualification .dot_list_li_hidden').remove();
+});
+$(document).on('click','.dot_list li', function(){
+    console.log(' dot_list li click '); 
+    if($(this).hasClass('active')){
+        $(this).removeClass('active');
+        $(this).find('.dot_list_li_hidden').remove();
+    }else{
+        $(this).addClass('active');
+        var type = $(this).attr('data-type'); 
+        var qualif_value = $(this).attr('data-id');
+        var input_hidden_html = '<input type="hidden" class="dot_list_li_hidden" name="'+type+'" value="'+qualif_value+'" />'; 
+        $(this).append(input_hidden_html);
+    }
+     
+});
+
+
+
+
+//====================================================================================================================================//
+// Function to display Industry experience list. 
+//====================================================================================================================================//
+$('input[name="filter_industry_status"]').change(function() {
+    console.log(' filter_industry_status '); 
+    (this.checked)?(jQuery('.filter_industryList').removeClass('hide_it')):(jQuery('.filter_industryList').addClass('hide_it'));  
+});
 
 
 });

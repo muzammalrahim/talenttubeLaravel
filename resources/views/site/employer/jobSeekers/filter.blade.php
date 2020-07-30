@@ -7,7 +7,7 @@
     {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'jobSeeker_filter_form' )) }}
     <input type="hidden" name="page" id="paginate" value="">
    
-   <div class="searchField_qualification mb10">
+ {{--   <div class="searchField_qualification mb10">
         <div class="searchFieldLabel dinline_block">Qualification: </div>
         <select class="dinline_block select_aw" name="filter_qualification_type" data-placeholder="Select Qalification & Trades">
              <option value="">Select Qalification & Trades</option>
@@ -16,7 +16,34 @@
              <option value="degree">University Degree</option>
              <option value="post_degree">University Post Graduate (Masters or PHD)</option>
         </select>
+    </div> --}}
+     <div class="searchField_qualification mb10">
+        <div class="searchFieldLabel dinline_block">Qualification: </div>
+        <select class="dinline_block filter_qualification_type" name="filter_qualification_type" data-placeholder="Select Qalification & Trades">
+             <option value="">Select Qalification & Trades</option>
+             <option value="certificate">Certificate or Advanced Diploma</option>
+             <option value="trade">Trade Certificate</option>
+             <option value="degree">University Degree</option>
+             <option value="post_degree">University Post Graduate (Masters or PHD)</option>
+        </select>
+
+        @php
+         $qualifications = getQualificationsList();
+        @endphp
+        @if(!empty($qualifications))
+        <div class="filter_qualificaton_degree">
+            <ul class="qualification_ul item_ul dot_list">
+                @foreach ($qualifications as $qualif)
+                    <li class="{{$qualif['type']}}" data-id="{{$qualif['id']}}" data-type="ja_filter_qualification[]">
+                        <span>{{$qualif['title']}}</span>
+                    </li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
     </div>
+
+
 
     <div class="searchField_salaryRange dblock mb10">
         <div class="searchFieldLabel dinline_block">Salary Range: </div>
@@ -28,10 +55,29 @@
         </select>
     </div>
 
-    <div class="searchField_keyword dblock mb10">
-        <div class="searchFieldLabel dinline_block">Keyword: </div>
-        <input type="text" name="filter_keyword">
+     <div class="searchField_industry mb10">
+        <div class="searchFieldLabel dinline_block">Filter by Industry: </div>
+        <div class="toggleSwitchButton dinline_block"><label class="switch"><input type="checkbox" name="filter_industry_status"></label></div>
+        {{-- industry selection --}}
+        <div class="filter_industryList hide_it">
+            @php 
+                $industries = getIndustries()
+            @endphp
+            @if(!empty($industries))
+            <div class="filter_industries_list ">
+                <ul class="industries_ul item_ul dot_list">
+                    @foreach ($industries as $indK => $indV)
+                        <li class="" data-id="{{$indK}}" data-type="filter_industry[]"><span>{{$indV}}</span></li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+        </div>
+        {{-- industry selection --}}        
     </div>
+
+
+   
 
     <div class="searchField_location mb10">
         <div class="searchFieldLabel dinline_block">Filter by Location: </div>
@@ -103,6 +149,12 @@
 
       </div>
 
+    </div>
+
+
+     <div class="searchField_keyword dblock mb10">
+        <div class="searchFieldLabel dinline_block">Keyword: </div>
+        <input type="text" name="filter_keyword">
     </div>
     
 

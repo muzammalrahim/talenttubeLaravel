@@ -422,59 +422,60 @@ $(document).on('click','.jsLikeUserBtn',function(){
 
 
  // ========== Function to show popup when click on jobApplyBtn ==========//
- $('#jobApplyModal').on($.modal.OPEN, function(event, modal) {
-    var job_id = $('#openModalJobId').val();
-    console.log(' job_id ', job_id);
-    console.log(' after open ', event);
-    $.ajax({
-    type: 'GET',
-        url: base_url+'/ajax/jobApplyInfo/'+job_id,
-        success: function(data){
-            $('#jobApplyModal .cont').html(data);
-        }
-    });
-});
+ // $('#jobApplyModal').on($.modal.OPEN, function(event, modal) {
+ //    var job_id = $('#openModalJobId').val();
+ //    console.log(' job_id ', job_id);
+ //    console.log(' after open ', event);
+ //    $.ajax({
+ //    type: 'GET',
+ //        url: base_url+'/ajax/jobApplyInfo/'+job_id,
+ //        success: function(data){
+ //            $('#jobApplyModal .cont').html(data);
+ //        }
+ //    });
+// });
 
 
-$('.jobApplyBtn').on('click',function(){
-    var job_id = $(this).attr('data-jobid');
-    $('#openModalJobId').val(job_id);
-    $('#jobApplyModal .cont').html(getLoader('css_loader loader_edit_popup'));
-    $('#jobApplyModal').modal({
-        fadeDuration: 200,
-        fadeDelay: 2.5
-    });
-});
+// $('.jobApplyBtn').on('click',function(){
+//     var job_id = $(this).attr('data-jobid');
+//     $('#openModalJobId').val(job_id);
+//     $('#jobApplyModal .cont').html(getLoader('css_loader loader_edit_popup'));
+//     $('#jobApplyModal').modal({
+//         fadeDuration: 200,
+//         fadeDelay: 2.5
+//     });
+// });
 
 //========== jobApplyBtn clck end. ==========
 
 
 // ========== Function to submit job application ==========//
-$(document).on('click','.submitApplication',function(){
-    event.preventDefault();
-    // var job_id = $(this).attr('data-jobid');
-    console.log(' submitApplication submit click ');
-    $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
+// $(document).on('click','.submitApplication',function(){
+//     event.preventDefault();
+//     // var job_id = $(this).attr('data-jobid');
+//     console.log(' submitApplication submit click ');
+//     $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
 
-    var applyFormData = $('#job_apply_form').serializeArray()
-    $.ajax({
-    type: 'POST',
-        url: base_url+'/ajax/jobApplySubmit',
-        data: applyFormData,
-        success: function(data){
-            $('.submitApplication').html('Submit').prop('disabled',false);
-            console.log(' data ', data );
-            if (data.status == 1){
-                 $('#job_apply_form').html(data.message);
-            }else {
-                 $('#job_apply_form').html(data.error);
-            }
+//     var applyFormData = $('#job_apply_form').serializeArray()
+//     $.ajax({
+//     type: 'POST',
+//         url: base_url+'/ajax/jobApplySubmit',
+//         data: applyFormData,
+//         success: function(data){
+//             $('.submitApplication').html('Submit').prop('disabled',false);
+//             console.log(' data ', data );
+//             if (data.status == 1){
+//                  $('#job_apply_form').html(data.message);
+//             }else {
+//                  $('#job_apply_form').html(data.error);
+//             }
 
 
 
-        }
-    });
-});
+//         }
+//     });
+// });
+
 //========== jobSubmitApplyBtn clck end. ==========
 
 });

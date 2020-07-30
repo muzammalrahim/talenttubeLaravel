@@ -80,9 +80,7 @@ class SiteUserController extends Controller
             // $data['industry_experience'] = getIndustries();
             $data['industriesList'] = getIndustries();
             $data['userquestion'] = getUserRegisterQuestions();
-
-        
-            $view_name = 'site.user.profile.profile';
+            $view_name = 'site.user.profile.profile'; // site/user/profile/profile
             return view($view_name, $data);
         } else {
             return view('site.404');
@@ -222,19 +220,21 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     // save post user profile data. posted from profile setting page
     //====================================================================================================================================//
-    public function updateUserProfile(Request $request)
-    {
-        // dump( $request->toArray() );
-
+    public function updateUserProfile(Request $request) { 
         $rules = array(
             'nickname' => 'required',
             'biirth_day' => 'day|integer',
             'birth_month' => 'month|integer',
             'birth_year' => 'year|integer',
-            'country' => 'required|integer',
-            'state' => 'required|integer',
-            'city' => 'required|integer',
+
+            'location_name' => 'max:100',
+            'location_country' => 'max:100',
+            'location_state' => 'max:100',
+            'location_city' => 'max:100',
+            'location_lat' => 'max:50',
+            'location_long' => 'max:50',
         );
+
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json([
@@ -243,29 +243,31 @@ class SiteUserController extends Controller
             ]);
         } else {
             // check country state city correction.
-            $geo_country = \App\GeoCountry::where('country_id', $request->country)->first();
-            if (!$geo_country) {
-                return response()->json([
-                    'status' => 0,
-                    'validator' =>  $validator->errors()->add('country', 'Wrong Country id')
-                ]);
-            }
-            $geo_validate_state = $geo_country->validateState($request->state);
-            if (!$geo_validate_state) {
-                $validator->errors()->add('state', 'Wrong State selected');
-                return response()->json([
-                    'status' => 0,
-                    'validator' => $validator->getMessageBag()->toArray()
-                ]);
-            }
-            $geo_validate_city  = $geo_country->validateCity($request->state, $request->city);
-            if (!$geo_validate_city) {
-                $validator->errors()->add('city', 'Wrong City selected');
-                return response()->json([
-                    'status' => 0,
-                    'validator' => $validator->getMessageBag()->toArray()
-                ]);
-            }
+            // $geo_country = \App\GeoCountry::where('country_id', $request->country)->first();
+            // if (!$geo_country) {
+            //     return response()->json([
+            //         'status' => 0,
+            //         'validator' =>  $validator->errors()->add('country', 'Wrong Country id')
+            //     ]);
+            // }
+            // $geo_validate_state = $geo_country->validateState($request->state);
+            // if (!$geo_validate_state) {
+            //     $validator->errors()->add('state', 'Wrong State selected');
+            //     return response()->json([
+            //         'status' => 0,
+            //         'validator' => $validator->getMessageBag()->toArray()
+            //     ]);
+            // }
+            // $geo_validate_city  = $geo_country->validateCity($request->state, $request->city);
+            // if (!$geo_validate_city) {
+            //     $validator->errors()->add('city', 'Wrong City selected');
+            //     return response()->json([
+            //         'status' => 0,
+            //         'validator' => $validator->getMessageBag()->toArray()
+            //     ]);
+            // }
+
+            // $lati = $request->location_lat;
 
             $user = Auth::user();
             $user->name = $request->nickname;
@@ -275,26 +277,21 @@ class SiteUserController extends Controller
             $user->bday = $request->day;
             $user->bmonth = $request->month;
             $user->byear = $request->year;
+            $user->location_lat     = $request->location_lat;
+            $user->location_long    = $request->location_long;
+            $user->location         = $request->location_name;
+            $user->country = $request->location_country;
+            $user->state = $request->location_state;
+            $user->city = $request->location_city;
+
 
             try {
-
                 $user->save();
-
                 $html_userProfileLocation  = '<ul class="list_info userProfileLocation">'; 
                 $html_userProfileLocation .= '<li><span id="list_info_age">'.$user->age.'</span><span class="basic_info">•</span></li>'; 
-                $html_userProfileLocation .= '<li id="list_info_location">'; 
-                $html_userProfileLocation .= ($user->GeoCity)?($user->GeoCity->city_title):'';
-                $html_userProfileLocation .= ', ';
-                $html_userProfileLocation .= ($user->GeoState)?($user->GeoState->state_title):'';
-                $html_userProfileLocation .= ', ';
-                $html_userProfileLocation .= ($user->GeoCountry)?($user->GeoCountry->country_title):''; 
-                $html_userProfileLocation .= '</li>';
-
-
-
+                $html_userProfileLocation .= '<li id="list_info_location">'.userLocation($user).'</li>';
                 $html_userProfileLocation .= '<li><span class="basic_info">•</span><span id="list_info_gender">'.(isTypeEmployer($user)?'Employer':'Job Seeker').'</span></li>';
                 $html_userProfileLocation .= '</ul>';
-
 
                 return response()->json([
                     'status' => 1,
@@ -1033,7 +1030,7 @@ class SiteUserController extends Controller
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
         $data['jobs'] = Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-        return view('site.jobs.jobs', $data);
+        return view('site.jobs.jobs', $data); // site/jobs/jobs 
     }
 
 
@@ -1058,7 +1055,6 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     public function jobApplySubmit(Request $request){
         $user = Auth::user();
-
         $requestData = $request->all();
         $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
 
@@ -1068,7 +1064,6 @@ class SiteUserController extends Controller
                 $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']); 
             }  
         }
-
 
         $job = Jobs::find($requestData['job_id']);
         // check to confirm job with id exist
@@ -1087,10 +1082,20 @@ class SiteUserController extends Controller
                 ]);
             }
 
+
+            // check application description which is mandatory. 
+            if(empty($request->application_description)){
+                 return response()->json([
+                    'status' => 0,
+                    'error' => 'Please answer all mandatory question.'
+                ]);
+            }
+
             $newJobApplication = new JobsApplication();
             $newJobApplication->user_id = $user->id;
             $newJobApplication->job_id = $job->id;
             $newJobApplication->status = 'applied';
+            $newJobApplication->description = $request->application_description;
             // $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
             // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
             $newJobApplication->save();
@@ -1406,6 +1411,23 @@ class SiteUserController extends Controller
             ]);
 
         }
+    }
+
+
+
+
+    //====================================================================================================================================//
+    // Get // show job detail page.
+    //====================================================================================================================================//
+    function jobDetail(Jobs $id){
+        // dd($job);
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Job Detail';
+        $data['classes_body'] = 'jobDetail';
+        $data['job'] = $id;
+        return view('site.jobs.jobDetail', $data);
+
     }
     
 

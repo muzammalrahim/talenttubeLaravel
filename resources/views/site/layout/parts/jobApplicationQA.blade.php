@@ -21,4 +21,9 @@
         </div>         
  @endif
 
+<div class="jobAppDescriptionBox">
+    <span>{{jobApplicationMandatoryQuestion()}}</span>
+    <div class="jobAppDescription">{{$application->description}}</div>
+</div>
+
 </div>

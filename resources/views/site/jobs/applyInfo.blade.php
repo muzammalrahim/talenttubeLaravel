@@ -27,9 +27,11 @@
                 <div class="form_qstn_options">
                     @if(!empty($question->options))
 
-                 {{--    @dump($question)
+                    {{--    
+                    @dump($question)
                     @dump($question->options)
-                    @dump(is_array($question->options)) --}}
+                    @dump(is_array($question->options)) 
+                    --}}
 
                         <select name="answer[{{$question['id']}}][option]">
                             @foreach($question->options as $option)
@@ -47,11 +49,20 @@
     @endif
 
 
+    <div class="ja_description">
+        <div class="form_qstn">
+             {{ jobApplicationMandatoryQuestion() }}
+        </div>
+        <div class="ja_descriptionAnswer">
+            <textarea name="application_description" class="w100" title="Add a 250 character word minimum" style="height: 100px;"></textarea>
+            <div class="characterCount"><span class="count">0</span> / 250 minimum character</div>
+        </div>
+    </div>
 
 
     <input type="hidden" name="job_id" value="{{$job->id}}" />
     <div class="fomr_btn act_field center">
-        <button class="btn small turquoise submitApplication">Submit</button>
+        <button class="btn small turquoise submitApplication" disabled>Submit</button>
     </div>
 
     </form>
