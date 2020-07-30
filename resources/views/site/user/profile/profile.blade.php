@@ -94,15 +94,7 @@
     
 
 
-           {{--  <div class="title_interest">
-                <strong>I am looking for</strong>
-                <div class="icon_edit"><span onclick="Profile.showLookingForEditor();"></span></div>
-            </div>
-            <ul class="list_interest">
-                <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Job Seeker</span></li>
-                <li><span class="basic_info">•</span><span id="info_looking_for_ages">Ages 18-100</span></li>
-                <li><span class="basic_info">•</span><span id="info_looking_for_near_me">Near me</span></li>
-            </ul> --}}
+           
         </div>
         <div class="cl"></div>
     </div>

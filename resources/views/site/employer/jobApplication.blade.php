@@ -15,31 +15,29 @@
     {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'job_applications_filter_form' )) }}
         <input type="hidden" name="page" id="paginate" value="">
         <input type="hidden" name="job_id" value="{{$job->id}}">
-        {{-- 
-        <div class="searchFieldLocation mb10 dblock">
-            <div class="searchFieldLabel dinline_block">Location: </div>
-            <div class="searchField filterCountry country_dd">
-                <select name="ja_filter_country" class=""  data-placeholder="Select Country">
-                    <option value="">Select Country</option>
-                     @foreach(get_Geo_Country() as $country)
-                       <option value="{{$country->country_id}}" >{{$country->country_title}}</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="searchField filterState state_dd"><select name="ja_filter_state" class=""></select></div>
-            <div class="searchField filterState city_dd"><select name="ja_filter_city" class=""></select></div>
-        </div> 
-        --}}
 
         <div class="searchField_qualification mb10">
             <div class="searchFieldLabel dinline_block">Qualification: </div>
-            <select class="dinline_block" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
+            <select class="dinline_block filter_qualification_type" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
                  <option value="">Select Qalification & Trades</option>
                  <option value="certificate">Certificate or Advanced Diploma</option>
                  <option value="trade">Trade Certificate</option>
                  <option value="degree">University Degree</option>
                  <option value="post_degree">University Post Graduate (Masters or PHD)</option>
             </select>
+
+            @php ($qualifications = getQualificationsList())
+            @if(!empty($qualifications))
+            <div class="filter_qualificaton_degree">
+                <ul class="qualification_ul item_ul dot_list">
+                    @foreach ($qualifications as $qualif)
+                        <li class="{{$qualif['type']}}" data-id="{{$qualif['id']}}" data-type="ja_filter_qualification[]">
+                            <span>{{$qualif['title']}}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
         </div>
 
         <div class="searchField_salaryRange dblock mb10">
@@ -51,6 +49,27 @@
                 @endforeach
             </select>
         </div>
+
+        <div class="searchField_industry mb10">
+            <div class="searchFieldLabel dinline_block">Filter by Industry: </div>
+            <div class="toggleSwitchButton dinline_block"><label class="switch"><input type="checkbox" name="filter_industry_status"></label></div>
+            {{-- industry selection --}}
+            <div class="filter_industryList hide_it">
+                @php ($industries = getIndustries())
+                @if(!empty($industries))
+                <div class="filter_industries_list ">
+                    <ul class="industries_ul item_ul dot_list">
+                        @foreach ($industries as $indK => $indV)
+                            <li class="" data-id="{{$indK}}" data-type="filter_industry[]"><span>{{$indV}}</span></li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+            </div>
+            {{-- industry selection --}}        
+        </div>
+
+       
 
         <div class="searchField_location mb10">
             <div class="searchFieldLabel dinline_block">Filter by Location: </div>
@@ -79,7 +98,7 @@
 
         <div class="searchField_questions mb10">
             <div class="searchFieldLabel dinline_block">Filter by Question: </div>
-            <div class="toggleSwitchButton dinline_block p10"><label class="switch"><input type="checkbox" name="filter_by_questions"></label></div>
+            <div class="toggleSwitchButton dinline_block"><label class="switch"><input type="checkbox" name="filter_by_questions"></label></div>
             <div class="filter_question_cont hide_it">
                  <div class="questionFilter">
                  @if(varExist('questions', $job))
@@ -107,6 +126,18 @@
         <div class="searchField_keyword dblock mb10">
             <div class="searchFieldLabel dinline_block">Keyword: </div>
             <input type="text" name="ja_filter_keyword">
+        </div>
+
+        <div class="searchField_sortBy dblock mb10">
+            <div class="sortByFieldLabel dinline_block">Sort By: </div>
+            <select name="ja_filter_sortBy">
+              <option value="goldstars">Gold Stars</option>
+              <option value="applied">Applied</option>
+              <option value="inreview">In Review</option>
+              <option value="interview">Interview</option>
+              <option value="unsuccessful">Unsuccessful</option>
+              <option value="all_candidates">All candidates</option>
+            </select>
         </div>
         
         <div class="searchField_action">
@@ -152,8 +183,7 @@
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
+<script src="{{ asset('js/site/common.js') }}"></script> 
 
 <script type="text/javascript">
 $(document).ready(function() {
@@ -227,79 +257,43 @@ $(document).ready(function() {
         getData();
     });
 
+    // change job application status, send ajax. 
+    $(document).on('change','select.jobApplicStatus',function(e){
+        console.log(' jobApplicStatus change ', $(this)); 
+        var statusElem = $(this); 
+        var status = $(this).val(); 
+        var application_id = $(this).attr('data-application_id'); 
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/changeJobApplicationStatus',
+            data: {status: status, application_id: application_id},
+            success: function(data){
+                var jobAppStatusHtml = '<span class="jobApplicationStatusResponse">Updated Succesfully</span>'; 
+                statusElem.closest('.jobApplicationStatusCont').append(jobAppStatusHtml);
+                setTimeout(function(){  
+                  statusElem.closest('.jobApplicationStatusCont').find('.jobApplicationStatusResponse').remove();
+                },1500);
+            }
+        });
+    });
+
     // function to send ajax call for getting data throug filter/Pagination selection. 
     var getData = function(){
         var url = '{{route('jobAppFilter')}}';
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.post(url, $('#job_applications_filter_form').serialize(), function(data){
             $('.job_applications').html(data);
+            $('.jobApplicationStatusCont select').styler({ selectSearch: true,});
         });
     }
     
     // initially when page load trigger the ajax call to get data. 
     getData();
 
-
-
-
-
-  // // on country dorop down change update the state drop down. 
-  //  $(document).on('change','.country_dd', function(){
-  //    console.log(' country_dd ',this);
-  //    var country_id = $('.country_dd select').val();
-  //    var type = 'geo_states';
-  //    console.log(' country_id ', country_id)
-  //    get_Location('geo_states',country_id,0);
-  //  });
-  //  // country_dd end
-
-   // // on state drop down change update the city dropdown 
-   //  $(document).on('change','.state_dd', function(){
-   //   console.log(' state_dd ',this);
-   //   var country_id = $('.country_dd select').val();
-   //   var city_id = $('.state_dd select').val();
-   //   var type = 'geo_cities';
-   //   get_Location('geo_cities',country_id,city_id);
-   // });
-   // // country_dd end
-
-
-  // // get country/state dropdown data ajax.  
-  // get_Location = function(type, country_id, state_id){
-  //   $.ajax({
-  //       type: 'POST',
-  //       url: base_url+'/ajax/'+type,
-  //       data: { cmd:type,
-  //               select_id: (type == 'geo_states')?country_id:state_id,
-  //               filter:'1',
-  //               list: 0
-  //       },
-  //       beforeSend: function(){
-  //           // $jq('.geo, #city', pp_profile_edit_main_frm).prop('disabled', true).trigger('refresh');
-  //           // preloader
-  //       },
-  //       success: function(data){
-  //           console.log(data);
-  //           if (data.status) {
-  //               var option ='<option value="0">Select City</option>';
-  //               switch (type) {
-  //                   case 'geo_states':
-  //                       $('.state_dd select').html(data.list).trigger('refresh');
-  //                       $('.city_dd select').html(option).trigger('refresh');
-  //                       break
-  //                   case 'geo_cities':
-  //                       $('.city_dd select').html(data.list).trigger('refresh');
-  //                       break
-  //               }
-  //               formStyler();
-  //           }
-  //       }
-  //   });
-  // }
-
-  formStyler =  function(){
-    $('#job_applications_filter_form input, #job_applications_filter_form select').styler({ selectSearch: true,});
-  } 
+    formStyler =  function(){
+      $('#job_applications_filter_form input, #job_applications_filter_form select').styler({ selectSearch: true,});
+    } 
 
 
 
@@ -323,12 +317,39 @@ $('input[name="filter_location_status"]').change(function() {
 });
 
 
+//====================================================================================================================================//
+// Function to display sub qualification on base of qualification type. 
+//====================================================================================================================================//
+// $(document).on('change','select[name="ja_filter_qualification_type"]',function() {
+//     var degreeType =  $(this).val();
+//      if (degreeType != ''){ degreeType = (degreeType == 'trade')?'trade':'degree';}
+//      $(this).closest('.searchField_qualification').attr('class','searchField_qualification '+degreeType);
+//      $('.dot_list li').removeClass('active');
+//      $('.searchField_qualification .dot_list_li_hidden').remove();
+// });
+// $(document).on('click','.dot_list li', function(){
+//     console.log(' dot_list li click '); 
+//     if($(this).hasClass('active')){
+//         $(this).removeClass('active');
+//         $(this).find('.dot_list_li_hidden').remove();
+//     }else{
+//         $(this).addClass('active');
+//         var type = $(this).attr('data-type'); 
+//         var qualif_value = $(this).attr('data-id');
+//         var input_hidden_html = '<input type="hidden" class="dot_list_li_hidden" name="'+type+'" value="'+qualif_value+'" />'; 
+//         $(this).append(input_hidden_html);
+//     }
+   
+// });
 
 
-    //====================================================================================================================================//
-    // Google map location script 
-    //====================================================================================================================================//
-    var map;
+
+
+
+  //====================================================================================================================================//
+  // Google map location script 
+  //====================================================================================================================================//
+  var map;
  
     var input = document.getElementById('location_search');
     var autocomplete = new google.maps.places.Autocomplete(input);
@@ -619,7 +640,7 @@ button.ja_load_qa { background: #40c7db; }
     font-weight: bold;
     color: #eea11e;
 }
-.searchFieldLabel { min-width: 100px; }
+.searchFieldLabel { min-width: 15%; }
 .searchField { display: inline-block; }
 
 .jobFilterQuestion {margin: 10px 0px;}
@@ -646,6 +667,23 @@ button.ja_load_qa { background: #40c7db; }
     height: 250px;
     margin: 2px;
     border-radius: 4px;
+}
+.jobApplicAction {
+    display: inline-block;
+    float: right;
+    margin: 10px 0px;
+}
+.jobApplicationStatusCont .jq-selectbox__select, 
+.jobApplicationStatusCont .jq-selectbox__trigger {
+    height: 28px;
+    line-height: 28px;
+}
+.jobApplicationStatusResponse {
+    display: block;
+    position: absolute;
+    font-size: 11px;
+    margin: 6px;
+    color: #fba82f;
 }
 </style>
 

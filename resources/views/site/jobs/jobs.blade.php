@@ -20,6 +20,11 @@
  
             <div class="job_heading p10">
                 <h3 class=" job_title"><a>{{$job->title}}</a></h3>
+                @if ($job->code)
+                     <div class="job_code">Code: {{$job->code}}</div>
+                @endif
+                <div class="job_employer">Employer: {{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</div>
+
                 <div class="job_location">
                     <span>Location : </span>{{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
                 </div>
@@ -85,8 +90,9 @@
 
                 <div class="w_25p fl_right">
                     <div class="j_button fl_right"><a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Apply</a></div>
-                    {{-- <div class="j_button">Delete</div> --}}
+                    <div class="j_button fl_right"><a class="jobDetailBtn graybtn jbtn m5" href="{{route('jobDetail', ['id' => $job->id]) }}">Detail</a></div>
                 </div>
+
             </div>
 
 
@@ -153,66 +159,65 @@
 <script type="text/javascript">
 $(document).ready(function() {
     console.log(' new job doc ready  ');
-    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+    // $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
 
     /*$('.saveNewJob').on('click',function(){  console.log(' saveNewJob clck  '); });*/
 
 
     // ========== Function to show popup when click on jobApplyBtn ==========//
 
-    $('#jobApplyModal').on($.modal.OPEN, function(event, modal) {
-        var job_id = $('#openModalJobId').val();
-        console.log(' job_id ', job_id);
-        console.log(' after open ', event);
-        $.ajax({
-        type: 'GET',
-            url: base_url+'/ajax/jobApplyInfo/'+job_id,
-            success: function(data){
-                $('#jobApplyModal .cont').html(data);
-            }
-        });
-    });
+    // $('#jobApplyModal').on($.modal.OPEN, function(event, modal) {
+    //     var job_id = $('#openModalJobId').val();
+    //     console.log(' job_id ', job_id);
+    //     console.log(' after open ', event);
+    //     $.ajax({
+    //     type: 'GET',
+    //         url: base_url+'/ajax/jobApplyInfo/'+job_id,
+    //         success: function(data){
+    //             $('#jobApplyModal .cont').html(data);
+    //         }
+    //     });
+    // });
 
-
-    $('.jobApplyBtn').on('click',function(){
-        var job_id = $(this).attr('data-jobid');
-        $('#openModalJobId').val(job_id);
-        $('#jobApplyModal .cont').html(getLoader('css_loader loader_edit_popup'));
-        $('#jobApplyModal').modal({
-            fadeDuration: 200,
-            fadeDelay: 2.5
-        });
-    });
+    // $('.jobApplyBtn').on('click',function(){
+    //     var job_id = $(this).attr('data-jobid');
+    //     $('#openModalJobId').val(job_id);
+    //     $('#jobApplyModal .cont').html(getLoader('css_loader loader_edit_popup'));
+    //     $('#jobApplyModal').modal({
+    //         fadeDuration: 200,
+    //         fadeDelay: 2.5
+    //     });
+    // });
 
     //========== jobApplyBtn clck end. ==========
 
 
     // ========== Function to submit job application ==========//
-    $(document).on('click','.submitApplication',function(){
-        event.preventDefault();
-        // var job_id = $(this).attr('data-jobid');
-        console.log(' submitApplication submit click ');
-        $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
+    // $(document).on('click','.submitApplication',function(){
+    //     event.preventDefault();
+    //     // var job_id = $(this).attr('data-jobid');
+    //     console.log(' submitApplication submit click ');
+    //     $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
 
-        var applyFormData = $('#job_apply_form').serializeArray()
-        $.ajax({
-        type: 'POST',
-            url: base_url+'/ajax/jobApplySubmit',
-            data: applyFormData,
-            success: function(data){
-                $('.submitApplication').html('Submit').prop('disabled',false);
-                console.log(' data ', data );
-                if (data.status == 1){
-                     $('#job_apply_form').html(data.message);
-                }else {
-                     $('#job_apply_form').html(data.error);
-                }
+    //     var applyFormData = $('#job_apply_form').serializeArray()
+    //     $.ajax({
+    //     type: 'POST',
+    //         url: base_url+'/ajax/jobApplySubmit',
+    //         data: applyFormData,
+    //         success: function(data){
+    //             $('.submitApplication').html('Submit').prop('disabled',false);
+    //             console.log(' data ', data );
+    //             if (data.status == 1){
+    //                  $('#job_apply_form').html(data.message);
+    //             }else {
+    //                  $('#job_apply_form').html(data.error);
+    //             }
 
 
 
-            }
-        });
-    });
+    //         }
+    //     });
+    // });
     //========== jobSubmitApplyBtn clck end. ==========
 
 

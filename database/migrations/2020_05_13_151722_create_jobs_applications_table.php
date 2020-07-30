@@ -15,7 +15,7 @@ class CreateJobsApplicationsTable extends Migration
     {
         Schema::create('jobs_applications', function (Blueprint $table) {
             $table->id();
-            $table->text('questions');
+            $table->text('description');
             $table->text('answers');
             $table->string('status');
 

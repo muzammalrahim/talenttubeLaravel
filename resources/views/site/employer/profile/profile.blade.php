@@ -8,46 +8,24 @@
 @section('content')
 <div class="cont bl_profile">
     <div class="bl_pic_info  my_profile">
-
-        {{-- @dump($profileImage) --}}
-        {{-- @dump($profileImage['imagepath']) --}}
-        {{-- @dump( $user_profile->image ) --}}
-        {{-- @dump($profile_image) --}}
-
+       
         <div class="bl_pic">
             <div class="pic">
                 <div class="profile_pic_one to_show">
                     <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
-                        <img  data-offset-id="23" class="photo"
-                            id="pic_main_img"
-                            src="{{$profile_image}}"
-                            title="">
+                        <img  data-offset-id="23" class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
                     </a>
-                    {{-- <div id="add_photo_main_profile" class="add_photo">
-                        <div class="file" id="add_photo_profile">
-                            <form>
-                                <button class="btn small violet"><img width="16" height="16" alt="" src="">Add a photo</button>
-                                <input title="" id="some_add_photo_main_public" type="file" multiple="" name="file_public[]">
-                                <input id="some_add_photo_main_public_reset" type="reset" value="">
-                            </form>
-                        </div>
-                    </div> --}}
-                </div>
-                   {{-- <div id="profile_status_online" title="On the site now!" class="status_online to_show"></div> --}}
+                </div> 
             </div>
         </div>
 
-        {{-- @dump($user) --}}
-        {{-- @dump($user->GeoCountry)
-        @dump($user->GeoState)
-        @dump($user->GeoCity) --}}
-
         <div class="info">
-            <div class="name"><a id="profile_name" style="cursor:default;" class="edit_main_title"  onclick="return false;">{{$user->name}} {{$user->surname}}</a></div>
+            <div class="name"><a id="profile_name" style="cursor:default;" class="edit_main_title"  onclick="return false;">
+                {{($user->company)?($user->company):($user->name.' '.$user->surname)}}</a></div>
             <div class="bl_list_info">
                 <ul class="list_info userProfileLocation">
                     <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li>
-                    <li id="list_info_location">{{($user->GeoCity)?($user->GeoCity->city_title):''}},  {{($user->GeoState)?($user->GeoState->state_title):''}}, {{($user->GeoCountry)?($user->GeoCountry->country_title):''}}</li>
+                    <li id="list_info_location">{{userLocation($user)}}</li>
                     <li><span class="basic_info">•</span><span id="list_info_gender">Employer</span></li>
                 </ul>
                 <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div>
@@ -61,16 +39,6 @@
                 <div id="profile_status_edit" class="icon_edit" onclick="UProfile.enableStatusTextEdit();" style="opacity: 1;"><span></span></div>
             </div>
 
-
-            {{-- <div class="title_interest">
-                <strong>I am looking for</strong>
-                <div class="icon_edit"><span onclick="Profile.showLookingForEditor();"></span></div>
-            </div>
-            <ul class="list_interest">
-                <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Job Seeker</span></li>
-                <li><span class="basic_info">•</span><span id="info_looking_for_ages">Ages 18-100</span></li>
-                <li><span class="basic_info">•</span><span id="info_looking_for_near_me">Near me</span></li>
-            </ul> --}}
         </div>
         <div class="cl"></div>
     </div>

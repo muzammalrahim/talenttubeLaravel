@@ -4,7 +4,7 @@
 	$.fn.modalPopup = function (opt) {
 		opt=opt||{};
 		var isVisible = false, el=this.addClass('pp_cont');
-		var popup = $('<div /><div />');
+		var popup = $('<div></div><div></div>');
 		popup.eq(0).addClass('pp_shadow '+(opt.shClass||'')).css(opt.shCss||{});
 		popup.eq(1).addClass('pp_wrapper pp_body '+(opt.wrClass||'')).css(opt.wrCss||{}).append(el);
 		el.css(opt.css||{left:0, top:0, margin:'25px 3px'})

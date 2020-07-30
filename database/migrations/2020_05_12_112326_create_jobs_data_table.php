@@ -28,6 +28,7 @@ class CreateJobsDataTable extends Migration
             $table->text('age');
             $table->text('questions');
             $table->dateTime('expiration');
+            $table->string('code');
             $table->timestamps();
             $table->unsignedbigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

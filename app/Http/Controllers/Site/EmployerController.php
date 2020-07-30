@@ -68,7 +68,7 @@ class EmployerController extends Controller {
             $data['activities'] = $activities;
             $data['videos'] = $videos;
 
-			$view_name = 'site.employer.profile.profile';
+			$view_name = 'site.employer.profile.profile'; // site/employer/profile/profile
             return view($view_name, $data);
         }else{
             return view('site.404');
@@ -190,7 +190,7 @@ class EmployerController extends Controller {
         // dd( $jobs->questions()->first()->options );
 
         $data['geo_country'] = get_Geo_Country();
-        return view('site.jobs.new', $data);
+        return view('site.jobs.new', $data); // site/jobs/new
     }
 
     //====================================================================================================================================//
@@ -274,6 +274,7 @@ class EmployerController extends Controller {
             $job->user_id =  $user->id;
             $job->expiration =  $requestData['expiration'].' 00:00:00';
             // $job->questions =  $requestData['questions'];
+            $job->code =  Jobs::generateCode(); // 
             $job->save();
 
             $job->addJobQuestions($requestData['jq']); 
@@ -300,6 +301,7 @@ class EmployerController extends Controller {
         $data['classes_body'] = 'myJob';
         $data['jobs'] = Jobs::with('applicationCount')->where('user_id',$user->id)->orderBy('created_at', 'DESC')->get();
         return view('site.employer.myjobs', $data);
+        // site/employer/myjobs 
     }
 
 
@@ -348,23 +350,15 @@ class EmployerController extends Controller {
         // dd($request->toArray());
         $user = Auth::user();
         if(isEmployer($user)){
-            // $job =  Jobs::find($id);
-          
-            // $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id','=',$job_id);
-
             $applications = new JobsApplication();
             $applications = $applications->getFilterApplication($request);
-
-           
-
-            // dd( $applications->toArray());
+            $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
             $data['applications'] = $applications;
-            // $data['job']   = $job;
-            $data['user']   = $user;
-            $data['title']  = 'Job Detail';
+            $data['user']       = $user;
+            $data['title']      = 'Job Detail';
+            $data['likeUsers']  =  $likeUsers;
             $data['classes_body'] = 'jobdetail';
             return view('site.employer.jobApplicationAjax', $data);
-
             // site/employer/jobApplicationAjax
         }
     }
@@ -449,7 +443,7 @@ class EmployerController extends Controller {
 
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = null; // $jobSeekers;
-        return view('site.employer.jobSeekers.index', $data); // site/employer/jobSeekers
+        return view('site.employer.jobSeekers.index', $data); // site/employer/jobSeekers/index
     }
 
 
@@ -470,8 +464,13 @@ class EmployerController extends Controller {
 
         // $jobSeekersObj          = new User();
         // $jobSeekers             = $jobSeekersObj->getJobSeekers($request, $user);
+        $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
+        $industries = $request->filter_industry;
+        $qualification_type = $request->ja_filter_qualification_type;
+        $qualifications = $request->ja_filter_qualification;
 
-        $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+
+        $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
         $query = User::with('profileImage')->where('type','user'); 
         if(!empty($block)){
@@ -518,7 +517,7 @@ class EmployerController extends Controller {
                 }); 
         }
 
-
+ 
         // Filter by Keyword filter_keyword
         if(varExist('filter_qualification_type', $request)){
             $query = $query->where('qualificationType', '=', $request->filter_qualification_type); 
@@ -526,11 +525,37 @@ class EmployerController extends Controller {
 
         // Filter by Question
         if(varExist('filter_question', $request) && varExist('filter_question_value', $request) ){
-            
             // SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
             $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%'; 
             $query = $query->where('questions', 'LIKE', $question_like); 
         }
+
+
+        //Filter by industry status. 
+        if($industry_status && !empty($industries)){
+            $query = $query->where(function($q) use($industries) {
+                $q->where('industry_experience','LIKE', "%{$industries[0]}%"); 
+                if(count($industries) > 1){
+                    foreach ($industries as $indk =>  $industry) {
+                        if($indk == 0) continue; 
+                        $q->orWhere('industry_experience','LIKE', "%{$industry}%");   
+                    }
+                }
+            });
+        }
+
+
+        //Filter by qualification.
+        if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
+        if(!empty($qualifications)){
+            $query->whereHas('qualificationRelation', function($query2) use($qualifications) {
+                $query2->whereIn('qualifications.id', $qualifications);
+                // $query->where('jobseeker.id', 1);
+                // dd($query->toSql()); 
+                return $query2; 
+            });
+        }
+
 
         // DB::enableQueryLog();
         // print_r( $query->toSql() );exit; 
@@ -546,7 +571,7 @@ class EmployerController extends Controller {
 
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = $jobSeekers;
-        return view('site.employer.jobSeekers.list', $data); // site/employer/jobSeekers
+        return view('site.employer.jobSeekers.list', $data); // site/employer/jobSeekers/list
     }
 
 
@@ -643,6 +668,39 @@ class EmployerController extends Controller {
             $jobsApplication = JobsApplication::with('answers.question')->where('id',$id)->first();
             $data['application'] = $jobsApplication;
             return view('site.layout.parts.jobApplicationQA', $data); // site/layout/parts/jobApplicationQA
+        }
+    }
+
+
+    //====================================================================================================================================//
+    // Get // layout for job application question answer.
+    //====================================================================================================================================//
+    public function changeJobApplicationStatus(Request $request){
+        $user = Auth::user();
+        if(isEmployer($user)){
+
+            $status         =  $request->status; 
+            $application_id = (int) $request->application_id; 
+            
+            if(!empty($status) && !empty($application_id)){
+                // check if job application belong to this employer job. 
+                $jobsApplication = JobsApplication::find($application_id );
+                // dd($jobsApplication->job);
+                if($jobsApplication){
+                    if(!empty($jobsApplication->job) && !empty($jobsApplication->job->user_id) && ($jobsApplication->job->user_id == $user->id)){ 
+                        // check if status is valide. 
+                        $jobAppStatusArray = jobStatusArray();
+                        if(isset($jobAppStatusArray[$status])){
+                            $jobsApplication->status =  $status; 
+                            $jobsApplication->save();
+                             return response()->json([
+                                'status' => 1,
+                                'message' => 'Job Application Status Updated',
+                            ]);
+                        }
+                    }
+                } 
+            }
         }
     }
 

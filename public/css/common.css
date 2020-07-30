@@ -5,7 +5,6 @@
 .valign-middle { vertical-align: middle; }
 .valign-top { vertical-align: top; }
 
-
 .dblock{ display: block; }
 .dtable{ display: table; }
 .dinline_block{ display: inline-block; }
@@ -198,4 +197,49 @@ button.btn:disabled, button.btn.disabled {
 .toggleSwitchButton {
     display: inline-block;
     margin: 10px;
+    margin-left: 0px; 
+}
+
+.info ul.list_info li:nth-child(3) {
+    display: block !important;
+}
+
+
+
+
+/*========================================== Job Qualification type ==========================================*/
+
+.searchField_qualification .dot_list li { display: none; }
+.searchField_qualification.degree .degree { display: inline-block; }
+.dot_list li { 
+  width: 50%;
+  vertical-align: top;
+  cursor: pointer;
+  float: left;
+  position: relative;
+  margin-bottom: 2px;
+}
+.searchField_qualification.trade .trade { display: inline-block; }
+.dot_list li:before{
+    font-size: 18px;
+    content: '\2022';
+    position: absolute;
+    left: 0;
+    margin: 1px 4px;
+}
+.dot_list li span {
+    margin-left: 15px;
+    display: block;
+    padding: 2px;
+    margin-bottom: 1px;
+}
+.dot_list {
+    margin: 12px 4px;
+    display: table;
+}
+.dot_list li.active {
+    cursor: pointer;
+    background: #9E9E9E;
+    color: white;
+    border-radius: 4px;
 }

@@ -250,6 +250,11 @@ function getQualificationsType(){
     );
 }
 
+function getQualificationsByType($type){
+    $degree = App\Qualification::where('type',$type)->get();
+    return $degree; 
+}
+ 
 
 function getQualificationsList(){
     return 
@@ -799,16 +804,21 @@ function userLocation($user){
 
 }
 
+ 
 
 function jobStatusArray(){
     $status_array = array();
     $status_array['applied'] = 'Applied';
-    $status_array['review'] = 'In Review';
+    $status_array['inreview'] = 'In Review';
     $status_array['interview'] = 'Interview';
     $status_array['unsuccessful'] = 'Unsuccessful';
     return $status_array; 
 }
  
 
-
 function varExist($var, $obj){ return (isset($obj->$var) && !empty($obj->$var));  }
+
+
+function jobApplicationMandatoryQuestion(){
+    return 'What motivated you to apply for this job and why do think you will be suitable?'; 
+}

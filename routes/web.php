@@ -210,11 +210,10 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 Route::get('/', 'Site\HomeController@index')->name('homepage');
 
 // Login.
+Route::get('login', function () { return redirect('/'); });
 Route::post('login', 'Site\HomeController@loginUser')->name('login');
 Route::post('join', 'Site\HomeController@join')->name('join'); 
-Route::get('join', function () {
-    return redirect('/');
-});
+Route::get('join', function () { return redirect('/'); });
 
 
 
@@ -323,6 +322,7 @@ Route::group(array('middleware' => 'auth'), function(){
  
     Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
     Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
+    Route::get('jobs/{id}', 'Site\SiteUserController@jobDetail')->name('jobDetail');
     
     Route::post('ajax/deleteJob/{id}', 'Site\SiteUserController@deleteJob')->name('deleteJob');
     Route::get('jobApplications', 'Site\SiteUserController@jobApplications')->name('jobApplications');
@@ -331,6 +331,7 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('ajax/jobApplySubmit', 'Site\SiteUserController@jobApplySubmit')->name('jobApplySubmit');
     Route::post('ajax/deleteJobApplication/{id}', 'Site\SiteUserController@deleteJobApplication')->name('deleteJobApplication');
     Route::get('ajax/getJobAppQA/{id}', 'Site\EmployerController@getJobAppQA')->name('getJobAppQA');
+    Route::post('ajax/changeJobApplicationStatus', 'Site\EmployerController@changeJobApplicationStatus')->name('changeJobApplicationStatus');
 
     // Route::get('employer/jobapplications', 'Site\EmployerController@empJobApplications')->name('empJobApplications');
     

@@ -5,14 +5,39 @@
     @if ($jobSeekers && $jobSeekers->count() > 0)
    
     @foreach ($jobSeekers as $js)
+    
+
+
+
+    <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
+        <div class="jobSeeker_box relative dinline_block w100">
+            @include('site.layout.parts.jobSeekerProfilePhotoBox')
+            @include('site.layout.parts.jobSeekerInfoBox')
+            <div class="jobApplicAction">
+             @if (in_array($js->id,$likeUsers))
+                <a class="active graybtn jbtn" data-jsid="{{$js->id}}">Liked</a>
+             @else
+                <a class="jsLikeUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Like</a>
+             @endif
+                <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" >View Profile</a> 
+            </div>
+        </div>
+        
+        
+    </div>
+
+
+{{-- 
     <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
 
         <div class="jobSeeker_box relative dinline_block w100">
 
         <div class="js_info w_70p w_box dblock fl_left">
 
+            @include('site.layout.parts.jobSeekerProfilePhotoBox')
+
             <div class="js_education js_field">
-                <span class="js_label">Education:</span>{{getEducationName($js->education)}}
+                <span class="js_label">Education: </span>{{ ucfirst($js->qualificationType) }}
             </div>
             <div class="js_about js_field">
                 <span class="js_label">About me:</span>
@@ -60,6 +85,7 @@
         </div>
 
     </div>
+ --}}
     @endforeach
    
 

@@ -102,4 +102,18 @@ class Jobs extends Model {
     }
 
 
+
+
+   
+    static function generateCode(){
+        $code = str_pad(mt_rand(999, 999999), 6, '0', STR_PAD_LEFT);
+        $exist = Jobs::where('code', $code)->first(); 
+        if($exist){
+            $this->generateCode(); 
+        }else{
+            return $code; 
+        }
+    }
+
+
 }
