@@ -215,22 +215,30 @@
     
     <a id="tabs-3" class="tab_link tab_a"></a>
     <div class="tab_about tab_cont">
-        
-         @php  
+
+     <div class="employerRegisterQuestions">
+        <div id="basic" class="title_icon_edit"style="float:left;">Questions <i class="editQuestions fas fa-edit "></i>
+              </div><p class="loader SaveQuestionsLoader"style="float: left;"></p>
+              <div class="cl"></div>
+        @php  
             $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
+            $empquestion = getEmpRegisterQuestions();
         @endphp
 
             {{-- @dump($userQuestions) --}}
 
-            @if(!empty(getEmpRegisterQuestions()))
-            @foreach (getEmpRegisterQuestions() as $qk => $empq)
-
+            @if(!empty($empquestion))
+            @foreach ($empquestion as $qk => $empq)
                 {{($empq)}}
                     <b><p>
                         {{$userQuestions[$qk]}}
                     </p></b>
             @endforeach
             @endif
+            <div class="col-md-12 text-center text-white"style="margin-top: 15px;text-align: center;">
+                  <button class="button">Save</button>
+            </div>
+      </div>       
     </div>
 
 {{-- End Here --}}

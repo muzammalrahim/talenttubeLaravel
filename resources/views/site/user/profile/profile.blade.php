@@ -91,9 +91,6 @@
                 </div>
 
 {{-- New Salary Range End Here --}}
-    
-
-
            
         </div>
         <div class="cl"></div>
@@ -144,10 +141,17 @@ div.jq-selectbox__dropdown.drop_down>ul>li {
     font-size: 14px;
     float: right;
     color: #a94442;
+    margin-top: 5px;
 }
-div#basic_anchor_Questions {
+div#basic {
     font-size: 20px;
 }
+/*.SaveQuestionsSpinner{
+    position: relative;
+    right: 774px;
+    top: 5px;
+    float: right;
+}*/
 select{
         display: block;
         width: 100%;
@@ -186,6 +190,60 @@ div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {
 .title.IndusListBox.edit .hide_it {
     display: block !important;
 }
+div#basic_anchor_industry_experience,div.title.qualificationList>div#basic {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+div.title.IndusListBox>div#basic {
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+.smallSpinner.SaveIndustrySpinner {
+    font-size: 20px;
+}
+a.addQualification.btn.btn-sm.btn-primary.text-white.hide_it, span.addIndus.btn.btn-primary.hide_it {
+    margin: 25px 0px 5px 0px;
+}
+select.userQualification {
+    width: 90%;
+    display: inline-block;
+}
+div>div.jq-selectbox__dropdown.drop_down>ul {
+    width: 120px;
+}
+div.questionsOfUser>div>p {
+    margin: 10px 0px 0;
+}
+.alert.alert-success.questionsAlert {
+    margin-top: 50px;
+}
+/*span.addIndus.btn.btn-primary.hide_it {
+    margin: 25px 0px 5px 0px;
+}*/
+.questionsAlert{
+    display: none;
+}
+.SaveIndustryLoader{
+    font-size: 20px;
+}
+.hide2{
+    display: none;
+}
+select.jobSeekerRegQuestion {
+    width: auto;
+    cursor: pointer;
+}
+div.smallSpinner.SaveQuestionsSpinner>.spinner.center {
+    font-size: 20px;
+    margin: 5px 0px 0px 10px;
+}
+div.IndusList>div.IndustrySelect>select {
+    width: 90%;
+    display: inline-block;
+}
+i.fa.fa-trash.removeIndustry {
+    margin-top: 7px;
+}
 </style>
 @stop
 
@@ -213,6 +271,7 @@ div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {
      $(this).closest('.QualificationSelect').remove();
    });
 
+ })
    $(document).on('click','.addQualification', function(){
     console.log(' addQualification ');
 
@@ -230,14 +289,11 @@ div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {
    });
 
 
- })
-
+//======================= add remove industry =================================
 
  $(".editIndustry").click(function(){
     $(this).closest('.IndusListBox').addClass('edit');   
   });
-
-
  
 
 // add and remove Industry code
@@ -248,30 +304,33 @@ $(document).ready(function(){
 
    $(document).on('click','.addIndus', function(){
     console.log(' addIndus ');
-    var newIndusHtml = '<div class="IndusSelect"><select name="industry_experience[]">'; 
-
+    var newIndusHtml = '<div class="IndustrySelect"><select name="industry_experience[]" class="industry_experience userIndustryExperience">'; 
     @if(!empty($industriesList))
         @foreach($industriesList as $lk=>$lv)
             newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>'; 
         @endforeach
     @endif
-
     newIndusHtml += '</select>';  
-    newIndusHtml += '<span class="removeIndus btn btn-danger">Remove</span>';
+    newIndusHtml += '<i class="fa fa-trash removeIndustry"></i>';
     newIndusHtml += '</div>';
 
-    $('.indusList').append(newIndusHtml);
+    $('.IndusList').append(newIndusHtml);
    });
 }); 
 
-// add and remove Industry code end here
+//======================= add remove industry =================================
 
-    $(document).ready(function(){
-    $(".removeIndus ").click(function(){
-    $(".IndusList").removeClass("indusSelect");
+//======================= User Questions Edit =================================
 
-});  
-});
+ $(".editQuestions").click(function(){
+ $('.hide2').css("display","inline-block");
+ $('.jobSeekerRegQuestion').removeClass('hide_it');
+ $('.QuestionsKeyPTag').addClass('hide_it');
+
+//======================= User Questions Editing end here =================================
+
+
+  });
 
 </script>
 

@@ -60,23 +60,25 @@
 {{-- Qualification --}}
                 
                 {{-- @dump($user->qualification) --}}
-            <div class="bl qualificationBox">
+         <div class="bl qualificationBox">
                  
                 
-<div class="title qualificationList">
-  <div id="basic" class="title_icon_edit">Qualification <i class="editQualification fas fa-edit "></i>
-  </div> <p class="loader SaveQualification"style="float: left;"></p>
-  <div class="cl"></div>
-  
-    <div class="jobSeekerQualificationList">
-       @include('site.layout.parts.jobSeekerQualificationList')
-    </div>  
-</div>
-
-
+            <div class="title qualificationList">
+              <div id="basic" class="title_icon_edit">Qualification <i class="editQualification fas fa-edit "></i>
+              </div><p class="loader SaveQualification"style="float: left;"></p>
+              <div class="cl"></div>
+              
+                <div class="jobSeekerQualificationList">
+                   @include('site.layout.parts.jobSeekerQualificationList')
+                </div>  
+            </div>
                  <a class="addQualification btn btn-sm btn-primary text-white hide_it"style = "cursor:pointer;">Add New</a>
                  <a class="btn btn-sm btn-success hide_it" onclick="UProfile.updateQualifications()">Save</a>
             </div>
+                    <div class="alert alert-success QualifAlert hide_it2" role="alert">
+          {{-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
+          <strong>Success!</strong> Qualification have been updated successfully!
+        </div>
 
 {{-- Qualification End here --}}
 
@@ -102,15 +104,28 @@
 
 {{-- Industry Experience End here --}}
 
-                <div class="title IndusListBox">
-                    <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
-                    </div>
+        <div class="title IndusListBox">
 
-                        <div class="IndusList">
-                         @include('site.layout.parts.jobSeekerIndustryList')
-                        </div> 
-                        <span class="addIndus btn btn-primary"style = "cursor:pointer;">+ Add</span> 
-                </div>
+            {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
+          <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
+          <div class="cl"></div> --}}
+          <div id="basic" class="title_icon_edit">Industry Experience <i class="editIndustry fas fa-edit "></i>
+              </div><p class="loader SaveindustryExperience"style="float: left;"></p>
+              <div class="cl"></div>
+
+
+                <div class="IndusList">
+                     @include('site.layout.parts.jobSeekerIndustryList')
+                </div> 
+                <span class="addIndus btn btn-primary hide_it"style = "cursor:pointer;">+ Add</span>
+               <a class="btn btn-sm btn-success hide_it saveIndus"style = "cursor:pointer;" onclick="UProfile.updateIndustryExperience()">Save</a> 
+        </div>
+
+        <div class="alert alert-success IndusAlert hide_it2" role="alert">
+       {{--    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
+          <strong>Success!</strong> Industry Experience have been updated successfully!
+        </div>
+
  {{-- Testing Industry Experience --}}
 
 
@@ -247,10 +262,16 @@
             @endif
  --}}
             {{-- adding new  --}}
-
+        {{-- <div id="basic_anchor_Questions" class="title_icon_edit">Questions <i class="editQuestions fas fa-edit "></i> --}}
+        {{-- <p class="loader SaveQuestionsLoader"></p> --}}
+        {{-- </div> --}}
+    <div> 
+        <div id="basic" class="title_icon_edit"style="float:left;">Questions <i class="editQuestions fas fa-edit "></i>
+              </div><p class="loader SaveQuestionsLoader"style="float: left;"></p>
+              <div class="cl"></div>
+        
         <div class="questionsOfUser">
-            <div id="basic_anchor_Questions" class="title_icon_edit">Questions <i class="editQuestions fas fa-edit "></i>
-            </div>
+            
             @php  
                 $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
             @endphp
@@ -258,8 +279,13 @@
                 {{--  @dd($userquestion) --}}
                 @foreach($userquestion as $qk => $question)
                 <div>
+                       
+
                 <p>{{$question}} </p>
-                    <select name="{{$qk}}" class="jobSeekerRegQuestion">
+
+                 <p class="QuestionsKeyPTag"><b>{{$userQuestions[$qk]}}</b></p>
+
+                    <select name="{{$qk}}" class="jobSeekerRegQuestion hide_it">
                         <option value="yes"
                         {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
                         >Yes</option>
@@ -270,11 +296,17 @@
                 </div>
                 @endforeach
              @endif
-                  <div class="col-md-12 text-center">
-                      <a class="btn btn-sm btn-success" onclick="UProfile.updateQuestions()">Save</a>
+                  <div class="col-md-12 text-center"style="margin-top: 65px;">
+                      <a class="btn btn-sm btn-success saveQuestionsButton hide2" onclick="UProfile.updateQuestions()">Save</a>
                   </div>  
                  
         </div>
+    </div>
+
+            <div class="alert alert-success questionsAlert" role="alert">
+             {{--  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
+              <strong>Success!</strong> Questions have been updated successfully!
+            </div>
             {{-- adding new end here --}}
 
 </div>

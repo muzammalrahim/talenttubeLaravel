@@ -59,6 +59,32 @@
 
 
 @section('custom_footer_css')
+<style type="text/css">
+
+div.tab_about.tab_cont>div#basic {
+font-size: 20px;
+margin: 0px 10px 20px 0px;
+}
+i.editEmployerQuestions.fas.fa-edit {
+    cursor: pointer;
+    font-size: 14px;
+    color: mediumseagreen;
+}
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin: 4px 2px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.button:hover {background-color: #3e8e41}
+</style>
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/plyr.css') }}">

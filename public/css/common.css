@@ -9,6 +9,7 @@
 .dtable{ display: table; }
 .dinline_block{ display: inline-block; }
 .hide_it { display: none !important; }
+.hide_it2 { display: none ; } /* Removed !important */
 .not_visible { visibility: hidden !important; opacity: 0 !important; }
 .visible_it{ visibility: visible !important;  opacity: 1 !important; }
 

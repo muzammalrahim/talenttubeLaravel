@@ -199,53 +199,10 @@ var CProfile = function() {
 
 
 
-// Edit Qualification
+ 
 
-    this.updateQualifications = function(){
+// ======================== Edit Salary Range ========================
 
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get(); 
-
-        $('.SaveQualification').after(getLoader('smallSpinner SaveQualificationSpinner'));
-
-        $.ajax({
-            type: 'POST',
-            url: base_url+'/ajax/updateQualification',
-            data: {'qualification': qualification},
-            success: function(resp){
-                if(resp.status){
-                    $('.SaveQualificationSpinner').remove();
-                    $('.jobSeekerQualificationList').html(resp.data);
-                    $('.qualificationBox').removeClass('editQualif');   
-                    // $(".QualificationSelect i").toggleClass("hide_it");
-                    // $(".qualificationBox a").toggleClass("hide_it");
-
-                    // var newQualifHtml = ''; 
-                    // newQualifHtml += '<div class="QualificationSelect">'; 
-                    // newQualifHtml += '<input type="hidden" name="qualification[]" class="userQualification" value="5">'; 
-                    // newQualifHtml += ''
-                    //             <p>Chemistry, Pharmacology, Radiography &amp; Forensic Science <i class="fa fa-trash removeQualification"></i></p>
-                    //         </div>
-
-                    // $(".qualificationBox").load(location.href+" .qualificationBox>*","");
-                    // location.reload(); 
-                    // $('.SaveQualification').hide();
-                    // $('.salaryRangeField').addClass('hide_it');
-                }
-           
-            }
-        });
-}
-
-
-
-// End Qualification 
-
-// Edit Salary Range'
         this.updateSalaryRange = function(){
         var salaryRangeField = $('#salaryRangeFieldnew option:selected').val();
         // var salaryRangeField = this.val
@@ -279,7 +236,68 @@ var CProfile = function() {
         // console.log(abc);
     }
 
-// Edit Salary Range End Here 
+// ======================== Edit Salary Range End Here ======================== 
+
+// ======================== Edit Qualification ======================== 
+
+    this.updateQualifications = function(){
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get(); 
+
+        $('.SaveQualification').after(getLoader('smallSpinner SaveQualificationSpinner'));
+
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/updateQualification',
+            data: {'qualification': qualification},
+            success: function(resp){
+                if(resp.status){
+                    $('.SaveQualificationSpinner').remove();
+                    $('.jobSeekerQualificationList').html(resp.data);
+                    $('.qualificationBox').removeClass('editQualif'); 
+                    $('.QualifAlert').show().delay(3000).fadeOut('slow');
+                    $('.userQualification').hide();
+                    $('.removeQualification').hide();
+                }
+            }
+        });
+}
+
+
+// ======================== End Qualification end here ======================== 
+
+// ======================== Edit Industry Experience ========================
+
+this.updateIndustryExperience = function(){
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        var industry_experience = jQuery('.industry_experience').map(function(){ return $(this).val()}).get(); 
+         $('.SaveindustryExperience').after(getLoader('smallSpinner SaveIndustrySpinner'));
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/updateIndustryExperience',
+            data: {'industry_experience': industry_experience},
+            success: function(resp){
+                if(resp.status){
+                    $('.IndusListBox').removeClass('edit'); 
+                    $('.IndusAlert').show().delay(3000).fadeOut('slow');
+                    $('.SaveIndustrySpinner').remove(); 
+                    $('.IndusList').html(resp.data); 
+
+                    }
+            }
+    });
+ }
+
+// ======================== Edit Industry Experience End Here ======================== 
 
 //  ======================================= Edit Questions Start =======================================
 
@@ -293,23 +311,26 @@ var CProfile = function() {
             items[elem_name] = elem_val; 
             // items.push({elem_name : elem_val });
         });
-
-        // console.log(items);
-
          $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
+        $('.SaveQuestionsLoader').after(getLoader('smallSpinner SaveQuestionsSpinner'));
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/updateQuestions',
             data: {'questions': items},
+            
             success: function(data){
-                // console.log('come'+data);
-                if(data){
-                    // $('.recentJobSpinner').remove();
+                    $('.questionsAlert').show().delay(3000).fadeOut('slow');
+                    $('.saveQuestionsButton').hide(); 
+                    $('.jobSeekerRegQuestion').addClass('hide_it');
+                    $('.QuestionsKeyPTag').removeClass('hide_it');
+                    if(data){
+                        $(".questionsOfUser").load(" .questionsOfUser");
+                        $(".SaveQuestionsSpinner").remove();
+                       
                 }
             }
         });
@@ -337,7 +358,6 @@ var CProfile = function() {
         }).addClass('focus');
         $editor.addClass('to_show');
     }
-
 
     this.closeBasicFieldEditor = function(field){
         var $field = $jq('#basic_editor_text_'+field);

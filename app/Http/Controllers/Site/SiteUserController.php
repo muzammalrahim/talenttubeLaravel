@@ -80,6 +80,8 @@ class SiteUserController extends Controller
             // $data['industry_experience'] = getIndustries();
             $data['industriesList'] = getIndustries();
             $data['userquestion'] = getUserRegisterQuestions();
+            $data['empquestion'] = getEmpRegisterQuestions();
+
             $view_name = 'site.user.profile.profile'; // site/user/profile/profile
             return view($view_name, $data);
         } else {
@@ -402,8 +404,7 @@ class SiteUserController extends Controller
         }
     }
 
- // Ajax For updating Questions.
-    //====================================================================================================================================//
+ // ================================== Ajax For updating Questions. ==================================
 
 
     public function updateQuestions(Request $request){
@@ -430,8 +431,36 @@ class SiteUserController extends Controller
         // }
     }
 
- // Ajax For updating Questions End here.
-    //====================================================================================================================================//
+ // ============================= Ajax For updating Questions End here ====================================
+
+ // ================================== Ajax For updating Industry Experience. ==============================
+
+
+    public function updateIndustryExperience(Request $request){
+        
+        // dump($request->industry_experience); 
+        $user = Auth::user();
+        $rules = array(
+                'industry_experience'    => 'required|array', 
+                'industry_experience.*'  => 'string|max:100'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        // dd( $validator->errors() ); 
+        if (!$validator->fails()) {
+            $user->industry_experience = $request->industry_experience;
+            $user->save();
+            $data['user'] = User::find($user->id); 
+            $IndustryView = view('site.layout.parts.jobSeekerIndustryList', $data);
+            $IndustryHtml = $IndustryView->render();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $IndustryHtml
+            ]);
+        }
+    }
+
+ // ============================= Ajax For updating Industry Experience End here =================================
+
 
     //====================================================================================================================================//
     // chagne the about me text on user profile.
