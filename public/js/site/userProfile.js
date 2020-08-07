@@ -299,7 +299,7 @@ this.updateIndustryExperience = function(){
 
 // ======================== Edit Industry Experience End Here ======================== 
 
-//  ======================================= Edit Questions Start =======================================
+//  ======================================= Edit User Questions Start =======================================
 
     this.updateQuestions = function(){
         var items = {}; 
@@ -328,7 +328,7 @@ this.updateIndustryExperience = function(){
                     $('.jobSeekerRegQuestion').addClass('hide_it');
                     $('.QuestionsKeyPTag').removeClass('hide_it');
                     if(data){
-                        $(".questionsOfUser").load(" .questionsOfUser");
+                        // $(".questionsOfUser").load(" .questionsOfUser");
                         $(".SaveQuestionsSpinner").remove();
                        
                 }
@@ -336,8 +336,54 @@ this.updateIndustryExperience = function(){
         });
     }
 
-//  ======================================= Edit Questions End  =======================================
+//  ======================================= Edit User Questions End  =======================================
 
+
+//  ======================================= Edit Employer Questions Start =======================================
+
+    this.updateEmployerQuestions = function(){
+        var items = {}; 
+        $('select.EmployerRegQuestion').each(function(index,el){  
+        // console.log(index, $(el).attr('name')  , $(el).val()   );  
+            // items.push({name:  $(el).attr('name') , value: $(el).val()});
+            var elem_name = $(el).attr('name'); 
+            var elem_val = $(el).val(); 
+            items[elem_name] = elem_val; 
+            // items.push({elem_name : elem_val });
+        });
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.SaveEmployerQuestionsLoader').after(getLoader('smallSpinner SaveEmployerQuestionsSpinner'));
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/updateEmployerQuestions',
+            data: {'questions': items},
+            
+            success: function(resp){
+                    // $('.EmployerQuestionsAlert').removeClass('hide_it').delay(3000).fadeOut('slow');
+                    $('.hide_it2').show().delay(3000).fadeOut('slow');
+
+                    $('.saveEmployerQuestionsButton').hide(); 
+                    $('.EmployerRegQuestion').addClass('hide_it');
+                    $('.employerQuestionsPtag').removeClass('hide_it');
+
+                    if(resp.status){
+                        $(".SaveEmployerQuestionsSpinner").remove();
+                        $('.EmpQuestionList').html(); 
+                        $(".employerRegisterQuestions").load(true);
+
+                       
+                }
+            }
+
+
+        });
+    }
+
+//  ======================================= Edit Employer Questions End  =======================================
 
     // this.showBasicFieldEditor = function(item){
     //     console.log(' showBasicFieldEditor ', item);

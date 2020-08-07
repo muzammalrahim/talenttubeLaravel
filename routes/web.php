@@ -258,6 +258,15 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('ajax/updateQualification', 'Site\SiteUserController@updateQualification')->name('updateQualification');
     Route::post('ajax/updateQuestions', 'Site\SiteUserController@updateQuestions');
 
+
+
+    // ========================== Update Employer Questions ===========================================
+
+    Route::post('ajax/updateEmployerQuestions', 'Site\SiteUserController@updateEmployerQuestions');
+
+    // ========================== Update Employer Questions ===========================================
+
+
     Route::post('ajax/updateIndustryExperience', 'Site\SiteUserController@updateIndustryExperience')->name('updateIndustryExperience');
 
     
@@ -274,6 +283,14 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('ajax/removeAttachment/', 'Site\SiteUserController@removeAttachment')->name('removeAttachment');
     Route::get('ajax/getTags/{category}/{offset?}', 'Site\SiteUserController@getTags');
     Route::get('ajax/searchTags', 'Site\SiteUserController@searchTags')->name('searchTags');
+
+    // ============================================= Save User Tags =============================================
+
+    Route::post('ajax/updateUserTags', 'Site\SiteUserController@updateUserTags')->name('updateUserTags');
+
+
+    // ============================================= Save User Tags =============================================
+
     Route::post('ajax/addNewTag', 'Site\SiteUserController@addNewTag')->name('addNewTag');
 
     // activity  user/employer

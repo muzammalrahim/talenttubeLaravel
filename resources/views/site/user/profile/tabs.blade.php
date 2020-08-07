@@ -14,15 +14,25 @@
                 <a href="#tabs-3" title=""><span>Questions</span></a>
             </li>
 
+            <li id="tabs-4_switch" class="switch_tab ">
+                <a href="#tabs-4" title=""><span>Tags</span></a>
+            </li>
+            <li id="tabs-5_switch" class="switch_tab ">
+                <a href="#tabs-5" title=""><span>jobs</span></a>
+            </li>
+
         </ul>
     </div>
 
     <div id="tabs_content" class="tabs_content">
+
     <!-- tab_about -->
+
     <a id="tabs-1" class="tab_link tab_a target"></a>
     <div class="tab_about tab_cont">
         <div class="col_left">
 
+{{-- ======================================== About Me ======================================= --}}
             <div class="bl">
                 <div class="title">
                     <div id="basic_anchor_about_me" class="title_icon_edit">About me
@@ -41,6 +51,14 @@
                 {{-- <script>Profile.handlerBasicFieldEditor('about_me');</script> --}}
             </div>
 
+{{-- ======================================== About Me End here ======================================= --}}
+
+
+      <hr class="rounded">
+      {{-- <div class="lineDivivder"><span>Interested In</span></div> --}}
+
+{{-- ======================================== Interested in ======================================= --}}
+
             <div class="bl">
                 <div class="title">
                     <div id="basic_anchor_interested_in" class="title_icon_edit">Interested in
@@ -57,7 +75,13 @@
                 </div>
             </div>
 
-{{-- Qualification --}}
+{{-- ======================================== Interested in ======================================= --}}
+
+      <hr class="rounded">
+
+
+{{-- ======================================== Qualification ======================================= --}}
+
                 
                 {{-- @dump($user->qualification) --}}
          <div class="bl qualificationBox">
@@ -80,37 +104,21 @@
           <strong>Success!</strong> Qualification have been updated successfully!
         </div>
 
-{{-- Qualification End here --}}
+{{-- ======================================== Qualification End here ======================================= --}}
+  
+  <hr class="rounded">
+
+{{-- ======================================== Industry Experience ======================================= --}}
 
 
-{{-- Industry Experience --}}
-
-                {{-- @dump($user->industry_experience) --}}
-
-    {{--         <div class="bl">
-                <div class="title">
-                    <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
-                    </div>
-                    <div class="cl"></div>
-                </div>
-
-                @if(isset($user->industry_experience))
-                @foreach ($user->industry_experience as $ind)
-                     <p>{{getIndustryName($ind)}}</p> 
-                @endforeach
-                @endif 
-            
-            </div> --}}
-
-{{-- Industry Experience End here --}}
 
         <div class="title IndusListBox">
 
             {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
           <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
           <div class="cl"></div> --}}
-          <div id="basic" class="title_icon_edit">Industry Experience <i class="editIndustry fas fa-edit "></i>
-              </div><p class="loader SaveindustryExperience"style="float: left;"></p>
+          <div id="basic" class="title_icon_edit">Industry Experience <i class="editIndustry fas fa-edit "></i></div>
+              <p class="loader SaveindustryExperience"style="float: left;"></p>
               <div class="cl"></div>
 
 
@@ -126,10 +134,11 @@
           <strong>Success!</strong> Industry Experience have been updated successfully!
         </div>
 
- {{-- Testing Industry Experience --}}
+{{-- ======================================== Industry Experience end here  ======================================= --}}
+
+ 
 
 
-{{-- Testing Indstry Experience End Here --}}
 
 					{{-- <div class="bl">
 						<div class="title">
@@ -311,11 +320,77 @@
 
 </div>
 
-
-
-
 <!-- Tab question-->
 
+
+<!-- =========================================== Tab Tags ========================================== -->
+
+
+
+
+<a id="tabs-4" class="tab_link tab_a"></a>
+   <div class="tab_photos tab_cont">
+
+          <div class="col_left">
+              <div> 
+                  <div id="basic" class="title_icon_edit"style="float:left;">Tags <i class="editTags fas fa-edit "></i></div>
+                  <p class="loader SaveTagsLoader"style="float: left;"></p>
+                  <div class="cl"></div>
+            {{--       <div class="tagsOfUser">    
+                    @foreach($userTags as $uTags)
+                        <div class="userTag">
+
+                          <span class="userTagLabel">{{$uTags->title}}</span>
+                          <input type="hidden" name="userTags[]" value="{{$uTags->id}}" class="UserTagsHidden">
+                        </div>
+                    @endforeach     
+                  </div> --}}
+      
+                    <a class="btn btn-sm btn-success saveTagsButton hide2" style="margin-top: 5px;">Save</a>
+            </div>
+
+            <div class="alert alert-success TagsAlert hide2" role="alert">
+              <strong>Success!</strong> Tags have been updated successfully!
+            </div>
+        </div>
+
+    <div class="userTagsEditingLayout">  
+      @include('site.layout.tagging')
+    </div>
+
+        <div class="savebuttonUsertags hide_it2">
+          {{-- <button type="button" class="btn btn-success">Done</button> --}}
+        </div>
+
+</div>
+
+<!-- =========================================== Tab Tags ========================================== -->
+
+<!-- =========================================== Tab Jobs ========================================== -->
+
+<a id="tabs-5" class="tab_link tab_a"></a>
+    <div class="tab_photos tab_cont">
+
+            <div> 
+               <div id="basic" class="title_icon_edit"style="float:left;">Jobs {{-- <i class="editQuestions fas fa-edit "></i> --}}</div>
+                {{-- <p class="loader SaveQuestionsLoader"style="float: left;"></p> --}}
+               
+                <div class="cl"></div>
+                  
+
+                {{-- @dump($jobsApplication) --}}
+
+                <div class="questionsOfUser">
+               </div>
+
+           </div>
+
+             <div class="alert alert-success questionsAlert" role="alert">
+                <strong>Success!</strong> Questions have been updated successfully!
+             </div>
+     </div>
+
+<!-- =========================================== Tab Jobs ========================================== -->
 
     </div>
 </div>

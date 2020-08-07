@@ -18,7 +18,7 @@
                     <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
                         <img  data-offset-id="23" class="photo"
                             id="pic_main_img"
-                            src="{{$profile_image}}"
+                            src="{{$profile_image}}" 
                             title="">
                     </a>
                     {{-- <div id="add_photo_main_profile" class="add_photo">
@@ -116,6 +116,8 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site/tagSystem.css') }}">
+
 <style>
 .job{margin:10px; }
 .jq-selectbox.jqselect.salaryRangeField.dropup.opened{ width: 100px;}
@@ -192,11 +194,11 @@ div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {
 }
 div#basic_anchor_industry_experience,div.title.qualificationList>div#basic {
     font-size: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 13px;
 }
 div.title.IndusListBox>div#basic {
     font-size: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 13px;
 }
 .smallSpinner.SaveIndustrySpinner {
     font-size: 20px;
@@ -244,6 +246,49 @@ div.IndusList>div.IndustrySelect>select {
 i.fa.fa-trash.removeIndustry {
     margin-top: 7px;
 }
+
+.rounded{
+    /*border-top: 3px solid #bbb;*/
+    border-top: 3px solid #142d69;
+
+    border-radius: 3px;
+}
+.lineDivivder {
+   width: 100%; 
+   text-align: center; 
+   border-bottom: 1px solid #000; 
+   line-height: 0.1em;
+   margin: 10px 0 20px; 
+} 
+
+.lineDivivder span { 
+    background:#f3f5f9; 
+    padding:0 10px; 
+}
+
+span.addTags.btn.btn-primary
+{
+    display: block;
+    margin-top: 15px;
+}
+div.col_left>div>div#basic {
+    margin-bottom: 13px;
+}
+.userTag {
+    margin-bottom: 7px;
+}
+select.userTags.userTagsSelect {
+    width: 45%;
+    display: inline-block;
+}
+
+.tab_photos>.col_left {
+    float: none !important;
+}
+.savebuttonUsertags{
+    text-align: center; 
+    margin-top:10px
+}
 </style>
 @stop
 
@@ -252,6 +297,7 @@ i.fa.fa-trash.removeIndustry {
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
 <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
+<script src="{{ asset('js/site/tagSystem.js') }}"></script>
 <script type="text/javascript">
 
   $(document).ready(function(){
@@ -320,17 +366,49 @@ $(document).ready(function(){
 
 //======================= add remove industry =================================
 
+//======================= add remove User Tags =================================
+
+$(document).ready(function(){
+   $(document).on('click','.removeTags', function(){
+    $(this).closest('.userTag').remove();
+   });
+   $(document).on('click','.addTags', function(){
+    var newTagsHtml = '<div class="userTag"><select name="userTags[]" id="example2" class="userTags userTagsSelect" value = "Select Tag Category">'; 
+    newTagsHtml += '<option value="" disabled selected hidden>Select Tag Category</option>'; 
+    @if(!empty($tags))
+        @foreach($tagCategories as $lk=>$tagCategory)
+           newTagsHtml   += '<option value="{{$tagCategory->id}}">{{$tagCategory->title}}</option>'; 
+        @endforeach
+    @endif
+    newTagsHtml += '</select>';  
+    newTagsHtml += '<input type = "text"placeholder="Add Tag" data-id="{{$tagCategory->id}}">';  
+    newTagsHtml += '<i class="fa fa-trash removeTags"></i>';
+    newTagsHtml += '</div>';
+    $('.tagsOfUser').append(newTagsHtml);
+   });
+
+}); 
+
+//======================= add remove User Tags end here =================================
+
 //======================= User Questions Edit =================================
 
  $(".editQuestions").click(function(){
  $('.hide2').css("display","inline-block");
  $('.jobSeekerRegQuestion').removeClass('hide_it');
  $('.QuestionsKeyPTag').addClass('hide_it');
-
+});
 //======================= User Questions Editing end here =================================
 
+//======================= User Tags Edit =================================
 
-  });
+//  $(".editTags").click(function(){
+//  $('.userTagsEditingLayout').css("display","block");
+//  $('.savebuttonUsertags').css("display","block");
+//  $('.tagsOfUser').addClass('hide_it2');
+// });
+//======================= User Tags Editing end here =================================
+
 
 </script>
 
