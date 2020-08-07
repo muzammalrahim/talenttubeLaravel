@@ -288,6 +288,8 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::get('like',         'Site\SiteUserController@likeList')->name('likeList');
     Route::post('ajax/unLikeUser', 'Site\SiteUserController@unLikeUser')->name('unLikeUser');
 
+
+    Route::get('mutual-likes',         'Site\SiteUserController@mutualLikes')->name('mutualLikes');
     
 
 
@@ -323,7 +325,10 @@ Route::group(array('middleware' => 'auth'), function(){
 
  
     Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
+    
     Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
+    Route::post('jobsFilter', 'Site\SiteUserController@jobsFilter')->name('jobsFilter');
+
     Route::get('jobs/{id}', 'Site\SiteUserController@jobDetail')->name('jobDetail');
     
     Route::post('ajax/deleteJob/{id}', 'Site\SiteUserController@deleteJob')->name('deleteJob');

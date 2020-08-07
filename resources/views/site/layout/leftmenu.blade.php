@@ -29,6 +29,14 @@
 
                 <li><a href="{{route('likeList')}}" class="column_narrow_search_results {{(request()->is('like'))?'active':''}}"><span class="icon"></span>Like Users</a></li>
                 
+
+                <li>
+                    <a id="narrow_menu_link_31" href="{{route('mutualLikes')}}" class="column_narrow_mutual_likes {{(request()->is('mutual-likes'))?'active':''}}">
+                        <span class="icon"></span>Mutual likes
+                        <span id="narrow_mutual_likes_count" class="count "></span>
+                    </a>
+                </li>
+
                 {{-- Liker User List End --}}
 
             {{-- <li>
@@ -59,12 +67,7 @@
                 </a>
             </li> --}}
 
-            <li>
-                <a id="narrow_menu_link_31" href="./mutual_likes" class="column_narrow_mutual_likes  ">
-                    <span class="icon"></span>Mutual likes
-                    <span id="narrow_mutual_likes_count" class="count "></span>
-                </a>
-            </li>
+         
 
             {{-- <li>
                 <a id="" href="interest-parties.html" class="column_narrow_who_likes_you  ">

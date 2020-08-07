@@ -367,34 +367,21 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     public function updateQualification(Request $request){
         
-        // dd($request->toArray());
-        // dump($request->qualification);
-
-        // $data = $request->validate([
-        //     "qualification"    => "required|array|min:13",
-        //     "qualification.*"  => "required|string|distinct|min:3",
-        // ]);
-
         $requestData = $request->all();  
-        // $requestData['qualification'][2] = 'test not integer'; 
         $rules = array(
                     'qualification'    => 'required|array', 
                     'qualification.*'  => 'required|integer'
                 );
         $validator = Validator::make($requestData, $rules); 
-
         // dd( $validator->errors() ); 
-
         if (!$validator->fails()) {
             $user = Auth::user();
             $user->qualification = $request->qualification;
+            $user->qualificationRelation()->sync($requestData['qualification']); 
             $user->save();
-
             $data['user'] = User::find($user->id); 
             $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
             $QualificationHtml = $QualificationView->render();
-            
-            
             return response()->json([
                     'status' => 1,
                     'data' => $QualificationHtml,
@@ -1029,9 +1016,35 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
-        $data['jobs'] = Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-        return view('site.jobs.jobs', $data); // site/jobs/jobs 
+        $data['jobs'] = null; //Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
+        return view('site.jobs.index', $data); // site/jobs/index 
     }
+
+    //====================================================================================================================================//
+    // Get // layout for purchasing Credits.
+    //====================================================================================================================================//
+    function jobsFilter(Request $request){
+        // dd($request->toArray());
+        $user = Auth::user();
+        $data = array(); 
+        if(!isEmployer($user)){
+            
+            // $applications = new JobsApplication();
+            // $applications = $applications->getFilterApplication($request);
+            // $likeUsers    = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+            
+            $jobs = new Jobs(); 
+            $jobs = $jobs->filterJobs($request); 
+
+            // ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
+
+             $data['jobs'] = $jobs; 
+
+            return view('site.jobs.list', $data);
+            // site/jobs/list
+        }
+    }
+
 
 
     //====================================================================================================================================//
@@ -1285,6 +1298,8 @@ class SiteUserController extends Controller
         return view('site.user.likeUsers', $data);
     }
 
+
+
     //====================================================================================================================================//
     // Ajax Post // Remove user from user block User List.
     //====================================================================================================================================//
@@ -1314,6 +1329,28 @@ class SiteUserController extends Controller
         ]);
     }
 
+
+    //====================================================================================================================================//
+    // Get // get mutual likes user List.
+    //====================================================================================================================================//
+    public function mutualLikes(){
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Mutual Like Users';
+        $data['classes_body'] = 'mutualLikes';
+
+        $whoLikeMe = LikeUser::where('like',$user->id)->pluck('user_id');
+        $mutualUser = null;
+        if(!empty($whoLikeMe)){
+          $mutualUser = LikeUser::with('user')->where('user_id',$user->id)->whereIn('like',$whoLikeMe)->get();
+        }
+
+        // dd( $mutualUser );
+
+        $data['likeUsers'] = $mutualUser; 
+        return view('site.user.mutualUsers', $data);
+        // site/user/mutualUsers
+    }
 
 
     //====================================================================================================================================//

@@ -6,9 +6,6 @@
    
     @foreach ($jobSeekers as $js)
     
-
-
-
     <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
         <div class="jobSeeker_box relative dinline_block w100">
             @include('site.layout.parts.jobSeekerProfilePhotoBox')
@@ -22,8 +19,6 @@
                 <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" >View Profile</a> 
             </div>
         </div>
-        
-        
     </div>
 
 
