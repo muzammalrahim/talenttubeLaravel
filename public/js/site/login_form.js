@@ -68,7 +68,7 @@ $(function () {
 
 	$('body').on('click', '.pp_wrapper', function(e){
 		if($(e.target).is('.pp_wrapper')){
-            signInClose();
+            // signInClose();
             forgotPassClose();
         }
 	})
