@@ -177,7 +177,7 @@ $(document).ready(function(){
         });
     });
 
-    $('.jobApplyBtn').on('click',function(){
+    $(document).on('click','.jobApplyBtn', function(){
         var job_id = $(this).attr('data-jobid');
         $('#openModalJobId').val(job_id);
         $('#jobApplyModal .cont').html(getLoader('css_loader loader_edit_popup'));

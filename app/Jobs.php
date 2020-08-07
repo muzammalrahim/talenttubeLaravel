@@ -101,9 +101,6 @@ class Jobs extends Model {
 
     }
 
-
-
-
    
     static function generateCode(){
         $code = str_pad(mt_rand(999, 999999), 6, '0', STR_PAD_LEFT);
@@ -113,6 +110,83 @@ class Jobs extends Model {
         }else{
             return $code; 
         }
+    }
+
+
+
+
+
+
+    //====================================================================================================================================//
+    // Function to filter jobs. // called from jobs layout. 
+    //====================================================================================================================================//
+    public function filterJobs($request){
+
+         
+        $keyword = my_sanitize_string($request->filter_keyword);
+        $salaryRange = $request->filter_salary;
+        $jobType = $request->filter_jobType;
+        
+        
+        $locationStatus =  (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on'))?true:false; 
+        $latitude = $request->location_lat;
+        $longitude = $request->location_long;
+        $radius = $request->filter_location_radius;
+
+        
+        $query    = $this::with(['applicationCount','jobEmployerLogo']); 
+        
+
+        // Filter by salaryRange. 
+        if(!empty($salaryRange)){ $query->where('salary', '>=', $salaryRange); }
+
+        // Filter by jobType.
+        if(!empty($jobType)){ $query->where('type', '=', $jobType); }
+
+
+        // Filter by Keyword filter_keyword
+        if(varExist('filter_keyword', $request)){
+            $keyword = $request->filter_keyword;
+            $query = $query->where(function($q) use($keyword) {
+                        $q->where('code','LIKE', "%{$keyword}%")
+                        ->orWhere('title','LIKE', "%{$keyword}%")
+                        ->orWhere('description','LIKE', "%{$keyword}%"); 
+                }); 
+        }
+ 
+        // if( $filter_location ||  !empty($qualification_type) || !empty($salaryRange) || !empty($keyword) || $industry_status ){
+        //     $applications = $applications->whereHas('jobseeker', function ($query) use($filter_location,$latitude,$longitude,$radius,$qualification_type,$salaryRange,$keyword, $qualifications, $industry_status, $industries){
+        //         if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
+        //         if(!empty($keyword)){  $query->where('username', 'LIKE', "%{$keyword}%"); }
+        //         return $query; 
+        //     });  
+        // }
+
+        // if(varExist('ja_filter_sortBy', $request)){
+        //     // dd($request->ja_filter_sortBy);
+        //     $filter_column = 'goldstar';
+        //     if($request->ja_filter_sortBy == 'all_candidates'){
+        //         $applications = $applications->orderBy('created_at', 'DESC');
+        //     }else if($request->ja_filter_sortBy == 'goldstars'){
+        //         $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');
+        //     }else if($request->ja_filter_sortBy == 'applied'){
+        //         $applications  = $applications->where('status','=','applied');
+        //     }else if($request->ja_filter_sortBy == 'inreview'){
+        //         $applications  = $applications->where('status','=','inreview');
+        //     }else if($request->ja_filter_sortBy == 'interview'){
+        //         $applications  = $applications->where('status','=','interview');
+        //     }else if($request->ja_filter_sortBy == 'unsuccessful'){
+        //         $applications  = $applications->where('status','=','unsuccessful');
+        //     }  
+        // }else{
+        //     $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');
+        // }
+
+        // dd( $applications->toSql() ); 
+
+        $jobsList = $query->paginate(3);
+        return $jobsList; 
+
     }
 
 

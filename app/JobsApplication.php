@@ -171,7 +171,7 @@ class JobsApplication extends Model{
             
             // dd( $applications->toSql() ); 
 
-            $applications = $applications->paginate(1);
+            $applications = $applications->paginate(3);
 
             return $applications; 
     }

@@ -330,9 +330,7 @@ class EmployerController extends Controller {
         if(isEmployer($user)){
 
             $job =  Jobs::find($id);
-
             // $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id',$id)->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC')->paginate(1);
-
             // $data['applications'] = $applications;
             $data['job']   = $job;
             $data['user']   = $user;

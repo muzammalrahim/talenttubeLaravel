@@ -7,7 +7,8 @@
     {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'jobSeeker_filter_form' )) }}
     <input type="hidden" name="page" id="paginate" value="">
    
- {{--   <div class="searchField_qualification mb10">
+    {{--
+    <div class="searchField_qualification mb10">
         <div class="searchFieldLabel dinline_block">Qualification: </div>
         <select class="dinline_block select_aw" name="filter_qualification_type" data-placeholder="Select Qalification & Trades">
              <option value="">Select Qalification & Trades</option>
@@ -17,6 +18,7 @@
              <option value="post_degree">University Post Graduate (Masters or PHD)</option>
         </select>
     </div> --}}
+
      <div class="searchField_qualification mb10">
         <div class="searchFieldLabel dinline_block">Qualification: </div>
         <select class="dinline_block filter_qualification_type" name="filter_qualification_type" data-placeholder="Select Qalification & Trades">
