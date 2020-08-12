@@ -48,7 +48,7 @@
                     <li id="list_info_location">{{userLocation($user)}}</li>
                     <li><span class="basic_info">•</span><span id="list_info_gender">Job Seeker</span></li>
                 </ul>
-                <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div>
+                {{-- <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div> --}}
             </div>
 
         {{--     <div class="status">
@@ -86,7 +86,7 @@
                 <span>Expecting Salary:</span>
                 {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, ['placeholder' => 'Select Salary Range', 'onchange' => 'UProfile.updateSalaryRange()', 'id' => 'salaryRangeFieldnew', 'class' => 'hide_it salaryRangeField']) }}
 
-                <b> {{'USD: '}}<span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
+                <b> {{'AUD: '}}<span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
                 <i class="fas fa-edit salaryRangeEdit" onclick="UProfile.enableSalaryRangeEdit()"></i>
                 </div>
 
@@ -288,6 +288,9 @@ select.userTags.userTagsSelect {
 .savebuttonUsertags{
     text-align: center; 
     margin-top:10px
+}
+.jobSeekerProfileUpdate,.signOutButtonHeader{
+    color: white !important;
 }
 </style>
 @stop

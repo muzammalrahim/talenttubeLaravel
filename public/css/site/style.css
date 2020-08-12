@@ -131,7 +131,7 @@ h4{ font-size: 12px; line-height: 18px; padding: 0; margin: 0 0 10px; color: #00
 }
 
 .header ul.nav li span{ color: #8ad4ff; display: block; line-height: 41px; padding: 0 16px; }
-.header ul.nav li:last-child a{ padding: 0 0 0 16px; }
+.header ul.nav li:last-child a{ padding: 0 0 0 7px; }
 .header ul.nav li a:hover{ color: #8ad4ff; }
 
 .header ul.nav.color_hover_violet li span, .header ul.nav.color_hover_violet li a:hover{ color: #ff9bfe; }
