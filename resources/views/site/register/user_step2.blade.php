@@ -23,8 +23,9 @@
 <!-- main -->
 <div class="main  above ">
     <input type="hidden" id="userType" name="userType" value="user" />
+    <input type="hidden" id="userStep" name="userStep" value="{{($user->step2)?($user->step2):2}}" />
     <!-- header -->
-    <div class="header">  
+    <div class="header">
         <div id="join_step" class="step">
             <ul>
                 <li class="selected">1</li>
@@ -35,10 +36,10 @@
                 <li style="display:none;">6</li>
                 <li style="display:none;">7</li>
             </ul>
-            
+
         </div>
         <div class="slogan"><span id="join_slogan">Answer 6 questions to calculate your best matches.</span></div>
-        
+
         <div class="logo">
             <a href="./index"><img src="{{asset('/images/site/logo.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
         </div>
@@ -46,10 +47,10 @@
     <!-- /header -->
 
 
-     
+
     <div class="content">
+        <div class="full_step_error"></div>
         <div class="mw50 dtable margin_auto">
-            
             <div id="full_step_1" class="bl_card_question" style="display:none;">
                 <div class="card_question_cont">
                     <div id="card_question_no" class="card_question no hide answer">
@@ -58,7 +59,7 @@
                     <div id="card_question_yes" class="card_question yes hide answer">
                         <div class="question_vh"><img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /><span>Yes</span></div>
                     </div>
-                    
+
                     <div data-field="graduate_intern" class="card_question ">
                         <div class="count">6 of 6</div><div class="question_txt">Are you seeking a Graduate Program or Internship?</div>
                     </div>
@@ -66,23 +67,23 @@
                     <div data-field="part_time" class="card_question ">
                         <div class="count">5 of 6</div><div class="question_txt">Are you open to Part Time or Casual work?</div>
                     </div>
-                    
+
                     <div data-field="temporary_contract" class="card_question ">
                         <div class="count">4 of 6</div><div class="question_txt">Are you open to temporary and contract work?</div>
                     </div>
-                    
+
                     <div data-field="fulltime" class="card_question ">
                         <div class="count">3 of 6</div><div class="question_txt">Are you looking for Full Time Employment?</div>
                     </div>
-                    
+
                     <div data-field="relocation" class="card_question ">
                         <div class="count">2 of 6</div><div class="question_txt">Are you looking or willing to relocate for your next job opportunity?</div>
                     </div>
-                    
+
                     <div data-field="resident" class="card_question first">
                         <div class="count">1 of 6</div><div class="question_txt">Are you a Permanent Resident or Citizen of Australia or New Zealand?</div>
                     </div>
-                    
+
                     <div class="card_decor_left1"></div>
                     <div class="card_decor_left2"></div>
                     <div class="card_decor_right1"></div>
@@ -161,13 +162,13 @@
                                      @if (!empty($qualifications))
                                       @foreach ($qualifications as $qkey => $quaf)
                                         <li class="{{$quaf['type']}}" data-id="{{$quaf['id']}}"> {{$quaf['title']}} </li>
-                                      @endforeach                                                 
+                                      @endforeach
                                     @endif
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    
+
 
                     <div class="join_btn mt20 center">
                         <div class="join_industry_error"></div>
@@ -196,7 +197,7 @@
                                  @if (!empty($industries))
                                   @foreach ($industries as $ikey => $industry)
                                     <li data-id="{{$ikey}}"> {{$industry}} </li>
-                                  @endforeach                                                 
+                                  @endforeach
                                 @endif
                             </ul>
                         </div>
@@ -221,14 +222,14 @@
                     <div class="salary_list">
                         <div class="salary_list_cont">
                             <ul class="salary_ul item_ul">
-                                 @php
+                                @php
                                     $salaries = getSalariesRange();
                                 @endphp
 
                                  @if (!empty($salaries))
                                   @foreach ($salaries as $ikey => $salary)
                                     <li data-id="{{$ikey}}"> {{$salary}} </li>
-                                  @endforeach                                                 
+                                  @endforeach
                                 @endif
                             </ul>
                         </div>
@@ -278,7 +279,7 @@
                         <p>Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:</p>
                         <div class="step2_uplod_info">
                             <p>1. Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
-                            
+
                             <p>2. Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. </p>
                         </div>
 
@@ -308,7 +309,7 @@
                                 </a>
                             </div>
                            </div>
-                            
+
                            <div class="list_videos"></div>
                            </div>
                        </div>
@@ -329,9 +330,9 @@
         </div>
     </div>
 
- 
 
- 
+
+{{--@dd($user->step2)--}}
 
 </div>
 <!-- /main -->
@@ -347,16 +348,80 @@
 <script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>
+{{--<script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>--}}
+<script type="text/javascript" src="{{ asset('js/site/step2.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script>
 
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 
- 
+
+
 <script type="text/javascript">
     $(function(){
-        $('#full_step_1').delay(150).fadeIn(500);
-    }); 
+        // $('#full_step_1').delay(150).fadeIn(500);
+        var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
+        userStepReload(currentStep);
+        {{--var previousStep =  currentStep - 1;--}}
+        {{--var joinStepList = $('#join_step ul li').removeClass('selected');--}}
+        {{--console.log('step list', joinStepList);--}}
+        {{--// if (currentStep == 3){--}}
+        {{--//--}}
+        {{--// }--}}
+
+        {{--switch (currentStep) {--}}
+        {{--    case 2:--}}
+        {{--        var step3_slogan =  ($('#userType').val() == 'user')?('Update your profile'):('Give us a brief overview');--}}
+        {{--        $('#join_slogan').text(step3_slogan);--}}
+        {{--        joinStepList;--}}
+        {{--        $('#join_step ul li:eq(1)').addClass('selected').css('display','block');--}}
+        {{--        break;--}}
+
+        {{--    case 3:--}}
+        {{--        var step3_slogan =  ($('#userType').val() == 'user')?('Update your profile'):('Give us a brief overview');--}}
+        {{--        $('#join_slogan').text(step3_slogan);--}}
+        {{--        joinStepList;--}}
+        {{--        $('#join_step ul li:eq(1)').addClass('selected').css('display','block');--}}
+        {{--        break;--}}
+        {{--    case 4:--}}
+        {{--        // $('#join_slogan').text('Qualification');--}}
+        {{--        // joinStepList;--}}
+        {{--        // $('#join_step ul li:eq(1)').css('display','block');--}}
+        {{--        // $('#join_step ul li:eq(2)').addClass('selected').css('display','block');--}}
+        {{--        // // showUserStep4();--}}
+        {{--        showUserStep5();--}}
+
+        {{--        break;--}}
+        {{--    case 5:--}}
+        {{--        $('#join_slogan').text('Industry Experience');--}}
+        {{--        joinStepList;--}}
+        {{--        $('#join_step ul li:eq(1), #join_step ul li:eq(2)').css('display','block');--}}
+        {{--        $('#join_step ul li:eq(3)').addClass('selected').css('display','block');--}}
+        {{--        break;--}}
+        {{--    case 6:--}}
+        {{--        $('#join_step').text('Salary Range');--}}
+        {{--        joinStepList;--}}
+        {{--        $('#join_step ul li:eq(1), #join_step ul li:eq(2), #join_step ul li:eq(3)').css('display','block');--}}
+        {{--        $('#join_step ul li:eq(4)').addClass('selected').css('display','block');--}}
+        {{--        break;--}}
+        {{--    case 7:--}}
+        {{--        $('#join_step').text('Tagging');--}}
+        {{--        joinStepList;--}}
+        {{--        $('#join_step ul li:eq(1), #join_step ul li:eq(2), #join_step ul li:eq(3), #join_step ul li:eq(4)').css('display','block');--}}
+        {{--        $('#join_step ul li:eq(5)').addClass('selected').css('display','block');--}}
+        {{--        break;--}}
+        {{--    case 8:--}}
+        {{--        $('#join_step').text('Final Section');--}}
+        {{--        joinStepList;--}}
+        {{--        $('#join_step ul li:eq(1), #join_step ul li:eq(2), #join_step ul li:eq(3), #join_step ul li:eq(4), #join_step ul li:eq(5)').css('display','block');--}}
+        {{--        $('#join_step ul li:eq(6)').addClass('selected').css('display','block');--}}
+        {{--        break;--}}
+        {{--     default :--}}
+
+        {{--         $('#full_step_1').delay(150).fadeIn(500);--}}
+
+        {{--         break;--}}
+        // }
+    });
 </script>
 
 @stop
@@ -368,6 +433,19 @@
 <style>
 .header, .main.above .wrapper {
     background: #5b0079;
+}
+.full_step_error p {
+    color: white;
+    text-align: center;
+    background-color: rgba(228, 29, 61, 0.6);
+    font-size: 15px;
+    padding: 5px 0;
+    width: 20%;
+    margin: 10px auto;
+    border-radius: 5px;
+}
+.css_loader_btn .spinner.center, .css_loader_btn .spinnerw.center {
+    position: relative !important;
 }
 </style>
 @stop

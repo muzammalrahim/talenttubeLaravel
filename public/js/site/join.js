@@ -14,14 +14,14 @@ var step2_formData = new FormData();
 var dataIndustryExp = [];
 var userQualificationList = [];
 var userSalaryRange = '';
-var profile_img_selected = false; 
+var profile_img_selected = false;
 var userSelectedTagsList = [];
 
 // var isUploadPhotoJoinAjax=false, isUploadPhotoJoin=false;
 var currentPage = 'join.php';
 $(function(){
     /* STEP 1 */
-    $('.geo', '#step-1').change(function() {  
+    $('.geo', '#step-1').change(function() {
         console.log(' change  ', this);
         var type=$(this).data('location');
         $.ajax({type: 'POST',
@@ -398,25 +398,25 @@ $(function(){
         $jq('#about_me_error,#interested_in_error,.part_photo .name_info').addClass('to_hide');
         $jq('#about_me,#interested_in,.upload_file').removeClass('validation_error');
 
-        //validation 
-        var s3_validation = true; 
+        //validation
+        var s3_validation = true;
         var about_me = $.trim($('#about_me').val());
         var interested_in = $.trim($jq('#interested_in').val());
-        
+
         if ( about_me == ''){
-            s3_validation = false; 
+            s3_validation = false;
             $jq('#about_me_error').removeClass('to_hide').text('Required');
             $jq('#about_me').addClass('validation_error');
-        } 
+        }
 
         if (interested_in == ''){
-            s3_validation = false; 
+            s3_validation = false;
             $jq('#interested_in_error').removeClass('to_hide').text('Required');
             $jq('#interested_in').addClass('validation_error');
         }
 
         if(!profile_img_selected){
-            s3_validation = false; 
+            s3_validation = false;
             $jq('.part_photo .name_info').removeClass('to_hide').text('Required');
             $jq('.upload_file').addClass('validation_error');
         }
@@ -439,32 +439,32 @@ $(function(){
         $jq('#about_me_error,#interested_in_error,.part_photo .name_info,#recentJob_error').addClass('to_hide');
         $jq('#about_me,#interested_in,.upload_file,#recentJob').removeClass('validation_error');
 
-        //validation 
-        var s3_validation = true; 
+        //validation
+        var s3_validation = true;
         var about_me = $.trim($('#about_me').val());
         var interested_in = $.trim($jq('#interested_in').val());
         var recentJob = $.trim($jq('#recentJob').val());
-        
+
         if ( about_me == ''){
-            s3_validation = false; 
+            s3_validation = false;
             $jq('#about_me_error').removeClass('to_hide').text('Required');
             $jq('#about_me').addClass('validation_error');
-        } 
+        }
 
         if (interested_in == ''){
-            s3_validation = false; 
+            s3_validation = false;
             $jq('#interested_in_error').removeClass('to_hide').text('Required');
             $jq('#interested_in').addClass('validation_error');
         }
 
         if (recentJob == ''){
-            s3_validation = false; 
+            s3_validation = false;
             $jq('#recentJob_error').removeClass('to_hide').text('Required');
             $jq('#recentJob').addClass('validation_error');
         }
 
         if(!profile_img_selected){
-            s3_validation = false; 
+            s3_validation = false;
             $jq('.part_photo .name_info').removeClass('to_hide').text('Required');
             $jq('.upload_file').addClass('validation_error');
         }
@@ -473,32 +473,67 @@ $(function(){
             step2_formData.append('about_me', about_me);
             step2_formData.append('interested_in', interested_in );
             step2_formData.append('recentJob', recentJob );
+            // console.log('form data', step2_formData);
+            userStep2Update(step2_formData, 3);
             showUserStep4();
         }
+        // console.log(base_url);
+
+         // $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+         // $.ajax({
+         //     url: base_url+'/step2',
+         //     type : 'POST',
+         //     data : step2_formData,
+         //     processData: false,
+         //     contentType: false,
+         //     success : function(resp) {
+         //         console.log('resp ', resp);
+         //         $jq('#join_done').html('Done').prop('disabled',false);
+         //         if(resp.status){
+         //             setTimeout(() => {
+         //                 location.href = resp.redirect;
+         //             }, 1000);
+         //         }else{
+         //             $jq('#full_step_8').html('<div class="full_step_error center"><p>Error Updating data.</p></div>');
+         //             if(resp.validator != undefined){
+         //                 const keys = Object.keys(resp.validator);
+         //                 for (const key of keys) {
+         //                     var error_html = '<p>'+resp.validator[key][0]+'</p>';
+         //                     $('.full_step_error').append(error_html);
+         //                 }
+         //             }else if(resp.error != undefined ){
+         //                 var error_html = '<p>'+resp.error+'</p>';
+         //                 $('.full_step_error').append(error_html);
+         //             }
+         //
+         //             $('.full_step_error').append('<h3 class="mt20"><a class="pointer" onclick="location.reload()" style="color: #ffa200;">Click here to update</a></h3>');
+         //         }
+         //     }
+         // });
 
     });
 
 
 
 function showUserStep4(){
-    
-    $jq('#join_slogan').text('Qualification'); 
-    $jq('#join_step ul li').removeClass('selected'); 
-    $jq('#join_step ul li:eq(2)').addClass('selected').css('display','block'); 
+
+    $jq('#join_slogan').text('Qualification');
+    $jq('#join_step ul li').removeClass('selected');
+    $jq('#join_step ul li:eq(2)').addClass('selected').css('display','block');
      $jq('#full_step_3').fadeOut(400,function(){
         $jq('#full_step_4').fadeIn(400,function(){
         });
-     }); 
+     });
 
      $jq('#qualification_type').on('change',function(){
-        console.log(' qualification_type '); 
+        console.log(' qualification_type ');
         userQualificationList = [];
         jQuery('.qualification_ul li.selected').removeClass('selected');
-        var qualif_type = $jq(this).val(); 
-        console.log(' qualif_type ', qualif_type); 
+        var qualif_type = $jq(this).val();
+        console.log(' qualif_type ', qualif_type);
         if(qualif_type != ''){
             $jq('.select_qualification_list').removeClass('trade').removeClass('degree');
-            $jq('.select_qualification_list').addClass( (qualif_type == 'trade')?'trade':'degree'); 
+            $jq('.select_qualification_list').addClass( (qualif_type == 'trade')?'trade':'degree');
             $jq('.select_qualification_list').fadeIn(400,function(){});
         }else{
             $jq('.select_qualification_list').fadeOut(400,function(){});
@@ -509,10 +544,10 @@ function showUserStep4(){
 
 
 function showEmployStep4(){
-    
-    $jq('#join_slogan').text('Industry Experience'); 
-    $jq('#join_step ul li').removeClass('selected'); 
-    $jq('#join_step ul li:eq(2)').addClass('selected').css('display','block'); 
+
+    $jq('#join_slogan').text('Industry Experience');
+    $jq('#join_step ul li').removeClass('selected');
+    $jq('#join_step ul li:eq(2)').addClass('selected').css('display','block');
 
      $jq('#full_step_3').fadeOut(400,function(){
         $jq('#full_step_4').fadeIn(400,function(){
@@ -521,15 +556,15 @@ function showEmployStep4(){
         });
      })
 }
-    
-    // add the selected one to Employer Industry list selection.  
+
+    // add the selected one to Employer Industry list selection.
     jQuery('.industry_ul').on('click','li', function(){
         var industry_id = jQuery(this).attr('data-id');
         if (dataIndustryExp.indexOf(industry_id) == -1){
             if(dataIndustryExp.length < 5 ){
                 dataIndustryExp.push(industry_id);
                 jQuery(this).addClass('selected');
-            }  
+            }
         }else{
             dataIndustryExp.splice(dataIndustryExp.indexOf(industry_id),1);
             jQuery(this).removeClass('selected');
@@ -543,8 +578,8 @@ function showEmployStep4(){
         }
     });
 
-  
-     // add the selected one to User Qualification selection list.  
+
+     // add the selected one to User Qualification selection list.
     jQuery('.qualification_ul').on('click','li', function(){
         $('.join_industry_error').removeClass('error').text('');
          var qualification_id = jQuery(this).attr('data-id');
@@ -567,12 +602,12 @@ function showEmployStep4(){
     });
 
 
-    // add the selected one to User Qualification selection list.  
+    // add the selected one to User Qualification selection list.
     jQuery('.salary_ul').on('click','li', function(){
          var salary_id = jQuery(this).attr('data-id');
          jQuery('.salary_ul li.selected').removeClass('selected');
          jQuery(this).addClass('selected');
-         userSalaryRange = salary_id; 
+         userSalaryRange = salary_id;
          if (userSalaryRange != '' ){ jQuery('#user_step6_done').prop('disabled',false); }
         console.log('userSalaryRange ', userSalaryRange );
     });
@@ -580,9 +615,9 @@ function showEmployStep4(){
 
     // tagging system Script
     jQuery('.tagCategory.tagItem').on('click',function(){
-        console.log(' tagCategory tagItem click '); 
+        console.log(' tagCategory tagItem click ');
         jQuery('.tagCategory.tagItem').removeClass('selected');
-        jQuery(this).addClass('selected'); 
+        jQuery(this).addClass('selected');
 
         jQuery('.tagListCont .tagListBox').html('');
         jQuery('.tagListCont').addClass('loadingList');
@@ -596,7 +631,7 @@ function showEmployStep4(){
             success : function(resp) {
                console.log('getTags ', resp);
                jQuery('.tagListCont').removeClass('loadingList');
-               if(resp.status){   
+               if(resp.status){
                     jQuery('.tagListCont .tagListBox').html(resp.data);
                }
             }
@@ -606,7 +641,7 @@ function showEmployStep4(){
 
 
      jQuery('.tagListBox').on('click','li a.loadMoreTags', function(){
-        console.log(' loadMoreTags click '); 
+        console.log(' loadMoreTags click ');
         jQuery('.tagListCont .tagListBox').html('');
         jQuery('.tagListCont').addClass('loadingList');
         var offset = jQuery(this).attr('data-offset');
@@ -618,7 +653,7 @@ function showEmployStep4(){
             success : function(resp) {
                console.log('getTags ', resp);
                jQuery('.tagListCont').removeClass('loadingList');
-               if(resp.status){   
+               if(resp.status){
                     jQuery('.tagListCont .tagListBox').html(resp.data);
                }
             }
@@ -627,24 +662,24 @@ function showEmployStep4(){
 
 
 
-    
+
     jQuery('html').click(function(e) {
       //if clicked element is not your element and parents aren't your div
       if (e.target.id != 'newTag' && $(e.target).parents('#newTag').length == 0) {
-         jQuery('.tagSuggestionCont').hide(); 
+         jQuery('.tagSuggestionCont').hide();
       }else{
-         console.log(' 2 focusin out '); 
+         console.log(' 2 focusin out ');
          jQuery('.tagSuggestionCont').show();
       }
     });
 
     // jQuery('.newTag').focusin(function(){
-    //     console.log(' focusin out '); 
+    //     console.log(' focusin out ');
     //     jQuery('.tagSuggestionCont').show();
     // });
 
     jQuery('.newTag input').on('keyup',function() {
-        var query =  jQuery.trim(jQuery(this).val()); 
+        var query =  jQuery.trim(jQuery(this).val());
         console.log(' newTag keyup ', query);
         if ( query == '' ){
            jQuery('.tagSuggestionCont').hide();
@@ -653,17 +688,17 @@ function showEmployStep4(){
 
         jQuery.ajax({
             url: base_url+"/ajax/searchTags",
-            type:"GET", 
+            type:"GET",
             data:{'search':query, 'exclude': userSelectedTagsList},
             success:function (resp) {
-                console.log(' resp ', resp);   
+                console.log(' resp ', resp);
                 //$('#country_list').html(data);
                 if(resp.status){
                     console.log(' resp data ', resp.data);
                     if(resp.data.length > 0){
                         jQuery('.tagSuggestionCont').show();
                         var suggestionArray = resp.data;
-                        var suggestion = ''; 
+                        var suggestion = '';
                         jQuery.each( suggestionArray, function( index, value ){
                             suggestion += '<li class="suggestTagItem tagItem" data-id="'+value.id+'"><i class="tagIcon fa fa-box-open"></i><span>'+value.title+'</span></li>';
                         });
@@ -687,7 +722,7 @@ function showEmployStep4(){
 
     var addNewTag = function(elem){
         var tagId = jQuery(elem).attr('data-id');
-        console.log('suggestTagItem click ', tagId); 
+        console.log('suggestTagItem click ', tagId);
         if (userSelectedTagsList.indexOf(tagId) == -1){
              userSelectedTagsList.push(tagId);
              var tag_clone = elem;
@@ -700,11 +735,11 @@ function showEmployStep4(){
         }else{
            jQuery('#user_step7_done').prop('disabled',true);
         }
-    } 
+    }
 
 
     jQuery('.selectTagList').on('click','li.tagItem', function(){
-        console.log(' selectTagList click '); 
+        console.log(' selectTagList click ');
         var tagId = jQuery(this).attr('data-id');
          if ( userSelectedTagsList.indexOf(tagId) != -1 ){
               userSelectedTagsList.splice(userSelectedTagsList.indexOf(tagId),1);
@@ -712,10 +747,10 @@ function showEmployStep4(){
          }
     });
 
-   
+
 
     jQuery('button#addNewTag').on('click',function(){
-        console.log(' button#addNewTag '); 
+        console.log(' button#addNewTag ');
         var newTagTitle = jQuery.trim(jQuery('.newTagInput input').val());
         jQuery('.addNewTagModal .form_input input').val(newTagTitle);
         jQuery('.addNewTagModalBox').removeClass('loading');
@@ -732,32 +767,32 @@ function showEmployStep4(){
 
 
     jQuery('.addNewTagModal .newTagAdd').on('click',function(){
-        console.log(' newTagAdd click '); 
+        console.log(' newTagAdd click ');
         jQuery('.addNewTagModalBox').addClass('loading');
-        
+
         var newTagTitle = jQuery('.addNewTagModal .form_input input').val();
         var newTagCat   = jQuery('.addNewTagModal .form_input select[name="newTagCategory"]').val();
         var newTagIcon  = jQuery('.addNewTagModal .form_input select[name="newTagIcon"]').val();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         jQuery.ajax({
             url: base_url+"/ajax/addNewTag",
-            type:"POST", 
+            type:"POST",
             data:{'newTagtitle':newTagTitle, 'newTagCategory': newTagCat, 'newTagIcon': newTagIcon},
             success:function (resp) {
-                console.log(' resp ', resp);   
+                console.log(' resp ', resp);
                 //$('#country_list').html(data);
                 if(resp.status){
                     console.log(' resp data ', resp.data);
                     var newTagElem = resp.data;
-                    var newTagHtml = '<li class="tagItem" data-id="'+newTagElem.id+'"><i class="tagIcon fa '+newTagElem.icon+'"></i><span>'+newTagElem.title+'</span></li>';                    
+                    var newTagHtml = '<li class="tagItem" data-id="'+newTagElem.id+'"><i class="tagIcon fa '+newTagElem.icon+'"></i><span>'+newTagElem.title+'</span></li>';
                     var dom_nodes = jQuery(jQuery.parseHTML(newTagHtml));
                     addNewTag(dom_nodes);
 
-                    // jQuery('.selectTagList ul').append(newTagHtml); 
+                    // jQuery('.selectTagList ul').append(newTagHtml);
                     jQuery('.addNewTagModal .apiMessage').html('Tag Succesfully Added').show();
                     setTimeout(function() {
                         jQuery.modal.close();
-                        jQuery('.newTagInput input').val(''); 
+                        jQuery('.newTagInput input').val('');
                     }, 1000);
                 }else{
                     jQuery('.addNewTagModalBox').removeClass('loading');
@@ -784,9 +819,9 @@ function showEmployStep4(){
 
     });
 
-    
 
-  
+
+
     jQuery('.submit-document').on('submit',(function(e){
         e.preventDefault();
         var formData = new FormData(this);
@@ -889,98 +924,153 @@ function showEmployStep4(){
         }
         input.click();
 
-    
+
     });
 
 
 
     $jq('#user_step4_done').click(function(){
-        $jq('#join_slogan').text('Industry Experience'); 
-        $jq('#join_step ul li').removeClass('selected'); 
-        $jq('#join_step ul li:eq(3)').addClass('selected').css('display','block'); 
+        $jq('#join_slogan').text('Industry Experience');
+        $jq('#join_step ul li').removeClass('selected');
+        $jq('#join_step ul li:eq(3)').addClass('selected').css('display','block');
+        step2_formData.append('qualification', JSON.stringify(userQualificationList));
+        userStep2Update(step2_formData, 4);
          $jq('#full_step_4').fadeOut(400,function(){
             $jq('#full_step_5').fadeIn(400,function(){
             });
-         }); 
-    }); 
-    
+         });
+    });
+
     $jq('#user_step5_done').click(function(){
-        $jq('#join_slogan').text('Salary Range'); 
-        $jq('#join_step ul li').removeClass('selected'); 
-        $jq('#join_step ul li:eq(4)').addClass('selected').css('display','block'); 
+        $jq('#join_slogan').text('Salary Range');
+        $jq('#join_step ul li').removeClass('selected');
+        $jq('#join_step ul li:eq(4)').addClass('selected').css('display','block');
+        step2_formData.append('industry_experience', JSON.stringify(dataIndustryExp));
+        userStep2Update(step2_formData, 5);
          $jq('#full_step_5').fadeOut(400,function(){
             $jq('#full_step_6').fadeIn(400,function(){
             });
-         }); 
-    }); 
+         });
+    });
 
     $jq('#user_step6_done').click(function(){
-        $jq('#join_slogan').text('Tagging'); 
-        $jq('#join_step ul li').removeClass('selected'); 
-        $jq('#join_step ul li:eq(5)').addClass('selected').css('display','block'); 
+        $jq('#join_slogan').text('Tagging');
+        $jq('#join_step ul li').removeClass('selected');
+        $jq('#join_step ul li:eq(5)').addClass('selected').css('display','block');
+        step2_formData.append('salaryRange', userSalaryRange);
+        userStep2Update(step2_formData, 6);
          $jq('#full_step_6').fadeOut(400,function(){
             $jq('#full_step_7').fadeIn(400,function(){
             });
-         }); 
+         });
     });
 
     $jq('#user_step7_done').click(function(){
-        $jq('#join_slogan').text('Final Section'); 
-        $jq('#join_step ul li').removeClass('selected'); 
-        $jq('#join_step ul li:eq(6)').addClass('selected').css('display','block'); 
+        $jq('#join_slogan').text('Final Section');
+        $jq('#join_step ul li').removeClass('selected');
+        $jq('#join_step ul li:eq(6)').addClass('selected').css('display','block');
+        step2_formData.append('tags', userSelectedTagsList);
+        userStep2Update(step2_formData, 7);
          $jq('#full_step_7').fadeOut(400,function(){
             $jq('#full_step_8').fadeIn(400,function(){
             });
-         }); 
-    }); 
+         });
+    });
 
     jQuery('#user_step8_done').click(function(){
         console.log(' user_step8_done ', dataAnswerJoin);
-        $jq('#full_step_8').html(getLoader('css_loader_btn', false, true));
-       
-        step2_formData.append('industry_experience', JSON.stringify(dataIndustryExp));
-        step2_formData.append('qualification', JSON.stringify(userQualificationList));
-        step2_formData.append('salaryRange', userSalaryRange);
-        step2_formData.append('tags', userSelectedTagsList);
-        step2_formData.append('qualification_type', jQuery('#qualification_type').val());
-        
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+
+        userStep2Update(step2_formData, 8);
+        // $jq('#full_step_8').html(getLoader('css_loader_btn', false, true));
+
+        // step2_formData.append('industry_experience', JSON.stringify(dataIndustryExp));
+        // step2_formData.append('qualification', JSON.stringify(userQualificationList));
+        // step2_formData.append('salaryRange', userSalaryRange);
+        // step2_formData.append('tags', userSelectedTagsList);
+        // step2_formData.append('qualification_type', jQuery('#qualification_type').val());
+        //
+        // $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        // $.ajax({
+        //     url: base_url+'/step2',
+        //     type : 'POST',
+        //     data : step2_formData,
+        //     processData: false,
+        //     contentType: false,
+        //     success : function(resp) {
+        //         console.log('resp ', resp);
+        //         $jq('#join_done').html('Done').prop('disabled',false);
+        //         if(resp.status){
+        //             setTimeout(() => {
+        //                 location.href = resp.redirect;
+        //             }, 1000);
+        //         }else{
+        //             $jq('#full_step_8').html('<div class="full_step_error center"><p>Error Updating data.</p></div>');
+        //             if(resp.validator != undefined){
+        //                 const keys = Object.keys(resp.validator);
+        //                 for (const key of keys) {
+        //                     var error_html = '<p>'+resp.validator[key][0]+'</p>';
+        //                     $('.full_step_error').append(error_html);
+        //                 }
+        //             }else if(resp.error != undefined ){
+        //                 var error_html = '<p>'+resp.error+'</p>';
+        //                 $('.full_step_error').append(error_html);
+        //             }
+        //
+        //             $('.full_step_error').append('<h3 class="mt20"><a class="pointer" onclick="location.reload()" style="color: #ffa200;">Click here to update</a></h3>');
+        //         }
+        //     }
+        // });
+    });
+
+    // added by Akmal
+
+    function userStep2Update(data, step){
+        console.log(' userStep2Update data ', data );
+        console.log(' userStep2Update step ', step );
+        // first way.
+
+        // send ajax call.
+        // switch (step) {
+        //     case "step2":
+        //         $jq("#full_step_1").html(getLoader('css_loader_btn', false, true));
+        // }
+
+        // var postData = { "data": data, "step" : step };
+        // var postData =  {fkey: 'xsrf key'};
+        // console.log(' postData ', postData);
+        if (step == 4 || step == 3){
+            data.append('qualification_type', jQuery('#qualification_type').val());
+        }
+        data.append('step',step);
+
+        $jq("#full_step_"+ step).html(getLoader('css_loader_btn', false, true));
+        // console.log('step ', $jq("#full_step_"+ step));
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $(   'meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             url: base_url+'/step2',
-            type : 'POST',
-            data : step2_formData,
+            type: 'POST',
+            data: data,
             processData: false,
             contentType: false,
-            success : function(resp) {
-                console.log('resp ', resp);
-                $jq('#join_done').html('Done').prop('disabled',false);
-                if(resp.status){
+            // dataType: 'json',
+            success : function (resp) {
+                console.log('resp', resp);
+                if (resp.step == 8){
                     setTimeout(() => {
                         location.href = resp.redirect;
-                    }, 1000);
-                }else{
-                    $jq('#full_step_8').html('<div class="full_step_error center"><p>Error Updating data.</p></div>');
-                    if(resp.validator != undefined){
-                        const keys = Object.keys(resp.validator);
-                        for (const key of keys) {
-                            var error_html = '<p>'+resp.validator[key][0]+'</p>'; 
-                            $('.full_step_error').append(error_html);
-                        }
-                    }else if(resp.error != undefined ){
-                        var error_html = '<p>'+resp.error+'</p>'; 
-                        $('.full_step_error').append(error_html);
-                    }
-
-                    $('.full_step_error').append('<h3 class="mt20"><a class="pointer" onclick="location.reload()" style="color: #ffa200;">Click here to update</a></h3>');
+                        }, 1000);
                 }
             }
         });
-    });
+
+        // second way.
+
+    }
 
 
       $jq('#join_done').click(function(){
         console.log(' join_done ', dataAnswerJoin);
-        
+
             $jq('#join_done').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
             step2_formData.append('industry_experience', JSON.stringify(dataIndustryExp));
             console.log(' step2_formData ', step2_formData.entries());
@@ -1008,7 +1098,7 @@ function showEmployStep4(){
                                 // if($('#'+key+'_error').length > 0){
                                 //     $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(resp.validator[key][0]);
                                 // }
-                                var error_html = '<p>'+validator[key][0]+'</p>'; 
+                                var error_html = '<p>'+validator[key][0]+'</p>';
                                 $('.full_step_error .error').append(error_html);
                             }
                         }
@@ -1016,12 +1106,12 @@ function showEmployStep4(){
                     }
                 }
             });
-         
 
-              
-     
 
-        
+
+
+
+
 
     });
 
@@ -1047,7 +1137,7 @@ function showEmployStep4(){
         var input = document.createElement('input');
         input.type = 'file';
         input.setAttribute('accept', 'image/x-png,image/gif,image/jpeg');
-        input.onchange = e => { 
+        input.onchange = e => {
 
             $jq('.part_photo .name_info').addClass('to_hide').text('');
             $jq('.upload_file').removeClass('validation_error');
@@ -1057,15 +1147,15 @@ function showEmployStep4(){
             step2_formData.append('file',file);
             $jq('.bl_card_profile .name').text(file.name);
 
-            // check file type 
+            // check file type
             if( file.type == 'image/jpeg' || file.type == 'image/gif' || file.type == 'image/png' || file.type == 'image/x-png' ) {
                 var reader = new FileReader();
                 reader.onload = function (e) {
-                    profile_img_selected = true; 
+                    profile_img_selected = true;
                     $jq('.bl.photo_add').text('');
                     $jq('.bl.photo_add').css('background-image','url("'+e.target.result+'")');
                     $jq('.bl.photo_add').css('background-position','center');
-                    $jq('.bl.photo_add').css('background-size','cover');   
+                    $jq('.bl.photo_add').css('background-size','cover');
                 };
                 // read the image file as a data URL.
                 reader.readAsDataURL(file);
@@ -1216,8 +1306,11 @@ function showEmployStep4(){
         if($el[0]){
             dataAnswerJoin[$el.data('field')]=action?'yes':'no';
         }
-        // dev22 test 
+        // dev22 test
         if(!c){
+            step2_formData.append('questions',JSON.stringify(dataAnswerJoin));
+            userStep2Update(step2_formData, 1);
+
             $jq('#step_loader').fadeIn(400);
             $jq('#full_step_1').fadeOut(400,function(){
                 // getListUsersLike();
@@ -1384,14 +1477,14 @@ function validateBirthday(){
 
 function setDisabledSubmitJoin(context, setError, notSubmitDisabled){
 
-        console.log(' setDisabledSubmitJoin ', context); 
+        console.log(' setDisabledSubmitJoin ', context);
 
         notSubmitDisabled=notSubmitDisabled||0;
         context=context||'#step-1';
         setError=setError||0;
         var is=0,isError;
         $jq('input:not([type="hidden"]), select, textarea', context).not('.not_frm').each(function(){
-            console.log(' setDisabledSubmitJoin each element  ', jQuery(this)); 
+            console.log(' setDisabledSubmitJoin each element  ', jQuery(this));
             var val=$.trim(this.value);
             if(this.id=='email'){
                 isError=!checkEmail(val);
@@ -1483,11 +1576,11 @@ function joinLike(uid,$btn){
 }
 
 function showStep3(){
-    
-    var step3_slogan =  ($('#userType').val() == 'user')?('Update your profile'):('Give us a brief overview');  
-    $jq('#join_slogan').text(step3_slogan); 
-    $jq('#join_step ul li').removeClass('selected'); 
-    $jq('#join_step ul li:eq(1)').addClass('selected').css('display','block'); 
+
+    var step3_slogan =  ($('#userType').val() == 'user')?('Update your profile'):('Give us a brief overview');
+    $jq('#join_slogan').text(step3_slogan);
+    $jq('#join_step ul li').removeClass('selected');
+    $jq('#join_step ul li:eq(1)').addClass('selected').css('display','block');
 
     $jq('#full_step_3').fadeIn(400,function(){
         var $baseField=$jq('#full_step_3').find('.placeholder_always');
@@ -1633,7 +1726,7 @@ function l(key) {
 
 
 //====================================================================================================================================//
-// Google map location script 
+// Google map location script
 //====================================================================================================================================//
 var map;
 jQuery(document).ready(function() {
@@ -1646,7 +1739,7 @@ jQuery(document).ready(function() {
     var hasLocation = false;
     var latlng = new google.maps.LatLng(-31.2532183, 146.921099);
     var marker = "";
-   
+
     var options = {
         zoom: 14,
         center: latlng,
@@ -1658,13 +1751,13 @@ jQuery(document).ready(function() {
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
         if(!hasLocation) { map.setZoom(14); }
 
-        // add listner on map, when click on map change the latlong and put a marker over there. 
-        google.maps.event.addListener(map, "click", function(event) { 
-            console.log(' addListener click  '); 
-            reverseGeocode(event.latLng); 
+        // add listner on map, when click on map change the latlong and put a marker over there.
+        google.maps.event.addListener(map, "click", function(event) {
+            console.log(' addListener click  ');
+            reverseGeocode(event.latLng);
         })
 
-        // get the location (city,state,country) on base of text enter in search. 
+        // get the location (city,state,country) on base of text enter in search.
         jQuery("#location_search_load").click(function() {
             if(jQuery("#location_search").val() != "") {
                 geocode(jQuery("#location_search").val());
@@ -1680,10 +1773,10 @@ jQuery(document).ready(function() {
                 jQuery("#location_search_load").click();
         })
 
-        // when click on the Autocomplete suggested locations list 
+        // when click on the Autocomplete suggested locations list
         autocomplete.addListener('place_changed', function() {
-             console.log(' autocomplete place_changed '); 
-               
+             console.log(' autocomplete place_changed ');
+
               var place = autocomplete.getPlace();
               console.log(' place ', place);
 
@@ -1702,7 +1795,7 @@ jQuery(document).ready(function() {
                 map.setZoom(14);  // Why 14? Because it looks good.
               }
 
-              
+
               // var address = '';
               // if (place.address_components) {
               //   address = [
@@ -1713,16 +1806,16 @@ jQuery(document).ready(function() {
               // }
 
 
-              // console.log(' auto place --- ', place); 
-              // console.log(' auto address --- ', address); 
+              // console.log(' auto place --- ', place);
+              // console.log(' auto address --- ', address);
 
-                var address, city, country, state; 
+                var address, city, country, state;
                 var address_components = place.address_components;
                 for ( var j in address_components ) {
                     var types = address_components[j]["types"];
                     var long_name = address_components[j]["long_name"];
-                    var short_name = address_components[j]["short_name"];  
-                    // console.log(' address_components ', address_components); 
+                    var short_name = address_components[j]["short_name"];
+                    // console.log(' address_components ', address_components);
                     if ( jQuery.inArray("locality", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                         city = long_name;
                     }
@@ -1733,7 +1826,7 @@ jQuery(document).ready(function() {
                         country = long_name;
                     }
                 }
-            
+
                 if((city) && (state) && (country))
                     address = city + ", " + state + ", " + country;
                 else if((city) && (state))
@@ -1746,18 +1839,18 @@ jQuery(document).ready(function() {
                  if((place) && (place.name))
                     address = place.name + ',' + address;
 
-                    // console.log(' reverseGeocode place ', place); 
-                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country ); 
+                    // console.log(' reverseGeocode place ', place);
+                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
                     updateLocationInputs(place.name,city,state,country);
                     jQuery("#location_search").val(address);
                     placeMarker(place.geometry.location);
             });
 
         }
-        // location_map length. 
+        // location_map length.
 
     function placeMarker(location) {
-        console.log(' placeMarker location ',location); 
+        console.log(' placeMarker location ',location);
 
         if (marker == "") {
             marker = new google.maps.Marker({
@@ -1802,7 +1895,7 @@ jQuery(document).ready(function() {
     }
 
     function reverseGeocode(location) {
-        console.log(' reverseGeocode ', location); 
+        console.log(' reverseGeocode ', location);
         if (geocoder) {
             geocoder.geocode({"latLng": location}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
@@ -1813,8 +1906,8 @@ jQuery(document).ready(function() {
                             var types = address_components[j]["types"];
                             var long_name = address_components[j]["long_name"];
                             var short_name = address_components[j]["short_name"];
-                                
-                            // console.log(' address_components ', address_components); 
+
+                            // console.log(' address_components ', address_components);
 
                             if ( jQuery.inArray("locality", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                                 city = long_name;
@@ -1836,8 +1929,8 @@ jQuery(document).ready(function() {
                     else if(country)
                         address = country;
 
-                    // console.log(' reverseGeocode results ', results); 
-                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country ); 
+                    // console.log(' reverseGeocode results ', results);
+                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
                     updateLocationInputs('',city,state,country);
                     jQuery("#location_search").val(address);
                     placeMarker(location);
@@ -1861,12 +1954,12 @@ jQuery(document).ready(function() {
     }
 
 
-    // by default show this location; 
+    // by default show this location;
     geocode('Sydney New South Wales, Australia');
 
 
 
 });
-         
-        
-    
+
+
+
