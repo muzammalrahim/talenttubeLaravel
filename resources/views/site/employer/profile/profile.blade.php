@@ -126,6 +126,20 @@ li.sel {
 }
 /*chechking spinner*/
 
+/*===================================================== Image Sizing ===========================================*/
+/*.tabs_profile .tab_photos img.photo {
+    width: auto;
+    height: 150px;
+    max-width: 200px ;
+    min-width: 150px ;
+}*/
+
+/*===================================================== Make Profile Icon ===========================================*/
+span.icon_image_profile {
+    bottom: 42px;
+    right: 5px;
+}
+
 </style>
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">

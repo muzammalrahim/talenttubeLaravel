@@ -480,10 +480,9 @@ class SiteUserController extends Controller
     {
         $rules = array('email' => 'required|email|unique:users,email');
         $validator = Validator::make($request->all(), $rules);
-        $valitdaion_message = $validator->getMessageBag()->toArray();
-        $mes = $valitdaion_message['email'];
-
         if ($validator->fails()) {
+            $valitdaion_message = $validator->getMessageBag()->toArray();
+            $mes = $valitdaion_message['email'];
             return response()->json([
                 'status' => 0,
                 'validator' =>  $mes
@@ -503,9 +502,6 @@ class SiteUserController extends Controller
         }
     }   
 
-
-
-  
     //====================================================================================================================================//
     //Ajax Post // Update layout. // change user password.  
     //====================================================================================================================================//
@@ -537,9 +533,7 @@ class SiteUserController extends Controller
             $user->save();
             return response()->json([
                     'status' => 1,
-                    'data' => array(
-                    'logout_Route' => route('logout')
-                    )
+                    'data' => route('logout')
             ]);
         }
     }

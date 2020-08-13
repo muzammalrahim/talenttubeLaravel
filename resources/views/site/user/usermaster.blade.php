@@ -114,7 +114,7 @@
 
 {{-- ========================================= POPUP For Email Ending ========================================== --}}
 
-{{-- ========================================= POPUP For Password ========================================== --}}
+{{-- =========================================== POPUP For Password ============================================ --}}
 
    <!-- Modal -->
     <div class="modal fade" id="PasswordModal" tabindex="-1" role="dialog" aria-labelledby="emailModalLabel" aria-hidden="true"data-backdrop="static">
@@ -129,7 +129,7 @@
           <div class="modal-body">
             <p> After clicking "Confirm" you will be logout !</p>
             <p>To continue your session on "TalentTube" </p>
-            <p>You need to Log In again with your new Email Address.</p>
+            <p>You need to Log In again with your new Password.</p>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal"style="float:left;">Cancel</button>
@@ -139,12 +139,36 @@
       </div>
     </div>
 
-{{-- ========================================= POPUP For Password Ending ========================================== --}}
+{{-- =========================================== POPUP For Password Ending ============================================ --}}
+
+{{-- =========================================== POPUP For Password ============================================ --}}
+
+   <!-- Modal -->
+    <div class="modal fade" id="DeleteProfileModal" tabindex="-1" role="dialog" aria-labelledby="deleteProfileModalLabel" aria-hidden="true"data-backdrop="static">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content DeletingAccountModalContent">
+          <div class="modal-header">
+            <h5 class="modal-title" id="emailModalHeader"> Confirm delete account ? </h5>
+         {{--    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> --}}
+          </div>
+          <div class="modal-body">
+            <p> Please! Tell us why are you removing your account?</p>
+              <textarea class="form-control reasonAccRem" rows="5" id="removingAccount"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger" data-dismiss="modal"style="float:left;">Cancel</button>
+            <button id ="delete-profile" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+{{-- =========================================== POPUP For Password Ending ============================================ --}}
 
 
-
-
- {{-- @include('site.user.footer') --}} PasswordUpdateBUtton
+ {{-- @include('site.user.footer') --}} 
 
 <script src="{{asset('/js/lang.js')}}"></script>
 
@@ -177,10 +201,10 @@
     font-weight: 700;
     /*font-size: 16px;*/
 }
-.modal-content.emailModalContent,.modal-content.PhoneModalContent {
+.modal-content.emailModalContent,.modal-content.PhoneModalContent,.modal-content.DeletingAccountModalContent {
     width: 80%;
 }
-div.modal-content.emailModalContent>.modal-body {
+div.modal-content.emailModalContent>.modal-body,div.modal-content.DeletingAccountModalContent>.modal-body {
     margin: 0px auto;
     width: 80%;
 
@@ -194,9 +218,28 @@ div.modal-content.emailModalContent>div.modal-body>p,div.modal-content.PhoneModa
     margin: 0px 0px 0px 0px;
     line-height: 15px;
 }
-
+/*.reasonAccRem{
+    width: 80%;
+}*/
 </style>
 @yield('custom_js')
+
+<script type="text/javascript">
+  $(document).ready(function() {
+    $('#delete-profile').attr('disabled', true);
+    
+    $('.reasonAccRem').on('keyup',function() {
+        var textarea_value = $("#removingAccount").val();
+        // var text_value = $('input[name="textField"]').val();
+        
+        if(textarea_value != '') {
+            $('#delete-profile').attr('disabled', false);
+        } else {
+            $('#delete-profile').attr('disabled', true);
+        }
+    });
+});
+</script>
 
 </body>
 </html>

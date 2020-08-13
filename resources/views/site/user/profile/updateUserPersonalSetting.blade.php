@@ -1,10 +1,5 @@
 @extends('site.user.usermaster')
 
-{{-- @extends('site.user.usertemplate') --}}
-{{-- @extends('site.user.usermaster') --}}
-
-
-
 @section('content')
 <div class="cont bl_profile">
     <div class="bl_pic_info  my_profile">
@@ -49,54 +44,57 @@
 	        <div class="col-md-3"></div>
 	        <button type="button" class="PhoneUpdateBUtton"data-toggle="modal" data-target="#PhoneModal">Update</button>
 	        <div class="alert alert-success PhoneAlert hide_it2" role="alert">
-	            <strong>Success!</strong> Phone have been updated successfully!
+	            <strong>Success!</strong> Phone has been updated successfully!
 	        </div>
 
-	        {{-- ============================ Phone Number Ending ====================================== --}}
+	        {{-- =============================================  Phone Number Ending ========================================= --}}
 
-	        {{-- ============================ Password  ================================================ --}}
+	        {{-- =================================================== Password  ============================================== --}}
 
 
             <div class="sectionUpdateProfile"><b>Update Password</b></div>
-
 
             <div class="form-group row">
                 {{ Form::label('current password', null, ['class' => 'col-md-3 form-control-label']) }}
                 <div class="col-md-5">
                  {{--  {{ Form::text('current_password', '' , $attributes = array('class'=>'form-control', 'placeholder' => 'Current Password','required'=> 'false','id'=>'current_password')) }} --}}
-
                   {{ Form::password('current_password', ['class' => 'form-control'])}}
-
+                  <p class="PasswordValidatorErrorTextOld hide_it2" style="color: #dc3545;;"> </p>
                 </div>
             </div>
 
             <div class="form-group row">
                 {{ Form::label('new password', null, ['class' => 'col-md-3 form-control-label']) }}
-                <div class="col-md-5">
+                <div class="col-md-5 PasswordLoader">
              {{--      {{ Form::text('new_password', '' , $attributes = array('class'=>'form-control', 'placeholder' => 'New Password','required'=> 'false','id'=>'new_password')) }} --}}
                   {{ Form::password('new_password', ['class' => 'form-control'])}}
+
+                  <p class="PasswordValidatorErrorTextNew hide_it2" style="color: #dc3545;"> </p>
+
                 </div>
             </div>
+
             <div class="col-md-3"></div>
-	        <button type="button" class="PasswordUpdateBUtton"data-toggle="modal" data-target="#PasswordModal">Update</button>
+	        <button type="button" class="PasswordUpdateBUtton" data-toggle="modal" data-target="#PasswordModal">Update</button>
+            <div class="alert alert-success PasswordAlert hide_it2" role="alert">
+                <strong>Success!</strong> Password has been updated successfully!
+            </div>
 
-	        {{-- ============================ Password Ending ====================================== --}}
+            {{-- =================================================== Password  ============================================== --}}
 
-	        {{-- ============================ Delete Account ======================================= --}}
+
+	        {{-- ================================================= Delete Account =========================================== --}}
 
 
             <div class="sectionUpdateProfile"><b>Delete Account</b></div>
 	        <div class="form-group row">
 	            {{ Form::label('Delete My Account', null, ['class' => 'col-md-3 form-control-label']) }}
 	            <div class="col-md-9">
-	 			<button type="button" class="DeleteProfileBUtton">Delete</button>
+	 			<button type="button" class="DeleteProfileBUtton" data-toggle="modal" data-target="#DeleteProfileModal">Delete</button>
 	            </div>
 	        </div>
 
-	        {{-- ============================ Delete Account Ending =================================== --}}
-
-
-        {{-- @dump($user->phone); --}}
+            {{-- ============================================== Delete Account Ending ======================================== --}}
 
     </div>
 
@@ -104,9 +102,7 @@
 
 </div>
 
-
 @stop
-
 
 @section('custom_footer_css')
 <style type="text/css">
@@ -159,15 +155,16 @@ div.cont_w>.column_main {
 	background: #c82333;
 
 }
-.alert.alert-success.EmailAlert,.alert.alert-success.PhoneAlert {
+.alert.alert-success.EmailAlert,.alert.alert-success.PhoneAlert,.alert.alert-success.PasswordAlert {
     margin: 15px 26%;
     width: 40%;
 }
-.smallSpinner.SaveEmailSpinner,.smallSpinner.SavePhoneSpinner {
+.smallSpinner.SaveEmailSpinner,.smallSpinner.SavePhoneSpinner,.smallSpinner.SavePasswordSpinner {
     position: relative;
     float: left;
     font-size: 20px;
     margin-top: 15px;
+
 }
 p.emailValidatorErrorText,p.PhoneValidatorErrorText {
     margin: 0px;
@@ -218,7 +215,7 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
                 else{
                     // console.log(resp.validator[0])
                     $('.emailValidatorErrorText').text(resp.validator[0]);   // fail
-                    // $('.emailValidatorErrorText').show().delay(3000).fadeOut('slow');
+                    $('.emailValidatorErrorText').show().delay(3000).fadeOut('slow');
                     $('.SaveEmailSpinner').remove();
                 }
             }
@@ -278,11 +275,11 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
     $(document).ready(function (){
 
         $('#update-password').on('click', function(){
-        console.log('hi');
+        // console.log('hi');
         var new_password 	 = $('input[name="new_password"]').val();
         var current_password  = $('input[name="current_password"]').val();
         
-        console.log(new_password);
+        // console.log(new_password);
 
            $.ajaxSetup({
             headers: {
@@ -290,7 +287,7 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
             }
         });
 
-        // $('.PhoneLoader').after(getLoader('smallSpinner SavePhoneSpinner'));
+        $('.PasswordLoader').after(getLoader('smallSpinner SavePasswordSpinner'));
 
         $.ajax({
             type: 'POST',
@@ -298,17 +295,21 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
             data: {'new_password': new_password, 'current_password':current_password},
             success: function(resp){
                 if(resp.status == true){
-                    // $('.SavePhoneSpinner').remove();
-                    // $('.PhoneAlert').show().delay(3000).fadeOut('slow');
-                    // $('.PhoneValidatorErrorText').addClass('hide_it2');
-
+                    $('.SavePasswordSpinner').remove();
+                    $('.PasswordAlert').show().delay(3000).fadeOut('slow');
+                    $('.PasswordValidatorErrorTextOld').addClass('hide_it2');
+                    $('.PasswordValidatorErrorTextNew').addClass('hide_it2');  
                 }
                 else{
-                    // console.log(resp.validator[0]);
-                    // $('.PhoneValidatorErrorText').text(resp.validator[0]);
-                    // $('.SavePhoneSpinner').remove();
-                    // $('.PhoneValidatorErrorText').removeClass('hide_it2');
-
+                    $('.SavePasswordSpinner').remove();
+                    var CPR = resp.validator['current_password'];
+                    console.log(CPR);
+                    var NPR = resp.validator['new_password'];
+                    console.log(NPR);
+                    $('.PasswordValidatorErrorTextOld').text(CPR);
+                    $('.PasswordValidatorErrorTextNew').text(NPR);
+                    $('.PasswordValidatorErrorTextOld').removeClass('hide_it2');
+                    $('.PasswordValidatorErrorTextNew').removeClass('hide_it2');
                 }
             }
         });
@@ -317,6 +318,7 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
     });
 
  // =========================================== Update Password Ajax End here ===========================================
+
 </script>
 
 @stop

@@ -97,7 +97,10 @@ $(function () {
 
 	function loginResponse(data) {
         isFrmLoginSubmitAjax=false;
-        console.log(' loginResponse ', data);
+        // console.log(' loginResponse ', data);
+        var signinError = data['message']['password'][0];
+        $('.errorMessageLogIn').text(signinError);
+        console.log(signinError);
 
         if(data.status == 1) {
             location.href = data.redirect; // '/laravel/public/profile';

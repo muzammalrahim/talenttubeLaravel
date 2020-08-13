@@ -292,6 +292,30 @@ select.userTags.userTagsSelect {
 .jobSeekerProfileUpdate,.signOutButtonHeader{
     color: white !important;
 }
+
+
+
+/*===================================================== Save Resume ===========================================*/
+
+button.btn.violet.save-resume-btn.valign-top {
+    margin-bottom: 23px;
+}
+
+/*===================================================== Image Sizing ===========================================*/
+/*.tabs_profile .tab_photos img.photo {
+    width: auto;
+    height: 150px;
+    max-width: 200px ;
+    min-width: 150px ;
+}*/
+
+/*===================================================== Make Profile Icon ===========================================*/
+span.icon_image_profile {
+    bottom: 42px;
+    right: 5px;
+}
+
+
 </style>
 @stop
 

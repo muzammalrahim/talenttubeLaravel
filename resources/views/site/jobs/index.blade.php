@@ -112,6 +112,12 @@ $(document).on('click','.jobs_pagination .page-item .page-link',function(e){
 
 
 });
+
+$("body").click(function(){
+    clickOutside: false;
+});
+
+
 </script>
 @stop
 
