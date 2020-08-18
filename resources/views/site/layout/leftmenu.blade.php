@@ -102,13 +102,13 @@
                 </a>
             </li> --}}
 
-            <li>
+          {{--   <li>
                 <a id="user_block_list" href="block.html" class="column_narrow_blocked menu_selected inactive">
                     <span class="icon"></span>Blocked
                     <span id="narrow_blocked_count" class="count "></span>
 
                 </a>
-            </li>
+            </li> --}}
 
         </ul>
 

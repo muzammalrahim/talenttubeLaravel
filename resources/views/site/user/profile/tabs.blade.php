@@ -32,7 +32,7 @@
     <div class="tab_about tab_cont">
         <div class="col_left">
 
-{{-- ======================================== About Me ======================================= --}}
+{{-- ======================================== About Me ============================================ --}}
             <div class="bl">
                 <div class="title">
                     <div id="basic_anchor_about_me" class="title_icon_edit">About me
@@ -57,7 +57,7 @@
       <hr class="rounded">
       {{-- <div class="lineDivivder"><span>Interested In</span></div> --}}
 
-{{-- ======================================== Interested in ======================================= --}}
+{{-- ======================================== Interested in ===========================================--}}
 
             <div class="bl">
                 <div class="title">
@@ -99,10 +99,9 @@
                  <a class="addQualification btn btn-sm btn-primary text-white hide_it"style = "cursor:pointer;">Add New</a>
                  <a class="btn btn-sm btn-success hide_it" onclick="UProfile.updateQualifications()">Save</a>
             </div>
-                    <div class="alert alert-success QualifAlert hide_it2" role="alert">
-          {{-- <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
-          <strong>Success!</strong> Qualification have been updated successfully!
-        </div>
+              <div class="alert alert-success QualifAlert hide_it2" role="alert">
+                <strong>Success!</strong> Qualification have been updated successfully!
+              </div>
 
 {{-- ======================================== Qualification End here ======================================= --}}
   
@@ -333,7 +332,7 @@
 
           <div class="col_left">
               <div> 
-                  <div id="basic" class="title_icon_edit"style="float:left;">Tags <i class="editTags fas fa-edit "></i></div>
+                  <div id="basic" class="title_icon_edit"style="float:left;">Tags {{-- <i class="editTags fas fa-edit "></i> --}}</div>
                   <p class="loader SaveTagsLoader"style="float: left;"></p>
                   <div class="cl"></div>
             {{--       <div class="tagsOfUser">    
@@ -369,25 +368,21 @@
 <!-- =========================================== Tab Jobs ========================================== -->
 
 <a id="tabs-5" class="tab_link tab_a"></a>
-    <div class="tab_photos tab_cont">
+    <div class="tab_photos tab_cont" style="padding:0px;">
 
-            <div> 
-               <div id="basic" class="title_icon_edit"style="float:left;">Jobs {{-- <i class="editQuestions fas fa-edit "></i> --}}</div>
-                {{-- <p class="loader SaveQuestionsLoader"style="float: left;"></p> --}}
-               
-                <div class="cl"></div>
-                  
+        <div> 
+           {{-- <div id="basic" class="title_icon_edit"style="float:left;">Jobs <i class="editQuestions fas fa-edit "></i></div> --}}
 
-                {{-- @dump($jobsApplication) --}}
+            {{-- <p class="loader SaveQuestionsLoader"style="float: left;"></p> --}}
 
-                <div class="questionsOfUser">
-               </div>
-
+            <div class="cl"></div>
+        </div>
+            <div class="includedLayoutOfJobApplication">
+                @include('site.user.profile.jobApplicationInTabs')
+            </div>
+           <div class="alert alert-success JobsAlert hide_it2" role="alert">
+              <strong>Success!</strong> Jobs have been updated successfully!
            </div>
-
-             <div class="alert alert-success questionsAlert" role="alert">
-                <strong>Success!</strong> Questions have been updated successfully!
-             </div>
      </div>
 
 <!-- =========================================== Tab Jobs ========================================== -->

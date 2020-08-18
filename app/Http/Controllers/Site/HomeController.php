@@ -80,7 +80,7 @@ class HomeController extends Controller {
             );
         }else{
             // create our user data for the authentication
-            $userdata = array(
+            $userdata = array( 
             'email' =>  $request->get('email') ,
             'password' => $request->get('password')
             );

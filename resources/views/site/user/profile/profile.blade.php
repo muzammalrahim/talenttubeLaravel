@@ -16,9 +16,10 @@
             <div class="pic">
                 <div class="profile_pic_one to_show">
                     <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
-                        <img  data-offset-id="23" class="photo"
-                            id="pic_main_img"
-                            src="{{$profile_image}}" 
+                        <img  class="photo"
+                            id="pic_main_img" 
+                            src="{{$profile_image}}"
+
                             title="">
                     </a>
                     {{-- <div id="add_photo_main_profile" class="add_photo">
@@ -48,7 +49,7 @@
                     <li id="list_info_location">{{userLocation($user)}}</li>
                     <li><span class="basic_info">•</span><span id="list_info_gender">Job Seeker</span></li>
                 </ul>
-                <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div>
+                {{-- <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div> --}}
             </div>
 
         {{--     <div class="status">
@@ -86,7 +87,7 @@
                 <span>Expecting Salary:</span>
                 {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, ['placeholder' => 'Select Salary Range', 'onchange' => 'UProfile.updateSalaryRange()', 'id' => 'salaryRangeFieldnew', 'class' => 'hide_it salaryRangeField']) }}
 
-                <b> {{'USD: '}}<span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
+                <b> {{'AUD: '}}<span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
                 <i class="fas fa-edit salaryRangeEdit" onclick="UProfile.enableSalaryRangeEdit()"></i>
                 </div>
 
@@ -289,6 +290,33 @@ select.userTags.userTagsSelect {
     text-align: center; 
     margin-top:10px
 }
+.jobSeekerProfileUpdate,.signOutButtonHeader{
+    color: white !important;
+}
+
+
+
+/*===================================================== Save Resume ===========================================*/
+
+button.btn.violet.save-resume-btn.valign-top {
+    margin-bottom: 23px;
+}
+
+/*===================================================== Image Sizing ===========================================*/
+/*.tabs_profile .tab_photos img.photo {
+    width: auto;
+    height: 150px;
+    max-width: 200px ;
+    min-width: 150px ;
+}*/
+
+/*===================================================== Make Profile Icon ===========================================*/
+span.icon_image_profile {
+    bottom: 42px;
+    right: 5px;
+}
+
+
 </style>
 @stop
 

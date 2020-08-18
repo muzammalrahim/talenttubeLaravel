@@ -73,14 +73,7 @@ var CommonScript = function() {
 $(function () {
     CommonScript = new CommonScript();
 
-
-
-
-
-
 });
-
-
 
 $(document).ready(function(){
 
@@ -129,12 +122,10 @@ $(document).ready(function(){
     })
 
 
-
-
-
     //====================================================================================================================================//
     // Function to like user.
     //====================================================================================================================================//
+
     $(document).on('click','.jsLikeUserBtn',function(){
         var btn = $(this);
         var jobseeker_id = $(this).data('jsid');
@@ -159,15 +150,13 @@ $(document).ready(function(){
     });
 
 
-
-
-
-
     // ========== Function to show popup when click on jobApplyBtn ==========//
+
     $('#jobApplyModal').on($.modal.OPEN, function(event, modal) {
         var job_id = $('#openModalJobId').val();
         console.log(' job_id ', job_id);
         console.log(' after open ', event);
+        $('.jquery-modal.blocker.current').off('click');
         $.ajax({
         type: 'GET',
             url: base_url+'/ajax/jobApplyInfo/'+job_id,
@@ -186,9 +175,12 @@ $(document).ready(function(){
             fadeDelay: 2.5
         });
     });
+
+
     //========== jobApplyBtn clck end. ==========
 
     // ========== Function to submit job application ==========//
+
     $(document).on('click','.submitApplication',function(){
         event.preventDefault();
         console.log(' submitApplication submit click ');        
@@ -209,6 +201,7 @@ $(document).ready(function(){
             }
         });
     });
+
     //========== jobSubmitApplyBtn clck end. ==========
 
 
@@ -226,16 +219,11 @@ $(document).ready(function(){
          
          console.log(' application_description ', application_description); 
     }); 
- 
- 
-
-
-
-
 
 //====================================================================================================================================//
 // Function to display sub qualification on base of qualification type. 
 //====================================================================================================================================//
+
 $(document).on('change','select.filter_qualification_type', function() {
     var degreeType =  $(this).val();
      if (degreeType != ''){ degreeType = (degreeType == 'trade')?'trade':'degree';}
@@ -259,11 +247,10 @@ $(document).on('click','.dot_list li', function(){
 });
 
 
-
-
 //====================================================================================================================================//
 // Function to display Industry experience list. 
 //====================================================================================================================================//
+
 $('input[name="filter_industry_status"]').change(function() {
     console.log(' filter_industry_status '); 
     (this.checked)?(jQuery('.filter_industryList').removeClass('hide_it')):(jQuery('.filter_industryList').addClass('hide_it'));  
@@ -271,3 +258,11 @@ $('input[name="filter_industry_status"]').change(function() {
 
 
 });
+
+
+    $('body').on('click', '.wrapper', function(e){
+        if($(e.target).is('.wrapper')){
+            // signInClose();
+            forgotPassClose();
+        }
+    })

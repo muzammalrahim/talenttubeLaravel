@@ -58,3 +58,14 @@
 </div>
 </div>
 </div>
+
+<style type="text/css">
+
+#confirmDeleteAttachmentModal>a.close-modal,#confirmDeleteVideoModal>a.close-modal,#confirmDeleteModal>a.close-modal{
+    margin: 14px 14px 0px 0px;
+}
+
+div.pp_info_start.pp_alert.pp_confirm.pp_cont>div.cont>.title {
+    font-size: 20px;
+}
+</style>

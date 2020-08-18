@@ -272,10 +272,25 @@ span.js_tag {
 
 
 /*======================================= job Detail Page =======================================*/
+
 .jobDetail_field {
     display: table;
     width: 100%;
     margin: 5px 0px;
     border-bottom: 1px solid #9e9e9e75;
     padding: 5px 0px;
+}
+
+/*======================================= Employer/Jobs Page =======================================*/
+
+.ApplicationCountButton{
+    color: #142d69;
+    padding: 2px 10px 2px 10px;
+    box-shadow: inset 0 0px 0 #142d69, 0 1px 4px;
+
+}
+.ApplicationCountButton:hover{
+    background: #142d69;
+    color: white;
+    border-radius: 5px;
 }

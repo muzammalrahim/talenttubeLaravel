@@ -17,6 +17,9 @@
                 <input type="hidden" name="login_type" value="site_ajax" />
                 <div class="error"></div>
                 <input id="form_login_pass"  type="password" name="password" class="inp placeholder" placeholder="Password" />
+
+
+                    <span class="errorMessageLogIn"></span>
                 <div class="bl_remember">
                     <input id="form_login_remember" name="remember" value="1" type="checkbox" checked="checked"/>
                     <label for="form_login_remember">Remember me</label>
@@ -41,7 +44,11 @@
 </div>
 
 
-
-
-
 </div>
+
+<style type="text/css">
+    span.errorMessageLogIn {
+    font-size: 10px;
+    color: #e7495c;
+}
+</style>

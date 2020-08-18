@@ -37,6 +37,7 @@ class CreateUsersTable extends Migration
             $table->string('qualification');
             $table->string('qualificationType');
             $table->string('salaryRange');
+            $table->string('oldEmail');
 
             $table->rememberToken();
             $table->timestamps();
