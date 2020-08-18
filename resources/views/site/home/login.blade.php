@@ -44,7 +44,11 @@
 </div>
 
 
-
-
-
 </div>
+
+<style type="text/css">
+    span.errorMessageLogIn {
+    font-size: 10px;
+    color: #e7495c;
+}
+</style>

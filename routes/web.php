@@ -277,6 +277,7 @@ Route::group(array('middleware' => 'auth'), function(){
     Route::post('ajax/updateEmail', 'Site\SiteUserController@updateEmail');
     Route::post('ajax/updatePhone', 'Site\SiteUserController@updatePhone');
     Route::post('ajax/updatePassword', 'Site\SiteUserController@updatePassword');
+    Route::post('ajax/deleteuser', 'Site\SiteUserController@deleteuser');
 
 
     

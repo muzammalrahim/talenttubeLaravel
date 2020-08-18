@@ -156,6 +156,7 @@ $(document).ready(function(){
         var job_id = $('#openModalJobId').val();
         console.log(' job_id ', job_id);
         console.log(' after open ', event);
+        $('.jquery-modal.blocker.current').off('click');
         $.ajax({
         type: 'GET',
             url: base_url+'/ajax/jobApplyInfo/'+job_id,
@@ -174,6 +175,8 @@ $(document).ready(function(){
             fadeDelay: 2.5
         });
     });
+
+
     //========== jobApplyBtn clck end. ==========
 
     // ========== Function to submit job application ==========//

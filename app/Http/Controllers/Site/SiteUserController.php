@@ -22,10 +22,12 @@ use App\Jobs;
 use App\JobsApplication;
 use App\TagCategory;
 use App\Tags;
-
 use App\JobsAnswers;
 use App\JobsQuestions;
 use App\LikeUser;
+use App\fbremacc;
+
+
 
 use Illuminate\Support\Facades\Hash;
 
@@ -539,12 +541,15 @@ class SiteUserController extends Controller
     }
 
 
-    // ================================== Update Email Function End Here ================================== 
+    // ================================== Update Email Function End Here ======================================================== 
 
-    // ===================================== Update Phone Function =================================
+    // ===================================== Update Phone Function ==============================================================
     public function updatePhone(Request $request){   
         $user = Auth::user();
-        // dd( $request->all() ); 
+        // dd( $user->id); 
+
+
+
         $rules = array('phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10');
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) { 
@@ -566,7 +571,35 @@ class SiteUserController extends Controller
         }
     }
 
-    // ================================== Update Phone Function End Here ================================== 
+    // =============================================== Update Phone Function End Here =========================================  
+
+    // =================================================  Delete User Function ================================================ 
+    public function deleteuser(Request $request){   
+
+        
+        $user = Auth::user();
+        $del_data = new fbremacc();
+        $del_data->user_id = $user->id;
+        $del_data->user_name = $user->username;
+        $del_data->user_email = $user->email;
+        $del_data->recentJob = $user->recentJob;
+        $del_data->statusText = $user->statusText;
+        $del_data->company = $user->company;
+        $del_data->reason = $request->reasonValue;
+        $del_data->save();
+        
+        // dd( $user->email); 
+
+        if(!empty($user)){
+        $user->delete();
+          return response()->json([
+                'status' => 1,
+                'message' => 'User Succesfully Deleted',
+          ]);
+      }
+    }
+
+    // =================================================== Delete User Function End Here ================================================ 
 
 
     //====================================================================================================================================//

@@ -4,11 +4,11 @@
 
 @section('content_header')
 <div class="block row">
-    <div class="col-md-6"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
+    <div class="col-md-3"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
 
 
-     <div class="block row col-md-10 text-white">
-      <div class="col-md-2">
+     <div class="block row col-md-5 text-white">
+      <div class="col-md-5">
         <select class="filter_status browser-default custom-select">
             <option value="">Select Status</option>
             <option value="verified" {!! ($filter_status == 'verified')?('selected'):'' !!}>Approved</option>
@@ -22,7 +22,7 @@
       --}}
     </div>
 
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="float-right">
             <a href="{!! route('employers.create') !!}" class="btn btn-block btn-success">Add New</a>
         </div>

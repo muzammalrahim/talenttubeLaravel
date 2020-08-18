@@ -9,11 +9,11 @@
     
     <div class="searchField_keyword dblock mb10">
         <div class="searchFieldLabel dinline_block">Keyword: </div>
-        <input type="text" name="filter_keyword">
+        <input type="text" name="filter_keyword" style="margin-left: 53px;">
     </div>
 
     <div class="searchField_salaryRange dblock mb10">
-        <div class="searchFieldLabel dinline_block">Salary Range: </div>
+        <div class="searchFieldLabel dinline_block" style="margin-right:25px">Salary Range: </div>
         <select name="filter_salary" class="dinline_block select_aw" data-placeholder="Select Salary Range">
              <option value="">Select Salary Range</option>
             @foreach(getSalariesRange() as $sk => $salary)
@@ -23,7 +23,7 @@
     </div>
 
     <div class="searchField_JobType dblock mb10">
-        <div class="searchFieldLabel dinline_block">Job Type: </div>
+        <div class="searchFieldLabel dinline_block" style="margin-right:50px">Job Type: </div>
         <select name="filter_jobType" class="dinline_block select_aw" data-placeholder="Select Job Type">
             <option value="">Select Job Type</option>
             <option value="contract">Contract</option>

@@ -90,9 +90,10 @@
 	        <div class="form-group row">
 	            {{ Form::label('Delete My Account', null, ['class' => 'col-md-3 form-control-label']) }}
 	            <div class="col-md-9">
-	 			<button type="button" class="DeleteProfileBUtton" data-toggle="modal" data-target="#DeleteProfileModal">Delete</button>
+	 			<button type="button" class="DeleteProfileBUtton" data-toggle="modal" data-target="#DeleteProfileModal" user_id = "{{$user->id}}">Delete</button>
 	            </div>
 	        </div>
+
 
             {{-- ============================================== Delete Account Ending ======================================== --}}
 
@@ -318,6 +319,58 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
     });
 
  // =========================================== Update Password Ajax End here ===========================================
+
+
+  // =============================================== Delete Profile Ajax ================================================
+
+    $(document).ready(function (){
+
+        $('#delete-profile').on('click', function(){
+        console.log('hi');
+        var reasonValue = $('.reasonAccRem').val();
+        // var current_password  = $('input[name="current_password"]').val();
+        
+        console.log(reasonValue);
+
+           $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        // $('.PasswordLoader').after(getLoader('smallSpinner SavePasswordSpinner'));
+
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/deleteuser',
+            data: {'reasonValue': reasonValue},
+            success: function(resp){
+                if(resp.status == true){
+                    // $('.SavePasswordSpinner').remove();
+                    // $('.PasswordAlert').show().delay(3000).fadeOut('slow');
+                    // $('.PasswordValidatorErrorTextOld').addClass('hide_it2');
+                    // $('.PasswordValidatorErrorTextNew').addClass('hide_it2');  
+                }
+                else{
+                    // $('.SavePasswordSpinner').remove();
+                    // var CPR = resp.validator['current_password'];
+                    // console.log(CPR);
+                    // var NPR = resp.validator['new_password'];
+                    // console.log(NPR);
+                    // $('.PasswordValidatorErrorTextOld').text(CPR);
+                    // $('.PasswordValidatorErrorTextNew').text(NPR);
+                    // $('.PasswordValidatorErrorTextOld').removeClass('hide_it2');
+                    // $('.PasswordValidatorErrorTextNew').removeClass('hide_it2');
+                }
+            }
+        });
+
+        });
+
+    });
+
+ // =========================================== Delete Profile Ajax End here ===========================================
+
 
 </script>
 

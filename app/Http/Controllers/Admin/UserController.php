@@ -10,8 +10,8 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Hash;
 use \Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
+use App\Video;
 
-// use App\Users;
 
 class UserController extends Controller
 {
@@ -155,8 +155,6 @@ class UserController extends Controller
 
     }
 
-
-
     /** ================   ================ */
     public function create(){
 
@@ -167,7 +165,6 @@ class UserController extends Controller
         $data['content_header'] = 'Add new User';
         $data['countries'] = get_Geo_Country();
         $data['qualificationList'] = getQualificationsList();
-
         $data['languages'] = getLanguages();
         $data['hobbies'] = getHobbies();
         $data['familyType'] = getFamilyType();
@@ -180,11 +177,7 @@ class UserController extends Controller
         $data['cities'] = array();
         $data['userquestion'] = getUserRegisterQuestions();
         $data['industry_experience'] = getIndustries();
-        
-        $data['salaryRange'] = getSalariesRange();
-
-        
-            
+        $data['salaryRange'] = getSalariesRange();   
         return view('admin.user.edit', $data);
     }
 
@@ -212,12 +205,19 @@ class UserController extends Controller
     public function edit($id){
             
         $user = User::with('profileImage')->where('id',$id)->first();
+
+        $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
+        $videos = Video::where('user_id', $user->id)->get();
+        $attachments = Attachment::where('user_id', $user->id)->get();
+
+
         if(empty($user)){ return redirect(route('users.create')); } 
         if($user->type == 'employer'){ 
             return redirect(route('employers.edit', ['id' => $user->id]));
         }else if($user->type == 'user'){
             $data['record']   = $user;
             $data['title']  = 'User';
+
             $data['content_header'] = 'Edit User';
             $data['countries'] = get_Geo_Country();
             $data['qualificationList'] = getQualificationsList();
@@ -227,16 +227,21 @@ class UserController extends Controller
             $data['eyeColor'] = getEyeColor();
             $data['Days'] = getDays();
             $data['Months'] = getMonths();
-            $data['years'] = getYears();
-            
+            $data['years'] = getYears(); 
             $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
             $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
             $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
-
             $data['userquestion'] = getUserRegisterQuestions();
             $data['industriesList'] = getIndustries();
             $data['salaryRange'] = getSalariesRange();
             $data['questionsList'] = getIndustries();
+
+            $data['user_gallery'] = $user_gallery;
+            $data['videos'] = $videos;
+            $data['attachments'] = $attachments;
+
+
+
             return view('admin.user.edit', $data);
         }
         // admin/user/edit
@@ -245,7 +250,11 @@ class UserController extends Controller
     /** ================  ================ */
     public function editEmployer(User $id){
         
+
         $user = $id; 
+
+        $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
+
         $data['record']   = $id;
         $data['title']  = 'Employer';
         $data['content_header'] = 'Edit Employer';
@@ -263,14 +272,15 @@ class UserController extends Controller
         $data['cities'] = ($user->country && $user->state)?(get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray()):array();
         $data['questionsList'] = getEmpRegisterQuestions();
 
+            $data['user_gallery'] = $user_gallery;
+        
+
         // edit end
 
         return view('admin.employer.edit', $data);
     }
 
     public function update(Request $request, $id){
-
-        
 
         $user = User::find($id);
         if (!$user){
@@ -327,7 +337,6 @@ class UserController extends Controller
          // dd(  $request->toArray() );
 
         $user->questions = json_encode($request->questions); 
-        
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
@@ -616,14 +625,6 @@ class UserController extends Controller
         }
       }    
     }
-
-
- 
-
-   
-
-
-
 
     // end here
 }

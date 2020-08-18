@@ -154,7 +154,7 @@
             </button> --}}
           </div>
           <div class="modal-body">
-            <p> Please! Tell us why are you removing your account?</p>
+            <p><strong> Please!</strong> Tell us why are you removing your account?</p>
               <textarea class="form-control reasonAccRem" rows="5" id="removingAccount"></textarea>
           </div>
           <div class="modal-footer">

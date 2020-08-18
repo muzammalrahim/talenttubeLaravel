@@ -220,6 +220,4 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Qualification', 'user_qualifications','user_id','qualification_id');
     }
 
-
-
 }
