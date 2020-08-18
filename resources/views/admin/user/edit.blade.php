@@ -95,11 +95,14 @@
 
 @section('css')
     <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
+    
 @stop
 
 @section('js')
 
 <script src="{{ asset('js/admin_custom.js') }}"></script>
+<script src="{{ asset('js/site/userProfile.js') }}"></script>
+
 
 
 

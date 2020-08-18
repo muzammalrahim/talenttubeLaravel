@@ -34,29 +34,32 @@
 
 
 {{-- @dump( $jobs->toArray() ) --}}
+<div class="row" style="    margin-bottom: 15px;">
 
-<div class="dtHeader">
+  <div class="col-md-10">
+    <div class="dtHeader">
+        <div class="dtFilter dtHead">
+            <label class="dtFilterLabel">Select Job</label>
+            <select name="filter_job" id="filter_job">
+                <option value="">Filter By Job</option>
+                @if(!empty($jobs))
+                    @foreach ($jobs as $job)
+                        <option value="{{$job->id}}"  {{($request->job_id && $request->job_id == $job->id)?'selected="selected"':''}}> {{$job->title}}  ({{ ($job->applicationCount)?($job->applicationCount->aggregate):0 }})</option>
+                    @endforeach
+                @endif
+            </select>
+     
+        </div>
+      </div>
+  </div>
 
-    <div class="dtFilter dtHead">
-        <label class="dtFilterLabel">Select Job</label>
-        <select name="filter_job" id="filter_job">
-            <option value="">Filter By Job</option>
-            @if(!empty($jobs))
-                @foreach ($jobs as $job)
-                    <option value="{{$job->id}}"  {{($request->job_id && $request->job_id == $job->id)?'selected="selected"':''}}> {{$job->title}}  ({{ ($job->applicationCount)?($job->applicationCount->aggregate):0 }})</option>
-                @endforeach
-            @endif
-        </select>
-    </div>
-
+  <div class="col-md-2">
     <div class="dtActions">
         <button class="btn btn-success btn-sm pull-right btnExportCSV">Export CVS</button>
     </div>
+  </div>
 
 </div>
-
-
-
 
 <table class="table table-bordered text-center cbxDataTable" id="dataTable"t>
 

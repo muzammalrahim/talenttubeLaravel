@@ -222,6 +222,11 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('saveUserProfile', 'Site\SiteUserController@updateUserProfile')->name('saveUserProfile');
     Route::post('saveUserPersonalSetting', 'Site\SiteUserController@saveUserPersonalSetting')->name('saveUserPersonalSetting');
 
+// ======================================= For Updating User Setting =======================================
+
+    Route::get('updateUserPersonalSetting', 'Site\SiteUserController@updateUserPersonalSetting')->name('updateUserPersonalSetting');
+
+
     // User
     Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
     Route::post('step2',      'Site\SiteUserController@Step2');
@@ -245,6 +250,12 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
 
 
     Route::post('ajax/updateIndustryExperience', 'Site\SiteUserController@updateIndustryExperience')->name('updateIndustryExperience');
+
+    Route::post('ajax/updateEmail', 'Site\SiteUserController@updateEmail');
+    Route::post('ajax/updatePhone', 'Site\SiteUserController@updatePhone');
+    Route::post('ajax/updatePassword', 'Site\SiteUserController@updatePassword');
+    Route::post('ajax/deleteuser', 'Site\SiteUserController@deleteuser');
+
 
     
     // Added by Hassan

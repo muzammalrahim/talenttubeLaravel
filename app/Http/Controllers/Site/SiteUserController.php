@@ -22,12 +22,14 @@ use App\Jobs;
 use App\JobsApplication;
 use App\TagCategory;
 use App\Tags;
-
 use App\JobsAnswers;
 use App\JobsQuestions;
 use App\LikeUser;
+use App\fbremacc;
 
 
+
+use Illuminate\Support\Facades\Hash;
 
 class SiteUserController extends Controller
 {
@@ -37,11 +39,8 @@ class SiteUserController extends Controller
         $this->middleware('auth');
     }
 
-
-   
     public function index(Request $request) {
         $user = Auth::user();
-
         if ($request->username ===  $user->username) {
             $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
             $profile_image   = UserGallery::where('user_id', $user->id)->where('status', 1)->where('profile', 1)->first();
@@ -54,34 +53,20 @@ class SiteUserController extends Controller
             } else {
                 $profile_image   = assetGallery($profile_image->access,$user->id,'',$profile_image->image);
             }
-
-
             $attachments = Attachment::where('user_id', $user->id)->get();
             $activities = UserActivity::where('user_id', $user->id)->get();
             $videos = Video::where('user_id', $user->id)->get();
 
             $tags = Tags::orderBy('usage', 'DESC')->limit(30)->get();
             $tagCategories = TagCategory::get();
-
-
-
-            
-      
-
             $userTags = $user->tags;
-
             // dd( $tags );
-
             $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
-
-
             $data['user'] =  $user;
             $data['user_gallery'] = $user_gallery;
             $data['geo_country'] = get_Geo_Country();
-            
             $data['geo_state'] = !empty($user->country)?(get_Geo_State($user->country)):null;
             $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null; 
-
             $data['profile_image']    = $profile_image;
             $data['title'] = 'profile';
             $data['classes_body'] = 'profile';
@@ -89,15 +74,9 @@ class SiteUserController extends Controller
             $data['attachments'] = $attachments;
             $data['activities'] = $activities;
             $data['videos'] = $videos;
-
             $data['userTags'] = $userTags;
             $data['tags'] = $tags;
-
             $data['tagCategories'] = $tagCategories;
-
-           
-
-            
             // Getting Salaries
             $data['salaryRange'] = getSalariesRange(); 
             $data['qualificationList'] = getQualificationsList();
@@ -497,12 +476,137 @@ class SiteUserController extends Controller
 
             return response()->json([
                     'status' => 1,
-                    'data' => $EmpQuestionsHtml
+                    'data' => $EmpQuestionsHtml,
             ]);
         // }
     }
 
- // ============================= Ajax For updating Questions Employer End here ====================================
+    // ============================= Ajax For updating Questions Employer End here ============================
+
+    // ===================================== Update Email  =================================
+
+        public function updateEmail(Request $request)
+    {
+        $rules = array('email' => 'required|email|unique:users,email');
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            $valitdaion_message = $validator->getMessageBag()->toArray();
+            $mes = $valitdaion_message['email'];
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $mes
+            ]);
+        }else{
+            $user = Auth::user();
+            $user->oldEmail = $user->email;
+            $user->email = $request->email;
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => array(
+                        'email_User' => $user->email, 
+                        'logout_Route' => route('logout')
+                    )
+            ]);
+        }
+    }   
+
+    //====================================================================================================================================//
+    //Ajax Post // Update layout. // change user password.  
+    //====================================================================================================================================//
+    public function updatePassword(Request $request){
+        $user = Auth::user();
+
+        // dd($request->current_password);
+        // dd($request->new_password);
+        // dd($user->password);
+
+
+        $rules = array('current_password' => 'required|min:6|max:255', 'new_password' => 'required|min:6|max:255');
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        }else{
+            // check if user has enter his current password correct. 
+            if(!Hash::check($request->current_password, $user->password)){
+                return response()->json([
+                    'status' => 0,
+                    'validator' =>  $validator->getMessageBag()->toArray(),
+                    'validator' =>  $validator->errors()->add('current_password', 'Current password is wrong')
+                ]);
+            } 
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => route('logout')
+            ]);
+        }
+    }
+
+
+    // ================================== Update Email Function End Here ======================================================== 
+
+    // ===================================== Update Phone Function ==============================================================
+    public function updatePhone(Request $request){   
+        $user = Auth::user();
+        // dd( $user->id); 
+
+
+
+        $rules = array('phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10');
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) { 
+            $valitdaion_message = $validator->getMessageBag()->toArray();
+            $mes = $valitdaion_message['phone'];
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $mes
+            ]);
+        }
+        else{
+            $user = Auth::user();
+            $user->phone = $request->phone;
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $user->phone
+            ]);
+        }
+    }
+
+    // =============================================== Update Phone Function End Here =========================================  
+
+    // =================================================  Delete User Function ================================================ 
+    public function deleteuser(Request $request){   
+
+        
+        $user = Auth::user();
+        $del_data = new fbremacc();
+        $del_data->user_id = $user->id;
+        $del_data->user_name = $user->username;
+        $del_data->user_email = $user->email;
+        $del_data->recentJob = $user->recentJob;
+        $del_data->statusText = $user->statusText;
+        $del_data->company = $user->company;
+        $del_data->reason = $request->reasonValue;
+        $del_data->save();
+        
+        // dd( $user->email); 
+
+        if(!empty($user)){
+        $user->delete();
+          return response()->json([
+                'status' => 1,
+                'message' => 'User Succesfully Deleted',
+          ]);
+      }
+    }
+
+    // =================================================== Delete User Function End Here ================================================ 
 
 
     //====================================================================================================================================//
@@ -603,7 +707,7 @@ class SiteUserController extends Controller
 
                 $data = array();
                 $data['user'] = $user;
-                $view = view('site.user.profile.personalInfoTable', $data);
+                $view = view('site.user.profile.personalInfoTable', $data); 
                 $html = $view->render();
 
                 return response()->json([
@@ -621,6 +725,19 @@ class SiteUserController extends Controller
         }
     }
 
+    //====================================================================================================================================//
+    // Save User Personal Setting.
+    // Ajax submit request from profile page.
+    //====================================================================================================================================//
+    public function updateUserPersonalSetting(Request $request)
+    {       
+            $user = Auth::user();
+            $data['classes_body'] = 'profile';
+            $data['user'] = $user;
+            $view = view('site.user.profile.updateUserPersonalSetting', $data); 
+            $html = $view->render();
+            return $view;
+    }
 
     //====================================================================================================================================//
     // Upload User Gallery photo.
