@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
+use Jenssegers\Agent\Agent;
 
 class Authenticate extends Middleware
 {
@@ -15,7 +16,16 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('login');
+
+            $agent = new Agent();
+            if ($agent->isMobile()){
+                return route('mHomepage'); 
+                // dd('mobile login');
+            }else{
+                return route('login');
+            }
+
+            // return route('login');
         }
     }
 }

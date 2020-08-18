@@ -21,7 +21,6 @@ Route::get('welcom', function () { return view('welcome'); });
 
 Route::get('phpini', 'Site\HomeController@phpini')->name('phpini');
 
-
 Route::post('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
 // Route::get('notifyPayment', 'Site\PaymentController@notifyPayment')->name('notifyPayment');
 
@@ -42,12 +41,6 @@ Route::get('/clear', function() {
 });
 
 
-// Route::get('images/user/{userid}/{any}', [
-//     'as'         => 'images.show',
-//     'uses'       => 'Site\HomeController@imgshow',
-//     'middleware' => 'auth',
-// ])->where('any', '.*');
-
 Route::get('images/user/{userid}/gallery/{any}', [
     'as'         => 'images.show',
     'uses'       => 'Site\HomeController@imgshow',
@@ -59,14 +52,6 @@ Route::get('images/user/{userid}/private/{any}', [
     'uses'       => 'Site\HomeController@fileshow',
     'middleware' => 'auth',
 ])->where('any', '.*');
-
-
-// Media access video streaming 
-// Route::get('media/private/{userid}/videos/{any}', [
-//     'as'         => 'videoStream.show',
-//     'middleware' => 'auth',
-//     'uses'       => 'Site\HomeController@videoStream',
-// ])->where('any', '.*');
 
 
 // Media access video streaming 
@@ -95,12 +80,9 @@ Route::get('media/private/{userid}/{any}', [
 
 
 
-
-
 // Backend Admin with out Authentication
 Route::get('admin', 'Admin\AdminController@index');
 Route::post('admin/login', 'Admin\AdminController@login');
-
 
 Route::get('logout', function(){
     Auth::logout();
@@ -134,7 +116,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('users/resumeData', 'Admin\UserController@resumeData')->name('users.resumeData');
     Route::post('users/confirmAccount', 'Admin\UserController@confirmAccount')->name('users.confirmAccount');
 
-
     Route::get('employers', 'Admin\UserController@employers')->name('adminEmployers');
     Route::get('employers/verified', 'Admin\UserController@verifiedEmployers')->name('adminVerifiedEmployers');
     Route::get('employers/pending', 'Admin\UserController@pendingEmployers')->name('adminPendingEmployers');
@@ -148,7 +129,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     // for deleting 
     Route::post('employers/delete/{id}', 'Admin\UserController@destroyemployers')->name('employers.destroy');
 
-
     // Route added by Hassaan
     Route::get('jobs','Admin\AdminJobsController@jobs')->name('adminJobs');
     Route::get('jobs/getList', 'Admin\AdminJobsController@getDatatable')->name('jobs.dataTable');
@@ -158,7 +138,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('jobs/{id}', 'Admin\AdminJobsController@pdfExport')->name('jobs.pdfExport');
     Route::patch('jobs/update/{id}', 'Admin\AdminJobsController@updateJob')->name('jobs.update');
 
-    
     // for deleting 
     Route::post('jobs/delete/{id}', 'Admin\AdminJobsController@destroyJob')->name('jobs.destroy');
     
@@ -173,7 +152,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     // bulkCVS 
     Route::post('bulk/generateCVS', 'Admin\AdminEmailsController@GenerateCVS')->name('bulk.GenerateCVS');
     Route::get('bulk/generateCVS', 'Admin\AdminEmailsController@GenerateCVS');
-
     Route::post('bulk/generatePDF', 'Admin\AdminEmailsController@GeneratePDF')->name('bulk.GeneratePDF');
     Route::get('bulk/generatePDF', 'Admin\AdminEmailsController@GeneratePDF');
     
@@ -186,13 +164,11 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('job_applications/getjobapps', 'Admin\AdminJobsController@getJobAppDatatable')->name('job.jobAppDatatable');
     Route::get('job_applications/edit/{id}', 'Admin\AdminJobsController@editJobApp')->name('job_applications.edit');
     Route::patch('job_applications/update/{id}', 'Admin\AdminJobsController@updateJobApp')->name('job_applications.update');
-   
     Route::post('jobApplication/exportCSV', 'Admin\AdminJobsController@ExportCSV')->name('jobApplication.exportCSV');
     Route::get('job/exportApplicationCSV/{id}', 'Admin\AdminJobsController@ExportApplicationCSV')->name('job.exportApplicationCSV');
 
     // for filtering 
     Route::post('job_applications/search', 'Admin\AdminJobsController@filter')->name('job_applications.filter');
-
 
 
     // Job Application End Here
@@ -206,39 +182,40 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 
 
 // Front End without Authentication
+// Desktop layout only. 
+Route::group(array('middleware' => ['devicecheck']), function(){
 
-Route::get('/', 'Site\HomeController@index')->name('homepage');
+    Route::get('/', 'Site\HomeController@index')->name('homepage');
 
-// Login.
-Route::get('login', function () { return redirect('/'); });
-Route::post('login', 'Site\HomeController@loginUser')->name('login');
-Route::post('join', 'Site\HomeController@join')->name('join'); 
-Route::get('join', function () { return redirect('/'); });
-
-
-
-// User Registeration.
-Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
-// Route::get('step2', 'Site\HomeController@step2')->name('step2');
+    // Login.
+    Route::get('login', function () { return redirect('/'); });
+    Route::post('login', 'Site\HomeController@loginUser')->name('login');
+    Route::post('join', 'Site\HomeController@join')->name('join'); 
+    Route::get('join', function () { return redirect('/'); });
 
 
-//Employer Registeration.
-Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer'); // user_register
-Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
-Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
-Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
+    // User Registeration.
+    Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
+    // Route::get('step2', 'Site\HomeController@step2')->name('step2');
 
-Route::get('/unauthorized', function () { return view('unauthorized'); });
-Route::post('ajax/geo_states', 'Site\HomeController@geo_states')->name('ajax_geo_states');
-Route::post('ajax/geo_cities', 'Site\HomeController@geo_cities')->name('ajax_geo_cities');
+
+    //Employer Registeration.
+    Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer'); // user_register
+    Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
+    Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
+    Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
+
+    Route::get('/unauthorized', function () { return view('unauthorized'); });
+    Route::post('ajax/geo_states', 'Site\HomeController@geo_states')->name('ajax_geo_states');
+    Route::post('ajax/geo_cities', 'Site\HomeController@geo_cities')->name('ajax_geo_cities');
+
+});
 
 
 
 
 // Front End  with Authentication
-Route::group(array('middleware' => 'auth'), function(){
-    // Route::get('profile', 'Site\HomeController@profile')->name('profile');
-    // Route::get('profile', 'Site\HomeController@profile')->name('profile');
+Route::group(array('middleware' => ['auth','devicecheck']), function(){
 
     Route::get('profile', function () { return redirect('user/'.Auth::user()->username); })->name('profile');
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
@@ -271,7 +248,6 @@ Route::group(array('middleware' => 'auth'), function(){
 
     
     // Added by Hassan
-
     
     Route::get('ajax/getUserPersonalInfo', 'Site\SiteUserController@getUserPersonalInfo');
     Route::post('ajax/update_about_field', 'Site\SiteUserController@updateAboutField');
@@ -306,7 +282,6 @@ Route::group(array('middleware' => 'auth'), function(){
     // Like Route and unlike route
     Route::get('like',         'Site\SiteUserController@likeList')->name('likeList');
     Route::post('ajax/unLikeUser', 'Site\SiteUserController@unLikeUser')->name('unLikeUser');
-
 
     Route::get('mutual-likes',         'Site\SiteUserController@mutualLikes')->name('mutualLikes');
     

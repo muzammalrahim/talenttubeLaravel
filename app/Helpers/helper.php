@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Str;
+use Jenssegers\Agent\Agent;
 
 function checkRole($roles){
     echo "test helper working ";
@@ -68,6 +69,17 @@ function default_State_id(){ return 129; }
 
 if (! function_exists('str_random')) {
     function str_random($length = 16) { return Str::random($length); }
+}
+
+
+
+function isMobile(){
+      $agent = new Agent();
+      return $agent->isMobile();
+}
+
+function isRequestAjax($request){
+      return (isset($request->ajax) && ($request->ajax)) ? true : false;
 }
 
 

@@ -104,10 +104,17 @@ class SiteUserController extends Controller
             // $data['industry_experience'] = getIndustries();
             $data['industriesList'] = getIndustries();
             $data['userquestion'] = getUserRegisterQuestions();
-            $data['empquestion'] = getEmpRegisterQuestions();
-
-            $view_name = 'site.user.profile.profile'; // site/user/profile/profile
-            return view($view_name, $data);
+           $data['empquestion'] = getEmpRegisterQuestions();
+            if(isMobile()){
+                if(isRequestAjax($request)){
+                    return view('mobile.user.profile.profile', $data); 
+                }else{
+                    return view('mobile.user.profile.profile', $data);
+                }
+            }else{
+                return view('site.user.profile.profile', $data);
+                // site/user/profile/profile
+            } 
         } else {
             return view('site.404');
         }
