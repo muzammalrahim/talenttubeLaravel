@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="{{ asset('css/site/register.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/card.css') }}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 
 @stop
 
@@ -23,7 +25,7 @@
 <!-- main -->
 <div class="main  above ">
     <input type="hidden" id="userType" name="userType" value="user" />
-    <input type="hidden" id="userStep" name="userStep" value="{{($user->step2)?($user->step2):2}}" />
+{{--    <input type="hidden" id="userStep" name="userStep" value="{{($user->step2)?($user->step2):2}}" />--}}
     <!-- header -->
     <div class="header">
         <div id="join_step" class="step">
@@ -35,6 +37,8 @@
                 <li style="display:none;">5</li>
                 <li style="display:none;">6</li>
                 <li style="display:none;">7</li>
+                <li style="display:none;">8</li>
+                <li style="display:none;">9</li>
             </ul>
 
         </div>
@@ -246,6 +250,90 @@
             <div id="full_step_7" class="bl_card_indExp"  style="display:none;">
                 <div class="ind_exp">
                     <div class="ind_exp_h">
+                        <p>Well done candidates, you’re at the final stage. To complete your application, all you need to upload a 30-60 second video...</p>
+                        <div class="step2_uplod_info">
+                            <p> Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. </p>
+                        </div>
+                        <div class="userUpload">
+                            <div class="userVideoCont">
+                                <div class="userVideo">
+                                    <div class="title_private_photos title_videos">Upload Videos</div>
+                                    <div id="list_videos_public" class="list_videos_public">
+                                        <div id="photo_add_video" class="item add_photo add_video_public item_video">
+                                            <a class="add_photo">
+                                                <img id="video_upload_select" class="transparent is_video" src="{{ asset('images/site/icons/add_video160x120.png') }}" style="opacity: 1">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="list_videos"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="join_btn mt20 center">
+                            <button id="user_step7_done" class="btn turquoise small btn_join_submit">Done</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <div id="full_step_8" class="bl_card_Final full_step_8"  style="display:none;">
+                <div class="ind_exp">
+                    <div class="ind_exp_h">
+                        <p>Almost done candidates, you’re at the final stage. To complete your application, all you need to upload your resume...</p>
+                        <div class="step2_uplod_info">
+                            <p>Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
+
+{{--                            <p>2. Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. </p>--}}
+                        </div>
+
+                        <p class="info">You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
+                    </div>
+
+                    <div class="userUpload">
+                       <div class="userResumeCont">
+                        <div class="userResume">
+                         <div class="title_private_photos title_videos">Resume & Contact Details</div>
+                            <form id="frm_upload" class=" submit-document" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
+                              {{csrf_field()}} <br>
+                              <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">
+                              <a id="user_step8_done" class="btn turquoise violet save-resume-btn valign-top" name="submit">Done</a>
+                            </form>
+                            <div class="private_attachments"></div>
+                            <div class="upload_resume_error"></div>
+                        </div>
+                       </div>
+
+{{--                       <div class="userVideoCont">--}}
+{{--                           <div class="userVideo">--}}
+{{--                           <div class="title_private_photos title_videos">Upload Videos</div>--}}
+{{--                           <div id="list_videos_public" class="list_videos_public">--}}
+{{--                            <div id="photo_add_video" class="item add_photo add_video_public item_video">--}}
+{{--                                <a class="add_photo" >--}}
+{{--                                    <img id="video_upload_select" class="transparent is_video" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">--}}
+{{--                                </a>--}}
+{{--                            </div>--}}
+{{--                           </div>--}}
+
+{{--                           <div class="list_videos"></div>--}}
+{{--                           </div>--}}
+{{--                       </div>--}}
+                    </div>
+
+                    <div class="join_done"></div>
+
+{{--                    <div class="join_btn mt20 center">--}}
+{{--                        <button id="user_step8_done" class="btn turquoise small btn_join_submit">Done</button>--}}
+{{--                    </div>--}}
+
+                </div>
+            </div>
+
+
+            <div id="full_step_9" class="bl_card_final full_step_9" style="display: none">
+                <div class="ind_exp">
+                    <div class="ind_exp_h">
                         <p>Almost done, candidates! To help Employers connect with you, we’ve created a tagging system. This allows Employers to search for specific candidates via a search system. In the below section, we encourage you to create as many tags that best describe your key attributes as a Job Seeker.</p>
                         <div class="taging_h_info">
                             <p>Be sure to tag the following:</p>
@@ -261,71 +349,30 @@
                     </div>
 
                     <div class="user_tagging">
-                       @include('site.layout.tagging')
+                        @include('site.layout.tagging')
                     </div>
 
                     <div class="join_btn mt20 center">
-                        <button id="user_step7_done" class="btn turquoise small btn_join_submit " disabled="true">Done</button>
+                        <button id="user_step9_done" class="btn turquoise small btn_join_submit " disabled="true">Save Tags</button>
+                        <button id="tag_skip_btn" class="btn turquoise small btn_join_submit ">Skip</button>
                     </div>
 
                 </div>
             </div>
 
-
-
-            <div id="full_step_8" class="bl_card_Final full_step_8"  style="display:none;">
+            <div id="full_step_10" class="bl_card_Final full_step_10" style="display: none">
                 <div class="ind_exp">
                     <div class="ind_exp_h">
-                        <p>Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:</p>
-                        <div class="step2_uplod_info">
-                            <p>1. Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
-
-                            <p>2. Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. </p>
+                        <p>Browse Jobs</p>
+                        <div class="jobs_list">
+                            getLoader('css_loader_btn', false, true);
                         </div>
-
-                        <p class="info">You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
                     </div>
-
-                    <div class="userUpload">
-                       <div class="userResumeCont">
-                        <div class="userResume">
-                         <div class="title_private_photos title_videos">Resume & Contact Details</div>
-                            <form id="frm_upload" class=" submit-document" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
-                              {{csrf_field()}} <br>
-                              <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">
-                              <button class="btn violet save-resume-btn valign-top" name="submit" style="padding: 5px;">Save</button>
-                            </form>
-                            <div class="private_attachments"></div>
-                        </div>
-                       </div>
-
-                       <div class="userVideoCont">
-                           <div class="userVideo">
-                           <div class="title_private_photos title_videos">Upload Videos</div>
-                           <div id="list_videos_public" class="list_videos_public">
-                            <div id="photo_add_video" class="item add_photo add_video_public item_video">
-                                <a class="add_photo" >
-                                    <img id="video_upload_select" class="transparent is_video" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
-                                </a>
-                            </div>
-                           </div>
-
-                           <div class="list_videos"></div>
-                           </div>
-                       </div>
-                    </div>
-
-                    <div class="join_done"></div>
-
                     <div class="join_btn mt20 center">
-                        <button id="user_step8_done" class="btn turquoise small btn_join_submit">Done</button>
+                        <button id="user_step10_done" class="btn turquoise small btn_join_submit">Skip For Now</button>
                     </div>
-
                 </div>
             </div>
-
-
-
 
         </div>
     </div>
@@ -353,6 +400,8 @@
 <script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script>
 
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
+<script src="{{ asset('js/site/common.js') }}"></script>
 
 
 
@@ -361,66 +410,6 @@
         // $('#full_step_1').delay(150).fadeIn(500);
         var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
         userStepReload(currentStep);
-        {{--var previousStep =  currentStep - 1;--}}
-        {{--var joinStepList = $('#join_step ul li').removeClass('selected');--}}
-        {{--console.log('step list', joinStepList);--}}
-        {{--// if (currentStep == 3){--}}
-        {{--//--}}
-        {{--// }--}}
-
-        {{--switch (currentStep) {--}}
-        {{--    case 2:--}}
-        {{--        var step3_slogan =  ($('#userType').val() == 'user')?('Update your profile'):('Give us a brief overview');--}}
-        {{--        $('#join_slogan').text(step3_slogan);--}}
-        {{--        joinStepList;--}}
-        {{--        $('#join_step ul li:eq(1)').addClass('selected').css('display','block');--}}
-        {{--        break;--}}
-
-        {{--    case 3:--}}
-        {{--        var step3_slogan =  ($('#userType').val() == 'user')?('Update your profile'):('Give us a brief overview');--}}
-        {{--        $('#join_slogan').text(step3_slogan);--}}
-        {{--        joinStepList;--}}
-        {{--        $('#join_step ul li:eq(1)').addClass('selected').css('display','block');--}}
-        {{--        break;--}}
-        {{--    case 4:--}}
-        {{--        // $('#join_slogan').text('Qualification');--}}
-        {{--        // joinStepList;--}}
-        {{--        // $('#join_step ul li:eq(1)').css('display','block');--}}
-        {{--        // $('#join_step ul li:eq(2)').addClass('selected').css('display','block');--}}
-        {{--        // // showUserStep4();--}}
-        {{--        showUserStep5();--}}
-
-        {{--        break;--}}
-        {{--    case 5:--}}
-        {{--        $('#join_slogan').text('Industry Experience');--}}
-        {{--        joinStepList;--}}
-        {{--        $('#join_step ul li:eq(1), #join_step ul li:eq(2)').css('display','block');--}}
-        {{--        $('#join_step ul li:eq(3)').addClass('selected').css('display','block');--}}
-        {{--        break;--}}
-        {{--    case 6:--}}
-        {{--        $('#join_step').text('Salary Range');--}}
-        {{--        joinStepList;--}}
-        {{--        $('#join_step ul li:eq(1), #join_step ul li:eq(2), #join_step ul li:eq(3)').css('display','block');--}}
-        {{--        $('#join_step ul li:eq(4)').addClass('selected').css('display','block');--}}
-        {{--        break;--}}
-        {{--    case 7:--}}
-        {{--        $('#join_step').text('Tagging');--}}
-        {{--        joinStepList;--}}
-        {{--        $('#join_step ul li:eq(1), #join_step ul li:eq(2), #join_step ul li:eq(3), #join_step ul li:eq(4)').css('display','block');--}}
-        {{--        $('#join_step ul li:eq(5)').addClass('selected').css('display','block');--}}
-        {{--        break;--}}
-        {{--    case 8:--}}
-        {{--        $('#join_step').text('Final Section');--}}
-        {{--        joinStepList;--}}
-        {{--        $('#join_step ul li:eq(1), #join_step ul li:eq(2), #join_step ul li:eq(3), #join_step ul li:eq(4), #join_step ul li:eq(5)').css('display','block');--}}
-        {{--        $('#join_step ul li:eq(6)').addClass('selected').css('display','block');--}}
-        {{--        break;--}}
-        {{--     default :--}}
-
-        {{--         $('#full_step_1').delay(150).fadeIn(500);--}}
-
-        {{--         break;--}}
-        // }
     });
 </script>
 
@@ -434,7 +423,7 @@
 .header, .main.above .wrapper {
     background: #5b0079;
 }
-.full_step_error p {
+.full_step_error p, .upload_resume_error p {
     color: white;
     text-align: center;
     background-color: rgba(228, 29, 61, 0.6);
@@ -446,6 +435,29 @@
 }
 .css_loader_btn .spinner.center, .css_loader_btn .spinnerw.center {
     position: relative !important;
+}
+.title_private_photos.title_videos {
+    padding: 0 0 15px 0;
+}
+.userResumeCont, .userVideoCont {
+    width: 100%;
+}
+div#list_videos_public{
+    float: none;
+}
+a#user_step8_done {
+    transition: background-color 0.3s ease;
+    font-size: 18px;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    display: block;
+    background: #40c7db;
+    width: 5%;
+    margin: 0 auto;
+    padding: 10px 30px;
+    margin-top: 10px;
 }
 </style>
 @stop

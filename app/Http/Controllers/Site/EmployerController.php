@@ -59,7 +59,7 @@ class EmployerController extends Controller {
             $data['user_gallery'] = $user_gallery;
             $data['geo_country'] = get_Geo_Country();
              $data['geo_state'] = !empty($user->country)?(get_Geo_State($user->country)):null;
-            $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null; 
+            $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null;
             $data['profile_image']    = $profile_image;
             $data['title'] = 'profile';
             $data['classes_body'] = 'profile';
@@ -98,54 +98,69 @@ class EmployerController extends Controller {
         // dump( $request->toArray() );
 
         $requestData = $request->all();
-        $requestData['about_me']        = my_sanitize_string($request->about_me);
-        $requestData['interested_in']   =  my_sanitize_string($request->interested_in);
-        $requestData['questions']       =  json_decode( $request->questions, true );
-        $requestData['industry_experience']= json_decode(stripslashes($request->industry_experience), true);
+//        $requestData['about_me']        = my_sanitize_string($request->about_me);
+//        $requestData['interested_in']   =  my_sanitize_string($request->interested_in);
+//        $requestData['questions']       =  json_decode( $request->questions, true );
+//        $requestData['industry_experience']= json_decode(stripslashes($request->industry_experience), true);
+        $requestData['step'] = my_sanitize_number($request->step);
 
         // dd( $request->all() );
         // dd(  $requestData );
-        if( !empty($requestData['questions']) ){
-            foreach($requestData['questions'] as $qk => $qv){
-                $requestData['questions'][$qk] = my_sanitize_string($qv);
+        $user = Auth::user();
+        if ($requestData['step'] == 2){
+            $requestData['questions']       =  json_decode( $request->questions, true );
+            if( !empty($requestData['questions']) ){
+                foreach($requestData['questions'] as $qk => $qv){
+                    $requestData['questions'][$qk] = my_sanitize_string($qv);
+                }
             }
-        }
-
-        // card_step2_validation
-        $rules = array(
-            'about_me' => 'required|max:150',
-            'interested_in' => 'required|max:150',
-            "questions"  => "required",
-            "industry_experience"  => "required",
-        );
-        $validator = Validator::make( $requestData , $rules);
-
-        if ($validator->fails()){
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $validator->getMessageBag()->toArray()
-            ]);
-        }else{
-            $user = Auth::user();
-            $user->about_me         = $requestData['about_me'];
-            $user->interested_in    = $requestData['interested_in'];
-            $user->questions        = json_encode($requestData['questions']);
-            $user->step2            = 1;
-            $user->industry_experience = $requestData['industry_experience'];
+            $rules = array(
+                'questions'  => 'required'
+            );
+            $validator = Validator::make($requestData, $rules);
+            if ($validator->fails()){
+                return response()->json([
+                    'status' => 0,
+                    'validator' => $validator->getMessageBag()->toArray()
+                ]);
+            } else {
+                $user->questions = $requestData['questions'];
+                $user->step2 = $requestData['step'];
+                $user->save();
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'questions saved succesfully'
+                ]);
+            }
+        } elseif ($requestData['step'] == 3) {
+            $requestData['about_me']        = my_sanitize_string($request->about_me);
+            $requestData['interested_in']   =  my_sanitize_string($request->interested_in);
+            $rules = array(
+                'about_me' => 'required|max:150',
+                'interested_in' => 'required|max:150'
+            );
+            $validator = Validator::make($requestData, $rules);
+            if ($validator->fails()){
+                return response()->json([
+                    'status' => 0,
+                    'validator' => $validator->getMessageBag()->toArray()
+                ]);
+            }
+            $user->about_me = $requestData['about_me'];
+            $user->interested_in = $requestData['interested_in'];
+            $user->step2 = $requestData['step'];
             $user->save();
-
-            if(!empty($request->file('file'))){
-
+            if (!empty($request->file('file'))){
                 $image = $request->file('file');
-                $fileName   = time() . '.' . $image->getClientOriginalExtension();
-                
-                $file_thumb  = $user->id.'/gallery/small/'.$fileName;
-                $file_path   = $user->id.'/gallery/'.$fileName;
+                $fileName = time() . '.' . $image->getClientOriginalExtension();
+
+                $file_thumb = $user->id.'/gallery/small/'.$fileName;
+                $file_path = $user->id.'/gallery/'.$fileName;
 
                 $img = Image::make($image->getRealPath());
-                $img->resize(120, 120, function ($constraint) { $constraint->aspectRatio(); });
+                $img->resize(120,120, function ($constraint) { $constraint->aspectRatio(); });
                 $img->stream();
-                Storage::disk('publicMedia')->put( $file_thumb , $img);
+                Storage::disk('publicMedia')->put($file_thumb, $img);
 
                 $img = Image::make($image->getRealPath());
                 $img->stream();
@@ -161,12 +176,89 @@ class EmployerController extends Controller {
 
                 return response()->json([
                     'status' => 1,
-                    'message' => 'data saved succesfully',
-                    'redirect' => route('employerProfile')
+                    'message' => 'about me saved successfully'
                 ]);
-            
             }
+        } else {
+            $requestData['industry_experience']= json_decode(stripslashes($request->industry_experience), true);
+//            dd($requestData);
+            $rules = [
+                "industry_experience"  => "required"
+            ];
+            $validator = Validator::make($requestData, $rules);
+            if ($validator->fails()){
+                return response()->json([
+                    'status' => 0,
+                    'validator' => $validator->getMessageBag()->toArray()
+                ]);
+            }
+            $user->industry_experience = $requestData['industry_experience'];
+            $user->step2 = $requestData['step'];
+            $user->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'data saved successfully',
+                'redirect' => route('employerProfile'),
+                'step' => 4
+            ]);
         }
+
+        // card_step2_validation
+//        $rules = array(
+//            'about_me' => 'required|max:150',
+//            'interested_in' => 'required|max:150',
+//            "questions"  => "required",
+//            "industry_experience"  => "required",
+//        );
+//        $validator = Validator::make( $requestData , $rules);
+//
+//        if ($validator->fails()){
+//            return response()->json([
+//                'status' => 0,
+//                'validator' =>  $validator->getMessageBag()->toArray()
+//            ]);
+//        }else{
+//            $user = Auth::user();
+//            $user->about_me         = $requestData['about_me'];
+//            $user->interested_in    = $requestData['interested_in'];
+//            $user->questions        = json_encode($requestData['questions']);
+//            $user->step2            = 1;
+//            $user->industry_experience = $requestData['industry_experience'];
+//            $user->save();
+//
+//            if(!empty($request->file('file'))){
+//
+//                $image = $request->file('file');
+//                $fileName   = time() . '.' . $image->getClientOriginalExtension();
+//
+//                $file_thumb  = $user->id.'/gallery/small/'.$fileName;
+//                $file_path   = $user->id.'/gallery/'.$fileName;
+//
+//                $img = Image::make($image->getRealPath());
+//                $img->resize(120, 120, function ($constraint) { $constraint->aspectRatio(); });
+//                $img->stream();
+//                Storage::disk('publicMedia')->put( $file_thumb , $img);
+//
+//                $img = Image::make($image->getRealPath());
+//                $img->stream();
+//
+//                Storage::disk('publicMedia')->put($file_path, $img, 'public');
+//
+//                $userGallery = new UserGallery();
+//                $userGallery->user_id = $user->id;
+//                $userGallery->image = $fileName;
+//                $userGallery->status = 1;
+//                $userGallery->profile = 1;
+//                $userGallery->save();
+//
+//                return response()->json([
+//                    'status' => 1,
+//                    'message' => 'data saved succesfully',
+//                    'redirect' => route('employerProfile')
+//                ]);
+//
+//            }
+//        }
     }
 
 
@@ -184,7 +276,7 @@ class EmployerController extends Controller {
 
         $data['geo_state']      = get_Geo_State(default_Country_id());
         $data['geo_cities']     = get_Geo_City(default_Country_id(), default_State_id());
-        
+
         // $jobs =  Jobs::find(12);
         // dd( json_decode($jobs->questions()->first()->options, true) );
         // dd( $jobs->questions()->first()->options );
@@ -198,10 +290,10 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function addNewJob(Request $request){
         $user = Auth::user();
-        
-        // dd( $request->toArray() );  
+
+        // dd( $request->toArray() );
         // dd( $request->jq );
-        // Jobs::find(12)->addJobQuestions($requestData['jq']); 
+        // Jobs::find(12)->addJobQuestions($requestData['jq']);
 
         $requestData = $request->all();
         $requestData['title']         = my_sanitize_string($request->title);
@@ -218,23 +310,23 @@ class EmployerController extends Controller {
         // $requestData['age']   =  my_sanitize_string($request->age);
 
 
-        // sanitize all questions data. 
-        foreach ($requestData['jq'] as $jqk => $jqv) { 
-            
+        // sanitize all questions data.
+        foreach ($requestData['jq'] as $jqk => $jqv) {
+
             // dump($requestData['jq']);
             // dump($jqk);
             // dd($jqv['title']);
 
-            $requestData['jq'][$jqk]['title'] = my_sanitize_string($jqv['title']); 
+            $requestData['jq'][$jqk]['title'] = my_sanitize_string($jqv['title']);
             if(!empty($jqv['option'])){
                 foreach ($jqv['option'] as $jqok => $jqov) {
-                    $requestData['jq'][$jqk]['option'][$jqok]['text'] = my_sanitize_string($requestData['jq'][$jqk]['option'][$jqok]['text']);  
+                    $requestData['jq'][$jqk]['option'][$jqok]['text'] = my_sanitize_string($requestData['jq'][$jqk]['option'][$jqok]['text']);
                 }
             }
         }
-        
-        // Jobs::find(12)->addJobQuestions($requestData['jq']); 
-     
+
+        // Jobs::find(12)->addJobQuestions($requestData['jq']);
+
 
         // $requestData['questions']       =  json_encode( $requestData['questions']);
         $rules = array(
@@ -274,10 +366,10 @@ class EmployerController extends Controller {
             $job->user_id =  $user->id;
             $job->expiration =  $requestData['expiration'].' 00:00:00';
             // $job->questions =  $requestData['questions'];
-            $job->code =  Jobs::generateCode(); // 
+            $job->code =  Jobs::generateCode(); //
             $job->save();
 
-            $job->addJobQuestions($requestData['jq']); 
+            $job->addJobQuestions($requestData['jq']);
 
             return response()->json([
                 'status' => 1,
@@ -289,7 +381,7 @@ class EmployerController extends Controller {
     }
 
 
-   
+
 
     //====================================================================================================================================//
     // Get // Show list of jobs posted by employer.
@@ -301,7 +393,7 @@ class EmployerController extends Controller {
         $data['classes_body'] = 'myJob';
         $data['jobs'] = Jobs::with('applicationCount')->where('user_id',$user->id)->orderBy('created_at', 'DESC')->get();
         return view('site.employer.myjobs', $data);
-        // site/employer/myjobs 
+        // site/employer/myjobs
     }
 
 
@@ -450,7 +542,7 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function jobSeekersFilter(Request $request){
         $user = Auth::user();
-        if (!isEmployer($user)){ 
+        if (!isEmployer($user)){
             return response()->json([
                 'status' => 0,
                 'error' => 'You are not allwoed to access this information',
@@ -458,7 +550,7 @@ class EmployerController extends Controller {
         }
 
         $data['user']           = $user;
-        
+
 
         // $jobSeekersObj          = new User();
         // $jobSeekers             = $jobSeekersObj->getJobSeekers($request, $user);
@@ -470,37 +562,37 @@ class EmployerController extends Controller {
 
         $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
-        $query = User::with('profileImage')->where('type','user'); 
+        $query = User::with('profileImage')->where('type','user');
         if(!empty($block)){
             $query = $query->whereNotIn('id', $block);
-        } 
-    
-        // Filter by salaryRange. 
-        if (isset($request->filter_salary) && !empty($request->filter_salary)){ 
-            $query = $query->where('salaryRange', '>=', $request->filter_salary); 
         }
 
-        // Filter by google map location radius. 
-        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){  
+        // Filter by salaryRange.
+        if (isset($request->filter_salary) && !empty($request->filter_salary)){
+            $query = $query->where('salaryRange', '>=', $request->filter_salary);
+        }
+
+        // Filter by google map location radius.
+        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
             if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
                 // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
-                 $latitude = $request->location_lat; 
-                 $longitude = $request->location_long; 
-                 $radius = $request->filter_location_radius; 
-                 $radius_sign = ($radius <= 50)?'<':'>'; 
+                 $latitude = $request->location_lat;
+                 $longitude = $request->location_long;
+                 $radius = $request->filter_location_radius;
+                 $radius_sign = ($radius <= 50)?'<':'>';
 
                  $query = $query->selectRaw("*,
-                     ( 6371 * acos( cos(radians('".$latitude."')) 
+                     ( 6371 * acos( cos(radians('".$latitude."'))
                      * cos( radians(location_lat))
-                     * cos( radians(location_long) - radians('".$longitude."')) 
-                     + sin( radians('".$latitude."')) 
+                     * cos( radians(location_long) - radians('".$longitude."'))
+                     + sin( radians('".$latitude."'))
                      * sin( radians( location_lat )))
                      ) AS distance")
                 ->having("distance", $radius_sign, $radius)
-                ->orderBy("distance",'asc'); 
+                ->orderBy("distance",'asc');
 
             }
-        } 
+        }
 
         // Filter by Keyword filter_keyword
         if(varExist('filter_keyword', $request)){
@@ -512,31 +604,31 @@ class EmployerController extends Controller {
                         ->orWhere('about_me','LIKE', "%{$keyword}%")
                         ->orWhere('interested_in','LIKE', "%{$keyword}%")
                         ->orWhere('recentJob','LIKE', "%{$keyword}%");
-                }); 
+                });
         }
 
- 
+
         // Filter by Keyword filter_keyword
         if(varExist('filter_qualification_type', $request)){
-            $query = $query->where('qualificationType', '=', $request->filter_qualification_type); 
+            $query = $query->where('qualificationType', '=', $request->filter_qualification_type);
         }
 
         // Filter by Question
         if(varExist('filter_question', $request) && varExist('filter_question_value', $request) ){
             // SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
-            $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%'; 
-            $query = $query->where('questions', 'LIKE', $question_like); 
+            $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';
+            $query = $query->where('questions', 'LIKE', $question_like);
         }
 
 
-        //Filter by industry status. 
+        //Filter by industry status.
         if($industry_status && !empty($industries)){
             $query = $query->where(function($q) use($industries) {
-                $q->where('industry_experience','LIKE', "%{$industries[0]}%"); 
+                $q->where('industry_experience','LIKE', "%{$industries[0]}%");
                 if(count($industries) > 1){
                     foreach ($industries as $indk =>  $industry) {
-                        if($indk == 0) continue; 
-                        $q->orWhere('industry_experience','LIKE', "%{$industry}%");   
+                        if($indk == 0) continue;
+                        $q->orWhere('industry_experience','LIKE', "%{$industry}%");
                     }
                 }
             });
@@ -549,22 +641,22 @@ class EmployerController extends Controller {
             $query->whereHas('qualificationRelation', function($query2) use($qualifications) {
                 $query2->whereIn('qualifications.id', $qualifications);
                 // $query->where('jobseeker.id', 1);
-                // dd($query->toSql()); 
-                return $query2; 
+                // dd($query->toSql());
+                return $query2;
             });
         }
 
 
         // DB::enableQueryLog();
-        // print_r( $query->toSql() );exit; 
+        // print_r( $query->toSql() );exit;
         $jobSeekers =  $query->paginate(2);
         // $jobSeekers =  $query->get();
 
-        
+
         // dd(DB::getQueryLog());
 
         // return $data;
-    
+
 
 
         $data['likeUsers'] = $likeUsers;
@@ -677,19 +769,19 @@ class EmployerController extends Controller {
         $user = Auth::user();
         if(isEmployer($user)){
 
-            $status         =  $request->status; 
-            $application_id = (int) $request->application_id; 
-            
+            $status         =  $request->status;
+            $application_id = (int) $request->application_id;
+
             if(!empty($status) && !empty($application_id)){
-                // check if job application belong to this employer job. 
+                // check if job application belong to this employer job.
                 $jobsApplication = JobsApplication::find($application_id );
                 // dd($jobsApplication->job);
                 if($jobsApplication){
-                    if(!empty($jobsApplication->job) && !empty($jobsApplication->job->user_id) && ($jobsApplication->job->user_id == $user->id)){ 
-                        // check if status is valide. 
+                    if(!empty($jobsApplication->job) && !empty($jobsApplication->job->user_id) && ($jobsApplication->job->user_id == $user->id)){
+                        // check if status is valide.
                         $jobAppStatusArray = jobStatusArray();
                         if(isset($jobAppStatusArray[$status])){
-                            $jobsApplication->status =  $status; 
+                            $jobsApplication->status =  $status;
                             $jobsApplication->save();
                              return response()->json([
                                 'status' => 1,
@@ -697,7 +789,7 @@ class EmployerController extends Controller {
                             ]);
                         }
                     }
-                } 
+                }
             }
         }
     }

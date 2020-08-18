@@ -7,9 +7,9 @@ function checkRole($roles){
 }
 
 function onlyAdmin(){
-    $user = Auth::user(); 
+    $user = Auth::user();
     if (!$user->isAdmin()){
-        echo view('unauthorized'); exit;   
+        echo view('unauthorized'); exit;
     }
 }
 
@@ -116,7 +116,7 @@ function getLanguages(){
         "69"    =>  'Norsk bokmål',  "70"   =>  'Norsk nynorsk',     "71"   =>  'Oromoo',        "72"   =>  'ਪੰਜਾਬੀ',
         "73"    =>  'پښتو',        "74" =>  'संस्कृत',             "75" =>  'Sidaamu Afo',   "76"   =>  'Soomaali',
         "77"    =>  'Kiswahili',     "78"   =>  'தமிழ்'
-    ); 
+    );
    return $language_array;
 }
 
@@ -231,9 +231,9 @@ function getIndustries(){
         'telecommunications'            => 'Telecommunications',
         'trades_services'               => 'Trades and Services',
         'transport_logistics'           => 'Transport and Logistics'
-    ); 
+    );
 
-    return  $industries_list; 
+    return  $industries_list;
 }
 
 function getIndustryName($name){
@@ -252,184 +252,184 @@ function getQualificationsType(){
 
 function getQualificationsByType($type){
     $degree = App\Qualification::where('type',$type)->get();
-    return $degree; 
+    return $degree;
 }
- 
+
 
 function getQualificationsList(){
-    return 
+    return
     array(
-        array( 
+        array(
             'id' => '1',
             'type' => 'degree',
             'title' => 'Agricultural & Agribusiness Studies'
         ),
-        array( 
+        array(
             'id' => '2',
             'type' => 'degree',
             'title' => 'Architecture, Building, Construction'
         ),
-        array( 
+        array(
             'id' => '3',
             'type' => 'degree',
             'title' => 'Arts, Music, Film, Media, Animation & Graphic Design'
         ),
-        array( 
+        array(
             'id' => '4',
             'type' => 'degree',
             'title' => 'Biology, Genetics & Biomedical Science'
         ),
-        array( 
+        array(
             'id' => '5',
             'type' => 'degree',
             'title' => 'Chemistry, Pharmacology, Radiography & Forensic Science'
         ),
-        array( 
+        array(
             'id' => '6',
             'type' => 'degree',
             'title' => 'Economics, Finance, Taxation & Accounting'
         ),
-        array( 
+        array(
             'id' => '7',
             'type' => 'degree',
             'title' => 'Education & Workplace Learning and Assessment'
         ),
-        array( 
+        array(
             'id' => '8',
             'type' => 'degree',
             'title' => 'Emergency Services, Firefighting, EMT & Disaster Management'
         ),
-        array( 
+        array(
             'id' => '9',
             'type' => 'degree',
             'title' => 'Engineering (Chemical & Biomedical'
         ),
-        array( 
+        array(
             'id' => '10',
             'type' => 'degree',
-            'title' => 'Engineering (Civil & Structural'
+            'title' => 'Engineering (Civil & Structural)'
         ),
-        array( 
+        array(
             'id' => '11',
             'type' => 'degree',
             'title' => 'Engineering (Mechanical, Electrical & Mechatronics'
         ),
-        array( 
+        array(
             'id' => '12',
             'type' => 'degree',
             'title' => 'Environment, Land Management & Geoscience studies'
         ),
-        array( 
+        array(
             'id' => '13',
             'type' => 'degree',
             'title' => 'Financial Services (Banking, Insurance, Planning & Advice'
         ),
-        array( 
+        array(
             'id' => '14',
             'type' => 'degree',
             'title' => 'Food Science, Nutrition & Dietetics'
         ),
-        array( 
+        array(
             'id' => '15',
             'type' => 'degree',
             'title' => 'Food/Beverage Processing, Handling & Preparation'
         ),
-        array( 
+        array(
             'id' => '16',
             'type' => 'degree',
             'title' => 'Human Resources & Business/People Management'
         ),
-        array( 
+        array(
             'id' => '17',
             'type' => 'degree',
             'title' => 'Information Technology & Information Systems'
         ),
-        array( 
+        array(
             'id' => '18',
             'type' => 'degree',
             'title' => 'Landscaping, Horticulture, Floristry & Pest Control'
         ),
-        array( 
+        array(
             'id' => '19',
             'type' => 'degree',
             'title' => 'Languages, Literature, Creative Writing & Journalism'
         ),
-        array( 
+        array(
             'id' => '20',
             'type' => 'degree',
             'title' => 'Law, Criminology & Policing'
         ),
-        array( 
+        array(
             'id' => '21',
             'type' => 'degree',
             'title' => 'Medicine & Health Science'
         ),
-        array( 
+        array(
             'id' => '22',
             'type' => 'degree',
             'title' => 'Nursing & Aged Care'
         ),
-        array( 
+        array(
             'id' => '23',
             'type' => 'degree',
             'title' => 'Physics, Mathematics, Actuarial & Statistics'
         ),
-        array( 
+        array(
             'id' => '24',
             'type' => 'degree',
             'title' => 'Physiology & Rehabilitation Therapies'
         ),
-        array( 
+        array(
             'id' => '25',
             'type' => 'degree',
             'title' => 'Politics, Religion & History'
         ),
-        array( 
+        array(
             'id' => '26',
             'type' => 'degree',
             'title' => 'Psychology, Human Studies & Counselling'
         ),
-        array( 
+        array(
             'id' => '27',
             'type' => 'degree',
             'title' => 'Public Relations, Marketing, Social Media & Advertising'
         ),
-        array( 
+        array(
             'id' => '28',
             'type' => 'degree',
             'title' => 'Real Estate & Property Management'
         ),
-        array( 
+        array(
             'id' => '29',
             'type' => 'degree',
             'title' => 'Retail, Sales & Small Business'
         ),
-        array( 
+        array(
             'id' => '30',
             'type' => 'degree',
             'title' => 'Social Welfare & Community Wellbeing'
         ),
-        array( 
+        array(
             'id' => '31',
             'type' => 'degree',
             'title' => 'Sport, Fitness, Coaching & Personal Training'
         ),
-        array( 
+        array(
             'id' => '32',
             'type' => 'degree',
             'title' => 'Tourism, Hospitality & Event Management'
         ),
-        array( 
+        array(
             'id' => '33',
             'type' => 'degree',
             'title' => 'Veterinary Studies & Animal Science'
         ),
-        array( 
+        array(
             'id' => '34',
             'type' => 'degree',
             'title' => 'Workplace Health & Safety'
         ),
-         
+
 
         array(
             'id'    =>  '36',
@@ -506,7 +506,7 @@ function getQualificationsList(){
             'type' => 'trade',
             'title' => 'Utilities and Electro Technology (electrician, data/cabling, rail systems and communications'
         )
-    ); 
+    );
 }
 
 
@@ -520,7 +520,7 @@ function getSalariesRange(){
         '100000' => '100,000 and above',
         '120000' => '120,000 and above',
         '150000' => '150,000 and above',
-    ); 
+    );
     return $salaries;
 }
 
@@ -537,12 +537,12 @@ function my_sanitize_number($number) {
 }
 
 function my_sanitize_array_number($number_array) {
-    if(!empty($number_array) && is_array($number_array)){ 
+    if(!empty($number_array) && is_array($number_array)){
         foreach ($number_array as $key => $number) {
            $number_array[$key] = filter_var($number, FILTER_SANITIZE_NUMBER_INT);
         }
     }
-    return $number_array;  
+    return $number_array;
 }
 
 function my_sanitize_decimal($decimal) {
@@ -555,8 +555,8 @@ function my_sanitize_string($string) {
     return filter_var($string, FILTER_SANITIZE_STRING);
 }
 
-function my_sanitize_array_string($array_string) { 
-    if(!empty($array_string) && is_array($array_string)){ 
+function my_sanitize_array_string($array_string) {
+    if(!empty($array_string) && is_array($array_string)){
         foreach ($array_string as $key => $string) {
              $string = strip_tags($string);
              $string = addslashes($string);
@@ -587,7 +587,7 @@ function my_sanitize_email($string) {
     return filter_var($string, FILTER_SANITIZE_EMAIL);
 }
 
- 
+
 function remove_spaces($string) {
     return  str_replace(' ', '', $string);
 }
@@ -602,7 +602,7 @@ function assetGallery($access,$userId,$type,$file){
     }
     $path .= $userId.'/gallery/'.(($type)?($type.'/'):'').$file;
     return asset( $path );
-}   
+}
 
 function assetGallery2($gallery, $type){
     $path = '';
@@ -613,7 +613,7 @@ function assetGallery2($gallery, $type){
     }
     $path .= $gallery->user_id.'/gallery/'.(($type)?($type.'/'):'').$gallery->image;
     return asset( $path );
-}   
+}
 
 
 
@@ -624,22 +624,22 @@ function generateVideoThumbs($video){
         $vBasePath  = ($video->status == 2)?('media/private/'):('media/public/');
         $vBasePath .= $video->user_id.'/videos/thumbs/'.$video->id.'/';
         $vPath      = $vBasePath.$video->thumbs[0];
-        
-        $html .= ' src="'.asset($vPath).'"'; 
+
+        $html .= ' src="'.asset($vPath).'"';
 
         if(count($video->thumbs) > 1){
             foreach ($video->thumbs as $tkey => $thumb) {
                 $tPath = $vBasePath.$thumb;
-                $html .= ' data-thumb'.$tkey.'="'.asset($tPath).'"'; 
+                $html .= ' data-thumb'.$tkey.'="'.asset($tPath).'"';
             }
         }
     }
 
-   if (!empty($video->file)) 
-    $html .= ' data-src="'.assetVideo($video).'"'; 
+   if (!empty($video->file))
+    $html .= ' data-src="'.assetVideo($video).'"';
 
    $html .= '/>';
-   return $html; 
+   return $html;
 }
 
 
@@ -648,12 +648,12 @@ function assetVideo($video){
     $vPath  = 'stream/';
     $vPath .= $video->file;
     return asset( $vPath );
-} 
+}
 
 function assetResume($resume){
     if(isset($resume->file))
-        return asset('images/user/'.$resume->file); 
-} 
+        return asset('images/user/'.$resume->file);
+}
 
 
 function getQualificationNames($qualification_array_json){
@@ -663,7 +663,7 @@ function getQualificationNames($qualification_array_json){
        $qualification_array =  json_decode($qualification_array_json,true);
        foreach ($getQualificationsList  as $qkey => $qvalue) {
            if(in_array($qvalue['id'], $qualification_array)){
-                $qualification_names[] =  $qvalue['title']; 
+                $qualification_names[] =  $qvalue['title'];
            }
        }
     }
@@ -678,7 +678,7 @@ function getQualificationsData($qualification_array_json){
        $qualification_array =  json_decode($qualification_array_json,true);
        foreach ($getQualificationsList  as $qkey => $qvalue) {
            if(in_array($qvalue['id'], $qualification_array)){
-                $qualification_names[] = $qvalue; 
+                $qualification_names[] = $qvalue;
            }
        }
     }
@@ -770,7 +770,7 @@ function getUserRegisterQuestions(){
         'relocation' => 'Are you looking or willing to relocate for your next job opportunity?',
         'resident' => 'Are you a Permanent Resident or Citizen of Australia or New Zealand?',
 
-    ); 
+    );
     return $userquestion;
 }
 
@@ -782,29 +782,29 @@ function getEmpRegisterQuestions(){
         'fulltime' => 'Are you looking for Full Time candidates?',
         'relocation' => 'Are you willing to repay relocation expenses for a strong candidate?',
         'resident' => 'Does your organisation ever hire candidates who are not Permanent Resident or Citizen?',
-    ); 
+    );
     return $empquestion;
 }
 
 function userLocation($user){
-    $location = []; 
+    $location = [];
     if($user->location)
-        $location[] =  $user->location; 
-    
+        $location[] =  $user->location;
+
     if($user->city)
-        $location[] =  $user->city; 
+        $location[] =  $user->city;
 
     if($user->state)
-        $location[] =  $user->state; 
+        $location[] =  $user->state;
 
     if($user->country)
-        $location[] =  $user->country; 
+        $location[] =  $user->country;
 
     return implode(', ', $location);
 
 }
 
- 
+
 
 function jobStatusArray(){
     $status_array = array();
@@ -812,13 +812,13 @@ function jobStatusArray(){
     $status_array['inreview'] = 'In Review';
     $status_array['interview'] = 'Interview';
     $status_array['unsuccessful'] = 'Unsuccessful';
-    return $status_array; 
+    return $status_array;
 }
- 
+
 
 function varExist($var, $obj){ return (isset($obj->$var) && !empty($obj->$var));  }
 
 
 function jobApplicationMandatoryQuestion(){
-    return 'What motivated you to apply for this job and why do think you will be suitable?'; 
+    return 'What motivated you to apply for this job and why do think you will be suitable?';
 }

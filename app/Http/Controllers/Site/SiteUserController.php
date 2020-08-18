@@ -235,7 +235,7 @@ class SiteUserController extends Controller
             }
             return response()->json([
                 'status' => 1,
-                'message' => 'about me saved succesfully',
+                'message' => 'about me saved succesfully'
             ]);
         }
         elseif ($requestData['step'] == 4)
@@ -303,33 +303,52 @@ class SiteUserController extends Controller
             ]);
         } elseif ($requestData['step'] == 7)
         {
+            $user->step2 = $requestData['step'];
+            $user->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'data saved successfully'
+            ]);
+        } elseif($requestData['step'] == 8) {
+//            $this->userUploadResume();
+            $user->step2 = $requestData['step'];
+            $user->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'data saved successfully'
+            ]);
+        } elseif($requestData['step'] == 9) {
             $requestData['tags'] = my_sanitize_string($request->tags);
             $requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
-            $rules = array(
-                'tags'  => 'required'
-            );
-            $validator = Validator::make($requestData, $rules);
-            if ($validator->fails()){
-                return response()->json([
-                    'status' => 0,
-                    'validator' => $validator->getMessageBag()->toArray()
-                ]);
+//            $rules = array(
+//                'tags'  => 'required'
+//            );
+//            $validator = Validator::make($requestData, $rules);
+//            if ($validator->fails()){
+//                return response()->json([
+//                    'status' => 0,
+//                    'validator' => $validator->getMessageBag()->toArray()
+//                ]);
+//            }
+            if ($requestData['tags'] != null) {
+                $user->step2 = $requestData['step'];
+                $user->save();
+                $user->tags()->sync($requestData['tags']);
             }
             $user->step2 = $requestData['step'];
             $user->save();
-            $user->tags()->sync($requestData['tags']);
             return response()->json([
                 'status' => 1,
-                'message' => 'tags saved succesfully',
+                'message' => 'data saved successfully'
             ]);
         } else {
-            $user->step2 = 8;
+            $user->step2 = $requestData['step'];
             $user->save();
             return response()->json([
                 'status' => 1,
                 'message' => 'data saved successfully',
                 'redirect' => route('profile'),
-                'step' => 8
+                'step' => $requestData['step']
             ]);
         }
 
@@ -1012,12 +1031,14 @@ class SiteUserController extends Controller
                 $attachment->type = $resume->getClientOriginalExtension();
                 $attachment->file = $user->id . '/private/' . $fileName;
                 $attachment->save();
+                $user->step2 = 8;
+                $user->save();
 
                 $userAttachments = Attachment::where('user_id', $user->id)->get();
 
                 $output = array(
                     'status' => '1',
-                    'message' => 'Resume succesfully uploaded',
+                    'message' => 'Resume successfully uploaded',
                     'file' => asset('images/user/' . $user->id . '/private/' . $fileName),
                     'attachments' => $userAttachments,
 
