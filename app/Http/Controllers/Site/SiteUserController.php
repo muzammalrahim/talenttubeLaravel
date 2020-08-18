@@ -22,9 +22,11 @@ use App\Jobs;
 use App\JobsApplication;
 use App\TagCategory;
 use App\Tags;
+
 use App\JobsAnswers;
 use App\JobsQuestions;
 use App\LikeUser;
+
 
 
 class SiteUserController extends Controller
@@ -58,6 +60,20 @@ class SiteUserController extends Controller
             $activities = UserActivity::where('user_id', $user->id)->get();
             $videos = Video::where('user_id', $user->id)->get();
 
+            $tags = Tags::orderBy('usage', 'DESC')->limit(30)->get();
+            $tagCategories = TagCategory::get();
+
+
+
+            
+      
+
+            $userTags = $user->tags;
+
+            // dd( $tags );
+
+            $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
+
 
             $data['user'] =  $user;
             $data['user_gallery'] = $user_gallery;
@@ -73,6 +89,14 @@ class SiteUserController extends Controller
             $data['attachments'] = $attachments;
             $data['activities'] = $activities;
             $data['videos'] = $videos;
+
+            $data['userTags'] = $userTags;
+            $data['tags'] = $tags;
+
+            $data['tagCategories'] = $tagCategories;
+
+           
+
             
             // Getting Salaries
             $data['salaryRange'] = getSalariesRange(); 
@@ -80,8 +104,7 @@ class SiteUserController extends Controller
             // $data['industry_experience'] = getIndustries();
             $data['industriesList'] = getIndustries();
             $data['userquestion'] = getUserRegisterQuestions();
-            
-
+           $data['empquestion'] = getEmpRegisterQuestions();
             if(isMobile()){
                 if(isRequestAjax($request)){
                     return view('mobile.user.profile.profile', $data); 
@@ -92,9 +115,6 @@ class SiteUserController extends Controller
                 return view('site.user.profile.profile', $data);
                 // site/user/profile/profile
             } 
-
-            
-
         } else {
             return view('site.404');
         }
@@ -402,8 +422,7 @@ class SiteUserController extends Controller
         }
     }
 
- // Ajax For updating Questions.
-    //====================================================================================================================================//
+ // ================================== Ajax For updating Questions. ==================================
 
 
     public function updateQuestions(Request $request){
@@ -430,8 +449,61 @@ class SiteUserController extends Controller
         // }
     }
 
- // Ajax For updating Questions End here.
-    //====================================================================================================================================//
+ // ============================= Ajax For updating Questions End here ====================================
+
+ // ================================== Ajax For updating Industry Experience. ==============================
+
+
+    public function updateIndustryExperience(Request $request){
+        
+        // dump($request->tags); 
+        $user = Auth::user();
+        $rules = array(
+                'industry_experience'    => 'required|array', 
+                'industry_experience.*'  => 'string|max:100'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        // dd( $validator->errors() ); 
+        if (!$validator->fails()) {
+            $user->industry_experience = $request->industry_experience;
+            $user->save();
+            $data['user'] = User::find($user->id); 
+            $IndustryView = view('site.layout.parts.jobSeekerIndustryList', $data);
+            $IndustryHtml = $IndustryView->render();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $IndustryHtml
+            ]);
+        }
+    }
+
+ // ============================= Ajax For updating Industry Experience End here =================================
+
+
+     // ================================== Ajax For updating Employer Questions. ==================================
+
+
+    public function updateEmployerQuestions(Request $request){
+        
+        // dump($request->questions); 
+        $user = Auth::user();
+         
+        $rules = array('questions' => 'string|max:100');
+            $user->questions = json_encode($request->questions);
+            $user->save();
+            $data['user'] = User::find($user->id); 
+            $EmpQuestionsView = view('site.layout.parts.EmployerQuestionsList', $data);
+            $EmpQuestionsHtml = $EmpQuestionsView->render();
+
+            return response()->json([
+                    'status' => 1,
+                    'data' => $EmpQuestionsHtml
+            ]);
+        // }
+    }
+
+ // ============================= Ajax For updating Questions Employer End here ====================================
+
 
     //====================================================================================================================================//
     // chagne the about me text on user profile.
@@ -1463,6 +1535,37 @@ class SiteUserController extends Controller
         }
     }
 
+
+    //====================================================================================================================================//
+    // Ajax Post // add new tag.
+    //====================================================================================================================================//
+    function updateUserTags(Request $request){
+        // dd( $request->toArray() );
+        $user = Auth::user();
+        $rules = array(
+            'tags'    => 'required|array', 
+            'tags.*'  => 'required|integer'
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        } else {
+           
+            if(!empty($request->tags)){
+                $requestData['tags'] = my_sanitize_array_number($request->tags);
+                $user->tags()->sync($requestData['tags']); 
+                return response()->json([
+                    'status' => 1,
+                    'data'   => $requestData['tags'] 
+                ]);
+            }
+           
+        }
+    }
 
 
 

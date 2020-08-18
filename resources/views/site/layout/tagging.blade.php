@@ -3,7 +3,13 @@
 	<div class="selectedTags p10">
 		<div class="selectTagHead"><h3>Skills, Qualifications, Studies & Experience</h3></div>
 		<div class="selectTagList">
-			<ul></ul>
+			<ul>
+				@if (isset($userTags))
+					 @foreach($userTags as $uTags)
+					 	<li class="tag tagItem" data-id="{{$uTags->id}}"><i class="tagIcon fab fa-accusoft"></i>{{$uTags->title}}</li>
+					 @endforeach
+				@endif
+			</ul>
 		</div>
 	</div>
 

@@ -24,7 +24,7 @@
                 {{-- bl_location --}}
                 <div class="bl bl_location">
                 <label>I am from</label>
-                    <div class="location_filed">
+                    <div class="location_filed" style="display: none">
                         <div class="location_input dtable w100">
                             <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
                             <button type="button" id="location_search_load" class="btn btn-success location_search_btn w20 fl_left">Search</button>
