@@ -16,8 +16,8 @@
             <div class="pic">
                 <div class="profile_pic_one to_show">
                     <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
-                        <img  data-offset-id="23" class="photo"
-                            id="pic_main_img"
+                        <img  class="photo"
+                            id="pic_main_img" 
                             src="{{$profile_image}}"
                             title="">
                     </a>
