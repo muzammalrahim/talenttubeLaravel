@@ -253,7 +253,7 @@ body.step2 .header {
 body.step2 .content{  background: #254c8e!important; }
 
 div#full_step_4,
-div#full_step_5, 
+div#full_step_5,
 div#full_step_6 {
     width: 650px;
     margin: 0 auto;
@@ -262,7 +262,8 @@ div#full_step_6 {
 }
 
 div#full_step_7,
-div#full_step_8{
+div#full_step_8,
+div#full_step_9{
     width: auto;
     margin: 0 auto;
     vertical-align: middle;
@@ -283,7 +284,7 @@ div#full_step_8{
 
 ul.item_ul li {
     display: inline-block;
-    width: 47%;
+    width: 85%;
     vertical-align: top;
     padding: 0px 1%;
     cursor: pointer;
@@ -293,7 +294,7 @@ ul.item_ul li:before,
 ul.industry_selected_ul li:before {
     font-size: 18px;
     content: '\2022';
-} 
+}
 
 ul.item_ul li:hover{
     background: rgba(0, 0, 0, 0.16);
@@ -325,7 +326,7 @@ ul.item_selected_ul li:hover:after { color: #ffa200; }*/
 
 .step2 .validation_error{
     border: 1px solid #ff00003d !important;
-    border-radius: 4px; 
+    border-radius: 4px;
 }
 
 #full_step_3 .part_photo .name_info {
@@ -372,7 +373,7 @@ div#recentJob_error.to_hide {
 .select_qualification_list.degree li.degree { display: inline-block; }
 .select_qualification_list ul.item_ul li { display: none; }
 ul.item_ul li.selected {
-    width: 47%;
+    width: 100%;
     vertical-align: top;
     padding: 0px 1%;
     cursor: pointer;
@@ -383,9 +384,9 @@ ul.item_ul li.selected:after {
     font-size: 10px;
     color: white;
 }
-.taging_h_info p{ 
+.taging_h_info p{
     font-size: 14px;
-    margin: 4px; 
+    margin: 4px;
     line-height: 20px;
 }
 
@@ -432,7 +433,7 @@ button#addNewTag {
     width: 100%;
     display: table;
 }
-.tagIcon{ 
+.tagIcon{
     margin: 2px 4px;
     min-width: 20px;
     text-align: center;
@@ -453,7 +454,7 @@ button#addNewTag {
     width: 100%;
     display: table;
 }
- 
+
 ul.tagCategoriesList li {
     color: #FFEB3B;
 }
@@ -520,7 +521,7 @@ ul.tagSuggestion li {
 }
 ul.tagSuggestion li:hover {  color: #ffa200; }
 ul.tagSuggestion li:first-child { padding-top: 10px; }
- 
+
 .selectTagList li:after {
     content: '\2716';
     font-size: 10px;
@@ -580,7 +581,7 @@ ul.tagSuggestion li:first-child { padding-top: 10px; }
 }
 .newTagForm.loading,
 .addNewTagModalBox.loading .newTagForm { display: none; }
-.addNewTagModalBox.loading .newTagFormLoading { 
+.addNewTagModalBox.loading .newTagFormLoading {
     height: 100px;
     display: block !important;
 }
@@ -647,7 +648,7 @@ button.btn.save-resume-btn {
     display: table;
 }
 
-  
+
 .item_video {
     min-width: 100px;
     min-height: 100px;
@@ -680,3 +681,19 @@ div#list_videos_public {
 }
 
 .card_profile .part_photo .name{ display: none !important; }
+
+.qualification_ul_cont, .industry_ul_cont, .salary_list_cont {
+    position: relative;
+    top: 0;
+    left: 0;
+    column-count: 2;
+    column-gap: 20px;
+    width: 100%;
+}
+.item_ul{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0 auto;
+}
+
