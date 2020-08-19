@@ -1396,7 +1396,11 @@ class SiteUserController extends Controller
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
         $data['jobs'] = null; //Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-        return view('site.jobs.index', $data); // site/jobs/index
+        if(isMobile()){
+            return view('mobile.jobs.index', $data); // mobile/jobs/index 
+        }else{
+            return view('site.jobs.index', $data); // site/jobs/index 
+        }
     }
 
     //====================================================================================================================================//
