@@ -222,8 +222,8 @@ class HomeController extends Controller {
             $user->location_lat = $request->location_lat;
             $user->location_long = $request->location_long;
             $user->username = $request->username;
-            $user->email_verified_at = null;
-            // $user->email_verified_at = date("Y-m-d H:i:s");
+            // $user->email_verified_at = null;
+            $user->email_verified_at = date("Y-m-d H:i:s");
             $user->email_verification   = hash_hmac('sha256', str_random(40), 'creativeTalent');
             $user->type   = 'user';
 
@@ -238,7 +238,7 @@ class HomeController extends Controller {
                 return response()->json([
                     'status' => 1,
                     'message' => $success_message,
-                    'redirect' => route('profile')
+                    'redirect' => route('step2User')
                     // 'redirect' => route('step2')
                 ]);
             }else{
