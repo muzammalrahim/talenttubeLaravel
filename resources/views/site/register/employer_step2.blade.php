@@ -146,7 +146,7 @@
                                  @if (!empty($industries))
                                   @foreach ($industries as $ikey => $industry)
                                     <li data-id="{{$ikey}}"> {{$industry}} </li>
-                                  @endforeach                                                 
+                                  @endforeach
                                 @endif
                             </ul>
                         </div>
@@ -161,9 +161,7 @@
             </div>
 
 
-            <div id="full_step_error" class="step_error to_hide"> 
-                <div class="error"></div>
-            </div>
+            <div class="full_step_error"></div>
 
 
 
@@ -188,12 +186,15 @@
 <script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/site/step2.js') }}"></script>
+{{--<script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>--}}
 <script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script>
 
 <script type="text/javascript">
     $(function(){
-        $('#full_step_1').delay(150).fadeIn(500);
+        // $('#full_step_1').delay(150).fadeIn(500);
+        var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
+        employerStepReload(currentStep);
     });
 </script>
 
@@ -203,6 +204,16 @@
 <style>
 .header, .main.above .wrapper {
     background: #5b0079;
+}
+.full_step_error p {
+    color: white;
+    text-align: center;
+    background-color: rgba(228, 29, 61, 0.6);
+    font-size: 15px;
+    padding: 5px 0;
+    width: 50%;
+    margin: 10px auto;
+    border-radius: 5px;
 }
 </style>
 @stop

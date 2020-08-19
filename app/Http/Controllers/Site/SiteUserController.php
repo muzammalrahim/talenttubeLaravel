@@ -25,7 +25,11 @@ use App\Tags;
 use App\JobsAnswers;
 use App\JobsQuestions;
 use App\LikeUser;
+use App\fbremacc;
 
+
+
+use Illuminate\Support\Facades\Hash;
 
 class SiteUserController extends Controller
 {
@@ -35,11 +39,8 @@ class SiteUserController extends Controller
         $this->middleware('auth');
     }
 
-
-   
     public function index(Request $request) {
         $user = Auth::user();
-
         if ($request->username ===  $user->username) {
             $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
             $profile_image   = UserGallery::where('user_id', $user->id)->where('status', 1)->where('profile', 1)->first();
@@ -52,20 +53,24 @@ class SiteUserController extends Controller
             } else {
                 $profile_image   = assetGallery($profile_image->access,$user->id,'',$profile_image->image);
             }
-
-
             $attachments = Attachment::where('user_id', $user->id)->get();
             $activities = UserActivity::where('user_id', $user->id)->get();
             $videos = Video::where('user_id', $user->id)->get();
 
-
+            $tags = Tags::orderBy('usage', 'DESC')->limit(30)->get();
+            $tagCategories = TagCategory::get();
+ 
+ 
+            $userTags = $user->tags;
+            // dd( $tags );
+            $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
             $data['user'] =  $user;
             $data['user_gallery'] = $user_gallery;
             $data['geo_country'] = get_Geo_Country();
-            
+            $data['geo_state'] = !empty($user->country)?(get_Geo_State($user->country)):null;
+            $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null;
             $data['geo_state'] = !empty($user->country)?(get_Geo_State($user->country)):null;
             $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null; 
-
             $data['profile_image']    = $profile_image;
             $data['title'] = 'profile';
             $data['classes_body'] = 'profile';
@@ -73,15 +78,17 @@ class SiteUserController extends Controller
             $data['attachments'] = $attachments;
             $data['activities'] = $activities;
             $data['videos'] = $videos;
-            
+            $data['userTags'] = $userTags;
+            $data['tags'] = $tags;
+            $data['tagCategories'] = $tagCategories;
+
             // Getting Salaries
-            $data['salaryRange'] = getSalariesRange(); 
+            $data['salaryRange'] = getSalariesRange();
             $data['qualificationList'] = getQualificationsList();
             // $data['industry_experience'] = getIndustries();
             $data['industriesList'] = getIndustries();
             $data['userquestion'] = getUserRegisterQuestions();
-            
-
+           $data['empquestion'] = getEmpRegisterQuestions();
             if(isMobile()){
                 if(isRequestAjax($request)){
                     return view('mobile.user.profile.profile', $data); 
@@ -92,18 +99,15 @@ class SiteUserController extends Controller
                 return view('site.user.profile.profile', $data);
                 // site/user/profile/profile
             } 
-
-            
-
         } else {
             return view('site.404');
         }
     }
 
 
-    
+
     //====================================================================================================================================//
-    // Display Step2 form for Employer, on first time registeration.
+    // Dev Akmal// Display Step2 form for Employer, on first time registeration.
     //====================================================================================================================================//
 
     public function step2User(){
@@ -119,86 +123,88 @@ class SiteUserController extends Controller
 
         // dump(  $tags );
         // dd(  $tagCategories );
-        
+
         $data['tags'] = $tags;
         $data['tagCategories'] = $tagCategories;
-        
+
         return view('site.register.user_step2', $data);
 
     }
 
     //====================================================================================================================================//
-    //Ajax Post from step2 layout  // Add user step2 data.
+    // Dev Akmal Ajax Post from step2 layout  // Add user step2 data.
     //====================================================================================================================================//
     public function Step2(Request $request){
-        
+
+
+//        dd( $request->toArray() );
         $requestData = $request->all();
-        $requestData['questions']       = json_decode( $request->questions, true );
-        $requestData['about_me']        = my_sanitize_string($request->about_me);
-        $requestData['interested_in']   = my_sanitize_string($request->interested_in);
-        $requestData['recentJob']       = my_sanitize_string($request->recentJob);
-        $requestData['industry_experience'] = my_sanitize_array_string(json_decode(stripslashes($request->industry_experience),true));
-        $requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
-        $requestData['salaryRange'] = my_sanitize_string($request->salaryRange);
-        $requestData['tags'] = my_sanitize_string($request->tags);
-        $requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
-        $requestData['qualification_type']        = my_sanitize_string($request->qualification_type);
+//        $requestData['questions']       = json_decode($request->questions, true);
+//        $requestData['industry_experience'] = my_sanitize_array_string(json_decode(stripslashes($request->industry_experience),true));
+//        $requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
+//        $requestData['salaryRange'] = my_sanitize_string($request->salaryRange);
+//        $requestData['tags'] = my_sanitize_string($request->tags);
+//        $requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
+//        $requestData['qualification_type']        = my_sanitize_string($request->qualification_type);
+        $requestData['step'] = my_sanitize_number($request->step);
 
         // dump($requestData['tags']);
         // dump($requestData['industry_experience']);
         // dd( $request->toArray() );
+//        dd($request['questions']);
+//         dd( $request->all() );
+//        dd($requestData['step']);
 
-        // dd( $request->all() );
-        // dd(  $requestData );
-        if( !empty($requestData['questions']) ){
-            foreach($requestData['questions'] as $qk => $qv){
-                $requestData['questions'][$qk] = my_sanitize_string($qv);
+        $user = Auth::user();
+        if ($requestData['step'] == 2)
+        {
+            $requestData['questions']       = json_decode($request->questions, true);
+            if( !empty($requestData['questions']) ){
+                foreach($requestData['questions'] as $qk => $qv){
+                    $requestData['questions'][$qk] = my_sanitize_string($qv);
+                }
             }
-        }
-
-        // card_step2_validation
-        $rules = array(
-            'questions'  => 'required',
-            'about_me' => 'required|max:150',
-            'interested_in' => 'required|max:150',
-            'recentJob'  => 'required',
-            'industry_experience'  => 'required',
-            'qualification'  => 'required',
-            'salaryRange'  => 'required',
-            'tags'  => 'required',
-           
-        );
-        $validator = Validator::make( $requestData , $rules);
-
-        if ($validator->fails()){
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $validator->getMessageBag()->toArray()
-            ]);
-        }else{
-
-            // dump( ' validation success ' ); 
-            // dd( $request->all() );
-
-
-            $user = Auth::user();
-            $user->questions        = $requestData['questions'];
+//            dd($requestData['questions']);
+            $rules = array(
+                'questions'  => 'required'
+            );
+            $validator = Validator::make($requestData, $rules);
+            if ($validator->fails()){
+                return response()->json([
+                    'status' => 0,
+                    'validator' => $validator->getMessageBag()->toArray()
+                ]);
+            } else {
+                $user->questions = $requestData['questions'];
+                $user->step2 = $requestData['step'];
+                $user->save();
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'questions saved succesfully'
+                ]);
+            }
+        } elseif ($requestData['step'] == 3) {
+            $rules = array(
+                'about_me' => 'required|max:150',
+                'interested_in' => 'required|max:150',
+                'recentJob'  => 'required'
+            );
+            $validator = Validator::make($requestData, $rules);
+            if ($validator->fails()){
+                return response()->json([
+                    'status' => 0,
+                    'validator' => $validator->getMessageBag()->toArray()
+                ]);
+            }
             $user->about_me         = $requestData['about_me'];
             $user->interested_in    = $requestData['interested_in'];
             $user->recentJob        = $requestData['recentJob'];
-            $user->industry_experience = $requestData['industry_experience'];
-            $user->qualification    = $requestData['qualification'];
-            $user->salaryRange      = $requestData['salaryRange'];
-            $user->step2            = 1;
-            $user->qualificationType= $requestData['qualification_type'];
+            $user->step2 = $requestData['step'];
             $user->save();
-            $user->tags()->sync($requestData['tags']); 
-            $user->qualificationRelation()->sync($requestData['qualification']); 
-
             if(!empty($request->file('file'))){
                 $image = $request->file('file');
                 $fileName   = time() . '.' . $image->getClientOriginalExtension();
-                
+
                 $file_thumb  = $user->id.'/gallery/small/'.$fileName;
                 $file_path   = $user->id.'/gallery/'.$fileName;
 
@@ -209,7 +215,6 @@ class SiteUserController extends Controller
 
                 $img = Image::make($image->getRealPath());
                 $img->stream();
-
                 Storage::disk('publicMedia')->put($file_path, $img, 'public');
 
                 $userGallery = new UserGallery();
@@ -218,22 +223,191 @@ class SiteUserController extends Controller
                 $userGallery->status = 1;
                 $userGallery->profile = 1;
                 $userGallery->save();
-
+            }
+            return response()->json([
+                'status' => 1,
+                'message' => 'about me saved succesfully'
+            ]);
+        }
+        elseif ($requestData['step'] == 4)
+        {
+            $requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
+            $requestData['qualification_type'] = my_sanitize_string($request->qualification_type);
+            $rules = array(
+                'qualification'  => 'required'
+            );
+            $validator = Validator::make($requestData, $rules);
+            if ($validator->fails()){
                 return response()->json([
-                    'status' => 1,
-                    'message' => 'data saved succesfully',
-                    'redirect' => route('profile')
+                    'status' => 0,
+                    'validator' => $validator->getMessageBag()->toArray()
                 ]);
             }
+            $user->qualification    = $requestData['qualification'];
+            $user->qualificationType= $requestData['qualification_type'];
+            $user->step2 = $requestData['step'];
+            $user->save();
+            $user->qualificationRelation()->sync($requestData['qualification']);
+            return response()->json([
+                'status' => 1,
+                'message' => 'qualification saved succesfully',
+            ]);
+        } elseif ($requestData['step'] == 5)
+        {
+            $requestData['industry_experience'] = my_sanitize_array_string(json_decode(stripslashes($request->industry_experience),true));
+            $rules = array(
+                'industry_experience'  => 'required'
+            );
+            $validator = Validator::make($requestData, $rules);
+            if ($validator->fails()){
+                return response()->json([
+                    'status' => 0,
+                    'validator' => $validator->getMessageBag()->toArray()
+                ]);
+            }
+            $user->industry_experience = $requestData['industry_experience'];
+            $user->step2 = $requestData['step'];
+            $user->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'industry experience saved succesfully',
+            ]);
+        } elseif ($requestData['step'] == 6)
+        {
+            $requestData['salaryRange'] = my_sanitize_string($request->salaryRange);
+            $rules = array(
+                'salaryRange'  => 'required'
+            );
+            $validator = Validator::make($requestData, $rules);
+            if ($validator->fails()){
+                return response()->json([
+                    'status' => 0,
+                    'validator' => $validator->getMessageBag()->toArray()
+                ]);
+            }
+            $user->salaryRange      = $requestData['salaryRange'];
+            $user->step2 = $requestData['step'];
+            $user->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'salary range saved succesfully',
+            ]);
+        } elseif ($requestData['step'] == 7)
+        {
+            $user->step2 = $requestData['step'];
+            $user->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'data saved successfully'
+            ]);
+        } elseif($requestData['step'] == 8) {
+//            $this->userUploadResume();
+            $user->step2 = $requestData['step'];
+            $user->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'data saved successfully'
+            ]);
+        } elseif($requestData['step'] == 9) {
+            $requestData['tags'] = my_sanitize_string($request->tags);
+            $requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
+//            $rules = array(
+//                'tags'  => 'required'
+//            );
+//            $validator = Validator::make($requestData, $rules);
+//            if ($validator->fails()){
+//                return response()->json([
+//                    'status' => 0,
+//                    'validator' => $validator->getMessageBag()->toArray()
+//                ]);
+//            }
+            if ($requestData['tags'] != null) {
+                $user->step2 = $requestData['step'];
+                $user->save();
+                $user->tags()->sync($requestData['tags']);
+            }
+            $user->step2 = $requestData['step'];
+            $user->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'data saved successfully'
+            ]);
+        } else {
+            $user->step2 = $requestData['step'];
+            $user->save();
+            return response()->json([
+                'status' => 1,
+                'message' => 'data saved successfully',
+                'redirect' => route('profile'),
+                'step' => $requestData['step']
+            ]);
         }
+
+        // card_step2_validation
+//        $rules = array(
+//            'questions'  => 'required',
+//            'about_me' => 'required|max:150',
+//            'interested_in' => 'required|max:150',
+//            'recentJob'  => 'required',
+//            'industry_experience'  => 'required',
+//            'qualification'  => 'required',
+//            'salaryRange'  => 'required',
+//            'tags'  => 'required',
+//
+//        );
+//        $validator = Validator::make( $requestData , $rules);
+//
+//        if ($validator->fails()){
+//            return response()->json([
+//                'status' => 0,
+//                'validator' =>  $validator->getMessageBag()->toArray()
+//            ]);
+//        }else{
+//
+//            // dump( ' validation success ' );
+//            // dd( $request->all() );
+//
+//
+//            $user = Auth::user();
+//            $user->questions        = $requestData['questions'];
+//            $user->about_me         = $requestData['about_me'];
+//            $user->interested_in    = $requestData['interested_in'];
+//            $user->recentJob        = $requestData['recentJob'];
+//            $user->industry_experience = $requestData['industry_experience'];
+//            $user->qualification    = $requestData['qualification'];
+//            $user->salaryRange      = $requestData['salaryRange'];
+//            $user->step2            = 1;
+//            $user->qualificationType= $requestData['qualification_type'];
+//            $user->save();
+//            $user->tags()->sync($requestData['tags']);
+//            $user->qualificationRelation()->sync($requestData['qualification']);
+//        }
     }
+
+//    protected function step2Validation($requestData, $rules, $message = '')
+//    {
+////        dd($requestData);
+//        $validator = Validator::make($requestData, $rules);
+//        if ($validator->fails())
+//        {
+//            return response()->json([
+//                'status' => 0,
+//                'validator' =>  $validator->getMessageBag()->toArray()
+//            ]);
+//        } else {
+//            return response()->json([
+//                'status' => 1,
+//                'message' => $message
+//            ]);
+//        }
+//    }
 
 
 
     //====================================================================================================================================//
     // save post user profile data. posted from profile setting page
     //====================================================================================================================================//
-    public function updateUserProfile(Request $request) { 
+    public function updateUserProfile(Request $request) {
         $rules = array(
             'nickname' => 'required',
             'biirth_day' => 'day|integer',
@@ -300,8 +474,8 @@ class SiteUserController extends Controller
 
             try {
                 $user->save();
-                $html_userProfileLocation  = '<ul class="list_info userProfileLocation">'; 
-                $html_userProfileLocation .= '<li><span id="list_info_age">'.$user->age.'</span><span class="basic_info">•</span></li>'; 
+                $html_userProfileLocation  = '<ul class="list_info userProfileLocation">';
+                $html_userProfileLocation .= '<li><span id="list_info_age">'.$user->age.'</span><span class="basic_info">•</span></li>';
                 $html_userProfileLocation .= '<li id="list_info_location">'.userLocation($user).'</li>';
                 $html_userProfileLocation .= '<li><span class="basic_info">•</span><span id="list_info_gender">'.(isTypeEmployer($user)?'Employer':'Job Seeker').'</span></li>';
                 $html_userProfileLocation .= '</ul>';
@@ -376,23 +550,23 @@ class SiteUserController extends Controller
 
     //====================================================================================================================================//
     // Ajax For updating Qualification.
-    // Called from JobSeeker Profile page. 
+    // Called from JobSeeker Profile page.
     //====================================================================================================================================//
     public function updateQualification(Request $request){
-        
-        $requestData = $request->all();  
+
+        $requestData = $request->all();
         $rules = array(
-                    'qualification'    => 'required|array', 
+                    'qualification'    => 'required|array',
                     'qualification.*'  => 'required|integer'
                 );
-        $validator = Validator::make($requestData, $rules); 
-        // dd( $validator->errors() ); 
+        $validator = Validator::make($requestData, $rules);
+        // dd( $validator->errors() );
         if (!$validator->fails()) {
             $user = Auth::user();
             $user->qualification = $request->qualification;
-            $user->qualificationRelation()->sync($requestData['qualification']); 
+            $user->qualificationRelation()->sync($requestData['qualification']);
             $user->save();
-            $data['user'] = User::find($user->id); 
+            $data['user'] = User::find($user->id);
             $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
             $QualificationHtml = $QualificationView->render();
             return response()->json([
@@ -402,21 +576,20 @@ class SiteUserController extends Controller
         }
     }
 
- // Ajax For updating Questions.
-    //====================================================================================================================================//
+ // ================================== Ajax For updating Questions. ==================================
 
 
     public function updateQuestions(Request $request){
-        
-        // dump($request->questions); 
+
+        // dump($request->questions);
         $user = Auth::user();
 
-        // dd($user->questions); 
-        
+        // dd($user->questions);
+
         $rules = array('questions' => 'string|max:100');
         // $validator = Validator::make($request->all(), $rules);
         // if (!$validator->fails()) {
-            
+
             // dd($user);
             // $user->questions = $request->questions;
             $user->questions = json_encode($request->questions);
@@ -430,12 +603,190 @@ class SiteUserController extends Controller
         // }
     }
 
- // Ajax For updating Questions End here.
+ // ============================= Ajax For updating Questions End here ====================================
+
+ // ================================== Ajax For updating Industry Experience. ==============================
+
+
+    public function updateIndustryExperience(Request $request){
+
+        // dump($request->tags);
+        $user = Auth::user();
+        $rules = array(
+                'industry_experience'    => 'required|array',
+                'industry_experience.*'  => 'string|max:100'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        // dd( $validator->errors() );
+        if (!$validator->fails()) {
+            $user->industry_experience = $request->industry_experience;
+            $user->save();
+            $data['user'] = User::find($user->id);
+            $IndustryView = view('site.layout.parts.jobSeekerIndustryList', $data);
+            $IndustryHtml = $IndustryView->render();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $IndustryHtml
+            ]);
+        }
+    }
+
+ // ============================= Ajax For updating Industry Experience End here =================================
+
+
+     // ================================== Ajax For updating Employer Questions. ==================================
+
+
+    public function updateEmployerQuestions(Request $request){
+
+        // dump($request->questions);
+        $user = Auth::user();
+
+        $rules = array('questions' => 'string|max:100');
+            $user->questions = json_encode($request->questions);
+            $user->save();
+            $data['user'] = User::find($user->id);
+            $EmpQuestionsView = view('site.layout.parts.EmployerQuestionsList', $data);
+            $EmpQuestionsHtml = $EmpQuestionsView->render();
+
+            return response()->json([
+                    'status' => 1,
+                    'data' => $EmpQuestionsHtml,
+            ]);
+        // }
+    }
+
+    // ============================= Ajax For updating Questions Employer End here ============================
+
+    // ===================================== Update Email  =================================
+
+        public function updateEmail(Request $request)
+    {
+        $rules = array('email' => 'required|email|unique:users,email');
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            $valitdaion_message = $validator->getMessageBag()->toArray();
+            $mes = $valitdaion_message['email'];
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $mes
+            ]);
+        }else{
+            $user = Auth::user();
+            $user->oldEmail = $user->email;
+            $user->email = $request->email;
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => array(
+                        'email_User' => $user->email, 
+                        'logout_Route' => route('logout')
+                    )
+            ]);
+        }
+    }   
+
     //====================================================================================================================================//
+    //Ajax Post // Update layout. // change user password.  
+    //====================================================================================================================================//
+    public function updatePassword(Request $request){
+        $user = Auth::user();
+
+        // dd($request->current_password);
+        // dd($request->new_password);
+        // dd($user->password);
+
+
+        $rules = array('current_password' => 'required|min:6|max:255', 'new_password' => 'required|min:6|max:255');
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        }else{
+            // check if user has enter his current password correct. 
+            if(!Hash::check($request->current_password, $user->password)){
+                return response()->json([
+                    'status' => 0,
+                    'validator' =>  $validator->getMessageBag()->toArray(),
+                    'validator' =>  $validator->errors()->add('current_password', 'Current password is wrong')
+                ]);
+            } 
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => route('logout')
+            ]);
+        }
+    }
+
+
+    // ================================== Update Email Function End Here ======================================================== 
+
+    // ===================================== Update Phone Function ==============================================================
+    public function updatePhone(Request $request){   
+        $user = Auth::user();
+        // dd( $user->id); 
+
+
+
+        $rules = array('phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10');
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) { 
+            $valitdaion_message = $validator->getMessageBag()->toArray();
+            $mes = $valitdaion_message['phone'];
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $mes
+            ]);
+        }
+        else{
+            $user = Auth::user();
+            $user->phone = $request->phone;
+            $user->save();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $user->phone
+            ]);
+        }
+    }
+
+    // =============================================== Update Phone Function End Here =========================================  
+
+    // =================================================  Delete User Function ================================================ 
+    public function deleteuser(Request $request){   
+
+        
+        $user = Auth::user();
+        $del_data = new fbremacc();
+        $del_data->user_id = $user->id;
+        $del_data->user_name = $user->username;
+        $del_data->user_email = $user->email;
+        $del_data->recentJob = $user->recentJob;
+        $del_data->statusText = $user->statusText;
+        $del_data->company = $user->company;
+        $del_data->reason = $request->reasonValue;
+        $del_data->save();
+        
+        // dd( $user->email); 
+
+        if(!empty($user)){
+        $user->delete();
+          return response()->json([
+                'status' => 1,
+                'message' => 'User Succesfully Deleted',
+          ]);
+      }
+    }
+
+    // =================================================== Delete User Function End Here ================================================ 
+
 
     //====================================================================================================================================//
     // chagne the about me text on user profile.
-    // triggered from User profile page. 
+    // triggered from User profile page.
     //====================================================================================================================================//
     public function updateAboutField(Request $request)
     {
@@ -531,7 +882,7 @@ class SiteUserController extends Controller
 
                 $data = array();
                 $data['user'] = $user;
-                $view = view('site.user.profile.personalInfoTable', $data);
+                $view = view('site.user.profile.personalInfoTable', $data); 
                 $html = $view->render();
 
                 return response()->json([
@@ -549,6 +900,19 @@ class SiteUserController extends Controller
         }
     }
 
+    //====================================================================================================================================//
+    // Save User Personal Setting.
+    // Ajax submit request from profile page.
+    //====================================================================================================================================//
+    public function updateUserPersonalSetting(Request $request)
+    {       
+            $user = Auth::user();
+            $data['classes_body'] = 'profile';
+            $data['user'] = $user;
+            $view = view('site.user.profile.updateUserPersonalSetting', $data); 
+            $html = $view->render();
+            return $view;
+    }
 
     //====================================================================================================================================//
     // Upload User Gallery photo.
@@ -579,7 +943,7 @@ class SiteUserController extends Controller
 
         // Storage::disk('user')->put($user->id . '/gallery/' . $fileName, $img, 'public');
         Storage::disk('publicMedia')->put($file_path, $img, 'public');
-         
+
 
         $userGallery = new UserGallery();
         $userGallery->user_id = $user->id;
@@ -588,7 +952,7 @@ class SiteUserController extends Controller
         $userGallery->save();
 
         $html  = '<div id="'.$userGallery->id.'" class="item profile_photo_frame gallery_'.$userGallery->id.'">';
-        
+
 
         // $html .=    '<a data-offset-id="'.$userGallery->id.'" class="show_photo_gallery" href="'.asset('images/user/'.$user->id.'/gallery/'.$userGallery->image).'" data-lcl-thumb="'.asset('images/user/'.$user->id.'/gallery/small/'.$userGallery->image).'" >';
         // $html .=       '<img data-photo-id="'.$userGallery->id.'"  id="photo_'.$userGallery->id.'"   class="photo" data-src="'.asset('images/user/'.$user->id.'/gallery/'.$userGallery->image).'" src="'.asset('images/user/'.$user->id.'/gallery/small/'.$userGallery->image).'">';
@@ -643,7 +1007,7 @@ class SiteUserController extends Controller
                 );
                 return response()->json($output);
             } else {
-               
+
                 $g_path = (($gallery_image->access == 2)?('/private/'):('/public/')).$gallery_image->user_id.'/gallery/'.$gallery_image->image;
                 $gt_path = (($gallery_image->access == 2)?('/private/'):('/public/')).$gallery_image->user_id.'/gallery/small/'.$gallery_image->image;
 
@@ -684,11 +1048,11 @@ class SiteUserController extends Controller
                 );
                 return response()->json($output);
             } else {
-                $old_access = $gallery_image->access; 
+                $old_access = $gallery_image->access;
                 $gallery_image->access = ($gallery_image->access == 1)?2:1;
                 $gallery_image->save();
 
-                // move image to specific folder on base of access (private/public)  
+                // move image to specific folder on base of access (private/public)
                 if($old_access == 2){
                     $path       = '/private/'.$gallery_image->user_id.'/gallery/'.$gallery_image->image;
                     $newPath    = '/public/'.$gallery_image->user_id.'/gallery/'.$gallery_image->image;
@@ -698,12 +1062,12 @@ class SiteUserController extends Controller
                 }
 
                 $image_file = Storage::disk('media')->get($path);
-                Storage::disk('media')->put($newPath, $image_file); 
+                Storage::disk('media')->put($newPath, $image_file);
                 Storage::disk('media')->delete($path);
 
 
 
-                // move small image to specific folder on base of access (private/public)  
+                // move small image to specific folder on base of access (private/public)
                 if($old_access == 2){
                     $path       = '/private/'.$gallery_image->user_id.'/gallery/small/'.$gallery_image->image;
                     $newPath    = '/public/'.$gallery_image->user_id.'/gallery/small/'.$gallery_image->image;
@@ -713,11 +1077,11 @@ class SiteUserController extends Controller
                 }
 
                 $image_file = Storage::disk('media')->get($path);
-                Storage::disk('media')->put($newPath, $image_file); 
+                Storage::disk('media')->put($newPath, $image_file);
                 Storage::disk('media')->delete($path);
-               
 
-                // dd($path, $newPath); 
+
+                // dd($path, $newPath);
 
                 $output = array(
                     'status' => '1',
@@ -796,12 +1160,14 @@ class SiteUserController extends Controller
                 $attachment->type = $resume->getClientOriginalExtension();
                 $attachment->file = $user->id . '/private/' . $fileName;
                 $attachment->save();
+                $user->step2 = 8;
+                $user->save();
 
                 $userAttachments = Attachment::where('user_id', $user->id)->get();
 
                 $output = array(
                     'status' => '1',
-                    'message' => 'Resume succesfully uploaded',
+                    'message' => 'Resume successfully uploaded',
                     'file' => asset('images/user/' . $user->id . '/private/' . $fileName),
                     'attachments' => $userAttachments,
 
@@ -941,12 +1307,12 @@ class SiteUserController extends Controller
 
             $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
             $storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
-           
-            // store video in private folder by default. 
-            $storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video)); 
+
+            // store video in private folder by default.
+            $storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
 
 
-        
+
 
             $video = new Video();
             $video->title = $fileName;
@@ -957,7 +1323,7 @@ class SiteUserController extends Controller
             $video->file = $user->id.'/videos/'.$fileName;
             $video->save();
 
-            // generate video thumbs. 
+            // generate video thumbs.
             $video->generateThumbs();
 
 
@@ -1030,13 +1396,11 @@ class SiteUserController extends Controller
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
         $data['jobs'] = null; //Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-
         if(isMobile()){
             return view('mobile.jobs.index', $data); // mobile/jobs/index 
         }else{
             return view('site.jobs.index', $data); // site/jobs/index 
         }
-        
     }
 
     //====================================================================================================================================//
@@ -1045,19 +1409,19 @@ class SiteUserController extends Controller
     function jobsFilter(Request $request){
         // dd($request->toArray());
         $user = Auth::user();
-        $data = array(); 
+        $data = array();
         if(!isEmployer($user)){
-            
+
             // $applications = new JobsApplication();
             // $applications = $applications->getFilterApplication($request);
             // $likeUsers    = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
-            
-            $jobs = new Jobs(); 
-            $jobs = $jobs->filterJobs($request); 
+
+            $jobs = new Jobs();
+            $jobs = $jobs->filterJobs($request);
 
             // ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
 
-             $data['jobs'] = $jobs; 
+             $data['jobs'] = $jobs;
 
             return view('site.jobs.list', $data);
             // site/jobs/list
@@ -1075,10 +1439,10 @@ class SiteUserController extends Controller
         // $data['title'] = 'Jobs';
         // $data['classes_body'] = 'jobs';
         $data['job'] = Jobs::with('questions')->find($job_id);
-        // dd( $data['job']  ); 
-        // dd( $data['job']->questions()->count() ); 
+        // dd( $data['job']  );
+        // dd( $data['job']->questions()->count() );
         return view('site.jobs.applyInfo', $data);
-        // site/jobs/applyInfo 
+        // site/jobs/applyInfo
     }
 
 
@@ -1091,10 +1455,10 @@ class SiteUserController extends Controller
         $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
 
         if(isset($requestData['answer']) && !empty($requestData['answer'])){
-            foreach ($requestData['answer'] as $ansK => $ansV) { 
-                $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']); 
-                $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']); 
-            }  
+            foreach ($requestData['answer'] as $ansK => $ansV) {
+                $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']);
+                $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
+            }
         }
 
         $job = Jobs::find($requestData['job_id']);
@@ -1115,7 +1479,7 @@ class SiteUserController extends Controller
             }
 
 
-            // check application description which is mandatory. 
+            // check application description which is mandatory.
             if(empty($request->application_description)){
                  return response()->json([
                     'status' => 0,
@@ -1132,36 +1496,36 @@ class SiteUserController extends Controller
             // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
             $newJobApplication->save();
 
-            // if jobApplication is succesfully added then add job answers. 
+            // if jobApplication is succesfully added then add job answers.
             if( $newJobApplication->id > 0 ){
-                
+
                 if(isset($requestData['answer']) && !empty($requestData['answer'])){
-                    foreach ($requestData['answer'] as $ansK => $ansV) { 
-                        // $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']); 
-                        // $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']); 
+                    foreach ($requestData['answer'] as $ansK => $ansV) {
+                        // $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']);
+                        // $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
 
                         $jobQuestion = JobsQuestions::find($ansV['question_id']);
 
-                        // check if jqb question exist 
+                        // check if jqb question exist
                         if(!empty($jobQuestion)){
 
-                            // get the goldstar and preffer option 
-                            // $goldstar = !empty($jobQuestion->goldstar)?(json_decode($jobQuestion->goldstar, true)):(array()); 
+                            // get the goldstar and preffer option
+                            // $goldstar = !empty($jobQuestion->goldstar)?(json_decode($jobQuestion->goldstar, true)):(array());
                             // $preffer  = !empty($jobQuestion->preffer)?(json_decode($jobQuestion->preffer, true)):(array());
 
                             $goldstar = array();
                             if(!empty($jobQuestion->goldstar)){
                                 if(!is_array($jobQuestion->goldstar)){
-                                   $goldstar = json_decode($jobQuestion->goldstar, true); 
+                                   $goldstar = json_decode($jobQuestion->goldstar, true);
                                 }else{
                                    $goldstar =  $jobQuestion->goldstar;
                                 }
                             }
 
-                            $preffer = array(); 
+                            $preffer = array();
                             if(!empty($jobQuestion->preffer)){
                                 if(!is_array($jobQuestion->preffer)){
-                                   $preffer = json_decode($jobQuestion->preffer, true); 
+                                   $preffer = json_decode($jobQuestion->preffer, true);
                                 }else{
                                      $preffer = $jobQuestion->preffer;
                                 }
@@ -1170,37 +1534,37 @@ class SiteUserController extends Controller
                             // dump('goldstar', $goldstar);
                             // dump('preffer', $preffer);
                             // dump('ansV', $ansV);
-                           
-                            $jobAnswer              = new JobsAnswers(); 
+
+                            $jobAnswer              = new JobsAnswers();
                             $jobAnswer->question_id = $ansV['question_id'];
                             $jobAnswer->user_id     = $user->id;
                             $jobAnswer->answer      = $ansV['option'];
 
-                            $newJobApplicationUpdate = false; 
+                            $newJobApplicationUpdate = false;
 
                             if(in_array($jobAnswer->answer,  $goldstar)){
                                 $newJobApplication->goldstar = $newJobApplication->goldstar+1;
-                                $newJobApplicationUpdate = true; 
+                                $newJobApplicationUpdate = true;
                             }
-                            
+
                             if(in_array($jobAnswer->answer,  $preffer)){
                                 $newJobApplication->preffer = $newJobApplication->preffer+1;
-                                $newJobApplicationUpdate = true; 
+                                $newJobApplicationUpdate = true;
                             }
 
                             if( $newJobApplicationUpdate ){  $newJobApplication->save(); }
 
 
-                            $newJobApplication->answers()->save($jobAnswer); 
+                            $newJobApplication->answers()->save($jobAnswer);
 
                         }
 
-                      
 
-                    }  
+
+                    }
                 }
 
-               
+
 
             }
 
@@ -1304,7 +1668,7 @@ class SiteUserController extends Controller
         return view('site.user.blockUsers', $data);
     }
 
-    
+
 
     //=====================Like Function ==============================================//
 
@@ -1366,7 +1730,7 @@ class SiteUserController extends Controller
 
         // dd( $mutualUser );
 
-        $data['likeUsers'] = $mutualUser; 
+        $data['likeUsers'] = $mutualUser;
         return view('site.user.mutualUsers', $data);
         // site/user/mutualUsers
     }
@@ -1379,30 +1743,30 @@ class SiteUserController extends Controller
         // dd($category->toArray());
          // dd($tagsCount);
 
-        if($category) { 
+        if($category) {
 
-          $limit = 30;  
-          // $limit = 2;  
-          $skip = $offset * $limit; 
+          $limit = 30;
+          // $limit = 2;
+          $skip = $offset * $limit;
 
           $tags      = Tags::where('category_id',$category->id)->orderBy('usage', 'DESC')->skip($skip)->limit($limit)->get();
           $tagsCount = Tags::where('category_id',$category->id)->count();
-          
+
           $moreTagExist = (($tagsCount >  $limit) && (($skip + $limit) < $tagsCount))?1:0;
 
 
-          $tagsListHtml  = '<input type="hidden" name="tagPagination" value="0" />'; 
-          $tagsListHtml .= '<ul class="tagList">'; 
+          $tagsListHtml  = '<input type="hidden" name="tagPagination" value="0" />';
+          $tagsListHtml .= '<ul class="tagList">';
           if(!empty($tags) & ($tags->count() > 0)){
             foreach ($tags as $tkey => $tag) {
                 $tagsListHtml .=  '<li class="tag tagItem" data-id="'.$tag->id.'"><i class="tagIcon '.$tag->icon.'"></i>'.$tag->title.'</li>';
             }
- 
+
             if( $moreTagExist ){
-               $tagsListHtml .=  '<li class=""><a class="loadMoreTags" data-offset="'.($offset+1).'">More interests<i class="tagIcon fa fa-redo"></i></a></li>'; 
+               $tagsListHtml .=  '<li class=""><a class="loadMoreTags" data-offset="'.($offset+1).'">More interests<i class="tagIcon fa fa-redo"></i></a></li>';
             }
           }
-          $tagsListHtml .= '</ul>'; 
+          $tagsListHtml .= '</ul>';
           return response()->json([
             'status' => 1,
             'data' => $tagsListHtml
@@ -1415,7 +1779,7 @@ class SiteUserController extends Controller
     // Ajax Get // return list of tags based on search keyword.
     //====================================================================================================================================//
     function searchTags(Request $request){
-        $search = $request->search; 
+        $search = $request->search;
         if (!empty($search)){
             $exclude = !empty($request->exclude)?($request->exclude):(array());
             $tags = Tags::where('title', 'like', '%'.$search.'%')->whereNotIn('id',$exclude)->orderBy('usage', 'DESC')->limit(100)->get();
@@ -1459,16 +1823,47 @@ class SiteUserController extends Controller
             $newTag->category_id = $request->newTagCategory;
             // $newTag->icon = $request->newTagIcon;
             $newTag->usage = 0;
-            $newTag->save(); 
+            $newTag->save();
 
             return response()->json([
                 'status' => 1,
-                'data'   => $newTag 
+                'data'   => $newTag
             ]);
 
         }
     }
 
+
+    //====================================================================================================================================//
+    // Ajax Post // add new tag.
+    //====================================================================================================================================//
+    function updateUserTags(Request $request){
+        // dd( $request->toArray() );
+        $user = Auth::user();
+        $rules = array(
+            'tags'    => 'required|array',
+            'tags.*'  => 'required|integer'
+        );
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        } else {
+
+            if(!empty($request->tags)){
+                $requestData['tags'] = my_sanitize_array_number($request->tags);
+                $user->tags()->sync($requestData['tags']);
+                return response()->json([
+                    'status' => 1,
+                    'data'   => $requestData['tags']
+                ]);
+            }
+
+        }
+    }
 
 
 
@@ -1485,7 +1880,7 @@ class SiteUserController extends Controller
         return view('site.jobs.jobDetail', $data);
 
     }
-    
+
 
 
 }

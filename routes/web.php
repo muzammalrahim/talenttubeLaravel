@@ -222,6 +222,11 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('saveUserProfile', 'Site\SiteUserController@updateUserProfile')->name('saveUserProfile');
     Route::post('saveUserPersonalSetting', 'Site\SiteUserController@saveUserPersonalSetting')->name('saveUserPersonalSetting');
 
+// ======================================= For Updating User Setting =======================================
+
+    Route::get('updateUserPersonalSetting', 'Site\SiteUserController@updateUserPersonalSetting')->name('updateUserPersonalSetting');
+
+
     // User
     Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
     Route::post('step2',      'Site\SiteUserController@Step2');
@@ -234,6 +239,23 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/updateSalaryRange', 'Site\SiteUserController@updateSalaryRange');
     Route::post('ajax/updateQualification', 'Site\SiteUserController@updateQualification')->name('updateQualification');
     Route::post('ajax/updateQuestions', 'Site\SiteUserController@updateQuestions');
+
+
+
+    // ========================== Update Employer Questions ===========================================
+
+    Route::post('ajax/updateEmployerQuestions', 'Site\SiteUserController@updateEmployerQuestions');
+
+    // ========================== Update Employer Questions ===========================================
+
+
+    Route::post('ajax/updateIndustryExperience', 'Site\SiteUserController@updateIndustryExperience')->name('updateIndustryExperience');
+
+    Route::post('ajax/updateEmail', 'Site\SiteUserController@updateEmail');
+    Route::post('ajax/updatePhone', 'Site\SiteUserController@updatePhone');
+    Route::post('ajax/updatePassword', 'Site\SiteUserController@updatePassword');
+    Route::post('ajax/deleteuser', 'Site\SiteUserController@deleteuser');
+
 
     
     // Added by Hassan
@@ -248,6 +270,14 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/removeAttachment/', 'Site\SiteUserController@removeAttachment')->name('removeAttachment');
     Route::get('ajax/getTags/{category}/{offset?}', 'Site\SiteUserController@getTags');
     Route::get('ajax/searchTags', 'Site\SiteUserController@searchTags')->name('searchTags');
+
+    // ============================================= Save User Tags =============================================
+
+    Route::post('ajax/updateUserTags', 'Site\SiteUserController@updateUserTags')->name('updateUserTags');
+
+
+    // ============================================= Save User Tags =============================================
+
     Route::post('ajax/addNewTag', 'Site\SiteUserController@addNewTag')->name('addNewTag');
 
     // activity  user/employer

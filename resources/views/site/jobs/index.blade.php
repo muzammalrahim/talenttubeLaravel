@@ -29,10 +29,10 @@
 
 
 <div style="display: none;">
-<div id="jobApplyModal" class="modal p0 jobApplyModal wauto ">
+<div id="jobApplyModal" class="modal p0 jobApplyModal wauto">
     <div id="job_apply_modal" class="w100 pp_edit_info pp_cont m0">
         <div class="frame">
-            <a class="icon_close" href="#close"><span class="close_hover"></span></a>
+            {{-- <a class="icon_close" href="#close"><span class="close_hover"></span></a> --}}
             <div class="head m0">Submit Proposal</div>
             <input type="hidden" value="" name="openModalJobId" id="openModalJobId" />
             <div class="cont">
@@ -64,6 +64,8 @@
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+
+
 {{-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script> --}}
 
 @stop
@@ -112,6 +114,12 @@ $(document).on('click','.jobs_pagination .page-item .page-link',function(e){
 
 
 });
+
+$("body").click(function(){
+    clickOutside: false;
+});
+
+
 </script>
 @stop
 

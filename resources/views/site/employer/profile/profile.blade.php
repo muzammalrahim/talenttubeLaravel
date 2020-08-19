@@ -59,6 +59,88 @@
 
 
 @section('custom_footer_css')
+<style type="text/css">
+
+div.tab_about.tab_cont>div#basic {
+font-size: 20px;
+margin: 0px 10px 20px 0px;
+}
+i.editEmployerQuestions.fas.fa-edit {
+    cursor: pointer;
+    font-size: 14px;
+    color: mediumseagreen;
+}
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;;
+  text-align: center;
+  text-decoration: none;
+  display: none;
+  font-size: 14px;
+  margin: 4px 2px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.button:hover {background-color: #3e8e41}
+div.employerRegisterQuestions>div#basic {
+    margin: 0px 10px 20px 0px;
+    font-size: 20px;
+}
+i.editEmployerQuestions.fas.fa-edit {
+    cursor: pointer;
+    font-size: 14px;
+    color: mediumseagreen;
+    float:left;
+}
+.jq-selectbox.jqselect.EmployerRegQuestion{
+    margin-bottom: 15px;
+}
+.jq-selectbox__select {
+    width: 25px;
+    border-radius: 0px;
+}
+li.sel {
+    width: 35px;
+}
+
+/*chechking spinner*/
+
+.smallSpinner.SaveEmployerQuestionsSpinner {
+    float: left;
+    position: relative;
+    margin:8px 0px 0px 10px;
+    font-size: 18px;
+}
+.alert.alert-success.EmployerQuestionsAlert {
+    background: #3e8e41;
+    height: 30px;
+    width: 50%;
+    text-align: center;
+    padding: 15px 0px 0px 0px;
+    color: white;
+    font-size: 16px;
+    margin: 0px auto;
+    border-radius: 20px;
+}
+/*chechking spinner*/
+
+/*===================================================== Image Sizing ===========================================*/
+/*.tabs_profile .tab_photos img.photo {
+    width: auto;
+    height: 150px;
+    max-width: 200px ;
+    min-width: 150px ;
+}*/
+
+/*===================================================== Make Profile Icon ===========================================*/
+span.icon_image_profile {
+    bottom: 42px;
+    right: 5px;
+}
+
+</style>
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/plyr.css') }}">
@@ -68,5 +150,17 @@
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
 <script src="{{ asset('js/site/plyr.polyfilled.js') }}"></script>
+<script type="text/javascript">
+
+//======================= Employer Questions Edit =================================
+
+ $(".editEmployerQuestions").click(function(){
+ $('.button').css("display","inline-block");
+ $('.EmployerRegQuestion').removeClass('hide_it');
+ $('.employerQuestionsPtag').addClass('hide_it');
+});
+//======================= Employer Questions Editing end here =================================
+
+</script>
 @stop
 

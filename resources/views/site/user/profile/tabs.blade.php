@@ -14,15 +14,25 @@
                 <a href="#tabs-3" title=""><span>Questions</span></a>
             </li>
 
+            <li id="tabs-4_switch" class="switch_tab ">
+                <a href="#tabs-4" title=""><span>Tags</span></a>
+            </li>
+            <li id="tabs-5_switch" class="switch_tab ">
+                <a href="#tabs-5" title=""><span>jobs</span></a>
+            </li>
+
         </ul>
     </div>
 
     <div id="tabs_content" class="tabs_content">
+
     <!-- tab_about -->
+
     <a id="tabs-1" class="tab_link tab_a target"></a>
     <div class="tab_about tab_cont">
         <div class="col_left">
 
+{{-- ======================================== About Me ============================================ --}}
             <div class="bl">
                 <div class="title">
                     <div id="basic_anchor_about_me" class="title_icon_edit">About me
@@ -41,6 +51,14 @@
                 {{-- <script>Profile.handlerBasicFieldEditor('about_me');</script> --}}
             </div>
 
+{{-- ======================================== About Me End here ======================================= --}}
+
+
+      <hr class="rounded">
+      {{-- <div class="lineDivivder"><span>Interested In</span></div> --}}
+
+{{-- ======================================== Interested in ===========================================--}}
+
             <div class="bl">
                 <div class="title">
                     <div id="basic_anchor_interested_in" class="title_icon_edit">Interested in
@@ -57,64 +75,69 @@
                 </div>
             </div>
 
-{{-- Qualification --}}
+{{-- ======================================== Interested in ======================================= --}}
+
+      <hr class="rounded">
+
+
+{{-- ======================================== Qualification ======================================= --}}
+
                 
                 {{-- @dump($user->qualification) --}}
-            <div class="bl qualificationBox">
+         <div class="bl qualificationBox">
                  
                 
-<div class="title qualificationList">
-  <div id="basic" class="title_icon_edit">Qualification <i class="editQualification fas fa-edit "></i>
-  </div> <p class="loader SaveQualification"style="float: left;"></p>
-  <div class="cl"></div>
-  
-    <div class="jobSeekerQualificationList">
-       @include('site.layout.parts.jobSeekerQualificationList')
-    </div>  
-</div>
-
-
+            <div class="title qualificationList">
+              <div id="basic" class="title_icon_edit">Qualification <i class="editQualification fas fa-edit "></i>
+              </div><p class="loader SaveQualification"style="float: left;"></p>
+              <div class="cl"></div>
+              
+                <div class="jobSeekerQualificationList">
+                   @include('site.layout.parts.jobSeekerQualificationList')
+                </div>  
+            </div>
                  <a class="addQualification btn btn-sm btn-primary text-white hide_it"style = "cursor:pointer;">Add New</a>
                  <a class="btn btn-sm btn-success hide_it" onclick="UProfile.updateQualifications()">Save</a>
             </div>
+              <div class="alert alert-success QualifAlert hide_it2" role="alert">
+                <strong>Success!</strong> Qualification have been updated successfully!
+              </div>
 
-{{-- Qualification End here --}}
+{{-- ======================================== Qualification End here ======================================= --}}
+  
+  <hr class="rounded">
 
-
-{{-- Industry Experience --}}
-
-                {{-- @dump($user->industry_experience) --}}
-
-    {{--         <div class="bl">
-                <div class="title">
-                    <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
-                    </div>
-                    <div class="cl"></div>
-                </div>
-
-                @if(isset($user->industry_experience))
-                @foreach ($user->industry_experience as $ind)
-                     <p>{{getIndustryName($ind)}}</p> 
-                @endforeach
-                @endif 
-            
-            </div> --}}
-
-{{-- Industry Experience End here --}}
-
-                <div class="title IndusListBox">
-                    <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
-                    </div>
-
-                        <div class="IndusList">
-                         @include('site.layout.parts.jobSeekerIndustryList')
-                        </div> 
-                        <span class="addIndus btn btn-primary"style = "cursor:pointer;">+ Add</span> 
-                </div>
- {{-- Testing Industry Experience --}}
+{{-- ======================================== Industry Experience ======================================= --}}
 
 
-{{-- Testing Indstry Experience End Here --}}
+
+        <div class="title IndusListBox">
+
+            {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
+          <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
+          <div class="cl"></div> --}}
+          <div id="basic" class="title_icon_edit">Industry Experience <i class="editIndustry fas fa-edit "></i></div>
+              <p class="loader SaveindustryExperience"style="float: left;"></p>
+              <div class="cl"></div>
+
+
+                <div class="IndusList">
+                     @include('site.layout.parts.jobSeekerIndustryList')
+                </div> 
+                <span class="addIndus btn btn-primary hide_it"style = "cursor:pointer;">+ Add</span>
+               <a class="btn btn-sm btn-success hide_it saveIndus"style = "cursor:pointer;" onclick="UProfile.updateIndustryExperience()">Save</a> 
+        </div>
+
+        <div class="alert alert-success IndusAlert hide_it2" role="alert">
+       {{--    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
+          <strong>Success!</strong> Industry Experience have been updated successfully!
+        </div>
+
+{{-- ======================================== Industry Experience end here  ======================================= --}}
+
+ 
+
+
 
 					{{-- <div class="bl">
 						<div class="title">
@@ -247,10 +270,16 @@
             @endif
  --}}
             {{-- adding new  --}}
-
+        {{-- <div id="basic_anchor_Questions" class="title_icon_edit">Questions <i class="editQuestions fas fa-edit "></i> --}}
+        {{-- <p class="loader SaveQuestionsLoader"></p> --}}
+        {{-- </div> --}}
+    <div> 
+        <div id="basic" class="title_icon_edit"style="float:left;">Questions <i class="editQuestions fas fa-edit "></i>
+              </div><p class="loader SaveQuestionsLoader"style="float: left;"></p>
+              <div class="cl"></div>
+        
         <div class="questionsOfUser">
-            <div id="basic_anchor_Questions" class="title_icon_edit">Questions <i class="editQuestions fas fa-edit "></i>
-            </div>
+            
             @php  
                 $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
             @endphp
@@ -258,8 +287,13 @@
                 {{--  @dd($userquestion) --}}
                 @foreach($userquestion as $qk => $question)
                 <div>
+                       
+
                 <p>{{$question}} </p>
-                    <select name="{{$qk}}" class="jobSeekerRegQuestion">
+
+                 <p class="QuestionsKeyPTag"><b>{{$userQuestions[$qk]}}</b></p>
+
+                    <select name="{{$qk}}" class="jobSeekerRegQuestion hide_it">
                         <option value="yes"
                         {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
                         >Yes</option>
@@ -270,20 +304,88 @@
                 </div>
                 @endforeach
              @endif
-                  <div class="col-md-12 text-center">
-                      <a class="btn btn-sm btn-success" onclick="UProfile.updateQuestions()">Save</a>
+                  <div class="col-md-12 text-center"style="margin-top: 65px;">
+                      <a class="btn btn-sm btn-success saveQuestionsButton hide2" onclick="UProfile.updateQuestions()">Save</a>
                   </div>  
                  
         </div>
+    </div>
+
+            <div class="alert alert-success questionsAlert" role="alert">
+             {{--  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
+              <strong>Success!</strong> Questions have been updated successfully!
+            </div>
             {{-- adding new end here --}}
 
 </div>
 
-
-
-
 <!-- Tab question-->
 
+
+<!-- =========================================== Tab Tags ========================================== -->
+
+
+
+
+<a id="tabs-4" class="tab_link tab_a"></a>
+   <div class="tab_photos tab_cont">
+
+          <div class="col_left">
+              <div> 
+                  <div id="basic" class="title_icon_edit"style="float:left;">Tags {{-- <i class="editTags fas fa-edit "></i> --}}</div>
+                  <p class="loader SaveTagsLoader"style="float: left;"></p>
+                  <div class="cl"></div>
+            {{--       <div class="tagsOfUser">    
+                    @foreach($userTags as $uTags)
+                        <div class="userTag">
+
+                          <span class="userTagLabel">{{$uTags->title}}</span>
+                          <input type="hidden" name="userTags[]" value="{{$uTags->id}}" class="UserTagsHidden">
+                        </div>
+                    @endforeach     
+                  </div> --}}
+      
+                    <a class="btn btn-sm btn-success saveTagsButton hide2" style="margin-top: 5px;">Save</a>
+            </div>
+
+            <div class="alert alert-success TagsAlert hide2" role="alert">
+              <strong>Success!</strong> Tags have been updated successfully!
+            </div>
+        </div>
+
+    <div class="userTagsEditingLayout">  
+      @include('site.layout.tagging')
+    </div>
+
+        <div class="savebuttonUsertags hide_it2">
+          {{-- <button type="button" class="btn btn-success">Done</button> --}}
+        </div>
+
+</div>
+
+<!-- =========================================== Tab Tags ========================================== -->
+
+<!-- =========================================== Tab Jobs ========================================== -->
+
+<a id="tabs-5" class="tab_link tab_a"></a>
+    <div class="tab_photos tab_cont" style="padding:0px;">
+
+        <div> 
+           {{-- <div id="basic" class="title_icon_edit"style="float:left;">Jobs <i class="editQuestions fas fa-edit "></i></div> --}}
+
+            {{-- <p class="loader SaveQuestionsLoader"style="float: left;"></p> --}}
+
+            <div class="cl"></div>
+        </div>
+            <div class="includedLayoutOfJobApplication">
+                @include('site.user.profile.jobApplicationInTabs')
+            </div>
+           <div class="alert alert-success JobsAlert hide_it2" role="alert">
+              <strong>Success!</strong> Jobs have been updated successfully!
+           </div>
+     </div>
+
+<!-- =========================================== Tab Jobs ========================================== -->
 
     </div>
 </div>

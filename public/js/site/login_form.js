@@ -68,7 +68,7 @@ $(function () {
 
 	$('body').on('click', '.pp_wrapper', function(e){
 		if($(e.target).is('.pp_wrapper')){
-            signInClose();
+            // signInClose();
             forgotPassClose();
         }
 	})
@@ -97,7 +97,31 @@ $(function () {
 
 	function loginResponse(data) {
         isFrmLoginSubmitAjax=false;
-        console.log(' loginResponse ', data);
+        // console.log(' loginResponse ', data);
+        
+        // console.log(signinErrorSixChar);
+
+//==================================================== Removing Loader when error occur on Sign in =========================================
+
+        // $('.css_loader_login_form').addClass('hide_it2');
+
+
+        var signinErrorWrong = data['message'];
+        // console.log(signinErrorWrong);
+
+        var form_login_pass = $("#form_login_pass").val();
+        if (form_login_pass.length < 6){
+
+        var signinErrorSixChar = data['message']['password'];
+        $('.errorMessageLogIn').text(signinErrorSixChar);
+        console.log(signinErrorSixChar);
+        }
+
+        else{
+        var signinErrorWrong = data['message'];
+        $('.errorMessageLogIn').text(signinErrorWrong);
+
+        }
 
         if(data.status == 1) {
             location.href = data.redirect; // '/laravel/public/profile';

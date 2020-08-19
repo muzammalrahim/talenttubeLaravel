@@ -8,7 +8,7 @@
     <div class="col-md-2"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
 
     {{-- testing --}}
-    <div class="block row col-md-10 text-white">
+
       <div class="col-md-2">
         <select class="filter_status browser-default custom-select">
             <option value="">Select Status</option>
@@ -16,11 +16,14 @@
             <option value="pending" {!! ($filter_status == 'pending')?('selected'):'' !!}>Pending</option>
         </select>
       </div>
+
+    <div class="block row col-md-6 text-white">
+
       
-      <div class="col-md-2"><a class="btn btn-block btn-primary btnBulkApproved">Bulk Approved</a></div>
-      <div class="col-md-2"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Compile CV</a></div>
-      <div class="col-md-2"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
-      <div class="col-md-2"><a href="{{route('bulkEmail.new')}}" class="btn btn-block btn-primary ">Bulk Email</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Approved</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Compile CV</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
+      <div class="col-md-1.5 bulkButton"><a href="{{route('bulkEmail.new')}}" class="btn btn-block btn-primary ">Bulk Email</a></div>
       {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
     </div>
     {{-- testing --}}
@@ -173,6 +176,10 @@
     .modal.showProcessing  .modelProcessingUser{ display: block !important; }
     #delConfirmIdUser{ color:red; }
     td{ text-align: center; }
+
+ .bulkButton {
+    margin-left: 7px;
+}
 </style>
 @stop
 

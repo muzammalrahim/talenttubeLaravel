@@ -685,6 +685,9 @@ button.ja_load_qa { background: #40c7db; }
     margin: 6px;
     color: #fba82f;
 }
+.sortByFieldLabel.dinline_block {
+    margin-right: 88px;
+}
 </style>
 
 @stop
