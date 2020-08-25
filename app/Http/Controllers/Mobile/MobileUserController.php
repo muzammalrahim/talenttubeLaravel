@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Site;
+namespace App\Http\Controllers\Mobile;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -1012,13 +1012,117 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // GET // Job Search/Listing layout.
     //====================================================================================================================================//
-    public function jobs(){
+    public function Mjobs(){
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
-        $data['jobs'] = null; //Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-        return view('site.jobs.index', $data); // site/jobs/index 
+        $data['jobs'] =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
+        return view('mobile.jobs.index', $data); // site/jobs/index 
+    }
+
+    //====================================================================================================================================//
+    // Get // Add new job layout.
+    //====================================================================================================================================//
+    
+    public function MnewJob(){
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Add New Job';
+        $data['classes_body'] = 'newJob';
+
+        $data['geo_state']      = get_Geo_State(default_Country_id());
+        $data['geo_cities']     = get_Geo_City(default_Country_id(), default_State_id());
+
+        // $jobs =  Jobs::find(12);
+        // dd( json_decode($jobs->questions()->first()->options, true) );
+        // dd( $jobs->questions()->first()->options );
+
+        $data['geo_country'] = get_Geo_Country();
+        return view('mobile.jobs.new', $data); // site/jobs/new
+    }
+
+// ========================================== Employers on Mobile Phone ==========================================
+
+        public function Memployers(Request $request){
+        $user = Auth::user();
+        if (isEmployer($user)){ return redirect(route('jobSeekers')); }
+        $data['user']           = $user;
+        $data['title']          = 'Employers';
+        $data['classes_body']   = 'employers';
+        $employersObj          = new User();
+        $jobSeekers             = $employersObj->getEmployers($request, $user);
+        $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+
+        $data['likeUsers'] = $likeUsers;
+        $data['employers'] = $jobSeekers;
+        return view('mobile.user.employers', $data);
+    }
+
+    //====================================================================================================================================//
+    // Get // layout for listing of jobSeekers on mobile.
+    //====================================================================================================================================//
+
+        public function MjobSeekers(Request $request){
+        $user = Auth::user();
+        if (!isEmployer($user)){ return redirect(route('jobs')); }
+        $data['user']           = $user;
+        $data['title']          = 'Job Seekers';
+        $data['classes_body']   = 'jobSeekers';
+        $jobSeekersObj          = new User();
+        $jobSeekers             = $jobSeekersObj->getJobSeekers($request, $user);
+        $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+
+        $data['likeUsers'] = $likeUsers;
+        $data['jobSeekers'] = $jobSeekers;
+        return view('mobile.employer.jobSeekers.index', $data); // mobile/employer/jobSeekers/index
+    }
+
+
+        //====================================================================================================================================//
+    // Get // Show list of jobs posted by employer.
+    //====================================================================================================================================//
+    public function MemployerJobs(Request $request){
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'My Jobs';
+        $data['classes_body'] = 'myJob';
+        $data['jobs'] = Jobs::with('applicationCount')->where('user_id',$user->id)->orderBy('created_at', 'DESC')->get();
+        return view('mobile.employer.myjobs', $data);
+        // site/employer/myjobs
+    }
+
+
+    //====================================================================================================================================//
+    // Get // layout for Employer Detail.
+    //====================================================================================================================================//
+    public function MemployerInfo($employerId){
+        $user = Auth::user();
+        if (isEmployer($user)){ return redirect(route('employers')); }
+        $data['user'] = $user;
+        $employer = User::Employer()->where('id',$employerId)->first();
+
+        // check if employer with id exist.
+        if(empty($employer) || !isEmployer($employer) ){ return redirect(route('employers')); }
+
+        // check if this employer has not block you.
+       if(hasBlockYou($user, $employer)){ return view('unauthorized', $data); }
+
+        $jobs                = Jobs::where('user_id',$employerId)->get();
+        $employer_gallery    = UserGallery::Public()->Active()->where('user_id',$employerId)->get();
+        $employer_video      = Video::where('user_id', $employerId)->get();
+
+        $data['title']          = 'Employer Info';
+        $data['classes_body']   = 'employerInfo';
+        $data['employer']       = $employer;
+        $data['likeUsers']      = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        $data['jobs']           = $jobs;
+        $data['galleries']        = $employer_gallery;
+        $data['videos']          = $employer_video;
+
+
+        return view('mobile.user.employerInfo', $data);
+
     }
 
     //====================================================================================================================================//
@@ -1204,13 +1308,13 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // GET // Display user submit Job Application.
     //====================================================================================================================================//
-    public function jobApplications(){
+    public function mJobApplications(){
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'My job applications';
         $data['classes_body'] = 'jobApplications';
         $data['applications'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
-        return view('site.jobs.applied', $data);
+        return view('mobile.jobs.applied', $data);
     }
 
 
@@ -1277,26 +1381,26 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // Get // layout for Block User List.
     //====================================================================================================================================//
-    public function blockList(){
+    public function MblockList(){
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Block Users';
         $data['classes_body'] = 'blockUsers';
         $data['blockUsers'] = BlockUser::with('user')->where('user_id',$user->id)->get();
-        return view('site.user.blockUsers', $data);
+        return view('mobile.user.blockUsers', $data);
     }
 
     
 
     //=====================Like Function ==============================================//
 
-    public function likeList(){
+    public function MlikeList(){
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Like Users';
         $data['classes_body'] = 'likeUsers';
         $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
-        return view('site.user.likeUsers', $data);
+        return view('mobile.user.likeUsers', $data);
     }
 
 
@@ -1334,7 +1438,7 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // Get // get mutual likes user List.
     //====================================================================================================================================//
-    public function mutualLikes(){
+    public function MmutualLikes(){
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Mutual Like Users';
@@ -1349,8 +1453,36 @@ class MobileUserController extends Controller
         // dd( $mutualUser );
 
         $data['likeUsers'] = $mutualUser; 
-        return view('site.user.mutualUsers', $data);
+        return view('mobile.user.mutualUsers', $data);
         // site/user/mutualUsers
+    }
+
+
+    //====================================================================================================================================//
+    // Save User Personal Setting.
+    // Ajax submit request from profile page.
+    //====================================================================================================================================//
+    public function MupdateUserPersonalSetting(Request $request)
+    {       
+            $user = Auth::user();
+            $data['classes_body'] = 'profile';
+            $data['user'] = $user;
+            $view = view('mobile.user.profile.updateUserPersonalSetting', $data); 
+            $html = $view->render();
+            return $view;
+    }
+
+    //====================================================================================================================================//
+    // Get // layout for purchasing Credits.
+    //====================================================================================================================================//
+    public function Mcredit(){
+        $user = Auth::user();
+        if(isEmployer($user)){
+            $data['title']  = 'Credit';
+            $data['user']   =  $user;
+            $data['classes_body'] = 'credit';
+            return view('mobile.credit.purchase', $data);
+        }
     }
 
 

@@ -223,11 +223,13 @@ class UserController extends Controller
             $data['qualificationList'] = getQualificationsList();
             $data['languages'] = getLanguages();
             $data['hobbies'] = getHobbies();
-            $data['familyType'] = getFamilyType();
-            $data['eyeColor'] = getEyeColor();
-            $data['Days'] = getDays();
-            $data['Months'] = getMonths();
-            $data['years'] = getYears(); 
+
+            // $data['familyType'] = getFamilyType();
+            // $data['eyeColor'] = getEyeColor();
+            // $data['Days'] = getDays();
+            // $data['Months'] = getMonths();
+            // $data['years'] = getYears(); 
+            
             $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
             $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
             $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();

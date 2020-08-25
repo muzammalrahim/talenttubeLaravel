@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="newJobCont">
-    <div class="head icon_head_browse_matches">Employers Detail</div>
+    <div class="head icon_head_browse_matches">Employer's Detail</div>
 
     {{-- @dump($employers) --}}
     <div class="add_new_job">

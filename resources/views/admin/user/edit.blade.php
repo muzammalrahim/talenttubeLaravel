@@ -139,7 +139,7 @@ $(document).ready(function(){
 
    $(document).on('click','.addIndus', function(){
     console.log(' addIndus ');
-    var newIndusHtml = '<div class="IndusSelect"><select name="industry_experience[]">'; 
+    var newIndusHtml = '<div class="IndusSelect"><select name="industry_experience[]" class="industrySelectStyling">'; 
 
     @if(!empty($industriesList))
         @foreach($industriesList as $lk=>$lv)
@@ -317,7 +317,7 @@ $('#custom-tabs-one-private .btnPrevious').on('click', function (e) {
      
     
     // Add Qualification end here 
-    var newQualificationHtml = '<div class="QualificationSelect"><select name="qualification[]">'; 
+    var newQualificationHtml = '<div class="QualificationSelect"><select name="qualification[]" class="qualificationSelectStyling">'; 
     @if(!empty($qualificationList))
         @foreach($qualificationList as $lk=>$qualification)
             newQualificationHtml += '<option value="{{$qualification['id']}}">{{$qualification['title']}}</option>'; 
