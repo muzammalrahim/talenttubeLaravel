@@ -1,5 +1,5 @@
 {{-- @extends('adminlte::master') --}}
-@extends('site.master')
+@extends('mobile.master')
 
 @section('title', $title)
 
@@ -9,9 +9,9 @@
 
 
 @section('custom_css')
-    <link rel="stylesheet" href="{{ asset('css/site/register.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/site/card.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('css/mobile/mdb/addons-pro/steppers.min.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/site/card.css') }}"> --}}
+				{{-- <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/> --}}
 
 @stop
 
@@ -43,12 +43,44 @@
             <a href="./index"><img src="{{asset('/images/site/logo.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
         </div>
     </div>
-    <!-- /header -->
-
-
-     
+				<!-- /header -->
+				<div class="container mt-3">
+						<div class="row">
+								<div class="col-sm-12">
+									<div class="card">
+										<h5 class="card-header info-color white-text text-center py-4">
+											<strong>Contact us</strong>
+										</h5>
+										<!--Card content-->
+										<div class="card-body px-lg-5 pt-3">
+											<!-- Form -->
+											<form action="" class="text-center">
+												<!-- Photo -->
+												<label for="file">Add a photo</label>
+												<div class="md-form mt-3">
+													<input type="file" name="file" id="file" class="form-control">
+												</div>
+												<!-- About me -->
+												<div class="md-form mt-3">
+													<textarea id="about-me" class="form-control md-textarea" name="about-me" rows="2"></textarea>
+													<label for="about-me">About me</label>
+												</div>
+												<!-- Interested in -->
+												<div class="md-form mt-3">
+													<textarea id="interested-in" class="form-control md-textarea" name="interested-in" rows="2"></textarea>
+													<label for="about-me">Interested in</label>
+												</div>
+												<div class="md-form mt-3">
+													<input type="text" name="recent-job" id="recent-job" class="form-control" placeholder="Your current or most recent job title and employer"/>
+												</div>
+											</form>
+										</div>
+									</div>
+								</div>
+						</div>
+				</div>
     <div class="content">
-        <div class="mw50 dtable margin_auto">
+        <div class="mw50 dtable margin_auto" style="display: none">
             
             <div id="full_step_1" class="bl_card_question" style="display:none;">
                 <div class="card_question_cont">
@@ -335,34 +367,36 @@
 
 </div>
 <!-- /main -->
-
-
 @stop
 
 
 @section('custom_js')
-<script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/mobile/mdb/addons-pro/steppers.min.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/jquery.form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script> --}}
 
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 
  
 <script type="text/javascript">
     $(function(){
         $('#full_step_1').delay(150).fadeIn(500);
-    }); 
+				}); 
+				$(document).ready(function () {
+$('.stepper').mdbStepper();
+})
 </script>
 
 @stop
 
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 
 
 <style>

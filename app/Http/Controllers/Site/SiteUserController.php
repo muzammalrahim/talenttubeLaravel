@@ -301,7 +301,6 @@ class SiteUserController extends Controller
                 'message' => 'data saved successfully'
             ]);
         } elseif($requestData['step'] == 8) {
-//            $this->userUploadResume();
             $user->step2 = $requestData['step'];
             $user->save();
             return response()->json([
@@ -1148,8 +1147,9 @@ class SiteUserController extends Controller
             ]);
         } else {
             $user = Auth::user();
-            $resume = $request->file('resume');
-            $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
+												$resume = $request->file('resume');
+												// $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
+												$fileName = $resume->getClientOriginalName();
             $storeStatus = Storage::disk('user')->put($user->id . '/private/' . $fileName, file_get_contents($resume), 'public');
             if ($storeStatus) {
 
@@ -1286,7 +1286,7 @@ class SiteUserController extends Controller
     public function uploadVideo(Request $request){
 
         $user = Auth::user();
-        $video = $request->file('video');
+								$video = $request->file('video');
         // $rules = array('video.*' => 'required|file|max:20000');
         $rules = array('video' => 'required|file|max:50000');
         // $rules = array('video.*' => 'required|file|max:2');
@@ -1304,14 +1304,15 @@ class SiteUserController extends Controller
             $mime == "video/MP2T"             || $mime == "video/3gpp"             || $mime == "video/quicktime" ||
             $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"
         ) {
-
-            $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
-            $storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
+											$fileOriginalName = $video->getClientOriginalName();
+            // $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
+												$fileName = $fileOriginalName;
+												$storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
+												
 
             // store video in private folder by default.
-            $storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
-
-
+												$storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
+												
 
 
             $video = new Video();
@@ -1391,13 +1392,27 @@ class SiteUserController extends Controller
     // GET // Job Search/Listing layout.
     //====================================================================================================================================//
     public function jobs(){
-        $user = Auth::user();
+								$user = Auth::user();
+								$user->step2 = 10;
+								$user->save(); 
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
         $data['jobs'] = null; //Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
         return view('site.jobs.index', $data); // site/jobs/index
-    }
+				}
+				
+				//====================================================================================================================================//
+    // Dev Akmal GET // Job Listing For Step2
+    //====================================================================================================================================//
+    public function step2Jobs(){
+					$user = Auth::user();
+//        $data = array();
+					if (!isEmployer($user)){
+									$jobs = Jobs::take(10)->get();
+									return view('site.jobs.step2Jobs', compact('jobs'));
+					}
+	}
 
     //====================================================================================================================================//
     // Get // layout for purchasing Credits.

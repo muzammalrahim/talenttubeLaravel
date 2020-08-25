@@ -24,10 +24,17 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
  
  Route::post('join', 'Mobile\MobileController@join')->name('mJoin'); 
- Route::get('join', function () { return redirect('/m'); });
+	Route::get('join', function () { return redirect('/m'); });
 
 
  Route::group(array('middleware' => ['auth']), function(){ 
+
+		// ======================================= For Updating User Setting =======================================
+
+		// User
+				Route::get('step2', 'Mobile\MobileUserController@step2User')->name('mStep2User');
+
+
     Route::get('profile', function () { return redirect('m/user/'.Auth::user()->username); })->name('mProfile');
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');
  });

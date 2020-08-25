@@ -405,7 +405,7 @@ $(function(){
     });
 
     jQuery('#photo_add_video').on('click', function(){
-        var input = document.createElement('input');
+								var input = document.createElement('input');
         input.type = 'file';
         input.onchange = e => {
             var file = e.target.files[0];
@@ -1289,11 +1289,13 @@ function showUserStep10() {
         });
     });
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    var url = base_url+'/jobs';
+    var url = base_url+'/step2Jobs';
     $.get(url, function (data) {
         $('.jobs_list').html(data);
     });
 }
+
+// Employ Step4
 
 function showEmployStep4(){
     $jq('#join_slogan').text('Industry Experience');
@@ -1335,8 +1337,11 @@ function userStepReload(currentStep) {
             showUserStep9();
             break;
         case 9:
-            showUserStep9();
-            break;
+            showUserStep10();
+												break;
+								case 10:
+												showUserStep10();
+												break;
         default:
             showUserStep2();
             break;

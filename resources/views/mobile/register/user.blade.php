@@ -2,6 +2,12 @@
 
 @section('title', $title)
 
+@section('custom_css')
+    {{-- <link rel="stylesheet" href="{{ asset('css/site/register.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/> --}}
+
+@stop
+
 @section('classes_body', 'register user')
 
 @section('body')
@@ -9,123 +15,21 @@
 
 <!-- main -->
 <div class="main  ">
-<div class="homeBg">
+	<div class="homeBg">
+			<div class="shadeBg">
+											
+							
+						<div class="wrapper">
+											@include('site.header2')
+						</div>
+						
+						@include('mobile.register.user_step1')
 
-    <div class="shadeBg">
-        
-    
-    <div class="wrapper">
-        @include('site.header')
-   </div>
+			</div>
+	</div>
 
-    
+	{{-- @include('site.home.login') --}}
 
-   <div class="registerForm container h-100">
-
-       <div class="formTitle text-white text-center">Create New Account</div>
-
-       <div class="formBox mb-">
-            <form name="frm_date" method="post" action="{{route('register')}}" autocomplete="off" class="text-center">
-               
-                <!-- First Name -->
-                <div class="md-form bgShad">
-                    <input type="text" name="firstname" id="field_firstname" class="form-control">
-                    <label for="field_firstname">First Name</label>
-                    <div id="firstname_error" class="error d-none">&nbsp;</div>
-                </div>
-
-                <!-- Last Name -->
-                <div class="md-form bgShad">
-                    <input type="text" name="surname" id="field_surname" class="form-control">
-                    <label for="field_surname">Surname</label>
-                    <div id="surname_error" class="error d-none">&nbsp;</div>
-                </div>
-
-                <!-- Last Name -->
-                <div class="md-form bgShad">
-                    {{-- bl_location --}}
-                    
-                                             
-                            
-                            <input type="text" class="form-control" name="location_search" id="location_search" placeholder="Type a location">
-                           {{--  <div class="input-group-append">
-                               <button id="location_search_load" class="btn btn-outline-secondary location_search_btn waves-effect waves-light btn-sm " type="button">Search</button>
-                            </div> --}}
-                            <label for="location_search">Location</label>
-                           
-                            <div class="location_latlong d-none w100">
-                                <input type="text" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
-                                <input type="text" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
-
-                                <input type="hidden" name="location_name" id="location_name"  value="">
-                                <input type="hidden" name="location_city" id="location_city"  value="">
-                                <input type="hidden" name="location_state" id="location_state"  value="">
-                                <input type="hidden" name="location_country" id="location_country"  value="">
-                            </div>
-                         
-                    
-                    {{-- bl_location --}}
-                </div>
-
-
-                <!-- Email -->
-                <div class="md-form bgShad">
-                    <input type="email" name="email" id="field_email" class="form-control">
-                    <label for="field_email">E-mail</label>
-                    <div id="email_error" class="error d-none">&nbsp;</div>
-                </div>
-
-                <!-- Mobile -->
-                <div class="md-form bgShad">
-                    <input type="text" name="phone" id="field_phone" class="form-control">
-                    <label for="field_phone">Mobile Number</label>
-                    <div id="phone_error" class="error d-none">&nbsp;</div>
-                </div>
-
-                <!-- Mobile -->
-                <div class="md-form bgShad">
-                    <input type="text" name="username" id="field_username" class="form-control">
-                    <label for="field_username">Username</label>
-                    <div id="username_error" class="error d-none">&nbsp;</div>
-                </div>
-
-                <!-- Password -->
-                <div class="md-form bgShad">
-                    <input type="text" name="password" id="field_password" class="form-control">
-                    <label for="field_password">Password</label>
-                    <div id="password_error" class="error d-none">&nbsp;</div>
-                </div>
-
-                <!-- Password_confirmation -->
-                <div class="md-form bgShad">
-                    <input type="text" name="password_confirmation" id="field_password_confirmation" class="form-control">
-                    <label for="field_password_confirmation">Confirm password</label>
-                    <div id="password_confirmation_error" class="error d-none">&nbsp;</div>
-                </div>
-
-                <!-- Terms and Privacy -->
-                <div class="md-form">
-                    <div class="form-check">
-                        <input type="checkbox" name="privacy_policy" class="form-check-input" id="field_privacy_policy">
-                        <label class="form-check-label" for="field_privacy_policy">I agree to the Terms and Privacy Policy</label>
-                    </div>
-                </div>
-
-                <!-- Submit button -->
-                <div class="md-form">
-                    <div class="clearfix"></div>
-                    <button id="frm_register_submit" type="button" class="btn btn-primary btn-primary2 w-50">Next</button>
-                </div>
-
- 
-
-           </form>
-       </div>
-
-   </div>
-
-</div>
-</div>
 </div>
 <!-- /main -->
 
@@ -134,13 +38,13 @@
 
 
 @section('custom_js')
-
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
+<script type="text/javascript" src="{{ asset('js/mobile/mjoin.js') }}"></script>
+{{-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script> --}}
 <script type="text/javascript">
 //====================================================================================================================================//
 // Google map location script 
 //====================================================================================================================================//
-// var map;
+var map;
 jQuery(document).ready(function() {
 
     var input = document.getElementById('location_search');
@@ -150,13 +54,13 @@ jQuery(document).ready(function() {
     var geocoder = new google.maps.Geocoder();
     // var hasLocation = false;
     var latlng = new google.maps.LatLng(-31.2532183, 146.921099);
-    // var marker = "";
+    var marker = "";
    
-    // var options = {
-    //     zoom: 14,
-    //     center: latlng,
-    //     mapTypeId: google.maps.MapTypeId.ROADMAP
-    // };
+    var options = {
+        zoom: 14,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
     if(jQuery("#location_search").length > 0) {
         // map = new google.maps.Map(document.getElementById("location_map"), options);
         // autocomplete.bindTo('bounds', map);
@@ -372,10 +276,6 @@ jQuery(document).ready(function() {
 
 
 });
-         
-        
-    
-
 </script>
 
 @stop
