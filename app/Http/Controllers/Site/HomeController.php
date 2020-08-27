@@ -186,14 +186,15 @@ class HomeController extends Controller {
         // "phone" => "0123456"
         // "join_handle" => "creative"
         // "join_password" => "12345678"
-        // "privacy_policy" => "1"
+								// "privacy_policy" => "1"
+								// dd($request);
 
         $rules = array(
             'firstname' => 'required',
             'surname' => 'required',
-            'location_city' => 'required',
-            'location_state' => 'required',
-            'location_city' => 'required',
+            // 'location_city' => 'required',
+            // 'location_state' => 'required',
+            // 'location_city' => 'required',
             'email' => 'bail|required|email|unique:users,email',
             'phone' => 'required|min:10|max:10',
             'username' => 'required|unique:users,username',
@@ -215,32 +216,71 @@ class HomeController extends Controller {
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->phone = $request->phone;
-            $user->country = $request->location_country;
-            $user->state = $request->location_state;
-            $user->city = $request->location_city;
-            $user->location = $request->location_name;
-            $user->location_lat = $request->location_lat;
-            $user->location_long = $request->location_long;
+            // $user->country = $request->location_country;
+            // $user->state = $request->location_state;
+            // $user->city = $request->location_city;
+            // $user->location = $request->location_name;
+            // $user->location_lat = $request->location_lat;
+            // $user->location_long = $request->location_long;
             $user->username = $request->username;
-            $user->email_verified_at = null;
-            // $user->email_verified_at = date("Y-m-d H:i:s");
+            // $user->email_verified_at = null;
+            $user->email_verified_at = date("Y-m-d H:i:s");
             $user->email_verification   = hash_hmac('sha256', str_random(40), 'creativeTalent');
-            $user->type   = 'user';
+												$user->type   = 'user';
+												$user->verified = 1;
 
             if( $user->save() ){
                 $user->roles()->attach([config('app.user_role')]);
                 $success_message = '<div class="slogan">'.__('site.Register_Success').'</div>';
-                $success_message .= '<div class="slogan">'.__('site.Verify_Email').'</div>';
+                // $success_message .= '<div class="slogan">'.__('site.Verify_Email').'</div>';
                 // $success_message .= '<p>Redirecting to User info page.</p>';
+                // $mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
 
-                $mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
+													if($request->layout == 'mobile'){
 
-                return response()->json([
-                    'status' => 1,
-                    'message' => $success_message,
-                    'redirect' => route('profile')
-                    // 'redirect' => route('step2')
-                ]);
+														 // create our user data for the authentication
+														$userdata = array('email' => $user->email, 'password' => $request->password);
+
+															// attempt to do the login
+            		if (Auth::attempt($userdata)){
+																// validation successful
+																		$user = Auth::user();
+																	// check if its employee or user.
+																	if (isEmployer()){
+																					// check if employer has answer the initial question in step2.
+																					// $redirect_url = ($user->step2)?(route('employerProfile')):(route('step2Employer'));
+																					// return array(
+																					// 				'status'    => 1,
+																					// 				'message'   => 'login succesfully',
+																					// 				'redirect' =>  $redirect_url
+																					// );
+																		}else{
+																					// check if user has answer the initial question in step2.
+																					return array(
+																									'status'    => 1,
+																									'message'   => 'login succesfully',
+																									// 'new' => $success_message,
+																									'redirect' =>  route('mStep2User')
+																					);
+																		}
+															}else{
+																	return array(
+																		'status'    => 0,
+																		'message'   => 'Error authenticating user',
+																		'redirect' =>  route('mHomepage')
+																	);
+															}
+
+													}else{
+														return response()->json([
+															'status' => 1,
+															'message' => $success_message,
+															'redirect' => route('step2User')
+														]);
+													}
+
+              
+ 
             }else{
                 return response()->json([
                     'status' => 0,

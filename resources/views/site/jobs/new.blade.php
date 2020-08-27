@@ -191,7 +191,7 @@
 
         <div class="fomr_btn act_field">
             <span class="form_label"></span>
-            <iput type="type" value="academic" />
+            <input type="type" value="academic" />
             <button class="btn small turquoise saveNewJob">Save</button>
         </div>
 

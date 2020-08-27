@@ -1,3 +1,4 @@
+ 
 
 @extends('mobile.employer.usermaster')
 @section('content')
@@ -133,19 +134,17 @@
 @endif
 
 
+ 
 
 @stop
+
 
 
 @section('custom_footer_css')
-<style type="text/css">
 
-
-</style>
 @stop
 
 @section('custom_js')
-
-
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 @stop
 

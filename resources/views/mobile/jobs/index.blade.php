@@ -1,4 +1,3 @@
-
 @extends('mobile.user.usermaster')
 @section('content')
 
@@ -123,22 +122,18 @@
 @endforeach
 @endif     
 
+ 
 
 
 @stop
 
 
 @section('custom_footer_css')
-<style type="text/css">
 
-
-</style>
 @stop
 
 @section('custom_js')
-
 <script type="text/javascript">
-
 $(document).on('click','.jobApplyBtn', function() {
 
   var jobPopId = parseInt($(this).attr('job-id'));
@@ -179,6 +174,5 @@ $(document).on('click','.jobApplyBtn', function() {
 
 
 </script>
-
 @stop
 

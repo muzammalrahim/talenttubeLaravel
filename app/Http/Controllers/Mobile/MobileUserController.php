@@ -96,7 +96,8 @@ class MobileUserController extends Controller
 
     public function step2User(){
         // dd(' step2Employer ');
-        $user = Auth::user();
+								$user = Auth::user();
+								// dd($user);
         $data['user'] = $user;
         $data['title'] = 'User';
         $data['classes_body'] = 'userStep2';
@@ -111,7 +112,7 @@ class MobileUserController extends Controller
         $data['tags'] = $tags;
         $data['tagCategories'] = $tagCategories;
         
-        return view('site.register.user_step2', $data);
+        return view('mobile.register.user_step2', $data);
 
     }
 

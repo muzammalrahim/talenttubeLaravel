@@ -533,7 +533,14 @@ class EmployerController extends Controller {
 
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = null; // $jobSeekers;
-        return view('site.employer.jobSeekers.index', $data); // site/employer/jobSeekers/index
+
+
+        if(isMobile()){
+            return view('mobile.employer.jobSeekers.index', $data); // mobile/employer/jobSeekers/index
+        }else{
+            return view('site.employer.jobSeekers.index', $data); // site/employer/jobSeekers/index
+        }
+        
     }
 
 
