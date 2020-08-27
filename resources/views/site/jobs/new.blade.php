@@ -11,6 +11,7 @@
     <div class="head icon_head_browse_matches">Add New Job</div>
 
     <div class="add_new_job">
+        
     <form method="POST" name="new_job_form" class="new_job_form newJob job_validation">
         @csrf
         <div class="job_title form_field">

@@ -88,14 +88,28 @@ class SiteUserController extends Controller
             // $data['industry_experience'] = getIndustries();
             $data['industriesList'] = getIndustries();
             $data['userquestion'] = getUserRegisterQuestions();
-           $data['empquestion'] = getEmpRegisterQuestions();
+            $data['empquestion'] = getEmpRegisterQuestions();
             if(isMobile()){
-                if(isRequestAjax($request)){
-                    return view('mobile.user.profile.profile', $data); 
+
+                if(isEmployer()){
+
+                  if(isRequestAjax($request)){
+                    // return view('mobile.user.profile.profile', $data); 
                 }else{
-                    return view('mobile.user.profile.profile', $data);
+                    return view('mobile.employer.profile', $data);
                 }
-            }else{
+
+                }else{
+                    return view('mobile.user.profile.profile', $data); 
+
+                }
+
+              
+
+
+            }
+
+            else{
                 return view('site.user.profile.profile', $data);
                 // site/user/profile/profile
             } 
@@ -1446,6 +1460,7 @@ class SiteUserController extends Controller
     // GET // Job Apply information layout.
     //====================================================================================================================================//
     public function jobApplyInfo($job_id){
+        // dd($job_id);
         $user = Auth::user();
         $data['user'] = $user;
         // $data['title'] = 'Jobs';

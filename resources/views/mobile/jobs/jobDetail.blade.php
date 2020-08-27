@@ -1,22 +1,13 @@
+
 @extends('mobile.user.usermaster')
 @section('content')
 
  
-<h6 class="h6 jobAppH6">Browse Jobs</h6>
+<h6 class="h6 jobAppH6">Job's Detail</h6>
 
 @include('mobile.jobs.jobsModal')
 
-
-@if ($jobs->count() > 0)
-@foreach ($jobs as $job)
-
-{{-- @dump( $job->questions ) --}}
-    {{-- @dump($job->jobEmployer->name) --}}
-
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
-
-
-        
 
         <div class="card">
             <div class="card-header jobAppHeader p-2 jobInfoFont">
@@ -81,34 +72,10 @@
             </div>
 
             <div class="card-footer text-muted jobAppFooter">
-                <div class="row jobInfo jobFooter ">
-                    <div class="col p-0"><span>Expire on</span><br>
-                        {{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}
-                    </div>
-
-                    <div class="col p-0"> <button class="applicationsCount">Applications
-                        ({{($job->applicationCount)?($job->applicationCount->aggregate):0}})
-                    </button>
-
-                    </div>
-
-                    <div class="p-0 float-right mr-2"><span>Job Type</span><br>
-                        {{$job->type}}
-                    </div>
-                </div>
-
-                <div class="card-footer row p-0 mt-3">
-                    <div class="col p-0">
-                        <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MjobDetail', ['id' => $job->id]) }}">Detail</a>
-                    </div>
 
                     <div class="float-right">
-
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" {{-- data-toggle="modal" data-target="#modalJobApply" --}} href="{{route('MjobApplyInfo', ['id' => $job->id]) }}" >Apply</a>
-
+                        <a class="jobAppslyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" data-toggle="modal" data-target="#modalJobApply" {{-- href="{{route('MjobApplyInfo', ['id' => $job->id]) }} --}}>Apply</a>
                     </div>
-                    
-                </div>
 
             </div>
 
@@ -116,63 +83,17 @@
 
     </div> 
 
-    
-
-
-@endforeach
-@endif     
-
- 
-
-
 @stop
 
 
 @section('custom_footer_css')
+<style type="text/css">
 
+
+</style>
 @stop
 
 @section('custom_js')
-<script type="text/javascript">
-$(document).on('click','.jobApplyBtn', function() {
 
-  var jobPopId = parseInt($(this).attr('job-id'));
-  var jobPopTitle = $(this).attr('job-title');
-  $('.jobTitle').text(jobPopTitle);
-
-
-  // $.get(base_url + '/ajax/MjobApplyInfo/'+jobPopId, function(data,status){
-  //   console.log("data", data);
-
-  // });
-
-// $('#jobApplyModal').on($.modal.OPEN, function(event, modal) {
-    // var job_id = $('#openModalJobId').val();
-    // console.log(' job_id ', job_id);
-    // console.log(' after open ', event);
-
-    // $('.jquery-modal.blocker.current').off('click');
-    $.ajax({
-
-    type: 'GET',
-        url: base_url+'/ajax/MjobApplyInfo/'+ jobPopId,
-        success: function(data){
-
-            // $('#jobApplyModal .cont').html(data);
-            console.log("apply for job call");
-        }
-    });
-
-// });
-
-
-
-});
-
-
-
-
-
-</script>
 @stop
 

@@ -1,3 +1,4 @@
+
 // Employer Deleting Code
 
 $(document).on('click','#empdel', function() {
@@ -7,6 +8,7 @@ $(document).on('click','#empdel', function() {
   $('#deleteModalemp').modal('show');
   $('#delConfirmIdEmp').html(Emptitle);
 });
+
   // Ajax for deleting Employer
 
   $('#removeEmp').on('click', function() {
