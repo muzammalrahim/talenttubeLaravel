@@ -49,7 +49,7 @@ class MobileController extends Controller {
             return view($view_name, $data);
         }else {
             $data['title'] = 'Registeration';
-            $view_name = 'mobile.register.employer'; // mobile/register/employer
+												$view_name = 'mobile.register.employer'; // mobile/register/employer
             return view($view_name, $data);
         }
     }

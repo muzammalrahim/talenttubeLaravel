@@ -20,7 +20,8 @@
       <!-- Material Design Bootstrap -->
       <link rel="stylesheet" href="{{ asset('css/mobile/mdb/mdb.min.css') }}">
       <!-- Your custom styles (optional) -->
-      <link rel="stylesheet" href="{{ asset('css/mobile/style.css') }}">
+						<link rel="stylesheet" href="{{ asset('css/mobile/style.css') }}">
+						<input type="hidden" id="layout" name="layout" value="mobile"/>
 
 
 

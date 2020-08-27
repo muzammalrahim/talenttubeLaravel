@@ -182,21 +182,20 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 
 
 // Front End without Authentication
+// User Registeration.
+    Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
+				// Route::get('step2', 'Site\HomeController@step2')->name('step2');
+
 // Desktop layout only. 
 Route::group(array('middleware' => ['devicecheck']), function(){
 
     Route::get('/', 'Site\HomeController@index')->name('homepage');
 
-    // Login.
-    Route::get('login', function () { return redirect('/'); });
+				// Login.
+				Route::get('login', function () { return redirect('/'); });
     Route::post('login', 'Site\HomeController@loginUser')->name('login');
     Route::post('join', 'Site\HomeController@join')->name('join'); 
     Route::get('join', function () { return redirect('/'); });
-
-
-    // User Registeration.
-    Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
-    // Route::get('step2', 'Site\HomeController@step2')->name('step2');
 
 
     //Employer Registeration.
@@ -331,7 +330,8 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
  
     Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
     
-    Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
+				Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
+				Route::get('step2Jobs', 'Site\SiteUserController@step2Jobs')->name('step2Jobs');
     Route::post('jobsFilter', 'Site\SiteUserController@jobsFilter')->name('jobsFilter');
 
     Route::get('jobs/{id}', 'Site\SiteUserController@jobDetail')->name('jobDetail');

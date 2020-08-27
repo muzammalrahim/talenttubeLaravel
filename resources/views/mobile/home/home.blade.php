@@ -57,6 +57,10 @@
 
 
 </div>
+
+{{-- @include('site.home.login') --}}
+
+@include('site.footer')
 </div>
 <!-- /main -->
 
@@ -64,7 +68,6 @@
 @stop
 
 @section('custom_js')
-
 @stop
 
 @section('custom_footer_css')

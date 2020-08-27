@@ -15,4 +15,5 @@ sftp-config.json
 *.zip
 storage/media/*
 storage/media/.*
-/storage/media/.*
+/storage/media/.* 
+.idea/*

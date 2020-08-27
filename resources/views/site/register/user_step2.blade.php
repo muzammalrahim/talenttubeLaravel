@@ -9,11 +9,11 @@
 
 
 @section('custom_css')
+				<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/register.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/card.css') }}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/>
     <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 
 @stop
 
@@ -363,9 +363,24 @@
             <div id="full_step_10" class="bl_card_Final full_step_10" style="display: none">
                 <div class="ind_exp">
                     <div class="ind_exp_h">
-                        <p>Browse Jobs</p>
+                        <p class="center">Browse Jobs</p>
                         <div class="jobs_list">
-                            getLoader('css_loader_btn', false, true);
+																										<div class="css_loader">
+																											<div class="spinner center">
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																												<div class="spinner-blade"></div>
+																											</div>
+																										</div>
                         </div>
                     </div>
                     <div class="join_btn mt20 center">
@@ -375,7 +390,8 @@
             </div>
 
         </div>
-    </div>
+				</div>
+				
 
 
 
@@ -383,6 +399,36 @@
 
 </div>
 <!-- /main -->
+
+<div style="display: none;">
+	<div id="jobApplyModal" class="modal p0 jobApplyModal wauto">
+					<div id="job_apply_modal" class="w100 pp_edit_info pp_cont m0">
+									<div class="frame">
+													{{-- <a class="icon_close" href="#close"><span class="close_hover"></span></a> --}}
+													<div class="head m0">Submit Proposal</div>
+													<input type="hidden" value="" name="openModalJobId" id="openModalJobId" />
+													<div class="cont">
+																	<div class="css_loader loader_edit_popup">
+																					<div class="spinner center">
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																									<div class="spinner-blade"></div>
+																					</div>
+																	</div>
+													</div>
+									</div>
+					</div>
+	</div>
+	</div>
 
 
 @stop
@@ -417,6 +463,7 @@
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
 
 
 <style>
@@ -445,7 +492,7 @@
 div#list_videos_public{
     float: none;
 }
-a#user_step8_done {
+a#user_step8_done, a#more_jobs_step2  {
     transition: background-color 0.3s ease;
     font-size: 18px;
     color: #fff;
@@ -458,6 +505,9 @@ a#user_step8_done {
     margin: 0 auto;
     padding: 10px 30px;
     margin-top: 10px;
+}
+a#more_jobs_step2{
+    width: 9%;
 }
 </style>
 @stop

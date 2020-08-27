@@ -73,9 +73,10 @@ $(function(){
     /* Email */
     $jq('#email').on('change propertychange input',validateEmail);
     function validateEmail(f){
-        var val=$.trim($jq('#email').val()),res=false,f=f||1;
+								var val=$.trim($jq('#email').val()),res=false,f=f||1;
         if(!checkEmail(val)){
-            var msg=isFrmSubmit?joinLangParts.incorrect_email:'&nbsp;';
+												var msg=isFrmSubmit?joinLangParts.incorrect_email:'&nbsp;';
+												console.log('check msg', msg)
             showError('email',msg)
         } else {
             hideError('email',false);
@@ -148,7 +149,7 @@ $(function(){
     var dataFrm={},
         isFrmSubmit=false;
     $jq('#frm_register_submit').mouseenter(function(){
-        //$jq('#city').blur();
+								// $jq('#city').blur();
     }).click(function(){
         isFrmSubmit=true;
         if($jq('#frm_register_submit').is('.disabled')){
@@ -1477,14 +1478,14 @@ function validateBirthday(){
 
 function setDisabledSubmitJoin(context, setError, notSubmitDisabled){
 
-        console.log(' setDisabledSubmitJoin ', context);
+        // console.log(' setDisabledSubmitJoin ', context);
 
         notSubmitDisabled=notSubmitDisabled||0;
         context=context||'#step-1';
         setError=setError||0;
         var is=0,isError;
         $jq('input:not([type="hidden"]), select, textarea', context).not('.not_frm').each(function(){
-            console.log(' setDisabledSubmitJoin each element  ', jQuery(this));
+            // console.log(' setDisabledSubmitJoin each element  ', jQuery(this));
             var val=$.trim(this.value);
             if(this.id=='email'){
                 isError=!checkEmail(val);

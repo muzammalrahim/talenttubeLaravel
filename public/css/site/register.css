@@ -263,7 +263,9 @@ div#full_step_6 {
 
 div#full_step_7,
 div#full_step_8,
-div#full_step_9{
+div#full_step_9,
+div#full_step_10
+{
     width: auto;
     margin: 0 auto;
     vertical-align: middle;
@@ -695,5 +697,20 @@ div#list_videos_public {
     box-sizing: border-box;
     padding: 0;
     margin: 0 auto;
+}
+.job_row {
+	padding: 16px;
+}
+.jbtn.graybtn {
+	background: #b3b3b3;
+}
+.job_heading {
+	background: #b3b3b3;
+}
+h3.job_title {
+	font-size: 18px;
+}
+.list_videos {
+	margin: 20px 0;
 }
 
