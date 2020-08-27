@@ -1045,6 +1045,7 @@ class MobileUserController extends Controller
 // ========================================== Employers on Mobile Phone ==========================================
 
         public function Memployers(Request $request){
+        
         $user = Auth::user();
         if (isEmployer($user)){ return redirect(route('jobSeekers')); }
         $data['user']           = $user;
@@ -1056,7 +1057,21 @@ class MobileUserController extends Controller
 
         $data['likeUsers'] = $likeUsers;
         $data['employers'] = $jobSeekers;
-        return view('mobile.user.employers', $data);
+
+        $data['ajax'] =  $request->ajax;
+        
+        if($data['ajax']){
+                return view('mobile.user.employers', $data); // mobile/user/employers
+                //  $view = view('mobile.user.employers', $data);
+                // $view = $view->render();
+                // echo  $view;
+                // exit; 
+
+        }else{
+             return view('mobile.user.employers', $data);
+        }
+
+       
     }
 
     //====================================================================================================================================//
@@ -1119,7 +1134,7 @@ class MobileUserController extends Controller
         $data['jobs']           = $jobs;
         $data['galleries']        = $employer_gallery;
         $data['videos']          = $employer_video;
-
+        $data['empquestion'] = getEmpRegisterQuestions();
 
         return view('mobile.user.employerInfo', $data);
 
@@ -1155,7 +1170,9 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // GET // Job Apply information layout.
     //====================================================================================================================================//
-    public function jobApplyInfo($job_id){
+    public function MjobApplyInfo($job_id){
+
+        // dd($job_id);
         $user = Auth::user();
         $data['user'] = $user;
         // $data['title'] = 'Jobs';
@@ -1163,15 +1180,18 @@ class MobileUserController extends Controller
         $data['job'] = Jobs::with('questions')->find($job_id);
         // dd( $data['job']  ); 
         // dd( $data['job']->questions()->count() ); 
-        return view('site.jobs.applyInfo', $data);
-        // site/jobs/applyInfo 
+        return view('mobile.jobs.applyInfo', $data);
+        // return $data;
+        // mobile/jobs/applyInfo 
     }
 
 
     //====================================================================================================================================//
     // Ajax POST // Job Apply Submitted.
     //====================================================================================================================================//
-    public function jobApplySubmit(Request $request){
+    public function MjobApplySubmit(Request $request){
+
+         // dd($request->toArray());
         $user = Auth::user();
         $requestData = $request->all();
         $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
@@ -1589,16 +1609,19 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // Get // show job detail page.
     //====================================================================================================================================//
-    function jobDetail(Jobs $id){
+    function MjobDetail(Jobs $id){
         // dd($job);
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Job Detail';
         $data['classes_body'] = 'jobDetail';
         $data['job'] = $id;
-        return view('site.jobs.jobDetail', $data);
+        return view('mobile.jobs.jobDetail', $data);  //  mobile/jobs/jobDetail
 
     }
+    
+
+
     
 
 

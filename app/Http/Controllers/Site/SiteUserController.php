@@ -1444,6 +1444,7 @@ class SiteUserController extends Controller
     // GET // Job Apply information layout.
     //====================================================================================================================================//
     public function jobApplyInfo($job_id){
+        // dd($job_id);
         $user = Auth::user();
         $data['user'] = $user;
         // $data['title'] = 'Jobs';

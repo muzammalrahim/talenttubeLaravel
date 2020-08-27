@@ -142,7 +142,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav">
       <!-- SideNav slide-out button -->
-      <div class="float-left">
+      <div class="float-left scrolling">
         <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars"></i></a>
       </div>
       <!-- Breadcrumb-->
@@ -196,5 +196,19 @@
     </nav>
     <!-- /.Navbar -->
   </header>
+  
   <!--/.Double navigation-->
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+     /* The function will add a class to disable the scroll for the page */
+    $('body').on('click', '.navbar-toggleable-md .scrolling', function(){
+      // console.log('The class will be added.');
+      $('.container-fluid').addClass('position-fixed');
+    });
+    $('body').on('click', 'div#sidenav-overlay', function() {
+      // console.log('The class will be removed.');
+      $('.container-fluid').removeClass('position-fixed');
+    });
+  });
+</script>

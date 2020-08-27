@@ -114,8 +114,7 @@
         <div class="card-footer text-muted jobAppFooter p-1">
 
                 <div class="float-right">
-                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs"href="{{route('MemployerInfo', ['id' => $js->id])}}">Detail</a>
-                    <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs">Block</a>
+                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs"href="{{route('MemployerInfo', ['id' => $js->id])}}">View Profile</a>
 
                     <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs">Like</a>
 

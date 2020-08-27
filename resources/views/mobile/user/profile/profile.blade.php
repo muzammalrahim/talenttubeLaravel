@@ -129,13 +129,13 @@
                             </div>
                           @endforeach
                       @endif
-                          <div class="col-md-12 text-center"style="margin-top: 65px;">
-                              <a class="btn btn-sm btn-success saveQuestionsButton hide2" onclick="UProfile.updateQuestions()">Save</a>
+                          <div class="col-md-12 text-center mt-3">
+                              <a class="btn btn-sm btn-success saveQuestionsButton d-none" onclick="UProfile.updateQuestions()">Save</a>
                           </div>  
                 </div>
 
 
-            <div class="alert alert-success questionsAlert" role="alert">
+            <div class="alert alert-success questionsAlert d-none" role="alert">
               <strong>Success!</strong> Questions have been updated successfully!
             </div>
 	</div>

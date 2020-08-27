@@ -158,3 +158,14 @@ div.row.jobInfo>.col.jobInfo {
 .active{
     color: #afdffc !important;
 }
+
+/* ======================================= Job Apply Page Select Background Color $ dropdown ======================================= */
+
+select.browser-default.custom-select.custom-select-sm.mt-2,#exampleFormControlTextarea6 {
+    background: #f3f5f9;
+}
+
+input.select-dropdown.form-control {
+    color: black;
+    border-bottom: 1px solid black !important;
+}

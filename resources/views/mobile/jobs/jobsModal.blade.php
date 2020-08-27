@@ -1,46 +1,70 @@
 
-{{-- ================================================ Job Apply Modal ================================================ --}}
+{{-- ================================================ Job Apply Modal modalJobApply================================================ --}}
 
-<div class="modal fade" id="modalJobApply" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog" role="document">
-
+<!-- Modal: modalPoll -->
+<div class="modal fade right" id="modalJobApply" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
     <div class="modal-content">
-
-          {{-- @foreach ($jobs as $job) --}}
-          {{-- @dump($jobs); --}}
-
-      <div class="modal-header text-center">
-
-
-        <h5 class="modal-title w-100 font-weight-bold">Submit Proposal</h5>
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Submit Proposal
+        </p>
 
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
+          <span aria-hidden="true" class="white-text">×</span>
         </button>
-
       </div>
 
-      <div class="modal-body mx-3">
+      <!--Body-->
+      <div class="modal-body p-2 mt-2">
+        <div class="text-center">
 
-        <div class="md-form mb-5">
-          <i class="fas fa-user prefix grey-text"></i>
-          <input type="text" id="form34" class="form-control validate">
-          <label data-error="wrong" data-success="right" for="form34">Your name</label>
+
+          <p>
+            <strong class="jobTitle font-weight-bold ">Job Title</strong>
+          </p>
+
+          <p class="jobInfoFont">
+            <strong>
+              Almost done, few questions before your resume is accepted for this job.
+            </strong>
+          </p>
+
         </div>
 
+        {{-- <hr> --}}
+
+        <div class="text-center jobInfoFont">
+          <strong>What motivated you to apply for this job and why do think you will be suitable?
+            </strong>
+        </div>
+
+        <hr>
+        
+
+        <div class="text-center mt-3">
+
+          <i class="far fa-file-alt fa-4x mb-3 animated rotateIn"></i>
+          
+        </div>
+        <!--Basic textarea-->
         <div class="md-form">
-          <i class="fas fa-pencil prefix grey-text"></i>
-          <textarea type="text" id="form8" class="md-textarea form-control" rows="4"></textarea>
-          <label data-error="wrong" data-success="right" for="form8">Your message</label>
+          <textarea type="text" id="form79textarea" class="md-textarea form-control" rows="3"></textarea>
+          <label for="form79textarea" class="font-weight-bold">Answer</label>
         </div>
 
       </div>
-      <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-unique">Send <i class="fas fa-paper-plane-o ml-1"></i></button>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-primary waves-effect waves-light">Submit
+          <i class="fa fa-paper-plane ml-1"></i>
+        </a>
+        <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
       </div>
-      {{-- @endforeach --}}
     </div>
   </div>
 </div>
+<!-- Modal: modalPoll -->
 

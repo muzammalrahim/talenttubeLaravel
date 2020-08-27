@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="newJobCont">
-    <div class="head icon_head_browse_matches">My Jobs</div>
+    <div class="head icon_head_browse_matches">Browse Jobs</div>
 
     <div class="add_new_job">
          
@@ -18,7 +18,7 @@
         
         <!-- =============================================================================================================================== -->
          <div class="jobs_list">
-            @include('site.jobs.list')
+            @include('site.jobs.list') {{-- site/jobs/list --}}
          </div>
         <!-- =============================================================================================================================== -->
 

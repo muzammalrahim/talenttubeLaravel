@@ -28,14 +28,14 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
  Route::get('profile', function () { return redirect('m/user/'.Auth::user()->username); })->name('mProfile');
  Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');
 
-// ======================================== Added by Hassan ========================================
+// ========================================== Added by Hassan ==========================================
 
 // ======================================== JOb Seeker's Profile ========================================
 
  Route::get('mJobApplications', 'Mobile\MobileUserController@mJobApplications')->name('mJobApplications');
  Route::get('Mjobs', 'Mobile\MobileUserController@Mjobs')->name('Mjobs');
  Route::get('Memployers','Mobile\MobileUserController@Memployers')->name('Memployers');
- Route::get('MemployerInfo/{id}', 'Mobile\MobileUserController@MemployerInfo')->name('MemployerInfo');
+ Route::get('Memployers/{id}', 'Mobile\MobileUserController@MemployerInfo')->name('MemployerInfo');
 
 // ======================================== Employer's Profile ========================================
 
@@ -47,6 +47,20 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
  Route::get('Mmutual-likes',         'Mobile\MobileUserController@MmutualLikes')->name('MmutualLikes');
  Route::get('MupdateUserPersonalSetting', 'Mobile\MobileUserController@MupdateUserPersonalSetting')->name('MupdateUserPersonalSetting');
  Route::get('Mcredit',       'Mobile\MobileUserController@Mcredit')->name('Mcredit');
+ Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
+
+
+// ============================================ Jobs ============================================
+// Job ApplyInfo Modal 
+ Route::get('MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfo')->name('MjobApplyInfo');
+ 
+ // Job Application Submission
+
+ Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
+ 
+
+
+
 
 
 

@@ -1,8 +1,10 @@
 
-@extends('mobile.user.usermaster')
-@section('content')
+@if(!$ajax) 
+    @extends('mobile.user.usermaster')
+    @section('content')
+@endif
 
- 
+
 <h6 class="h6 jobAppH6">Employers</h6>
 
 @include('mobile.jobs.jobsModal')
@@ -20,6 +22,7 @@
 
             <div class="card-header jobInfoFont jobAppHeader p-2">Company : 
                 <span class="jobInfoFont">{{$js->name}}</span>
+                {{-- @dump($js->id) --}}
             </div>
 
 {{-- ============================================ Card Body ============================================ --}}
@@ -100,18 +103,8 @@
 
 
 
-@stop
+@if(!$ajax) 
 
+    @stop
 
-@section('custom_footer_css')
-<style type="text/css">
-
-
-</style>
-@stop
-
-@section('custom_js')
-
-
-@stop
-
+@endif
