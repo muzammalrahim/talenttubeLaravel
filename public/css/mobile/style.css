@@ -5,3 +5,30 @@ body{ background: #254c8ed1!important; }
 main .container-fluid{ padding: 5px;  }
 
 
+
+/* ================== Jobs Filter page ================== */
+.collapsing {
+  position: relative;
+  height: 0;
+  overflow: hidden;
+  -webkit-transition-property: height, visibility;
+  transition-property: height, visibility;
+  -webkit-transition-duration: 0.1s;
+  transition-duration: 0.1s;
+  -webkit-transition-timing-function: ease;
+  transition-timing-function: ease;
+}
+.collapsing.width {
+  -webkit-transition-property: width, visibility;
+  transition-property: width, visibility;
+  width: 0;
+  height: auto;
+}
+
+.select-wrapper.white-text .select-dropdown, .select-wrapper.white-text .caret {
+    color: white !important;
+}
+
+.FilterBox.trade div.qualification_trade, .FilterBox.degree div.qualification_degree { display: block !important; }
+
+

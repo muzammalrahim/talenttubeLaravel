@@ -280,6 +280,7 @@ class HomeController extends Controller {
 													}
 
               
+ 
             }else{
                 return response()->json([
                     'status' => 0,
