@@ -1019,7 +1019,7 @@ class MobileUserController extends Controller
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
         $data['jobs'] =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-        return view('mobile.jobs.index', $data); // site/jobs/index 
+        return view('mobile.jobs.index', $data); // mobile/jobs/index 
     }
 
     //====================================================================================================================================//
@@ -1137,7 +1137,41 @@ class MobileUserController extends Controller
         $data['videos']          = $employer_video;
         $data['empquestion'] = getEmpRegisterQuestions();
 
-        return view('mobile.user.employerInfo', $data);
+        return view('mobile.user.employerInfo', $data);                
+
+    }
+
+    //====================================================================================================================================//
+    // Get // layout for Employer Detail.
+    //====================================================================================================================================//
+    public function MjobSeekersInfo($jobseekerId){
+        $user = Auth::user();
+        // dump($jobseekerId);
+
+        // if (isEmployer($user)){ return redirect(route('employers')); }
+        $data['user'] = $user;
+        $employer = User::JobSeeker()->where('id',$jobseekerId)->first();
+
+        // check if employer with id exist.
+        // if(empty($employer) || !isEmployer($employer) ){ return redirect(route('employers')); }
+
+        // check if this employer has not block you.
+       if(hasBlockYou($user, $employer)){ return view('unauthorized', $data); }
+
+        $jobs                = Jobs::where('user_id',$jobseekerId)->get();
+        $employer_gallery    = UserGallery::Public()->Active()->where('user_id',$jobseekerId)->get();
+        $employer_video      = Video::where('user_id', $jobseekerId)->get();
+
+        $data['title']          = 'JobSeeker Info';
+        $data['classes_body']   = 'Jobseeker Info';
+        $data['jobseeker']       = $employer;
+        $data['likeUsers']      = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        $data['jobs']           = $jobs;
+        $data['galleries']        = $employer_gallery;
+        $data['videos']          = $employer_video;
+        $data['empquestion'] = getEmpRegisterQuestions();
+
+        return view('mobile.employer.jobSeekers.jobseekersInfo', $data);                
 
     }
 
@@ -1172,18 +1206,12 @@ class MobileUserController extends Controller
     // GET // Job Apply information layout.
     //====================================================================================================================================//
     public function MjobApplyInfo($job_id){
-
         // dd($job_id);
         $user = Auth::user();
         $data['user'] = $user;
-        // $data['title'] = 'Jobs';
-        // $data['classes_body'] = 'jobs';
         $data['job'] = Jobs::with('questions')->find($job_id);
-        // dd( $data['job']  ); 
-        // dd( $data['job']->questions()->count() ); 
         return view('mobile.jobs.applyInfo', $data);
-        // return $data;
-        // mobile/jobs/applyInfo 
+        
     }
 
 
