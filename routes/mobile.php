@@ -33,6 +33,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
 		// User
 				Route::get('step2', 'Mobile\MobileUserController@step2User')->name('mStep2User');
+				Route::post('step2', 'Mobile\MobileUserController@Step2');
 
 
     Route::get('profile', function () { return redirect('m/user/'.Auth::user()->username); })->name('mProfile');

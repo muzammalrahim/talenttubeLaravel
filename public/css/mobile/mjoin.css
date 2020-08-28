@@ -1,0 +1,66 @@
+
+/* Step2 Start */
+#full_step_1{
+	display: table;
+}
+#full_step_3{
+	display: flex;
+}
+.card_profile{
+	width: 100%;
+}
+.card_profile .part_photo {
+	display: block;
+	width: 100%;
+}
+.card_profile .error {
+	opacity: 1;
+}
+.step2 .validation_error {
+	border: 1px solid #ff00003d !important;
+	border-radius: 4px;
+}
+ul.item_ul li.selected {
+	background: rgba(0, 0, 0, 0.16);
+	color: #888;
+}
+.select_qualification_list .list-group-item {
+	display: none;
+	padding: .5rem 1.25rem;
+	text-align: left;
+}
+.select_qualification_list.degree .list-group-item.degree {
+	display: block;
+}
+.select_qualification_list.trade .list-group-item.trade {
+		display: block;
+}
+.userVideo, .userResume {
+	padding: 20px;
+	min-height: 200px;
+}
+.userResumeCont, .userVideoCont {
+	width: 100%;
+	border: 1px solid #4285f4;
+	float: left;
+	border-radius: 4px;
+	text-align: center;
+	background-color: rgba(0,0,0,0.18);
+}
+.item_video {
+	min-width: 100px;
+	min-height: 100px;
+	max-width: 200px;
+	position: relative;
+	width: auto;
+	height: auto;
+	display: inline-block;
+	box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+	border-radius: 4px;
+	background: #e8542b;
+}
+.title_private_photos.title_videos {
+	font-size: 25px;
+	padding-bottom: 15px;
+}
+/* Step2 End */
