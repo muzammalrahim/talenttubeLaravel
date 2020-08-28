@@ -38,6 +38,12 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
     Route::get('profile', function () { return redirect('m/user/'.Auth::user()->username); })->name('mProfile');
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');
+
+    Route::get('jobs', 'Site\SiteUserController@jobs')->name('mJobs');
+
+    Route::get('jobSeekers',        'Site\EmployerController@jobSeekers')->name('mJobSeekers');
+
+
  });
 
 

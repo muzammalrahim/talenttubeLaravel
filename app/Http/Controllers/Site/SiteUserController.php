@@ -1413,6 +1413,7 @@ class SiteUserController extends Controller
 									return view('site.jobs.step2Jobs', compact('jobs'));
 					}
 	}
+ 
 
     //====================================================================================================================================//
     // Get // layout for purchasing Credits.
