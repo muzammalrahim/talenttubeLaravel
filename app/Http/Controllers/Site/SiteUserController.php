@@ -100,8 +100,8 @@ class SiteUserController extends Controller
                 }
 
                 }else{
-                    return view('mobile.user.profile.profile', $data); 
-
+                    return view('mobile.user.profile.profile', $data);  //   mobile/user/profile/profile
+ 
                 }
 
               

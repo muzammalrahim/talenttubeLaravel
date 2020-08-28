@@ -1,99 +1,121 @@
- 
- 
- 
+
+ {{-- @dd($jobSeekers) --}}
+
+@if ($jobSeekers && $jobSeekers->get() && $jobSeekers->count() > 0)
+
+
+@foreach ($jobSeekers->get()  as $js)    
     
-    @if ($jobSeekers && $jobSeekers->count() > 0)
-   
-    @foreach ($jobSeekers as $js)
-    
-    <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
-        <div class="jobSeeker_box relative dinline_block w100">
-            @include('site.layout.parts.jobSeekerProfilePhotoBox')
-            @include('site.layout.parts.jobSeekerInfoBox')
-            <div class="jobApplicAction">
-             @if (in_array($js->id,$likeUsers))
-                <a class="active graybtn jbtn" data-jsid="{{$js->id}}">Liked</a>
-             @else
-                <a class="jsLikeUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Like</a>
+    {{-- @dump($js) --}}
+<div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
+    <div class="card">
+        <div class="card-header jobInfoFont jobAppHeader p-2">Name:
+            <span class="jobInfoFont font-weight-normal">{{$js->name}} {{$js->surname}}</span>
+                <div class="jobInfoFont">Location:
+                <span class="font-weight-normal">{{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}}</span>
+                </div>
+        </div>
+
+        {{-- ============================================ Card Body ============================================ --}}
+        <div class="card-body jobAppBody pt-2">
+
+            <div class="row jobInfo">
+               
+                <div class="col-4 p-0">
+                    <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="150px">
+
+                  {{--   <div class="mt-2">
+                        <span class="jobInfoFont">Location:</span>
+                        {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}}
+                    </div> --}}
+               
+
+                </div>
+
+
+                <div class="col p-0 pl-3">
+
+                    <div class="jobInfoFont">Recent Job</div>
+                    <div>
+                    {{$js->recentJob}}
+                    </div>
+
+                    {{-- <div class="jobInfoFont mt-2">Interested In</div>
+                    <div>
+                    {{$js->interested_in}}
+                    </div> --}}
+
+                    <div class="jobInfoFont mt-2">Salary Range</div>
+                    <div>
+                    {{getSalariesRangeLavel($js->salaryRange)}}
+                    </div>
+
+
+                    
+                </div>
+
+            </div> 
+
+            <div class="row p-0">
+                <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Interested In</div>
+            </div>
+            <p class="card-text jobDetail row mb-1">{{$js->interested_in}}</p>
+            
+
+            <div class="row p-0">
+                <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">About Me</div>
+            </div>
+            <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
+
+            <div class="row p-0">
+                <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Qualification</div>
+            </div>
+
+            @php
+             $qualification_names =  getQualificationNames($js->qualification)
+            @endphp
+            
+             @if(!empty($qualification_names))
+                @foreach ($qualification_names as $qnKey => $qnValue) 
+
+                   {{-- <span class="qualification dblock">{{$qnValue}}</span> --}}
+
+            <p class="card-text jobDetail row mb-1 qualification dblock">{{$qnValue}}</p>
+
+
+                @endforeach
              @endif
-                <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" >View Profile</a> 
-            </div>
+
+            {{-- <p class="card-text jobDetail row mb-1 qualification dblock">{{$qnValue}}</p> --}}
+
+
         </div>
+
+{{-- ============================================ Card Body end ============================================ --}}
+
+
+{{-- ============================================ Card Footer ============================================ --}}
+
+        <div class="card-footer text-muted jobAppFooter p-1">
+
+                <div class="float-right">
+                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs"href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
+
+                    <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs">Like</a>
+
+                </div>
+                
+        </div>
+
+{{-- ============================================ Card Footer end ============================================ --}}
+
+
     </div>
 
+</div>
 
-{{-- 
-    <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
+@endforeach
+@endif
 
-        <div class="jobSeeker_box relative dinline_block w100">
-
-        <div class="js_info w_70p w_box dblock fl_left">
-
-            @include('site.layout.parts.jobSeekerProfilePhotoBox')
-
-            <div class="js_education js_field">
-                <span class="js_label">Education: </span>{{ ucfirst($js->qualificationType) }}
-            </div>
-            <div class="js_about js_field">
-                <span class="js_label">About me:</span>
-                <p class="js_about_me"> {{$js->about_me}}</p>
-            </div>
-            <div class="js_interested js_field">
-                <span class="js_label">Interested in:</span>
-                <p>{{$js->interested_in}}</p>
-            </div>
-
-            <div class="js_languages js_field">
-                <span class="js_label">Languages:</span>
-                <div class="js_tags dinline_block">
-                    @if ($js->language)
-                    @foreach ($js->language as $lang)
-                        <span class="js_tag">{{getLanguage($lang)}}</span>
-                    @endforeach
-                    @endif
-                </div>
-            </div>
-
-            <div class="js_languages js_field">
-                <span class="js_label">Hobbies:</span>
-                <div class="js_tags dinline_block">
-                    @if ($js->hobbies)
-                    @foreach ($js->hobbies as $hobby)
-                        <span class="js_tag">{{getHobby($hobby)}}</span>
-                    @endforeach
-                    @endif
-                </div>
-            </div>
-
-        </div>
-       
-        <div class="js_actionBtn">
-            <a class="graybtn jbtn" href="{{route('jobSeekerInfo', ['id' => $js->id])}}">Detail</a>
-            <a class="jsBlockUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Block</a>
-            @if (in_array($js->id,$likeUsers))
-            <a class="active graybtn jbtn" data-jsid="{{$js->id}}">Liked</a>
-            @else
-            <a class="jsLikeUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Like</a>
-            @endif
-        </div>
-
-        </div>
-
-    </div>
- --}}
-    @endforeach
-   
-
-    <div class="jobseeker_pagination cpagination">{!! $jobSeekers->render() !!}</div>
-
-    @endif
-
-
-
- 
-
- 
-
- 
 
  

@@ -156,9 +156,15 @@
 
 @section('custom_js')
 
-<script type="text/javascript">
+{{-- <script src="{{ asset('js/mobile/jobSeekerProfile.js') }}"></script> --}}
 
-{{-- ==================================================== Edit Qualification ==================================================== --}}
+<script type="text/javascript">
+	
+
+// {{-- ==================================================== Edit Qualification ==================================================== --}}
+
+
+
 
   $(document).ready(function(){
   
@@ -186,7 +192,7 @@
         @endforeach
     @endif
     newQualificationHtml += '</select>';  
-    newQualificationHtml += '<i class="fa fa-trash removeQualification"></i>';
+    newQualificationHtml += '<i class="fa fa-trash removeQualification"></i>'; 
     newQualificationHtml += '</div>';
     $('.qualificationList').append(newQualificationHtml);
    });
@@ -239,7 +245,8 @@ $(document).ready(function(){
 
 //================================================ User Questions Editing end here ================================================
 
-
 </script>
+
+
 @stop
 
