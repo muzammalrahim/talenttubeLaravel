@@ -18,9 +18,12 @@
             @else
                 <li><a href="{{route('profile')}}" class="column_narrow_search_results {{(request()->is('user/'.$user->username))?'active':''}}">
                 <span class="icon"></span>My Profile</a></li>
+
                 <li><a href="{{route('jobApplications')}}" class="column_narrow_search_results {{(request()->is('jobApplications'))?'active':''}}"><span class="icon"></span>My jobs Application</a></li>
+
                 <li><a href="{{route('jobs')}}" class="column_narrow_search_results {{(request()->is('jobs'))?'active':''}}"><span class="icon"></span>Browse jobs</a></li>
                 <li><a href="{{route('employers')}}" class="column_narrow_search_results {{(request()->is('employers'))?'active':''}}"><span class="icon"></span>Employers</a></li>
+                
             @endif
 
                 <li><a href="{{route('blockList')}}" class="column_narrow_search_results {{(request()->is('block'))?'active':''}}"><span class="icon"></span>Block Users</a></li>

@@ -6,14 +6,21 @@
     
     <div class="add_new_job jobSeekersListingCont">
 
+    	 <h6 class="h6 jobAppH6">Job Seekeers</h6>
+
         <!-- =============================================================================================================================== -->
             @include('mobile.employer.jobSeekers.filter')  
-        <!-- =============================================================================================================================== -->
+
+            <!-- 			mobile/employer/jobSeekers/filter 				-->
         
         <!-- =============================================================================================================================== -->
-         <div class="jobSeekers_list">
-            {{-- @include('site.employer.jobSeekers.list') --}}
+
+        <div class="jobSeekers_list">
+            @include('mobile.employer.jobSeekers.list')
         </div>
+
+            <!-- 			mobile/employer/jobSeekers/list 				-->
+
         <!-- =============================================================================================================================== -->
 
     </div>
@@ -40,4 +47,12 @@
 $(document).ready(function(){ })
 </script>
 @stop
+ 
 
+
+
+
+
+
+
+ 
