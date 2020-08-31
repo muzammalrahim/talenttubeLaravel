@@ -11,7 +11,7 @@
 <div class="homeBg">
    
    <div class="wrapper">
-    @include('site.header')
+    @include('mobile.header.header1')
    </div>
 
 
@@ -53,7 +53,8 @@
   </div>  
 </div>
 
- 
+  
+   @include('mobile.home.loginPopup') 
 
 
 </div>
@@ -68,6 +69,7 @@
 @stop
 
 @section('custom_js')
+  <script type="text/javascript" ></script>
 @stop
 
 @section('custom_footer_css')
