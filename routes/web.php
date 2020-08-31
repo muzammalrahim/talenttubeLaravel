@@ -183,17 +183,18 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 
 // Front End without Authentication
 // User Registeration.
-    Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
-				// Route::get('step2', 'Site\HomeController@step2')->name('step2');
+Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
+// Route::get('step2', 'Site\HomeController@step2')->name('step2');
+ Route::post('login', 'Site\HomeController@loginUser')->name('login');
 
 // Desktop layout only. 
 Route::group(array('middleware' => ['devicecheck']), function(){
 
     Route::get('/', 'Site\HomeController@index')->name('homepage');
 
-				// Login.
-				Route::get('login', function () { return redirect('/'); });
-    Route::post('login', 'Site\HomeController@loginUser')->name('login');
+	// Login.
+	Route::get('login', function () { return redirect('/'); });
+   
     Route::post('join', 'Site\HomeController@join')->name('join'); 
     Route::get('join', function () { return redirect('/'); });
 
