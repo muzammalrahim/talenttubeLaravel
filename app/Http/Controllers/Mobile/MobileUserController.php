@@ -120,101 +120,196 @@ class MobileUserController extends Controller
     //Ajax Post from step2 layout  // Add user step2 data.
     //====================================================================================================================================//
     public function Step2(Request $request){
-        
-        $requestData = $request->all();
-        $requestData['questions']       = json_decode( $request->questions, true );
-        $requestData['about_me']        = my_sanitize_string($request->about_me);
-        $requestData['interested_in']   = my_sanitize_string($request->interested_in);
-        $requestData['recentJob']       = my_sanitize_string($request->recentJob);
-        $requestData['industry_experience'] = my_sanitize_array_string(json_decode(stripslashes($request->industry_experience),true));
-        $requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
-        $requestData['salaryRange'] = my_sanitize_string($request->salaryRange);
-        $requestData['tags'] = my_sanitize_string($request->tags);
-        $requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
-        $requestData['qualification_type']        = my_sanitize_string($request->qualification_type);
-
-        // dump($requestData['tags']);
-        // dump($requestData['industry_experience']);
-        // dd( $request->toArray() );
-
-        // dd( $request->all() );
-        // dd(  $requestData );
-        if( !empty($requestData['questions']) ){
-            foreach($requestData['questions'] as $qk => $qv){
-                $requestData['questions'][$qk] = my_sanitize_string($qv);
-            }
-        }
-
-        // card_step2_validation
-        $rules = array(
-            'questions'  => 'required',
-            'about_me' => 'required|max:150',
-            'interested_in' => 'required|max:150',
-            'recentJob'  => 'required',
-            'industry_experience'  => 'required',
-            'qualification'  => 'required',
-            'salaryRange'  => 'required',
-            'tags'  => 'required',
-           
-        );
-        $validator = Validator::make( $requestData , $rules);
-
-        if ($validator->fails()){
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $validator->getMessageBag()->toArray()
-            ]);
-        }else{
-
-            // dump( ' validation success ' ); 
-            // dd( $request->all() );
-
-
-            $user = Auth::user();
-            $user->questions        = $requestData['questions'];
-            $user->about_me         = $requestData['about_me'];
-            $user->interested_in    = $requestData['interested_in'];
-            $user->recentJob        = $requestData['recentJob'];
-            $user->industry_experience = $requestData['industry_experience'];
-            $user->qualification    = $requestData['qualification'];
-            $user->salaryRange      = $requestData['salaryRange'];
-            $user->step2            = 1;
-            $user->qualificationType= $requestData['qualification_type'];
-            $user->save();
-            $user->tags()->sync($requestData['tags']); 
-            $user->qualificationRelation()->sync($requestData['qualification']); 
-
-            if(!empty($request->file('file'))){
-                $image = $request->file('file');
-                $fileName   = time() . '.' . $image->getClientOriginalExtension();
-                
-                $file_thumb  = $user->id.'/gallery/small/'.$fileName;
-                $file_path   = $user->id.'/gallery/'.$fileName;
-
-                $img = Image::make($image->getRealPath());
-                $img->resize(120, 120, function ($constraint) { $constraint->aspectRatio(); });
-                $img->stream();
-                Storage::disk('publicMedia')->put( $file_thumb , $img);
-
-                $img = Image::make($image->getRealPath());
-                $img->stream();
-
-                Storage::disk('publicMedia')->put($file_path, $img, 'public');
-
-                $userGallery = new UserGallery();
-                $userGallery->user_id = $user->id;
-                $userGallery->image = $fileName;
-                $userGallery->status = 1;
-                $userGallery->profile = 1;
-                $userGallery->save();
-
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'data saved succesfully',
-                    'redirect' => route('profile')
-                ]);
-            }
-        }
+								// dd($request);
+					$requestData = $request->all();
+					$requestData['step'] = my_sanitize_number($request->step);
+					
+													$user = Auth::user();
+													if ($requestData['step'] == 2)
+													{
+																	$requestData['questions']       = json_decode($request->questions, true);
+																	if( !empty($requestData['questions']) ){
+																					foreach($requestData['questions'] as $qk => $qv){
+																									$requestData['questions'][$qk] = my_sanitize_string($qv);
+																					}
+																	}
+					//            dd($requestData['questions']);
+																	$rules = array(
+																					'questions'  => 'required'
+																	);
+																	$validator = Validator::make($requestData, $rules);
+																	if ($validator->fails()){
+																					return response()->json([
+																									'status' => 0,
+																									'validator' => $validator->getMessageBag()->toArray()
+																					]);
+																	} else {
+																					$user->questions = $requestData['questions'];
+																					$user->step2 = $requestData['step'];
+																					$user->save();
+																					return response()->json([
+																									'status' => 1,
+																									'message' => 'questions saved succesfully'
+																					]);
+																	}
+													} elseif ($requestData['step'] == 3) {
+																	$rules = array(
+																					'about_me' => 'required|max:150',
+																					'interested_in' => 'required|max:150',
+																					'recentJob'  => 'required'
+																	);
+																	$validator = Validator::make($requestData, $rules);
+																	if ($validator->fails()){
+																					return response()->json([
+																									'status' => 0,
+																									'validator' => $validator->getMessageBag()->toArray()
+																					]);
+																	}
+																	$user->about_me         = $requestData['about_me'];
+																	$user->interested_in    = $requestData['interested_in'];
+																	$user->recentJob        = $requestData['recentJob'];
+																	$user->step2 = $requestData['step'];
+																	$user->save();
+																	if(!empty($request->file('file'))){
+																					$image = $request->file('file');
+																					$fileName   = time() . '.' . $image->getClientOriginalExtension();
+					
+																					$file_thumb  = $user->id.'/gallery/small/'.$fileName;
+																					$file_path   = $user->id.'/gallery/'.$fileName;
+					
+																					$img = Image::make($image->getRealPath());
+																					$img->resize(120, 120, function ($constraint) { $constraint->aspectRatio(); });
+																					$img->stream();
+																					Storage::disk('publicMedia')->put( $file_thumb , $img);
+					
+																					$img = Image::make($image->getRealPath());
+																					$img->stream();
+																					Storage::disk('publicMedia')->put($file_path, $img, 'public');
+					
+																					$userGallery = new UserGallery();
+																					$userGallery->user_id = $user->id;
+																					$userGallery->image = $fileName;
+																					$userGallery->status = 1;
+																					$userGallery->profile = 1;
+																					$userGallery->save();
+																	}
+																	return response()->json([
+																					'status' => 1,
+																					'message' => 'about me saved succesfully'
+																	]);
+													}
+													elseif ($requestData['step'] == 4)
+													{
+																	$requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
+																	$requestData['qualification_type'] = my_sanitize_string($request->qualification_type);
+																	$rules = array(
+																					'qualification'  => 'required'
+																	);
+																	$validator = Validator::make($requestData, $rules);
+																	if ($validator->fails()){
+																					return response()->json([
+																									'status' => 0,
+																									'validator' => $validator->getMessageBag()->toArray()
+																					]);
+																	}
+																	$user->qualification    = $requestData['qualification'];
+																	$user->qualificationType= $requestData['qualification_type'];
+																	$user->step2 = $requestData['step'];
+																	$user->save();
+																	$user->qualificationRelation()->sync($requestData['qualification']);
+																	return response()->json([
+																					'status' => 1,
+																					'message' => 'qualification saved succesfully',
+																	]);
+													} elseif ($requestData['step'] == 5)
+													{
+																	$requestData['industry_experience'] = my_sanitize_array_string(json_decode(stripslashes($request->industry_experience),true));
+																	$rules = array(
+																					'industry_experience'  => 'required'
+																	);
+																	$validator = Validator::make($requestData, $rules);
+																	if ($validator->fails()){
+																					return response()->json([
+																									'status' => 0,
+																									'validator' => $validator->getMessageBag()->toArray()
+																					]);
+																	}
+																	$user->industry_experience = $requestData['industry_experience'];
+																	$user->step2 = $requestData['step'];
+																	$user->save();
+																	return response()->json([
+																					'status' => 1,
+																					'message' => 'industry experience saved succesfully',
+																	]);
+													} elseif ($requestData['step'] == 6)
+													{
+																	$requestData['salaryRange'] = my_sanitize_string($request->salaryRange);
+																	$rules = array(
+																					'salaryRange'  => 'required'
+																	);
+																	$validator = Validator::make($requestData, $rules);
+																	if ($validator->fails()){
+																					return response()->json([
+																									'status' => 0,
+																									'validator' => $validator->getMessageBag()->toArray()
+																					]);
+																	}
+																	$user->salaryRange      = $requestData['salaryRange'];
+																	$user->step2 = $requestData['step'];
+																	$user->save();
+																	return response()->json([
+																					'status' => 1,
+																					'message' => 'salary range saved succesfully',
+																	]);
+													} elseif ($requestData['step'] == 7)
+													{
+																	$user->step2 = $requestData['step'];
+																	$user->save();
+																	return response()->json([
+																					'status' => 1,
+																					'message' => 'data saved successfully'
+																	]);
+													} elseif($requestData['step'] == 8) {
+																	$user->step2 = $requestData['step'];
+																	$user->save();
+																	return response()->json([
+																					'status' => 1,
+																					'message' => 'data saved successfully'
+																	]);
+													} elseif($requestData['step'] == 9) {
+																	$requestData['tags'] = my_sanitize_string($request->tags);
+																	$requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
+					//            $rules = array(
+					//                'tags'  => 'required'
+					//            );
+					//            $validator = Validator::make($requestData, $rules);
+					//            if ($validator->fails()){
+					//                return response()->json([
+					//                    'status' => 0,
+					//                    'validator' => $validator->getMessageBag()->toArray()
+					//                ]);
+					//            }
+																	if ($requestData['tags'] != null) {
+																					$user->step2 = $requestData['step'];
+																					$user->save();
+																					$user->tags()->sync($requestData['tags']);
+																	}
+																	$user->step2 = $requestData['step'];
+																	$user->save();
+																	return response()->json([
+																					'status' => 1,
+																					'message' => 'data saved successfully'
+																	]);
+													} else {
+																	$user->step2 = $requestData['step'];
+																	$user->save();
+																	return response()->json([
+																					'status' => 1,
+																					'message' => 'data saved successfully',
+																					'redirect' => route('profile'),
+																					'step' => $requestData['step']
+																	]);
+													}
     }
 
 
@@ -908,8 +1003,9 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     public function uploadVideo(Request $request){
 
+								dd($request);
         $user = Auth::user();
-        $video = $request->file('video');
+								$video = $request->file('video');
         // $rules = array('video.*' => 'required|file|max:20000');
         $rules = array('video' => 'required|file|max:50000');
         // $rules = array('video.*' => 'required|file|max:2');
@@ -928,7 +1024,9 @@ class MobileUserController extends Controller
             $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"
         ) {
 
-            $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
+									$fileOriginalName = $video->getClientOriginalName();
+									// $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
+									$fileName = $fileOriginalName;
             $storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
            
             // store video in private folder by default. 

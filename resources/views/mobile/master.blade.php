@@ -21,11 +21,12 @@
       <link rel="stylesheet" href="{{ asset('css/mobile/mdb/mdb.min.css') }}">
       <!-- Your custom styles (optional) -->
 						<link rel="stylesheet" href="{{ asset('css/mobile/style.css') }}">
+
+
+
+						@yield('custom_css')
+						
 						<input type="hidden" id="layout" name="layout" value="mobile"/>
-
-
-
-      @yield('custom_css')
 
 </head>
 <body class="@yield('classes_body')" @yield('body_data')>
