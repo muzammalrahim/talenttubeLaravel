@@ -1003,8 +1003,9 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     public function uploadVideo(Request $request){
 
+								dd($request);
         $user = Auth::user();
-        $video = $request->file('video');
+								$video = $request->file('video');
         // $rules = array('video.*' => 'required|file|max:20000');
         $rules = array('video' => 'required|file|max:50000');
         // $rules = array('video.*' => 'required|file|max:2');
@@ -1023,7 +1024,9 @@ class MobileUserController extends Controller
             $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"
         ) {
 
-            $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
+									$fileOriginalName = $video->getClientOriginalName();
+									// $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
+									$fileName = $fileOriginalName;
             $storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
            
             // store video in private folder by default. 

@@ -35,6 +35,9 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 				Route::get('step2', 'Mobile\MobileUserController@step2User')->name('mStep2User');
 				Route::post('step2', 'Mobile\MobileUserController@Step2');
 
+				// video user/employer
+				Route::post('ajax/uploadVideo', 'Mobile\MobileUserController@uploadVideo')->name('mUploadVideo');
+				
 
     Route::get('profile', function () { return redirect('m/user/'.Auth::user()->username); })->name('mProfile');
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');

@@ -263,7 +263,62 @@ $(document).ready(function(){
 			// User Step6 End
 			
 			// User Step7 Start
-
+			$('#photo_add_video').on('click', function(){
+				var input = document.createElement('input');
+				input.type = 'file';
+				input.onchange = e => {
+					var file = e.target.files[0];
+					console.log(' onchange file  ', file);
+					var formData = new FormData();
+					formData.append('video', file);
+					var item_id = Math.floor((Math.random() * 1000) + 1);
+					var video_item = '';
+					video_item += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">';
+					video_item  +=  '<a class="show_photo_gallery video_link" href="">';
+					video_item  +=  '</a>';
+					video_item  +=  '<span class="v_title">Video title</span>';
+					video_item  +=  '<span title="Delete video" class="icon_delete">';
+					video_item  +=      '<span class="icon_delete_photo"></span>';
+					video_item  +=      '<span class="icon_delete_photo_hover"></span>';
+					video_item  +=  '</span>';
+					video_item  +=  '<div class="v_error error hide_it"></div>';
+					video_item  +=  '<div class="v_progress"></div>';
+					video_item  += '</div>';
+					$('.list_videos').append(video_item);
+					var updateForm = document.querySelector('form');
+					$.ajaxSetup({
+						headers: {
+							'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+						}
+					});
+					var request = new XMLHttpRequest();
+					request.upload.addEventListener('progress', function(e){
+						var percent = Math.round((e.loaded / e.total) * 100);
+						console.log(' progress-bar ', percent+'%' );
+						$('#v_'+item_id+' .v_progress').css('width', percent+'%');
+					}, false);
+					request.addEventListener('load', function(e){
+						console.log(' load e ', e);
+						var resp = JSON.parse(e.target.responseText);
+						console.log(' jsonResponse ', resp);
+						$('#v_'+item_id+' .v_progress').remove();
+						if (resp.status == 1) {
+							$('#v_'+item_id).replaceWith(res.html);
+						} else {
+							console.log(' video error ');
+							if (resp.validator != undefined) {
+								$('#v_'+item_id+' .error').removeClass('hide_it').addClass('to_show').text(res.validator['video'][0]);
+							}
+						}
+					}, false);
+					request.open('post', base_url+'/m/ajax/uploadVideo');
+					request.send(formData);
+				}
+				input.click();
+			});
+			$('#user_step7_done').click(function(){
+				userStep2Update(step6_formData,7);
+			});
 			// User Step7 End
 			// Step2 Send Ajax Request Start
 			var userType = $('#userType').val();
@@ -300,6 +355,9 @@ $(document).ready(function(){
 										break;
 									case 6:
 										showUserStep7();
+										break;
+									case 7:
+										showUserStep8();
 										break;
 									default:
 										break;
@@ -391,6 +449,16 @@ function showUserStep7(){
 	$('#join_step ul li:eq(5)').addClass('active').removeClass('d-none');
 	$('#full_step_6').fadeOut(400,function(){
 					$('#full_step_7').fadeIn(400,function(){
+					});
+	});
+}
+
+function showUserStep8(){
+	$('#join_step ul li').removeClass('active').addClass('d-none');
+	$('#join_step ul li:eq(1), #join_step ul li:eq(2), #join_step ul li:eq(3), #join_step ul li:eq(4), #join_step ul li:eq(5)').removeClass('d-block');
+	$('#join_step ul li:eq(6)').addClass('active').removeClass('d-none');
+	$('#full_step_7').fadeOut(400,function(){
+					$('#full_step_8').fadeIn(400,function(){
 					});
 	});
 }

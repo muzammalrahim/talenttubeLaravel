@@ -33,7 +33,7 @@
 				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">4</span> Industry Experience</li>
 				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">5</span> Salary Range</li>
 				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">6</span> Upload Video</li>
-				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2">7</span></li>
+				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">7</span> Upload Resume</li>
 				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2">8</span></li>
 				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2">9</span></li>
 			</ul>
@@ -251,7 +251,7 @@
 																						</a>
 																		</div>
 														</div>
-														<div class="list_videos"></div>
+														<div class="list_videos mt-3"></div>
 										</div>
 						</div>
 					</div>
@@ -263,6 +263,20 @@
 		</div>
 	</div>
 	<!-- Step 7 End -->
+	<!-- Step 8 Start -->
+	<div class="row py-3" id="full_step_8" style="display: none">
+		<div class="col">
+			<div class="card wider">
+				<div class="card-body">
+					<h4 class="text-center">Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:</h4>
+					<p class="text-center">1. Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
+					<p class="text-center">2. Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. </p>
+					<p class="h5 text-center">You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Step 8 End -->
 </div>
 
 <!-- main -->
@@ -270,37 +284,6 @@
     <input type="hidden" id="userType" name="userType" value="user" />
     <div class="content">
         <div class="mw50 dtable margin_auto" style="display: none">
-
-
-            <div id="full_step_7" class="bl_card_indExp"  style="display:none;">
-                <div class="ind_exp">
-                    <div class="ind_exp_h">
-                        <p>Almost done, candidates! To help Employers connect with you, we’ve created a tagging system. This allows Employers to search for specific candidates via a search system. In the below section, we encourage you to create as many tags that best describe your key attributes as a Job Seeker.</p>
-                        <div class="taging_h_info">
-                            <p>Be sure to tag the following:</p>
-                            <p>*Names of organisations and companies you’ve worked for, including charities and not for profits</p>
-                            <p>*Job Titles you have held</p>
-                            <p>*Skills you have (eg; customer service, java Developer, sales, book keeping, etc)</p>
-                            <p>*Institutions you’ve studied, including the names of schools, colleges, universities and others</p>
-                            <p>*The names of courses you’re studying or have completed</p>
-                            <p>*The name of qualifications you have (eg; RG146, RSA, etc)</p>
-                            <p>*Languages you speak (other than English)</p>
-                            <p>*Hobbies and personal interests are fine as well</p>
-                        </div>
-                    </div>
-
-                    <div class="user_tagging">
-                       @include('site.layout.tagging')
-                    </div>
-
-                    <div class="join_btn mt20 center">
-                        <button id="user_step7_done" class="btn turquoise small btn_join_submit " disabled="true">Done</button>
-                    </div>
-
-                </div>
-            </div>
-
-
 
             <div id="full_step_8" class="bl_card_Final full_step_8"  style="display:none;">
                 <div class="ind_exp">
