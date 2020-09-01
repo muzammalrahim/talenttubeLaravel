@@ -56,14 +56,29 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
 	// ============================================ Jobs ============================================
 	// Job ApplyInfo Modal 
+
 	 Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfo')->name('MjobApplyInfo');
 
 	 // Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfoAjax')->name('MjobApplyInfoAjax');
 	 
 	 // Job Application Submission
-
 	 Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
- 
+     Route::post('ajax/MupdateInterested_in', 'Mobile\MobileUserController@MupdateInterested_in')->name('MupdateInterested_in');
+     Route::post('ajax/Mabout_me', 'Mobile\MobileUserController@Mabout_me')->name('Mabout_me');
+     Route::post('ajax/MupdateQualification', 'Mobile\MobileUserController@MupdateQualification')->name('MupdateQualification');
+     Route::post('ajax/MupdateIndustryExperience', 'Mobile\MobileUserController@MupdateIndustryExperience')->name('MupdateIndustryExperience');
+     Route::post('ajax/MupdateQuestions', 'Mobile\MobileUserController@MupdateQuestions');
+
+     // Ajax for liking employer
+
+    Route::post('ajax/MlikeEmployer/{id}', 'Mobile\MobileUserController@MlikeEmployer')->name('MlikeEmployer');
+    Route::post('ajax/MunLikeUser/{id}', 'Mobile\MobileUserController@MunLikeUser')->name('MunLikeUser/{id}');
+
+    Route::post('ajax/MblockEmployer/{id}', 'Mobile\MobileUserController@MblockEmployer')->name('MblockEmployer');
+    Route::post('ajax/MunBlockUser/{id}', 'Mobile\MobileUserController@MunBlockUser')->name('MunBlockUser');
+
+
+
 
 
 
@@ -77,6 +92,8 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');
     Route::get('jobs', 'Site\SiteUserController@jobs')->name('mJobs');
     Route::get('jobSeekers',        'Site\EmployerController@jobSeekers')->name('mJobSeekers');
+
+
  
  });
 

@@ -363,11 +363,91 @@ class MobileUserController extends Controller
         }
     }
 
+
+    //====================================================================================================================================//
+    // Ajax For updating Interested In.
+    // Called from JobSeeker Profile page. 
+    //====================================================================================================================================//
+    public function MupdateInterested_in(Request $request){
+
+        // dd($request->interestedIn);
+        
+        $requestData = $request->all(); 
+        // dd($requestData);
+        // $rules = array(
+        //             'interested_in'    => 'required|array', 
+        //             'interested_in.*'  => 'required|integer'
+        //         );
+        // $validator = Validator::make($requestData, $rules); 
+        // dd( $validator->errors() ); 
+        // if (!$validator->fails()) {
+            $user = Auth::user();
+            // dd($user);
+            
+            $user->interested_in = $request->interestedIn;
+
+            // dd($request->interestedIn);
+
+            // $user->qualificationRelation()->sync($requestData['qualification']); 
+
+            $user->save();
+
+
+            $data['user'] = User::find($user->id); 
+            // $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
+            // $QualificationHtml = $QualificationView->render();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $data
+            ]);
+        // }
+    }
+
+    // Ajax For updating Interested In.
+    //====================================================================================================================================//
+
+    //====================================================================================================================================//
+    // Ajax For updating About Me.
+
+    public function Mabout_me(Request $request){
+
+        // dd($request->interestedIn);
+        
+        $requestData = $request->all(); 
+        // dd($requestData);
+        // $rules = array(
+        //             'interested_in'    => 'required|array', 
+        //             'interested_in.*'  => 'required|integer'
+        //         );
+        // $validator = Validator::make($requestData, $rules); 
+        // dd( $validator->errors() ); 
+        // if (!$validator->fails()) {
+            $user = Auth::user();
+            // dd($user);
+            
+            $user->about_me = $request->aboutMe;
+            // dd($request->interestedIn);
+            // $user->qualificationRelation()->sync($requestData['qualification']); 
+            $user->save();
+            $data['user'] = User::find($user->id); 
+            // $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
+            // $QualificationHtml = $QualificationView->render();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $data
+            ]);
+        // }
+    }
+
+    // Ajax For updating About Me.
+    //====================================================================================================================================//
+
+
     //====================================================================================================================================//
     // Ajax For updating Qualification.
     // Called from JobSeeker Profile page. 
     //====================================================================================================================================//
-    public function updateQualification(Request $request){
+    public function MupdateQualification(Request $request){
         
         $requestData = $request->all();  
         $rules = array(
@@ -391,11 +471,11 @@ class MobileUserController extends Controller
         }
     }
 
- // Ajax For updating Questions.
+    // Ajax For updating Questions.
     //====================================================================================================================================//
 
 
-    public function updateQuestions(Request $request){
+    public function MupdateQuestions(Request $request){
         
         // dump($request->questions); 
         $user = Auth::user();
@@ -419,8 +499,75 @@ class MobileUserController extends Controller
         // }
     }
 
- // Ajax For updating Questions End here.
     //====================================================================================================================================//
+    // Ajax POST // Like Employer on JobSeeker Employer listing page.
+    //====================================================================================================================================//
+    public function MlikeEmployer($employerId){
+        $user = Auth::user();
+        if (isEmployer($user)){
+            return response()->json([
+                'status' => 0,
+                'error' => 'You are not allwoed to block Employer',
+                // 'redirect' => route('')
+            ]);
+        }
+
+        // check if jobSeeker with id exist
+        $employer = User::Employer()->where('id',$employerId);
+        if (empty($employer)){
+            return response()->json([
+                'status' => 0,
+                'error' => 'Employer with id '.$employerId.' do not exist',
+            ]);
+        }
+
+        // block jos seeker.
+        $LikeUser = new LikeUser();
+        $record = $LikeUser->addEntry($user, $employerId);
+        return response()->json([
+            'status' => 1,
+            'message' => 'Employer Succefully Liked',
+            'data' =>  $record
+        ]);
+    }
+
+
+    // Ajax For Liking Employer End here.
+    //====================================================================================================================================//
+
+
+    //====================================================================================================================================//
+    // Ajax POST // Block Employer on JobSeeker Employers listing page.
+    //====================================================================================================================================//
+
+    public function MblockEmployer($employerId){
+        $user = Auth::user();
+        if (isEmployer($user)){
+            return response()->json([
+                'status' => 0,
+                'error' => 'You are not allwoed to block Employer',
+            ]);
+        }
+
+        // check if jobSeeker with id exist
+        $employer = User::Employer()->where('id',$employerId);
+        if (empty($employer)){
+            return response()->json([
+                'status' => 0,
+                'error' => 'Employer with id '.$employerId.' do not exist',
+            ]);
+        }
+
+        // block Employer.
+        $blockUser = new BlockUser();
+        $record = $blockUser->addEntry($user, $employerId);
+        return response()->json([
+            'status' => 1,
+            'message' => 'Employer Succefuly Blocked',
+            'data' =>  $record
+        ]);
+
+    }
 
     //====================================================================================================================================//
     // chagne the about me text on user profile.
@@ -1046,15 +1193,22 @@ class MobileUserController extends Controller
 // ========================================== Employers on Mobile Phone ==========================================
 
         public function Memployers(Request $request){
-        
+    
+
+
         $user = Auth::user();
         if (isEmployer($user)){ return redirect(route('jobSeekers')); }
         $data['user']           = $user;
         $data['title']          = 'Employers';
         $data['classes_body']   = 'employers';
-        $employersObj          = new User();
+        $employersObj           = new User();
         $jobSeekers             = $employersObj->getEmployers($request, $user);
         $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        $blockUsers             = BlockUser::where('user_id',$user->id)->pluck('block')->toArray();
+
+        // dd($blockUsers);
+
+        $data['blockUsers'] = $blockUsers;
 
         $data['likeUsers'] = $likeUsers;
         $data['employers'] = $jobSeekers;
@@ -1436,7 +1590,7 @@ class MobileUserController extends Controller
         $data['title'] = 'Block Users';
         $data['classes_body'] = 'blockUsers';
         $data['blockUsers'] = BlockUser::with('user')->where('user_id',$user->id)->get();
-        return view('mobile.user.blockUsers', $data);
+        return view('mobile.user.blockUsers', $data);  //   mobile/user/blockUsers
     }
 
     
@@ -1449,7 +1603,7 @@ class MobileUserController extends Controller
         $data['title'] = 'Like Users';
         $data['classes_body'] = 'likeUsers';
         $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
-        return view('mobile.user.likeUsers', $data);
+        return view('mobile.user.likeUsers', $data);  //  mobile/user/likeUsers
     }
 
 
@@ -1457,7 +1611,7 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // Ajax Post // Remove user from user block User List.
     //====================================================================================================================================//
-    public function unBlockUser(Request $request){
+    public function MunBlockUser(Request $request){
         // dd( $request->toArray() );
         $user = Auth::user();
         $blockUserId = (int) $request->id;
@@ -1472,7 +1626,20 @@ class MobileUserController extends Controller
     // Ajax Post // Remove user from user Like User List.
     //====================================================================================================================================//
 
-    public function unLikeUser(Request $request){
+    // public function MunLikeUser(Request $request){
+    //     // dd($request);
+
+    //     $user = Auth::user();
+    //     $likeUserId = (int)$request->id;
+    //     LikeUser::where('like',$likeUserId)->delete();
+    //     return response()->json([
+    //         'status' => 1,
+    //         'message' => 'User unLiked Succesfully'
+    //     ]);
+    // }
+
+
+    public function MunLikeUser(Request $request){
         // dd( $request->toArray() );
         $user = Auth::user();
         $likeUserId = (int) $request->id;
@@ -1482,6 +1649,7 @@ class MobileUserController extends Controller
             'message' => 'User unLiked Succesfully'
         ]);
     }
+
 
 
     //====================================================================================================================================//
@@ -1648,6 +1816,35 @@ class MobileUserController extends Controller
         return view('mobile.jobs.jobDetail', $data);  //  mobile/jobs/jobDetail
 
     }
+
+
+ // ================================== Ajax For updating Industry Experience. ==============================
+
+
+    public function MupdateIndustryExperience(Request $request){
+
+        // dump($request->tags);
+        $user = Auth::user();
+        $rules = array(
+                'industry_experience'    => 'required|array',
+                'industry_experience.*'  => 'string|max:100'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        // dd( $validator->errors() );
+        if (!$validator->fails()) {
+            $user->industry_experience = $request->industry_experience;
+            $user->save();
+            $data['user'] = User::find($user->id);
+            $IndustryView = view('site.layout.parts.jobSeekerIndustryList', $data);
+            $IndustryHtml = $IndustryView->render();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $IndustryHtml
+            ]);
+        }
+    }
+
+ // ============================= Ajax For updating Industry Experience End here =================================
     
 
 

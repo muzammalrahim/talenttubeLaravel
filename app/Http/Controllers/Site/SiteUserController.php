@@ -1406,9 +1406,9 @@ class SiteUserController extends Controller
     // GET // Job Search/Listing layout.
     //====================================================================================================================================//
     public function jobs(){
-								$user = Auth::user();
-								$user->step2 = 10;
-								$user->save(); 
+		$user = Auth::user();
+		$user->step2 = 10;
+		$user->save(); 
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
@@ -1705,7 +1705,7 @@ class SiteUserController extends Controller
         $data['title'] = 'Like Users';
         $data['classes_body'] = 'likeUsers';
         $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
-        return view('site.user.likeUsers', $data);
+        return view('site.user.likeUsers', $data);         //   site/user/likeUsers
     }
 
 

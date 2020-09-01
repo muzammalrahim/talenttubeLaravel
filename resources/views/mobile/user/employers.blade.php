@@ -18,7 +18,7 @@
 
 
     <div class="jobSeekers_list">
-        @include('mobile.user.employersList')
+        @include('mobile.user.employersList')  	<!--	mobile/user/employersList 		 -->
     </div>
 
 
@@ -27,3 +27,4 @@
     @stop
 
 @endif
+

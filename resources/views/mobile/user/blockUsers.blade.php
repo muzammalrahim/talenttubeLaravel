@@ -3,6 +3,13 @@
 @section('content')
 
  
+
+ <div class="alert alert-success empUnBlockAlert" role="alert" style="display:none;">
+          <strong>Success!</strong> You have Blocked Employer successfully!
+</div>
+
+
+
 <h6 class="h6 jobAppH6">Block User's List</h6>
 
 @if ($blockUsers->count() > 0)
@@ -74,7 +81,7 @@
             <div class="card-footer text-muted jobAppFooter p-1">
 
                     <div class="float-right">
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs">UnBlock</a>
+                        <a class="btn btn-sm btn-primary mr-0 btn-xs unBlockEmpButton"  data-jsid="{{$js->id}}">UnBlock</a>
                     </div>
                     
             </div>
@@ -110,6 +117,38 @@
 
 @section('custom_js')
 
+<script type="text/javascript">
+    
+{{-- ======================================================== Block Employer ======================================================== --}}
+
+$(document).on('click','.unBlockEmpButton',function(){
+    // console.log("hi unblock button")
+    var btn = $(this);
+    var employer_id = $(this).data('jsid');
+    console.log(' Employer  ', employer_id);
+    // // $(this).html(getLoader('blockJobSeekerLoader'));
+    // // $(this).html('..');
+
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/m/ajax/MunBlockUser/'+employer_id,
+        success: function(data){
+            btn.prop('disabled',false);
+            if( data.status == 1 ){
+
+                $('.empUnBlockAlert').show().delay(3000).fadeOut('slow');
+                location.reload();
+            }else{
+                btn.html('error');
+            }
+        }
+    });
+});
+
+{{-- ======================================================== Block Employer End Here ======================================================== --}}
+
+</script>
 
 @stop
 

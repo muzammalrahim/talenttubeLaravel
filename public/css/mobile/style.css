@@ -200,3 +200,18 @@ input.select-dropdown.form-control {
 div#heading1,.p-2.card-body.mb-1.rgba-grey-light.white-text.FilterCont {
     background: #254c8e;
 }
+
+/* =================================================== Display None Class ===================================================*/
+.hideme{
+  display:none;
+}
+
+/* ================================================ Interested in Sections */
+.interestedInEditColor,.interestedInEditColor {
+  /*  background: #80808096;
+    color: white;*/
+  border: 2px solid #dc9f4a;
+  padding: 7px;
+
+
+}
