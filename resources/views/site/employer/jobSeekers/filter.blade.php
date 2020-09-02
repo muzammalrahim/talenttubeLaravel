@@ -159,8 +159,6 @@
         <input type="text" name="filter_keyword">
     </div>
     
-
-
     <div class="searchField_action">
         <div class="searchFieldLabel dinline_block"></div>
         <button class="btn small OrangeBtn">Submit</button>

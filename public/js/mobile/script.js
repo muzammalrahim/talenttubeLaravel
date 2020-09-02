@@ -4,14 +4,34 @@ $(document).ready(function() {
   
   // SideNav Initialization
   $('.mdb-select').materialSelect();
-
   // Filter JobSeekers 
   $(document).on('change','select.filter_qualification_type', function() {
     var degreeType =  $(this).val();
      if (degreeType != ''){ degreeType = (degreeType == 'trade')?'trade':'degree';}
-     $(this).closest('.FilterBox').attr('class','FilterBox '+degreeType);
+					$(this).closest('.FilterBox').attr('class','FilterBox '+degreeType);
+					
 	});
 
+// 	$('#tradeSelect').on('change', function() {
+// 		var values = $(this).val();
+// 		alert(values);
+// });
+
+$('#degreeSelect').on('change', function() {
+	var values = $(this).val();
+	// alert(values.length);
+	if(values.length==0){
+		$("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
+	}
+	else
+	$("#filter").html("Filters ("+values.length+")" +"<i class='fas fa-angle-down rotate-icon'></i>" );
+});
+
+$(".reset-btn").click(function(){
+	$("#jobSeeker_filter_form").trigger("reset");
+	$("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
+	getDataCustom();
+});
 
 
     // Mobile login. 

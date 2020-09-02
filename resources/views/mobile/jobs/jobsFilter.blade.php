@@ -1,7 +1,7 @@
  
 
  <div class="mJSFilter mb-2">
-  {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'jobSeeker_filter_form' )) }}
+  {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'filter_form' )) }}
     <input type="hidden" name="page" id="paginate" value="">
 
 
@@ -22,7 +22,7 @@
         <div class="card-header rgba-stylish-strong z-depth-1 mb-1" role="tab" id="heading1">
           <a data-toggle="collapse" data-parent="#accordionEx7" href="#collapse1" aria-expanded="true"
             aria-controls="collapse1">
-            <h5 class="mb-0 white-text font-thin">Filters <i class="fas fa-angle-down rotate-icon"></i></h5>
+            <h5 class="mb-0 white-text font-thin" id="filter">Filters <i class="fas fa-angle-down rotate-icon"></i></h5>
           </a>
         </div>
 
@@ -47,7 +47,7 @@
                
                 @if(!empty($qualifications))
                 <div class="qualification_degree d-none">
-                    <select class="white-text mdb-select md-form qualification_degree" multiple name="qualification_degree[]" data-placeholder="Select Degree">
+                    <select class="white-text mdb-select md-form qualification_degree" multiple name="qualification_degree[]" id="degreeSelect" data-placeholder="Select Degree">
                         @foreach ($qualifications as $qualif)
                             @if($qualif['type']  == 'degree')
                               <option value="{{$qualif['id']}}">{{$qualif['title']}}</option>
@@ -58,7 +58,7 @@
                 </div>
  
                 <div class="qualification_trade d-none">
-                    <select class="white-text mdb-select md-form qualification_trade" multiple name="qualification_trade[]" data-placeholder="Select Trade">
+                    <select class="white-text mdb-select md-form qualification_trade" multiple name="qualification_trade[]"  id="tradeSelect" data-placeholder="Select Trade">
                         @foreach ($qualifications as $qualif)
                             @if($qualif['type']  !== 'degree')
                               <option value="{{$qualif['id']}}">{{$qualif['title']}}</option>
@@ -112,7 +112,7 @@
             {{-- Industry Experience --}}
 
 
-
+												<hr class="my-2" style="height: 0.1em;  background: rgb(41, 41, 41); ">
 
             {{-- Location  --}}
             <div class="FilterBox FilterLocation">
@@ -149,7 +149,7 @@
             </div>
             {{-- Location  --}}
 
-
+												<hr class="my-2" style="height: 0.07em;  background: rgb(41, 41, 41); ">
 
             {{-- Question  --}}
              <div class="FilterBox FilterLocation">
@@ -183,7 +183,12 @@
                 </div>
              </div>
 
-
+													<div class="FilterBox my-2">
+														<div class="text-center">
+															<button name="ResetForm" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
+															<button name="CreateConfig" class="btn waves-effect waves-light " id="CreateConfig" type="submit">Submit</button>
+														</div>
+												</div>	
             {{-- Question  --}}
 
 

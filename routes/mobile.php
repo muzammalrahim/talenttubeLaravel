@@ -44,13 +44,15 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
  
 
 	 Route::get('mJobApplications', 'Mobile\MobileUserController@mJobApplications')->name('mJobApplications');
-	 Route::get('Mjobs', 'Mobile\MobileUserController@Mjobs')->name('Mjobs');
+		Route::get('Mjobs', 'Mobile\MobileUserController@Mjobs')->name('Mjobs');
+		Route::post('MjobsFilter', 'Mobile\MobileUserController@jobsFilter')->name('MjobsFilter');
 	 Route::get('Memployers','Mobile\MobileUserController@Memployers')->name('Memployers');
 	 Route::get('Memployers/{id}', 'Mobile\MobileUserController@MemployerInfo')->name('MemployerInfo');
 
 	// ======================================== Employer's Profile ========================================
 
-	 Route::get('MjobSeekers',        'Mobile\MobileUserController@MjobSeekers')->name('MjobSeekers');
+		Route::get('MjobSeekers',        'Mobile\MobileUserController@MjobSeekers')->name('MjobSeekers');
+		Route::post('MjobSeekersFilter', 'Mobile\MobileUserController@jobSeekersFilter')->name('MjobSeekersFilter');
 	 Route::get('Memployer/jobs',    'Mobile\MobileUserController@MemployerJobs')->name('MemployerJobs');
 	 Route::get('employer/Mjob/new',    'Mobile\MobileUserController@MnewJob')->name('MnewJob');
 	 Route::get('Mblock',         'Mobile\MobileUserController@MblockList')->name('MblockList');

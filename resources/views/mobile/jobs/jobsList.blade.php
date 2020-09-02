@@ -115,4 +115,5 @@
 
 
 @endforeach
+<div class="jobseeker_pagination cpagination">{!! $jobs->links() !!}</div>
 @endif

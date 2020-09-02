@@ -108,11 +108,39 @@ class User extends Authenticatable
 
         // print_r( $data->toSql() );exit; 
 
-        // $data =  $data->paginate(2);
+       // $data =  $data->paginate(2);
         return $data;
     }
 
+				function getJobSeekersm( $request, $user ){
+					$block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
+					
+					if(!empty($block)){
+									$data = $this->with('profileImage')->where('type','user')->whereNotIn('id', $block);
+					}else{
+									$data = $this->with('profileImage')->where('type','user');
+					}
 
+				
+					// Filter by salaryRange. 
+					if (isset($request->filter_salary) && !empty($request->filter_salary)){ 
+									$data->where('salaryRange', '>=', $request->filter_salary); 
+					}
+
+					// Filter by google map location radius. 
+					if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){  
+									if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
+													$data =  $this->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
+									}
+					}
+						
+					// DB::enableQueryLog();
+
+					// print_r( $data->toSql() );exit; 
+
+					$data =  $data->paginate(2);
+					return $data;
+		}
 
 
     private function findByLatLongRadius($query, $latitude, $longitude, $radius = 5) {
