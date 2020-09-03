@@ -789,7 +789,7 @@ class SiteUserController extends Controller
         $user->delete();
           return response()->json([
                 'status' => 1,
-                'message' => 'User Succesfully Deleted',
+                'message' => 'Job Seeker Succesfully Deleted',
           ]);
       }
     }
@@ -922,7 +922,7 @@ class SiteUserController extends Controller
             $user = Auth::user();
             $data['classes_body'] = 'profile';
             $data['user'] = $user;
-            $view = view('site.user.profile.updateUserPersonalSetting', $data); 
+            $view = view('site.user.profile.updateUserPersonalSetting', $data); //  site/user/profile/updateUserPersonalSetting 
             $html = $view->render();
             return $view;
     }

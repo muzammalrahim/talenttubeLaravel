@@ -26,14 +26,8 @@ use App\JobsAnswers;
 use App\JobsQuestions;
 use App\LikeUser;
 
-use App\fbremacc;
 
-// use App\Hash;
-use Illuminate\Support\Facades\Hash;
-
-
-
-class MobileUserController extends Controller
+class MobileEmployerController extends Controller
 {
 
     public function __construct()
@@ -374,7 +368,7 @@ class MobileUserController extends Controller
     // Ajax For updating Interested In.
     // Called from JobSeeker Profile page. 
     //====================================================================================================================================//
-    public function MupdateInterested_in(Request $request){
+    public function MupdateInterested_inEmp(Request $request){
 
         // dd($request->interestedIn);
         
@@ -415,7 +409,7 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // Ajax For updating About Me.
 
-    public function Mabout_me(Request $request){
+    public function Mabout_meEmp(Request $request){
 
         // dd($request->interestedIn);
         
@@ -481,7 +475,7 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
 
 
-    public function MupdateQuestions(Request $request){
+    public function MupdateQuestionsEmp(Request $request){
         
         // dump($request->questions); 
         $user = Auth::user();
@@ -508,31 +502,31 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // Ajax POST // Like Employer on JobSeeker Employer listing page.
     //====================================================================================================================================//
-    public function MlikeEmployer($employerId){
+    public function MlikeJS($js){
         $user = Auth::user();
-        if (isEmployer($user)){
+        if (!isEmployer($user)){
             return response()->json([
                 'status' => 0,
-                'error' => 'You are not allwoed to block Employer',
+                'error' => 'You are not allwoed to like Employer',
                 // 'redirect' => route('')
             ]);
         }
 
         // check if jobSeeker with id exist
-        $employer = User::Employer()->where('id',$employerId);
+        $employer = User::Employer()->where('id',$js);
         if (empty($employer)){
             return response()->json([
                 'status' => 0,
-                'error' => 'Employer with id '.$employerId.' do not exist',
+                'error' => 'Job Seeker with id '.$js.' do not exist',
             ]);
         }
 
         // block jos seeker.
         $LikeUser = new LikeUser();
-        $record = $LikeUser->addEntry($user, $employerId);
+        $record = $LikeUser->addEntry($user, $js);
         return response()->json([
             'status' => 1,
-            'message' => 'Employer Succefully Liked',
+            'message' => 'Job Seeker Succefully Liked',
             'data' =>  $record
         ]);
     }
@@ -546,30 +540,30 @@ class MobileUserController extends Controller
     // Ajax POST // Block Employer on JobSeeker Employers listing page.
     //====================================================================================================================================//
 
-    public function MblockEmployer($employerId){
+    public function MblockJS($jsId){
         $user = Auth::user();
-        if (isEmployer($user)){
+        if (!isEmployer($user)){
             return response()->json([
                 'status' => 0,
-                'error' => 'You are not allwoed to block Employer',
+                'error' => 'You are not allwoed to block Job Seeker',
             ]);
         }
 
         // check if jobSeeker with id exist
-        $employer = User::Employer()->where('id',$employerId);
+        $employer = User::Employer()->where('id',$jsId);
         if (empty($employer)){
             return response()->json([
                 'status' => 0,
-                'error' => 'Employer with id '.$employerId.' do not exist',
+                'error' => 'Employer with id '.$jsId.' do not exist',
             ]);
         }
 
         // block Employer.
         $blockUser = new BlockUser();
-        $record = $blockUser->addEntry($user, $employerId);
+        $record = $blockUser->addEntry($user, $jsId);
         return response()->json([
             'status' => 1,
-            'message' => 'Employer Succefuly Blocked',
+            'message' => 'Job Seeker Succefuly Blocked',
             'data' =>  $record
         ]);
 
@@ -1645,7 +1639,7 @@ class MobileUserController extends Controller
     // }
 
 
-    public function MunLikeUser(Request $request){
+    public function MunLikeJS(Request $request){
         // dd( $request->toArray() );
         $user = Auth::user();
         $likeUserId = (int) $request->id;
@@ -1690,150 +1684,10 @@ class MobileUserController extends Controller
             $user = Auth::user();
             $data['classes_body'] = 'profile';
             $data['user'] = $user;
-            $view = view('mobile.user.profile.updateUserPersonalSetting', $data); //    mobile/user/profile/updateUserPersonalSetting 
+            $view = view('mobile.user.profile.updateUserPersonalSetting', $data); 
             $html = $view->render();
             return $view;
     }
-
-
-    // ===================================== Update Email  =================================
-
-        public function MupdateEmail(Request $request)
-    {
-        $rules = array('email' => 'required|email|unique:users,email');
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            $valitdaion_message = $validator->getMessageBag()->toArray();
-            $mes = $valitdaion_message['email'];
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $mes
-            ]);
-        }else{
-            $user = Auth::user();
-            $user->oldEmail = $user->email;
-            $user->email = $request->email;
-            $user->save();
-            return response()->json([
-                    'status' => 1,
-                    'data' => array(
-                        'email_User' => $user->email, 
-                        'logout_Route' => route('logout')
-                    )
-            ]);
-        }
-    }
-
-    // ===================================== Update Phone Function ==============================================================
-    public function MupdatePhone(Request $request){   
-        $user = Auth::user();
-        // dd( $user->id); 
-
-
-
-        $rules = array('phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10');
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) { 
-            $valitdaion_message = $validator->getMessageBag()->toArray();
-            $mes = $valitdaion_message['phone'];
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $mes
-            ]);
-        }
-        else{
-            $user = Auth::user();
-            $user->phone = $request->phone;
-            $user->save();
-            return response()->json([
-                    'status' => 1,
-                    'data' => $user->phone
-            ]);
-        }
-    }
-
-    // =============================================== Update Phone Function End Here =========================================  
-
-    // =========================================== Update Password Function End Here =========================================== 
-    public function MupdatePassword(Request $request){
-        $user = Auth::user();
-
-        // dd($request->current_password);
-        // dd($request->new_password);
-        // dd($user->password);
-
-
-        $rules = array('current_password' => 'required|min:6|max:255', 'new_password' => 'required|min:6|max:255');
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $validator->getMessageBag()->toArray()
-            ]);
-        }else{
-            // check if user has enter his current password correct. 
-            if(!Hash::check($request->current_password, $user->password)){
-                return response()->json([
-                    'status' => 0,
-                    'validator' =>  $validator->getMessageBag()->toArray(),
-                    'validator' =>  $validator->errors()->add('current_password', 'Current password is wrong')
-                ]);
-            } 
-            $user->password = Hash::make($request->new_password);
-            $user->save();
-            return response()->json([
-                    'status' => 1,
-                    'data' => route('logout')
-            ]);
-        }
-    }
-
-
-    // ================================== Update Password Function End Here ======================================================== 
-
-
-    // =================================================  Delete job Seeker Function ================================================ 
-    public function Mdeleteuser(Request $request){   
-
-        
-        $user = Auth::user();
-        $del_data = new fbremacc();
-
-        if(isEmployer($user))
-        {
-            $del_data->user_id = $user->id;
-            $del_data->user_name = $user->username;
-            $del_data->user_email = $user->email;
-            $del_data->reason = $request->reasonValue;
-            
-            $del_data->save();
-        }
-
-        else{
-
-            $del_data->user_id = $user->id;
-            $del_data->user_name = $user->username;
-            $del_data->user_email = $user->email;
-            $del_data->recentJob = $user->recentJob;
-            $del_data->statusText = $user->statusText;
-            $del_data->company = $user->company;
-            $del_data->reason = $request->reasonValue;
-            $del_data->save();
-        }
-        
-        
-        // dd( $user->email); 
-
-        if(!empty($user)){
-        $user->delete();
-          return response()->json([
-                'status' => 1,
-                'message' => 'User Succesfully Deleted',
-          ]);
-      }
-    }
-
-    // ================================================= Delete job Seeker Function End Here ==============================================
 
     //====================================================================================================================================//
     // Get // layout for purchasing Credits.

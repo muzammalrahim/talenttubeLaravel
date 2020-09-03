@@ -7,13 +7,15 @@
 
             <div class="sectionUpdateProfile text-center mb-1"><b>Update Email Address</b></div>
 
+            {{-- @dump($user); --}}
+
 	        {{-- ============================ Email ====================================== --}}
 
 	        <div class="form-group row">
 	            {{-- {{ Form::label('email', null, ['class' => 'col-md-3 form-control-label']) }} --}}
 	            <div class="col-md-12 emailLoader">
 	              {{ Form::text('email', $value = $user->email , $attributes = array('class'=>'form-control', 'placeholder' => 'email','required'=> 'false', 'id'=>'updateEmail','name'=>'userUpdatedEmail' )) }}
-	              <p class="emailValidatorErrorText hide_it2" style="color: #dc3545"> </p>
+	              <p class="emailValidatorErrorText hide" style="color: #dc3545"> </p>
 	            </div>
 	        </div>
 
@@ -36,14 +38,14 @@
 	            {{-- {{ Form::label('Phone', null, ['class' => 'col-md-3 form-control-label']) }} --}}
 	            <div class="col-md-12 PhoneLoader">
 	              {{ Form::text('phone', $value = $user->phone , $attributes = array('class'=>'form-control', 'placeholder' => 'Phone','required'=> 'false','id'=>'updatePhone',)) }}
-	              <p class="PhoneValidatorErrorText hide_it2" style="color: #dc3545;"> </p>
+	              <p class="PhoneValidatorErrorText hide" style="color: #dc3545;"> </p>
 
 	            </div>
 	        </div>
 
 	        <div class="col-md-3"></div>
 	        <button type="button" class="PhoneUpdateBUtton btn btn-sm btn-primary ml-0"data-toggle="modal" data-target="#PhoneModal">Update</button>
-	        <div class="alert alert-success PhoneAlert hide_it2" role="alert">
+	        <div class="alert alert-success PhoneAlert" role="alert" style="display: none;">
 	            <strong>Success!</strong> Phone has been updated successfully!
 	        </div>
 
@@ -59,7 +61,7 @@
                 <div class="col-md-12">
                  {{--  {{ Form::text('current_password', '' , $attributes = array('class'=>'form-control', 'placeholder' => 'Current Password','required'=> 'false','id'=>'current_password')) }} --}}
                   {{ Form::password('current_password', ['class' => 'form-control'])}}
-                  <p class="PasswordValidatorErrorTextOld hide_it2" style="color: #dc3545;;"> </p>
+                  <p class="PasswordValidatorErrorTextOld hide" style="color: #dc3545;;"> </p>
                 </div>
             </div>
 
@@ -69,14 +71,14 @@
              {{--      {{ Form::text('new_password', '' , $attributes = array('class'=>'form-control', 'placeholder' => 'New Password','required'=> 'false','id'=>'new_password')) }} --}}
                   {{ Form::password('new_password', ['class' => 'form-control'])}}
 
-                  <p class="PasswordValidatorErrorTextNew hide_it2" style="color: #dc3545;"> </p>
+                  <p class="PasswordValidatorErrorTextNew hide" style="color: #dc3545;"> </p>
 
                 </div>
             </div>
 
             <div class="col-md-3"></div>
 	        <button type="button" class="PasswordUpdateBUtton btn btn-sm btn-primary ml-0" data-toggle="modal" data-target="#PasswordModal">Update</button>
-            <div class="alert alert-success PasswordAlert hide_it2" role="alert">
+            <div class="alert alert-success PasswordAlert" role="alert" style="display:none;">
                 <strong>Success!</strong> Password has been updated successfully!
             </div>
 
@@ -103,6 +105,11 @@
 
 </div>
 
+{{-- ================================== Including File of Modals here ================================== --}} 
+
+ @include('mobile.user.profile.ModalUserPersonalSetting')
+
+
 @stop
 
 @section('custom_footer_css')
@@ -127,38 +134,10 @@ div.cont_w>.column_main {
     margin-bottom: 20px;
     border-radius: 10px;
 }
-/*.emailUpdateBUtton,.PhoneUpdateBUtton,.PasswordUpdateBUtton{
-	margin-left: 9px;
-    padding: 5px;
-    background:#142d69;
-	color: white;
-    border: 2px solid #142d69;
-    width: 75px;
-    border-radius: 7px;
-    transition: 0.3s;
-    opacity: 0.7;
-}*/
-/*.emailUpdateBUtton:hover,.PhoneUpdateBUtton:hover,.PasswordUpdateBUtton:hover{
-    opacity: 1.0;	  
-}*/
-/*.DeleteProfileBUtton{
-	margin-left: 2px;
-    padding: 5px;
-	background: #dc3545;
-	color: white;
-    width: 75px;
-    border-radius: 7px;
-    transition: 0.3s;
-        border: none;
-    /*opacity: 0.7;*/
-}*/
-/*.DeleteProfileBUtton:hover{
-	background: #c82333;
 
-}*/
 .alert.alert-success.EmailAlert,.alert.alert-success.PhoneAlert,.alert.alert-success.PasswordAlert {
-    margin: 15px 26%;
-    width: 40%;
+    /*margin: 15px 26%;*/
+    width: 100%;
 }
 .smallSpinner.SaveEmailSpinner,.smallSpinner.SavePhoneSpinner,.smallSpinner.SavePasswordSpinner {
     position: relative;
@@ -192,22 +171,21 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
         console.log('hi');
         var updateEmail = $('#updateEmail').val();
         console.log(updateEmail);
+        $('#centralModalSuccess').show().delay(1000).fadeOut('slow');
+
            $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
-        $('.emailLoader').after(getLoader('smallSpinner SaveEmailSpinner'));
-
         $.ajax({
             type: 'POST',
-            url: base_url+'/ajax/updateEmail',
+            url: base_url+'/m/ajax/MupdateEmail',
             data: {'email': updateEmail},
             success: function(resp){
                 if(resp.status == true){
                     console.log('email updated successfully');
-                    $('.SaveEmailSpinner').remove();
+                    // $('.SaveEmailSpinner').remove();
                     // location.reload();
                     window.location = resp.data.logout_Route;
                     // $('#updateEmail').attr("disabled",true);
@@ -217,7 +195,8 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
                     // console.log(resp.validator[0])
                     $('.emailValidatorErrorText').text(resp.validator[0]);   // fail
                     $('.emailValidatorErrorText').show().delay(3000).fadeOut('slow');
-                    $('.SaveEmailSpinner').remove();
+                    // centralModalSuccess
+                    // $('.SaveEmailSpinner').remove();
                 }
             }
         });
@@ -237,30 +216,29 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
         console.log('hi');
         var updatePhone = $('#updatePhone').val();
         console.log(updatePhone);
+        $('#centralModalSuccess').show().delay(1000).fadeOut('slow');
            $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
-        $('.PhoneLoader').after(getLoader('smallSpinner SavePhoneSpinner'));
-
+        // $('.PhoneLoader').after(getLoader('smallSpinner SavePhoneSpinner'));
         $.ajax({
             type: 'POST',
-            url: base_url+'/ajax/updatePhone',
+            url: base_url+'/m/ajax/MupdatePhone',
             data: {'phone': updatePhone},
             success: function(resp){
                 if(resp.status == true){
-                    $('.SavePhoneSpinner').remove();
-                    $('.PhoneAlert').show().delay(3000).fadeOut('slow');
-                    $('.PhoneValidatorErrorText').addClass('hide_it2');
-
+                    // $('.SavePhoneSpinner').remove();
+                    $('.PhoneAlert').css("display","block").delay(3000).fadeOut('slow');
+                    // $('.PhoneValidatorErrorText').show();
                 }
                 else{
                     console.log(resp.validator[0]);
                     $('.PhoneValidatorErrorText').text(resp.validator[0]);
-                    $('.SavePhoneSpinner').remove();
-                    $('.PhoneValidatorErrorText').removeClass('hide_it2');
+                    // $('.SavePhoneSpinner').remove();
+                    $('.PhoneValidatorErrorText').show().delay(3000).fadeOut('slow');
 
                 }
             }
@@ -281,36 +259,41 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
         var current_password  = $('input[name="current_password"]').val();
         
         // console.log(new_password);
-
+        $('#centralModalSuccess').show().delay(1000).fadeOut('slow');
            $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
 
-        $('.PasswordLoader').after(getLoader('smallSpinner SavePasswordSpinner'));
+        // $('.PasswordLoader').after(getLoader('smallSpinner SavePasswordSpinner'));
 
         $.ajax({
             type: 'POST',
-            url: base_url+'/ajax/updatePassword',
+            url: base_url+'/m/ajax/MupdatePassword',
             data: {'new_password': new_password, 'current_password':current_password},
             success: function(resp){
                 if(resp.status == true){
-                    $('.SavePasswordSpinner').remove();
-                    $('.PasswordAlert').show().delay(3000).fadeOut('slow');
-                    $('.PasswordValidatorErrorTextOld').addClass('hide_it2');
-                    $('.PasswordValidatorErrorTextNew').addClass('hide_it2');  
+                    // $('.SavePasswordSpinner').remove();
+                    // $('.PasswordAlert').css("display","block").delay(3000).fadeOut('slow');
+                    $('.PasswordAlert').css("display","block").delay(3000).fadeOut('slow');
+
+                    $('.PasswordValidatorErrorTextOld').hide();
+                    $('.PasswordValidatorErrorTextNew').hide();  
+
+                    // location.href = base_url+'/m/logout';
                 }
                 else{
-                    $('.SavePasswordSpinner').remove();
+                    // $('.SavePasswordSpinner').remove();
                     var CPR = resp.validator['current_password'];
                     console.log(CPR);
                     var NPR = resp.validator['new_password'];
                     console.log(NPR);
                     $('.PasswordValidatorErrorTextOld').text(CPR);
                     $('.PasswordValidatorErrorTextNew').text(NPR);
-                    $('.PasswordValidatorErrorTextOld').removeClass('hide_it2');
-                    $('.PasswordValidatorErrorTextNew').removeClass('hide_it2');
+                    $('.PasswordValidatorErrorTextOld').show();
+                    $('.PasswordValidatorErrorTextNew').show();
+
                 }
             }
         });
@@ -331,18 +314,16 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
         // var current_password  = $('input[name="current_password"]').val();
         
         console.log(reasonValue);
-
+        $('#centralModalSuccess').show().delay(1000).fadeOut('slow');
            $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
         // $('.PasswordLoader').after(getLoader('smallSpinner SavePasswordSpinner'));
-
         $.ajax({
             type: 'POST',
-            url: base_url+'/ajax/deleteuser',
+            url: base_url+'/m/ajax/Mdeleteuser',
             data: {'reasonValue': reasonValue},
             success: function(resp){
                 if(resp.status == true){

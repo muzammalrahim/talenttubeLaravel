@@ -21,7 +21,7 @@ class FbRemAcc extends Migration
             $table->string('reason');
             $table->string('statusText')->nullable();
             $table->string('company')->nullable();
-            $table->string('recentJob');
+            $table->string('recentJob')->nullable();
         });
     }
 
@@ -33,7 +33,6 @@ class FbRemAcc extends Migration
     public function down()
     {
         Schema::dropIfExists('fb_rem_acc');
-
 
     }
 }

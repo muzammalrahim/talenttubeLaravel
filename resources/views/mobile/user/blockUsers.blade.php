@@ -2,14 +2,6 @@
 @extends('mobile.user.usermaster')
 @section('content')
 
- 
-
- <div class="alert alert-success empUnBlockAlert" role="alert" style="display:none;">
-          <strong>Success!</strong> You have Blocked Employer successfully!
-</div>
-
-
-
 <h6 class="h6 jobAppH6">Block User's List</h6>
 
 @if ($blockUsers->count() > 0)
@@ -26,9 +18,16 @@
 
         <div class="card">
 
-            <div class="card-header jobInfoFont jobAppHeader p-2">Company : 
-                <span class="jobInfoFont">{{$js->name}}</span>
-            </div>
+            @if (isEmployer($user))
+                <div class="card-header jobInfoFont jobAppHeader p-2">Job Seeker :
+                    <span class="jobInfoFont">{{$js->name}} {{$js->surname}}</span> 
+                </div>
+            @else
+                <div class="card-header jobInfoFont jobAppHeader p-2">Company :
+                    <span class="jobInfoFont">{{$js->name}} {{$js->surname}}</span> 
+                </div>
+
+            @endif
 
 {{-- ============================================ Card Body ============================================ --}}
 
@@ -100,12 +99,38 @@
 
 @endif 
 
-
-
-
-
-
 @stop
+
+{{-- ====================================== Modal Succcess on unBlocking ====================================== --}}
+
+<div class="modal fade" id="getCodeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-notify modal-success" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <p class="heading lead">Success</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+
+        @if (isEmployer($user))
+
+            <p><strong>Success!</strong> You have UnBlocked Job Seeker successfully!</p>
+        @else
+          <p><strong>Success!</strong> You have UnBlocked Employer successfully!</p>
+        @endif
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{-- ====================================== Modal Succcess on unBlocking ====================================== --}}
 
 
 @section('custom_footer_css')
@@ -136,9 +161,15 @@ $(document).on('click','.unBlockEmpButton',function(){
         success: function(data){
             btn.prop('disabled',false);
             if( data.status == 1 ){
+                // $('.empUnBlockAlert').show().delay(3000).fadeOut('slow');
+                $("#getCodeModal").modal('show');
 
-                $('.empUnBlockAlert').show().delay(3000).fadeOut('slow');
-                location.reload();
+                setTimeout(() => { 
+                    $("#getCodeModal").modal('hide');
+                },3000);
+
+                window.setTimeout(function(){location.reload()},3000)
+
             }else{
                 btn.html('error');
             }

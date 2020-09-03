@@ -111,12 +111,19 @@
  <!-- Central Modal Medium Info -->
  <div class="modal fade" id="unlikeEmpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
    aria-hidden="true" data-backdrop="static">
-   <div class="modal-dialog modal-notify modal-info" role="document">
+   <div class="modal-dialog modal-notify modal-danger" role="document">
      <!--Content-->
      <div class="modal-content">
        <!--Header-->
        <div class="modal-header">
+
+         @if (isEmployer($user))
+         <p class="heading lead">UnLike Jobseeker?</p>
+         @else
          <p class="heading lead">UnLike Employer?</p>
+
+     
+         @endif
 
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
            <span aria-hidden="true" class="white-text">&times;</span>
@@ -139,8 +146,8 @@
 
        <!--Footer-->
        <div class="modal-footer justify-content-center">
-         <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
-         <a type="button" class="btn btn-primary confirmUnlikeEmployer" data-dismiss="modal" >Confirm</a>
+         <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Cancel</a>
+         <a type="button" class="btn btn-danger confirmUnlikeEmployer" data-dismiss="modal" >Confirm</a>
          <input type="hidden" name="idEmpInModalHidden" id="idEmpInModalHidden" value =""/>
 
 
