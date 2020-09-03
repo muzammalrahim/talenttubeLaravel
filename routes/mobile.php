@@ -46,7 +46,8 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	 Route::get('mJobApplications', 'Mobile\MobileUserController@mJobApplications')->name('mJobApplications');
 		Route::get('Mjobs', 'Mobile\MobileUserController@Mjobs')->name('Mjobs');
 		Route::post('MjobsFilter', 'Mobile\MobileUserController@jobsFilter')->name('MjobsFilter');
-	 Route::get('Memployers','Mobile\MobileUserController@Memployers')->name('Memployers');
+		Route::get('Memployers','Mobile\MobileUserController@Memployers')->name('Memployers');
+		Route::post('Memployers','Mobile\MobileUserController@Memployerspost')->name('Memployers');
 	 Route::get('Memployers/{id}', 'Mobile\MobileUserController@MemployerInfo')->name('MemployerInfo');
 
 	// ======================================== Employer's Profile ========================================

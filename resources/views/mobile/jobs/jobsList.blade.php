@@ -1,3 +1,4 @@
+@if(isset($jobs))
 @if ($jobs->count() > 0)
 @foreach ($jobs as $job)
 
@@ -5,9 +6,6 @@
     {{-- @dump($job->jobEmployer->name) --}}
 
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
-
-
-        
 
         <div class="card">
             <div class="card-header jobAppHeader p-2 jobInfoFont">
@@ -115,5 +113,6 @@
 
 
 @endforeach
-<div class="jobseeker_pagination cpagination">{!! $jobs->links() !!}</div>
+<div class="jobs_pagination cpagination">{!! $jobs->render() !!}</div>
+@endif
 @endif

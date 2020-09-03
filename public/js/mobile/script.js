@@ -27,11 +27,8 @@ $('#degreeSelect').on('change', function() {
 	$("#filter").html("Filters ("+values.length+")" +"<i class='fas fa-angle-down rotate-icon'></i>" );
 });
 
-$(".reset-btn").click(function(){
-	$("#jobSeeker_filter_form").trigger("reset");
-	$("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
-	getDataCustom();
-});
+
+
 
 
     // Mobile login. 

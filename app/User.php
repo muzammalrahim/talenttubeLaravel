@@ -135,9 +135,7 @@ class User extends Authenticatable
 					}
 						
 					// DB::enableQueryLog();
-
 					// print_r( $data->toSql() );exit; 
-
 					$data =  $data->paginate(2);
 					return $data;
 		}
@@ -236,6 +234,75 @@ class User extends Authenticatable
         return $data;
     }
 
+				function getEmployersp( $request, $user ){
+					$block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
+					if(!empty($block)){
+									$query = $this::with('profileImage')->where('type','employer')->whereNotIn('id', $block);
+					}else{
+									$query = $this::with('profileImage')->where('type','employer');
+					}
+
+					
+					if(varExist('filter_keyword', $request)){
+						$keyword = my_sanitize_string($request->filter_keyword);
+						$query = $query->where(function($q) use($keyword) {
+																		$q->where('name','LIKE', "%{$keyword}%")
+																		->orWhere('about_me','LIKE', "%{$keyword}%")
+																		->orWhere('interested_in','LIKE', "%{$keyword}%"); 
+										}); 
+					}
+
+					if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
+						if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
+										// $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
+											$latitude = $request->location_lat;
+											$longitude = $request->location_long;
+											$radius = $request->filter_location_radius;
+											$radius_sign = ($radius <= 50)?'<':'>';
+
+											$query = $query->selectRaw("*,
+															( 6371 * acos( cos(radians('".$latitude."'))
+															* cos( radians(location_lat))
+															* cos( radians(location_long) - radians('".$longitude."'))
+															+ sin( radians('".$latitude."'))
+															* sin( radians( location_lat )))
+															) AS distance")
+										->having("distance", $radius_sign, $radius)
+										->orderBy("distance",'asc');
+
+						}
+				}
+				
+					$industries = $request->filter_industry;
+					$industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
+				  //Filter by industry status.
+						if($industry_status && !empty($industries)){
+							$query = $query->where(function($q) use($industries) {
+											$q->where('industry_experience','LIKE', "%{$industries[0]}%");
+											if(count($industries) > 1){
+															foreach ($industries as $indk =>  $industry) {
+																			if($indk == 0) continue;
+																			$q->orWhere('industry_experience','LIKE', "%{$industry}%");
+															}
+											}
+							});
+			}
+				
+			
+				$filter_by_questions_status = (isset($request->filter_by_questions) && !empty($request->filter_by_questions == 'on'))?true:false;
+				// // Filter by Question
+				if($filter_by_questions_status){
+				if(varExist('filter_question', $request) && varExist('filter_question_value', $request) ){
+					// SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
+					$question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';
+					$query = $query->where('questions', 'LIKE', $question_like);
+					}
+				}
+						// //	dd($request->filter_keyword);
+					
+						
+					return $query->paginate(2);
+	}
 
 
     function tags(){

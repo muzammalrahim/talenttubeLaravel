@@ -126,6 +126,12 @@ $('input[name="filter_by_questions"]').change(function() {
   
 
 });
+
+$(".reset-btn").click(function(){
+	$("#jobSeeker_filter_form").trigger("reset");
+	$("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
+	getDataCustom();
+});
 //made custom function for global call to refresh the job seekers data on rest
 var getDataCustom = function(){
     var url = '{{route('MjobSeekersFilter')}}';

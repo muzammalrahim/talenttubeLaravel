@@ -100,12 +100,12 @@
                 @endphp
                 @if(!empty($industries))
                     <div class="filter_industries_list ">
-                            @foreach ($industries as $indK => $indV)
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="industry_{{$indK}}">
-                                    <label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
-                                </div>
-                            @endforeach
+																							@foreach ($industries as $indK => $indV)
+																							<div class="form-check">
+																											<input type="checkbox" class="form-check-input" id="industry_{{$indK}}" name="filter_industry[]" value="{{$indK}}">
+																											<label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
+																										</div>
+																						@endforeach
                     </div>
                 @endif
                 </div>

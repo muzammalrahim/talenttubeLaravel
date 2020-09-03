@@ -43,9 +43,24 @@ class JobSeekerController extends Controller {
         $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 
         $data['likeUsers'] = $likeUsers;
-        $data['employers'] = $jobSeekers;
+       // $data['employers'] = $jobSeekers;
         return view('site.user.employers', $data);
-    }
+				}
+				
+				public function employerspost(Request $request){
+					$user = Auth::user();
+					if (isEmployer($user)){ return redirect(route('jobSeekers')); }
+					$data['user']           = $user;
+					$data['title']          = 'Employers';
+					$data['classes_body']   = 'employers';
+					$employersObj          = new User();
+					$jobSeekers             = $employersObj->getEmployersp($request, $user);
+					$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+
+					$data['likeUsers'] = $likeUsers;
+				 $data['employers'] = $jobSeekers;
+					return view('site.user.employerslist', $data);
+				}
 
 
 

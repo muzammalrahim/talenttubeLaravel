@@ -1117,7 +1117,7 @@ class MobileUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
-        $data['jobs'] =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->paginate(2);
+       // $data['jobs'] =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->paginate(2);
         return view('mobile.jobs.index', $data); // mobile/jobs/index 
     }
 
@@ -1126,19 +1126,22 @@ class MobileUserController extends Controller
 					$user = Auth::user();
 					$data = array();
 					if(!isEmployer($user)){
+						$data['user'] = $user;
+						$data['title'] = 'Jobs';
+						$data['classes_body'] = 'jobs';
+						// $applications = new JobsApplication();
+						// $applications = $applications->getFilterApplication($request);
+						// $likeUsers    = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 
-									// $applications = new JobsApplication();
-									// $applications = $applications->getFilterApplication($request);
-									// $likeUsers    = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+						// $jobs =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->paginate(2);
+						// $jobs = $jobs->filterJobs($request);
+						$jobs = new Jobs();
+						$jobs = $jobs->filterJobs($request);
+						// ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
 
-									$jobs = new Jobs();
-									$jobs = $jobs->filterJobs($request);
-
-									// ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-
-										$data['jobs'] = $jobs;
-
-									return view('mobile.jobs.jobsList', $data);
+							$data['jobs'] = $jobs;
+						//	dd($jobs);
+										return view('mobile.jobs.jobsList', $data);
 									// site/jobs/list
 					}
 		}
@@ -1173,27 +1176,58 @@ class MobileUserController extends Controller
         $data['title']          = 'Employers';
         $data['classes_body']   = 'employers';
         $employersObj          = new User();
-        $jobSeekers             = $employersObj->getEmployers($request, $user);
+       // $jobSeekers             = $employersObj->getEmployersp($request, $user);
         $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 
         $data['likeUsers'] = $likeUsers;
-        $data['employers'] = $jobSeekers;
-
-        $data['ajax'] =  $request->ajax;
         
-        if($data['ajax']){
-                return view('mobile.user.employers', $data); // mobile/user/employers
-                //  $view = view('mobile.user.employers', $data);
-                // $view = $view->render();
-                // echo  $view;
-                // exit; 
 
-        }else{
+        // $data['ajax'] =  $request->ajax;cx
+        //$data['employers'] = $jobSeekers;
+        // if($data['ajax']){
+								// 								
+        //         return view('mobile.user.employersList', $data); // mobile/user/employers
+        //         //  $view = view('mobile.user.employers', $data);
+        //         // $view = $view->render();
+        //         // echo  $view;
+        //         // exit; 
+
+        // }else{
              return view('mobile.user.employers', $data);
-        }
+        // }
 
        
-    }
+				}
+				
+				public function Memployerspost(Request $request){
+        //dd($request);
+					$user = Auth::user();
+					if (isEmployer($user)){ return redirect(route('jobSeekers')); }
+					$data['user']           = $user;
+					$data['title']          = 'Employers';
+					$data['classes_body']   = 'employers';
+					$employersObj          = new User();
+					$employers             = $employersObj->getEmployersp($request, $user);
+					$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+
+					$data['likeUsers'] = $likeUsers;
+					
+
+
+
+
+
+					$data['employers'] = $employers;
+					return view('mobile.user.employersList', $data); // mobile/user/employers
+					//  $view = view('mobile.user.employers', $data);
+					// $view = $view->render();
+					// echo  $view;
+					// exit; 
+
+				
+
+				
+	}
 
     //====================================================================================================================================//
     // Get // layout for listing of jobSeekers on mobile.
@@ -1340,7 +1374,7 @@ class MobileUserController extends Controller
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = $jobSeekers;
 					
-					return view('mobile.employer.jobSeekers.list', $data); // site/employer/jobSeekers/list
+								return view('mobile.employer.jobSeekers.list', $data); // site/employer/jobSeekers/list
 					
 	}
 

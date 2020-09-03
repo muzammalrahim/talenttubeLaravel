@@ -309,7 +309,8 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
 
     Route::post('ajax/blockJobSeeker/{id}', 'Site\EmployerController@blockJobSeeker')->name('blockJobSeeker');
     Route::post('ajax/likeJobSeeker/{id}', 'Site\EmployerController@likeJobSeeker')->name('likeJobSeeker');
-    Route::get('employers',         'Site\JobSeekerController@employers')->name('employers');
+				Route::get('employers',         'Site\JobSeekerController@employers')->name('employers');
+				Route::post('employers',         'Site\JobSeekerController@employerspost')->name('employers');
     Route::get('employerInfo/{id}', 'Site\JobSeekerController@employerInfo')->name('employerInfo');
     Route::get('jobSeekerInfo/{id}', 'Site\JobSeekerController@jobSeekerInfo')->name('jobSeekerInfo');
     Route::post('ajax/blockEmployer/{id}', 'Site\JobSeekerController@blockEmployer')->name('blockEmployer');

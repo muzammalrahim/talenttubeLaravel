@@ -1,4 +1,4 @@
-
+@if(isset($employers))
 @if ($employers->count() > 0)
 @foreach ($employers as $js)
 
@@ -88,4 +88,6 @@
     </div> 
 
 @endforeach
+<div class="employeer_pagination cpagination">{!! $employers->render() !!}</div>
+@endif
 @endif
