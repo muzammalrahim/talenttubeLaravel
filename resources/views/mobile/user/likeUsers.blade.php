@@ -74,10 +74,12 @@
             <div class="card-footer text-muted jobAppFooter p-1">
 
                     <div class="float-right">
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs">UnLike</a>
+                        <a class="btn btn-sm btn-primary mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
                     </div>
                     
             </div>
+
+           
 
 {{-- ============================================ Card Footer end ============================================ --}}
 
@@ -86,16 +88,77 @@
 
     </div> 
 
+
+
+
+
+
 @endforeach
 @else
-    <div class="jobAppH6">You have not Blocked anyone</div>
+    <div class="jobAppH6">You have not Liked anyone</div>
 @endif     
 
 
 
 @stop
 
+{{-- ======================================================= Unlike Employer Modal ======================================================= --}}
 
+{{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#centralModalInfo">Launch
+   modal
+</button> --}}
+
+ <!-- Central Modal Medium Info -->
+ <div class="modal fade" id="unlikeEmpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true" data-backdrop="static">
+   <div class="modal-dialog modal-notify modal-danger" role="document">
+     <!--Content-->
+     <div class="modal-content">
+       <!--Header-->
+       <div class="modal-header">
+
+         @if (isEmployer($user))
+         <p class="heading lead">UnLike Jobseeker?</p>
+         @else
+         <p class="heading lead">UnLike Employer?</p>
+
+     
+         @endif
+
+         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true" class="white-text">&times;</span>
+         </button>
+       </div>
+
+       <!--Body-->
+       <div class="modal-body">
+         <div class="text-center">
+           <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
+
+           <p>
+               Are you sure you wish to continue?
+
+           </p>
+            <p class="idOfEmployerInModal"></p>
+         </div>
+       </div>
+
+
+       <!--Footer-->
+       <div class="modal-footer justify-content-center">
+         <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Cancel</a>
+         <a type="button" class="btn btn-danger confirmUnlikeEmployer" data-dismiss="modal" >Confirm</a>
+         <input type="hidden" name="idEmpInModalHidden" id="idEmpInModalHidden" value =""/>
+
+
+       </div>
+     </div>
+     <!--/.Content-->
+   </div>
+ </div>
+ <!-- Central Modal Medium Info-->
+
+{{-- ======================================================= Unlike Employer Modal ======================================================= --}}
 @section('custom_footer_css')
 <style type="text/css">
 
@@ -105,6 +168,53 @@
 
 @section('custom_js')
 
+<script type="text/javascript">
+    $('.unlikeEmpButton').click(function(){
+        // console.log('Hi Unlike Employer Button');
+        var btn = $(this);
+        var jobseeker_id = $(this).data('jsid');
+        // console.log(' likeEmployerButton jobseeker_id ', jobseeker_id);
+        $('#idEmpInModalHidden').val(jobseeker_id);
 
+    });
+
+    $('.confirmUnlikeEmployer').click(function(){
+        // console.log('Hi Unlike Employer Button');
+        var btn = $(this);
+        var jobseeker_id = $(this).data('jsid');
+        // console.log(' likeEmployerButton jobseeker_id ', jobseeker_id);
+        var emp_id = $('#idEmpInModalHidden').val();
+        console.log(emp_id);
+
+        // $('.idEmpInModalHidden').val(jobseeker_id);
+        // $('.idOfEmployerInModal').html(jobseeker_id);
+
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.ajax({
+                type: 'POST',
+                url: base_url+'/m/ajax/MunLikeUser/'+emp_id,
+                data: {'id': emp_id},
+                success: function(data){
+                   // btn.prop('disabled',false);
+                    // $('.confirmJobSeekerBlockModal').removeClass('showLoader').addClass('showMessage');
+                    
+                    if( data.status == 1 ){
+                        $('.empLikeAlert').show().delay(3000).fadeOut('slow');
+                        location.reload();
+
+                        // $('.confirmJobSeekerBlockModal .apiMessage').html(data.message);
+                        // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+
+                    }
+
+                    // else{
+                    //     $('.confirmJobSeekerBlockModal .apiMessage').html(data.error);
+                    // }
+                }
+            });
+    });
+
+
+</script>
 @stop
 

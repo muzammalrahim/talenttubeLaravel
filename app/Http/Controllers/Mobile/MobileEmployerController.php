@@ -26,14 +26,8 @@ use App\JobsAnswers;
 use App\JobsQuestions;
 use App\LikeUser;
 
-use App\fbremacc;
 
-// use App\Hash;
-use Illuminate\Support\Facades\Hash;
-
-
-
-class MobileUserController extends Controller
+class MobileEmployerController extends Controller
 {
 
     public function __construct()
@@ -126,196 +120,101 @@ class MobileUserController extends Controller
     //Ajax Post from step2 layout  // Add user step2 data.
     //====================================================================================================================================//
     public function Step2(Request $request){
-								// dd($request);
-					$requestData = $request->all();
-					$requestData['step'] = my_sanitize_number($request->step);
-					
-													$user = Auth::user();
-													if ($requestData['step'] == 2)
-													{
-																	$requestData['questions']       = json_decode($request->questions, true);
-																	if( !empty($requestData['questions']) ){
-																					foreach($requestData['questions'] as $qk => $qv){
-																									$requestData['questions'][$qk] = my_sanitize_string($qv);
-																					}
-																	}
-					//            dd($requestData['questions']);
-																	$rules = array(
-																					'questions'  => 'required'
-																	);
-																	$validator = Validator::make($requestData, $rules);
-																	if ($validator->fails()){
-																					return response()->json([
-																									'status' => 0,
-																									'validator' => $validator->getMessageBag()->toArray()
-																					]);
-																	} else {
-																					$user->questions = $requestData['questions'];
-																					$user->step2 = $requestData['step'];
-																					$user->save();
-																					return response()->json([
-																									'status' => 1,
-																									'message' => 'questions saved succesfully'
-																					]);
-																	}
-													} elseif ($requestData['step'] == 3) {
-																	$rules = array(
-																					'about_me' => 'required|max:150',
-																					'interested_in' => 'required|max:150',
-																					'recentJob'  => 'required'
-																	);
-																	$validator = Validator::make($requestData, $rules);
-																	if ($validator->fails()){
-																					return response()->json([
-																									'status' => 0,
-																									'validator' => $validator->getMessageBag()->toArray()
-																					]);
-																	}
-																	$user->about_me         = $requestData['about_me'];
-																	$user->interested_in    = $requestData['interested_in'];
-																	$user->recentJob        = $requestData['recentJob'];
-																	$user->step2 = $requestData['step'];
-																	$user->save();
-																	if(!empty($request->file('file'))){
-																					$image = $request->file('file');
-																					$fileName   = time() . '.' . $image->getClientOriginalExtension();
-					
-																					$file_thumb  = $user->id.'/gallery/small/'.$fileName;
-																					$file_path   = $user->id.'/gallery/'.$fileName;
-					
-																					$img = Image::make($image->getRealPath());
-																					$img->resize(120, 120, function ($constraint) { $constraint->aspectRatio(); });
-																					$img->stream();
-																					Storage::disk('publicMedia')->put( $file_thumb , $img);
-					
-																					$img = Image::make($image->getRealPath());
-																					$img->stream();
-																					Storage::disk('publicMedia')->put($file_path, $img, 'public');
-					
-																					$userGallery = new UserGallery();
-																					$userGallery->user_id = $user->id;
-																					$userGallery->image = $fileName;
-																					$userGallery->status = 1;
-																					$userGallery->profile = 1;
-																					$userGallery->save();
-																	}
-																	return response()->json([
-																					'status' => 1,
-																					'message' => 'about me saved succesfully'
-																	]);
-													}
-													elseif ($requestData['step'] == 4)
-													{
-																	$requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
-																	$requestData['qualification_type'] = my_sanitize_string($request->qualification_type);
-																	$rules = array(
-																					'qualification'  => 'required'
-																	);
-																	$validator = Validator::make($requestData, $rules);
-																	if ($validator->fails()){
-																					return response()->json([
-																									'status' => 0,
-																									'validator' => $validator->getMessageBag()->toArray()
-																					]);
-																	}
-																	$user->qualification    = $requestData['qualification'];
-																	$user->qualificationType= $requestData['qualification_type'];
-																	$user->step2 = $requestData['step'];
-																	$user->save();
-																	$user->qualificationRelation()->sync($requestData['qualification']);
-																	return response()->json([
-																					'status' => 1,
-																					'message' => 'qualification saved succesfully',
-																	]);
-													} elseif ($requestData['step'] == 5)
-													{
-																	$requestData['industry_experience'] = my_sanitize_array_string(json_decode(stripslashes($request->industry_experience),true));
-																	$rules = array(
-																					'industry_experience'  => 'required'
-																	);
-																	$validator = Validator::make($requestData, $rules);
-																	if ($validator->fails()){
-																					return response()->json([
-																									'status' => 0,
-																									'validator' => $validator->getMessageBag()->toArray()
-																					]);
-																	}
-																	$user->industry_experience = $requestData['industry_experience'];
-																	$user->step2 = $requestData['step'];
-																	$user->save();
-																	return response()->json([
-																					'status' => 1,
-																					'message' => 'industry experience saved succesfully',
-																	]);
-													} elseif ($requestData['step'] == 6)
-													{
-																	$requestData['salaryRange'] = my_sanitize_string($request->salaryRange);
-																	$rules = array(
-																					'salaryRange'  => 'required'
-																	);
-																	$validator = Validator::make($requestData, $rules);
-																	if ($validator->fails()){
-																					return response()->json([
-																									'status' => 0,
-																									'validator' => $validator->getMessageBag()->toArray()
-																					]);
-																	}
-																	$user->salaryRange      = $requestData['salaryRange'];
-																	$user->step2 = $requestData['step'];
-																	$user->save();
-																	return response()->json([
-																					'status' => 1,
-																					'message' => 'salary range saved succesfully',
-																	]);
-													} elseif ($requestData['step'] == 7)
-													{
-																	$user->step2 = $requestData['step'];
-																	$user->save();
-																	return response()->json([
-																					'status' => 1,
-																					'message' => 'data saved successfully'
-																	]);
-													} elseif($requestData['step'] == 8) {
-																	$user->step2 = $requestData['step'];
-																	$user->save();
-																	return response()->json([
-																					'status' => 1,
-																					'message' => 'data saved successfully'
-																	]);
-													} elseif($requestData['step'] == 9) {
-																	$requestData['tags'] = my_sanitize_string($request->tags);
-																	$requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
-					//            $rules = array(
-					//                'tags'  => 'required'
-					//            );
-					//            $validator = Validator::make($requestData, $rules);
-					//            if ($validator->fails()){
-					//                return response()->json([
-					//                    'status' => 0,
-					//                    'validator' => $validator->getMessageBag()->toArray()
-					//                ]);
-					//            }
-																	if ($requestData['tags'] != null) {
-																					$user->step2 = $requestData['step'];
-																					$user->save();
-																					$user->tags()->sync($requestData['tags']);
-																	}
-																	$user->step2 = $requestData['step'];
-																	$user->save();
-																	return response()->json([
-																					'status' => 1,
-																					'message' => 'data saved successfully'
-																	]);
-													} else {
-																	$user->step2 = $requestData['step'];
-																	$user->save();
-																	return response()->json([
-																					'status' => 1,
-																					'message' => 'data saved successfully',
-																					'redirect' => route('profile'),
-																					'step' => $requestData['step']
-																	]);
-													}
+        
+        $requestData = $request->all();
+        $requestData['questions']       = json_decode( $request->questions, true );
+        $requestData['about_me']        = my_sanitize_string($request->about_me);
+        $requestData['interested_in']   = my_sanitize_string($request->interested_in);
+        $requestData['recentJob']       = my_sanitize_string($request->recentJob);
+        $requestData['industry_experience'] = my_sanitize_array_string(json_decode(stripslashes($request->industry_experience),true));
+        $requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
+        $requestData['salaryRange'] = my_sanitize_string($request->salaryRange);
+        $requestData['tags'] = my_sanitize_string($request->tags);
+        $requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
+        $requestData['qualification_type']        = my_sanitize_string($request->qualification_type);
+
+        // dump($requestData['tags']);
+        // dump($requestData['industry_experience']);
+        // dd( $request->toArray() );
+
+        // dd( $request->all() );
+        // dd(  $requestData );
+        if( !empty($requestData['questions']) ){
+            foreach($requestData['questions'] as $qk => $qv){
+                $requestData['questions'][$qk] = my_sanitize_string($qv);
+            }
+        }
+
+        // card_step2_validation
+        $rules = array(
+            'questions'  => 'required',
+            'about_me' => 'required|max:150',
+            'interested_in' => 'required|max:150',
+            'recentJob'  => 'required',
+            'industry_experience'  => 'required',
+            'qualification'  => 'required',
+            'salaryRange'  => 'required',
+            'tags'  => 'required',
+           
+        );
+        $validator = Validator::make( $requestData , $rules);
+
+        if ($validator->fails()){
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        }else{
+
+            // dump( ' validation success ' ); 
+            // dd( $request->all() );
+
+
+            $user = Auth::user();
+            $user->questions        = $requestData['questions'];
+            $user->about_me         = $requestData['about_me'];
+            $user->interested_in    = $requestData['interested_in'];
+            $user->recentJob        = $requestData['recentJob'];
+            $user->industry_experience = $requestData['industry_experience'];
+            $user->qualification    = $requestData['qualification'];
+            $user->salaryRange      = $requestData['salaryRange'];
+            $user->step2            = 1;
+            $user->qualificationType= $requestData['qualification_type'];
+            $user->save();
+            $user->tags()->sync($requestData['tags']); 
+            $user->qualificationRelation()->sync($requestData['qualification']); 
+
+            if(!empty($request->file('file'))){
+                $image = $request->file('file');
+                $fileName   = time() . '.' . $image->getClientOriginalExtension();
+                
+                $file_thumb  = $user->id.'/gallery/small/'.$fileName;
+                $file_path   = $user->id.'/gallery/'.$fileName;
+
+                $img = Image::make($image->getRealPath());
+                $img->resize(120, 120, function ($constraint) { $constraint->aspectRatio(); });
+                $img->stream();
+                Storage::disk('publicMedia')->put( $file_thumb , $img);
+
+                $img = Image::make($image->getRealPath());
+                $img->stream();
+
+                Storage::disk('publicMedia')->put($file_path, $img, 'public');
+
+                $userGallery = new UserGallery();
+                $userGallery->user_id = $user->id;
+                $userGallery->image = $fileName;
+                $userGallery->status = 1;
+                $userGallery->profile = 1;
+                $userGallery->save();
+
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'data saved succesfully',
+                    'redirect' => route('profile')
+                ]);
+            }
+        }
     }
 
 
@@ -469,7 +368,7 @@ class MobileUserController extends Controller
     // Ajax For updating Interested In.
     // Called from JobSeeker Profile page. 
     //====================================================================================================================================//
-    public function MupdateInterested_in(Request $request){
+    public function MupdateInterested_inEmp(Request $request){
 
         // dd($request->interestedIn);
         
@@ -510,7 +409,7 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // Ajax For updating About Me.
 
-    public function Mabout_me(Request $request){
+    public function Mabout_meEmp(Request $request){
 
         // dd($request->interestedIn);
         
@@ -576,7 +475,7 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
 
 
-    public function MupdateQuestions(Request $request){
+    public function MupdateQuestionsEmp(Request $request){
         
         // dump($request->questions); 
         $user = Auth::user();
@@ -603,31 +502,31 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // Ajax POST // Like Employer on JobSeeker Employer listing page.
     //====================================================================================================================================//
-    public function MlikeEmployer($employerId){
+    public function MlikeJS($js){
         $user = Auth::user();
-        if (isEmployer($user)){
+        if (!isEmployer($user)){
             return response()->json([
                 'status' => 0,
-                'error' => 'You are not allwoed to block Employer',
+                'error' => 'You are not allwoed to like Employer',
                 // 'redirect' => route('')
             ]);
         }
 
         // check if jobSeeker with id exist
-        $employer = User::Employer()->where('id',$employerId);
+        $employer = User::Employer()->where('id',$js);
         if (empty($employer)){
             return response()->json([
                 'status' => 0,
-                'error' => 'Employer with id '.$employerId.' do not exist',
+                'error' => 'Job Seeker with id '.$js.' do not exist',
             ]);
         }
 
         // block jos seeker.
         $LikeUser = new LikeUser();
-        $record = $LikeUser->addEntry($user, $employerId);
+        $record = $LikeUser->addEntry($user, $js);
         return response()->json([
             'status' => 1,
-            'message' => 'Employer Succefully Liked',
+            'message' => 'Job Seeker Succefully Liked',
             'data' =>  $record
         ]);
     }
@@ -641,30 +540,30 @@ class MobileUserController extends Controller
     // Ajax POST // Block Employer on JobSeeker Employers listing page.
     //====================================================================================================================================//
 
-    public function MblockEmployer($employerId){
+    public function MblockJS($jsId){
         $user = Auth::user();
-        if (isEmployer($user)){
+        if (!isEmployer($user)){
             return response()->json([
                 'status' => 0,
-                'error' => 'You are not allwoed to block Employer',
+                'error' => 'You are not allwoed to block Job Seeker',
             ]);
         }
 
         // check if jobSeeker with id exist
-        $employer = User::Employer()->where('id',$employerId);
+        $employer = User::Employer()->where('id',$jsId);
         if (empty($employer)){
             return response()->json([
                 'status' => 0,
-                'error' => 'Employer with id '.$employerId.' do not exist',
+                'error' => 'Employer with id '.$jsId.' do not exist',
             ]);
         }
 
         // block Employer.
         $blockUser = new BlockUser();
-        $record = $blockUser->addEntry($user, $employerId);
+        $record = $blockUser->addEntry($user, $jsId);
         return response()->json([
             'status' => 1,
-            'message' => 'Employer Succefuly Blocked',
+            'message' => 'Job Seeker Succefuly Blocked',
             'data' =>  $record
         ]);
 
@@ -1156,9 +1055,8 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     public function uploadVideo(Request $request){
 
-								dd($request);
         $user = Auth::user();
-								$video = $request->file('video');
+        $video = $request->file('video');
         // $rules = array('video.*' => 'required|file|max:20000');
         $rules = array('video' => 'required|file|max:50000');
         // $rules = array('video.*' => 'required|file|max:2');
@@ -1177,9 +1075,7 @@ class MobileUserController extends Controller
             $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"
         ) {
 
-									$fileOriginalName = $video->getClientOriginalName();
-									// $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
-									$fileName = $fileOriginalName;
+            $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
             $storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
            
             // store video in private folder by default. 
@@ -1743,7 +1639,7 @@ class MobileUserController extends Controller
     // }
 
 
-    public function MunLikeUser(Request $request){
+    public function MunLikeJS(Request $request){
         // dd( $request->toArray() );
         $user = Auth::user();
         $likeUserId = (int) $request->id;
@@ -1788,150 +1684,10 @@ class MobileUserController extends Controller
             $user = Auth::user();
             $data['classes_body'] = 'profile';
             $data['user'] = $user;
-            $view = view('mobile.user.profile.updateUserPersonalSetting', $data); //    mobile/user/profile/updateUserPersonalSetting 
+            $view = view('mobile.user.profile.updateUserPersonalSetting', $data); 
             $html = $view->render();
             return $view;
     }
-
-
-    // ===================================== Update Email  =================================
-
-        public function MupdateEmail(Request $request)
-    {
-        $rules = array('email' => 'required|email|unique:users,email');
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            $valitdaion_message = $validator->getMessageBag()->toArray();
-            $mes = $valitdaion_message['email'];
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $mes
-            ]);
-        }else{
-            $user = Auth::user();
-            $user->oldEmail = $user->email;
-            $user->email = $request->email;
-            $user->save();
-            return response()->json([
-                    'status' => 1,
-                    'data' => array(
-                        'email_User' => $user->email, 
-                        'logout_Route' => route('logout')
-                    )
-            ]);
-        }
-    }
-
-    // ===================================== Update Phone Function ==============================================================
-    public function MupdatePhone(Request $request){   
-        $user = Auth::user();
-        // dd( $user->id); 
-
-
-
-        $rules = array('phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10');
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) { 
-            $valitdaion_message = $validator->getMessageBag()->toArray();
-            $mes = $valitdaion_message['phone'];
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $mes
-            ]);
-        }
-        else{
-            $user = Auth::user();
-            $user->phone = $request->phone;
-            $user->save();
-            return response()->json([
-                    'status' => 1,
-                    'data' => $user->phone
-            ]);
-        }
-    }
-
-    // =============================================== Update Phone Function End Here =========================================  
-
-    // =========================================== Update Password Function End Here =========================================== 
-    public function MupdatePassword(Request $request){
-        $user = Auth::user();
-
-        // dd($request->current_password);
-        // dd($request->new_password);
-        // dd($user->password);
-
-
-        $rules = array('current_password' => 'required|min:6|max:255', 'new_password' => 'required|min:6|max:255');
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $validator->getMessageBag()->toArray()
-            ]);
-        }else{
-            // check if user has enter his current password correct. 
-            if(!Hash::check($request->current_password, $user->password)){
-                return response()->json([
-                    'status' => 0,
-                    'validator' =>  $validator->getMessageBag()->toArray(),
-                    'validator' =>  $validator->errors()->add('current_password', 'Current password is wrong')
-                ]);
-            } 
-            $user->password = Hash::make($request->new_password);
-            $user->save();
-            return response()->json([
-                    'status' => 1,
-                    'data' => route('logout')
-            ]);
-        }
-    }
-
-
-    // ================================== Update Password Function End Here ======================================================== 
-
-
-    // =================================================  Delete job Seeker Function ================================================ 
-    public function Mdeleteuser(Request $request){   
-
-        
-        $user = Auth::user();
-        $del_data = new fbremacc();
-
-        if(isEmployer($user))
-        {
-            $del_data->user_id = $user->id;
-            $del_data->user_name = $user->username;
-            $del_data->user_email = $user->email;
-            $del_data->reason = $request->reasonValue;
-            
-            $del_data->save();
-        }
-
-        else{
-
-            $del_data->user_id = $user->id;
-            $del_data->user_name = $user->username;
-            $del_data->user_email = $user->email;
-            $del_data->recentJob = $user->recentJob;
-            $del_data->statusText = $user->statusText;
-            $del_data->company = $user->company;
-            $del_data->reason = $request->reasonValue;
-            $del_data->save();
-        }
-        
-        
-        // dd( $user->email); 
-
-        if(!empty($user)){
-        $user->delete();
-          return response()->json([
-                'status' => 1,
-                'message' => 'User Succesfully Deleted',
-          ]);
-      }
-    }
-
-    // ================================================= Delete job Seeker Function End Here ==============================================
 
     //====================================================================================================================================//
     // Get // layout for purchasing Credits.
