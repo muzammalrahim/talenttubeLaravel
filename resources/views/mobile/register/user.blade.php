@@ -30,6 +30,8 @@
 
 	{{-- @include('site.home.login') --}}
 
+	@include('mobile.footer')
+
 </div>
 <!-- /main -->
 

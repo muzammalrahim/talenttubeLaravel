@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Mail;
 use FFMpeg;
-
+use Jenssegers\Agent\Agent;
 
 class HomeController extends Controller {
 
@@ -102,13 +102,22 @@ class HomeController extends Controller {
 
             // attempt to do the login
             if (Auth::attempt($userdata)){
+													$agent = new Agent();
                 // validation successful
                 // do whatever you want on success
                 if( $request->login_type == 'site_ajax' ){
                      $user = Auth::user();
                     // check if its employee or user.
                     if (isEmployer()){
-                        // check if employer has answer the initial question in step2.
+																								// check if employer has answer the initial question in step2.
+																								if($agent->isMobile()){
+																									$redirect_url = ($user->step2)?(route('Memployers')):(route('mStep2Employer'));
+																									return array(
+																										'status' => 1,
+																										'message' => 'login succesfully',
+																										'redirect' => $redirect_url
+																									);
+																								}
                         $redirect_url = ($user->step2)?(route('employerProfile')):(route('step2Employer'));
                         return array(
                             'status'    => 1,
@@ -116,7 +125,15 @@ class HomeController extends Controller {
                             'redirect' =>  $redirect_url
                         );
                     }else{
-                        // check if user has answer the initial question in step2.
+																								// check if user has answer the initial question in step2.
+																								if($agent->isMobile()){
+																									$redirect_url = ($user->step2)?(route('mUsername', $user->username)):(route('mStep2User'));
+																									return array(
+																										'status' => 1,
+																										'message' => 'login succesfully',
+																										'redirect' => $redirect_url
+																									);
+																								}
                         $redirect_url = ($user->step2)?(route('username',$user->username)):(route('step2User'));
                         return array(
                             'status'    => 1,

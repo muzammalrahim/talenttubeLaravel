@@ -575,7 +575,7 @@ $(function(){
             }, 1000);
         } else {
             jQuery('.submit-document').submit();
-        }
+        }   
         // $jq('#full_step_8').html(getLoader('css_loader_btn', false, true));
 
         // step2_formData.append('industry_experience', JSON.stringify(dataIndustryExp));

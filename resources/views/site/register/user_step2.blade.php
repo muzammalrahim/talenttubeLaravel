@@ -507,7 +507,8 @@ a#user_step8_done, a#more_jobs_step2  {
     margin-top: 10px;
 }
 a#more_jobs_step2{
-    width: 9%;
+	width: 15%;
+text-align: center;
 }
 </style>
 @stop

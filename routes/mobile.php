@@ -103,6 +103,37 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
 
 
+// Akmal routes work. 
+
+// Front End modile layout only 
+Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){ 
+
+	// Front End  mobile with Authentication 
+ Route::group(array('middleware' => ['auth']), function(){ 
+
+	});
+	
+	Route::post('ajax/userUploadResume', 'Mobile\MobileUserController@userUploadResume')->name('mUserUploadResume');
+
+	// Tags
+	Route::get('ajax/getTags/{category}/{offset?}', 'Site\SiteUserController@getTags');
+	Route::get('ajax/searchTags', 'Site\SiteUserController@searchTags')->name('mSearchTags');
+	Route::post('ajax/addNewTag', 'Site\SiteUserController@addNewTag')->name('mAddNewTag');
+
+	// Jobs
+	Route::get('step2Jobs', 'Mobile\MobileUserController@step2Jobs')->name('mStep2Jobs');
+
+	// Employer
+	Route::get('employer/profile', function () { return redirect('employer/'.Auth::user()->username); })->name('mEmployerProfile');
+	Route::get('employer/step2',       'Site\EmployerController@step2Employer')->name('mStep2Employer');
+	Route::post('employer/step2',      'Site\EmployerController@Step2');
+
+
+
+
+});
+
+// Akmal routes work. 
  
 
 

@@ -11,6 +11,7 @@ var profile_img_selected = false;
 var userSelectedTagsList = [];
 
 var isAnswerSend=false;
+var s3_validation = true;
 var dataAnswerJoin={};
 var isUploadPhotoJoinAjax=false,
 				isUploadPhotoJoin=false;
@@ -31,7 +32,7 @@ var profile_img_selected = false;
 				} else {
 					event.preventDefault();
 					event.stopPropagation();
-					// Register step1 form submit
+					// Register User step1 form submit
 					var formData = {};
 						$('#frm_register_submit').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>').prop('disabled', true);
 						$('input:not([type="search"]), select', '#step-1').each(function(){
@@ -77,6 +78,14 @@ $(document).ready(function(){
 		}
 		});
 
+		// Make Step Header Sticky
+
+	// 	$(".sticky-content").sticky({
+	// 		topSpacing: 50,
+	// 		zIndex: 100,
+	// 		stopper: "#footer",
+	// });
+
 		// Step2 Start
 		$('.btn_question').click(function(){
 			questionAnswer($(this).data('action'));
@@ -112,6 +121,57 @@ $(document).ready(function(){
 			}
 			// Step2 End
 
+			// Employer step3 3 strat
+			$('#step3_done').click(function(){
+				console.log(' step3_done ', dataAnswerJoin);
+				step2_formData.append('questions',JSON.stringify(dataAnswerJoin));
+				console.log(' step2_formData ', step2_formData.entries());
+
+				$('#about_me_error,#interested_in_error,.part_photo .name_info').addClass('to_hide');
+				$('#about_me,#interested_in,.upload_file').removeClass('validation_error');
+
+				//validation
+				// var s3_validation = true;
+				var about_me = $.trim($('#about_me').val());
+				var interested_in = $.trim($('#interested_in').val());
+
+				if ( about_me == ''){
+								s3_validation = false;
+								$('#about_me_error').removeClass('to_hide').text('Required');
+								$('#about_me').addClass('validation_error');
+				}
+
+				if (interested_in == ''){
+								s3_validation = false;
+								$('#interested_in_error').removeClass('to_hide').text('Required');
+								$('#interested_in').addClass('validation_error');
+				}
+
+				if(!profile_img_selected){
+								s3_validation = false;
+								$('.part_photo .name_info').removeClass('d-none').addClass('d-block');
+								$('.upload_file').addClass('validation_error');
+				}
+
+				if(s3_validation){
+								step3_formData.append('about_me', about_me);
+								step3_formData.append('interested_in', interested_in );
+								userStep2Update(step3_formData, 3);
+								showEmployStep4();
+				}
+
+		});
+
+		// Employer Step 3 end
+
+		// Employer Step 4 start
+		$('#join_done').click(function(){
+			console.log(' join_done ', dataAnswerJoin);
+			step4_formData.append('industry_experience', JSON.stringify(dataIndustryExp));
+   userStep2Update(step4_formData, 4);
+		});
+		// Employer Step 4 end
+
 			// User Step3 Done Start
 			$('#user_step3_done').click(function(){
 				console.log(' step3_formData ', step3_formData.entries());
@@ -120,7 +180,7 @@ $(document).ready(function(){
 				$('#about_me,#interested_in,.upload_file,#recentJob').removeClass('validation_error');
 				
 				//validation
-				var s3_validation = true;
+				// var s3_validation = true;
 				var about_me = $.trim($('#about_me').val());
 				var interested_in = $.trim($('#interested_in').val());
 				var recentJob = $.trim($('#recentJob').val());
@@ -320,6 +380,276 @@ $(document).ready(function(){
 				userStep2Update(step6_formData,7);
 			});
 			// User Step7 End
+
+			// User Step8 Start
+			$('.submit-document').on('submit', function(e){
+				e.preventDefault();
+				var formData = new FormData(this);
+				console.log(formData);
+				formData.append('submit', true);
+				jQuery.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+				jQuery.ajax({
+					type: 'POST',
+					url: '/m/ajax/userUploadResume',
+					data: formData,
+					cache:false,
+					contentType: false,
+					processData: false,
+					success:function(data){
+						jQuery('.save-resume-btn').html('Save');
+						console.log("success data ", data);
+						if (data && data.attachments) {
+							var attachments = data.attachments;
+							var attach_html = '';
+							if( attachments.length > 0 ){
+											for (let ai = 0; ai < attachments.length; ai++) {
+															attach_html += '<div class="attachment_'+attachments[ai].id+' attachment_file">';
+															attach_html +=   '<div class="attachment"><img src="'+base_url+'/images/site/icons/cv.png" /></div>';
+															attach_html +=   '<span class="attach_title">'+attachments[ai].name+'</span>';
+															attach_html +=   '<div class="attach_btns">';
+															attach_html +=      '<a class="attach_btn downloadAttachBtn" href="'+base_url+'/'+attachments[ai].file+'">Download</a>';
+															attach_html +=      '<a class="attach_btn removeAttachBtn" data-attachmentid="'+attachments[ai].id+'" onclick="UProfile.confirmAttachmentDelete('+attachments[ai].id+');">Remvoe</a>';
+															attach_html +=    '</div>';
+															attach_html +=  '</div>';
+											}
+							}
+							jQuery('.private_attachments').html(attach_html);
+
+							setTimeout(function(){ showUserStep9(); }, 1000);
+						}
+						console.log(data);
+					},
+				error: function(data){
+					console.log("error");
+     console.log(data);
+				}
+				});
+			});
+
+			$('#user_step8_done').click(function(){
+				$('.upload_resume_error').html('');
+				$('.upload_resume_error').show();
+				var resumeFileLength = $('#resume')[0].files.length;
+				console.log('check length', resumeFileLength);
+				if (resumeFileLength === 0){
+					$('.upload_resume_error').append('<p>please select resume</p>');
+					setTimeout(function () {
+									$('.upload_resume_error').fadeOut();
+					}, 1000);
+				} else {
+					jQuery('.submit-document').submit();
+					}
+			});
+			// User Step8 End
+
+			// User Step9 Start
+			
+			// tagging system Script
+			$('#tagCategory').on('change', function(){
+				jQuery('.tagListCont .tagListBox').html('');
+    jQuery('.tagListCont').addClass('loadingList');
+				var tagCatId = jQuery(this).val();
+				console.log('cat id', tagCatId);
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            url: base_url+'/m/ajax/getTags/'+tagCatId,
+            type : 'GET',
+            success : function(resp) {
+                console.log('getTags ', resp);
+                jQuery('.tagListCont').removeClass('loadingList');
+                if(resp.status){
+                    jQuery('.tagListCont .tagListBox').html(resp.data);
+                }
+            }
+        });
+			});
+
+						jQuery('.tagListBox').on('click','li a.loadMoreTags', function(){
+							console.log(' loadMoreTags click ');
+							jQuery('.tagListCont .tagListBox').html('');
+							jQuery('.tagListCont').addClass('loadingList');
+							var offset = jQuery(this).attr('data-offset');
+							var tagCatId = jQuery('#tagCategory option:selected').val();
+							console.log('tag cat id', tagCatId);
+							$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+							$.ajax({
+											url: base_url+'/ajax/getTags/'+tagCatId+'/'+offset,
+											type : 'GET',
+											success : function(resp) {
+															console.log('getTags ', resp);
+															jQuery('.tagListCont').removeClass('loadingList');
+															if(resp.status){
+																			jQuery('.tagListCont .tagListBox').html(resp.data);
+															}
+											}
+							});
+			});
+
+			jQuery('html').click(function(e) {
+				//if clicked element is not your element and parents aren't your div
+				if (e.target.id != 'newTag' && $(e.target).parents('#newTag').length == 0) {
+								jQuery('.tagSuggestionCont').hide();
+				}else{
+								console.log(' 2 focusin out ');
+								jQuery('.tagSuggestionCont').show();
+				}
+		});
+
+		jQuery('.newTag input').on('keyup',function() {
+			var query =  jQuery.trim(jQuery(this).val());
+			console.log(' newTag keyup ', query);
+			if ( query == '' ){
+							jQuery('.tagSuggestionCont').hide();
+							jQuery('ul.tagSuggestion').html('');
+			}
+
+			jQuery.ajax({
+							url: base_url+"/m/ajax/searchTags",
+							type:"GET",
+							data:{'search':query, 'exclude': userSelectedTagsList},
+							success:function (resp) {
+											console.log(' resp ', resp);
+											//$('#country_list').html(data);
+											if(resp.status){
+															console.log(' resp data ', resp.data);
+															if(resp.data.length > 0){
+																			jQuery('.tagSuggestionCont').show();
+																			var suggestionArray = resp.data;
+																			var suggestion = '';
+																			jQuery.each( suggestionArray, function( index, value ){
+																							suggestion += '<li class="suggestTagItem tagItem" data-id="'+value.id+'"><i class="tagIcon fa fa-box-open"></i><span>'+value.title+'</span></li>';
+																			});
+																			jQuery('ul.tagSuggestion').html(suggestion);
+															}
+											}
+							}
+			})
+			// end of ajax call
+});
+
+jQuery('.tagSuggestionCont').on('click','.suggestTagItem', function(){
+	addNewTag(this);
+});
+
+
+jQuery('.tagListBox').on('click','.tag.tagItem', function(){
+	addNewTag(this);
+	// jQuery(this).remove();
+});
+
+var addNewTag = function(elem){
+	var tagId = jQuery(elem).attr('data-id');
+	console.log('suggestTagItem click ', tagId);
+	if (userSelectedTagsList.indexOf(tagId) == -1){
+					userSelectedTagsList.push(tagId);
+					var tag_clone = elem;
+					console.log(' tag_clone ', tag_clone);
+					jQuery('.selectTagList ul').append(tag_clone);
+	}
+	console.log(' userSelectedTagsList ', userSelectedTagsList);
+	if (userSelectedTagsList.length > 0 ){
+					jQuery('#user_step9_done').prop('disabled',false);
+					jQuery('#tag_skip_btn').fadeOut();
+	}else{
+					jQuery('#user_step9_done').prop('disabled',true);
+	}
+}
+
+jQuery('.selectTagList').on('click','li.tagItem', function(){
+	// console.log(' selectTagList click ');
+	var tagId = jQuery(this).attr('data-id');
+	// console.log('selected tags', userSelectedTagsList.indexOf(tagId));
+	if ( userSelectedTagsList.indexOf(tagId) != -1 ){
+					userSelectedTagsList.splice(userSelectedTagsList.indexOf(tagId),1);
+					jQuery(this).remove();
+	} if (userSelectedTagsList.length == 0)  {
+					jQuery('#user_step9_done').prop('disabled',true);
+					jQuery('#tag_skip_btn').fadeIn();
+	}
+});
+
+jQuery('button#addNewTag').on('click',function(){
+	console.log(' button#addNewTag ');
+	var newTagTitle = jQuery.trim(jQuery('.newTagInput input').val());
+	console.log('input', newTagTitle);
+	jQuery('.addNewTagModal .md-form input').val(newTagTitle);
+	// jQuery('#addNewTagModalBox').removeClass('loading');
+	jQuery('.addNewTagModal .apiMessage').hide();
+	jQuery('.addNewTagModal .error').html('&nbsp;');
+});
+
+jQuery('.addNewTagModal .newTagAdd').on('click',function(){
+	console.log(' newTagAdd click ');
+	jQuery('.modal-dialog').addClass('loading');
+
+	var newTagTitle = jQuery('.addNewTagModal .form_input input').val();
+	var newTagCat   = jQuery('.addNewTagModal .form_input select[name="newTagCategory"]').val();
+	var newTagIcon  = jQuery('.addNewTagModal .form_input select[name="newTagIcon"]').val();
+	$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+	jQuery.ajax({
+					url: base_url+"/m/ajax/addNewTag",
+					type:"POST",
+					data:{'newTagtitle':newTagTitle, 'newTagCategory': newTagCat, 'newTagIcon': newTagIcon},
+					success:function (resp) {
+									console.log(' resp ', resp);
+									//$('#country_list').html(data);
+									if(resp.status){
+													console.log(' resp data ', resp.data);
+													var newTagElem = resp.data;
+													var newTagHtml = '<li class="tagItem" data-id="'+newTagElem.id+'"><i class="tagIcon fa '+newTagElem.icon+'"></i><span>'+newTagElem.title+'</span></li>';
+													var dom_nodes = jQuery(jQuery.parseHTML(newTagHtml));
+													addNewTag(dom_nodes);
+
+													// jQuery('.selectTagList ul').append(newTagHtml);
+													jQuery('.addNewTagModal .apiMessage').html('Tag Succesfully Added').show();
+													setTimeout(function() {
+																	jQuery('#addNewTagModal').modal('hide');
+																	jQuery('.newTagInput input').val('');
+													}, 1000);
+									}else{
+													jQuery('.modal-dialog').removeClass('loading');
+													if(resp.validator != undefined){
+																	const keys = Object.keys(resp.validator);
+																	for (const key of keys) {
+																					if($('#'+key+'_error').length > 0){
+																									$('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(resp.validator[key][0]);
+																					}
+																	}
+													}
+
+													if(resp.error != undefined){
+																	$('.modal-dialog .apiMessage').show().text(resp.error);
+																	setTimeout(function() {
+																					jQuery('.addNewTagModal .apiMessage').html('').hide();
+																	}, 3000);
+
+													}
+
+									}
+					}
+	})
+
+});
+
+$('#user_step9_done').click(function () {
+	step7_formData.append('tags', userSelectedTagsList);
+	userStep2Update(step7_formData, 9);
+});
+
+$('#tag_skip_btn').click(function () {
+	userStep2Update(step7_formData, 9);
+});
+			// User Step9 End
+
+			// User Step10 Start
+			$(window).on('load', function() {
+				$('#mdb-preloader').delay(1000).fadeOut(300);
+			});
+
+			$('#user_step10_done').click(function () {
+				userStep2Update(step7_formData, 10);
+				});
+			// User Step9 End
 			// Step2 Send Ajax Request Start
 			var userType = $('#userType').val();
 			function userStep2Update(data, step){
@@ -359,7 +689,18 @@ $(document).ready(function(){
 									case 7:
 										showUserStep8();
 										break;
+									case 8:
+										showUserStep9();
+										break;
+									case 9:
+										showUserStep10();
+										break;
+									case 10:
+										setTimeout(() => {
+											location.href = resp.redirect;
+										}, 1000);
 									default:
+										showUserStep2();
 										break;
 								}
 							} else {
@@ -377,6 +718,56 @@ $(document).ready(function(){
 							}
 						}
 					});
+				} else {
+					if(step == 3){
+						$('#step3_done').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>');
+					} else {
+						$('#join_done').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>').prop('disabled', true);
+					}
+					$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+					$.ajax({
+						url: base_url+'/m/employer/step2',
+						type : 'POST',
+						data : data,
+						processData: false,
+						contentType: false,
+						success : function(resp) {
+							console.log('resp ', resp);
+							if (step == 3){
+											$('#step3_done').html('Done').prop('disabled', false);
+							}
+							$('#join_done').html('Done').prop('disabled',false);
+
+							if(resp.status == 1){
+											switch (step) {
+															case 2:
+																			showUserStep3();
+																			break;
+															case 3:
+																			showEmployStep4();
+																			break;
+															case 4:
+																			setTimeout(() => {
+																							location.href = resp.redirect;
+																			}, 1000);
+																			break;
+															default:
+																			showUserStep2();
+																			break;
+											}
+							}else{
+											if(resp.validator != undefined){
+															const keys = Object.keys(resp.validator);
+															for (const key of keys) {
+																			var error_html = '<p>'+resp.validator[key][0]+'</p>';
+																			console.log(error_html);
+																			$('.full_step_error').append(error_html);
+															}
+											}
+
+							}
+			}
+					});
 				}
 			}
 			// Step2 Send Ajax Request End
@@ -387,8 +778,9 @@ function showUserStep2(){
 }
 
 function showUserStep3(){
+	var step3Slogan = ($('#userType').val() == 'user')?('Update your profile'):('Give us a brief overview');
 	$('#join_step ul li').removeClass('active').addClass('d-none');
-    $('#join_step ul li:eq(1)').addClass('active').removeClass('d-none');;
+    $('#join_step ul li:eq(1)').addClass('active').removeClass('d-none').html('<span class="rounded p-4 bg-dark mr-2 d-inline-block h3">2</span>'+ step3Slogan);
     $('#full_step_1').fadeOut(400,function(){
         $('#full_step_3').fadeIn(400,function(){
             var $baseField=$('#full_step_3').find('.placeholder_always');
@@ -462,7 +854,45 @@ function showUserStep8(){
 					});
 	});
 }
-// After reload the user window
+
+function showUserStep9(){
+	$('#join_step ul li').removeClass('active').addClass('d-none');
+	$('#join_step ul li:eq(1), #join_step ul li:eq(2), #join_step ul li:eq(3), #join_step ul li:eq(4), #join_step ul li:eq(5), #join_step ul li:eq(6)').removeClass('d-block');
+	$('#join_step ul li:eq(7)').addClass('active').removeClass('d-none');
+	$('#full_step_8').fadeOut(400,function(){
+					$('#full_step_9').fadeIn(400,function(){
+					});
+	});
+}
+
+function showUserStep10(){
+	$('#join_step ul li').removeClass('active').addClass('d-none');
+	$('#join_step ul li:eq(1), #join_step ul li:eq(2), #join_step ul li:eq(3), #join_step ul li:eq(4), #join_step ul li:eq(5), #join_step ul li:eq(6), #join_step ul li:eq(7)').removeClass('d-block');
+	$('#join_step ul li:eq(8)').addClass('active').removeClass('d-none');
+	$('#full_step_9').fadeOut(400,function(){
+					$('#full_step_10').fadeIn(400,function(){
+					});
+	});
+	$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+	var url = base_url+'/m/step2Jobs';
+	$.get(url, function (data) {
+					$('.jobs_list').html(data);
+	});
+}
+
+// Employ Step4
+
+function showEmployStep4(){
+	$('#join_step ul li').removeClass('active').addClass('d-none');
+	$('#join_step ul li:eq(1)').removeClass('d-block');
+	$('#join_step ul li:eq(2)').addClass('active').removeClass('d-none');
+	$('#full_step_3').fadeOut(400,function(){
+					$('#full_step_4').fadeIn(400,function(){});
+	})
+}
+
+
+// After reload the user step2 window
 function userStepReload(currentStep) {
 	switch (currentStep) {
 					case 2:
@@ -491,6 +921,24 @@ function userStepReload(currentStep) {
 									break;
 					case 10:
 									showUserStep10();
+									break;
+					default:
+									showUserStep2();
+									break;
+	}
+}
+
+// After reload the employer step2 window
+function employerStepReload(currentStep) {
+	switch (currentStep) {
+					case 2:
+									showUserStep3();
+									break;
+					case 3:
+									showEmployStep4();
+									break;
+					case 4:
+									showEmployStep4();
 									break;
 					default:
 									showUserStep2();
