@@ -185,7 +185,13 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 // User Registeration.
 Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
 // Route::get('step2', 'Site\HomeController@step2')->name('step2');
- Route::post('login', 'Site\HomeController@loginUser')->name('login');
+	Route::post('login', 'Site\HomeController@loginUser')->name('login');
+	
+	//Employer Registeration.
+	Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer');
+	Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
+	Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
+	Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
 
 // Desktop layout only. 
 Route::group(array('middleware' => ['devicecheck']), function(){
@@ -200,10 +206,10 @@ Route::group(array('middleware' => ['devicecheck']), function(){
 
 
     //Employer Registeration.
-    Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer'); // user_register
-    Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
-    Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
-    Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
+    // Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer'); // user_register
+    // Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
+    // Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
+    // Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
 
     Route::get('/unauthorized', function () { return view('unauthorized'); });
     Route::post('ajax/geo_states', 'Site\HomeController@geo_states')->name('ajax_geo_states');

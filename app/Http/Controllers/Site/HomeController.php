@@ -23,6 +23,13 @@ use Jenssegers\Agent\Agent;
 
 class HomeController extends Controller {
 
+				public $agent;
+
+				public function __construct()
+				{
+					$this->agent = new Agent();
+				}
+
     public function index(){
         $data['title'] = 'Home Page';
         $data['content_header'] = 'Content Header';
@@ -313,13 +320,13 @@ class HomeController extends Controller {
     // POST request submitted from registeration.
     //====================================================================================================================================//
     public function registerEmployer(Request $request){
-        // dd( $request->toArray() );
+								// dd( $request->toArray() );
         $rules = array(
             'firstname' => 'required|alpha_num|max:12',
             'surname' => 'required|alpha_num|max:12',
-            'location_city' => 'required',
-            'location_state' => 'required',
-            'location_city' => 'required',
+            // 'location_city' => 'required',
+            // 'location_state' => 'required',
+            // 'location_city' => 'required',
             'email' => 'bail|required|email|unique:users,email',
             'phone' => 'required|min:10|max:10',
             'companyname' => 'required|string|max:25',
@@ -360,15 +367,43 @@ class HomeController extends Controller {
                 $success_message .= '<div class="slogan">'.__('site.Verify_Email').'</div>';
                 // $success_message .= '<p>Redirecting to User info page.</p>';
                 
-                $mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
-
+																$mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
+																if($this->agent->isMobile()){
+																	$userData = array('email' => $user->email, 'password' => $request->password);
+																	if(Auth::attempt($userData)){
+																		$user = Auth::user();
+																		return array(
+																			'status'    => 1,
+																			'message'   => 'login succesfully',
+																			// 'new' => $success_message,
+																			'redirect' =>  route('mStep2Employer')
+																		);
+																	} else {
+																		return array(
+																			'status'    => 0,
+																			'message'   => 'Error authenticating user',
+																			'redirect' =>  route('mHomepage')
+																		);
+																	} 
+																} else {
+																	return response()->json([
+																		'status' => 1,
+																		'message' => $success_message,
+																		'redirect' => route('step2Employer')
+																	]);
+																}
                 return response()->json([
                     'status' => 1,
                     'message' => $success_message,
-                    'redirect' => route('homepage')
-                    // 'redirect' => route('step2Employer')
+                    // 'redirect' => route('employerNotVerified')
+                    'redirect' => route('step2Employer')
                 ]);
-            }
+            } else {
+													return response()->json([
+														'status' => 0,
+														'validator' =>  array('Error Creative User.')
+														]);
+												}
         }
     }
 
@@ -376,7 +411,7 @@ class HomeController extends Controller {
     function employerNotVerified(){
         // dd(' employerNotVerified ');
         $data['title'] = '';
-        $view_name = 'site.register.employer_notvarified';
+        $view_name = ($this->agent->isMobile()) ? 'mobile.register.employer_notvarified' : 'site.register.employer_notvarified';
         return view($view_name, $data);
     }
 

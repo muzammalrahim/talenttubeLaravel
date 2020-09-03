@@ -61,7 +61,7 @@
 
 {{-- @include('site.home.login') --}}
 
-@include('site.footer')
+@include('mobile.footer')
 </div>
 <!-- /main -->
 

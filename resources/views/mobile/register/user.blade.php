@@ -20,12 +20,13 @@
 											
 							
 						<div class="wrapper">
-											@include('site.header2')
+											@include('mobile.header.header1')
 						</div>
 						
 						@include('mobile.register.user_step1')
 
 			</div>
+			@include('mobile.home.loginPopup') 
 	</div>
 
 	{{-- @include('site.home.login') --}}

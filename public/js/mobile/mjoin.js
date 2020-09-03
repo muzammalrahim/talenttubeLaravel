@@ -40,26 +40,51 @@ var profile_img_selected = false;
 						});
 						var layout = $('#layout').val();
 						formData.layout = layout;
-					$.post(base_url+'/register', formData, 
-					function(data){
-						console.log('register data', data);
-						if(!data.status){
-							const keys = Object.keys(data.validator);
-							for(const key of keys){
-								if($('#'+key+'_error').length > 0){
-									$('#'+key+'_error').removeClass('d-none').addClass('d-block').text(data.validator[key][0]);
-									$('#field_privacy_policy').prop('checked', false);
-									$('#frm_register_submit').text('Next');
+						var requestFrom = $('#user_type').val();
+						console.log('request', requestFrom);
+						if(requestFrom == 'employer'){
+							$.post(base_url+'/register/employer', formData,
+							function(data){
+								console.log(' register data ', data);
+								if(!data.status){
+									const keys = Object.keys(data.validator);
+									for(const key of keys){
+										if($('#'+key+'_error').length > 0){
+											$('#'+key+'_error').removeClass('d-none').addClass('d-block').text(data.validator[key][0]);
+											$('#field_privacy_policy').prop('checked', false);
+											$('#frm_register_submit').text('Next');
+										}
+									}
+								} else {
+									$('#step-1').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>').prop('disabled', true);
+									$('#success-step-1').html(data.message);
+									setTimeout(() => {
+										location.href = data.redirect;
+									}, 2000);
 								}
-							}
+							});
 						} else {
-							$('#step-1').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>').prop('disabled', true);
-							$('#success-step-1').html(data.message);
-							setTimeout(() => {
-								location.href = data.redirect;
-							}, 2000);
+							$.post(base_url+'/register', formData, 
+							function(data){
+								console.log('register data', data);
+								if(!data.status){
+									const keys = Object.keys(data.validator);
+									for(const key of keys){
+										if($('#'+key+'_error').length > 0){
+											$('#'+key+'_error').removeClass('d-none').addClass('d-block').text(data.validator[key][0]);
+											$('#field_privacy_policy').prop('checked', false);
+											$('#frm_register_submit').text('Next');
+										}
+									}
+								} else {
+									$('#step-1').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>').prop('disabled', true);
+									$('#success-step-1').html(data.message);
+									setTimeout(() => {
+										location.href = data.redirect;
+									}, 2000);
+								}
+							});
 						}
-					});
 				}
 				form.classList.add('was-validated');
 			}, false);
