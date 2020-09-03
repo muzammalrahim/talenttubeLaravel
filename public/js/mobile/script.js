@@ -13,6 +13,54 @@ $(document).ready(function() {
 	});
 
 
+
+    // Mobile login. 
+    $('.mSignInBtn').on('click',function() {
+        console.log(' mSignInBtn click ');
+        $('.loginStatus').html('');
+        $('.mProcessing').removeClass('d-none');
+        $('#m_form_login').addClass('d-none');
+        var formData = $('#m_form_login').serialize();
+        console.log(' formData ', formData); 
+        // var formData = { 
+        //     email:  $.trim($('#loginFormEmail').val()),
+        //     password:  $.trim($('#loginFormPassword').val()),
+        //     login_type: 'site_ajax',
+        //   };
+
+
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+         $.ajax({
+             url: base_url+'/login',
+             type : 'POST',
+             data : formData,
+             success : function(resp) {
+                 console.log('resp ', resp);
+
+                 if(resp.status){
+                     setTimeout(() => {
+                         location.href = resp.redirect;
+                     }, 1000);
+                 }else{
+
+                    $('.mProcessing').addClass('d-none');
+                    $('#m_form_login').removeClass('d-none');
+
+                    if(resp.message && resp.message.email){
+                        $('.loginStatus').html('<p>'+resp.message.email+'</p>');
+                    }
+                    if(resp.message && resp.message.password){
+                        $('.loginStatus').html('<p>'+resp.message.password+'</p>');
+                    }
+                   
+                 }
+             }
+         });
+          
+    });
+
+
+
 	//====================================================================================================================================//
 	// Function to display Industry experience list. 
 	//====================================================================================================================================//
@@ -182,6 +230,6 @@ $(document).ready(function() {
 
 
 
-
+  
         
 });

@@ -1,7 +1,3 @@
-
-
-
-
 <div id="step-1" class="hide1">
 	<div class="registerForm container h-100">
 

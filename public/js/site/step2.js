@@ -970,9 +970,9 @@ $(function(){
     function questionAnswer(action){
         console.log(' questionAnswer ', action, dataAnswerJoin);
         if(isAnswerSend)return;
-        isAnswerSend=true;
-        var $el=$('.card_question.first:not(.answer)');
-        var c=$('.card_question:not(.answer)').length-1;
+								isAnswerSend=true;
+								var $el=$('.card_question.first:not(.answer)');
+								var c=$('.card_question:not(.answer)').length-1;
         if($el[0]){
             dataAnswerJoin[$el.data('field')]=action?'yes':'no';
         }

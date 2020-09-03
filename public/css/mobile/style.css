@@ -8,6 +8,17 @@ main .container-fluid{
     background: #f3f5f9;
 }
 
+@-webkit-keyframes rotation {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+    to {
+        -webkit-transform: rotate(359deg);
+    }
+}
+.rotating {
+    -webkit-animation: rotation 2s infinite linear;
+}
 /*========================= Container Background Color ========================= */
 
  

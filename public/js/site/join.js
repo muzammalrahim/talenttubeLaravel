@@ -159,7 +159,7 @@ $(function(){
         if(setDisabledSubmitJoin(false,true,true)){
             return false;
         }
-        $jq('#frm_register_submit').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
+								$jq('#frm_register_submit').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
         $jq('input:not([type="search"]), select', '#step-1').each(function(){
             dataFrm[this.name]=$.trim(this.value);
         })
