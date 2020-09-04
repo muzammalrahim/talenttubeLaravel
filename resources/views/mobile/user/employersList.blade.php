@@ -124,7 +124,7 @@ $(document).on('click','.likeEmployerButton',function(){
 
                 $('.empLikeAlert').show().delay(3000).fadeOut('slow');
                 btn.html('Liked').addClass('active');
-                location.reload();
+                // location.reload();
 
                 // $(this)('.likeEmployerButton').attr("d-none");
 

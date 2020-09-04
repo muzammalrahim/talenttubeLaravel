@@ -118,8 +118,9 @@ $(function () {
         }
 
         else{
-        var signinErrorWrong = data['message'];
+        var signinErrorWrong = data['message']['email'];
         $('.errorMessageLogIn').text(signinErrorWrong);
+        // console.log(signinErrorWrong);
 
         }
 

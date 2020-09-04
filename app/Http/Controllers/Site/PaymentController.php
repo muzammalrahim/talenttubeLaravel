@@ -16,6 +16,9 @@ class PaymentController extends Controller {
         //   return view('payment',compact('product'));
     }
 
+
+
+
     public function paymentReturn(Request $request){
         // $user = Auth::user();
         // $data['user'] = $user;
@@ -24,6 +27,11 @@ class PaymentController extends Controller {
         // $data['content'] = 'this is page content';
         return view('site.credit.return', $data);
     }
+
+
+
+
+    
 
     public function notifyPayment(Request $request){
         // dump('  notifyPayment ');

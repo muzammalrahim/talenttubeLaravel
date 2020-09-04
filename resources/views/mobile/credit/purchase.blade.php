@@ -78,22 +78,22 @@
         <form action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post" >
 
                 <div class="form-check p-0">
-                  <input type="radio" class="form-check-input" id="materialGroupExample1" name="groupOfMaterialRadios">
+                  <input type="radio" class="form-check-input radioClick" id="materialGroupExample1" name="groupOfMaterialRadios">
                   <label class="form-check-label" for="materialGroupExample1">100 credits for $1.00</label>
                 </div>
 
                 <div class="form-check p-0">
-                  <input type="radio" class="form-check-input" id="materialGroupExample2" name="groupOfMaterialRadios" checked>
+                  <input type="radio" class="form-check-input radioClick" id="materialGroupExample2" name="groupOfMaterialRadios" checked>
                   <label class="form-check-label" for="materialGroupExample2">550 credits for $5.00</label>
                 </div>
 
                 <div class="form-check p-0">
-                  <input type="radio" class="form-check-input" id="materialGroupExample3" name="groupOfMaterialRadios">
+                  <input type="radio" class="form-check-input radioClick" id="materialGroupExample3" name="groupOfMaterialRadios">
                   <label class="form-check-label" for="materialGroupExample3"> 1250 credits for $10.00</label>
                 </div>
 
                 <div class="form-check p-0">
-                  <input type="radio" class="form-check-input" id="materialGroupExample4" name="groupOfMaterialRadios" checked>
+                  <input type="radio" class="form-check-input radioClick" id="materialGroupExample4" name="groupOfMaterialRadios" checked>
                   <label class="form-check-label" for="materialGroupExample4">2750 credits for $20.00</label>
                 </div>
 
@@ -111,7 +111,7 @@
                 <input type="hidden" name="currency_code" value="USD">
                 <input type="hidden" name="notify_url" value="{{route('notifyPayment')}}">
                 {{-- <input type="hidden" name="notify_url" value="http://139.59.44.29/notifyPayment"> --}}
-                <input type="hidden" name="cancel_return" value="{{route('paymentCancel')}}">
+                <input type="hidden" name="cancel_return" value="{{route('Mcredit')}}">
                 {{-- <input type="hidden" name="return" value="{{route('paymentReturn')}}"> --}}
                 <input type="hidden" name="return" value="{{route('employerProfile')}}">
 

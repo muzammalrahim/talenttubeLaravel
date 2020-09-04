@@ -1375,7 +1375,7 @@ class MobileUserController extends Controller
         $data['classes_body'] = 'myJob';
         $data['jobs'] = Jobs::with('applicationCount')->where('user_id',$user->id)->orderBy('created_at', 'DESC')->get();
         return view('mobile.employer.myjobs', $data);
-        // site/employer/myjobs
+        // mobile/employer/myjobs
     }
 
 
