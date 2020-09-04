@@ -116,15 +116,15 @@ class HomeController extends Controller {
                      $user = Auth::user();
                     // check if its employee or user.
                     if (isEmployer()){
-																								// check if employer has answer the initial question in step2.
-																								if($agent->isMobile()){
-																									$redirect_url = ($user->step2)?(route('Memployers')):(route('mStep2Employer'));
-																									return array(
-																										'status' => 1,
-																										'message' => 'login succesfully',
-																										'redirect' => $redirect_url
-																									);
-																								}
+    					// check if employer has answer the initial question in step2.
+    					if($agent->isMobile()){
+    						$redirect_url = ($user->step2)?(route('Memployers')):(route('mStep2Employer'));
+    						return array(
+    							'status' => 1,
+    							'message' => 'login succesfully',
+    							'redirect' => $redirect_url
+    						);
+    					}
                         $redirect_url = ($user->step2)?(route('employerProfile')):(route('step2Employer'));
                         return array(
                             'status'    => 1,
@@ -132,15 +132,15 @@ class HomeController extends Controller {
                             'redirect' =>  $redirect_url
                         );
                     }else{
-																								// check if user has answer the initial question in step2.
-																								if($agent->isMobile()){
-																									$redirect_url = ($user->step2)?(route('mUsername', $user->username)):(route('mStep2User'));
-																									return array(
-																										'status' => 1,
-																										'message' => 'login succesfully',
-																										'redirect' => $redirect_url
-																									);
-																								}
+    					// check if user has answer the initial question in step2.
+    					if($agent->isMobile()){
+    						$redirect_url = ($user->step2)?(route('mUsername', $user->username)):(route('mStep2User'));
+    						return array(
+    							'status' => 1,
+    							'message' => 'login succesfully',
+    							'redirect' => $redirect_url
+    						);
+    					}
                         $redirect_url = ($user->step2)?(route('username',$user->username)):(route('step2User'));
                         return array(
                             'status'    => 1,
@@ -166,9 +166,6 @@ class HomeController extends Controller {
         // dd( $request->toArray() );
         // exit;
      }
-
-
-
 
      public function geo_states(Request $request){
         $states = DB::table('geo_state')->where('country_id', $request->get('select_id'))->get();
@@ -260,51 +257,48 @@ class HomeController extends Controller {
                 // $success_message .= '<p>Redirecting to User info page.</p>';
                 // $mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
 
-													if($request->layout == 'mobile'){
+				if($request->layout == 'mobile'){
 
-														 // create our user data for the authentication
-														$userdata = array('email' => $user->email, 'password' => $request->password);
+					 // create our user data for the authentication
+					$userdata = array('email' => $user->email, 'password' => $request->password);
 
-															// attempt to do the login
+						// attempt to do the login
             		if (Auth::attempt($userdata)){
-																// validation successful
-																		$user = Auth::user();
-																	// check if its employee or user.
-																	if (isEmployer()){
-																					// check if employer has answer the initial question in step2.
-																					// $redirect_url = ($user->step2)?(route('employerProfile')):(route('step2Employer'));
-																					// return array(
-																					// 				'status'    => 1,
-																					// 				'message'   => 'login succesfully',
-																					// 				'redirect' =>  $redirect_url
-																					// );
-																		}else{
-																					// check if user has answer the initial question in step2.
-																					return array(
-																									'status'    => 1,
-																									'message'   => 'login succesfully',
-																									// 'new' => $success_message,
-																									'redirect' =>  route('mStep2User')
-																					);
-																		}
-															}else{
-																	return array(
-																		'status'    => 0,
-																		'message'   => 'Error authenticating user',
-																		'redirect' =>  route('mHomepage')
-																	);
-															}
+					// validation successful
+							$user = Auth::user();
+						// check if its employee or user.
+					if (isEmployer()){
+									// check if employer has answer the initial question in step2.
+									// $redirect_url = ($user->step2)?(route('employerProfile')):(route('step2Employer'));
+									// return array(
+									// 				'status'    => 1,
+									// 				'message'   => 'login succesfully',
+									// 				'redirect' =>  $redirect_url
+									// );
+						}else{
+							// check if user has answer the initial question in step2.
+							return array(
+											'status'    => 1,
+											'message'   => 'login succesfully',
+											// 'new' => $success_message,
+											'redirect' =>  route('mStep2User')
+							);
+						}
+						}else{
+								return array(
+									'status'    => 0,
+									'message'   => 'Error authenticating user',
+									'redirect' =>  route('mHomepage')
+								);
+						}
 
-													}else{
-														return response()->json([
-															'status' => 1,
-															'message' => $success_message,
-															'redirect' => route('step2User')
-														]);
-													}
-
-              
- 
+						}else{
+							return response()->json([
+								'status' => 1,
+								'message' => $success_message,
+								'redirect' => route('step2User')
+							]);
+						}
             }else{
                 return response()->json([
                     'status' => 0,
@@ -367,31 +361,31 @@ class HomeController extends Controller {
                 $success_message .= '<div class="slogan">'.__('site.Verify_Email').'</div>';
                 // $success_message .= '<p>Redirecting to User info page.</p>';
                 
-																$mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
-																if($this->agent->isMobile()){
-																	$userData = array('email' => $user->email, 'password' => $request->password);
-																	if(Auth::attempt($userData)){
-																		$user = Auth::user();
-																		return array(
-																			'status'    => 1,
-																			'message'   => 'login succesfully',
-																			// 'new' => $success_message,
-																			'redirect' =>  route('mStep2Employer')
-																		);
-																	} else {
-																		return array(
-																			'status'    => 0,
-																			'message'   => 'Error authenticating user',
-																			'redirect' =>  route('mHomepage')
-																		);
-																	} 
-																} else {
-																	return response()->json([
-																		'status' => 1,
-																		'message' => $success_message,
-																		'redirect' => route('step2Employer')
-																	]);
-																}
+				$mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
+				if($this->agent->isMobile()){
+					$userData = array('email' => $user->email, 'password' => $request->password);
+					if(Auth::attempt($userData)){
+						$user = Auth::user();
+						return array(
+							'status'    => 1,
+							'message'   => 'login succesfully',
+							// 'new' => $success_message,
+							'redirect' =>  route('mStep2Employer')
+						);
+					} else {
+						return array(
+							'status'    => 0,
+							'message'   => 'Error authenticating user',
+							'redirect' =>  route('mHomepage')
+						);
+					} 
+				} else {
+					return response()->json([
+						'status' => 1,
+						'message' => $success_message,
+						'redirect' => route('step2Employer')
+					]);
+				}
                 return response()->json([
                     'status' => 1,
                     'message' => $success_message,
@@ -399,11 +393,11 @@ class HomeController extends Controller {
                     'redirect' => route('step2Employer')
                 ]);
             } else {
-													return response()->json([
-														'status' => 0,
-														'validator' =>  array('Error Creative User.')
-														]);
-												}
+				return response()->json([
+					'status' => 0,
+					'validator' =>  array('Error Creative User.')
+					]);
+			}
         }
     }
 
@@ -711,6 +705,13 @@ class HomeController extends Controller {
 
             }
         }
+    }
+
+function forgetPassword(){
+        // dd(' employerNotVerified ');
+        // $data['title'] = '';
+        // $view_name = ($this->agent->isMobile()) ? 'mobile.register.employer_notvarified' : 'site.register.testingForgetPassword.blade';
+        return view ('site.register.testingForgetPassword');
     }
 
 }

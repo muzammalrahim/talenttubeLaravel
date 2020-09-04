@@ -1,11 +1,11 @@
 
 @extends('mobile.user.usermaster')
 @section('content')
+@include('mobile.jobs.jobsModal')
 
  
 <h6 class="h6 jobAppH6">Job's Detail</h6>
 
-@include('mobile.jobs.jobsModal')
 
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 

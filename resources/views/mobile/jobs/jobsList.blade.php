@@ -2,6 +2,9 @@
 @if ($jobs->count() > 0)
 @foreach ($jobs as $job)
 
+
+@include('mobile.jobs.jobsModal')  {{--         mobile/jobs/jobsModal       --}}
+
 {{-- @dump( $job->questions ) --}}
     {{-- @dump($job->jobEmployer->name) --}}
 
@@ -75,7 +78,7 @@
                         {{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}
                     </div>
 
-                    <div class="col p-0"> <button class="applicationsCount">Applications
+                    <div class="col p-0"> <button class="applicationsCount btn btn-sm btn-primary btn-xs">Applications
                         ({{($job->applicationCount)?($job->applicationCount->aggregate):0}})
                     </button>
 
@@ -92,7 +95,9 @@
                     </div>
 
                     <div class="float-right">
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" >Apply</a>
+                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" data-toggle="modal" data-target="#modalJobApply" >Apply</a>
+
+
 
                         {{-- <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" href="{{route('MjobApplyInfo', ['id' => $job->id]) }}" >test</a> --}}
 

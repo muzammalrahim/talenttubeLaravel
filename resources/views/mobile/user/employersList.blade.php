@@ -2,8 +2,6 @@
 @if(isset($employers))
  
 
-
-
 <div class="alert alert-success empLikeAlert" role="alert" style="display:none;">
           <strong>Success!</strong> You have successfully liked this Employer!
 </div>
@@ -11,7 +9,6 @@
 <div class="alert alert-success empBlockAlert" role="alert" style="display:none;">
           <strong>Success!</strong> You have Blocked Employer successfully!
 </div>
-
  
 @if ($employers->count() > 0)
 @foreach ($employers as $js)
@@ -180,12 +177,6 @@ $(document).on('click','.blockEmployerButton',function(){
 });
 
 {{-- ======================================================== Block Employer End Here ======================================================== --}}
-
-
-
-
-
-
 
 
 </script>

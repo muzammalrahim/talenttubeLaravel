@@ -121,17 +121,18 @@ div.row.jobInfo>.col.jobInfo {
 	color: black !important;
 }
 .applicationsCount{
-    width: 96px;
-    height: 34px;
-    border-radius: 8px;
-    border: 2px solid #254c8e;
-    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    /*width: 96px;*/
+    /*height: 34px;*/
+    padding: .4rem 0.4rem !important;
+    /*border-radius: 8px;*/
+    /*border: 2px solid #254c8e;*/
+    /*transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;*/
 
 }
 .applicationsCount:hover{
-	background: #254c8e;
+	/*background: #254c8e;*/
 	color: white;
-    border: 2px solid #254c8e;
+    /*border: 2px solid #254c8e;*/
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 
 }

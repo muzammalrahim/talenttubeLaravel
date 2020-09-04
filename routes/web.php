@@ -186,6 +186,16 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
 // Route::get('step2', 'Site\HomeController@step2')->name('step2');
 	Route::post('login', 'Site\HomeController@loginUser')->name('login');
+
+
+    // =============================================== Forget Password ===============================================
+
+    Route::get('forgetPassword', 'Site\HomeController@forgetPassword')->name('forgetPassword');
+
+
+    // =============================================== Forget Password ===============================================
+
+
 	
 	//Employer Registeration.
 	Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer');
