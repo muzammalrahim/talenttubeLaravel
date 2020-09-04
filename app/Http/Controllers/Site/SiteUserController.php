@@ -36,7 +36,7 @@ class SiteUserController extends Controller
 
     public function __construct()
     {
-        $this->middleware('auth');
+								$this->middleware('auth');
     }
 
     public function index(Request $request) {
@@ -789,7 +789,7 @@ class SiteUserController extends Controller
         $user->delete();
           return response()->json([
                 'status' => 1,
-                'message' => 'User Succesfully Deleted',
+                'message' => 'Job Seeker Succesfully Deleted',
           ]);
       }
     }
@@ -922,7 +922,7 @@ class SiteUserController extends Controller
             $user = Auth::user();
             $data['classes_body'] = 'profile';
             $data['user'] = $user;
-            $view = view('site.user.profile.updateUserPersonalSetting', $data); 
+            $view = view('site.user.profile.updateUserPersonalSetting', $data); //  site/user/profile/updateUserPersonalSetting 
             $html = $view->render();
             return $view;
     }
@@ -1406,9 +1406,9 @@ class SiteUserController extends Controller
     // GET // Job Search/Listing layout.
     //====================================================================================================================================//
     public function jobs(){
-								$user = Auth::user();
-								$user->step2 = 10;
-								$user->save(); 
+		$user = Auth::user();
+		$user->step2 = 10;
+		$user->save(); 
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
@@ -1705,7 +1705,7 @@ class SiteUserController extends Controller
         $data['title'] = 'Like Users';
         $data['classes_body'] = 'likeUsers';
         $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
-        return view('site.user.likeUsers', $data);
+        return view('site.user.likeUsers', $data);         //   site/user/likeUsers
     }
 
 

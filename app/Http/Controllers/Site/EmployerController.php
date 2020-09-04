@@ -22,12 +22,15 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
-
+use Jenssegers\Agent\Agent;
 
 class EmployerController extends Controller {
 
+			public $agent;
+
     public function __construct(){
-    	$this->middleware('auth');
+					$this->middleware('auth');
+					$this->agent = new Agent();
     }
 
 
@@ -86,7 +89,10 @@ class EmployerController extends Controller {
         $data['user'] = $user;
         $data['title'] = 'Employer';
         $data['classes_body'] = 'empStep2';
-        // $data['content'] = 'this is page content';
+								// $data['content'] = 'this is page content';
+								if($this->agent->isMobile()){
+									return view('mobile.register.employer_step2', $data);
+								}
         return view('site.register.employer_step2', $data);
 
     }
@@ -194,11 +200,12 @@ class EmployerController extends Controller {
             }
             $user->industry_experience = $requestData['industry_experience'];
             $user->step2 = $requestData['step'];
-            $user->save();
+												$user->save();
+												$redirect_url = ($this->agent->isMobile())? (route('mEmployerProfile')) : (route('employerProfile'));
             return response()->json([
                 'status' => 1,
-                'message' => 'data saved successfully',
-                'redirect' => route('employerProfile'),
+																'message' => 'data saved successfully',
+                'redirect' => $redirect_url,
                 'step' => 4
             ]);
         }

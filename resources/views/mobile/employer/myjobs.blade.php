@@ -15,12 +15,14 @@
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 
 
-        <div class="card">
+        <div class="card">  
+            {{-- @dump($job) --}}
+            {{-- $job->type =  $requestData['type']; --}}
 
 
              <div class="card-header jobAppHeader p-2 jobInfoFont">
 
-                <button class="jobsTypeLablel float-right font-weight-normal" disabled>{{$job->type}} Job</button>
+                <button class="jobsTypeLablel float-right font-weight-normal" disabled> {{$job->type}} Job</button>
 
                 <a>{{$job->title}}</a>
                 <div>

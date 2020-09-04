@@ -45,6 +45,10 @@
 	getData();
 
 
+    <div class="jobSeekers_list">
+        @include('mobile.user.employersList')  	<!--	mobile/user/employersList 		 -->
+    </div>
+
 // Bottom pagination load data throug ajax. 
 $(document).on('click','.employeer_pagination .page-item .page-link',function(e){
     console.log(' page-link click ', $(this) ); 
@@ -72,3 +76,4 @@ $(document).on('click','.employeer_pagination .page-item .page-link',function(e)
 	}
 	</script>
 	@stop
+

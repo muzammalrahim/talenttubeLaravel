@@ -185,7 +185,13 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 // User Registeration.
 Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
 // Route::get('step2', 'Site\HomeController@step2')->name('step2');
- Route::post('login', 'Site\HomeController@loginUser')->name('login');
+	Route::post('login', 'Site\HomeController@loginUser')->name('login');
+	
+	//Employer Registeration.
+	Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer');
+	Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
+	Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
+	Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
 
 // Desktop layout only. 
 Route::group(array('middleware' => ['devicecheck']), function(){
@@ -200,18 +206,16 @@ Route::group(array('middleware' => ['devicecheck']), function(){
 
 
     //Employer Registeration.
-    Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer'); // user_register
-    Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
-    Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
-    Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
+    // Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer'); // user_register
+    // Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
+    // Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
+    // Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
 
     Route::get('/unauthorized', function () { return view('unauthorized'); });
     Route::post('ajax/geo_states', 'Site\HomeController@geo_states')->name('ajax_geo_states');
     Route::post('ajax/geo_cities', 'Site\HomeController@geo_cities')->name('ajax_geo_cities');
 
 });
-
-
 
 
 // Front End  with Authentication
@@ -225,11 +229,6 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
 // ======================================= For Updating User Setting =======================================
 
     Route::get('updateUserPersonalSetting', 'Site\SiteUserController@updateUserPersonalSetting')->name('updateUserPersonalSetting');
-
-
-    // User
-    Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
-    Route::post('step2',      'Site\SiteUserController@Step2');
     
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
     Route::post('ajax/updateRecentJob', 'Site\SiteUserController@updateRecentJob');
@@ -297,6 +296,9 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::get('mutual-likes',         'Site\SiteUserController@mutualLikes')->name('mutualLikes');
     
 
+				// User Step2
+				Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
+				Route::post('step2',      'Site\SiteUserController@Step2');
 
 
     // Employer
@@ -361,6 +363,26 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
 
 
 });
+
+// Front End With Authentication except step2
+// Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
+
+// 					// Route::get('profile', function () { return redirect('user/'.Auth::user()->username); })->name('profile');
+// 					// Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
+// 	    // User
+// 					Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
+// 					Route::post('step2',      'Site\SiteUserController@Step2');
+
+// 					// Jobs
+// 					Route::get('step2Jobs', 'Site\SiteUserController@step2Jobs')->name('step2Jobs');
+
+// 					Route::post('ajax/userUploadResume', 'Site\SiteUserController@userUploadResume')->name('userUploadResume');
+
+// 					// Tags
+// 					Route::get('ajax/getTags/{category}/{offset?}', 'Site\SiteUserController@getTags');
+// 					Route::get('ajax/searchTags', 'Site\SiteUserController@searchTags')->name('searchTags');
+// 					Route::post('ajax/addNewTag', 'Site\SiteUserController@addNewTag')->name('addNewTag');
+// });
 
 
 

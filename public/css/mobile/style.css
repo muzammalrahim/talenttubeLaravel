@@ -215,4 +215,19 @@ div#heading1,.p-2.card-body.mb-1.rgba-grey-light.white-text.FilterCont {
 
 select option[data-placeholder] { 
 color : rgb(255, 255, 255);
+
+/* =================================================== Display None Class ===================================================*/
+.hideme{
+  display:none;
+}
+
+/* ================================================ Interested in Sections */
+.interestedInEditColor,.interestedInEditColor {
+  /*  background: #80808096;
+    color: white;*/
+  border: 2px solid #dc9f4a;
+  padding: 7px;
+
+
+
 }

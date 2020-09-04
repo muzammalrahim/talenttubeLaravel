@@ -45,7 +45,7 @@
                     <option value="contract">Contract</option>
                     <option value="temporary">Temporary</option>
                     <option value="casual">Casual</option>
-                    <option value="part_time">Part Time</option>
+                    <option value="Part Time">Part Time</option>
                     <option value="full_time">Full Time</option>
                 </select>
                 <div id="type_error" class="error field_error to_hide">&nbsp;</div>
@@ -191,7 +191,7 @@
 
         <div class="fomr_btn act_field">
             <span class="form_label"></span>
-            <input type="type" value="academic" />
+            {{-- <input type="type" value="academic" /> --}}
             <button class="btn small turquoise saveNewJob">Save</button>
         </div>
 

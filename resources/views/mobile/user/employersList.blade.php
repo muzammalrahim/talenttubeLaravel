@@ -1,4 +1,18 @@
+ 
 @if(isset($employers))
+ 
+
+
+
+<div class="alert alert-success empLikeAlert" role="alert" style="display:none;">
+          <strong>Success!</strong> You have successfully liked this Employer!
+</div>
+
+<div class="alert alert-success empBlockAlert" role="alert" style="display:none;">
+          <strong>Success!</strong> You have Blocked Employer successfully!
+</div>
+
+ 
 @if ($employers->count() > 0)
 @foreach ($employers as $js)
 
@@ -50,6 +64,8 @@
 
                 </div>
 
+                {{-- @dump($likeUsers); --}}
+
 
                 <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
             
@@ -72,9 +88,9 @@
 
                     <div class="float-right">
                         <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs"href="{{route('MemployerInfo', ['id' => $js->id])}}">Detail</a>
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs">Block</a>
+                        <a class="btn btn-sm btn-primary mr-0 btn-xs blockEmployerButton" data-jsid ="{{$js->id}}">Block</a>
 
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs">Like</a>
+                        <a class="btn btn-sm btn-primary mr-0 btn-xs likeEmployerButton" data-jsid ="{{$js->id}}">Like</a>
 
                     </div>
                     
@@ -87,7 +103,89 @@
 
     </div> 
 
+ 
+
 @endforeach
 <div class="employeer_pagination cpagination">{!! $employers->render() !!}</div>
 @endif
 @endif
+ 
+
+<script type="text/javascript">
+
+{{-- ======================================================== Like Employer ======================================================== --}}
+
+$(document).on('click','.likeEmployerButton',function(){
+    var btn = $(this);
+    var jobseeker_id = $(this).data('jsid');
+    console.log(' likeEmployerButton jobseeker_id ', jobseeker_id);
+    // $(this).html(getLoader('blockJobSeekerLoader'));
+    // $(this).html('..');
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/m/ajax/MlikeEmployer/'+jobseeker_id,
+        success: function(data){
+            btn.prop('disabled',false);
+            if( data.status == 1 ){
+
+                $('.empLikeAlert').show().delay(3000).fadeOut('slow');
+                btn.html('Liked').addClass('active');
+                // location.reload();
+
+                // $(this)('.likeEmployerButton').attr("d-none");
+
+                // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+                // $('.likeEmployerButton').html("Liked");
+            }else{
+                btn.html('error');
+            }
+        }
+    });
+});
+
+{{-- ======================================================== Like Employer End Here ======================================================== --}}
+
+{{-- ======================================================== Block Employer ======================================================== --}}
+
+$(document).on('click','.blockEmployerButton',function(){
+    var btn = $(this);
+    var employer_id = $(this).data('jsid');
+    console.log(' Employer  ', employer_id);
+    // $(this).html(getLoader('blockJobSeekerLoader'));
+    // $(this).html('..');
+
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/m/ajax/MblockEmployer/'+employer_id,
+        success: function(data){
+            btn.prop('disabled',false);
+            if( data.status == 1 ){
+
+                $('.empBlockAlert').show().delay(3000).fadeOut('slow');
+                btn.html('Blocked').addClass('active');
+                // location.reload();
+                
+
+                // $('You Have Block Employer Successfully').alert();
+                // $(this)('.likeEmployerButton').attr("d-none");
+                // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+                // $('.likeEmployerButton').html("Liked");
+            }else{
+                btn.html('error');
+            }
+        }
+    });
+});
+
+{{-- ======================================================== Block Employer End Here ======================================================== --}}
+
+
+
+
+
+
+
+
+</script>
