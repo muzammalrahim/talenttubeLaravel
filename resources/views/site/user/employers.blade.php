@@ -20,6 +20,9 @@
 
 
 				@include("site.user.employerfilter")
+				
+																
+				@include("site.spinner")
 				<div class="employers_list">
 					@include("site.user.employerslist")
 				</div>
@@ -83,6 +86,25 @@ $('input[name="filter_by_questions"]').change(function() {
     (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));  
      // $('input, select').styler({ selectSearch: true, });
 });
+
+$(".reset-btn").click(function(){
+	$("#employer_filter_form").trigger("reset");
+	getDataCustom();
+});
+
+
+	var getDataCustom = function(){
+					var url = '{{route('employers')}}';
+					$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+					$.post(url, $('#employer_filter_form').serialize(), function(data){
+									$('.employers_list').html(data);
+					});
+	}
+
+
+
+
+
 
 </script>
 @stop

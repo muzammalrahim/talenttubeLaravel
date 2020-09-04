@@ -244,9 +244,18 @@ $('#degreeSelect').on('change', function() {
     // geocode('Sydney New South Wales, Australia');
 
 
-
+		
 
 
   
         
+});
+
+
+$( document ).ajaxStart(function() {
+	$( ".spin" ).show();
+});
+
+$( document ).ajaxComplete(function() {
+	$( ".spin" ).hide();
 });

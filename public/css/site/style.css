@@ -731,7 +731,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
 .tabs_profile .tab_photos .icon_delete:hover span.icon_delete_photo{ opacity: 0; }
 .tabs_profile .tab_photos .icon_delete:hover span.icon_delete_photo_hover{ opacity: 1; }
 
-.tabs_profile .tab_photos .icon_private{ display: inline-block; width: 32px; height: 32px; cursor: pointer; }
+/* .tabs_profile .tab_photos .icon_private{ display: inline-block; width: 32px; height: 32px; cursor: pointer; } */
 .tabs_profile .tab_photos .icon_private_photo, .tabs_profile .tab_photos .icon_private_photo_hover{ position: absolute; right: 0; top: 25px; background-image: url(/images/site/icons/icon_private_photo.png); background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block;
 -webkit-transition: opacity .3s ease-in-out; -moz-transition: opacity .3s ease-in-out; -o-transition: opacity .3s ease-in-out; transition: opacity .3s ease-in-out; }
 .tabs_profile .tab_photos .icon_private_photo{ background-position: 0 0; opacity: 1; }
@@ -756,7 +756,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
 .tabs_profile .tab_photos .icon_rotate:hover span.icon_rotate_photo_hover{ opacity: 1; }
 
 .tabs_profile .tab_photos .list_photos_public .item.add_photo.hover_bg{ background: #00dbeb; }
-.tabs_profile .tab_photos .list_photos_public{ padding: 0 0 10px; }
+/* .tabs_profile .tab_photos .list_photos_public{ padding: 0 0 10px; } */
 
 /*.tabs_profile .tab_photos .list_photos_trans{margin-top:-20px;}
 .tabs_profile .tab_photos .list_photos_trans.to_trans{margin-top:0px; transition: margin .7s cubic-bezier(.26,1.28,.6,1.62) .15s;}*/
@@ -792,7 +792,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
     max-height: 300px;
     min-width: 150px;
 }
-.gallery_action { border-top: 4px solid #142d69; }
+/* .gallery_action { border-top: 4px solid #142d69; } */
 
 /*.tabs_profile .tab_photos img.photo.to_hide{opacity:0; position:absolute; top:0;}
 .tabs_profile .tab_photos img.photo.to_show{opacity:1; transition:opacity .5s linear!important; position:absolute; top:0;}*/

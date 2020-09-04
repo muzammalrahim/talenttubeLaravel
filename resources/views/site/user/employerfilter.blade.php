@@ -146,6 +146,7 @@
 				<div class="searchField_action">
 								<div class="searchFieldLabel dinline_block"></div>
 								<button class="btn small OrangeBtn">Submit</button>
+								<button class="btn small OrangeBtn reset-btn">Rest</button>
 				</div>
 
 				{{ Form::close() }}

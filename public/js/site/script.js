@@ -752,6 +752,15 @@ function approvePhotoDelete(pid){
         }
     )
 }
+
+
+$( document ).ajaxStart(function() {
+	$( ".spin" ).show();
+});
+
+$( document ).ajaxComplete(function() {
+	$( ".spin" ).hide();
+});
 // $("#save").click(function(){
 
 //     var phonePatt =  /^[0-9-+]+$/;

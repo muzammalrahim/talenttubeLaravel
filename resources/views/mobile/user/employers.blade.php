@@ -9,7 +9,7 @@
     <!-- ===================================================== Employer Filter ===================================================== -->
 
 @include('mobile.user.employersFilter')  
-	
+@include('mobile.spinner')
 <!-- ===================================================== Employer List ===================================================== -->
 
 
@@ -43,11 +43,6 @@
 	}
 	
 	getData();
-
-
-    <div class="jobSeekers_list">
-        @include('mobile.user.employersList')  	<!--	mobile/user/employersList 		 -->
-    </div>
 
 // Bottom pagination load data throug ajax. 
 $(document).on('click','.employeer_pagination .page-item .page-link',function(e){

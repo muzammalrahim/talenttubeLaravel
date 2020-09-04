@@ -29,6 +29,7 @@
 
 		<div class="tagCategories">
 				<ul class="tagCategoriesList">
+					
 					 @if(!empty($tagCategories))
 					 @foreach($tagCategories as $tagCat)
 					 		<li class="tagCategory tagItem {{($tagCat->id == 1)?'selected':''}}" data-id="{{$tagCat->id}}"><i class="tagIcon {{$tagCat->icon}}"></i>{{$tagCat->title}}</li>
@@ -113,11 +114,13 @@
 		            			<span class="form_label">Category :</span>
 		            			<div class="form_input">
 		            				 <select name="newTagCategory" class="">
-		            				 	@if(!empty($tagCategories))
-														 @foreach($tagCategories as $tagCat)
-														 		<option value="{{$tagCat->id}}"><i class="tagIcon {{$tagCat->icon}}"></i>{{$tagCat->title}}</option>
-														 @endforeach
-													@endif
+																				@if(!empty($tagCategories))
+																			
+																					@foreach($tagCategories as $tagCat)
+																				
+																							<option value="{{$tagCat->id}}"><i class="tagIcon {{$tagCat->icon}}"></i>{{$tagCat->title}}</option>
+																					@endforeach
+																			@endif
 		            				 </select>
 		            				<div id="newTagCategory_error" class="error field_error to_hide">&nbsp;</div>
 		            			</div>
