@@ -1,5 +1,3 @@
-
-
 @extends('mobile.user.usermaster')
 @section('content')
 
@@ -14,7 +12,7 @@
 
 
 <div class="employersList">
-				@include('mobile.user.employersList')
+	@include('mobile.user.employersList')
 </div>
 
 
@@ -43,7 +41,6 @@
 	}
 	
 	getData();
-
 // Bottom pagination load data throug ajax. 
 $(document).on('click','.employeer_pagination .page-item .page-link',function(e){
     console.log(' page-link click ', $(this) ); 
