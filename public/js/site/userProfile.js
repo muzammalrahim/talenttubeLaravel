@@ -682,6 +682,9 @@ this.updateIndustryExperience = function(){
 
 
     this.showVideoModal = function(video_url){
+								const player = new Plyr('#player');
+								window.player = player;
+							
         console.log(' showVideoModal ', video_url);
         var videoElem  = '<video id="player" controls>';
         videoElem     += '<source src="'+video_url+'" type="video/mp4">';
@@ -693,7 +696,7 @@ this.updateIndustryExperience = function(){
             escapeClose: false,
             clickClose: false,
         }); 
-       //  const player = new Plyr('#player');
+      
     }
 
 

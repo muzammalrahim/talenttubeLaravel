@@ -6,9 +6,10 @@
 
 <!-- ================================================================ Jobs Apply Modal ================================================================ -->
 <!-- ================================================================ Jobs Filter ================================================================ -->
-  @include('mobile.jobs.jobsFilter')
+		@include('mobile.jobs.jobsFilter')
+		@include('mobile.spinner')
 <!-- ================================================================ Jobs List ================================================================ -->
-		<div class="jobSeekers_list">	
+		<div class="jobs_list">	
 		@include('mobile.jobs.jobsList')
 		</div>
 
@@ -25,6 +26,7 @@
 
 $(document).ready(function(){
 
+
 	$('#filter_form').on('submit',function(event){
     console.log(' filter_form submit '); 
     event.preventDefault();
@@ -38,7 +40,7 @@ var getData = function(){
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.post(url, $('#filter_form').serialize(), function(data){
 						 
-        $('.jobSeekers_list').html(data);
+        $('.jobs_list').html(data);
     });
 }
 

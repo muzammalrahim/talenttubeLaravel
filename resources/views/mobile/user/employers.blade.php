@@ -7,7 +7,7 @@
     <!-- ===================================================== Employer Filter ===================================================== -->
 
 @include('mobile.user.employersFilter')  
-	
+@include('mobile.spinner')
 <!-- ===================================================== Employer List ===================================================== -->
 
 
@@ -41,10 +41,6 @@
 	}
 	
 	getData();
-
-
-   
-
 // Bottom pagination load data throug ajax. 
 $(document).on('click','.employeer_pagination .page-item .page-link',function(e){
     console.log(' page-link click ', $(this) ); 

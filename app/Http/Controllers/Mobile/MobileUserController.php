@@ -1332,8 +1332,7 @@ class MobileUserController extends Controller
     }
 
 // ========================================== Employers on Mobile Phone ==========================================
-
-        public function Memployers(Request $request){
+  public function Memployers(Request $request){
         $user = Auth::user();
         if (isEmployer($user)){ return redirect(route('jobSeekers')); }
         $data['user']           = $user;
