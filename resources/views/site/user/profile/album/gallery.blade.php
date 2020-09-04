@@ -20,9 +20,12 @@
                     href="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
                     data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}"
                     >
-                    <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo"
+                   <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo"
                     data-src="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
-                    src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}" >
+																				src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}" >
+																				{{-- <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo"
+                    data-src="{{asset('/images/site/icons/profileimage.jpg')}}"
+                    src="{{asset('/images/site/icons/profileimage.jpg')}}" > --}}
                 </a>
                 <div class="gallery_action">
                 <span onclick="UProfile.confirmPhotoDelete({{$gallery->id}});" title="Delete photo" class="icon_delete">

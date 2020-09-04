@@ -81,7 +81,7 @@ class SiteUserController extends Controller
             $data['userTags'] = $userTags;
             $data['tags'] = $tags;
             $data['tagCategories'] = $tagCategories;
-
+												//dd($tagCategories);
             // Getting Salaries
             $data['salaryRange'] = getSalariesRange();
             $data['qualificationList'] = getQualificationsList();

@@ -6,6 +6,7 @@
 @stop
 
 @section('content')
+
 <div class="cont bl_profile">
     <div class="bl_pic_info  my_profile">
        
@@ -151,16 +152,13 @@ span.icon_image_profile {
 <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
 <script src="{{ asset('js/site/plyr.polyfilled.js') }}"></script>
 <script type="text/javascript">
-
 //======================= Employer Questions Edit =================================
-
  $(".editEmployerQuestions").click(function(){
  $('.button').css("display","inline-block");
  $('.EmployerRegQuestion').removeClass('hide_it');
  $('.employerQuestionsPtag').addClass('hide_it');
 });
-//======================= Employer Questions Editing end here =================================
-
+//======================= Employer Questions Editing end here =================================									
 </script>
 @stop
 

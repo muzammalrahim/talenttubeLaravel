@@ -15,7 +15,7 @@
         <!-- =============================================================================================================================== -->
         @include('site.jobs.filter')
         <!-- =============================================================================================================================== -->
-        
+        @include("site.spinner")
         <!-- =============================================================================================================================== -->
          <div class="jobs_list">
             @include('site.jobs.list') {{-- site/jobs/list --}}
@@ -119,7 +119,19 @@ $("body").click(function(){
     clickOutside: false;
 });
 
+$(".reset-btn").click(function(){
+	$("#filter_form").trigger("reset");
+	getDataCustom();
+});
 
+
+	var getDataCustom = function(){
+					var url = '{{route('jobsFilter')}}';
+					$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+					$.post(url, $('#filter_form').serialize(), function(data){
+									$('.jobs_list').html(data);
+					});
+	}
 </script>
 @stop
 

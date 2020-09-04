@@ -67,6 +67,7 @@
     // });
 
     jQuery('.newTag input').on('keyup',function() {
+				
         var query =  jQuery.trim(jQuery(this).val()); 
         console.log(' newTag keyup ', query);
         if ( query == '' ){
@@ -179,7 +180,8 @@
             data:{'newTagtitle':newTagTitle, 'newTagCategory': newTagCat, 'newTagIcon': newTagIcon},
             success:function (resp) {
                 console.log(' resp ', resp);   
-                //$('#country_list').html(data);
+																//$('#country_list').html(data);
+															
                 if(resp.status){
                     console.log(' resp data ', resp.data);
                     var newTagElem = resp.data;

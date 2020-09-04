@@ -16,7 +16,7 @@
         <!-- =============================================================================================================================== -->
             @include('site.employer.jobSeekers.filter')
         <!-- =============================================================================================================================== -->
-        
+        @include("site.spinner")
         <!-- =============================================================================================================================== -->
          <div class="jobSeekers_list">
             @include('site.employer.jobSeekers.list')
@@ -460,6 +460,22 @@ $('input[name="filter_by_questions"]').change(function() {
   
 
 });
+
+
+
+$(".reset-btn").click(function(){
+	$("#jobSeeker_filter_form").trigger("reset");
+	getDataCustom();
+});
+
+
+	var getDataCustom = function(){
+					var url = '{{route('jobSeekersFilter')}}';
+					$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+					$.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
+									$('.jobSeekers_list').html(data);
+					});
+	}
 </script>
 @stop
 

@@ -1333,7 +1333,7 @@ class MobileUserController extends Controller
 
 // ========================================== Employers on Mobile Phone ==========================================
 
-        public function Memployers(Request $request){
+    public function Memployers(Request $request){
     
 
 
@@ -1385,11 +1385,7 @@ class MobileUserController extends Controller
 					$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 
 					$data['likeUsers'] = $likeUsers;
-					
-
-
-
-
+				
 
 					$data['employers'] = $employers;
 					return view('mobile.user.employersList', $data); // mobile/user/employers
