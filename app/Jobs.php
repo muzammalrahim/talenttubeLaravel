@@ -184,7 +184,7 @@ class Jobs extends Model {
 
         // dd( $applications->toSql() ); 
 
-        $jobsList = $query->paginate(3);
+        $jobsList = $query->paginate(2);
         return $jobsList; 
 
     }

@@ -5,12 +5,12 @@
 <h6 class="h6 jobAppH6">Browse Jobs</h6>
 
 <!-- ================================================================ Jobs Apply Modal ================================================================ -->
-  @include('mobile.jobs.jobsModal')
 <!-- ================================================================ Jobs Filter ================================================================ -->
   @include('mobile.jobs.jobsFilter')
 <!-- ================================================================ Jobs List ================================================================ -->
-  @include('mobile.jobs.jobsList')
-
+		<div class="jobSeekers_list">	
+		@include('mobile.jobs.jobsList')
+		</div>
 
 @stop
 
@@ -24,6 +24,33 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+
+	$('#filter_form').on('submit',function(event){
+    console.log(' filter_form submit '); 
+    event.preventDefault();
+    $('#paginate').val('');
+    getData();
+});
+
+// function to send ajax call for getting data throug filter/Pagination selection. 
+var getData = function(){
+    var url = '{{route('MjobsFilter')}}';
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.post(url, $('#filter_form').serialize(), function(data){
+						 
+        $('.jobSeekers_list').html(data);
+    });
+}
+
+getData(); 
+
+$(document).on('click','.jobs_pagination .page-item .page-link',function(e){
+    console.log(' page-link click ', $(this) ); 
+    e.preventDefault();
+    var page = $(this).attr('href').split('page=')[1];
+    $('#paginate').val(page);
+    getData();
+});
   console.log(' doc ready ');
 
   $(document).on('click','.jobApplyBtn', function() {
@@ -68,7 +95,6 @@ $('#modalJobApply').on('show.bs.modal', function (event) {
 // Jobs Modal Close Button
 
 
-
 });
 // ready end 
 
@@ -83,8 +109,19 @@ $('#modalJobApply').on('show.bs.modal', function (event) {
 //   // });
 
 // });
+$(".reset-btn").click(function(){
+	$("#filter_form").trigger("reset");
+	$("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
+	getDataCustom();
+});
 
-
+var getDataCustom = function(){
+    var url = '{{route('MjobsFilter')}}';
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.post(url, $('#filter_form').serialize(), function(data){
+        $('.jobs_list').html(data);
+    });
+}
 
 
 

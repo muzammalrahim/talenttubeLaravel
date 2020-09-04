@@ -1,10 +1,10 @@
 
  {{-- @dd($jobSeekers) --}}
 
-@if ($jobSeekers && $jobSeekers->get() && $jobSeekers->count() > 0)
+@if ($jobSeekers && $jobSeekers->count() > 0)
 
 
-@foreach ($jobSeekers->get()  as $js)    
+@foreach ($jobSeekers as $js)    
     
     {{-- @dump($js) --}}
 <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
@@ -15,14 +15,27 @@
                 <span class="font-weight-normal">{{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}}</span>
                 </div>
         </div>
+								@php
+								$profile_image  = asset('images/site/icons/nophoto.jpg');
+								$profile_image_gallery    = $js->profileImage()->first();
 
+								// dump($profile_image_gallery); 
+
+									if ($profile_image_gallery) {
+												// $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+
+												$profile_image   = assetGallery2($profile_image_gallery,'small');
+													// dump($profile_image); 
+
+									} 
+								@endphp
         {{-- ============================================ Card Body ============================================ --}}
         <div class="card-body jobAppBody pt-2">
 
             <div class="row jobInfo">
                
                 <div class="col-4 p-0">
-                    <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="150px">
+                    <img class="img-fluid z-depth-1" src="{{$profile_image}}" height="100px" width="150px">
 
                   {{--   <div class="mt-2">
                         <span class="jobInfoFont">Location:</span>
@@ -112,6 +125,7 @@
 </div>
 
 @endforeach
+<div class="jobseeker_pagination cpagination">{!! $jobSeekers->links() !!}</div>
 @endif
 
 

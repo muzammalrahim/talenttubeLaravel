@@ -1,7 +1,7 @@
  
 
  <div class="mJSFilter mb-2">
-  {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'jobSeeker_filter_form' )) }}
+  {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'filter_form' )) }}
     <input type="hidden" name="page" id="paginate" value="">
 
 
@@ -22,7 +22,7 @@
         <div class="card-header rgba-stylish-strong z-depth-1 mb-1" role="tab" id="heading1">
           <a data-toggle="collapse" data-parent="#accordionEx7" href="#collapse1" aria-expanded="true"
             aria-controls="collapse1">
-            <h5 class="mb-0 white-text font-thin">Filters <i class="fas fa-angle-down rotate-icon"></i></h5>
+            <h5 class="mb-0 white-text font-thin" id="filter">Filters <i class="fas fa-angle-down rotate-icon"></i></h5>
           </a>
         </div>
 
@@ -32,44 +32,23 @@
           <div class="p-2 card-body mb-1 rgba-grey-light white-text FilterCont">
             
             <div class="FilterBox">
-                <select class="white-text mdb-select md-form colorful-select dropdown-primary filter_qualification_type" name="filter_qualification_type" data-placeholder="Select Qalification & Trades">
-                     <option value="">Select Qalification & Trades</option>
-                     <option value="certificate">Certificate or Advanced Diploma</option>
-                     <option value="trade">Trade Certificate</option>
-                     <option value="degree">University Degree</option>
-                     <option value="post_degree">University Post Graduate (Masters or PHD)</option>
-                </select>
+																<div class="form-group md-form"> <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
+																	<input type="text" name="filter_keyword" class="form-control" style="color:white;" placeholder="Keyword">
+															 </div>
+														
+																<div class="form-group">
+																	<select name="filter_jobType" class="white-text mdb-select md-form" data-placeholder="Select Job Type">
+																					<option value="" >Select Job Type</option>
+																					<option value="contract">Contract</option>
+																					<option value="temporary">Temporary</option>
+																					<option value="casual">Casual</option>
+																					<option value="part_time">Part Time</option>
+																					<option value="full_time">Full Time</option>
+																	</select>
+																</div>
 
+              
 
-                 @php
-                 $qualifications = getQualificationsList();
-                @endphp
-               
-                @if(!empty($qualifications))
-                <div class="qualification_degree d-none">
-                    <select class="white-text mdb-select md-form qualification_degree" multiple name="qualification_degree[]" data-placeholder="Select Degree">
-                        @foreach ($qualifications as $qualif)
-                            @if($qualif['type']  == 'degree')
-                              <option value="{{$qualif['id']}}">{{$qualif['title']}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                 {{-- <label class="mdb-main-label">Example label</label> --}}
-                </div>
- 
-                <div class="qualification_trade d-none">
-                    <select class="white-text mdb-select md-form qualification_trade" multiple name="qualification_trade[]" data-placeholder="Select Trade">
-                        @foreach ($qualifications as $qualif)
-                            @if($qualif['type']  !== 'degree')
-                              <option value="{{$qualif['id']}}">{{$qualif['title']}}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                 {{-- <label class="mdb-main-label">Example label</label> --}}
-                </div>
-                @endif
-
-            </div>
 
 
 
@@ -84,36 +63,6 @@
                 </select>
             </div>
             {{-- Salary Range --}}
-
-
-
-             {{-- Industry Experience --}}
-            <div class="FilterBox FilterIndustry">
-                <div class="form-check">
-                    <input type="checkbox" class="form-check-input filter_showDetail" id="filter_industry_status" name="filter_industry_status" data-dc="FilterIndustryList">
-                    <label class="form-check-label" for="filter_industry_status">Filter by Industry</label>
-                </div>
-                <div class="FilterIndustryList d-none">
-                @php 
-                    $industries = getIndustries()
-                @endphp
-                @if(!empty($industries))
-                    <div class="filter_industries_list ">
-                            @foreach ($industries as $indK => $indV)
-                                <div class="form-check">
-                                    <input type="checkbox" class="form-check-input" id="industry_{{$indK}}">
-                                    <label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
-                                </div>
-                            @endforeach
-                    </div>
-                @endif
-                </div>
-            </div>
-            {{-- Industry Experience --}}
-
-
-
-
             {{-- Location  --}}
             <div class="FilterBox FilterLocation">
                 <div class="form-check">
@@ -149,44 +98,17 @@
             </div>
             {{-- Location  --}}
 
+											
 
+													<div class="FilterBox my-2">
+														<div class="text-center">
+															<button name="ResetForm" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
+															<button name="CreateConfig" class="btn waves-effect waves-light " id="CreateConfig" type="submit">Submit</button>
+														</div>
+												</div>	
+            
 
-            {{-- Question  --}}
-             <div class="FilterBox FilterLocation">
-                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input filter_showDetail" id="filter_by_questions" name="filter_by_questions" data-dc="FilterQuestionBox">
-                    <label class="form-check-label" for="filter_by_questions">Filter by Question</label>
-                </div>
-                <div class="FilterQuestionBox d-none col">
-                   
-                    <div class="row">
-                @if(!empty(getUserRegisterQuestions()))
-
-                    <div class="col-12 p-0">
-                        <select class="white-text mdb-select md-form filter_question" name="filter_question">
-                            @foreach (getUserRegisterQuestions() as $qk => $question)
-                                <option value="{{$qk}}">{{$question}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-4 p-0">
-                        <select class="white-text mdb-select md-form filter_question_value"  name="filter_question_value">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div> 
-
-
-                @endif
-</div>
-                </div>
-             </div>
-
-
-            {{-- Question  --}}
-
-
+            </div>
           </div>
         </div>
       </div>

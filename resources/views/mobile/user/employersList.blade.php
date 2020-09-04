@@ -1,3 +1,6 @@
+ 
+@if(isset($employers))
+ 
 
 
 
@@ -9,6 +12,7 @@
           <strong>Success!</strong> You have Blocked Employer successfully!
 </div>
 
+ 
 @if ($employers->count() > 0)
 @foreach ($employers as $js)
 
@@ -102,7 +106,10 @@
  
 
 @endforeach
+<div class="employeer_pagination cpagination">{!! $employers->render() !!}</div>
 @endif
+@endif
+ 
 
 <script type="text/javascript">
 
