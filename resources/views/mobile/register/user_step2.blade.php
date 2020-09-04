@@ -23,25 +23,23 @@
 		<a href="./index"><img src="{{asset('/images/site/logo.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
 	</div>
 </div>
-<div class="container text-center" style="background: transparent;">
-	<div class="row">
-		<div id="join_step" class="step col">
-			<ul class="list-group">
-				<li class="list-group-item active"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">1</span> Answer 6 questions to calculate your best matches.</li>
-				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">2</span> Update your profile</li>
-				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">3</span> Qualification</li>
-				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">4</span> Industry Experience</li>
-				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">5</span> Salary Range</li>
-				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">6</span> Upload Video</li>
-				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">7</span> Upload Resume</li>
-				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2">8</span></li>
-				<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2">9</span></li>
-			</ul>
-		</div>
-	</div>
-	</div>
 <!-- Header End -->
 <div class="container">
+		<div class="row">
+			<div id="join_step" class="step col">
+				<ul class="list-group">
+					<li class="list-group-item active text-white"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">1</span> Answer 6 questions to calculate your best matches.</li>
+					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">2</span> Update your profile</li>
+					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">3</span> Qualification</li>
+					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">4</span> Industry Experience</li>
+					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">5</span> Salary Range</li>
+					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">6</span> Upload Video</li>
+					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">7</span> Upload Resume</li>
+					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">8</span> Tagging</li>
+					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">9</span> Browse Jobs</li>
+				</ul>
+			</div>
+		</div>
 	<div class="full_step_error"></div>
 <!-- Step 1 Start -->
 	<div class="row py-3 bl_card_question" id="full_step_1" style="display:none;">
@@ -137,7 +135,7 @@
 					<h4 class="card-title"><strong>Please select the highest level of tertiary studies you have completed or currently enrolled in and completing (You can only select 1 option)</strong></h4>
 					<div class="qualification_selected_type mb20 center mb-2">
 						<div class="qualification_type_cont">
-										<select class="qualification_type mdb-select md-form dropdown-success colorful-select" id="qualification_type" name="qualification_type" data-placeholder="Select Qalification & Trades">
+										<select class="qualification_type browser-default custom-select" id="qualification_type" name="qualification_type" data-placeholder="Select Qalification & Trades">
 															<option value="">Select Qalification & Trades</option>
 															<option value="certificate">Certificate or Advanced Diploma</option>
 															<option value="trade">Trade Certificate </option>
@@ -263,6 +261,7 @@
 		</div>
 	</div>
 	<!-- Step 7 End -->
+
 	<!-- Step 8 Start -->
 	<div class="row py-3" id="full_step_8" style="display: none">
 		<div class="col">
@@ -270,84 +269,97 @@
 				<div class="card-body">
 					<h4 class="text-center">Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:</h4>
 					<p class="text-center">1. Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
-					<p class="text-center">2. Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. </p>
-					<p class="h5 text-center">You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
+					<p class="h5 font-weight-bold text-center">You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
+					<div class="userUpload">
+						<div class="userResumeCont">
+							<div class="userResume">
+								<div class="title_private_photos title_videos">Resume & Contact Details</div>
+											<form id="frm_upload" class="submit-document md-form" action="{{route('mUserUploadResume')}}" method="post" enctype="multipart/form-data">
+												{{csrf_field()}}
+												<div class="file-field big">
+													<a class="btn-floating purple-gradient mt-0 float-left">
+														<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+														<input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">
+													</a>
+													<div class="file-path-wrapper">
+														<input class="file-path validate" type="text" placeholder="Browse...">
+												</div>
+												</div>
+													<a id="user_step8_done" class="btn turquoise violet save-resume-btn valign-top" name="submit">Done</a>
+											</form>
+											<div class="private_attachments"></div>
+											<div class="upload_resume_error bg-danger text-white"></div>
+							</div>
+						</div>
+					</div>
+					<div class="join_done"></div>
 				</div>
 			</div>
 		</div>
 	</div>
 	<!-- Step 8 End -->
+
+	<!-- Step 9 Start -->
+	<div class="row py-3" id="full_step_9" style="display: none">
+		<div class="col">
+			<div class="card wider">
+				<div class="card-body">
+					<h4 class="text-center font-weight-bold">Almost done, candidates! To help Employers connect with you, we’ve created a tagging system. This allows Employers to search for specific candidates via a search system. In the below section, we encourage you to create as many tags that best describe your key attributes as a Job Seeker.</h4>
+					<p class="h5">Be sure to tag the following:</p>
+					<p class="h5">*Names of organisations and companies you’ve worked for, including charities and not for profits</p>
+					<p class="h5">*Job Titles you have held</p>
+					<p class="h5">*Skills you have (eg; customer service, java Developer, sales, book keeping, etc)</p>
+					<p class="h5">*Institutions you’ve studied, including the names of schools, colleges, universities and others</p>
+					<p class="h5">*The names of courses you’re studying or have completed</p>
+					<p class="h5">*The name of qualifications you have (eg; RG146, RSA, etc)</p>
+					<p class="h5">*Languages you speak (other than English)</p>
+					<p class="h5">*Hobbies and personal interests are fine as well</p>
+						<div class="user_tagging">
+							@include('mobile.layout.tagging')
+						</div>
+					<div class="join_btn mt20 text-center">
+									<button id="user_step9_done" class="btn turquoise small btn_join_submit " disabled="true">Save Tags</button>
+									<button id="tag_skip_btn" class="btn turquoise small btn_join_submit ">Skip</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Step 9 End -->
+
+	<!-- Step 10 Start -->
+	<div class="row py-3" id="full_step_10" style="display: none">
+		<div class="col">
+			<div id="mdb-preloader" class="flex-center">
+				<div class="preloader-wrapper active">
+						<div class="spinner-layer spinner-green-only">
+								<div class="circle-clipper left">
+										<div class="circle"></div>
+								</div>
+								<div class="gap-patch">
+										<div class="circle"></div>
+								</div>
+								<div class="circle-clipper right">
+										<div class="circle"></div>
+								</div>
+						</div>
+				</div>
+		</div>
+		<div class="jobs_list">
+		</div>
+		<div class="d-flex flex-row justify-content-center">
+			<div class="p-2">
+				<a href="{{ route('Mjobs') }}" id="step2_more_jobs" class="btn btn-rounded btn-amber btn-lg"><i class="fas fa-redo pr-2 text-white" aria-hidden="true"></i> Load More</a>
+			</div>
+			<div class="p-2">
+				<button id="user_step10_done" class="btn btn-rounded btn-blue-grey btn-lg"><i class="fas fa-step-forward text-white" aria-hidden="true"></i> Skip For Now</button>
+			</div>
+		</div>
+		</div>
+	</div>
+	<!-- Step 10 End -->
 </div>
-
-<!-- main -->
-{{-- <div class="main  above">
-    <input type="hidden" id="userType" name="userType" value="user" />
-    <div class="content">
-        <div class="mw50 dtable margin_auto" style="display: none">
-
-            <div id="full_step_8" class="bl_card_Final full_step_8"  style="display:none;">
-                <div class="ind_exp">
-                    <div class="ind_exp_h">
-                        <p>Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:</p>
-                        <div class="step2_uplod_info">
-                            <p>1. Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
-                            
-                            <p>2. Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. </p>
-                        </div>
-
-                        <p class="info">You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
-                    </div>
-
-                    <div class="userUpload">
-                       <div class="userResumeCont">
-                        <div class="userResume">
-                         <div class="title_private_photos title_videos">Resume & Contact Details</div>
-                            <form id="frm_upload" class=" submit-document" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
-                              {{csrf_field()}} <br>
-                              <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">
-                              <button class="btn violet save-resume-btn valign-top" name="submit" style="padding: 5px;">Save</button>
-                            </form>
-                            <div class="private_attachments"></div>
-                        </div>
-                       </div>
-
-                       <div class="userVideoCont">
-                           <div class="userVideo">
-                           <div class="title_private_photos title_videos">Upload Videos</div>
-                           <div id="list_videos_public" class="list_videos_public">
-                            <div id="photo_add_video" class="item add_photo add_video_public item_video">
-                                <a class="add_photo" >
-                                    <img id="video_upload_select" class="transparent is_video" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
-                                </a>
-                            </div>
-                           </div>
-                            
-                           <div class="list_videos"></div>
-                           </div>
-                       </div>
-                    </div>
-
-                    <div class="join_done"></div>
-
-                    <div class="join_btn mt20 center">
-                        <button id="user_step8_done" class="btn turquoise small btn_join_submit">Done</button>
-                    </div>
-
-                </div>
-            </div>
-
-
-
-
-        </div>
-    </div>
-
- 
-
- 
-
-</div> --}}
-<!-- /main -->
+@include('mobile.footer')
 @stop
 
 @section('custom_footer_css')
@@ -369,12 +381,7 @@
     $(function(){
 								var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
         userStepReload(currentStep);
-				}); 
-// function someFunction22(){
-// 	setTimeout(function(){
-// 		$('#horizontal-stepper-fix').nextStep();
-// 	}, 2000);
-// }
+				});
 </script>
 
 @stop

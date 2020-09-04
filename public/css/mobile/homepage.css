@@ -6,7 +6,7 @@
     background-size: cover;
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 .head_top.absolute {
     top: 0;
@@ -34,7 +34,7 @@ a#pp_sign_in_open {
 .shadeBg {
     background: rgb(0 0 0 / 55%);
     width: 100%;
-    height: 100%;
+    height: auto;
 }
 .formBox {
     display: block;

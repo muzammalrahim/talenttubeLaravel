@@ -312,7 +312,7 @@ class MobileUserController extends Controller
 																	return response()->json([
 																					'status' => 1,
 																					'message' => 'data saved successfully',
-																					'redirect' => route('profile'),
+																					'redirect' => route('mProfile'),
 																					'step' => $requestData['step']
 																	]);
 													}
@@ -1011,7 +1011,6 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     public function userUploadResume(Request $request)
     {
-
         $rules = array('resume.*' => 'required|file|mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:204800');
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -1022,7 +1021,8 @@ class MobileUserController extends Controller
         } else {
             $user = Auth::user();
             $resume = $request->file('resume');
-            $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
+												// $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
+												$fileName = $resume->getClientOriginalName();
             $storeStatus = Storage::disk('user')->put($user->id . '/private/' . $fileName, file_get_contents($resume), 'public');
             if ($storeStatus) {
 
@@ -1032,7 +1032,9 @@ class MobileUserController extends Controller
                 $attachment->name = $fileName;
                 $attachment->type = $resume->getClientOriginalExtension();
                 $attachment->file = $user->id . '/private/' . $fileName;
-                $attachment->save();
+																$attachment->save();
+																$user->step2 = 8;
+                $user->save();
 
                 $userAttachments = Attachment::where('user_id', $user->id)->get();
 
@@ -1156,7 +1158,6 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     public function uploadVideo(Request $request){
 
-								dd($request);
         $user = Auth::user();
 								$video = $request->file('video');
         // $rules = array('video.*' => 'required|file|max:20000');
@@ -1265,13 +1266,24 @@ class MobileUserController extends Controller
     // GET // Job Search/Listing layout.
     //====================================================================================================================================//
     public function Mjobs(){
-        $user = Auth::user();
+								$user = Auth::user();
+								$user->step2 = 10;
+								$user->save();
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
         $data['jobs'] =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
         return view('mobile.jobs.index', $data); // mobile/jobs/index 
-    }
+				}
+				
+				public function step2Jobs(){
+					$user = Auth::user();
+//        $data = array();
+					if (!isEmployer($user)){
+									$jobs = Jobs::take(10)->get();
+									return view('mobile.jobs.jobsList', compact('jobs'));
+					}
+				}
 
     //====================================================================================================================================//
     // Get // Add new job layout.
