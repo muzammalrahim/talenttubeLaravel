@@ -57,7 +57,8 @@
 
 <div class="card shadow mb-3 bg-white rounded">
 
-  	<h6 class="card-header h6">Qualification<i class="fas fa-edit float-right editQualification"></i></h6>
+  	<h6 class="card-header h6">Qualification <div class="spinner-border spinner-border-sm text-light qualifExpLoader ml-2" role="status" style="display:none;"></div>
+        <i class="fas fa-edit float-right editQualification"></i></h6>
 
 	<div class="card-body p-2 cardBody">
 	  	<div class="bl qualificationBox">     
@@ -66,7 +67,8 @@
 	        	<div class="cl"></div>
 	      
 		        <div class="jobSeekerQualificationList">
-		        	@php
+
+		        	{{-- @php
 					  $qualificationsData =  ($user->qualification)?(getQualificationsData($user->qualification)):(array());
 					@endphp
 					@if(!empty($qualificationsData))
@@ -76,7 +78,11 @@
 					          <p>{{$qualification['title']}} <i class="fa fa-trash removeQualification hide_it2 float-right"></i></p>
 					      </div>
 					   @endforeach
-					 @endif 
+					 @endif  --}}
+
+                    @include('mobile.layout.parts.jobSeekerQualificationList')
+
+
 		        </div>  
 	    	</div>
 		         <a class="addQualification btn btn-sm btn-primary text-white hide_it2"style = "cursor:pointer;">Add New</a>
@@ -148,7 +154,7 @@
                             <div>
                               <p>{{$question}} </p>
                                <p class="QuestionsKeyPTag"><b>{{$userQuestions[$qk]}}</b></p>
-                                <select name="{{$qk}}" class="jobSeekerRegQuestion custom-select custom-select hideme mb-2">
+                                <select name="{{$qk}}" class="jobSeekerRegQuestion custom-select custom-select mb-2 d-none">
                                     <option value="yes"
                                     {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
                                     >Yes</option>
@@ -163,7 +169,6 @@
                               <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
                           </div>  
                 </div>
-
 
             <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
               <strong>Success!</strong> Questions have been updated successfully!
@@ -196,7 +201,7 @@
 $('.intInSecButton').click(function(){
 
         $('.interestedInSec').attr("contentEditable", "true");
-        $('.interestedInSec').addClass('interestedInEditColor');
+        $('.interestedInSec').addClass('interestedInEditColor').css("border","2px solid #dc9f4a");
         $('.interestedInSec').addClass('editable');
 		$('.saveInterestedInButton').removeClass('d-none');
 
@@ -222,7 +227,7 @@ $(".saveInterestedInButton").click(function(){
                 $('.IntsdInLoader').hide(); 
                 $('.saveInterestedInButton').addClass('d-none'); 
                 $('.interestedInSec').attr("contentEditable", "false");
-                $('.interestedInSec').removeClass('interestedInEditColor');
+                $('.interestedInSec').removeClass('interestedInEditColor').css("border","none");
                 $('.interestedInAlert').show().delay(3000).fadeOut('slow');
 
 
@@ -238,7 +243,7 @@ $(".saveInterestedInButton").click(function(){
 $('.aboutMeSecButton').click(function(){
 
         $('.aboutMeSec').attr("contentEditable", "true");
-        $('.aboutMeSec').addClass('interestedInEditColor');
+        $('.aboutMeSec').addClass('interestedInEditColor').css("border","2px solid #dc9f4a");
         $('.aboutMeSec').addClass('editable');
         $('.saveAboutMeButton').removeClass('d-none');
 });
@@ -263,7 +268,7 @@ $(".saveAboutMeButton").click(function(){
                 $('.AboutMeLoader').hide(); 
                 $('.saveAboutMeButton').addClass('d-none'); 
                 $('.aboutMeSec').attr("contentEditable", "false");
-                $('.aboutMeSec').removeClass('interestedInEditColor');
+                $('.aboutMeSec').removeClass('interestedInEditColor').css("border","none");
                 $('.AboutMeAlert').show().delay(3000).fadeOut('slow');
 
             }
@@ -286,6 +291,8 @@ $(".saveAboutMeButton").click(function(){
         $('.qualificationSaveButton').removeClass('hide_it2');
 
         // console.log('Testing Qualification');
+
+        
   });
 
    $('.qualificationBox').on('click','.removeQualification', function(){
@@ -305,7 +312,7 @@ $(".saveAboutMeButton").click(function(){
     newQualificationHtml += '</select>';  
     newQualificationHtml += '<i class="fa fa-trash removeQualification"></i>'; 
     newQualificationHtml += '</div>';
-    $('.qualificationList').append(newQualificationHtml);
+    $('.jobSeekerQualificationList').append(newQualificationHtml);
    });
 
 
@@ -314,14 +321,13 @@ $(".saveAboutMeButton").click(function(){
 
     $(".qualificationSaveButton").click(function(){
     	console.log('hi qualification');
-
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
         var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get(); 
-
+        $('.qualifExpLoader').show();           //indusExpLoader
         // $('.SaveQualification').after(getLoader('smallSpinner SaveQualificationSpinner'));
 
         $.ajax({
@@ -330,12 +336,13 @@ $(".saveAboutMeButton").click(function(){
             data: {'qualification': qualification},
             success: function(resp){
                 if(resp.status){
-                    // $('.SaveQualificationSpinner').remove();
-                    // $('.jobSeekerQualificationList').html(resp.data);
-                    // $('.qualificationBox').removeClass('editQualif'); 
-                    // $('.QualifAlert').show().delay(3000).fadeOut('slow');
-                    // $('.userQualification').hide();
-                    // $('.removeQualification').hide();
+                    $('.removeQualification ').addClass('hide_it2');
+                    $('.addQualification').addClass('hide_it2');
+                    $('.qualificationSaveButton').addClass('hide_it2');
+                    $('.qualifExpLoader').hide(); 
+                    $('.jobSeekerQualificationList').html(resp.data); 
+
+                    // location.reload();
                 }
             }
         });
@@ -433,6 +440,9 @@ $(".saveIndus").click(function(){
      $('.hideme').show();
      $('.saveQuestionsButton').removeClass('d-none');
      $('.QuestionsKeyPTag').addClass('d-none');
+     $('.jobSeekerRegQuestion').removeClass('d-none');
+
+
 });
 
 //  ======================================= User Questions Ajax saveQuestionsButton =======================================

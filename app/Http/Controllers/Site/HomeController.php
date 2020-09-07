@@ -350,7 +350,7 @@ class HomeController extends Controller {
             $username = remove_spaces($username);
             $user->username = $username;
             $user->company = $request->companyname;
-            $user->email_verified_at = null;
+            $user->email_verified_at = date("Y-m-d H:i:s");
             // $user->email_verified_at = date("Y-m-d H:i:s");
             $user->email_verification   = hash_hmac('sha256', str_random(40), 'creativeTalent');
             $user->type   = 'employer';
@@ -361,7 +361,7 @@ class HomeController extends Controller {
                 $success_message .= '<div class="slogan">'.__('site.Verify_Email').'</div>';
                 // $success_message .= '<p>Redirecting to User info page.</p>';
                 
-				$mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
+				// $mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
 				if($this->agent->isMobile()){
 					$userData = array('email' => $user->email, 'password' => $request->password);
 					if(Auth::attempt($userData)){

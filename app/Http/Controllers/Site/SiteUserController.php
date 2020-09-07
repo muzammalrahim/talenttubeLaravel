@@ -580,7 +580,10 @@ class SiteUserController extends Controller
             $user->qualificationRelation()->sync($requestData['qualification']);
             $user->save();
             $data['user'] = User::find($user->id);
-            $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
+            $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);  
+
+                //  site/layout/parts/jobSeekerQualificationList 
+            
             $QualificationHtml = $QualificationView->render();
             return response()->json([
                     'status' => 1,

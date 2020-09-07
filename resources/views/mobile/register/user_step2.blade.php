@@ -44,47 +44,60 @@
 <!-- Step 1 Start -->
 	<div class="row py-3 bl_card_question" id="full_step_1" style="display:none;">
 		<div class="col">
-							<div class="card_question_cont">
-								<div id="card_question_no" class="card_question no hide answer">
-												<div class="question_vh"><img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /><span>No</span></div>
-								</div>
-								<div id="card_question_yes" class="card_question yes hide answer">
-												<div class="question_vh"><img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /><span>Yes</span></div>
-								</div>
-	
-								<div data-field="graduate_intern" class="card_question card">
-												<div class="count">6 of 6</div><div class="question_txt">Are you seeking a Graduate Program or Internship?</div>
-								</div>
-	
-								<div data-field="part_time" class="card_question card">
-												<div class="count">5 of 6</div><div class="question_txt">Are you open to Part Time or Casual work?</div>
-								</div>
-	
-								<div data-field="temporary_contract" class="card_question card">
-												<div class="count">4 of 6</div><div class="question_txt">Are you open to temporary and contract work?</div>
-								</div>
-	
-								<div data-field="fulltime" class="card_question card">
-												<div class="count">3 of 6</div><div class="question_txt">Are you looking for Full Time Employment?</div>
-								</div>
-	
-								<div data-field="relocation" class="card_question card">
-												<div class="count">2 of 6</div><div class="question_txt">Are you looking or willing to relocate for your next job opportunity?</div>
-								</div>
-	
-								<div data-field="resident" class="card_question first card">
-												<div class="count">1 of 6</div><div class="question_txt">Are you a Permanent Resident or Citizen of Australia or New Zealand?</div>
-								</div>
-	
-								<div class="card_decor_left1"></div>
-								<div class="card_decor_left2"></div>
-								<div class="card_decor_right1"></div>
-				</div>
-				<div class="card_question_btn">
-					<button data-action="0" class="btn large pink fl_left btn_question">No</button>
-					<button data-action="1" class="btn large turquoise fl_right btn_question">Yes</button>
-					<div class="cl"></div>
-				</div>
+			<div class="card_question_cont">
+					<div id="card_question_no" class="card_question no hide answer">
+
+						<div class="question_vh">
+
+							{{-- <img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /> --}}
+
+							<i class="fas fa-times"></i>
+
+							<span>No</span></div>
+					</div>
+					<div id="card_question_yes" class="card_question yes hide answer">
+						<div class="question_vh">
+
+							{{-- <img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /> --}}
+							<i class="fas fa-check"></i>
+
+							<span>Yes</span></div>
+					</div>
+
+					<div data-field="graduate_intern" class="card_question card">
+						<div class="count">6 of 6</div><div class="question_txt">Are you seeking a Graduate Program or Internship?</div>
+					</div>
+
+					<div data-field="part_time" class="card_question card">
+						<div class="count">5 of 6</div><div class="question_txt">Are you open to Part Time or Casual work?</div>
+					</div>
+
+					<div data-field="temporary_contract" class="card_question card">
+							<div class="count">4 of 6</div><div class="question_txt">Are you open to temporary and contract work?</div>
+					</div>
+
+					<div data-field="fulltime" class="card_question card">
+						<div class="count">3 of 6</div><div class="question_txt">Are you looking for Full Time Employment?</div>
+					</div>
+
+					<div data-field="relocation" class="card_question card">
+						<div class="count">2 of 6</div><div class="question_txt">Are you looking or willing to relocate for your next job opportunity?</div>
+					</div>
+
+					<div data-field="resident" class="card_question first card">
+						<div class="count">1 of 6</div><div class="question_txt">Are you a Permanent Resident or Citizen of Australia or New Zealand?</div>
+					</div>
+
+					<div class="card_decor_left1"></div>
+					<div class="card_decor_left2"></div>
+					<div class="card_decor_right1"></div>
+			</div>
+
+			<div class="card_question_btn">
+				<button data-action="0" class="btn large pink fl_left btn_question step2Css">No</button>
+				<button data-action="1" class="btn large turquoise fl_right btn_question step2Css">Yes</button>
+				<div class="cl"></div>
+			</div>
 		</div>
 	</div>
 	<!-- Step 1 End -->
@@ -119,8 +132,14 @@
 	
 									<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="1000"></textarea>
 									</div>
-									<div class="text-center">
-										<button id="user_step3_done" class="btn turquoise small btn_join_submit">Done</button>
+									<div class="row text-center">
+
+
+									<div class="col">
+
+										<button id="user_step3_done" class="btn_join_submit btn btn-primary">Done</button>
+									</div>
+
 									</div>
 					</div>
 				</div>
@@ -267,28 +286,29 @@
 		<div class="col">
 			<div class="card wider">
 				<div class="card-body">
-					<h4 class="text-center">Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:</h4>
-					<p class="text-center">1. Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
-					<p class="h5 font-weight-bold text-center">You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
+					<p class="text-left font-weight-bold">Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:</p>
+					<p class="text-left"><b>1.</b> Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
+
+					<p class="text-left"><b>2.</b> You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
 					<div class="userUpload">
 						<div class="userResumeCont">
-							<div class="userResume">
+							<div class="userResume">								
 								<div class="title_private_photos title_videos">Resume & Contact Details</div>
-											<form id="frm_upload" class="submit-document md-form" action="{{route('mUserUploadResume')}}" method="post" enctype="multipart/form-data">
-												{{csrf_field()}}
-												<div class="file-field big">
-													<a class="btn-floating purple-gradient mt-0 float-left">
-														<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
-														<input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">
-													</a>
-													<div class="file-path-wrapper">
-														<input class="file-path validate" type="text" placeholder="Browse...">
-												</div>
-												</div>
-													<a id="user_step8_done" class="btn turquoise violet save-resume-btn valign-top" name="submit">Done</a>
-											</form>
-											<div class="private_attachments"></div>
-											<div class="upload_resume_error bg-danger text-white"></div>
+									<form id="frm_upload" class="submit-document md-form" action="{{route('mUserUploadResume')}}" method="post" enctype="multipart/form-data">
+										{{csrf_field()}}
+										<div class="file-field big">
+											<a class="btn-floating purple-gradient mt-0 float-left">
+												<i class="fas fa-cloud-upload-alt" aria-hidden="true"></i>
+												<input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">
+											</a>
+											<div class="file-path-wrapper">
+												<input class="file-path validate" type="text" placeholder="Browse...">
+										</div>
+										</div>
+											<a id="user_step8_done" class="btn btn-primary save-resume-btn mt-5 mr-5" name="submit">Done</a>
+									</form>
+									<div class="private_attachments"></div>
+									<div class="upload_resume_error bg-danger text-white"></div>
 							</div>
 						</div>
 					</div>
@@ -369,6 +389,11 @@
 /* .header, .main.above .wrapper {
     background: #5b0079;
 } */
+
+
+
+
+
 </style>
 @stop
 
