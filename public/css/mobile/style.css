@@ -56,7 +56,7 @@ h6.card-header.h6 {
 }
 
 select.industry_experience.userIndustryExperience, select.userQualification {
-    width: 93%;
+    width: 90%;
     margin-right: 4%;
 }
 
@@ -228,7 +228,4 @@ color : rgb(255, 255, 255);
     color: white;*/
   border: 2px solid #dc9f4a;
   padding: 7px;
-
-
-
 }

@@ -4,7 +4,7 @@
 		<div class="formTitle text-white text-center">Create New Account</div>
 
 		<div class="formBox mb-4">
-							<form name="frm_date" method="post" autocomplete="on" class="text-center needs-validation" novalidate>
+							<form name="frm_date" method="post" autocomplete="off" class="text-center needs-validation" novalidate>
 										@csrf
 											<!-- First Name -->
 											<div class="md-form bgShad">

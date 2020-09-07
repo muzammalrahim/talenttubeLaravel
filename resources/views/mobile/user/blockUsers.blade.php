@@ -99,7 +99,8 @@
 
 @endif 
 
-@stop
+
+
 
 {{-- ====================================== Modal Succcess on unBlocking ====================================== --}}
 
@@ -133,11 +134,9 @@
 {{-- ====================================== Modal Succcess on unBlocking ====================================== --}}
 
 
+@stop
+
 @section('custom_footer_css')
-<style type="text/css">
-
-
-</style>
 @stop
 
 @section('custom_js')

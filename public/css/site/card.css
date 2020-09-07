@@ -427,3 +427,41 @@ button.btn.like_frame.active{ background: #ffa200; color: #fff; border: none; }
 button.btn.like_frame.active:hover span.like{ opacity: 1; }
 button.btn.like_frame.active span.like, button.btn.like_frame.active span.like_hover{ background-image: url(../images/icon_liked.png); width: 16px; height: 16px; background-position: 0 2px; margin: 7px 0 0 -22px; }
 input.fl_basic:disabled, textarea.fl_basic:disabled{background-color: #FFF;}
+
+/* ========================= Media Query For Mobile ============================= */
+
+@media only screen and (max-width: 423px) {
+   .bl_card_question .card_question .question_vh, 
+  .bl_card_question .card_question, .bl_card_question .card_question_cont, .bl_card_question,.bl_card_question .card_question .question_txt {
+    width: 260px;
+    font-size: 21px;
+    height: 340px;
+    margin-bottom:20px;
+    /*margin:0px !important;*/
+  }
+  .bl_card_question .card_decor_right1, .bl_card_question .card_decor_left2, 
+  .bl_card_question .card_decor_left1{
+    height: 280px;
+    width: 240px
+
+  }
+  .card_question_cont {
+    margin-bottom: 54px !important;
+}
+  .step2Css {
+    padding: 0px !important;
+    font-size: 22px !important;
+    min-width: 102px !important;
+    height: 50px !important;
+}
+}
+
+
+button#user_step3_done {
+    float: unset;
+}
+
+.bl.bl_basic {
+    width: auto;
+    float: unset;
+}

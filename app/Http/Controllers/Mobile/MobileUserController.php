@@ -119,7 +119,7 @@ class MobileUserController extends Controller
         $data['tags'] = $tags;
         $data['tagCategories'] = $tagCategories;
         
-        return view('mobile.register.user_step2', $data);
+        return view('mobile.register.user_step2', $data);    //		mobile/register/user_step2
 
     }
 
@@ -564,7 +564,7 @@ class MobileUserController extends Controller
             $user->qualificationRelation()->sync($requestData['qualification']); 
             $user->save();
             $data['user'] = User::find($user->id); 
-            $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
+            $QualificationView =  view('mobile.layout.parts.jobSeekerQualificationList', $data);
             $QualificationHtml = $QualificationView->render();
             return response()->json([
                     'status' => 1,

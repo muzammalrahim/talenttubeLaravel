@@ -212,7 +212,8 @@ select.userQualification {
     display: inline-block;
 }
 div>div.jq-selectbox__dropdown.drop_down>ul {
-    width: 120px;
+    width: 280px;
+    height: 150px;
 }
 div.questionsOfUser>div>p {
     margin: 10px 0px 0;
@@ -316,6 +317,14 @@ span.icon_image_profile {
     right: 5px;
 }
 
+
+div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{
+    position: unset !important;
+}
+
+.jq-selectbox__search {
+    display: none;
+}
 
 </style>
 @stop

@@ -99,6 +99,14 @@
     </div> 
 
 @endforeach
+
+@else
+
+<h6 class="h6 jobAppH6 mt-3">you hva not applied fo any job.</h6>
+
+
+
+
 @endif     
 
 

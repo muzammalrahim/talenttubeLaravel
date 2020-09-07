@@ -80,8 +80,8 @@
 				<div class="card_decor_right1"></div>
 			</div>
 			<div class="card_question_btn">
-				<button data-action="0" class="btn large pink fl_left btn_question">No</button>
-				<button data-action="1" class="btn large turquoise fl_right btn_question">Yes</button>
+				<button data-action="0" class="btn large pink fl_left btn_question step2Css">No</button>
+				<button data-action="1" class="btn large turquoise fl_right btn_question step2Css">Yes</button>
 				<div class="cl"></div>
 			</div>
 		</div>

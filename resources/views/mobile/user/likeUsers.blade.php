@@ -100,13 +100,8 @@
 
 
 
-@stop
-
 {{-- ======================================================= Unlike Employer Modal ======================================================= --}}
-
-{{-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#centralModalInfo">Launch
-   modal
-</button> --}}
+ 
 
  <!-- Central Modal Medium Info -->
  <div class="modal fade" id="unlikeEmpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
@@ -159,6 +154,12 @@
  <!-- Central Modal Medium Info-->
 
 {{-- ======================================================= Unlike Employer Modal ======================================================= --}}
+
+
+
+@stop
+
+
 @section('custom_footer_css')
 <style type="text/css">
 
