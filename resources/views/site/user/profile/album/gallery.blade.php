@@ -1,6 +1,6 @@
 <!-- gallery blade -->
 
-
+<div class="photosHeading">Photos</div>
 
 
 

@@ -7,7 +7,13 @@
         <li>
           <div class="logo-wrapper waves-light">
               <div id="logoOverImg" style="/*position:absolute; */width:auto; height:80px">
-                <a href="#"><img src="https://p16-tiktokcdn-com.akamaized.net/aweme/720x720/tiktok-obj/1646491669975042.jpeg"></a>
+
+                {{-- <a href="#"><img src="https://p16-tiktokcdn-com.akamaized.net/aweme/720x720/tiktok-obj/1646491669975042.jpeg"></a> --}}
+
+                <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+            <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
+            </a>
+            
               </div>
           </div>
         </li>

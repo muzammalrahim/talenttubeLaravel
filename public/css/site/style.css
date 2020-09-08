@@ -4403,3 +4403,13 @@ ul.pp_small_decor_r_show li:last-child a.selected:hover span{ background: url(..
     left: 100%;
     cursor: pointer;
 }
+
+.photosHeading{
+    line-height: 16px;
+    color: #7d7d7d;
+    /*background: url(../../images/site/icon_private_photos.png) -2px 0 no-repeat;*/
+    border-bottom: 1px solid #dcdee2;
+    padding: 0 0 8px 18px;
+    margin: 0 45px 26px 0;
+    font-weight: bold;
+}

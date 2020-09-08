@@ -118,6 +118,11 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     Route::get('jobs', 'Site\SiteUserController@jobs')->name('mJobs');
     Route::get('jobSeekers',        'Site\EmployerController@jobSeekers')->name('mJobSeekers');
 
+    // ==================================== Delete Job from employer =====================================
+
+    Route::post('ajax/MdeleteJob/{id}', 'Mobile\MobileUserController@MdeleteJob')->name('MdeleteJob');
+    // Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
+
 
  
  });

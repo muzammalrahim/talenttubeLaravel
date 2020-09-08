@@ -58,10 +58,26 @@
             <div id="full_step_1" class="bl_card_question" style="display:none;">
                 <div class="card_question_cont">
                     <div id="card_question_no" class="card_question no hide answer">
-                        <div class="question_vh"><img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /><span>No</span></div>
+                        <div class="question_vh">
+
+                            {{-- <img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /> --}}
+
+                            <i class="fas fa-times"></i>
+
+                        
+                            <span>No</span>
+                        
+                        </div>
                     </div>
                     <div id="card_question_yes" class="card_question yes hide answer">
-                        <div class="question_vh"><img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /><span>Yes</span></div>
+                        <div class="question_vh">
+
+                            {{-- <img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /> --}}
+                            <i class="fas fa-check"></i>
+                            
+
+                            <span>Yes</span>
+                        </div>
                     </div>
 
                     <div data-field="graduate_intern" class="card_question ">

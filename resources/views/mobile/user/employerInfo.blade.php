@@ -27,7 +27,22 @@
                 <div class="row jobInfo">
                    
                     <div class="col-4 p-0">
-                        <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px">
+
+
+                        {{-- @dump($employer_video); --}}
+                        
+                   {{--      <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px"> --}}
+
+                        @php
+                    $profile_image   = asset('images/site/icons/nophoto.jpg');
+                    if ($employer->profileImage){
+                        $profile_image = asset('images/user/'.$employer->id.'/gallery/'.$employer->profileImage->image);
+                    }
+                    @endphp
+                    
+                    <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}">
+
+
                     </div>
 
                     <div class="col p-0 pl-3">

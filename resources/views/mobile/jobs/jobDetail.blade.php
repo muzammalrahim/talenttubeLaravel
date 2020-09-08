@@ -74,7 +74,7 @@
             <div class="card-footer text-muted jobAppFooter">
 
                     <div class="float-right">
-                        <a class="jobAppslyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" data-toggle="modal" data-target="#modalJobApply" {{-- href="{{route('MjobApplyInfo', ['id' => $job->id]) }} --}}>Apply</a>
+                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" href="{{route('MjobApplyInfo', ['id' => $job->id]) }}" data-toggle="modal" data-target="#modalJobApply" >Apply</a>
                     </div>
 
             </div>
@@ -95,5 +95,17 @@
 
 @section('custom_js')
 
-@stop
 
+<script type="text/javascript">
+$(document).ready(function(){
+
+    $('.graybtn').click(function(){
+        console.log("jobapplybutton");
+    });
+
+
+
+});
+</script>
+
+@stop

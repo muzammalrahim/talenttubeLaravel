@@ -335,12 +335,12 @@
                     @endforeach     
                   </div> --}}
       
-                    <a class="btn btn-sm btn-success saveTagsButton hide2" style="margin-top: 5px;">Save</a>
+                    {{-- <a class="btn btn-sm btn-success saveTagsButton hide2" style="margin-top: 5px;">Save</a> --}}
             </div>
-
+{{-- 
             <div class="alert alert-success TagsAlert hide2" role="alert">
               <strong>Success!</strong> Tags have been updated successfully!
-            </div>
+            </div> --}}
         </div>
 
     <div class="userTagsEditingLayout">  

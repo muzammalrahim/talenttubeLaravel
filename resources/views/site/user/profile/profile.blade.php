@@ -16,11 +16,8 @@
             <div class="pic">
                 <div class="profile_pic_one to_show">
                     <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
-                        <img  class="photo"
-                            id="pic_main_img" 
-                            src="{{$profile_image}}"
-
-                            title="">
+                        
+                        <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
                     </a>
                     {{-- <div id="add_photo_main_profile" class="add_photo">
                         <div class="file" id="add_photo_profile">
@@ -44,10 +41,15 @@
         <div class="info">
             <div class="name"><a id="profile_name" style="cursor:default;" class="edit_main_title"  onclick="return false;">{{$user->name}} {{$user->surname}}</a></div>
             <div class="bl_list_info">
-                <ul class="list_info userProfileLocation">
-                    <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li>
+                <ul class="list_info userProfileLocation"><br>
+                    {{-- <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li> --}}
+
                     <li id="list_info_location">{{userLocation($user)}}</li>
-                    <li><span class="basic_info">•</span><span id="list_info_gender">Job Seeker</span></li>
+
+                    <li>
+                        {{-- <span class="basic_info">•</span> --}}
+
+                    <span id="list_info_gender">Job Seeker</span></li>
                 </ul>
                 {{-- <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div> --}}
             </div>
@@ -120,7 +122,9 @@
 <link rel="stylesheet" href="{{ asset('css/site/tagSystem.css') }}">
 
 <style>
-.job{margin:10px; }
+.job{
+    margin: 5px 23px;
+}
 .jq-selectbox.jqselect.salaryRangeField.dropup.opened{ width: 100px;}
 .jq-selectbox__select {
     min-width: 120px;

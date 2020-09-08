@@ -141,7 +141,7 @@ class SiteUserController extends Controller
         $data['tags'] = $tags;
         $data['tagCategories'] = $tagCategories;
 
-        return view('site.register.user_step2', $data);
+        return view('site.register.user_step2', $data);         //      site/register/user_step2
 
     }
 

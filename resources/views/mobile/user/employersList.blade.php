@@ -13,7 +13,7 @@
 @if ($employers->count() > 0)
 @foreach ($employers as $js)
 
-    {{-- @dump($job->jobEmployer->name) --}}
+    {{-- @dump($profile_image) --}}
 
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 
@@ -32,7 +32,13 @@
                 <div class="row jobInfo">
                    
                     <div class="col-4 p-0">
-                        <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px">
+
+
+                   {{--      <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+                            <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
+                        </a> --}}
+
+
                     </div>
 
                     <div class="col p-0 pl-3">

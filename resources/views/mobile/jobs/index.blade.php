@@ -4,11 +4,11 @@
  
 <h6 class="h6 jobAppH6">Browse Jobs</h6>
 
-<!-- ================================================================ Jobs Apply Modal ================================================================ -->
-<!-- ================================================================ Jobs Filter ================================================================ -->
+<!-- =================================================== Jobs Apply Modal =================================================== -->
+<!-- =================================================== Jobs Filter =================================================== -->
 		@include('mobile.jobs.jobsFilter')
 		@include('mobile.spinner')
-<!-- ================================================================ Jobs List ================================================================ -->
+<!-- =================================================== Jobs List =================================================== -->
 		<div class="jobs_list">	
 		@include('mobile.jobs.jobsList')
 		</div>
@@ -54,7 +54,6 @@ $(document).on('click','.jobs_pagination .page-item .page-link',function(e){
     getData();
 });
   console.log(' doc ready ');
-
   $(document).on('click','.jobApplyBtn', function() {
     console.log(' jobApplyBtn click  ');
     var jobPopId = parseInt($(this).attr('job-id'));
@@ -99,9 +98,7 @@ $('#modalJobApply').on('show.bs.modal', function (event) {
 
 });
 // ready end 
-
 // $(document).on('click','.jobApplyBtnX', function() {
-
 //   var jobPopId = parseInt($(this).attr('job-id'));
 //   var jobPopTitle = $(this).attr('job-title');
 //   $('.jobTitle').text(jobPopTitle);
@@ -124,10 +121,6 @@ var getDataCustom = function(){
         $('.jobs_list').html(data);
     });
 }
-
-
-
-
 
 </script>
 @stop
