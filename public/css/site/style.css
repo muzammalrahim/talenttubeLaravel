@@ -724,7 +724,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
 .tabs_profile .tab_photos .item.private { border: 3px solid #ff5f4e;}
 
 .tabs_profile .tab_photos .icon_delete{ /*display: inline-block; width: 32px; height: 32px;*/ cursor: pointer; }
-.tabs_profile .tab_photos .icon_delete_photo, .tabs_profile .tab_photos .icon_delete_photo_hover{ position: absolute; right: 0; top: 2px; background-image: url(/images/site/icons/icon_delete_photo.png); background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block;
+.tabs_profile .tab_photos .icon_delete_photo, .tabs_profile .tab_photos .icon_delete_photo_hover{ position: absolute; right: 0; top: 2px; background-image: url('../images/site/icons/icon_delete_photo.png'); background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block;
 -webkit-transition: opacity .3s ease-in-out; -moz-transition: opacity .3s ease-in-out; -o-transition: opacity .3s ease-in-out; transition: opacity .3s ease-in-out; }
 .tabs_profile .tab_photos .icon_delete_photo{ background-position: 0 0; opacity: 1; }
 .tabs_profile .tab_photos .icon_delete_photo_hover{ background-position: 0 -32px; opacity: 0; }
@@ -732,7 +732,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
 .tabs_profile .tab_photos .icon_delete:hover span.icon_delete_photo_hover{ opacity: 1; }
 
 /* .tabs_profile .tab_photos .icon_private{ display: inline-block; width: 32px; height: 32px; cursor: pointer; } */
-.tabs_profile .tab_photos .icon_private_photo, .tabs_profile .tab_photos .icon_private_photo_hover{ position: absolute; right: 0; top: 25px; background-image: url(/images/site/icons/icon_private_photo.png); background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block;
+.tabs_profile .tab_photos .icon_private_photo, .tabs_profile .tab_photos .icon_private_photo_hover{ position: absolute; right: 0; top: 25px; background-image: url('../images/site/icons/icon_private_photo.png'); background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block;
 -webkit-transition: opacity .3s ease-in-out; -moz-transition: opacity .3s ease-in-out; -o-transition: opacity .3s ease-in-out; transition: opacity .3s ease-in-out; }
 .tabs_profile .tab_photos .icon_private_photo{ background-position: 0 0; opacity: 1; }
 .tabs_profile .tab_photos .icon_private_photo_hover{ background-position: 0 -32px; opacity: 0; }
@@ -740,7 +740,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
 .tabs_profile .tab_photos .icon_private:hover span.icon_private_photo_hover{ opacity: 1; }
 
 .tabs_profile .tab_photos .icon_public{ display: inline-block; width: 32px; height: 32px; cursor: pointer; }
-.tabs_profile .tab_photos .icon_public_photo, .tabs_profile .tab_photos .icon_public_photo_hover{ position: absolute; right: 0; top: 25px; background-image: url(/images/site/icons/icon_public_photo.png); background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block;
+.tabs_profile .tab_photos .icon_public_photo, .tabs_profile .tab_photos .icon_public_photo_hover{ position: absolute; right: 0; top: 25px; background-image: url('../images/site/icons/icon_public_photo.png'); background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block;
 -webkit-transition: opacity .3s ease-in-out; -moz-transition: opacity .3s ease-in-out; -o-transition: opacity .3s ease-in-out; transition: opacity .3s ease-in-out; }
 .tabs_profile .tab_photos .icon_public_photo{ background-position: 0 0; opacity: 1; }
 .tabs_profile .tab_photos .icon_public_photo_hover{ background-position: 0 -32px; opacity: 0; }
@@ -748,7 +748,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
 .tabs_profile .tab_photos .icon_public:hover span.icon_public_photo_hover{ opacity: 1; }
 
 .tabs_profile .tab_photos .icon_rotate{ display: inline-block; width: 32px; height: 32px; cursor: pointer; }
-.tabs_profile .tab_photos .icon_rotate_photo, .tabs_profile .tab_photos .icon_rotate_photo_hover{ position: absolute; right: 0; top: 48px; background-image: url(../images/icon_rotate_photo.png); background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block;
+.tabs_profile .tab_photos .icon_rotate_photo, .tabs_profile .tab_photos .icon_rotate_photo_hover{ position: absolute; right: 0; top: 48px; background-image: url('../images/icon_rotate_photo.png'); background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block;
 -webkit-transition: opacity .3s ease-in-out; -moz-transition: opacity .3s ease-in-out; -o-transition: opacity .3s ease-in-out; transition: opacity .3s ease-in-out; }
 .tabs_profile .tab_photos .icon_rotate_photo{ background-position: 0 0; opacity: 1; }
 .tabs_profile .tab_photos .icon_rotate_photo_hover{ background-position: 0 -32px; opacity: 0; }
@@ -789,7 +789,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
     width: auto;
     height: auto; 
     max-width: 300px;
-    max-height: 300px;
+    max-height: 3000px;
     min-width: 150px;
 }
 /* .gallery_action { border-top: 4px solid #142d69; } */

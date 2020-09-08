@@ -1415,7 +1415,7 @@ class MobileUserController extends Controller
 									$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 	
 									$data['likeUsers'] = $likeUsers;
-									$data['jobSeekers'] = $jobSeekers; // $jobSeekers;
+									//$data['jobSeekers'] = $jobSeekers; // $jobSeekers;
 	
 									return view('mobile.employer.jobSeekers.index', $data); 
 								 // mobile/employer/jobSeekers/index
