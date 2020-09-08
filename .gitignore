@@ -11,6 +11,7 @@ Homestead.yaml
 npm-debug.log
 yarn-error.log
 /storage/images/user
+/New Folder
 sftp-config.json
 *.zip
 storage/media/*
