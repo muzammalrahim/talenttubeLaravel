@@ -13,7 +13,7 @@
       </div>
 
       <!--Body-->
-      <div class="modal-body p-2 mt-2">
+      <div class="modal-body p-2 mt-3">
         
         <div class="mProcessing d-none text-center">
          <div class="preloader-wrapper big active crazy">
@@ -36,27 +36,41 @@
           <input type="hidden" name="login_type" value="site_ajax" >
         <!-- Email -->
         <div class="md-form">
-          <input type="email" name="email" id="materialLoginFormEmail" class="form-control black-text" required>
-          <label for="materialLoginFormEmail" class="text-info">E-mail</label>
+          <input type="email" name="email" id="materialLoginFormEmail" class="form-control black-text pl-2" required style="margin-bottom: 31px;">
+          <label for="materialLoginFormEmail" class="text-info"><h6 class=" ml-1">E-mail</h6></label>
         </div>
 
         <!-- Password -->
-        <div class="md-form">
-          <input type="password" name="password" id="materialLoginFormPassword" class="form-control black-text" required>
-          <label for="materialLoginFormPassword" class="text-info">Password</label>
+        <div class="md-form my-4">
+          <input type="password" name="password" id="materialLoginFormPassword" class="form-control black-text pl-2" required>
+          <label for="materialLoginFormPassword" class="text-info"><h6 class="ml-1">Password</h6></label>
         </div>
 
-        <div class="d-flex justify-content-around">
-          <div>
-            <div class="form-check">
+        <div class="d-flex row">
+          {{-- <div> --}}
+            <div class="form-check p-0 col">
               <input type="checkbox" class="form-check-input" id="materialLoginFormRemember">
-              <label class="form-check-label" for="materialLoginFormRemember">Remember me</label>
+              <label class="form-check-label text-primary pl-4" for="materialLoginFormRemember">Remember me</label>
             </div>
-          </div>
+
+            <div class="col">
+                <a class="text-primary float-right" data-toggle="modal" data-target="#modalLoginForm" data-dismiss="modal">Forget Password?</a>
+            </div>
+          {{-- </div> --}}
         </div>
 
         <!-- Register -->
-        <p>Not a member?<a href="">Register</a></p>
+
+      <div>
+
+      <div class="d-flex mt-2 mb-1 float-right">
+
+      <a href="" class="">Register?</a>
+      </div>
+      <div class="d-flex">
+      </div>
+
+      </div>
 
 
 
@@ -82,3 +96,61 @@
   </div>
 </div>
 
+{{-- <style type="text/css">
+  label.text-info{
+    /*font-size: 15px !important;*/
+    margin-left: 4px;
+    font-weight: 600;
+    color: black !important;
+}
+</style> --}}
+
+
+{{-- ==================================== Forget Password ============================ --}}
+
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center text-white bg-primary">
+        <h6 class="modal-title w-100 font-weight-bold">Forgot your password</h6>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+
+        <div class="row">
+
+        <div class="col-1">  
+        <i class="fas fa-lock prefix grey-text float-left"></i></div>
+        <div class="col text-center">
+        <p style="font-size: 13px;"> Please enter your email address we will send you a link to reset your password</p>
+        </div>
+
+        </div>
+
+        <div class="md-form mb-5">
+          <i class="fas fa-envelope prefix grey-text"></i>
+          <input type="email" id="defaultForm-email" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="defaultForm-email" placeholder="Your email">Your email</label>
+        </div>
+
+{{--         <div class="md-form mb-4">
+          <i class="fas fa-lock prefix grey-text"></i>
+          <input type="password" id="defaultForm-pass" class="form-control validate">
+          <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+        </div> --}}
+
+      </div>
+      <div class="modal-footer d-flex justify-content-center">
+        <button class="btn btn-primary">Reset Password</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{-- <div class="text-center">
+  <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">Launch
+    Modal Login Form</a>
+</div> --}}

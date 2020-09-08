@@ -27,7 +27,7 @@
                 <button id="form_login_submit" type="submit" class="btn pink">Sign in</button>
                 <div class="login_form_errors to_hide"></div>
             </form>
-            <a id="pp_forgot_pass_open" class="link" href="">Forgot password?</a>
+            <a {{-- id="pp_forgot_pass_open" class="link"  --}}href="{{route('forgetPassword')}}">Forgot password?</a>
             <div class="line"></div>
             <div class="or"><span>or</span></div>
 
@@ -45,6 +45,53 @@
 
 
 </div>
+
+
+
+
+{{-- Material form login --}}
+{{-- <div class="card">
+
+  <h5 class="card-header info-color white-text text-center py-4">
+    <strong>Sign in</strong>
+  </h5>
+
+  <div class="card-body px-lg-5 pt-0">
+
+    <form class="text-center" style="color: #757575;" action="#!">
+
+      <div class="md-form">
+        <input type="email" id="materialLoginFormEmail" class="form-control">
+        <label for="materialLoginFormEmail">E-mail</label>
+      </div>
+
+      <div class="md-form">
+        <input type="password" id="materialLoginFormPassword" class="form-control">
+        <label for="materialLoginFormPassword">Password</label>
+      </div>
+
+      <div class="d-flex justify-content-around">
+        <div>
+
+          <a href="">Forgot password?</a>
+        </div>
+      </div>
+
+      <button class="btn btn-outline-info btn-rounded btn-block my-4 waves-effect z-depth-0" type="submit">Sign in</button>
+
+      <p>Not a member?
+        <a href="">Register</a>
+      </p>
+
+    </form>
+
+  </div>
+
+</div> --}}
+<!-- Material form login -->
+
+
+
 
 <style type="text/css">
     span.errorMessageLogIn {

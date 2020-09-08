@@ -67,7 +67,7 @@ ul.item_ul li.selected {
 	padding-bottom: 15px;
 }
 a#user_step8_done, a#more_jobs_step2  {
-	transition: background-color 0.3s ease;
+/*	transition: background-color 0.3s ease;
 	font-size: 18px;
 	color: #fff;
 	border: none;
@@ -75,10 +75,12 @@ a#user_step8_done, a#more_jobs_step2  {
 	cursor: pointer;
 	display: block;
 	background: #40c7db;
+	
 	width: 30%;
+
 	margin: 0 auto;
 	padding: 10px 30px;
-	margin-top: 20px;
+	margin-top: 20px;*/
 }
 .flex-1 {
 	flex: 1;

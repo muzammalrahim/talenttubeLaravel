@@ -11,7 +11,6 @@ var profile_img_selected = false;
 var userSelectedTagsList = [];
 
 var isAnswerSend=false;
-var s3_validation = true;
 var dataAnswerJoin={};
 var isUploadPhotoJoinAjax=false,
 				isUploadPhotoJoin=false;
@@ -156,7 +155,7 @@ $(document).ready(function(){
 				$('#about_me,#interested_in,.upload_file').removeClass('validation_error');
 
 				//validation
-				// var s3_validation = true;
+				var s3_validation = true;
 				var about_me = $.trim($('#about_me').val());
 				var interested_in = $.trim($('#interested_in').val());
 
@@ -205,7 +204,7 @@ $(document).ready(function(){
 				$('#about_me,#interested_in,.upload_file,#recentJob').removeClass('validation_error');
 				
 				//validation
-				// var s3_validation = true;
+				var s3_validation = true;
 				var about_me = $.trim($('#about_me').val());
 				var interested_in = $.trim($('#interested_in').val());
 				var recentJob = $.trim($('#recentJob').val());
@@ -233,7 +232,6 @@ $(document).ready(function(){
 							$('.part_photo .name_info').removeClass('d-none').addClass('d-block');
 							$('.upload_file').addClass('validation_error');
 						}
-
 						if(s3_validation){
 							step3_formData.append('about_me', about_me);
 							step3_formData.append('interested_in', interested_in );

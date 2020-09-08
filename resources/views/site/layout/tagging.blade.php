@@ -121,6 +121,7 @@
 		            	<div class="new_tag_category form_field">
 		            			<span class="form_label">Category :</span>
 		            			<div class="form_input">
+
 		            				 <select name="newTagCategory" class="something">
 																				@if(!empty($tagCategories))
 																					
@@ -129,6 +130,8 @@
 																							<option value="{{$tagCat->id}}"><i class="tagIcon {{$tagCat->icon}}"></i>{{$tagCat->title}}</option>
 																					@endforeach
 																			@endif
+
+		 
 		            				 </select>
 		            				<div id="newTagCategory_error" class="error field_error to_hide">&nbsp;</div>
 		            			</div>
