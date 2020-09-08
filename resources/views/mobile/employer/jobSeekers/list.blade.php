@@ -1,6 +1,6 @@
 
  {{-- @dd($jobSeekers) --}}
-
+@if(isset($jobSeekers))
 @if ($jobSeekers && $jobSeekers->count() > 0)
 
 
@@ -199,3 +199,5 @@ $(document).on('click','.jsBlockButton',function(){
 {{-- ======================================================== Block Employer End Here ======================================================== --}}
 
 </script>
+
+@endif

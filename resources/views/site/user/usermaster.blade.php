@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('css/site/style.css') }}">
 
     {{-- Added By Hassan --}}
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  
     <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 
     {{-- Added By Hassan --}}
@@ -30,10 +30,7 @@
     <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     
-    {{-- Added By Hassan --}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    {{-- Added By Hassan --}}
+ 
     
 
 </head>
@@ -171,13 +168,12 @@
  {{-- @include('site.user.footer') --}} 
 
 <script src="{{asset('/js/lang.js')}}"></script>
-
+<script src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
 <script src="{{ asset('js/site/modernizr.js') }}"></script>
 <script src="{{ asset('js/site/jquery.popup.js') }}"></script>
 <script src="{{ asset('js/site/impact_lib.js') }}"></script>
 <script src="{{ asset('js/site/lib.js') }}"></script>
 <script src="{{ asset('js/site/script.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
 
 
 {{-- <script src="{{ asset('js/site/profile.js') }}"></script>  --}}

@@ -682,8 +682,7 @@ this.updateIndustryExperience = function(){
 
 
     this.showVideoModal = function(video_url){
-								const player = new Plyr('#player');
-								window.player = player;
+							
 							
         console.log(' showVideoModal ', video_url);
         var videoElem  = '<video id="player" controls>';
@@ -695,7 +694,12 @@ this.updateIndustryExperience = function(){
             fadeDelay: 2.5,
             escapeClose: false,
             clickClose: false,
-        }); 
+								}); 
+								
+
+								$('#videoShowModal').on($.modal.CLOSE, function(event, modal) {
+									$(this).find(".videoBox video").remove();
+							});
       
     }
 

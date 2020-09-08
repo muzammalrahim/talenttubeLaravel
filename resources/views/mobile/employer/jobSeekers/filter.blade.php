@@ -185,8 +185,8 @@
              </div>
 													<div class="FilterBox my-2">
 														<div class="text-center">
-															<button name="ResetForm" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
-															<button name="CreateConfig" class="btn waves-effect waves-light " id="CreateConfig" type="submit">Submit</button>
+															<button name="ResetForm" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
+															<button name="CreateConfig" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light " id="CreateConfig" type="submit">Submit</button>
 														</div>
 												</div>	
 

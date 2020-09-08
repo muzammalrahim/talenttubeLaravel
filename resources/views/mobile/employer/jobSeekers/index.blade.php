@@ -1,10 +1,7 @@
 @extends('mobile.user.usermaster')
 @section('content')
-<div class="newJobCont">
     {{-- <div class="head icon_head_browse_matches">Job Seekers List</div> --}}
 
-    
-    <div class="add_new_job jobSeekersListingCont">
 
     	 <h6 class="h6 jobAppH6">Job Seekeers</h6>
 
@@ -23,10 +20,6 @@
 
         <!-- =============================================================================================================================== -->
 
-    </div>
-
-<div class="cl"></div>
-</div>
 
 
 
@@ -92,7 +85,7 @@ var getData = function(){
     });
 }
 
-// getData(); 
+getData(); 
 
 // Bottom pagination load data throug ajax. 
 $(document).on('click','.jobseeker_pagination .page-item .page-link',function(e){
