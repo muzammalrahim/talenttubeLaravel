@@ -19,6 +19,7 @@
     	<div class="IndustrySelect">
               <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
               <p>
+                <i class="fas fa-angle-right qualifiCationBullet"></i>
               	{{getIndustryName($industry)}}
               	<i class="fa fa-trash removeIndustry hide_it"></i></p>
         </div>

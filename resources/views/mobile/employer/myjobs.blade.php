@@ -1,7 +1,7 @@
 
 @extends('mobile.user.usermaster')
 @section('content')
-
+@include('mobile.modals.jobsModal')
  
 <h6 class="h6 jobAppH6">My Jobs</h6>
 
@@ -102,10 +102,10 @@
             <div class="card-footer text-muted jobAppFooter p-1">
 
                     <div class="float-right">
-                        <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-danger ml-0 btn-xs" {{-- href="{{route('MemployerInfo', ['id' => $js->id])}}" --}}>Delete</a>
+                        <a class="myJobDeleteBtn graybtn jbtn m5 btn btn-sm btn-danger ml-0 btn-xs" data-jobid="{{$job->id}}" {{-- href="{{route('MdeleteJob', ['id' => $job->id])}}" --}} data-toggle="modal" data-target="#deleteJobPopup" >Delete</a>
                         <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs">Edit</a>
 
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs">Detail</a>
+                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" href="{{route('MjobDetail', ['id' => $job->id]) }}">Detail</a>
 
                     </div>
                     
@@ -119,7 +119,14 @@
     </div> 
 
 @endforeach
+
+@else
+<h6 class="h6 jobAppH6">You have not posted any job yet.</h6>
+
 @endif     
+
+
+
 
 
 
@@ -129,12 +136,55 @@
 @section('custom_footer_css')
 <style type="text/css">
 
+div#centralModalSuccess {
+    height: 100%;
+    width: 100%;
+    background: #21252940;
+    padding-top: 50%;
+}
 
+#successMessageJobdeleting{
+    height: 100%;
+    width: 100%;
+    padding-top: 50%;
+    font-size: 25px;
+    background: #1411118c;
+}
 </style>
 @stop
 
 @section('custom_js')
 
+<script type="text/javascript">
+
+$('.myJobDeleteBtn').on('click',function(){
+    var job_id = $(this).attr('data-jobid');
+    console.log(' confirmJobAppRemoval click  job_id ', job_id, $(this) );
+        $('#deleteConfirmJobId').val(job_id);
+});
+
+$(document).on('click','.confirm_jobDelete_ok',function(){
+    var job_id =  $('#deleteConfirmJobId').val();
+        $('#centralModalSuccess').show().delay(1000).fadeOut('slow');
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/m/ajax/MdeleteJob/'+job_id,
+        success: function(data){
+            if( data.status == 1 ){
+                // $('.confirmJobDeleteModal .img_chat').html(data.message);
+                // $('.job_row.job_'+job_id).remove();
+                    $('.jobDeleted').show().delay(2000).fadeOut('slow');
+                    location.reload();
+
+            }else{
+                // $('.confirmJobDeleteModal .img_chat').html(data.error);
+            }
+        }
+    });
+});
+
+</script>
 
 @stop
 

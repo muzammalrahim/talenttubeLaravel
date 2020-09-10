@@ -4,11 +4,11 @@
  
 <h6 class="h6 jobAppH6">Browse Jobs</h6>
 
-<!-- ================================================================ Jobs Apply Modal ================================================================ -->
-<!-- ================================================================ Jobs Filter ================================================================ -->
+<!-- =================================================== Jobs Apply Modal =================================================== -->
+<!-- =================================================== Jobs Filter =================================================== -->
 		@include('mobile.jobs.jobsFilter')
 		@include('mobile.spinner')
-<!-- ================================================================ Jobs List ================================================================ -->
+<!-- =================================================== Jobs List =================================================== -->
 		<div class="jobs_list">	
 		@include('mobile.jobs.jobsList')
 		</div>
@@ -55,6 +55,9 @@ $(document).on('click','.jobs_pagination .page-item .page-link',function(e){
 });
   console.log(' doc ready ');
 
+
+// ======================================== Apply For Job Js and Ajax ========================================
+
   $(document).on('click','.jobApplyBtn', function() {
     console.log(' jobApplyBtn click  ');
     var jobPopId = parseInt($(this).attr('job-id'));
@@ -63,18 +66,7 @@ $(document).on('click','.jobs_pagination .page-item .page-link',function(e){
     $('#openModalJobId').val(jobPopId);
     $('#modalJobApply').modal('show');
 
-
-
-  }); // jobApplyBtn click end 
-
-$('#modalJobApply').on('show.bs.modal', function (event) {
-    console.log(' jobApplyModal show ');
-        var jobPopId = $('#openModalJobId').val();
-        console.log(' jobPopId ', jobPopId);
-        console.log(' after open ', event); 
-        $('.applyJobModalProcessing').removeClass('d-none');
-
-        $.ajax({
+    $.ajax({
         type: 'GET',
             url: base_url+'/m/ajax/MjobApplyInfo/'+ jobPopId,
             success: function(data){
@@ -82,8 +74,38 @@ $('#modalJobApply').on('show.bs.modal', function (event) {
                 $('.applyJobModalProcessing').addClass('d-none');
                 $('.jobApplyModalContent').removeClass('d-none');
                 $('.jobApplyModalContent').html(data);
+                // $('#modalJobApply').modal('hide');
+
             }
         });
+
+
+
+  }); 
+
+// ======================================== Apply For Job Js and Ajax end ========================================
+
+  // jobApplyBtn click end 
+
+$('jobApplyBtn').on('show.bs.modal', function (event) {
+    console.log(' jobApplyModal show ');
+        var jobPopId = $('#openModalJobId').val();
+        console.log(' jobPopId ', jobPopId);
+        console.log(' after open ', event); 
+        $('.applyJobModalProcessing').removeClass('d-none');
+
+        // $('.modalJobApply').show();
+
+        // $.ajax({
+        // type: 'GET',
+        //     url: base_url+'/m/ajax/MjobApplyInfo/'+ jobPopId,
+        //     success: function(data){
+        //         console.log("apply for job call");
+        //         $('.applyJobModalProcessing').addClass('d-none');
+        //         $('.jobApplyModalContent').removeClass('d-none');
+        //         $('.jobApplyModalContent').html(data);
+        //     }
+        // });
   });
 
 // Jobs Modal Close Button
@@ -99,9 +121,7 @@ $('#modalJobApply').on('show.bs.modal', function (event) {
 
 });
 // ready end 
-
 // $(document).on('click','.jobApplyBtnX', function() {
-
 //   var jobPopId = parseInt($(this).attr('job-id'));
 //   var jobPopTitle = $(this).attr('job-title');
 //   $('.jobTitle').text(jobPopTitle);
@@ -124,10 +144,6 @@ var getDataCustom = function(){
         $('.jobs_list').html(data);
     });
 }
-
-
-
-
 
 </script>
 @stop

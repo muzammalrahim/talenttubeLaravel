@@ -141,7 +141,7 @@ class SiteUserController extends Controller
         $data['tags'] = $tags;
         $data['tagCategories'] = $tagCategories;
 
-        return view('site.register.user_step2', $data);
+        return view('site.register.user_step2', $data);         //      site/register/user_step2
 
     }
 
@@ -199,7 +199,7 @@ class SiteUserController extends Controller
             }
         } elseif ($requestData['step'] == 3) {
             $rules = array(
-                'about_me' => 'required|max:150',
+                'about_me' => 'required|max:300',
                 'interested_in' => 'required|max:150',
                 'recentJob'  => 'required'
             );

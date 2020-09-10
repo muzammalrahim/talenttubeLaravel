@@ -272,6 +272,24 @@ $(document).ready(function(){
 				input.click();
 			});
 			// Profile Image Upload End
+
+			// about me Character count for textarea start
+
+				var aboutMaxLength = 300;
+				$('#about_me').keyup(function() {
+					var textlen = aboutMaxLength - $(this).val().length;
+					$('#arChars').text(textlen);
+				});
+			// about me Character count for textarea end
+
+			// about me Character count for textarea start
+
+				var maxLength = 150;
+				$('#interested_in').keyup(function() {
+					var textlen = maxLength - $(this).val().length;
+					$('#irChars').text(textlen);
+				});
+			// about me Character count for textarea end
 			// User Step3 End
 
 			// User Step4 Start
@@ -730,6 +748,7 @@ $('#tag_skip_btn').click(function () {
 								}
 							} else {
 								// stop the loader.
+								console.log(resp.status);
 								$("#user_step"+step+"_done").html(currentButtonText);
 								// if validation error occure.
 								if (resp.validator !== undefined) {

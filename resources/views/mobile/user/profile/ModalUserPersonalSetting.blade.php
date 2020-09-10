@@ -178,11 +178,11 @@ div.modal-content.emailModalContent>div.modal-body>p,div.modal-content.PhoneModa
 }*/
 
 
-div#centralModalSuccess {
+/*div#centralModalSuccess {
     height: 100%;
     width: 100%;
     background: #21252940;
-}
+}*/
 
 .modal-dialog.modal-notify.modal-success {
     margin-top: 60%;

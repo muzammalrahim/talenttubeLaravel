@@ -161,7 +161,7 @@ class MobileUserController extends Controller
 																	}
 													} elseif ($requestData['step'] == 3) {
 																	$rules = array(
-																					'about_me' => 'required|max:150',
+																					'about_me' => 'required|max:300',
 																					'interested_in' => 'required|max:150',
 																					'recentJob'  => 'required'
 																	);
@@ -1267,9 +1267,9 @@ class MobileUserController extends Controller
     // GET // Job Search/Listing layout.
     //====================================================================================================================================//
     public function Mjobs(){
-								$user = Auth::user();
-								$user->step2 = 10;
-								$user->save();
+		$user = Auth::user();
+		$user->step2 = 10;
+		$user->save();
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
@@ -1277,39 +1277,43 @@ class MobileUserController extends Controller
         return view('mobile.jobs.index', $data); // mobile/jobs/index
 				}
 
-				public function step2Jobs(){
-					$user = Auth::user();
-//        $data = array();
-					if (!isEmployer($user)){
-									$jobs = Jobs::take(10)->paginate(10);
-									return view('mobile.jobs.jobsList', compact('jobs'));
-					}
-				}
+		 
 
-				function jobsFilter(Request $request){
-					// dd($request->toArray());
-					$user = Auth::user();
-					$data = array();
-					if(!isEmployer($user)){
-						$data['user'] = $user;
-						$data['title'] = 'Jobs';
-						$data['classes_body'] = 'jobs';
-						// $applications = new JobsApplication();
-						// $applications = $applications->getFilterApplication($request);
-						// $likeUsers    = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
-
-						// $jobs =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->paginate(2);
-						// $jobs = $jobs->filterJobs($request);
-						$jobs = new Jobs();
-						$jobs = $jobs->filterJobs($request);
-						// ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-
-							$data['jobs'] = $jobs;
-						//	dd($jobs);
-										return view('mobile.jobs.jobsList', $data);
-									// mobile/jobs/list
-					}
+				
+	public function step2Jobs(){
+		$user = Auth::user();
+		//        $data = array();
+		if (!isEmployer($user)){
+						$jobs = Jobs::take(10)->get();
+						return view('mobile.jobs.jobsList', compact('jobs'));
 		}
+	}
+ 
+
+	function jobsFilter(Request $request){
+		// dd($request->toArray());
+		$user = Auth::user();
+		$data = array();
+		if(!isEmployer($user)){
+			$data['user'] = $user;
+			$data['title'] = 'Jobs';
+			$data['classes_body'] = 'jobs';
+			// $applications = new JobsApplication();
+			// $applications = $applications->getFilterApplication($request);
+			// $likeUsers    = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+
+			// $jobs =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->paginate(2);
+			// $jobs = $jobs->filterJobs($request);
+			$jobs = new Jobs();
+			$jobs = $jobs->filterJobs($request);
+			// ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
+
+				$data['jobs'] = $jobs;
+			//	dd($jobs);
+							return view('mobile.jobs.jobsList', $data);
+						// mobile/jobs/list
+		}
+	}
     //====================================================================================================================================//
     // Get // Add new job layout.
     //====================================================================================================================================//
@@ -1357,7 +1361,7 @@ class MobileUserController extends Controller
         //         // exit;
 
         // }else{
-             return view('mobile.user.employers', $data);
+             return view('mobile.user.employers', $data);		//		mobile/user/employers
         // }
 		}
 
@@ -1607,8 +1611,7 @@ class MobileUserController extends Controller
         // return $data;
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = $jobSeekers;
-		return view('mobile.employer.jobSeekers.list', $data); // site/employer/jobSeekers/list
-
+		    return view('mobile.employer.jobSeekers.list', $data); // mobile/employer/jobSeekers/list		
 	}
     //====================================================================================================================================//
     // Get // Show list of jobs posted by employer.
@@ -1651,9 +1654,7 @@ class MobileUserController extends Controller
         $data['galleries']        = $employer_gallery;
         $data['videos']          = $employer_video;
         $data['empquestion'] = getEmpRegisterQuestions();
-
-        return view('mobile.user.employerInfo', $data);
-
+        return view('mobile.user.employerInfo', $data);           // 	mobile/user/employerInfo      
     }
 
     //====================================================================================================================================//
@@ -1729,7 +1730,6 @@ class MobileUserController extends Controller
         return view('mobile.jobs.applyInfo', $data);
 
     }
-
 
     //====================================================================================================================================//
     // Ajax POST // Job Apply Submitted.
@@ -1870,6 +1870,7 @@ class MobileUserController extends Controller
 
 
 
+
     //====================================================================================================================================//
     // GET // Display user submit Job Application.
     //====================================================================================================================================//
@@ -1879,14 +1880,14 @@ class MobileUserController extends Controller
         $data['title'] = 'My job applications';
         $data['classes_body'] = 'jobApplications';
         $data['applications'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
-        return view('mobile.jobs.applied', $data);
+        return view('mobile.jobs.applied', $data);			// 	mobile/jobs/applied
     }
 
 
     //====================================================================================================================================//
     // POST // delete job application.
     //====================================================================================================================================//
-    public function deleteJobApplication($jobAppId){
+    public function MdeleteJobApplication($jobAppId){
         $user = Auth::user();
         $jobApplication = JobsApplication::find($jobAppId);
         if($jobApplication == null){
@@ -1915,7 +1916,9 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // POST // delete job.
     //====================================================================================================================================//
-    public function deleteJob($jobId){
+    public function MdeleteJob($jobId){
+
+    	// dd($jobId);
         $user = Auth::user();
         $job = Jobs::find($jobId);
         if($job == null){
@@ -1948,14 +1951,24 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     public function MblockList(){
         $user = Auth::user();
+        // $profile_image   = UserGallery::where('user_id', $user->id)->where('status', 1)->where('profile', 1)->first();
+        //     if (!$profile_image) {
+        //         if ($user_gallery->count() > 0) {
+        //            $profile_image   = assetGallery($user_gallery->first()->access,$user->id,'',$user_gallery->first()->image);
+        //         } else {
+        //             $profile_image   = asset('images/site/icons/nophoto.jpg');
+        //         }
+        //     } else {
+        //         $profile_image   = assetGallery($profile_image->access,$user->id,'',$profile_image->image);
+        //     }
+
+        // $data['profile_image']    = $profile_image;
         $data['user'] = $user;
         $data['title'] = 'Block Users';
         $data['classes_body'] = 'blockUsers';
         $data['blockUsers'] = BlockUser::with('user')->where('user_id',$user->id)->get();
         return view('mobile.user.blockUsers', $data);  //   mobile/user/blockUsers
     }
-
-
 
     //=====================Like Function ==============================================//
 
@@ -1967,8 +1980,6 @@ class MobileUserController extends Controller
         $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
         return view('mobile.user.likeUsers', $data);  //  mobile/user/likeUsers
     }
-
-
 
     //====================================================================================================================================//
     // Ajax Post // Remove user from user block User List.
@@ -2347,10 +2358,17 @@ class MobileUserController extends Controller
     }
 
  // ============================= Ajax For updating Industry Experience End here =================================
-
-
-
-
-
-
+    
+    // Get // show job detail page.
+    //====================================================================================================================================//
+    // function MjobDetail(Jobs $id){
+    //     // dd($job);
+    //     $user = Auth::user();
+    //     $data['user'] = $user;
+    //     $data['title'] = 'Job Detail';
+    //     $data['classes_body'] = 'jobDetail';
+    //     $data['job'] = $id;
+    //     return view('site.jobs.jobDetail', $data);
+    // }
+ 
 }

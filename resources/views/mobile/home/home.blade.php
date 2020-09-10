@@ -16,7 +16,7 @@
 
 
 
- <div class="container h-100">
+ <div class="container mt-5">
   <div class="row h-100 justify-content-center align-items-center text-center">
    <form id="frm_join_index_step_1" action="{{route('mJoin')}}" method="POST" class="col-12">
       @csrf

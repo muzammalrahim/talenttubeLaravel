@@ -19,7 +19,7 @@
    @foreach($qualificationsData as $qualification)
       <div class="QualificationSelect">
           <input type="hidden" name="qualification[]" class="userQualification" value="{{$qualification['id']}}">
-          <p>{{$qualification['title']}} <i class="fa fa-trash removeQualification hide_it2 float-right"></i></p>
+          <p class="mb-1"><i class="fas fa-angle-double-right mr-2"></i> {{$qualification['title']}} <i class="fa fa-trash removeQualification hide_it2 float-right"></i></p>
       </div>
    @endforeach
  @endif 

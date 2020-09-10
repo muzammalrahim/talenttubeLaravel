@@ -14,11 +14,8 @@
             <div class="pic">
                 <div class="profile_pic_one to_show">
                     <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
-                        <img  class="photo"
-                            id="pic_main_img" 
-                            src="{{$profile_image}}"
-
-                            title="">
+                        
+                        <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
                     </a>
                     {{-- <div id="add_photo_main_profile" class="add_photo">
                         <div class="file" id="add_photo_profile">
@@ -42,21 +39,18 @@
         <div class="info">
             <div class="name"><a id="profile_name" style="cursor:default;" class="edit_main_title"  onclick="return false;">{{$user->name}} {{$user->surname}}</a></div>
             <div class="bl_list_info">
-                <ul class="list_info userProfileLocation">
-                    <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li>
+                <ul class="list_info userProfileLocation"><br>
+                    {{-- <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li> --}}
+
                     <li id="list_info_location">{{userLocation($user)}}</li>
-                    <li><span class="basic_info">•</span><span id="list_info_gender">Job Seeker</span></li>
+
+                    <li>
+                        {{-- <span class="basic_info">•</span> --}}
+
+                    <span id="list_info_gender">Job Seeker</span></li>
                 </ul>
                 {{-- <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div> --}}
             </div>
-
-        {{--     <div class="status">
-                <div id="profile_status" class="status_text" style="min-height: 24.0078px; min-width: 163.008px;">
-                    <span class="statusText">{{($user->statusText)?($user->statusText):'Enter Your Status'}}</span>
-                    <input class="hide_it" type="text" id="statusText" value="{{($user->statusText)?($user->statusText):''}}" onchange="UProfile.updateStatusText()" />
-                </div>
-                <div id="profile_status_edit" class="icon_edit" onclick="UProfile.enableStatusTextEdit();" style="opacity: 1;"><span></span></div>
-            </div> --}}
 
             <div class="job">
                 <span style="margin-right: 34px;">Recent Job:</span>
@@ -118,7 +112,9 @@
 <link rel="stylesheet" href="{{ asset('css/site/tagSystem.css') }}">
 
 <style>
-.job{margin:10px; }
+.job{
+    margin: 5px 23px;
+}
 .jq-selectbox.jqselect.salaryRangeField.dropup.opened{ width: 100px;}
 .jq-selectbox__select {
     min-width: 120px;
@@ -323,7 +319,17 @@ div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{
 .jq-selectbox__search {
     display: none;
 }
-
+.qualifiCationBullet {
+    margin-right: 10px;
+}
+.qualifType{
+    /*margin-left: 10px;*/
+    font-size: 16px;
+}
+.qualifTypeSpan{   
+    text-transform: capitalize;
+    font-weight: bold;
+}
 </style>
 @stop
 
