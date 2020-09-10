@@ -19,7 +19,7 @@ class User extends Authenticatable
     // added by Hassan
     protected $attributes = [
     'username' => 0,
-    ];     
+    ];
 
     protected $table = 'users';
 
@@ -60,7 +60,7 @@ class User extends Authenticatable
     ];
 
 
-    function isAdmin(){ 
+    function isAdmin(){
        return  $this->hasRole('admin');
     }
 
@@ -84,29 +84,29 @@ class User extends Authenticatable
 
     function getJobSeekers( $request, $user ){
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
-        
+
         if(!empty($block)){
             $data = $this->with('profileImage')->where('type','user')->whereNotIn('id', $block);
         }else{
             $data = $this->with('profileImage')->where('type','user');
         }
 
-       
-        // Filter by salaryRange. 
-        if (isset($request->filter_salary) && !empty($request->filter_salary)){ 
-            $data->where('salaryRange', '>=', $request->filter_salary); 
+
+        // Filter by salaryRange.
+        if (isset($request->filter_salary) && !empty($request->filter_salary)){
+            $data->where('salaryRange', '>=', $request->filter_salary);
         }
 
-        // Filter by google map location radius. 
-        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){  
+        // Filter by google map location radius.
+        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
             if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
                 $data =  $this->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
             }
         }
-         
+
         // DB::enableQueryLog();
 
-        // print_r( $data->toSql() );exit; 
+        // print_r( $data->toSql() );exit;
 
        // $data =  $data->paginate(2);
         return $data;
@@ -114,28 +114,28 @@ class User extends Authenticatable
 
 				function getJobSeekersm( $request, $user ){
 					$block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
-					
+
 					if(!empty($block)){
 									$data = $this->with('profileImage')->where('type','user')->whereNotIn('id', $block);
 					}else{
 									$data = $this->with('profileImage')->where('type','user');
 					}
 
-				
-					// Filter by salaryRange. 
-					if (isset($request->filter_salary) && !empty($request->filter_salary)){ 
-									$data->where('salaryRange', '>=', $request->filter_salary); 
+
+					// Filter by salaryRange.
+					if (isset($request->filter_salary) && !empty($request->filter_salary)){
+									$data->where('salaryRange', '>=', $request->filter_salary);
 					}
 
-					// Filter by google map location radius. 
-					if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){  
+					// Filter by google map location radius.
+					if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
 									if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
 													$data =  $this->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
 									}
 					}
-						
+
 					// DB::enableQueryLog();
-					// print_r( $data->toSql() );exit; 
+					// print_r( $data->toSql() );exit;
 					$data =  $data->paginate(2);
 					return $data;
 		}
@@ -146,19 +146,19 @@ class User extends Authenticatable
      * using eloquent approach, make sure to replace the "Restaurant" with your actual model name
      * replace 6371000 with 6371 for kilometer and 3956 for miles
      */
- 
 
 
-        
+
+
         $query = $query->selectRaw("*,
-                     ( 6371 * acos( cos(radians('".$latitude."'')) 
+                     ( 6371 * acos( cos(radians('".$latitude."''))
                      * cos( radians(location_lat))
-                     * cos( radians(location_long) - radians('".$longitude."'')) 
-                     + sin( radians('".$latitude."'')) 
+                     * cos( radians(location_long) - radians('".$longitude."''))
+                     + sin( radians('".$latitude."''))
                      * sin( radians( location_lat )))
                      ) AS distance")
         ->having("distance", "<", $radius)
-        ->orderBy("distance",'asc'); 
+        ->orderBy("distance",'asc');
 
         return $query;
 
@@ -200,10 +200,10 @@ class User extends Authenticatable
         return $this->hasOne('App\UserGallery','user_id')->where('status',1)->where('profile',1);
         // return $this->hasMany('App\UserGallery','user_id'); //->limit(1);
     }
-    
 
-    function Gallery(){ 
-        return $this->hasMany('App\UserGallery','user_id');  
+
+    function Gallery(){
+        return $this->hasMany('App\UserGallery','user_id');
     }
 
 
@@ -242,14 +242,14 @@ class User extends Authenticatable
 									$query = $this::with('profileImage')->where('type','employer');
 					}
 
-					
+
 					if(varExist('filter_keyword', $request)){
 						$keyword = my_sanitize_string($request->filter_keyword);
 						$query = $query->where(function($q) use($keyword) {
 																		$q->where('name','LIKE', "%{$keyword}%")
 																		->orWhere('about_me','LIKE', "%{$keyword}%")
-																		->orWhere('interested_in','LIKE', "%{$keyword}%"); 
-										}); 
+																		->orWhere('interested_in','LIKE', "%{$keyword}%");
+										});
 					}
 
 					if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
@@ -272,7 +272,7 @@ class User extends Authenticatable
 
 						}
 				}
-				
+
 					$industries = $request->filter_industry;
 					$industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
 				  //Filter by industry status.
@@ -287,8 +287,8 @@ class User extends Authenticatable
 											}
 							});
 			}
-				
-			
+
+
 				$filter_by_questions_status = (isset($request->filter_by_questions) && !empty($request->filter_by_questions == 'on'))?true:false;
 				// // Filter by Question
 				if($filter_by_questions_status){
@@ -299,8 +299,8 @@ class User extends Authenticatable
 					}
 				}
 						// //	dd($request->filter_keyword);
-					
-						
+
+
 					return $query->paginate(2);
 	}
 
@@ -313,6 +313,16 @@ class User extends Authenticatable
     function qualificationRelation(){
         // return $this->hasMany('App\UserTags','user_id');
         return $this->belongsToMany('App\Qualification', 'user_qualifications','user_id','qualification_id');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany('App\User');
+    }
+
+    public function employers()
+    {
+        return $this->belongsToMany('App\User');
     }
 
 }

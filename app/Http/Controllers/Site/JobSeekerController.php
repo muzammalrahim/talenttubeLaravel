@@ -190,7 +190,7 @@ class JobSeekerController extends Controller {
         // $jobs                = Jobs::where('user_id',$employerId)->get();
         $galleries    = UserGallery::Public()->Active()->where('user_id',$jobSeekerId)->get();
         $videos      = Video::where('user_id', $jobSeekerId)->get();
-
+									
         $data['title']          = 'JobSeeker Info';
         $data['classes_body']   = 'jobSeekerInfo';
         $data['jobSeeker']       = $jobSeeker;

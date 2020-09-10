@@ -654,6 +654,22 @@ function generateVideoThumbs($video){
    return $html;
 }
 
+function generateVideoThumbsm($video){
+        $html = '<img class="img-fluid z-depth-1" alt="video" data-toggle="modal"';
+        $html .= 'data-target="#modal'.$video->id.'"';
+        if (!empty($video->thumbs)){
+            // $html .= ' src="'.$video->thumbs[0].'"  ';
+            $vBasePath  = ($video->status == 2)?('media/private/'):('media/public/');
+            $vBasePath .= $video->user_id.'/videos/thumbs/'.$video->id.'/';
+            $vPath      = $vBasePath.$video->thumbs[0];
+            $html .= ' src="'.asset($vPath).'"';
+
+
+        }
+    $html .= '/>';
+    return $html;
+}
+
 
 function assetVideo($video){
     // $vPath  = ($video->status == 2)?('media/private/'):('media/public/');

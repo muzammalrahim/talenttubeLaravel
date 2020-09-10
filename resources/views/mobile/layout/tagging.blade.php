@@ -7,28 +7,29 @@
 				<ul>
 					@if (isset($userTags))
 							@foreach($userTags as $uTags)
-								<li class="tag tagItem" data-id="{{$uTags->id}}"><i class="tagIcon fab fa-accusoft"></i>{{$uTags->title}}</li>
+								<li class="tag tagItem" data-id="{{$uTags->id}}">asd<i class="tagIcon fab fa-accusoft"></i>{{$uTags->title}}</li>
 							@endforeach
 					@endif
 				</ul>
 			</div>
 		</div>
 	</div>
-	
+
 <div class="col-sm-12 mb-3">
 	<div class="newTag" id="newTag">
 		<p class="m-0">Add more interests here!</p>
 		<div class="newTagInput relative">
 			<div class="col-auto">
 				<!-- Material input -->
-				<div class="md-form">
+				<div class="md-form form-inline">
 						<input type="text" name="newTag" value="" class="form-control mb-2" id="inlineFormInputMD" placeholder="Add New Tag">
-						<label class="sr-only" for="inlineFormInputMD">Name</label>
+                        <label class="sr-only" for="inlineFormInputMD">Name</label>
+
+                            <button id="addNewTag" class="btn btn-success btn-sm ml-5 mb-0" data-toggle="modal" data-target="#addNewTagModal">Add New</button>
+
 				</div>
 				</div>
-				<div class="col-auto text-center">
-					<button id="addNewTag" class="btn btn-success mb-0" data-toggle="modal" data-target="#addNewTagModal">Add New</button>
-			</div>
+
 			<div class="col-auto">
 				<div class="tagSuggestionCont" style="display: none;">
 					<ul class="tagSuggestion">
@@ -76,7 +77,7 @@
 				</div>
 				{{-- <a class="loadMoreTags">More interests  <i class="tagIcon fa fa-redo"></i></a> --}}
 			</div>
-		
+
 		</div>
 	</div>
 
@@ -132,7 +133,7 @@
 										<span class="form_label">Icon :</span>
 										<div class="form_input">
 												<select name="newTagIcon" class="">
-													@php 
+													@php
 														$fa_list = getFontAwesomeIconList();
 													@endphp
 													@if(!empty($fa_list))
@@ -144,7 +145,7 @@
 											<div id="newTagIcon_error" class="error field_error to_hide">&nbsp;</div>
 										</div>
 								</div> --}}
-								
+
 							</div>
 						</div>
 

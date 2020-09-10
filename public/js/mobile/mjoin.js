@@ -63,7 +63,7 @@ var profile_img_selected = false;
 								}
 							});
 						} else {
-							$.post(base_url+'/register', formData, 
+							$.post(base_url+'/register', formData,
 							function(data){
 								console.log('register data', data);
 								if(!data.status){
@@ -202,7 +202,7 @@ $(document).ready(function(){
 
 				$('#about_me_error,#interested_in_error,.part_photo .name_info,#recentJob_error').addClass('to_hide');
 				$('#about_me,#interested_in,.upload_file,#recentJob').removeClass('validation_error');
-				
+
 				//validation
 				var s3_validation = true;
 				var about_me = $.trim($('#about_me').val());
@@ -344,9 +344,10 @@ $(document).ready(function(){
      userStep2Update(step6_formData, 6);
 				});
 			// User Step6 End
-			
+
 			// User Step7 Start
 			$('#photo_add_video').on('click', function(){
+
 				var input = document.createElement('input');
 				input.type = 'file';
 				input.onchange = e => {
@@ -366,7 +367,7 @@ $(document).ready(function(){
 					video_item  +=  '</span>';
 					video_item  +=  '<div class="v_error error hide_it"></div>';
 					video_item  +=  '<div class="v_progress"></div>';
-					video_item  += '</div>';
+                    video_item  += '</div>';
 					$('.list_videos').append(video_item);
 					var updateForm = document.querySelector('form');
 					$.ajaxSetup({
@@ -378,7 +379,7 @@ $(document).ready(function(){
 					request.upload.addEventListener('progress', function(e){
 						var percent = Math.round((e.loaded / e.total) * 100);
 						console.log(' progress-bar ', percent+'%' );
-						$('#v_'+item_id+' .v_progress').css('width', percent+'%');
+                        $('#v_'+item_id+' .v_progress').css('width', percent+'%');
 					}, false);
 					request.addEventListener('load', function(e){
 						console.log(' load e ', e);
@@ -386,7 +387,7 @@ $(document).ready(function(){
 						console.log(' jsonResponse ', resp);
 						$('#v_'+item_id+' .v_progress').remove();
 						if (resp.status == 1) {
-							$('#v_'+item_id).replaceWith(res.html);
+							$('#v_'+item_id).replaceWith(resp.html);
 						} else {
 							console.log(' video error ');
 							if (resp.validator != undefined) {
@@ -406,6 +407,7 @@ $(document).ready(function(){
 
 			// User Step8 Start
 			$('.submit-document').on('submit', function(e){
+
 				e.preventDefault();
 				var formData = new FormData(this);
 				console.log(formData);
@@ -413,7 +415,7 @@ $(document).ready(function(){
 				jQuery.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 				jQuery.ajax({
 					type: 'POST',
-					url: '/m/ajax/userUploadResume',
+					url: './ajax/userUploadResume',
 					data: formData,
 					cache:false,
 					contentType: false,
@@ -466,7 +468,7 @@ $(document).ready(function(){
 			// User Step8 End
 
 			// User Step9 Start
-			
+
 			// tagging system Script
 			$('#tagCategory').on('change', function(){
 				jQuery('.tagListCont .tagListBox').html('');
@@ -527,7 +529,7 @@ $(document).ready(function(){
 			}
 
 			jQuery.ajax({
-							url: base_url+"/m/ajax/searchTags",
+							url: base_url+"./m/ajax/searchTags",
 							type:"GET",
 							data:{'search':query, 'exclude': userSelectedTagsList},
 							success:function (resp) {

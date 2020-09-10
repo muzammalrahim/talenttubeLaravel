@@ -1,21 +1,21 @@
 var CProfile = function() {
 
     var $this=this;
-    var pp_profile_edit_main=$jq('#pp_profile_main_editor');
+    var pp_profile_edit_main=$('#pp_profile_main_editor');
     // var $userProfileEditPopup=$('#pp_profile_main_editor').modalPopup({shClass: ''});
     var userProfileEditPopup;
     var hideErrortListner = false;
 
     /* Edit looking for */
     /* Edit main */
-    this.showMainEditor = function(){ 
-        console.log(' showMainEditor '); 
+    this.showMainEditor = function(){
+        console.log(' showMainEditor ');
 
         this.userProfileEditPopup = $('#pp_profile_main_editor').modalPopup({shClass: ''});
         this.userProfileEditPopup.open();
         this.initlizeLocationMap();
 
-         console.log(' showMainEditor ', this.userProfileEditPopup); 
+         console.log(' showMainEditor ', this.userProfileEditPopup);
 
         if(!this.hideErrortListner){
             this.hideErrortListner = true;
@@ -168,7 +168,7 @@ var CProfile = function() {
             }
         });
     }
-    
+
     this.enableStatusTextEdit = function(){
         $('.statusText').addClass('hide_it');
         $('#statusText').removeClass('hide_it');
@@ -199,7 +199,7 @@ var CProfile = function() {
 
 
 
- 
+
 
 // ======================== Edit Salary Range ========================
 
@@ -209,7 +209,7 @@ var CProfile = function() {
         // console.log(salaryRangeField);
         $('.salaryRangeValue').removeClass('hide_it').text(salaryRangeField);
         $('#salaryRangeFieldnew').addClass('hide_it');
-        
+
 
            $.ajaxSetup({
             headers: {
@@ -236,9 +236,9 @@ var CProfile = function() {
         // console.log(abc);
     }
 
-// ======================== Edit Salary Range End Here ======================== 
+// ======================== Edit Salary Range End Here ========================
 
-// ======================== Edit Qualification ======================== 
+// ======================== Edit Qualification ========================
 
     this.updateQualifications = function(){
 
@@ -247,7 +247,7 @@ var CProfile = function() {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get(); 
+        var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get();
 
         $('.SaveQualification').after(getLoader('smallSpinner SaveQualificationSpinner'));
 
@@ -259,7 +259,7 @@ var CProfile = function() {
                 if(resp.status){
                     $('.SaveQualificationSpinner').remove();
                     $('.jobSeekerQualificationList').html(resp.data);
-                    $('.qualificationBox').removeClass('editQualif'); 
+                    $('.qualificationBox').removeClass('editQualif');
                     $('.QualifAlert').show().delay(3000).fadeOut('slow');
                     $('.userQualification').hide();
                     $('.removeQualification').hide();
@@ -269,7 +269,7 @@ var CProfile = function() {
 }
 
 
-// ======================== End Qualification end here ======================== 
+// ======================== End Qualification end here ========================
 
 // ======================== Edit Industry Experience ========================
 
@@ -279,7 +279,7 @@ this.updateIndustryExperience = function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        var industry_experience = jQuery('.industry_experience').map(function(){ return $(this).val()}).get(); 
+        var industry_experience = jQuery('.industry_experience').map(function(){ return $(this).val()}).get();
          $('.SaveindustryExperience').after(getLoader('smallSpinner SaveIndustrySpinner'));
         $.ajax({
             type: 'POST',
@@ -287,28 +287,28 @@ this.updateIndustryExperience = function(){
             data: {'industry_experience': industry_experience},
             success: function(resp){
                 if(resp.status){
-                    $('.IndusListBox').removeClass('edit'); 
+                    $('.IndusListBox').removeClass('edit');
                     $('.IndusAlert').show().delay(3000).fadeOut('slow');
-                    $('.SaveIndustrySpinner').remove(); 
-                    $('.IndusList').html(resp.data); 
+                    $('.SaveIndustrySpinner').remove();
+                    $('.IndusList').html(resp.data);
 
                     }
             }
     });
  }
 
-// ======================== Edit Industry Experience End Here ======================== 
+// ======================== Edit Industry Experience End Here ========================
 
 //  ======================================= Edit User Questions Start =======================================
 
     this.updateQuestions = function(){
-        var items = {}; 
-        $('select.jobSeekerRegQuestion').each(function(index,el){  
-        // console.log(index, $(el).attr('name')  , $(el).val()   );  
+        var items = {};
+        $('select.jobSeekerRegQuestion').each(function(index,el){
+        // console.log(index, $(el).attr('name')  , $(el).val()   );
             // items.push({name:  $(el).attr('name') , value: $(el).val()});
-            var elem_name = $(el).attr('name'); 
-            var elem_val = $(el).val(); 
-            items[elem_name] = elem_val; 
+            var elem_name = $(el).attr('name');
+            var elem_val = $(el).val();
+            items[elem_name] = elem_val;
             // items.push({elem_name : elem_val });
         });
          $.ajaxSetup({
@@ -321,16 +321,16 @@ this.updateIndustryExperience = function(){
             type: 'POST',
             url: base_url+'/ajax/updateQuestions',
             data: {'questions': items},
-            
+
             success: function(data){
                     $('.questionsAlert').show().delay(3000).fadeOut('slow');
-                    $('.saveQuestionsButton').hide(); 
+                    $('.saveQuestionsButton').hide();
                     $('.jobSeekerRegQuestion').addClass('hide_it');
                     $('.QuestionsKeyPTag').removeClass('hide_it');
                     if(data){
                         // $(".questionsOfUser").load(" .questionsOfUser");
                         $(".SaveQuestionsSpinner").remove();
-                       
+
                 }
             }
         });
@@ -342,13 +342,13 @@ this.updateIndustryExperience = function(){
 //  ======================================= Edit Employer Questions Start =======================================
 
     this.updateEmployerQuestions = function(){
-        var items = {}; 
-        $('select.EmployerRegQuestion').each(function(index,el){  
-        // console.log(index, $(el).attr('name')  , $(el).val()   );  
+        var items = {};
+        $('select.EmployerRegQuestion').each(function(index,el){
+        // console.log(index, $(el).attr('name')  , $(el).val()   );
             // items.push({name:  $(el).attr('name') , value: $(el).val()});
-            var elem_name = $(el).attr('name'); 
-            var elem_val = $(el).val(); 
-            items[elem_name] = elem_val; 
+            var elem_name = $(el).attr('name');
+            var elem_val = $(el).val();
+            items[elem_name] = elem_val;
             // items.push({elem_name : elem_val });
         });
          $.ajaxSetup({
@@ -361,21 +361,21 @@ this.updateIndustryExperience = function(){
             type: 'POST',
             url: base_url+'/ajax/updateEmployerQuestions',
             data: {'questions': items},
-            
+
             success: function(resp){
                     // $('.EmployerQuestionsAlert').removeClass('hide_it').delay(3000).fadeOut('slow');
                     $('.hide_it2').show().delay(3000).fadeOut('slow');
 
-                    $('.saveEmployerQuestionsButton').hide(); 
+                    $('.saveEmployerQuestionsButton').hide();
                     $('.EmployerRegQuestion').addClass('hide_it');
                     $('.employerQuestionsPtag').removeClass('hide_it');
 
                     if(resp.status){
                         $(".SaveEmployerQuestionsSpinner").remove();
-                        $('.EmpQuestionList').html(); 
+                        $('.EmpQuestionList').html();
                         $(".employerRegisterQuestions").load(true);
 
-                       
+
                 }
             }
 
@@ -682,9 +682,9 @@ this.updateIndustryExperience = function(){
 
 
     this.showVideoModal = function(video_url){
-							
-							
-        console.log(' showVideoModal ', video_url);
+
+
+        console.log(' showVideoModal Ali ', video_url);
         var videoElem  = '<video id="player" controls>';
         videoElem     += '<source src="'+video_url+'" type="video/mp4">';
         videoElem     += '</video>';
@@ -694,31 +694,31 @@ this.updateIndustryExperience = function(){
             fadeDelay: 2.5,
             escapeClose: false,
             clickClose: false,
-								}); 
-								
+								});
+
 
 								$('#videoShowModal').on($.modal.CLOSE, function(event, modal) {
 									$(this).find(".videoBox video").remove();
 							});
-      
+
     }
 
 
 
     this.initlizeLocationMap = function(){
 
-    
+
             var input = document.getElementById('location_search');
             var autocomplete = new google.maps.places.Autocomplete(input);
             // var service = new google.maps.places.AutocompleteService();
             var geocoder = new google.maps.Geocoder();
             var hasLocation = false;
-            var user_lat  = (jQuery('#location_lat').val() != '')?(jQuery('#location_lat').val()):'-31.2532183'; 
-            var user_long = (jQuery('#location_long').val() != '')?(jQuery('#location_long').val()):'146.921099'; 
- 
+            var user_lat  = (jQuery('#location_lat').val() != '')?(jQuery('#location_lat').val()):'-31.2532183';
+            var user_long = (jQuery('#location_long').val() != '')?(jQuery('#location_long').val()):'146.921099';
+
             var latlng = new google.maps.LatLng(user_lat,user_long);
             var marker = "";
-           
+
             var options = {
                 zoom: 14,
                 center: latlng,
@@ -730,13 +730,13 @@ this.updateIndustryExperience = function(){
                 autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
                 if(!hasLocation) { map.setZoom(14); }
 
-                // add listner on map, when click on map change the latlong and put a marker over there. 
-                google.maps.event.addListener(map, "click", function(event) { 
-                    console.log(' addListener click  '); 
-                    reverseGeocode(event.latLng); 
+                // add listner on map, when click on map change the latlong and put a marker over there.
+                google.maps.event.addListener(map, "click", function(event) {
+                    console.log(' addListener click  ');
+                    reverseGeocode(event.latLng);
                 })
 
-                // get the location (city,state,country) on base of text enter in search. 
+                // get the location (city,state,country) on base of text enter in search.
                 jQuery("#location_search_load").click(function() {
                     if(jQuery("#location_search").val() != "") {
                         geocode(jQuery("#location_search").val());
@@ -752,10 +752,10 @@ this.updateIndustryExperience = function(){
                         jQuery("#location_search_load").click();
                 })
 
-                // when click on the Autocomplete suggested locations list 
+                // when click on the Autocomplete suggested locations list
                 autocomplete.addListener('place_changed', function() {
-                     console.log(' autocomplete place_changed '); 
-                       
+                     console.log(' autocomplete place_changed ');
+
                       var place = autocomplete.getPlace();
                       console.log(' place ', place);
 
@@ -774,13 +774,13 @@ this.updateIndustryExperience = function(){
                         map.setZoom(14);  // Why 14? Because it looks good.
                       }
 
-                        var address, city, country, state; 
+                        var address, city, country, state;
                         var address_components = place.address_components;
                         for ( var j in address_components ) {
                             var types = address_components[j]["types"];
                             var long_name = address_components[j]["long_name"];
-                            var short_name = address_components[j]["short_name"];  
-                            // console.log(' address_components ', address_components); 
+                            var short_name = address_components[j]["short_name"];
+                            // console.log(' address_components ', address_components);
                             if ( jQuery.inArray("locality", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                                 city = long_name;
                             }
@@ -791,7 +791,7 @@ this.updateIndustryExperience = function(){
                                 country = long_name;
                             }
                         }
-                    
+
                         if((city) && (state) && (country))
                             address = city + ", " + state + ", " + country;
                         else if((city) && (state))
@@ -804,18 +804,18 @@ this.updateIndustryExperience = function(){
                          if((place) && (place.name))
                             address = place.name + ',' + address;
 
-                            // console.log(' reverseGeocode place ', place); 
-                            // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country ); 
+                            // console.log(' reverseGeocode place ', place);
+                            // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
                             updateLocationInputs(place.name,city,state,country);
                             jQuery("#location_search").val(address);
                             placeMarker(place.geometry.location);
                     });
 
                 }
-                // location_map length. 
+                // location_map length.
 
             function placeMarker(location) {
-                console.log(' placeMarker location ',location); 
+                console.log(' placeMarker location ',location);
 
                 if (marker == "") {
                     marker = new google.maps.Marker({
@@ -860,7 +860,7 @@ this.updateIndustryExperience = function(){
             }
 
             function reverseGeocode(location) {
-                // console.log(' reverseGeocode ', location); 
+                // console.log(' reverseGeocode ', location);
                 if (geocoder) {
                     geocoder.geocode({"latLng": location}, function(results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
@@ -871,7 +871,7 @@ this.updateIndustryExperience = function(){
                                     var types = address_components[j]["types"];
                                     var long_name = address_components[j]["long_name"];
                                     var short_name = address_components[j]["short_name"];
-                                        
+
                                     if ( jQuery.inArray("locality", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                                         city = long_name;
                                     }
@@ -892,8 +892,8 @@ this.updateIndustryExperience = function(){
                             else if(country)
                                 address = country;
 
-                            // console.log(' reverseGeocode results ', results); 
-                            // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country ); 
+                            // console.log(' reverseGeocode results ', results);
+                            // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
                             updateLocationInputs('',city,state,country);
                             jQuery("#location_search").val(address);
                             placeMarker(location);
@@ -912,12 +912,12 @@ this.updateIndustryExperience = function(){
 
             }
 
-            // by default show this location; 
-            var location_search = jQuery('#location_search').val(); 
-            geocode(location_search); 
-            console.log(' location_search ', location_search); 
+            // by default show this location;
+            var location_search = jQuery('#location_search').val();
+            geocode(location_search);
+            console.log(' location_search ', location_search);
 
-    
+
     }
 
 }
@@ -1130,23 +1130,23 @@ $(document).ready(function() {
     }));
 
 
-   
+
 
     // var vloop = null;
-    // var num = 0; 
+    // var num = 0;
     // $('.item.item_video').on('mouseenter', function(){
-    //     console.log(' mouseover '); 
-    //     var video_thumb = $(this).find('img'); 
+    //     console.log(' mouseover ');
+    //     var video_thumb = $(this).find('img');
     //      vloop = setInterval(function() {
     //         // loop - one, two, trÃ­
-    //          console.log(' change video image  ', num); 
+    //          console.log(' change video image  ', num);
     //         if(num == 3) {
     //             num = 1;
     //         } else {
     //             num++;
     //         }
-            
-    //         console.log(' video_thumb ', video_thumb); 
+
+    //         console.log(' video_thumb ', video_thumb);
 
     //         video_thumb.attr('src', video_thumb.attr('data-thumb'+num));
     //         // set the image source on the element
@@ -1156,12 +1156,12 @@ $(document).ready(function() {
 
 
     // }).on('mouseleave',function(){
-    //     console.log(' mouseout >>  '); 
+    //     console.log(' mouseout >>  ');
     //     clearInterval(vloop);
     // });
 
 
- 
+
 
 
 
