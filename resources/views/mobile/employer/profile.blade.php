@@ -10,7 +10,12 @@
 
     <div class="card-body p-2 cardBody">
     <div id="over" style="/*position:absolute; */width:auto; height:150px">
-      <img src="https://p16-tiktokcdn-com.akamaized.net/aweme/720x720/tiktok-obj/1646491669975042.jpeg">
+
+      {{-- <img src="https://p16-tiktokcdn-com.akamaized.net/aweme/720x720/tiktok-obj/1646491669975042.jpeg"> --}}
+        <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+            <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
+        </a>
+        
     </div>
 
     <div class="personalInfo">{{$user->name}} {{$user->surname}}</div>
@@ -101,16 +106,15 @@
             <p class="loader SaveQuestionsLoader"style="float: left;"></p>
               <div class="cl"></div>
                 <div class="questionsOfUser">
-            
                     @php  
                         $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
                     @endphp
                       @if(!empty($empquestion))
                           @foreach($empquestion as $qk => $question)
                             <div>
-                              <p>{{$question}} </p>
-                               <p class="QuestionsKeyPTag"><b>{{$userQuestions[$qk]}}</b></p>
-                                <select name="{{$qk}}" class="jobSeekerRegQuestion custom-select custom-select hideme mb-2">
+                              <p class="mb-1">{{$question}} </p>
+                               <p class="QuestionsKeyPTag mb-1"><b>{{$userQuestions[$qk]}}</b></p>
+                                <select name="{{$qk}}" class="jobSeekerRegQuestion custom-select custom-select hideme mb-2 d-none">
                                     <option value="yes"
                                     {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
                                     >Yes</option>
@@ -125,8 +129,6 @@
                               <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
                           </div>  
                 </div>
-
-
             <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
               <strong>Success!</strong> Questions have been updated successfully!
             </div>
@@ -142,6 +144,9 @@
 @section('custom_footer_css')
 <style type="text/css">
 
+p,span{
+    font-size: 12px;
+}
 
 </style>
 @stop
@@ -242,6 +247,9 @@ $(".saveAboutMeButton").click(function(){
      $('.hideme').show();
      $('.saveQuestionsButton').removeClass('d-none');
      $('.QuestionsKeyPTag').addClass('d-none');
+     $('.jobSeekerRegQuestion').removeClass('d-none');
+
+
 });
 //================================================ Employer Questions Editing end here ================================================
 

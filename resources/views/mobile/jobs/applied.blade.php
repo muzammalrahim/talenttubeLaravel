@@ -90,7 +90,14 @@
                     <div class="col"><span>Submitted</span><br>
                         {{$application->created_at->format('yy-m-d')}}
                     </div>
-                    <button class="btn btn-sm btn-danger confirmJobAppRemoval redbtn jbtn mr-3" data-jobid="{{$application->id}}">Remove</button>
+                    <a class="btn btn-sm btn-danger confirmJobAppRemoval redbtn jbtn mr-3" data-jobid="{{$application->id}}" data-toggle="modal" data-target="#deleteJobAppPopup" >Remove</a>
+
+
+               {{--      <div class="float-right">
+                        <a class="btn btn-sm btn-primary mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
+                    </div> --}}
+
+
                 </div>
             </div>
 
@@ -123,6 +130,34 @@
 
 @section('custom_js')
 
+
+<script type="text/javascript">
+
+    $('.confirmJobAppRemoval').on('click',function(){
+        var job_id = $(this).attr('data-jobid');
+        console.log(' confirmJobAppRemoval click  job_id ', job_id, $(this) );
+        $('#deleteConfirmJobAppId').val(job_id);
+    });
+    $(document).on('click','.confirm_jobAppDelete_ok',function(){
+        $('.confirmJobAppDeleteModal').addClass('showLoader');
+        var job_app_id = $('#deleteConfirmJobAppId').val();
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/m/ajax/MdeleteJobApplication/'+job_app_id,
+            success: function(data){
+                $('.confirmJobAppDeleteModal').removeClass('showLoader').addClass('showMessage');
+                if( data.status == 1 ){
+                    $('.confirmJobAppDeleteModal .apiMessage').html(data.message);
+                    $('.jobApp_'+job_app_id).remove();
+                }else{
+                    $('.confirmJobAppDeleteModal .apiMessage').html(data.error);
+                }
+            }
+        });
+    });
+
+</script>
 
 @stop
 

@@ -59,7 +59,7 @@ class JobSeekerController extends Controller {
 
 					$data['likeUsers'] = $likeUsers;
 				 $data['employers'] = $jobSeekers;
-					return view('site.user.employerslist', $data);
+					return view('site.user.employerslist', $data);     //  site/user/employerslist
 				}
 
 
@@ -198,6 +198,8 @@ class JobSeekerController extends Controller {
         // $data['jobs']           = $jobs;
         $data['galleries']        = $galleries;
         $data['videos']          = $videos;
+        $data['qualificationList'] = getQualificationsList();
+        
 
         return view('site.user.jobSeekerInfo', $data);      //  site/user/jobSeekerInfo
     }

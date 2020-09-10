@@ -1,6 +1,6 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('mobile.user.usermaster')
-@section('content')
+@section('content') 
 
  
 
@@ -10,15 +10,22 @@
 
 	  <div class="card-body p-2 cardBody">
 		<div id="over" style="/*position:absolute; */width:auto; height:150px">
-		  <img src="https://p16-tiktokcdn-com.akamaized.net/aweme/720x720/tiktok-obj/1646491669975042.jpeg">
+
+        {{-- @dump($profile_image) --}}
+            <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+            <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
+            </a>
+            
 		</div>
 
-		<div class="personalInfo">{{$user->name}} {{$user->surname}}</div>
-		<div class="personalInfo"><b>Email:</b> {{$user->email}}</div>
-		<div class="personalInfo"><b>Phone:</b> {{$user->phone}}</div>
-		<div class="personalInfo"><b>Location: </b>{{$user->location}}</div>
+            
+            {{-- <div class="personalInfoDiv"> --}}
+        		<div class="personalInfo mt-2"> <h6 class="m-0 font-weight-bold">{{$user->name}} {{$user->surname}}</h6></div>
+        		<div class="personalInfo"> <b>Email:</b>     <span class="m-0">{{$user->email}}</span></div>
+        		<div class="personalInfo"> <b>Phone:</b>     <span class="m-0">{{$user->phone}}</span></div>
+        		<div class="personalInfo"> <b>Location: </b> <span class="m-0 mb-1">{{$user->location}}</span></div>
+            {{-- </div> --}}
 
-        {{-- Interested In --}}
 		<div class="aboutMeSection"><b>Interested In: </b>
             <div class="spinner-border spinner-border-sm text-primary IntsdInLoader ml-2" role="status" style="display:none;"></div>
             <i class="fas fa-edit float-right intInSecButton"></i> <p class="interestedInSec">{{$user->interested_in}}</p>
@@ -68,6 +75,11 @@
 	      
 		        <div class="jobSeekerQualificationList">
 
+                    <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet mr-2"></i>
+                        <span class="ml-1">Type:</span>
+                            <span class="qualifTypeSpan">{{$user->qualificationType}}</span>
+                        </div>
+
 		        	{{-- @php
 					  $qualificationsData =  ($user->qualification)?(getQualificationsData($user->qualification)):(array());
 					@endphp
@@ -81,7 +93,7 @@
 					 @endif  --}}
 
                     @include('mobile.layout.parts.jobSeekerQualificationList')
-
+                    {{-- mobile/layout/parts/jobSeekerQualificationList --}}
 
 		        </div>  
 	    	</div>
@@ -116,9 +128,10 @@
 						    @foreach($user->industry_experience as  $industry )
 						    	<div class="IndustrySelect">
 						              <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
-						              <p>
+						              <p class="mb-1"> 
+                                        <i class="fas fa-angle-right mr-2"></i> 
 						              	{{getIndustryName($industry)}}
-						              	<i class="fa fa-trash removeIndustry float-right hide_it2"></i></p>
+						              	<i class="fa fa-trash removeIndustry float-right hide_it2 float-right"></i></p>
 						        </div>
 						    @endforeach
 						@endif  
@@ -152,8 +165,8 @@
                       @if(!empty($userquestion))
                           @foreach($userquestion as $qk => $question)
                             <div>
-                              <p>{{$question}} </p>
-                               <p class="QuestionsKeyPTag"><b>{{$userQuestions[$qk]}}</b></p>
+                              <p class="mb-1">{{$question}} </p>
+                               <p class="QuestionsKeyPTag mb-1"><b>{{$userQuestions[$qk]}}</b></p>
                                 <select name="{{$qk}}" class="jobSeekerRegQuestion custom-select custom-select mb-2 d-none">
                                     <option value="yes"
                                     {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
@@ -184,6 +197,21 @@
 
 @section('custom_footer_css')
 <style type="text/css">
+
+
+.qualifType{
+    /*margin-left: 10px;*/
+    font-size: 12px;
+}
+.qualifTypeSpan{   
+    text-transform: capitalize;
+    font-weight: bold;
+}
+p,span{
+    font-size: 12px;
+}
+
+
 
 
 </style>

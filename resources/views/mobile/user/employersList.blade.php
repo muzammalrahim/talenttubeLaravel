@@ -1,19 +1,10 @@
  
 @if(isset($employers))
- 
 
-<div class="alert alert-success empLikeAlert" role="alert" style="display:none;">
-          <strong>Success!</strong> You have successfully liked this Employer!
-</div>
-
-<div class="alert alert-success empBlockAlert" role="alert" style="display:none;">
-          <strong>Success!</strong> You have Blocked Employer successfully!
-</div>
- 
 @if ($employers->count() > 0)
 @foreach ($employers as $js)
 
-    {{-- @dump($job->jobEmployer->name) --}}
+    {{-- @dump($profile_image) --}}
 
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 
@@ -32,7 +23,13 @@
                 <div class="row jobInfo">
                    
                     <div class="col-4 p-0">
-                        <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px">
+
+
+                   {{--      <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+                            <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
+                        </a> --}}
+
+
                     </div>
 
                     <div class="col p-0 pl-3">
@@ -84,11 +81,16 @@
             <div class="card-footer text-muted jobAppFooter p-1">
 
                     <div class="float-right">
-                        <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs"href="{{route('MemployerInfo', ['id' => $js->id])}}">Detail</a>
-                        <a class="btn btn-sm btn-primary mr-0 btn-xs blockEmployerButton" data-jsid ="{{$js->id}}">Block</a>
+                        <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MemployerInfo', ['id' => $js->id])}}">Detail</a>
+                        <a class="btn btn-sm btn-danger mr-0 btn-xs blockEmployerButton" data-jsid ="{{$js->id}}">Block</a>
 
+                        @if (in_array($js->id,$likeUsers))
+
+                        <a class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
+                        @else
                         <a class="btn btn-sm btn-primary mr-0 btn-xs likeEmployerButton" data-jsid ="{{$js->id}}">Like</a>
 
+                        @endif
                     </div>
                     
             </div>
@@ -110,73 +112,32 @@
 
 <script type="text/javascript">
 
-{{-- ======================================================== Like Employer ======================================================== --}}
+$('.unlikeEmpButton').click(function(){
+        var btn = $(this);
+        var jobseeker_id = $(this).data('jsid');
+        $('#idEmpInModalHidden').val(jobseeker_id);
 
-$(document).on('click','.likeEmployerButton',function(){
-    var btn = $(this);
-    var jobseeker_id = $(this).data('jsid');
-    console.log(' likeEmployerButton jobseeker_id ', jobseeker_id);
-    // $(this).html(getLoader('blockJobSeekerLoader'));
-    // $(this).html('..');
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/m/ajax/MlikeEmployer/'+jobseeker_id,
-        success: function(data){
-            btn.prop('disabled',false);
-            if( data.status == 1 ){
-
-                $('.empLikeAlert').show().delay(3000).fadeOut('slow');
-                btn.html('Liked').addClass('active');
-                // location.reload();
-
-                // $(this)('.likeEmployerButton').attr("d-none");
-
-                // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-                // $('.likeEmployerButton').html("Liked");
-            }else{
-                btn.html('error');
-            }
-        }
     });
-});
 
-{{-- ======================================================== Like Employer End Here ======================================================== --}}
-
-{{-- ======================================================== Block Employer ======================================================== --}}
-
-$(document).on('click','.blockEmployerButton',function(){
-    var btn = $(this);
-    var employer_id = $(this).data('jsid');
-    console.log(' Employer  ', employer_id);
-    // $(this).html(getLoader('blockJobSeekerLoader'));
-    // $(this).html('..');
-
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/m/ajax/MblockEmployer/'+employer_id,
-        success: function(data){
-            btn.prop('disabled',false);
-            if( data.status == 1 ){
-
-                $('.empBlockAlert').show().delay(3000).fadeOut('slow');
-                btn.html('Blocked').addClass('active');
-                // location.reload();
-                
-
-                // $('You Have Block Employer Successfully').alert();
-                // $(this)('.likeEmployerButton').attr("d-none");
-                // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-                // $('.likeEmployerButton').html("Liked");
-            }else{
-                btn.html('error');
-            }
-        }
+    $('.confirmUnlikeEmployer').click(function(){
+        var btn = $(this);
+        var jobseeker_id = $(this).data('jsid');
+        var emp_id = $('#idEmpInModalHidden').val();
+        console.log(emp_id);
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.ajax({
+                type: 'POST',
+                url: base_url+'/m/ajax/MunLikeUser/'+emp_id,
+                data: {'id': emp_id},
+                success: function(data){
+                    if( data.status == 1 ){
+                        $('.empLikeAlert').show().delay(3000).fadeOut('slow');
+                        location.reload();
+                    }
+                }
+            });
     });
-});
-
-{{-- ======================================================== Block Employer End Here ======================================================== --}}
-
 
 </script>
+
+

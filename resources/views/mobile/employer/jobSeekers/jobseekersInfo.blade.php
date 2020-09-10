@@ -115,7 +115,17 @@ $js = $jobseeker;
                 <div class="float-right">
                 {{--     <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs"href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a> --}}
                     <a class="jsBlockButton btn btn-sm btn-danger mr-0 btn-xs" data-jsid ="{{$js->id}}">Block</a>
+                    {{-- <a class="jsLikeButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$js->id}}">Like</a> --}}
+
+
+                    @if (in_array($js->id,$likeUsers))
+                        <a class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
+                    @else
                     <a class="jsLikeButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$js->id}}">Like</a>
+                        
+                    @endif
+
+
                 </div>
         </div>
 
@@ -203,4 +213,45 @@ $js = $jobseeker;
   </div>
 </div>
 
+@stop
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script> 
+
+@section('custom_js')
+
+<script type="text/javascript">
+
+
+// =============================================== unLike Job Seeker in JS Detail Page ===============================================
+
+$('.unlikeEmpButton').click(function(){
+        var btn = $(this);
+        var jobseeker_id = $(this).data('jsid');
+        $('#idEmpInModalHidden').val(jobseeker_id);
+
+    });
+
+    $('.confirmUnlikeEmployer').click(function(){
+        var btn = $(this);
+        var jobseeker_id = $(this).data('jsid');
+        var emp_id = $('#idEmpInModalHidden').val();
+        console.log(emp_id);
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.ajax({
+                type: 'POST',
+                url: base_url+'/m/ajax/MunLikeUser/'+emp_id,
+                data: {'id': emp_id},
+                success: function(data){
+                    if( data.status == 1 ){
+                        $('.empLikeAlert').show().delay(3000).fadeOut('slow');
+                        location.reload(); 
+                    }
+                }
+            });
+    });
+
+// =============================================== unLike Job Seeker in JS Detail Page end ===============================================
+
+</script>
 @stop

@@ -74,7 +74,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	 // Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfoAjax')->name('MjobApplyInfoAjax');
 	 
 	 // Job Application Submission
-	 Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
+	 // Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
 
 	 // ================================================= Job Seeker =================================================
      Route::post('ajax/MupdateInterested_in', 'Mobile\MobileUserController@MupdateInterested_in')->name('MupdateInterested_in');
@@ -117,8 +117,12 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');
     Route::get('jobs', 'Site\SiteUserController@jobs')->name('mJobs');
     Route::get('jobSeekers',        'Site\EmployerController@jobSeekers')->name('mJobSeekers');
+    // ==================================== Delete Job from employer =====================================
+    Route::post('ajax/MdeleteJob/{id}', 'Mobile\MobileUserController@MdeleteJob')->name('MdeleteJob');
+    // Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
 
-
+    Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
+    Route::post('ajax/MdeleteJobApplication/{id}', 'Mobile\MobileUserController@MdeleteJobApplication')->name('MdeleteJobApplication');
  
  });
 
@@ -145,7 +149,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
 	});
 	
-	Route::post('ajax/userUploadResume', 'Mobile\MobileUserController@userUploadResume')->name('mUserUploadResume');
+	Route::post('ajax/MUserUploadResume', 'Mobile\MobileUserController@MUserUploadResume')->name('MUserUploadResume');
 
 	// Tags
 	Route::get('ajax/getTags/{category}/{offset?}', 'Site\SiteUserController@getTags');

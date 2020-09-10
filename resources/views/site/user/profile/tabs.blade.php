@@ -83,16 +83,18 @@
 {{-- ======================================== Qualification ======================================= --}}
 
                 
-                {{-- @dump($user->qualification) --}}
+                {{-- @dump($user->qualificationType) --}}
 <div class="bl qualificationBox">
             
     <div class="title qualificationList">
       <div id="basic" class="title_icon_edit">Qualification <i class="editQualification fas fa-edit "></i>
         </div><p class="loader SaveQualification"style="float: left;"></p>
         <div class="cl"></div>
-      
+        <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
+            <span class="qualifTypeSpan">{{$user->qualificationType}}</span>
+        </div>
         <div class="jobSeekerQualificationList">
-           @include('site.layout.parts.jobSeekerQualificationList')
+           @include('site.layout.parts.jobSeekerQualificationList')   {{--   site/layout/parts/jobSeekerQualificationList  --}}
         </div>  
     </div>
          <a class="addQualification btn btn-sm btn-primary text-white hide_it"style = "cursor:pointer;">Add New</a>
@@ -335,12 +337,12 @@
                     @endforeach     
                   </div> --}}
       
-                    <a class="btn btn-sm btn-success saveTagsButton hide2" style="margin-top: 5px;">Save</a>
+                    {{-- <a class="btn btn-sm btn-success saveTagsButton hide2" style="margin-top: 5px;">Save</a> --}}
             </div>
-
+{{-- 
             <div class="alert alert-success TagsAlert hide2" role="alert">
               <strong>Success!</strong> Tags have been updated successfully!
-            </div>
+            </div> --}}
         </div>
 
     <div class="userTagsEditingLayout">  

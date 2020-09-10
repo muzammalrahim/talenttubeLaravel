@@ -40,7 +40,6 @@
 				</ul>
 			</div>
 		</div>
-	<div class="full_step_error"></div>
 <!-- Step 1 Start -->
 	<div class="row py-3 bl_card_question" id="full_step_1" style="display:none;">
 		<div class="col">
@@ -104,6 +103,7 @@
 	
 	<!-- Step 3 Start -->
 		<div class="row py-3" id="full_step_3" style="display: none">
+			<div class="full_step_error"></div>
 			<div class="col">
 				<div class="card_profile">
 					<div class="part_photo">
@@ -123,14 +123,16 @@
 									<div class="bl bl_basic">
 									<div class="title">About me</div>
 									<div id="about_me_error" class="error to_hide">Required field!</div>
-									<textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="1000"></textarea>
+									<textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="300"></textarea>
+									<span id="arChars" class="rChars">300</span> Character(s) Remaining
 									</div>
 	
 									<div class="bl bl_basic">
 									<div class="title">Interested in</div>
 									<div id="interested_in_error" class="error to_hide">Required field!</div>
 	
-									<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="1000"></textarea>
+									<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
+									<span id="irChars" class="rChars">150</span> Character(s) Remaining
 									</div>
 									<div class="row text-center">
 
@@ -151,33 +153,36 @@
 		<div class="col">
 			<div class="card wider">
 				<div class="card-body text-center">
-					<h4 class="card-title"><strong>Please select the highest level of tertiary studies you have completed or currently enrolled in and completing (You can only select 1 option)</strong></h4>
+					<p class="card-title text-center">
+						Please select the highest level of tertiary studies you have completed or currently enrolled in and completing <br> 
+						<b>(You can only select 1 option)</b>
+					</p>
 					<div class="qualification_selected_type mb20 center mb-2">
 						<div class="qualification_type_cont">
-										<select class="qualification_type browser-default custom-select" id="qualification_type" name="qualification_type" data-placeholder="Select Qalification & Trades">
-															<option value="">Select Qalification & Trades</option>
-															<option value="certificate">Certificate or Advanced Diploma</option>
-															<option value="trade">Trade Certificate </option>
-															<option value="degree">University Degree</option>
-															<option value="post_degree">University Post Graduate (Masters or PHD) </option>
-										</select>
+							<select class="qualification_type browser-default custom-select" id="qualification_type" name="qualification_type" data-placeholder="Select Qalification & Trades">
+								<option value="">Select Qalification & Trades</option>
+								<option value="certificate">Certificate or Advanced Diploma</option>
+								<option value="trade">Trade Certificate </option>
+								<option value="degree">University Degree</option>
+								<option value="post_degree">University Post Graduate (Masters or PHD) </option>
+							</select>
 						</div>
 					</div>
 					<div class="select_qualification_list" style="display: none;">
 						<div class="qualification_list">
-										<div class="qualification_ul_cont">
-														<ul class="qualification_ul item_ul list-group">
-																			@php
-																						$qualifications = getQualificationsList();
-																		@endphp
+								<div class="qualification_ul_cont">
+										<ul class="qualification_ul item_ul list-group">
+											@php
+															$qualifications = getQualificationsList();
+											@endphp
 
-																			@if (!empty($qualifications))
-																				@foreach ($qualifications as $qkey => $quaf)
-																						<li class="{{$quaf['type']}} list-group-item" data-id="{{$quaf['id']}}"> {{$quaf['title']}} </li>
-																				@endforeach                                                 
-																		@endif
-														</ul>
-										</div>
+											@if (!empty($qualifications))
+													@foreach ($qualifications as $qkey => $quaf)
+															<li class="{{$quaf['type']}} list-group-item" data-id="{{$quaf['id']}}"> {{$quaf['title']}} </li>
+													@endforeach                                                 
+											@endif
+										</ul>
+								</div>
 						</div>
 					</div>
 					<div class="join_btn mt20 center">
@@ -194,20 +199,23 @@
 		<div class="col">
 			<div class="card wider">
 				<div class="card-body">
-					<h4 class="card-title text-center"><strong>Please select from the industries and role types below, that best describe the type of candidates you’d like to match with. You can select up to 5 and change these at any time.</strong></h4>
+					<p class="card-title text-center">
+						Please select from the industries and role types below, that best describe the type of candidates you’d like to match with. <br>
+						<b>You can select up to 5 and change these at any time.</b>
+					</p>
 					<div class="industry_list">
 						<div class="industry_ul_cont">
-										<ul class="industry_ul item_ul list-group">
-															@php
-																		$industries = getIndustries();
-														@endphp
+							<ul class="industry_ul item_ul list-group">
+								@php
+												$industries = getIndustries();
+								@endphp
 
-															@if (!empty($industries))
-																@foreach ($industries as $ikey => $industry)
-																		<li data-id="{{$ikey}}" class="list-group-item"> {{$industry}} </li>
-																@endforeach                                                 
-														@endif
-										</ul>
+									@if (!empty($industries))
+										@foreach ($industries as $ikey => $industry)
+												<li data-id="{{$ikey}}" class="list-group-item"> {{$industry}} </li>
+										@endforeach                                                 
+								@endif
+							</ul>
 						</div>
 					</div>
 
@@ -226,18 +234,20 @@
 		<div class="col">
 			<div class="card wider">
 				<div class="card-body">
-					<h4 class="card-title text-center"><strong>What’s a rough idea of the salary range you are open to?</strong></h4>
+					<p class="card-title text-center">
+						What’s a rough idea of the salary range you are open to?
+					</p>
 						<div class="salary_list">
 							<div class="salary_list_cont">
 									<ul class="salary_ul item_ul list-group">
-											@php
-													$salaries = getSalariesRange();
-											@endphp
-											@if (!empty($salaries))
-													@foreach ($salaries as $ikey => $salary)
-															<li data-id="{{$ikey}}" class="list-group-item"> {{$salary}} </li>
-													@endforeach                                                 
-											@endif
+										@php
+												$salaries = getSalariesRange();
+										@endphp
+										@if (!empty($salaries))
+												@foreach ($salaries as $ikey => $salary)
+														<li data-id="{{$ikey}}" class="list-group-item"> {{$salary}} </li>
+												@endforeach                                                 
+										@endif
 								</ul>
 							</div>
 					</div>
@@ -255,21 +265,24 @@
 		<div class="col">
 			<div class="card wider">
 				<div class="card-body">
-					<h4 class="text-center"><strong>Well done candidates, To complete your application, all you need to upload a 30-60 second video...</strong></h4>
-					<p class="text-center">Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit.</p>
+					<p class="mb-0">
+					Well done candidates, To complete your application, all you need to upload a <b>30-60 second video.</b>
+					</p>
+
+					<p class="">Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit.</p>
 					<div class="userUpload">
 						<div class="userVideoCont">
-										<div class="userVideo">
-														<div class="title_private_photos title_videos">Upload Videos</div>
-														<div id="list_videos_public" class="list_videos_public">
-																		<div id="photo_add_video" class="item add_photo add_video_public item_video">
-																						<a class="add_photo">
-																										<img id="video_upload_select" class="transparent is_video" src="{{ asset('images/site/icons/add_video160x120.png') }}" style="opacity: 1">
-																						</a>
-																		</div>
-														</div>
-														<div class="list_videos mt-3"></div>
+							<div class="userVideo">
+								<div class="title_private_photos title_videos">Upload Videos</div>
+									<div id="list_videos_public" class="list_videos_public">
+										<div id="photo_add_video" class="item add_photo add_video_public item_video">
+											<a class="add_photo">
+												<img id="video_upload_select" class="transparent is_video" src="{{ asset('images/site/icons/add_video160x120.png') }}" style="opacity: 1">
+											</a>
 										</div>
+									</div>
+									<div class="list_videos mt-3"></div>
+							</div>
 						</div>
 					</div>
 					<div class="join_btn text-center">
@@ -286,6 +299,7 @@
 		<div class="col">
 			<div class="card wider">
 				<div class="card-body">
+
 					<p class="text-left font-weight-bold">Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:</p>
 					<p class="text-left"><b>1.</b> Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
 
@@ -391,6 +405,10 @@
 } */
 
 
+.select_qualification_list.degree,.industry_list,.salary_list {
+    height: 200px;
+    overflow-y: scroll;
+}
 
 
 

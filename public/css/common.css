@@ -252,3 +252,16 @@ width: 103%;
 }
 
 /*========================= For Removing Spaces in Qualificaiton Step2 (university) ===================================*/
+
+.qualifiCationBullet {
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.qualifType{
+    /*margin-left: 10px;*/
+    font-size: 14px;
+}
+.qualifTypeSpan{   
+    text-transform: capitalize;
+    font-weight: bold;
+}

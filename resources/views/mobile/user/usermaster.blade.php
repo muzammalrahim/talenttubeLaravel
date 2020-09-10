@@ -28,6 +28,7 @@
 <body class="hidden-sn grey-skin @yield('classes_body')" @yield('body_data')  >
 
  @include('mobile.header.header')
+ @include('mobile.modals.jobsModal')
 
   <!--Main Layout-->
   <main class="p-0">
@@ -60,6 +61,8 @@
 <script type="text/javascript" src="{{ asset('js/mobile/mdb/mdb.min.js') }}"></script>
 <!-- Your custom scripts (optional) -->
 <script type="text/javascript" src="{{ asset('js/mobile/script.js') }}"></script>
+
+
 
 @yield('custom_js')
 

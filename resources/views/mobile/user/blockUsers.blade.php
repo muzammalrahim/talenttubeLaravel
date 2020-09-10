@@ -13,6 +13,8 @@
         $js = $blockUser->user;
     @endphp
 
+{{-- @dump($js) --}}
+
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 
 
@@ -36,7 +38,16 @@
                 <div class="row jobInfo">
                    
                     <div class="col-4 p-0">
-                        <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px">
+
+                        @php
+                    $profile_image   = asset('images/site/icons/nophoto.jpg');
+                    if ($js->profileImage){
+                        $profile_image = asset('images/user/'.$js->id.'/gallery/'.$js->profileImage->image);
+                    }
+                    @endphp
+                        <img lass="img-fluid z-depth-1" src="{{$profile_image}}">
+
+                        {{-- <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px"> --}}
                     </div>
 
                     <div class="col p-0 pl-3">

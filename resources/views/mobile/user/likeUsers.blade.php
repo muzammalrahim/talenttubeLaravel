@@ -30,7 +30,19 @@
                 <div class="row jobInfo">
                    
                     <div class="col-4 p-0">
-                        <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px">
+
+                   {{--      <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+                        <img  class="img-fluid z-depth-1" id="pic_main_img" src="{{$profile_image}}" title="" height="100px" width="100px">
+                        </a> --}}
+
+                           @php
+                    $profile_image   = asset('images/site/icons/nophoto.jpg');
+                    if ($js->profileImage){
+                        $profile_image = asset('images/user/'.$js->id.'/gallery/'.$js->profileImage->image);
+                    }
+                    @endphp
+                        <img lass="img-fluid z-depth-1" src="{{$profile_image}}">
+
                     </div>
 
                     <div class="col p-0 pl-3">
@@ -72,11 +84,9 @@
 {{-- ============================================ Card Footer ============================================ --}}
 
             <div class="card-footer text-muted jobAppFooter p-1">
-
                     <div class="float-right">
                         <a class="btn btn-sm btn-primary mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
                     </div>
-                    
             </div>
 
            
@@ -100,62 +110,6 @@
 
 
 
-{{-- ======================================================= Unlike Employer Modal ======================================================= --}}
- 
-
- <!-- Central Modal Medium Info -->
- <div class="modal fade" id="unlikeEmpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-   aria-hidden="true" data-backdrop="static">
-   <div class="modal-dialog modal-notify modal-danger" role="document">
-     <!--Content-->
-     <div class="modal-content">
-       <!--Header-->
-       <div class="modal-header">
-
-         @if (isEmployer($user))
-         <p class="heading lead">UnLike Jobseeker?</p>
-         @else
-         <p class="heading lead">UnLike Employer?</p>
-
-     
-         @endif
-
-         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-           <span aria-hidden="true" class="white-text">&times;</span>
-         </button>
-       </div>
-
-       <!--Body-->
-       <div class="modal-body">
-         <div class="text-center">
-           <i class="fas fa-check fa-4x mb-3 animated rotateIn"></i>
-
-           <p>
-               Are you sure you wish to continue?
-
-           </p>
-            <p class="idOfEmployerInModal"></p>
-         </div>
-       </div>
-
-
-       <!--Footer-->
-       <div class="modal-footer justify-content-center">
-         <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Cancel</a>
-         <a type="button" class="btn btn-danger confirmUnlikeEmployer" data-dismiss="modal" >Confirm</a>
-         <input type="hidden" name="idEmpInModalHidden" id="idEmpInModalHidden" value =""/>
-
-
-       </div>
-     </div>
-     <!--/.Content-->
-   </div>
- </div>
- <!-- Central Modal Medium Info-->
-
-{{-- ======================================================= Unlike Employer Modal ======================================================= --}}
-
-
 
 @stop
 
@@ -166,6 +120,11 @@
 
 </style>
 @stop
+
+
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+
+{{-- <script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockEmp.js') }}"></script>  --}}
 
 @section('custom_js')
 
@@ -214,7 +173,6 @@
                 }
             });
     });
-
 
 </script>
 @stop

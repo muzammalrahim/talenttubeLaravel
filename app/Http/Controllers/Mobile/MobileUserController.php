@@ -161,7 +161,7 @@ class MobileUserController extends Controller
 																	}
 													} elseif ($requestData['step'] == 3) {
 																	$rules = array(
-																					'about_me' => 'required|max:150',
+																					'about_me' => 'required|max:300',
 																					'interested_in' => 'required|max:150',
 																					'recentJob'  => 'required'
 																	);
@@ -1267,49 +1267,49 @@ class MobileUserController extends Controller
     // GET // Job Search/Listing layout.
     //====================================================================================================================================//
     public function Mjobs(){
-								$user = Auth::user();
-								$user->step2 = 10;
-								$user->save();
+		$user = Auth::user();
+		$user->step2 = 10;
+		$user->save();
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
        // $data['jobs'] =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->paginate(2);
         return view('mobile.jobs.index', $data); // mobile/jobs/index 
-				}
+	}
 				
-				public function step2Jobs(){
-					$user = Auth::user();
-//        $data = array();
-					if (!isEmployer($user)){
-									$jobs = Jobs::take(10)->get();
-									return view('mobile.jobs.jobsList', compact('jobs'));
-					}
-				}
-
-				function jobsFilter(Request $request){
-					// dd($request->toArray());
-					$user = Auth::user();
-					$data = array();
-					if(!isEmployer($user)){
-						$data['user'] = $user;
-						$data['title'] = 'Jobs';
-						$data['classes_body'] = 'jobs';
-						// $applications = new JobsApplication();
-						// $applications = $applications->getFilterApplication($request);
-						// $likeUsers    = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
-
-						// $jobs =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->paginate(2);
-						// $jobs = $jobs->filterJobs($request);
-						$jobs = new Jobs();
-						$jobs = $jobs->filterJobs($request);
-						// ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-
-							$data['jobs'] = $jobs;
-						//	dd($jobs);
-										return view('mobile.jobs.jobsList', $data);
-									// mobile/jobs/list
-					}
+	public function step2Jobs(){
+		$user = Auth::user();
+		//        $data = array();
+		if (!isEmployer($user)){
+						$jobs = Jobs::take(10)->get();
+						return view('mobile.jobs.jobsList', compact('jobs'));
 		}
+	}
+
+	function jobsFilter(Request $request){
+		// dd($request->toArray());
+		$user = Auth::user();
+		$data = array();
+		if(!isEmployer($user)){
+			$data['user'] = $user;
+			$data['title'] = 'Jobs';
+			$data['classes_body'] = 'jobs';
+			// $applications = new JobsApplication();
+			// $applications = $applications->getFilterApplication($request);
+			// $likeUsers    = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+
+			// $jobs =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->paginate(2);
+			// $jobs = $jobs->filterJobs($request);
+			$jobs = new Jobs();
+			$jobs = $jobs->filterJobs($request);
+			// ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
+
+				$data['jobs'] = $jobs;
+			//	dd($jobs);
+							return view('mobile.jobs.jobsList', $data);
+						// mobile/jobs/list
+		}
+	}
     //====================================================================================================================================//
     // Get // Add new job layout.
     //====================================================================================================================================//
@@ -1357,7 +1357,7 @@ class MobileUserController extends Controller
         //         // exit; 
 
         // }else{
-             return view('mobile.user.employers', $data);
+             return view('mobile.user.employers', $data);		//		mobile/user/employers
         // }
 		}
 				
@@ -1517,7 +1517,7 @@ class MobileUserController extends Controller
         // return $data;
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = $jobSeekers;
-		return view('mobile.employer.jobSeekers.list', $data); // site/employer/jobSeekers/list
+		return view('mobile.employer.jobSeekers.list', $data); // mobile/employer/jobSeekers/list
 				
 	}
     //====================================================================================================================================//
@@ -1562,7 +1562,7 @@ class MobileUserController extends Controller
         $data['videos']          = $employer_video;
         $data['empquestion'] = getEmpRegisterQuestions();
 
-        return view('mobile.user.employerInfo', $data);                
+        return view('mobile.user.employerInfo', $data);           // 	mobile/user/employerInfo      
 
     }
 
@@ -1641,144 +1641,6 @@ class MobileUserController extends Controller
     }
 
 
-    //====================================================================================================================================//
-    // Ajax POST // Job Apply Submitted.
-    //====================================================================================================================================//
-    public function MjobApplySubmit(Request $request){
-
-         // dd($request->toArray());
-        $user = Auth::user();
-        $requestData = $request->all();
-        $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
-
-        if(isset($requestData['answer']) && !empty($requestData['answer'])){
-            foreach ($requestData['answer'] as $ansK => $ansV) { 
-                $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']); 
-                $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']); 
-            }  
-        }
-
-        $job = Jobs::find($requestData['job_id']);
-        // check to confirm job with id exist
-        if ($job == null){
-            return response()->json([
-                'status' => 0,
-                'error' => 'Job with id '.$requestData['job_id'].' does not exist'
-            ]);
-        }else{
-            // check if user has not submitted application already.
-            $jobApplication = JobsApplication::where('user_id',$user->id)->where('job_id',$requestData['job_id'])->first();
-            if (!empty($jobApplication)) {
-                return response()->json([
-                    'status' => 0,
-                    'error' => 'You already submit application for this job'
-                ]);
-            }
-
-
-            // check application description which is mandatory. 
-            if(empty($request->application_description)){
-                 return response()->json([
-                    'status' => 0,
-                    'error' => 'Please answer all mandatory question.'
-                ]);
-            }
-
-            $newJobApplication = new JobsApplication();
-            $newJobApplication->user_id = $user->id;
-            $newJobApplication->job_id = $job->id;
-            $newJobApplication->status = 'applied';
-            $newJobApplication->description = $request->application_description;
-            // $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
-            // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
-            $newJobApplication->save();
-
-            // if jobApplication is succesfully added then add job answers. 
-            if( $newJobApplication->id > 0 ){
-                
-                if(isset($requestData['answer']) && !empty($requestData['answer'])){
-                    foreach ($requestData['answer'] as $ansK => $ansV) { 
-                        // $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']); 
-                        // $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']); 
-
-                        $jobQuestion = JobsQuestions::find($ansV['question_id']);
-
-                        // check if jqb question exist 
-                        if(!empty($jobQuestion)){
-
-                            // get the goldstar and preffer option 
-                            // $goldstar = !empty($jobQuestion->goldstar)?(json_decode($jobQuestion->goldstar, true)):(array()); 
-                            // $preffer  = !empty($jobQuestion->preffer)?(json_decode($jobQuestion->preffer, true)):(array());
-
-                            $goldstar = array();
-                            if(!empty($jobQuestion->goldstar)){
-                                if(!is_array($jobQuestion->goldstar)){
-                                   $goldstar = json_decode($jobQuestion->goldstar, true); 
-                                }else{
-                                   $goldstar =  $jobQuestion->goldstar;
-                                }
-                            }
-
-                            $preffer = array(); 
-                            if(!empty($jobQuestion->preffer)){
-                                if(!is_array($jobQuestion->preffer)){
-                                   $preffer = json_decode($jobQuestion->preffer, true); 
-                                }else{
-                                     $preffer = $jobQuestion->preffer;
-                                }
-                            }
-
-                            // dump('goldstar', $goldstar);
-                            // dump('preffer', $preffer);
-                            // dump('ansV', $ansV);
-                           
-                            $jobAnswer              = new JobsAnswers(); 
-                            $jobAnswer->question_id = $ansV['question_id'];
-                            $jobAnswer->user_id     = $user->id;
-                            $jobAnswer->answer      = $ansV['option'];
-
-                            $newJobApplicationUpdate = false; 
-
-                            if(in_array($jobAnswer->answer,  $goldstar)){
-                                $newJobApplication->goldstar = $newJobApplication->goldstar+1;
-                                $newJobApplicationUpdate = true; 
-                            }
-                            
-                            if(in_array($jobAnswer->answer,  $preffer)){
-                                $newJobApplication->preffer = $newJobApplication->preffer+1;
-                                $newJobApplicationUpdate = true; 
-                            }
-
-                            if( $newJobApplicationUpdate ){  $newJobApplication->save(); }
-
-
-                            $newJobApplication->answers()->save($jobAnswer); 
-
-                        }
-
-                      
-
-                    }  
-                }
-
-               
-
-            }
-
-
-             // dd($request->toArray());
-
-            if ($newJobApplication) {
-                return response()->json([
-                    'status' => 1,
-                    'message' => 'You Job Application has been submitted succesfully'
-                ]);
-            }
-        }
-
-    }
-
-
 
     //====================================================================================================================================//
     // GET // Display user submit Job Application.
@@ -1789,14 +1651,14 @@ class MobileUserController extends Controller
         $data['title'] = 'My job applications';
         $data['classes_body'] = 'jobApplications';
         $data['applications'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
-        return view('mobile.jobs.applied', $data);
+        return view('mobile.jobs.applied', $data);			// 	mobile/jobs/applied
     }
 
 
     //====================================================================================================================================//
     // POST // delete job application.
     //====================================================================================================================================//
-    public function deleteJobApplication($jobAppId){
+    public function MdeleteJobApplication($jobAppId){
         $user = Auth::user();
         $jobApplication = JobsApplication::find($jobAppId);
         if($jobApplication == null){
@@ -1825,7 +1687,9 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // POST // delete job.
     //====================================================================================================================================//
-    public function deleteJob($jobId){
+    public function MdeleteJob($jobId){
+
+    	// dd($jobId);
         $user = Auth::user();
         $job = Jobs::find($jobId);
         if($job == null){
@@ -1858,6 +1722,18 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     public function MblockList(){
         $user = Auth::user();
+        // $profile_image   = UserGallery::where('user_id', $user->id)->where('status', 1)->where('profile', 1)->first();
+        //     if (!$profile_image) {
+        //         if ($user_gallery->count() > 0) {
+        //            $profile_image   = assetGallery($user_gallery->first()->access,$user->id,'',$user_gallery->first()->image);
+        //         } else {
+        //             $profile_image   = asset('images/site/icons/nophoto.jpg');
+        //         }
+        //     } else {
+        //         $profile_image   = assetGallery($profile_image->access,$user->id,'',$profile_image->image);
+        //     }
+
+        // $data['profile_image']    = $profile_image;
         $data['user'] = $user;
         $data['title'] = 'Block Users';
         $data['classes_body'] = 'blockUsers';
@@ -1865,8 +1741,7 @@ class MobileUserController extends Controller
         return view('mobile.user.blockUsers', $data);  //   mobile/user/blockUsers
     }
 
-    
-
+   
     //=====================Like Function ==============================================//
 
     public function MlikeList(){
@@ -1877,8 +1752,6 @@ class MobileUserController extends Controller
         $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
         return view('mobile.user.likeUsers', $data);  //  mobile/user/likeUsers
     }
-
-
 
     //====================================================================================================================================//
     // Ajax Post // Remove user from user block User List.
@@ -2258,8 +2131,151 @@ class MobileUserController extends Controller
 
  // ============================= Ajax For updating Industry Experience End here =================================
     
+    // Get // show job detail page.
+    //====================================================================================================================================//
+    // function MjobDetail(Jobs $id){
+    //     // dd($job);
+    //     $user = Auth::user();
+    //     $data['user'] = $user;
+    //     $data['title'] = 'Job Detail';
+    //     $data['classes_body'] = 'jobDetail';
+    //     $data['job'] = $id;
+    //     return view('site.jobs.jobDetail', $data);
+
+    // }
+
+    public function MjobApplySubmit(Request $request){
+    	// dd($request->job_id);
+        $user = Auth::user();
+        $requestData = $request->all();
+        $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
+
+        if(isset($requestData['answer']) && !empty($requestData['answer'])){
+            foreach ($requestData['answer'] as $ansK => $ansV) {
+                $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']);
+                $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
+            }
+        }
+
+        $job = Jobs::find($requestData['job_id']);
+        // check to confirm job with id exist
+        if ($job == null){
+            return response()->json([
+                'status' => 0,
+                'error' => 'Job with id '.$requestData['job_id'].' does not exist'
+            ]);
+        }else{
+            // check if user has not submitted application already.
+            $jobApplication = JobsApplication::where('user_id',$user->id)->where('job_id',$requestData['job_id'])->first();
+            if (!empty($jobApplication)) {
+                return response()->json([
+                    'status' => 0,
+                    'error' => 'You already submit application for this job'
+                ]);
+            }
 
 
+            // check application description which is mandatory.
+            if(empty($request->application_description)){
+                 return response()->json([
+                    'status' => 0,
+                    'error' => 'Please answer all mandatory question.'
+                ]);
+            }
+
+            $newJobApplication = new JobsApplication();
+            $newJobApplication->user_id = $user->id;
+            $newJobApplication->job_id = $job->id;
+            $newJobApplication->status = 'applied';
+            $newJobApplication->description = $request->application_description;
+            // $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
+            // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
+            $newJobApplication->save();
+
+            // if jobApplication is succesfully added then add job answers.
+            if( $newJobApplication->id > 0 ){
+
+                if(isset($requestData['answer']) && !empty($requestData['answer'])){
+                    foreach ($requestData['answer'] as $ansK => $ansV) {
+                        // $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']);
+                        // $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
+
+                        $jobQuestion = JobsQuestions::find($ansV['question_id']);
+
+                        // check if jqb question exist
+                        if(!empty($jobQuestion)){
+
+                            // get the goldstar and preffer option
+                            // $goldstar = !empty($jobQuestion->goldstar)?(json_decode($jobQuestion->goldstar, true)):(array());
+                            // $preffer  = !empty($jobQuestion->preffer)?(json_decode($jobQuestion->preffer, true)):(array());
+
+                            $goldstar = array();
+                            if(!empty($jobQuestion->goldstar)){
+                                if(!is_array($jobQuestion->goldstar)){
+                                   $goldstar = json_decode($jobQuestion->goldstar, true);
+                                }else{
+                                   $goldstar =  $jobQuestion->goldstar;
+                                }
+                            }
+
+                            $preffer = array();
+                            if(!empty($jobQuestion->preffer)){
+                                if(!is_array($jobQuestion->preffer)){
+                                   $preffer = json_decode($jobQuestion->preffer, true);
+                                }else{
+                                     $preffer = $jobQuestion->preffer;
+                                }
+                            }
+
+                            // dump('goldstar', $goldstar);
+                            // dump('preffer', $preffer);
+                            // dump('ansV', $ansV);
+
+                            $jobAnswer              = new JobsAnswers();
+                            $jobAnswer->question_id = $ansV['question_id'];
+                            $jobAnswer->user_id     = $user->id;
+                            $jobAnswer->answer      = $ansV['option'];
+
+                            $newJobApplicationUpdate = false;
+
+                            if(in_array($jobAnswer->answer,  $goldstar)){
+                                $newJobApplication->goldstar = $newJobApplication->goldstar+1;
+                                $newJobApplicationUpdate = true;
+                            }
+
+                            if(in_array($jobAnswer->answer,  $preffer)){
+                                $newJobApplication->preffer = $newJobApplication->preffer+1;
+                                $newJobApplicationUpdate = true;
+                            }
+
+                            if( $newJobApplicationUpdate ){  $newJobApplication->save(); }
+
+
+                            $newJobApplication->answers()->save($jobAnswer);
+
+                        }
+
+
+
+                    }
+                }
+
+
+
+            }
+
+
+             // dd($request->toArray());
+
+            if ($newJobApplication) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'You Job Application has been submitted succesfully'
+                ]);
+            }
+        }
+
+    }
     
 
 
