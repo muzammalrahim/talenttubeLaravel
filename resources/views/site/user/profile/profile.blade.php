@@ -1,11 +1,9 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('site.user.usermaster')
 
-
-
 @section('content')
 <div class="cont bl_profile">
-    <div class="bl_pic_info  my_profile">
+    <div class="bl_pic_info my_profile">
 
         {{-- @dump($profileImage) --}}
         {{-- @dump($profileImage['imagepath']) --}}
@@ -341,119 +339,7 @@ div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
 <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
 <script src="{{ asset('js/site/tagSystem.js') }}"></script>
-<script type="text/javascript">
 
-  $(document).ready(function(){
-   
- // Enable Editing Qualification 
-  $(".editQualification").click(function(){
-        $(this).closest('.qualificationBox').addClass('editQualif');
-      // $(".QualificationSelect i").toggleClass("hide_it");
-      // $(".qualificationBox a").toggleClass("hide_it");
-
-  });
- // Enable Editing Qualification  End here 
-
-   // For deleting old qual which was added by user
-   $('.qualificationBox').on('click','.removeQualification', function(){
-      console.log('removeQualification');
-     $(this).closest('.QualificationSelect').remove();
-   });
-
- })
-   $(document).on('click','.addQualification', function(){
-    console.log(' addQualification ');
-
-    // Add Qualification end here 
-    var newQualificationHtml = '<div class="QualificationSelect"><select name="qualification[]" class="userQualification">'; 
-    @if(!empty($qualificationList))
-        @foreach($qualificationList as $lk=>$qualification)
-            newQualificationHtml += '<option value="{{$qualification['id']}}">{{$qualification['title']}}</option>'; 
-        @endforeach
-    @endif
-    newQualificationHtml += '</select>';  
-    newQualificationHtml += '<i class="fa fa-trash removeQualification"></i>';
-    newQualificationHtml += '</div>';
-    $('.qualificationList').append(newQualificationHtml);
-   });
-
-
-//======================= add remove industry =================================
-
- $(".editIndustry").click(function(){
-    $(this).closest('.IndusListBox').addClass('edit');   
-  });
- 
-
-// add and remove Industry code
-$(document).ready(function(){
-   $(document).on('click','.removeIndustry', function(){
-    $(this).closest('.IndustrySelect').remove();
-   });
-
-   $(document).on('click','.addIndus', function(){
-    console.log(' addIndus ');
-    var newIndusHtml = '<div class="IndustrySelect"><select name="industry_experience[]" class="industry_experience userIndustryExperience">'; 
-    @if(!empty($industriesList))
-        @foreach($industriesList as $lk=>$lv)
-            newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>'; 
-        @endforeach
-    @endif
-    newIndusHtml += '</select>';  
-    newIndusHtml += '<i class="fa fa-trash removeIndustry"></i>';
-    newIndusHtml += '</div>';
-
-    $('.IndusList').append(newIndusHtml);
-   });
-}); 
-
-//======================= add remove industry =================================
-
-//======================= add remove User Tags =================================
-
-$(document).ready(function(){
-   $(document).on('click','.removeTags', function(){
-    $(this).closest('.userTag').remove();
-   });
-   $(document).on('click','.addTags', function(){
-    var newTagsHtml = '<div class="userTag"><select name="userTags[]" id="example2" class="userTags userTagsSelect" value = "Select Tag Category">'; 
-    newTagsHtml += '<option value="" disabled selected hidden>Select Tag Category</option>'; 
-    @if(!empty($tags))
-        @foreach($tagCategories as $lk=>$tagCategory)
-           newTagsHtml   += '<option value="{{$tagCategory->id}}">{{$tagCategory->title}}</option>'; 
-        @endforeach
-    @endif
-    newTagsHtml += '</select>';  
-    newTagsHtml += '<input type = "text"placeholder="Add Tag" data-id="{{$tagCategory->id}}">';  
-    newTagsHtml += '<i class="fa fa-trash removeTags"></i>';
-    newTagsHtml += '</div>';
-    $('.tagsOfUser').append(newTagsHtml);
-   });
-
-}); 
-
-//======================= add remove User Tags end here =================================
-
-//======================= User Questions Edit =================================
-
- $(".editQuestions").click(function(){
- $('.hide2').css("display","inline-block");
- $('.jobSeekerRegQuestion').removeClass('hide_it');
- $('.QuestionsKeyPTag').addClass('hide_it');
-});
-//======================= User Questions Editing end here =================================
-
-//======================= User Tags Edit =================================
-
-//  $(".editTags").click(function(){
-//  $('.userTagsEditingLayout').css("display","block");
-//  $('.savebuttonUsertags').css("display","block");
-//  $('.tagsOfUser').addClass('hide_it2');
-// });
-//======================= User Tags Editing end here =================================
-
-
-</script>
 
 
 @stop

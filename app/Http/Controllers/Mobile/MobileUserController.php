@@ -1386,19 +1386,25 @@ class MobileUserController extends Controller
 
         public function MjobSeekers(Request $request){
 									
-			$user = Auth::user();
-			if (!isEmployer($user)){ return redirect(route('jobs')); }
-			$data['user']           = $user;
-			$data['title']          = 'Job Seekers';
-			$data['classes_body']   = 'jobSeekers';
-			$jobSeekersObj          = new User();
-			$jobSeekers             = $jobSeekersObj->getJobSeekersm($request, $user);
-			$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
-			$data['likeUsers'] = $likeUsers;
-			$data['jobSeekers'] = $jobSeekers; // $jobSeekers;
-			return view('mobile.employer.jobSeekers.index', $data); 
-		 	// mobile/employer/jobSeekers/index
-			}
+
+									$user = Auth::user();
+									if (!isEmployer($user)){ return redirect(route('jobs')); }
+									$data['user']           = $user;
+									$data['title']          = 'Job Seekers';
+									$data['classes_body']   = 'jobSeekers';
+									$jobSeekersObj          = new User();
+									$jobSeekers             = $jobSeekersObj->getJobSeekersm($request, $user);
+									$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+	
+									$data['likeUsers'] = $likeUsers;
+									//$data['jobSeekers'] = $jobSeekers; // $jobSeekers;
+	
+									return view('mobile.employer.jobSeekers.index', $data); 
+								 // mobile/employer/jobSeekers/index
+				}
+
+
+
 				
 		public function jobSeekersFilter(Request $request){
 			  $user = Auth::user();

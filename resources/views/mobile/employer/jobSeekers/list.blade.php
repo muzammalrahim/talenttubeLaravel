@@ -1,6 +1,6 @@
 
  {{-- @dd($jobSeekers) --}}
-
+@if(isset($jobSeekers))
 @if ($jobSeekers && $jobSeekers->count() > 0)
 
 
@@ -151,6 +151,7 @@ $('.unlikeEmpButton').click(function(){
 
     });
 
+ 
     $('.confirmUnlikeEmployer').click(function(){
         var btn = $(this);
         var jobseeker_id = $(this).data('jsid');
@@ -170,3 +171,5 @@ $('.unlikeEmpButton').click(function(){
             });
     });
 </script>
+@endif
+ 

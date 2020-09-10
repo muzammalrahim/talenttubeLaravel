@@ -1,4 +1,6 @@
 <!-- Tagging system -->
+
+
 <div class="tagging_cont p10">
 	<div class="selectedTags p10">
 		<div class="selectTagHead"><h3>Skills, Qualifications, Studies & Experience</h3></div>
@@ -18,12 +20,18 @@
 			<div class="newTagInput relative">
 				<input type="text" name="newTag" value="" />
 				<button id="addNewTag" class="btn pink">Add New</button>
+				
 				<div class="tagSuggestionCont" style="display: none;">
 					<ul class="tagSuggestion">
 					</ul>
 				</div>
 			</div>
 	</div>
+
+
+
+	
+
 
 	<div class="tagsList">
 
@@ -113,12 +121,17 @@
 		            	<div class="new_tag_category form_field">
 		            			<span class="form_label">Category :</span>
 		            			<div class="form_input">
-		            				 <select name="newTagCategory" class="">
-										@if(!empty($tagCategories))
-											@foreach($tagCategories as $tagCat)
-													<option value="{{$tagCat->id}}"><i class="tagIcon {{$tagCat->icon}}"></i>{{$tagCat->title}}</option>
-											@endforeach
-										@endif
+
+		            				 <select name="newTagCategory" class="something">
+																				@if(!empty($tagCategories))
+																					
+																					@foreach($tagCategories as $tagCat)
+																					
+																							<option value="{{$tagCat->id}}"><i class="tagIcon {{$tagCat->icon}}"></i>{{$tagCat->title}}</option>
+																					@endforeach
+																			@endif
+
+		 
 		            				 </select>
 		            				<div id="newTagCategory_error" class="error field_error to_hide">&nbsp;</div>
 		            			</div>
