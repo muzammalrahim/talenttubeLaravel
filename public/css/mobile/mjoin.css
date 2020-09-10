@@ -12,6 +12,37 @@ body{
 .card_profile{
 	width: 100%;
 }
+
+.item_video {
+    min-width: 100px;
+    min-height: 100px;
+    max-width: 200px;
+    position: relative;
+    width: auto;
+    height: auto;
+    display: inline-block;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    border-radius: 4px;
+    background: #e8542b;
+}
+.userVideo, .userResume {
+    padding: 20px;
+    min-height: 200px;
+}
+div#list_videos_public {
+    display: inline-block;
+    float: left;
+}
+.userUpload {
+    display: table;
+    width: 100%;
+}
+.v_progress {
+    position: absolute;
+    bottom: 0;
+    background: black;
+    padding: 6px;
+}
 .card_profile .part_photo {
 	display: block;
 	width: 100%;
@@ -75,7 +106,7 @@ a#user_step8_done, a#more_jobs_step2  {
 	cursor: pointer;
 	display: block;
 	background: #40c7db;
-	
+
 	width: 30%;
 
 	margin: 0 auto;
@@ -105,7 +136,7 @@ a#user_step8_done, a#more_jobs_step2  {
 	background-color: #ced4da;
  border: 1px solid #212529;
  margin: 3px 1px;
- border-radius: 14px;
+
 }
 /* .tagItem:hover {
 	border: 1px solid rgba(255, 255, 255, 0.13);

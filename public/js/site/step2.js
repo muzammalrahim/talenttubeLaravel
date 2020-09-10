@@ -575,7 +575,7 @@ $(function(){
             }, 1000);
         } else {
             jQuery('.submit-document').submit();
-        }   
+        }
         // $jq('#full_step_8').html(getLoader('css_loader_btn', false, true));
 
         // step2_formData.append('industry_experience', JSON.stringify(dataIndustryExp));
@@ -1289,7 +1289,7 @@ function showUserStep10() {
         });
     });
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    var url = base_url+'/step2Jobs';
+    var url = './step2Jobs';
     $.get(url, function (data) {
         $('.jobs_list').html(data);
     });

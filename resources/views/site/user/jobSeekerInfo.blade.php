@@ -52,6 +52,7 @@
                         <span class="js_label">Recent Job:</span>
                         <p>{{$js->recentJob}}</p>
                     </div>
+ 
                     <div class="js_about js_field">
                         <span class="js_label">About me:</span>
                         <p class="js_about_me"> {{$js->about_me}}</p>
@@ -116,7 +117,7 @@
 <!-- tabs_employer -->
 <div class="tabs_profile tabContainer">
 
-  
+
 
     <div id="tabs_profile">
         <ul class="tab customTab">
@@ -140,49 +141,51 @@
         </ul>
     </div>
 
-    
+
 
     <div id="tabs_content" class="tabs_content">
 
     <!-- tab_album -->
     <a id="tabs-2" class="tab_link tab_a target"></a>
     <div class="tab_photos tab_cont">
-
         <div class="galleryCont">
             <div class="head2">Gallery Photos</div>
             <div class="photos">
-                @if ($galleries)
-                @foreach ($galleries as $gallery)
-                    <div id="{{$gallery->id}}" class="emp_profile_photo_frame fl_left gallery_{{$gallery->id}}">
-                        <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-                            href="{{asset('images/user/'.$jobSeeker->id.'/gallery/'.$gallery->image)}}"
-                            data-lcl-thumb="{{asset('images/user/'.$jobSeeker->id.'/gallery/small/'.$gallery->image)}}"
-                            >
-                            <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="w100"
-                            data-src="{{asset('images/user/'.$jobSeeker->id.'/gallery/'.$gallery->image)}}"
-                            src="{{asset('images/user/'.$jobSeeker->id.'/gallery/small/'.$gallery->image)}}" >
-                        </a>
-                    </div>
-                @endforeach
+            @if ($galleries)
+            @foreach ($galleries as $gallery)
+
+            <div id="{{$gallery->id}}" class="emp_profile_photo_frame fl_left gallery_{{$gallery->id}}">
+            <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
+            href="{{assetGallery($gallery->access,$jobSeeker->id,'',$gallery->image)}}"
+
+            data-lcl-thumb="{{assetGallery($gallery->access,$jobSeeker->id,'small',$gallery->image)}}"
+            >
+            <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="w100"
+            data-src="{{assetGallery($gallery->access,$jobSeeker->id,'',$gallery->image)}}"
+            src="{{assetGallery($gallery->access,$jobSeeker->id,'small',$gallery->image)}}" >
+            </a>
+            </div>
+            @endforeach
             @endif
             </div>
         </div>
-        <!-- /photos -->
+								<!-- /photos -->
+
 
         <div class="cl mb20"></div>
-
         <div class="VideoCont">
             <div class="head2">Gallery Videos</div>
             <div class="videos">
                 @if ($videos->count() > 0 )
-                @foreach ($videos as $video)
-                    <div id="v_{{$video->id}}" class="video_box">
-                        <a class="video_link" href="{{asset('images/user/'.$video->file)}}" data-lcl-thumb="{{'images/user/'.asset($video->file)}}" target="_blank">
-                        <span class="v_title">{{$video->title}}</span>
-                        </a>
-                    </div>
+               	@foreach ($videos as $video)
+                <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
+                            <a onclick="UProfile.showVideoModal('{{assetVideo($video)}}')" class="video_link" target="_blank">
+                                            <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
+                                        {!! generateVideoThumbs($video) !!}
+                            </a>
+                </div>
                 @endforeach
-            @endif
+                @endif
             </div>
         </div>
         <!-- /videos -->
@@ -190,18 +193,30 @@
     </div>
 
 
-
+				<div style="display:none;">
+					<div id="videoShowModal" class="modal p0 videoShowModal">
+									<div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+													<div class="cont">
+																	<div class="videoBox"></div>
+																	{{-- <div class="double_btn">
+																					<button class="confirm_close btn small dgrey" onclick="UProfile.cancelVideoModal(); return false;">Close</button>
+																					<div class="cl"></div>
+																	</div> --}}
+													</div>
+									</div>
+					</div>
+	</div>
     <!-- /tab_album -->
 
 
-   <!--Tab Questions -->     
+   <!--Tab Questions -->
     <a id="tabs-3" class="tab_link tab_a"></a>
     <div class="tab_photos tab_cont">
 
             {{-- Added By Hassan --}}
 
-            @php  
-                $userQuestions = !empty($js->questions)?(json_decode($js->questions, true)):(array()); 
+            @php
+                $userQuestions = !empty($js->questions)?(json_decode($js->questions, true)):(array());
             @endphp
             {{-- @dump($userQuestions) --}}
             @if(!empty(getUserRegisterQuestions()))
@@ -222,7 +237,7 @@
 
 
 {{-- Added By Hassan --}}
-<!--Tab Questions end here -->     
+<!--Tab Questions end here -->
 
 
     </div>
@@ -268,7 +283,7 @@
 
 
 
- 
+
 
 @stop
 
@@ -462,7 +477,7 @@ $(document).on('click','.jsLikeUserBtn',function(){
                         <p>{{$js->recentJob}}</p>
                     </div>
 
-                    
+
 
                     <div class="js_about js_field">
                         <span class="js_label">About me:</span>
@@ -527,7 +542,7 @@ $(document).on('click','.jsLikeUserBtn',function(){
 
     <div id="tabs_content" class="tabs_content">
 
-    
+
 
 
     <!-- tab_album -->
@@ -617,7 +632,7 @@ $(document).on('click','.jsLikeUserBtn',function(){
 
 
 
- 
+
 
 @stop
 

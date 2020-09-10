@@ -63,7 +63,7 @@ var CommonScript = function() {
             fadeDelay: 2.5,
             escapeClose: false,
             clickClose: false,
-        }); 
+        });
        //  const player = new Plyr('#player');
     }
 
@@ -78,7 +78,7 @@ $(function () {
 $(document).ready(function(){
 
     //====================================================================================================================================//
-        // Initlize Datepicker 
+        // Initlize Datepicker
     //====================================================================================================================================//
     $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
 
@@ -90,7 +90,6 @@ $(document).ready(function(){
         $('.saveNewJob').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
         console.log(' formData ', formData);
         $('.general_error').html('');
-
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/job/new',
@@ -183,7 +182,7 @@ $(document).ready(function(){
 
     $(document).on('click','.submitApplication',function(){
         event.preventDefault();
-        console.log(' submitApplication submit click ');        
+        console.log(' submitApplication submit click ');
         $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
         var applyFormData = $('#job_apply_form').serializeArray()
         $.ajax({
@@ -206,7 +205,7 @@ $(document).ready(function(){
 
 
     $(document).on('keyup','textarea[name="application_description"]',function(){
-         console.log(' application_description changed '); 
+         console.log(' application_description changed ');
          var application_description = $.trim($('textarea[name="application_description"]').val());
          $('.characterCount .count').text(application_description.length);
          if(application_description.length < 250){
@@ -216,12 +215,12 @@ $(document).ready(function(){
             $('.submitApplication').prop('disabled', false);
             $('.characterCount').addClass('hide_it');
          }
-         
-         console.log(' application_description ', application_description); 
-    }); 
+
+         console.log(' application_description ', application_description);
+    });
 
 //====================================================================================================================================//
-// Function to display sub qualification on base of qualification type. 
+// Function to display sub qualification on base of qualification type.
 //====================================================================================================================================//
 
 $(document).on('change','select.filter_qualification_type', function() {
@@ -232,28 +231,28 @@ $(document).on('change','select.filter_qualification_type', function() {
      $('.searchField_qualification .dot_list_li_hidden').remove();
 });
 $(document).on('click','.dot_list li', function(){
-    console.log(' dot_list li click '); 
+    console.log(' dot_list li click ');
     if($(this).hasClass('active')){
         $(this).removeClass('active');
         $(this).find('.dot_list_li_hidden').remove();
     }else{
         $(this).addClass('active');
-        var type = $(this).attr('data-type'); 
+        var type = $(this).attr('data-type');
         var qualif_value = $(this).attr('data-id');
-        var input_hidden_html = '<input type="hidden" class="dot_list_li_hidden" name="'+type+'" value="'+qualif_value+'" />'; 
+        var input_hidden_html = '<input type="hidden" class="dot_list_li_hidden" name="'+type+'" value="'+qualif_value+'" />';
         $(this).append(input_hidden_html);
     }
-     
+
 });
 
 
 //====================================================================================================================================//
-// Function to display Industry experience list. 
+// Function to display Industry experience list.
 //====================================================================================================================================//
 
 $('input[name="filter_industry_status"]').change(function() {
-    console.log(' filter_industry_status '); 
-    (this.checked)?(jQuery('.filter_industryList').removeClass('hide_it')):(jQuery('.filter_industryList').addClass('hide_it'));  
+    console.log(' filter_industry_status ');
+    (this.checked)?(jQuery('.filter_industryList').removeClass('hide_it')):(jQuery('.filter_industryList').addClass('hide_it'));
 });
 
 

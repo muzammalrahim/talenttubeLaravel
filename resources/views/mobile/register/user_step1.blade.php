@@ -29,7 +29,7 @@
 																										<button id="location_search_load" class="btn btn-outline-secondary location_search_btn waves-effect waves-light btn-sm " type="button">Search</button>
 																							</div>
 																							<label for="location_search">Location</label>
-																						
+
 																							<div class="location_latlong d-none w100">
 																											<input type="text" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
 																											<input type="text" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">

@@ -89,7 +89,7 @@ class JobsApplication extends Model{
                             // $query = $query->selectRaw("*,
                             $query = $query->selectRaw("
                                 ( 6371 * acos( cos(radians('".$latitude."')) 
-                                * cos( radians(location_lat)) 
+                                * cos( radians(;)) 
                                 * cos( radians(location_long) - radians('".$longitude."')) 
                                 + sin( radians('".$latitude."')) 
                                 * sin( radians( location_lat )))

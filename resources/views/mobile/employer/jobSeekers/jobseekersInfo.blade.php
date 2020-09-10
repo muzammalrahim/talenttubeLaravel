@@ -22,21 +22,21 @@ $js = $jobseeker;
 		$profile_image  = asset('images/site/icons/nophoto.jpg');
 		$profile_image_gallery    = $js->profileImage()->first();
 
-		// dump($profile_image_gallery); 
+		// dump($profile_image_gallery);
 
 			if ($profile_image_gallery) {
 						// $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
 
 						$profile_image   = assetGallery2($profile_image_gallery,'small');
-							// dump($profile_image); 
-			} 
+							// dump($profile_image);
+			}
 		@endphp
 
         {{-- ============================================ Card Body ============================================ --}}
         <div class="card-body jobAppBody pt-2">
 
             <div class="row jobInfo">
-               
+
                 <div class="col-4 p-0">
                     <img class="img-fluid z-depth-1" src="{{$profile_image}}" height="100px" width="150px">
 
@@ -56,13 +56,13 @@ $js = $jobseeker;
                     </div>
                 </div>
 
-            </div> 
+            </div>
 
             <div class="row p-0">
                 <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Interested In</div>
             </div>
             <p class="card-text jobDetail row mb-1">{{$js->interested_in}}</p>
-            
+
 
             <div class="row p-0">
                 <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">About Me</div>
@@ -76,9 +76,9 @@ $js = $jobseeker;
             @php
              $qualification_names =  getQualificationNames($js->qualification)
             @endphp
-            
+
              @if(!empty($qualification_names))
-                @foreach ($qualification_names as $qnKey => $qnValue) 
+                @foreach ($qualification_names as $qnKey => $qnValue)
 
                    {{-- <span class="qualification dblock">{{$qnValue}}</span> --}}
 
@@ -162,43 +162,77 @@ $js = $jobseeker;
                 @foreach ($galleries as $gallery)
                     <div id="{{$gallery->id}}" class="emp_profile_photo_frame fl_left gallery_{{$gallery->id}}">
                         <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-                            href="{{asset('images/user/'.$js->id.'/gallery/'.$gallery->image)}}"
-                            data-lcl-thumb="{{asset('images/user/'.$js->id.'/gallery/small/'.$gallery->image)}}"
+                            href="{{assetGallery($gallery->access,$js->id,'',$gallery->image)}}"
+                            data-lcl-thumb="{{assetGallery($gallery->access,$js->id,'small',$gallery->image)}}"
                             >
                             <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="w100"
-                            data-src="{{asset('images/user/'.$js->id.'/gallery/'.$gallery->image)}}"
-                            src="{{asset('images/user/'.$js->id.'/gallery/small/'.$gallery->image)}}" >
+                            data-src="{{assetGallery($gallery->access,$js->id,'',$gallery->image)}}"
+                            src="{{assetGallery($gallery->access,$js->id,'small',$gallery->image)}}" >
                         </a>
                     </div>
+
+
                 @endforeach
             @endif
             </div>
 
   </div>
   <div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
+    <div class="row">
 
+        <!-- Grid column -->
+    <div class="col-lg-4 col-md-4 mb-4">
     <div class="videos">
         @if ($videos->count() > 0 )
         @foreach ($videos as $video)
-            <div id="v_{{$video->id}}" class="video_box">
-                <a class="video_link" href="{{asset('images/user/'.$video->file)}}" data-lcl-thumb="{{'images/user/'.asset($video->file)}}" target="_blank">
-                <span class="v_title">{{$video->title}}</span>
-                </a>
+            <div id="v_{{$video->id}}" class="video_box mb-2">
+                <!-- Grid row -->
+
+
+      <!--Modal: Name-->
+      <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+          <!--Content-->
+          <div class="modal-content">
+            <!--Body-->
+            <div class="modal-body mb-0 p-0">
+              <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
+                  <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
+                    <source src="{{assetVideo($video)}}" type="video/mp4" />
+                  </video>
+              </div>
+            </div>
+            <!--Footer-->
+            <div class="modal-footer justify-content-center">
+              <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+          <!--/.Content-->
+        </div>
+      </div>
+
+      <!--Modal: Name-->
+      <a>{!! generateVideoThumbsm($video) !!}</a>
             </div>
         @endforeach
     @endif
     </div>
 
   </div>
+</div>
+<!-- Grid column -->
+
+</div>
+
   <div class="tab-pane fade" id="contact-md" role="tabpanel" aria-labelledby="contact-tab-md">
 
 
     <p class="loader SaveQuestionsLoader"style="float: left;"></p>
       	<div class="cl"></div>
             <div class="questionsOfUser text-dark">
-        
-                @php  
-                    $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
+
+                @php
+                    $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
                 @endphp
                   @if(!empty($userquestion))
                       @foreach($userquestion as $qk => $question)
@@ -215,11 +249,34 @@ $js = $jobseeker;
 
 @stop
 
+@section('custom_footer_css')
+<link rel="stylesheet" href="{{ asset('css/site/plyr.css') }}">
+@stop
+
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script> 
 
 @section('custom_js')
+<script src="{{ asset('js/site/plyr.polyfilled.js') }}"></script>
+<script>
+    @if ($videos->count() > 0 )
+    @foreach ($videos as $video)
 
+    $('#modal{{$video->id}}').on('hidden.bs.modal', function (e) {
+  // do something...
+        var src = $(this).find(".videoBox video").find("source").attr('src');
+        $(this).find(".videoBox video").find("source").attr('src');
+        var videoElem  = '<video id="player" controls>';
+        videoElem     += '<source src="'+src+'" type="video/mp4">';
+        videoElem     += '</video>';
+        $(this).find(".videoBox video").remove();
+        $(this).find(".videoBox").html(videoElem);
+    });
+    @endforeach
+    @endif
+
+</script>
 <script type="text/javascript">
 
 
