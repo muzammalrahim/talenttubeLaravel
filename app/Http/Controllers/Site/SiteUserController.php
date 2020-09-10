@@ -199,7 +199,7 @@ class SiteUserController extends Controller
             }
         } elseif ($requestData['step'] == 3) {
             $rules = array(
-                'about_me' => 'required|max:150',
+                'about_me' => 'required|max:300',
                 'interested_in' => 'required|max:150',
                 'recentJob'  => 'required'
             );

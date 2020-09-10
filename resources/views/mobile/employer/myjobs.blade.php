@@ -1,7 +1,7 @@
 
 @extends('mobile.user.usermaster')
 @section('content')
-
+@include('mobile.modals.jobsModal')
  
 <h6 class="h6 jobAppH6">My Jobs</h6>
 
@@ -125,76 +125,9 @@
 
 @endif     
 
-<!-- Central Modal Danger Demo-->
-<div class="modal fade right" id="deleteJobPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="t`rue">
-  <div class="modal-dialog modal-notify modal-danger modal-side modal-top-right" role="document">
-    <!--Content-->
-    <div class="modal-content">
-      <!--Header-->
-      <div class="modal-header">
-        <p class="heading">Delete Job</p>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true" class="white-text">&times;</span>
-        </button>
-      </div>
-      <!--Body-->
-      <div class="modal-body">
-        <div class="row">
-          <div class="col">
-            <p class="text-center"><i class="fas fa-trash fa-2x"></i></p>
-          </div>
-        </div>
-        <div class="row text-center mt-3 px-4">
-            <p>This action can not be undone. Are you sure you wish to continue?</p>
-        </div>
-      </div>
-      <!--Footer-->
-      <div class="modal-footer justify-content-center">
-        <a type="button" class="btn btn-sm btn-outline-danger waves-effect" data-dismiss="modal">Cancel</a>
-        <a type="button" id="deleteConfirmJobId" class="confirm_jobDelete_ok btn btn-sm btn-danger"data-dismiss="modal">Delete<i class="fas fa-trash ml-1 white-text"></i></a>
-      </div>
-      <input type="hidden" name="deleteConfirmJobId" id="deleteConfirmJobId" value=""/>
-    </div>
-    <!--/.Content-->
-  </div>
-</div>
 
-{{-- ======================= ajax loader ============================ --}}
 
-<div class="modal" id="centralModalSuccess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-notify modal-success" role="document">
 
-      <div class="modal-body">
-        <div class="text-center">
-
-        <div class="spinner-grow text-primary" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-
-        </div>
-      </div>
-  </div>
-</div>
-
-{{-- ======================= Succes Message ============================ --}}
-
-<div class="modal jobDeleted" id="successMessageJobdeleting" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-  aria-hidden="true">
-  <div class="modal-dialog modal-notify modal-success" role="document">
-
-      <div class="modal-body">
-        <div class="text-center text-white">
-            <p>Job Has been Deleted Successfully</p>
-        <div class="spinner-grow text-primary" role="status">
-          <span class="sr-only">Loading...</span>
-        </div>
-
-        </div>
-      </div>
-  </div>
-</div>
 
 
 @stop
@@ -227,21 +160,12 @@ div#centralModalSuccess {
 $('.myJobDeleteBtn').on('click',function(){
     var job_id = $(this).attr('data-jobid');
     console.log(' confirmJobAppRemoval click  job_id ', job_id, $(this) );
-    // $('#confirmJobDeleteModal').modal({
-    //     fadeDuration: 200,
-    //     fadeDelay: 2.5,
-    //     escapeClose: false,
-    //     clickClose: false,
-    // });
         $('#deleteConfirmJobId').val(job_id);
 });
 
 $(document).on('click','.confirm_jobDelete_ok',function(){
-    // $('.confirmJobDeleteModal  .img_chat').html(getLoader('jobDeleteloader'));
-    // $(this).prop('disabled',true);
     var job_id =  $('#deleteConfirmJobId').val();
         $('#centralModalSuccess').show().delay(1000).fadeOut('slow');
-
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.ajax({
         type: 'POST',

@@ -1,7 +1,7 @@
 
 @extends('mobile.user.usermaster')
 @section('content')
-@include('mobile.jobs.jobsModal')
+{{-- @include('mobile.modals.jobsModal') --}}
 
  
 <h6 class="h6 jobAppH6">Job's Detail</h6>
@@ -74,7 +74,11 @@
             <div class="card-footer text-muted jobAppFooter">
 
                     <div class="float-right">
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" href="{{route('MjobApplyInfo', ['id' => $job->id]) }}" data-toggle="modal" data-target="#modalJobApply" >Apply</a>
+
+                       {{--  <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" href="{{route('MjobApplyInfo', ['id' => $job->id]) }}" data-toggle="modal" data-target="#modalJobApply" >Apply</a> --}}
+
+                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}">Apply</a>
+
                     </div>
 
             </div>
@@ -96,6 +100,8 @@
 @section('custom_js')
 
 
+
+
 <script type="text/javascript">
 $(document).ready(function(){
 
@@ -106,6 +112,33 @@ $(document).ready(function(){
 
 
 });
+
+
+  $(document).on('click','.jobApplyBtn', function() {
+    console.log(' jobApplyBtn click  ');
+    var jobPopId = parseInt($(this).attr('job-id'));
+    var jobPopTitle = $(this).attr('job-title');
+    $('.jobTitle').text(jobPopTitle);
+    $('#openModalJobId').val(jobPopId);
+    $('#modalJobApply').modal('show');
+
+    $.ajax({
+        type: 'GET',
+            url: base_url+'/m/ajax/MjobApplyInfo/'+ jobPopId,
+            success: function(data){
+                console.log("apply for job call");
+                $('.applyJobModalProcessing').addClass('d-none');
+                $('.jobApplyModalContent').removeClass('d-none');
+                $('.jobApplyModalContent').html(data);
+            }
+        });
+
+
+
+  }); // jobApplyBtn click end 
+
+
+
 </script>
 
 @stop

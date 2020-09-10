@@ -112,8 +112,16 @@
         <div class="card-footer text-muted jobAppFooter p-1">
                 <div class="float-right">
                     <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
+                    
                     <a class="jsBlockButton btn btn-sm btn-danger mr-0 btn-xs" data-jsid ="{{$js->id}}">Block</a>
+
+                    @if (in_array($js->id,$likeUsers))
+                        <a class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
+                    @else
                     <a class="jsLikeButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$js->id}}">Like</a>
+                        
+                    @endif
+
                 </div>
         </div>
 
@@ -129,73 +137,36 @@
 @endif
 
 
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script> 
+
 <script type="text/javascript">
 
-{{-- ======================================================== Like JS ======================================================== --}}
+$('.unlikeEmpButton').click(function(){
+        var btn = $(this);
+        var jobseeker_id = $(this).data('jsid');
+        $('#idEmpInModalHidden').val(jobseeker_id);
 
-$(document).on('click','.jsLikeButton',function(){
-    var btn = $(this);
-    var jobseeker_id = $(this).data('jsid');
-    console.log(' jsLikeButton jobseeker_id ', jobseeker_id);
-    // $(this).html(getLoader('blockJobSeekerLoader'));
-    // $(this).html('..');
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/m/ajax/MlikeJS/'+jobseeker_id,
-        success: function(data){
-            btn.prop('disabled',false);
-            if( data.status == 1 ){
-
-                $('.empLikeAlert').show().delay(3000).fadeOut('slow');
-                btn.html('Liked').addClass('active');
-
-                // location.reload();
-                // $(this)('.jsLikeButton').attr("d-none");
-                // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-                // $('.jsLikeButton').html("Liked");
-            }else{
-                btn.html('error');
-            }
-        }
     });
-});
 
-{{-- ======================================================== Like JS End Here ======================================================== --}}
-
-{{-- ======================================================== Block Employer ======================================================== --}}
-
-$(document).on('click','.jsBlockButton',function(){
-    var btn = $(this);
-    var js_id = $(this).data('jsid');
-    console.log(' Job Seeker  ', js_id);
-    // $(this).html(getLoader('blockJobSeekerLoader'));
-    // $(this).html('..');
-
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/m/ajax/MblockJS/'+js_id,
-        success: function(data){
-            btn.prop('disabled',false);
-            if( data.status == 1 ){
-
-                $('.empBlockAlert').show().delay(3000).fadeOut('slow');
-                btn.html('Blocked').addClass('active');
-                // location.reload();
-                
-
-                // $('You Have Block Employer Successfully').alert();
-                // $(this)('.likeEmployerButton').attr("d-none");
-                // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-                // $('.likeEmployerButton').html("Liked");
-            }else{
-                btn.html('error');
-            }
-        }
+    $('.confirmUnlikeEmployer').click(function(){
+        var btn = $(this);
+        var jobseeker_id = $(this).data('jsid');
+        var emp_id = $('#idEmpInModalHidden').val();
+        console.log(emp_id);
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.ajax({
+                type: 'POST',
+                url: base_url+'/m/ajax/MunLikeUser/'+emp_id,
+                data: {'id': emp_id},
+                success: function(data){
+                    if( data.status == 1 ){
+                        $('.empLikeAlert').show().delay(3000).fadeOut('slow');
+                        location.reload(); 
+                    }
+                }
+            });
     });
-});
-
-{{-- ======================================================== Block Employer End Here ======================================================== --}}
-
 </script>

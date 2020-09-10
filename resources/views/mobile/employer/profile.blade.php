@@ -106,16 +106,15 @@
             <p class="loader SaveQuestionsLoader"style="float: left;"></p>
               <div class="cl"></div>
                 <div class="questionsOfUser">
-            
                     @php  
                         $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
                     @endphp
                       @if(!empty($empquestion))
                           @foreach($empquestion as $qk => $question)
                             <div>
-                              <p>{{$question}} </p>
-                               <p class="QuestionsKeyPTag"><b>{{$userQuestions[$qk]}}</b></p>
-                                <select name="{{$qk}}" class="jobSeekerRegQuestion custom-select custom-select hideme mb-2">
+                              <p class="mb-1">{{$question}} </p>
+                               <p class="QuestionsKeyPTag mb-1"><b>{{$userQuestions[$qk]}}</b></p>
+                                <select name="{{$qk}}" class="jobSeekerRegQuestion custom-select custom-select hideme mb-2 d-none">
                                     <option value="yes"
                                     {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
                                     >Yes</option>
@@ -130,8 +129,6 @@
                               <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
                           </div>  
                 </div>
-
-
             <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
               <strong>Success!</strong> Questions have been updated successfully!
             </div>
@@ -147,6 +144,9 @@
 @section('custom_footer_css')
 <style type="text/css">
 
+p,span{
+    font-size: 12px;
+}
 
 </style>
 @stop
@@ -247,6 +247,9 @@ $(".saveAboutMeButton").click(function(){
      $('.hideme').show();
      $('.saveQuestionsButton').removeClass('d-none');
      $('.QuestionsKeyPTag').addClass('d-none');
+     $('.jobSeekerRegQuestion').removeClass('d-none');
+
+
 });
 //================================================ Employer Questions Editing end here ================================================
 

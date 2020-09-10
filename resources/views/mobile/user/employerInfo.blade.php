@@ -95,8 +95,21 @@
             <div class="card-footer text-muted jobAppFooter p-1">
 
                     <div class="float-right">
-                        <a class="blockEmployerButton btn btn-sm btn-primary mr-0 btn-xs">Block</a>
-                        <a class="likeEmployerButton btn btn-sm btn-primary mr-0 btn-xs">Like</a>
+
+
+                        <a class="blockEmployerButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid="{{$employer->id}}">Block</a>
+                        {{-- <a class="likeEmployerButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid="{{$employer->id}}">Like</a> --}}
+
+                        @if (in_array($employer->id,$likeUsers))
+                        <a class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$employer->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
+                    @else
+                    <a class="jsLikeButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$employer->id}}">Like</a>
+                        
+                    @endif
+
+
+
+
                     </div>
             </div>
 
@@ -134,7 +147,7 @@
 @if ($jobs->count() > 0)
 @foreach ($jobs as $job)
 
-@include('mobile.jobs.jobsModal')  {{--         mobile/jobs/jobsModal       --}}
+{{-- @include('mobile.modals.jobsModal')          mobile/modals/jobsModal       --}}
 
 {{-- @dump( $job->questions ) --}}
 {{-- @dump($job->jobEmployer->name) --}}
@@ -222,7 +235,12 @@
                         <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MjobDetail', ['id' => $job->id]) }}">Detail</a>
                     </div>
                     <div class="float-right">
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" data-toggle="modal" data-target="#modalJobApply" >Apply</a>
+
+                        {{-- <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" data-toggle="modal" data-target="#modalJobApply" >Apply</a> --}}
+
+                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}">Apply</a>
+
+
                     </div>
                     
                 </div>
@@ -316,3 +334,41 @@
 @stop
 
 
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+{{-- <script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockEmp.js') }}"></script>  --}}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script> 
+
+<script type="text/javascript">
+$(document).ready(function(){
+    $('.graybtn').click(function(){
+        console.log("jobapplybutton");
+    });
+});
+
+
+  $(document).on('click','.jobApplyBtn', function() {
+    console.log(' jobApplyBtn click  ');
+    var jobPopId = parseInt($(this).attr('job-id'));
+    var jobPopTitle = $(this).attr('job-title');
+    $('.jobTitle').text(jobPopTitle);
+    $('#openModalJobId').val(jobPopId);
+    $('#modalJobApply').modal('show');
+
+    $.ajax({
+        type: 'GET',
+            url: base_url+'/m/ajax/MjobApplyInfo/'+ jobPopId,
+            success: function(data){
+                console.log("apply for job call");
+                $('.applyJobModalProcessing').addClass('d-none');
+                $('.jobApplyModalContent').removeClass('d-none');
+                $('.jobApplyModalContent').html(data);
+            }
+        });
+
+  }); // jobApplyBtn click end 
+
+
+
+</script>

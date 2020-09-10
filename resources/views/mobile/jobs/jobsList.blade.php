@@ -3,7 +3,7 @@
 @foreach ($jobs as $job)
 
 
-@include('mobile.jobs.jobsModal')  {{--         mobile/jobs/jobsModal       --}}
+{{-- @include('mobile.modals.jobsModal')          mobile/jobs/jobsModal       --}}
 
 {{-- @dump( $job->questions ) --}}
     {{-- @dump($job->jobEmployer->name) --}}
@@ -111,15 +111,12 @@
                     </div>
 
                     <div class="float-right">
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" data-toggle="modal" data-target="#modalJobApply" >Apply</a>
+                        {{-- <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" href="{{route('MjobApplyInfo', ['id' => $job->id])}}" job-id ="{{$job->id}}" job-title="{{$job->title}}" data-toggle="modal" data-target="#modalJobApply" >Apply</a> --}}
 
 
+                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}">Apply</a>
 
-                        {{-- <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" href="{{route('MjobApplyInfo', ['id' => $job->id]) }}" >test</a> --}}
-
-                        
-
-
+                    
                     </div>
                     
                 </div>

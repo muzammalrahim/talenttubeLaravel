@@ -42,10 +42,12 @@ html {
 }
 
 .personalInfo{
-    /*margin-top: 7px;*/
-    text-align: center;
+    width: 50%;
+    margin-left: 35%;
+    font-size: 12px;
 
 }
+
 h6.card-header.h6 {
     background: #254c8e;
     color: white;
@@ -64,6 +66,13 @@ select.industry_experience.userIndustryExperience, select.userQualification {
 
 #logoOverImg img{
 	margin-left: auto;
+    margin-right: auto;
+    height: 80px;
+    display: block;
+    border-radius: 50%;
+}
+i#logoOverImg{
+  margin-left: auto;
     margin-right: auto;
     height: 80px;
     display: block;
@@ -234,4 +243,17 @@ color : rgb(255, 255, 255);
     height: 100%;
     width: 100%;
     background: #21252940;
+}
+
+
+/* ========================================== step 2 qualification layout changing ========================================== */
+
+
+.qualifType{
+    /*margin-left: 10px;*/
+    font-size: 14px;
+}
+.qualifTypeSpan{   
+    text-transform: capitalize;
+    font-weight: bold;
 }

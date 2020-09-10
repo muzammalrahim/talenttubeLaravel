@@ -54,14 +54,6 @@
                 {{-- <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div> --}}
             </div>
 
-        {{--     <div class="status">
-                <div id="profile_status" class="status_text" style="min-height: 24.0078px; min-width: 163.008px;">
-                    <span class="statusText">{{($user->statusText)?($user->statusText):'Enter Your Status'}}</span>
-                    <input class="hide_it" type="text" id="statusText" value="{{($user->statusText)?($user->statusText):''}}" onchange="UProfile.updateStatusText()" />
-                </div>
-                <div id="profile_status_edit" class="icon_edit" onclick="UProfile.enableStatusTextEdit();" style="opacity: 1;"><span></span></div>
-            </div> --}}
-
             <div class="job">
                 <span style="margin-right: 34px;">Recent Job:</span>
                 <input type="text" class="hide_it recentJobField" name="recentJobField" value="{{$user->recentJob}}"  onchange="UProfile.updateRecentJob()"/>
@@ -329,7 +321,17 @@ div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{
 .jq-selectbox__search {
     display: none;
 }
-
+.qualifiCationBullet {
+    margin-right: 10px;
+}
+.qualifType{
+    /*margin-left: 10px;*/
+    font-size: 16px;
+}
+.qualifTypeSpan{   
+    text-transform: capitalize;
+    font-weight: bold;
+}
 </style>
 @stop
 

@@ -133,7 +133,7 @@
 
                     <div id="frm_card_join" class="card_profile_info card_join">
 
-                        <div class="bl bl_basic">
+                        {{-- <div class="bl bl_basic">
                         <div class="title">About me</div>
                         <div id="about_me_error" class="error to_hide">Required field!</div>
                         <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="1000"></textarea>
@@ -146,7 +146,35 @@
                         <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="1000"></textarea>
                         </div>
 
-                        <button id="user_step3_done" class="btn turquoise small btn_join_submit">Done</button>
+                        <button id="user_step3_done" class="btn turquoise small btn_join_submit">Done</button> --}}
+
+                        <div class="bl bl_basic">
+                                    <div class="title">About me</div>
+                                    <div id="about_me_error" class="error to_hide">Required field!</div>
+                                    <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="300"></textarea>
+                                    <span id="arChars" class="rChars">300</span> Character(s) Remaining
+                                    </div>
+    
+                                    <div class="bl bl_basic">
+                                    <div class="title">Interested in</div>
+                                    <div id="interested_in_error" class="error to_hide">Required field!</div>
+    
+                                    <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
+                                    <span id="irChars" class="rChars">150</span> Character(s) Remaining
+                                    </div>
+                                    <div class="row text-center">
+
+
+                                    <div class="col">
+
+                                        <button id="user_step3_done" class="btn_join_submit btn btn-primary">Done</button>
+                                    </div>
+
+                                    </div>
+
+
+
+
                     </div>
                 </div>
             </div>
@@ -418,33 +446,33 @@
 
 <div style="display: none;">
 	<div id="jobApplyModal" class="modal p0 jobApplyModal wauto">
-					<div id="job_apply_modal" class="w100 pp_edit_info pp_cont m0">
-									<div class="frame">
-													{{-- <a class="icon_close" href="#close"><span class="close_hover"></span></a> --}}
-													<div class="head m0">Submit Proposal</div>
-													<input type="hidden" value="" name="openModalJobId" id="openModalJobId" />
-													<div class="cont">
-																	<div class="css_loader loader_edit_popup">
-																					<div class="spinner center">
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																									<div class="spinner-blade"></div>
-																					</div>
-																	</div>
-													</div>
-									</div>
-					</div>
-	</div>
-	</div>
+		<div id="job_apply_modal" class="w100 pp_edit_info pp_cont m0">
+			<div class="frame">
+				{{-- <a class="icon_close" href="#close"><span class="close_hover"></span></a> --}}
+                <div class="head m0">Submit Proposal</div>
+                    <input type="hidden" value="" name="openModalJobId" id="openModalJobId" />
+                    <div class="cont">
+                        <div class="css_loader loader_edit_popup">
+                            <div class="spinner center">
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                                <div class="spinner-blade"></div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 @stop
@@ -473,6 +501,30 @@
         var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
         userStepReload(currentStep);
     });
+
+
+
+    // Profile Image Upload End
+
+            // about me Character count for textarea start
+
+                var aboutMaxLength = 300;
+                $('#about_me').keyup(function() {
+                    var textlen = aboutMaxLength - $(this).val().length;
+                    $('#arChars').text(textlen);
+                });
+            // about me Character count for textarea end
+
+            // about me Character count for textarea start
+
+                var maxLength = 150;
+                $('#interested_in').keyup(function() {
+                    var textlen = maxLength - $(this).val().length;
+                    $('#irChars').text(textlen);
+                });
+            // about me Character count for textarea end
+            // User Step3 End
+
 </script>
 
 @stop
