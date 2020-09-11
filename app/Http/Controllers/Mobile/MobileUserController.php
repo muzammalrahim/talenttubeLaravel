@@ -1277,18 +1277,18 @@ class MobileUserController extends Controller
         return view('mobile.jobs.index', $data); // mobile/jobs/index
 				}
 
-		 
 
-				
+
+
 	public function step2Jobs(){
 		$user = Auth::user();
 		//        $data = array();
 		if (!isEmployer($user)){
 						$jobs = Jobs::take(10)->get();
-						return view('mobile.jobs.jobsList', compact('jobs'));
+						return view('mobile.jobs.jobsListstep2', compact('jobs'));
 		}
 	}
- 
+
 
 	function jobsFilter(Request $request){
 		// dd($request->toArray());
@@ -1611,7 +1611,7 @@ class MobileUserController extends Controller
         // return $data;
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = $jobSeekers;
-		    return view('mobile.employer.jobSeekers.list', $data); // mobile/employer/jobSeekers/list		
+		    return view('mobile.employer.jobSeekers.list', $data); // mobile/employer/jobSeekers/list
 	}
     //====================================================================================================================================//
     // Get // Show list of jobs posted by employer.
@@ -1654,7 +1654,7 @@ class MobileUserController extends Controller
         $data['galleries']        = $employer_gallery;
         $data['videos']          = $employer_video;
         $data['empquestion'] = getEmpRegisterQuestions();
-        return view('mobile.user.employerInfo', $data);           // 	mobile/user/employerInfo      
+        return view('mobile.user.employerInfo', $data);           // 	mobile/user/employerInfo
     }
 
     //====================================================================================================================================//
@@ -2358,7 +2358,7 @@ class MobileUserController extends Controller
     }
 
  // ============================= Ajax For updating Industry Experience End here =================================
-    
+
     // Get // show job detail page.
     //====================================================================================================================================//
     // function MjobDetail(Jobs $id){
@@ -2370,5 +2370,5 @@ class MobileUserController extends Controller
     //     $data['job'] = $id;
     //     return view('site.jobs.jobDetail', $data);
     // }
- 
+
 }
