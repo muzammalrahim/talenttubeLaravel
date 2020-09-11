@@ -45,10 +45,21 @@
 		<div class="col">
 			<div class="card_question_cont">
 				<div id="card_question_no" class="card_question no hide answer">
-					<div class="question_vh"><img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /><span>No</span></div>
+
+					<div class="question_vh">
+
+						{{-- <img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /> --}}
+
+						<i class="fas fa-times"></i>
+
+						<span>No</span></div>
 				</div>
 				<div id="card_question_yes" class="card_question yes hide answer">
-					<div class="question_vh"><img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /><span>No</span></div>
+
+					<div class="question_vh">
+						{{-- <img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /> --}}
+						<i class="fas fa-check"></i>
+						<span>No</span></div>
 				</div>
 
 				<div data-field="graduate_intern" class="card_question card">
@@ -99,18 +110,45 @@
 					</div>
 					<div id="frm_card_join" class="card_profile_info card_join">
 
+
 						<div class="bl bl_basic">
 						<div class="title">About Our Organisation</div>
 						<div id="about_me_error" class="error to_hide">Required field!</div>
-						<textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Give us a brief overview of what your company does" maxlength="1000"></textarea>
+						<textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Give us a brief overview of what your company does" maxlength="300">
+							
+						</textarea>
+						<span id="arChars" class="rChars">300</span> Character(s) Remaining
+
+
 						</div>
 
 						<div class="bl bl_basic">
 						<div class="title">Interested in</div>
 						<div id="interested_in_error" class="error to_hide">Required field!</div>
 
-						<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="Whom would you like to find?" maxlength="1000"></textarea>
+						<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="Whom would you like to find?" maxlength="150"></textarea>
+						<span id="irChars" class="rChars">150</span> Character(s) Remaining
+						
 						</div>
+
+
+
+						{{-- <div class="bl bl_basic">
+						<div class="title">About Our Organization</div>
+						<div id="about_me_error" class="error to_hide">Required field!</div>
+						<textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="300"></textarea>
+
+						<span id="arChars" class="rChars">300</span> Character(s) Remaining
+						</div>
+
+						<div class="bl bl_basic">
+						<div class="title">Interested in</div>
+						<div id="interested_in_error" class="error to_hide">Required field!</div>
+
+						<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
+						<span id="irChars" class="rChars">150</span> Character(s) Remaining
+						</div> --}}
+
 
 						<button id="step3_done" class="btn turquoise small btn_join_submit">Done</button>
 					</div>
