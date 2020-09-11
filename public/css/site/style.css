@@ -735,7 +735,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
 .tabs_profile .tab_photos .icon_private_photo, .tabs_profile .tab_photos .icon_private_photo_hover{ position: absolute; right: 0; top: 25px; background-image: url('../images/site/icons/icon_private_photo.png'); background-repeat: no-repeat; width: 32px; height: 32px; display: inline-block;
 -webkit-transition: opacity .3s ease-in-out; -moz-transition: opacity .3s ease-in-out; -o-transition: opacity .3s ease-in-out; transition: opacity .3s ease-in-out; }
 .tabs_profile .tab_photos .icon_private_photo{ background-position: 0 0; opacity: 1; }
-.tabs_profile .tab_photos .icon_private_photo_hover{ background-position: 0 -32px; opacity: 0; }
+.tabs_profile .tab_photos .icon_private_photo_hover{ background-position: 0 -32px; opacity: 0; cursor: pointer;}
 .tabs_profile .tab_photos .icon_private:hover span.icon_private_photo{ opacity: 0; }
 .tabs_profile .tab_photos .icon_private:hover span.icon_private_photo_hover{ opacity: 1; }
 

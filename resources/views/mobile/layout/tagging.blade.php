@@ -1,8 +1,8 @@
 <!-- Tagging System For Mobile -->
 <div class="row">
 	<div class="col-sm-12">
-		<div class="selectedTags p-4">
-			<div class="selectTagHead"><h3>Skills, Qualifications, Studies & Experience</h3></div>
+		<div class="selectedTags p-0 mt-4">
+			<div class="selectTagHead"><h6 class="font-weight-bold">Skills, Qualifications, Studies & Experience</h6></div>
 			<div class="selectTagList">
 				<ul>
 					@if (isset($userTags))
@@ -15,19 +15,18 @@
 		</div>
 	</div>
 
-<div class="col-sm-12 mb-3">
+<div class="col-sm-12 mb-0">
 	<div class="newTag" id="newTag">
 		<p class="m-0">Add more interests here!</p>
 		<div class="newTagInput relative">
-			<div class="col-auto">
+			<div class="">
 				<!-- Material input -->
 				<div class="md-form form-inline">
-						<input type="text" name="newTag" value="" class="form-control mb-2" id="inlineFormInputMD" placeholder="Add New Tag">
+						<input type="text" name="newTag" value="" class="form-control mb-2 w-50" id="inlineFormInputMD" placeholder="Add New Tag">
                         <label class="sr-only" for="inlineFormInputMD">Name</label>
-
-                            <button id="addNewTag" class="btn btn-success btn-sm ml-5 mb-0" data-toggle="modal" data-target="#addNewTagModal">Add New</button>
-
+                        <button id="addNewTag" class="btn btn-success btn-sm ml-5 mb-4" data-toggle="modal" data-target="#addNewTagModal">Add New</button>
 				</div>
+
 				</div>
 
 			<div class="col-auto">
@@ -47,7 +46,7 @@
 				<div class="tagCategories">
 					<ul class="tagCategoriesList">
 							@if(!empty($tagCategories))
-							<label class="mdb-main-label">Select Tag Category</label>
+							<label class="mdb-main-label d-block"><h6 class="font-weight-bold">Select Tag Category</label></h6>
 							<select name="tagCategories" id="tagCategory" class="browser-default custom-select">
 								@foreach($tagCategories as $tagCat)
 								<option value="{{$tagCat->id}}">{{$tagCat->title}}</option>

@@ -94,7 +94,7 @@
 
 			<div class="card_question_btn">
 				<button data-action="0" class="btn large pink fl_left btn_question step2Css">No</button>
-				<button data-action="1" class="btn large turquoise fl_right btn_question step2Css">Yes</button>
+				<button data-action="1" class="btn large turquoise fl_right btn_question step2Css" >Yes</button>
 				<div class="cl"></div>
 			</div>
 		</div>
@@ -107,42 +107,42 @@
 			<div class="col">
 				<div class="card_profile">
 					<div class="part_photo">
-									<div class="upload_file"><div class="upload"><div class="bl photo_add">Add a Photo</div></div></div>
-									<div class="name d-none"></div>
-									<div class="name_info d-none text-danger">Required field!</div>
-									<div class="recent_job m5 mt20 relative">
-														<div class="title">Your current or most recent job title and employer</div>
-														<input type="text" id="recentJob" name="recentJob" value="" />
-														<div id="recentJob_error" class="d-none text-danger">Required field!</div>
-									</div>
+						<div class="upload_file"><div class="upload"><div class="bl photo_add">Add a Photo</div></div></div>
+						<div class="name d-none"></div>
+						<div class="name_info d-none text-danger">Required field!</div>
+						<div class="recent_job m5 mt20 relative">
+							<div class="title">Your current or most recent job title and employer</div>
+							<input type="text" id="recentJob" name="recentJob" value="" />
+							<div id="recentJob_error" class="d-none text-danger">Required field!</div>
+						</div>
 	
 					</div>
 	
 					<div id="frm_card_join" class="card_profile_info card_join">
 	
-									<div class="bl bl_basic">
-									<div class="title">About me</div>
-									<div id="about_me_error" class="error to_hide">Required field!</div>
-									<textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="300"></textarea>
-									<span id="arChars" class="rChars">300</span> Character(s) Remaining
-									</div>
-	
-									<div class="bl bl_basic">
-									<div class="title">Interested in</div>
-									<div id="interested_in_error" class="error to_hide">Required field!</div>
-	
-									<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
-									<span id="irChars" class="rChars">150</span> Character(s) Remaining
-									</div>
-									<div class="row text-center">
+						<div class="bl bl_basic">
+						<div class="title">About me</div>
+						<div id="about_me_error" class="error to_hide">Required field!</div>
+						<textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="300"></textarea>
+						<span id="arChars" class="rChars">300</span> Character(s) Remaining
+						</div>
+
+						<div class="bl bl_basic">
+						<div class="title">Interested in</div>
+						<div id="interested_in_error" class="error to_hide">Required field!</div>
+
+						<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
+						<span id="irChars" class="rChars">150</span> Character(s) Remaining
+						</div>
+						<div class="row text-center">
 
 
-									<div class="col">
+						<div class="col">
 
-										<button id="user_step3_done" class="btn_join_submit btn btn-primary">Done</button>
-									</div>
+							<button id="user_step3_done" class="btn_join_submit btn btn-primary">Done</button>
+						</div>
 
-									</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -300,8 +300,12 @@
 			<div class="card wider">
 				<div class="card-body">
 
-					<p class="text-left font-weight-bold">Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:</p>
-					<p class="text-left"><b>1.</b> Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
+					<p class="text-left font-weight-bold">
+
+					Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:
+					</p>
+					<p class="text-left"><b>1.</b> Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.
+					</p>
 
 					<p class="text-left"><b>2.</b> You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
 					<div class="userUpload">
@@ -338,16 +342,20 @@
 		<div class="col">
 			<div class="card wider">
 				<div class="card-body">
-					<h4 class="text-center font-weight-bold">Almost done, candidates! To help Employers connect with you, we’ve created a tagging system. This allows Employers to search for specific candidates via a search system. In the below section, we encourage you to create as many tags that best describe your key attributes as a Job Seeker.</h4>
-					<p class="h5">Be sure to tag the following:</p>
-					<p class="h5">*Names of organisations and companies you’ve worked for, including charities and not for profits</p>
-					<p class="h5">*Job Titles you have held</p>
-					<p class="h5">*Skills you have (eg; customer service, java Developer, sales, book keeping, etc)</p>
-					<p class="h5">*Institutions you’ve studied, including the names of schools, colleges, universities and others</p>
-					<p class="h5">*The names of courses you’re studying or have completed</p>
-					<p class="h5">*The name of qualifications you have (eg; RG146, RSA, etc)</p>
-					<p class="h5">*Languages you speak (other than English)</p>
-					<p class="h5">*Hobbies and personal interests are fine as well</p>
+					<div class="skillDiv">
+						<p class="mb-1">
+						Almost done, candidates! To help Employers connect with you, we’ve created a tagging system. This allows Employers to search for specific candidates via a search system. In the below section, we encourage you to create as many tags that best describe your key attributes as a Job Seeker.
+						</p>
+						<p class="font-weight-bold mb-1">Be sure to tag the following:</p>
+						<p class="mb-1">*Names of organisations and companies you’ve worked for, including charities and not for profits</p>
+						<p class="mb-1">*Job Titles you have held</p>
+						<p class="mb-1">*Skills you have (eg; customer service, java Developer, sales, book keeping, etc)</p>
+						<p class="mb-1">*Institutions you’ve studied, including the names of schools, colleges, universities and others</p>
+						<p class="mb-1">*The names of courses you’re studying or have completed</p>
+						<p class="mb-1">*The name of qualifications you have (eg; RG146, RSA, etc)</p>
+						<p class="mb-1">*Languages you speak (other than English)</p>
+						<p class="mb-1">*Hobbies and personal interests are fine as well</p>
+					</div>
 						<div class="user_tagging">
 							@include('mobile.layout.tagging')
 						</div>
@@ -410,8 +418,16 @@
     overflow-y: scroll;
 }
 
-
-
+.skillDiv {
+    height: 250px;
+    overflow-y: auto;
+    font-size: 12px;
+    border: 1px solid #e0e0e0;
+    padding: 10px;
+}
+li.tag.tagItem {
+    font-size: 12px;
+}
 </style>
 @stop
 

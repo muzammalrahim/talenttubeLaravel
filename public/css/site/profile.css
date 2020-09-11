@@ -104,13 +104,16 @@ a.attach_btn {
 
 span.icon_image_profile {
     position: absolute;
-    right: 0;
-    bottom: 0;
+    bottom: 24px !important;
+    bottom: 4px;
+    /*right: 0;*/
+    /*bottom: 0;*/
     width: 25px;
     height: 25px;
     border-radius: 5px;
     cursor: pointer;
     background: rgba(0, 0, 0, 0.21);
+
 }
 
 .profile_pic_spinner{

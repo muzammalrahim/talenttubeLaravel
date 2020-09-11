@@ -136,10 +136,10 @@ li.sel {
 }*/
 
 /*===================================================== Make Profile Icon ===========================================*/
-span.icon_image_profile {
+/*span.icon_image_profile {
     bottom: 42px;
     right: 5px;
-}
+}*/
 
 </style>
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">

@@ -106,8 +106,12 @@ $(function () {
         // $('.css_loader_login_form').addClass('hide_it2');
 
 
+
         var signinErrorWrong = data['message'];
-        // console.log(signinErrorWrong);
+
+
+        $('.errorMessageLogIn').text(signinErrorWrong);
+        
 
         var form_login_pass = $("#form_login_pass").val();
         if (form_login_pass.length < 6){
@@ -116,6 +120,8 @@ $(function () {
         $('.errorMessageLogIn').text(signinErrorSixChar);
         console.log(signinErrorSixChar);
         }
+
+
 
         else{
         var signinErrorWrong = data['message']['email'];

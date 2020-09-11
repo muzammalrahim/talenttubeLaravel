@@ -112,6 +112,7 @@
 }
 div#colfix_l {
     height: 310px;
+    width: 185px;
 }
 div.cont_w>.column_main {
     min-height: 700px;
@@ -174,6 +175,8 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
 </style>
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 @stop
 
 @section('custom_js')

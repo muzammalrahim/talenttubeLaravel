@@ -37,7 +37,7 @@
                     <span class="icon_private_photo_hover"></span>
                 </span>
             	<span onclick="UProfile.setAsProfile({{$gallery->id}})" title="Make Profile" class="icon_image_profile">
-            			<span class=""></span>
+            			<span class="icon_profile_photo"></span>
             	</span>
                 </div>
 
