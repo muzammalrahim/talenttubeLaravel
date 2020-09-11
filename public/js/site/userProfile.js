@@ -461,6 +461,7 @@ this.updateIndustryExperience = function(){
     }
 
     this.cancelGalleryConfirm = function(){ $.modal.close(); }
+
     this.deleteGallery = function(){
         var gallery_id =  $('#deleteConfirmId').val();
         $.modal.close();
@@ -497,18 +498,54 @@ this.updateIndustryExperience = function(){
         $('#deleteAttachmentId').val(attachment_id);
     }
 
+
+    this.confirmPurchase = function(user_id){
+        $('#confirmPurchaseModal').modal({
+            fadeDuration: 200,
+            fadeDelay: 2.5,
+            escapeClose: false,
+            clickClose: false,
+        });
+        $('#user_id').val(user_id);
+    }
+
     this.deleteAttachment = function(){
         $.modal.close();
         var attachment_id = $('#deleteAttachmentId').val();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
-            type: 'POST',
+            type:'GET',
             url: base_url+'/ajax/removeAttachment/',
             data: {attachment_id: attachment_id},
             success: function(data){
                 console.log(' data ', data);
                 if(data.status == 1){
                     $('.attachment_file.attachment_'+attachment_id).remove();
+                }
+            }
+        });
+    }
+    this.purchase = function(){
+        $.modal.close();
+        var user_id = $('#user_id').val();
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type:'GET',
+            url: base_url+'/ajax/purchaseUserInfo/',
+            data: {user_id: user_id},
+            success: function(data){
+                console.log(' data ', data);
+                if(data.status == 1){
+                    location.reload();
+                }
+
+                if(data.status == 2){
+                    $('#lowPointsModal').modal({
+                        fadeDuration: 200,
+                        fadeDelay: 2.5,
+                        escapeClose: false,
+                        clickClose: false,
+                    });
                 }
             }
         });
@@ -1083,7 +1120,7 @@ $(document).ready(function() {
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type:'POST',
-            url: '/ajax/userUploadResume',
+            url: base_url+'/ajax/userUploadResume',
             data:formData,
             cache:false,
             contentType: false,

@@ -16,6 +16,8 @@
 @stop
 
 @section('content')
+
+
 <div class="newJobCont">
     <div class="head icon_head_browse_matches">Job Seeker Detail</div>
 
@@ -52,7 +54,7 @@
                         <span class="js_label">Recent Job:</span>
                         <p>{{$js->recentJob}}</p>
                     </div>
- 
+
                     <div class="js_about js_field">
                         <span class="js_label">About me:</span>
                         <p class="js_about_me"> {{$js->about_me}}</p>
@@ -81,9 +83,9 @@
                                   <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
                               </div>
                            @endforeach
-                         @endif 
+                         @endif
                     </div>
-                    
+
                     <div class="js_interested js_field">
                         <span class="js_label">Industry Experience:</span>
                             @if(isset($js->industry_experience))
@@ -169,8 +171,57 @@
             @endif
             </div>
         </div>
-								<!-- /photos -->
 
+        <div class="cl mb20"></div>
+        @if($isallowed)
+        {{-- private area --}}
+            <span class="prvate-section">
+                <div class="title_private_photos" style="margin-bottom: 5px;">
+                    Resume &amp; Contact Details
+                </div>
+
+                <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
+                    <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
+                    <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
+                    {{-- <li> <a class="btn violet view-resume" target="_blank" style="" href="/talenttube/_files/resumeUpload/3687_Pimmys logo.pdf">View Resume</a></li> --}}
+                </ul>
+
+
+            </span>
+                <br>
+
+                <div class="private_attachments">
+                    @foreach ($attachments as $attachment)
+
+                        {{-- {{asset('images/user/'.$attachment->file)}} --}}
+
+                        <div class="attachment_{{$attachment->id}} attachment_file">
+                                <div class="attachment"><img src="{{asset('images/site/icons/cv.png')}}" /></div>
+                                <span class="attach_title">{{ $attachment->name }}</span>
+                                <div class="attach_btns">
+                                    <a class="attach_btn downloadAttachBtn" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
+                                </div>
+
+                        </div>
+                    @endforeach
+            </div>
+            @else
+
+            <span class="prvate-section">
+                <div class="title_private_photos" style="margin-bottom: 5px;">
+                    Content Locked
+                </div>
+
+                <div class="attach_btns">
+                    <a class="attach_btn downloadAttachBtn"  onclick="UProfile.confirmPurchase({{$js->id}});" style="margin-bottom: 25px;">Unlock</a>
+                </div>
+            </span>
+
+
+
+
+
+            @endif
 
         <div class="cl mb20"></div>
         <div class="VideoCont">
@@ -192,6 +243,67 @@
 
     </div>
 
+
+
+
+
+
+
+    <div style="display:none;">
+        <div id="lowPointsModal" class="modal p0 confirmDeleteModal">
+        <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+                <div class="cont">
+                        <div class="title">You don't have enough credits</div>
+                        <div class="img_chat">
+                                <div class="icon">
+                                        <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
+                                </div>
+                                <div class="msg">Please, purchases some points to unlock private info</div>
+                        </div>
+                        <div class="double_btn">
+                                <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">OK</button>
+                                <input type="hidden" name="user_id" id="user_id" value=""/>
+                                <div class="cl"></div>
+                        </div>
+                </div>
+        </div>
+        </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+{{-- Hi there --}}
+
+
+    <div style="display:none;">
+        <div id="confirmPurchaseModal" class="modal p0 confirmDeleteModal">
+        <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+                <div class="cont">
+                        <div class="title">Do you wanna unlock this user private info? costs 10 points</div>
+                        <div class="img_chat">
+                                <div class="icon">
+                                        <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
+                                </div>
+                                <div class="msg">This action can not be undone. Are you sure you wish to continue?</div>
+                        </div>
+                        <div class="double_btn">
+                                <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
+                                <button class="confirm_ok btn small marsh" onclick="UProfile.purchase(); return false;">OK</button>
+                                <input type="hidden" name="user_id" id="user_id" value=""/>
+                                <div class="cl"></div>
+                        </div>
+                </div>
+        </div>
+        </div>
+        </div>
 
 				<div style="display:none;">
 					<div id="videoShowModal" class="modal p0 videoShowModal">
@@ -518,7 +630,7 @@ $(document).on('click','.jsLikeUserBtn',function(){
                     @endif
                 </div>
                 </div>
-            
+
             </div>
         </div>
     </div>

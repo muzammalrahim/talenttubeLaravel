@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Auth;
 Route::get('test', 'Site\SiteUserController@test')->name('test');
 Route::get('test2', 'Site\HomeController@test2')->name('test2');
 Route::get('test3', 'Site\HomeController@test3')->name('test3');
-Route::get('welcom', function () { return view('welcome'); }); 
+Route::get('welcom', function () { return view('welcome'); });
 
 Route::get('phpini', 'Site\HomeController@phpini')->name('phpini');
 
@@ -54,7 +54,7 @@ Route::get('images/user/{userid}/private/{any}', [
 ])->where('any', '.*');
 
 
-// Media access video streaming 
+// Media access video streaming
 Route::get('stream/{userid}/videos/{any}', [
     'as'         => 'videoStream.show',
     'middleware' => 'auth',
@@ -62,7 +62,7 @@ Route::get('stream/{userid}/videos/{any}', [
 ])->where('any', '.*');
 
 
-//Media access gallery  
+//Media access gallery
 Route::get('media/public/{userid}/{any}', [
     // 'as'         => 'files.show',
     'uses'       => 'Site\HomeController@fileshow2',
@@ -96,7 +96,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 
     Route::get('dashboard','Admin\AdminController@dashboard')->name('adminDashboard');
     Route::get('adminDashboard','Admin\AdminController@dashboard');
-   
+
     Route::get('users', 'Admin\UserController@index')->name('users');
     Route::get('users/create', 'Admin\UserController@create')->name('users.create');
     Route::get('users/edit/{id}', 'Admin\UserController@edit')->name('users.edit');
@@ -107,7 +107,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('users/verified', 'Admin\UserController@verifiedUsers')->name('verifiedUsers');
 
 
-    // for deleting 
+    // for deleting
     Route::post('users/delete/{id}', 'Admin\UserController@destroyUser')->name('users.destroy');
 
     // user Info
@@ -126,7 +126,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::post('employers/create', 'Admin\UserController@storeEmployer')->name('employers.store');
     Route::get('employers/getList', 'Admin\UserController@getEmployerDatatable')->name('employers.dataTable');
 
-    // for deleting 
+    // for deleting
     Route::post('employers/delete/{id}', 'Admin\UserController@destroyemployers')->name('employers.destroy');
 
     // Route added by Hassaan
@@ -138,27 +138,27 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('jobs/{id}', 'Admin\AdminJobsController@pdfExport')->name('jobs.pdfExport');
     Route::patch('jobs/update/{id}', 'Admin\AdminJobsController@updateJob')->name('jobs.update');
 
-    // for deleting 
+    // for deleting
     Route::post('jobs/delete/{id}', 'Admin\AdminJobsController@destroyJob')->name('jobs.destroy');
-    
 
-    // bulkEmail 
+
+    // bulkEmail
     Route::get('bulkEmail/new', 'Admin\AdminEmailsController@newBulkEmail')->name('bulkEmail.new');
     Route::post('bulkEmail/store', 'Admin\AdminEmailsController@storeBulkEmail')->name('bulkEmail.store');
     Route::get('bulkEmail/list', 'Admin\AdminEmailsController@list')->name('bulkEmail.list');
     Route::get('bulkEmail/getList', 'Admin\AdminEmailsController@getDatatable')->name('bulkEmail.dataTable');
     Route::post('bulkEmail/SendEmail', 'Admin\AdminEmailsController@SendEmail')->name('bulkEmail.SendEmail');
 
-    // bulkCVS 
+    // bulkCVS
     Route::post('bulk/generateCVS', 'Admin\AdminEmailsController@GenerateCVS')->name('bulk.GenerateCVS');
     Route::get('bulk/generateCVS', 'Admin\AdminEmailsController@GenerateCVS');
     Route::post('bulk/generatePDF', 'Admin\AdminEmailsController@GeneratePDF')->name('bulk.GeneratePDF');
     Route::get('bulk/generatePDF', 'Admin\AdminEmailsController@GeneratePDF');
-    
+
 
     // End here
 
-    // Job Application Start here 
+    // Job Application Start here
 
     Route::get('job_applications','Admin\AdminJobsController@job_applications')->name('job_applications');
     Route::get('job_applications/getjobapps', 'Admin\AdminJobsController@getJobAppDatatable')->name('job.jobAppDatatable');
@@ -167,7 +167,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::post('jobApplication/exportCSV', 'Admin\AdminJobsController@ExportCSV')->name('jobApplication.exportCSV');
     Route::get('job/exportApplicationCSV/{id}', 'Admin\AdminJobsController@ExportApplicationCSV')->name('job.exportApplicationCSV');
 
-    // for filtering 
+    // for filtering
     Route::post('job_applications/search', 'Admin\AdminJobsController@filter')->name('job_applications.filter');
 
 
@@ -196,22 +196,22 @@ Route::post('register', 'Site\HomeController@register')->name('register'); // us
     // =============================================== Forget Password ===============================================
 
 
-	
+
 	//Employer Registeration.
 	Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer');
 	Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
 	Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
 	Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
 
-// Desktop layout only. 
+// Desktop layout only.
 Route::group(array('middleware' => ['devicecheck']), function(){
 
     Route::get('/', 'Site\HomeController@index')->name('homepage');
 
 	// Login.
 	Route::get('login', function () { return redirect('/'); });
-   
-    Route::post('join', 'Site\HomeController@join')->name('join'); 
+
+    Route::post('join', 'Site\HomeController@join')->name('join');
     Route::get('join', function () { return redirect('/'); });
 
 
@@ -239,10 +239,10 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
 // ======================================= For Updating User Setting =======================================
 
     Route::get('updateUserPersonalSetting', 'Site\SiteUserController@updateUserPersonalSetting')->name('updateUserPersonalSetting');
-    
+
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
     Route::post('ajax/updateRecentJob', 'Site\SiteUserController@updateRecentJob');
-    
+
     // Added by Hassan
 
     Route::post('ajax/updateSalaryRange', 'Site\SiteUserController@updateSalaryRange');
@@ -266,9 +266,9 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/deleteuser', 'Site\SiteUserController@deleteuser');
 
 
-    
+
     // Added by Hassan
-    
+
     Route::get('ajax/getUserPersonalInfo', 'Site\SiteUserController@getUserPersonalInfo');
     Route::post('ajax/update_about_field', 'Site\SiteUserController@updateAboutField');
     Route::post('ajax/uploadUserGallery', 'Site\SiteUserController@uploadUserGallery');
@@ -276,7 +276,8 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/setGalleryPrivateAccess/{id}', 'Site\SiteUserController@setGalleryPrivateAccess');
     Route::post('ajax/setImageAsProfile/{id}', 'Site\SiteUserController@setImageAsProfile');
     Route::post('ajax/userUploadResume', 'Site\SiteUserController@userUploadResume')->name('userUploadResume');
-    Route::post('ajax/removeAttachment/', 'Site\SiteUserController@removeAttachment')->name('removeAttachment');
+    Route::get('ajax/removeAttachment/', 'Site\SiteUserController@removeAttachment')->name('removeAttachment');
+    Route::get('ajax/purchaseUserInfo/', 'Site\SiteUserController@purchaseUserInfo')->name('purchaseUserInfo');
     Route::get('ajax/getTags/{category}/{offset?}', 'Site\SiteUserController@getTags');
     Route::get('ajax/searchTags', 'Site\SiteUserController@searchTags')->name('searchTags');
 
@@ -304,7 +305,7 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/unLikeUser', 'Site\SiteUserController@unLikeUser')->name('unLikeUser');
 
     Route::get('mutual-likes',         'Site\SiteUserController@mutualLikes')->name('mutualLikes');
-    
+
 
 				// User Step2
 				Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
@@ -331,28 +332,28 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
 
     // job
 
- 
+
 
     Route::get('employer/job/new',    'Site\EmployerController@newJob')->name('newJob');
     Route::post('ajax/job/new',    'Site\EmployerController@addNewJob')->name('addNewJob');
     Route::get('employer/jobs',    'Site\EmployerController@jobs')->name('employerJobs');
     Route::get('employer/jobsEdit/{id}',    'Site\EmployerController@jobEdit')->name('employerJobEdit');
     Route::get('employer/job/{id}/applications', 'Site\EmployerController@empJobApplications')->name('empJobApplications');
-    
+
     Route::post('employer/jobAppFilter', 'Site\EmployerController@jobAppFilter')->name('jobAppFilter');
 
- 
+
     Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
-    
+
 				Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
 				Route::get('step2Jobs', 'Site\SiteUserController@step2Jobs')->name('step2Jobs');
     Route::post('jobsFilter', 'Site\SiteUserController@jobsFilter')->name('jobsFilter');
 
     Route::get('jobs/{id}', 'Site\SiteUserController@jobDetail')->name('jobDetail');
-    
+
     Route::post('ajax/deleteJob/{id}', 'Site\SiteUserController@deleteJob')->name('deleteJob');
     Route::get('jobApplications', 'Site\SiteUserController@jobApplications')->name('jobApplications');
-    
+
 
     Route::get('ajax/jobApplyInfo/{id}', 'Site\SiteUserController@jobApplyInfo')->name('jobApplyInfo');
     Route::post('ajax/jobApplySubmit', 'Site\SiteUserController@jobApplySubmit')->name('jobApplySubmit');
@@ -361,7 +362,7 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/changeJobApplicationStatus', 'Site\EmployerController@changeJobApplicationStatus')->name('changeJobApplicationStatus');
 
     // Route::get('employer/jobapplications', 'Site\EmployerController@empJobApplications')->name('empJobApplications');
-    
+
 
 
     // Credits

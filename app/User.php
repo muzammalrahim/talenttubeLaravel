@@ -317,8 +317,11 @@ class User extends Authenticatable
 
     public function users()
     {
-        return $this->belongsToMany('App\User');
+                    return $this->belongsToMany('App\User', 'employer_user_transaction', 'employer_id', 'user_id')
+                    ->withTimestamps()
+                    ->withPivot(['status','type']);
     }
+
 
     public function employers()
     {
