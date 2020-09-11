@@ -1230,6 +1230,52 @@ class SiteUserController extends Controller
     }
 
 
+
+
+    public function purchaseUserInfo(Request $request)
+    {
+        //  dd($request->toArray());
+        $user = Auth::user();
+        $user_id = $request->user_id;
+
+        if (!empty($user_id)) {
+            
+            if($user->credit-10 >= 0){
+                $user->users()->attach($user_id, ['type'=> 'User info purchased', 'status'=> 1]);
+                $user->credit = $user->credit-10;
+                $user->save();
+                $output = array(
+                    'status' => '1',
+                    'message' => 'User info purchased.'
+                );
+            }
+            else{
+                $output = array(
+                    'status' => '2',
+                    'message' => 'Not Enough credit'
+                );
+
+            }
+
+            return response()->json($output);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //====================================================================================================================================//
     // Add new user activity.
     // POST Ajax request submitted from profile area.

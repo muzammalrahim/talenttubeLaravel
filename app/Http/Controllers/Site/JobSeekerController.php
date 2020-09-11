@@ -46,7 +46,7 @@ class JobSeekerController extends Controller {
        // $data['employers'] = $jobSeekers;
         return view('site.user.employers', $data);
 				}
-				
+
 				public function employerspost(Request $request){
 					$user = Auth::user();
 					if (isEmployer($user)){ return redirect(route('jobSeekers')); }
@@ -173,13 +173,24 @@ class JobSeekerController extends Controller {
     //====================================================================================================================================//
     public function jobSeekerInfo($jobSeekerId){
         $user = Auth::user();
-        // if not employer then do not allowed him. 
+        // if not employer then do not allowed him.
         if (!isEmployer($user)){ return redirect(route('jobSeekers')); }
 
         $data['user'] = $user;
-         
+
 
         $jobSeeker = User::JobSeeker()->where('id',$jobSeekerId)->first();
+
+        $isallowed = False;
+        foreach($user->users as $us){
+            if($us->id = $jobSeeker->id){
+                $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
+                $isallowed = True;
+                $data['attachments'] = $attachments;
+                
+            }
+
+        }
 
         // check if jobseeker not exist then redirect to jobseeker list.
         if(empty($jobSeeker) || isEmployer($jobSeeker) ){ return redirect(route('jobSeekers')); }
@@ -190,16 +201,16 @@ class JobSeekerController extends Controller {
         // $jobs                = Jobs::where('user_id',$employerId)->get();
         $galleries    = UserGallery::Public()->Active()->where('user_id',$jobSeekerId)->get();
         $videos      = Video::where('user_id', $jobSeekerId)->get();
-									
+
         $data['title']          = 'JobSeeker Info';
         $data['classes_body']   = 'jobSeekerInfo';
         $data['jobSeeker']       = $jobSeeker;
         $data['likeUsers']       = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
-        // $data['jobs']           = $jobs;
+        $data['isallowed'] = $isallowed;
         $data['galleries']        = $galleries;
         $data['videos']          = $videos;
         $data['qualificationList'] = getQualificationsList();
-        
+
 
         return view('site.user.jobSeekerInfo', $data);      //  site/user/jobSeekerInfo
     }
