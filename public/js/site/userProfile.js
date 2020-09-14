@@ -324,9 +324,9 @@ this.updateIndustryExperience = function(){
 
             success: function(data){
                     $('.questionsAlert').show().delay(3000).fadeOut('slow');
-                    $('.saveQuestionsButton').hide();
+                    $('.saveQuestionsButton').css("display","none");
                     $('.jobSeekerRegQuestion').addClass('hide_it');
-                    $('.QuestionsKeyPTag').removeClass('hide_it');
+                    $('.QuestionsKeyPTag').removeClass('hide_it2');
                     if(data){
                         // $(".questionsOfUser").load(" .questionsOfUser");
                         $(".SaveQuestionsSpinner").remove();

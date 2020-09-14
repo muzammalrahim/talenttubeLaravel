@@ -98,7 +98,7 @@
         </div>  
     </div>
          <a class="addQualification btn btn-sm btn-primary text-white hide_it"style = "cursor:pointer;">Add New</a>
-         <a class="btn btn-sm btn-success hide_it" onclick="UProfile.updateQualifications()">Save</a>
+         <a class="btn btn-sm btn-success hide_it saveQualification" onclick="UProfile.updateQualifications()">Save</a>
 </div>
       <div class="alert alert-success QualifAlert hide_it2" role="alert">
         <strong>Success!</strong> Qualification have been updated successfully!
@@ -297,8 +297,8 @@
                             </div>
                           @endforeach
                       @endif
-                          <div class="col-md-12 text-center"style="margin-top: 65px;">
-                              <a class="btn btn-sm btn-success saveQuestionsButton hide2" onclick="UProfile.updateQuestions()">Save</a>
+                          <div class="col-md-12 text-center"style="margin-top: 15px;">
+                              <a class="btn btn-sm btn-success saveQuestionsButton hide_it2" onclick="UProfile.updateQuestions()">Save</a>
                           </div>  
                 </div>
     </div>

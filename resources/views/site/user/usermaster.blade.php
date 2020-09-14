@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/style.css') }}">
 
+    {{-- added on 14-09-2020 --}}
+{{--     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous"> --}}
+    {{-- added on 14-09-2020 --}}
+    
+
     {{-- Added By Hassan --}}
   
     <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
