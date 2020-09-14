@@ -719,7 +719,7 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function likeJobSeeker($jobSekerId){
         $user = Auth::user();
-        if (!isEmployer($user)){
+        if (isEmployer($user)){
             return response()->json([
                 'status' => 0,
                 'error' => 'You are not allwoed to block Job Seekers',

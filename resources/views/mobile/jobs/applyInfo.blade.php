@@ -66,8 +66,15 @@
   $('.submitApplication').click(function(){
     console.log('submit application');
       var applyFormData = $('#job_apply_form').serializeArray()
+
+      $.ajaxSetup({
+        headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+        });
         $.ajax({
         type: 'POST',
+
             url: base_url+'/m/ajax/MjobApplySubmit',
             data: applyFormData,
             success: function(data){
