@@ -439,7 +439,7 @@ li.tag.tagItem {
 <script type="text/javascript">
     $(function(){
 								var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
-        userStepReload(currentStep);
+        userStepReload(currentStep); 
 				});
 </script>
 

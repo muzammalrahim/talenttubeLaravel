@@ -267,3 +267,43 @@ $('input[name="filter_industry_status"]').change(function() {
             forgotPassClose();
         }
     })
+
+ // ========== Function to show Block popup when click on ==========//
+ $(document).ready(function(){
+ $(document).on('click','.jsBlockUserBtn',function(){
+     var jobseeker_id = $(this).data('jsid');
+     console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
+     $('#jobSeekerBlockId').val(jobseeker_id);
+     $('#confirmJobSeekerBlockModal').modal({
+        fadeDuration: 200,
+        fadeDelay: 2.5,
+        escapeClose: false,
+        clickClose: false,
+    });
+ });
+
+ // ========== Block Employer Ajax call  ==========//
+ $(document).on('click','.confirm_JobSeekerBlock_ok',function(){
+    console.log(' confirm_JobSeekerBlock_ok ');
+    var jobseeker_id = $('#jobSeekerBlockId').val();
+
+    $('confirmJobSeekerBlockModal  .img_chat').html(getLoader('blockJobSeekerLoader'));
+    var btn = $(this); //
+    btn.prop('disabled',true);
+
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/ajax/blockEmployer/'+jobseeker_id,
+        success: function(data){
+            btn.prop('disabled',false);
+            if( data.status == 1 ){
+                $('.confirmJobSeekerBlockModal .img_chat').html(data.message);
+                $('.jobSeeker_row.js_'+jobseeker_id).remove();
+            }else{
+                $('.confirmJobSeekerBlockModal .img_chat').html(data.error);
+            }
+        }
+    });
+});
+});

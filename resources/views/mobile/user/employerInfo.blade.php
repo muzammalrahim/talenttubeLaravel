@@ -101,9 +101,12 @@
                         {{-- <a class="likeEmployerButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid="{{$employer->id}}">Like</a> --}}
 
                         @if (in_array($employer->id,$likeUsers))
+
                         <a class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$employer->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
+
+
                     @else
-                    <a class="jsLikeButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$employer->id}}">Like</a>
+                    <a class="likeEmployerButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$employer->id}}">Like</a>
                         
                     @endif
 
@@ -334,11 +337,11 @@
 @stop
 
 
-{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
-{{-- <script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockEmp.js') }}"></script>  --}}
-
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockEmp.js') }}"></script> 
+
+{{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
+{{-- <script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script>  --}}
 
 <script type="text/javascript">
 $(document).ready(function(){
@@ -367,8 +370,7 @@ $(document).ready(function(){
             }
         });
 
-  }); // jobApplyBtn click end 
+  });
 
-
-
+  // jobApplyBtn click end 
 </script>

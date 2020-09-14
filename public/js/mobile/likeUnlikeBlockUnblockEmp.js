@@ -68,13 +68,14 @@ $(document).on('click','.blockEmployerButton',function(){
 
 
 
-// ======================================================= Unlike Employer in Employer Detal Page =======================================================
+// // ======================================================= Unlike Employer in Employer Detal Page =======================================================
+$(document).ready(function(){
 
     $('.unlikeEmpButton').click(function(){
         // console.log('Hi Unlike Employer Button');
         var btn = $(this);
         var jobseeker_id = $(this).data('jsid');
-        // console.log(' likeEmployerButton jobseeker_id ', jobseeker_id);
+        console.log(' likeEmployerButton jobseeker_id ', jobseeker_id);
         $('#idEmpInModalHidden').val(jobseeker_id);
 
     });
@@ -99,7 +100,7 @@ $(document).on('click','.blockEmployerButton',function(){
                 }
             });
     });
-
+});
 // ======================================================= Unlike Employer in Employer Detal Page end here =======================================================
 
 
