@@ -243,6 +243,11 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
     Route::post('ajax/updateRecentJob', 'Site\SiteUserController@updateRecentJob');
 
+    // Added by ALi
+    Route::post('ajax/addNewLocation', 'Site\SiteUserController@addNewLoaction');
+
+
+
     // Added by Hassan
 
     Route::post('ajax/updateSalaryRange', 'Site\SiteUserController@updateSalaryRange');
