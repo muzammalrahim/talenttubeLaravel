@@ -678,12 +678,12 @@ function showMap(){
      return false;
  }
 
- // function updateLocationInputs(place,city,state,country){
- //     jQuery('#location_name').val(place);
- //     jQuery('#location_city').val(city);
- //     jQuery('#location_state').val(state);
- //     jQuery('#location_country').val(country);
- // }
+ function updateLocationInputs(place,city,state,country){
+     jQuery('#location_name').val(place);
+     jQuery('#location_city').val(city);
+     jQuery('#location_state').val(state);
+     jQuery('#location_country').val(country);
+ }
 
  // by default show this location;
  geocode('Sydney New South Wales, Australia');
@@ -735,7 +735,7 @@ function showMap(){
 
 
   $(document).ready(function(){
-  
+
   $(".editQualification").click(function(){
         $(this).closest('.qualificationBox').addClass('editQualif');
         $('.removeQualification').removeClass('hide_it2');
@@ -744,7 +744,7 @@ function showMap(){
 
         // console.log('Testing Qualification');
 
-        
+
   });
 
    $('.qualificationBox').on('click','.removeQualification', function(){
@@ -755,21 +755,21 @@ function showMap(){
  })
    $(document).on('click','.addQualification', function(){
     console.log(' addQualification ');
-    var newQualificationHtml = '<div class="QualificationSelect"><select name="qualification[]" class="userQualification">'; 
+    var newQualificationHtml = '<div class="QualificationSelect"><select name="qualification[]" class="userQualification">';
     @if(!empty($qualificationList))
         @foreach($qualificationList as $lk=>$qualification)
-            newQualificationHtml += '<option value="{{$qualification['id']}}">{{$qualification['title']}}</option>'; 
+            newQualificationHtml += '<option value="{{$qualification['id']}}">{{$qualification['title']}}</option>';
         @endforeach
     @endif
-    newQualificationHtml += '</select>';  
-    newQualificationHtml += '<i class="fa fa-trash removeQualification"></i>'; 
+    newQualificationHtml += '</select>';
+    newQualificationHtml += '<i class="fa fa-trash removeQualification"></i>';
     newQualificationHtml += '</div>';
     $('.jobSeekerQualificationList').append(newQualificationHtml);
    });
 
 
 
-// ====================================================== Edit Qualification Ajax ====================================================== 
+// ====================================================== Edit Qualification Ajax ======================================================
 
 //     $(".qualificationSaveButton").click(function(){
 //         console.log('hi qualification');
@@ -778,7 +778,7 @@ function showMap(){
 //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 //             }
 //         });
-//         var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get(); 
+//         var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get();
 //         $('.qualifExpLoader').show();           //indusExpLoader
 //         // $('.SaveQualification').after(getLoader('smallSpinner SaveQualificationSpinner'));
 
@@ -791,8 +791,8 @@ function showMap(){
 //                     $('.removeQualification ').addClass('hide_it2');
 //                     $('.addQualification').addClass('hide_it2');
 //                     $('.qualificationSaveButton').addClass('hide_it2');
-//                     $('.qualifExpLoader').hide(); 
-//                     $('.jobSeekerQualificationList').html(resp.data); 
+//                     $('.qualifExpLoader').hide();
+//                     $('.jobSeekerQualificationList').html(resp.data);
 
 //                     // location.reload();
 //                 }
@@ -801,7 +801,7 @@ function showMap(){
 // })
 
 
-// ====================================================== End Qualification Ajax end here ====================================================== 
+// ====================================================== End Qualification Ajax end here ======================================================
 
 
 
@@ -809,15 +809,15 @@ function showMap(){
 //===================================================== add remove industry ===================================================
 
  $(".editIndustry").click(function(){
-    $(this).closest('.IndusListBox').addClass('edit');   
+    $(this).closest('.IndusListBox').addClass('edit');
 
     $('.removeIndustry').removeClass('hide_it2');
     $('.addIndus').removeClass('hide_it2');
     $('.buttonSaveIndustry').removeClass('hide_it2');
-    
+
     // console.log('welcome');
   });
- 
+
 // add and remove Industry code
 $(document).ready(function(){
    $(document).on('click','.removeIndustry', function(){
@@ -826,30 +826,30 @@ $(document).ready(function(){
 
    $(document).on('click','.addIndus', function(){
     console.log(' addIndus ');
-    var newIndusHtml = '<div class="IndustrySelect"><select name="industry_experience[]" class="industry_experience userIndustryExperience">'; 
+    var newIndusHtml = '<div class="IndustrySelect"><select name="industry_experience[]" class="industry_experience userIndustryExperience">';
     @if(!empty($industriesList))
         @foreach($industriesList as $lk=>$lv)
-            newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>'; 
+            newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>';
         @endforeach
     @endif
-    newIndusHtml += '</select>';  
+    newIndusHtml += '</select>';
     newIndusHtml += '<i class="fa fa-trash removeIndustry"></i>';
     newIndusHtml += '</div>';
 
     $('.IndusList').append(newIndusHtml);
    });
-}); 
+});
 
 // ======================== Edit Industry Experience for Ajax ========================
 
-// $(".saveIndus").click(function(){ 
+// $(".saveIndus").click(function(){
 //     // console.log('hi industry');
 //     $.ajaxSetup({
 //             headers: {
 //                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 //             }
 //         });
-//         var industry_experience = jQuery('.industry_experience').map(function(){ return $(this).val()}).get(); 
+//         var industry_experience = jQuery('.industry_experience').map(function(){ return $(this).val()}).get();
 
 //          // $('.indusExpLoader').after(getLoader('smallSpinner indusExpLoader'));
 //         $('.indusExpLoader').show();           //indusExpLoader
@@ -860,19 +860,19 @@ $(document).ready(function(){
 //             url: base_url+'/ajax/updateIndustryExperience',
 //             data: {'industry_experience': industry_experience},
 //             // $('.IndusAlert').hide();
-            
-            
+
+
 //             success: function(resp){
 //                 if(resp.status){
-//                     // $('.IndusListBox').removeClass('edit'); 
+//                     // $('.IndusListBox').removeClass('edit');
 //                     $('.IndusAlert').show().delay(3000).fadeOut('slow');
-//                     // $('.SaveIndustrySpinner').remove(); 
+//                     // $('.SaveIndustrySpinner').remove();
 
-//                     $('.IndusList').html(resp.data); 
-//                     $('.removeIndustry').addClass('hide_it2'); 
+//                     $('.IndusList').html(resp.data);
+//                     $('.removeIndustry').addClass('hide_it2');
 //                     $('.addIndus').addClass('hide_it2');
 //                     $('.buttonSaveIndustry').addClass('hide_it2');
-//                     $('.indusExpLoader').hide(); 
+//                     $('.indusExpLoader').hide();
 
 
 //                     }
@@ -880,14 +880,14 @@ $(document).ready(function(){
 //     });
 //  });
 
-// ======================================= Edit Industry Experience For Ajax End Here ======================================= 
+// ======================================= Edit Industry Experience For Ajax End Here =======================================
 
 
 //===================================================== add remove industry end  =====================================================
 
 //===================================================== User Questions Edit =====================================================
 
- $(".editQuestions").click(function(){      
+ $(".editQuestions").click(function(){
      // $('.hideme').show();
      $('.saveQuestionsButton').css("display","block");
      $('.QuestionsKeyPTag').addClass('hide_it2');
@@ -902,15 +902,15 @@ $(document).ready(function(){
 //  ======================================= User Questions Ajax saveQuestionsButton =======================================
 
     // $(".saveQuestionsButton").click(function(){
-    //     var items = {}; 
-    //     $('select.jobSeekerRegQuestion').each(function(index,el){  
-    //     // console.log(index, $(el).attr('name')  , $(el).val()   );  
+    //     var items = {};
+    //     $('select.jobSeekerRegQuestion').each(function(index,el){
+    //     // console.log(index, $(el).attr('name')  , $(el).val()   );
     //         // items.push({name:  $(el).attr('name') , value: $(el).val()});
-    //         var elem_name = $(el).attr('name'); 
-    //         var elem_val = $(el).val(); 
-    //         items[elem_name] = elem_val; 
+    //         var elem_name = $(el).attr('name');
+    //         var elem_val = $(el).val();
+    //         items[elem_name] = elem_val;
     //         // items.push({elem_name : elem_val });
-    //     $('.userQuesLoader').show();     
+    //     $('.userQuesLoader').show();
 
     //     });
     //      $.ajaxSetup({
@@ -923,12 +923,12 @@ $(document).ready(function(){
     //         type: 'POST',
     //         url: base_url+'/m/ajax/MupdateQuestions',
     //         data: {'questions': items},
-            
+
     //         success: function(data){
     //                 $('.questionsAlert').show().delay(3000).fadeOut('slow');
     //  $('.saveQuestionsButton').addClass('hide_it2');
 
-    //                 // $('.saveQuestionsButton').addClass('hide_it2'); 
+    //                 // $('.saveQuestionsButton').addClass('hide_it2');
     //                 $('.userQuesLoader').hide();
     //                 $('.QuestionsKeyPTag').removeClass('hide_it2');
     //                 $(".SaveQuestionsSpinner").remove();
@@ -939,7 +939,7 @@ $(document).ready(function(){
     //                 if(data){
     //                     // $(".questionsOfUser").load(" .questionsOfUser");
     //                     // $(".SaveQuestionsSpinner").remove();
-                       
+
     //             }
     //         }
     //     });
