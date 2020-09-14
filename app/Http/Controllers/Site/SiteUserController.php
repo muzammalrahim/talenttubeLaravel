@@ -59,8 +59,8 @@ class SiteUserController extends Controller
 
             $tags = Tags::orderBy('usage', 'DESC')->limit(30)->get();
             $tagCategories = TagCategory::get();
- 
- 
+
+
             $userTags = $user->tags;
             // dd( $tags );
             $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
@@ -70,7 +70,7 @@ class SiteUserController extends Controller
             $data['geo_state'] = !empty($user->country)?(get_Geo_State($user->country)):null;
             $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null;
             $data['geo_state'] = !empty($user->country)?(get_Geo_State($user->country)):null;
-            $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null; 
+            $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null;
             $data['profile_image']    = $profile_image;
             $data['title'] = 'profile';
             $data['classes_body'] = 'profile';
@@ -94,17 +94,17 @@ class SiteUserController extends Controller
                 if(isEmployer()){
 
                   if(isRequestAjax($request)){
-                    // return view('mobile.user.profile.profile', $data); 
+                    // return view('mobile.user.profile.profile', $data);
                 }else{
                     return view('mobile.employer.profile', $data);
                 }
 
                 }else{
                     return view('mobile.user.profile.profile', $data);  //   mobile/user/profile/profile
- 
+
                 }
 
-              
+
 
 
             }
@@ -112,7 +112,7 @@ class SiteUserController extends Controller
             else{
                 return view('site.user.profile.profile', $data);
                 // site/user/profile/profile
-            } 
+            }
         } else {
             return view('site.404');
         }
@@ -507,7 +507,74 @@ class SiteUserController extends Controller
         }
     }
 
+    public function addNewLoaction(Request $request) {
+        $rules = array(
+            'location_name' => 'max:100',
+            'location_country' => 'max:100',
+            'location_state' => 'max:100',
+            'location_city' => 'max:100',
+            'location_lat' => 'max:50',
+            'location_long' => 'max:50',
+        );
 
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        } else {
+            // check country state city correction.
+            // $geo_country = \App\GeoCountry::where('country_id', $request->country)->first();
+            // if (!$geo_country) {
+            //     return response()->json([
+            //         'status' => 0,
+            //         'validator' =>  $validator->errors()->add('country', 'Wrong Country id')
+            //     ]);
+            // }
+            // $geo_validate_state = $geo_country->validateState($request->state);
+            // if (!$geo_validate_state) {
+            //     $validator->errors()->add('state', 'Wrong State selected');
+            //     return response()->json([
+            //         'status' => 0,
+            //         'validator' => $validator->getMessageBag()->toArray()
+            //     ]);
+            // }
+            // $geo_validate_city  = $geo_country->validateCity($request->state, $request->city);
+            // if (!$geo_validate_city) {
+            //     $validator->errors()->add('city', 'Wrong City selected');
+            //     return response()->json([
+            //         'status' => 0,
+            //         'validator' => $validator->getMessageBag()->toArray()
+            //     ]);
+            // }
+
+            // $lati = $request->location_lat;
+
+            $user = Auth::user();
+            $user->location_lat     = $request->location_lat;
+            $user->location_long    = $request->location_long;
+            $user->location         = $request->location_name;
+            $user->country = $request->location_country;
+            $user->state = $request->location_state;
+            $user->city = $request->location_city;
+
+
+            try {
+                $user->save();
+                return response()->json([
+                    'status' => 1,
+                    'validator' => 'record Succesfully saved',
+                    'data' => userLocation($user)
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 0,
+                    'error' => $e->errorInfo[2]
+                ]);
+            }
+        }
+    }
     //====================================================================================================================================//
     // chagne the text of user status,.
     // triggered from User profile page.
@@ -580,10 +647,10 @@ class SiteUserController extends Controller
             $user->qualificationRelation()->sync($requestData['qualification']);
             $user->save();
             $data['user'] = User::find($user->id);
-            $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);  
+            $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
 
-                //  site/layout/parts/jobSeekerQualificationList 
-            
+                //  site/layout/parts/jobSeekerQualificationList
+
             $QualificationHtml = $QualificationView->render();
             return response()->json([
                     'status' => 1,
@@ -695,15 +762,15 @@ class SiteUserController extends Controller
             return response()->json([
                     'status' => 1,
                     'data' => array(
-                        'email_User' => $user->email, 
+                        'email_User' => $user->email,
                         'logout_Route' => route('logout')
                     )
             ]);
         }
-    }   
+    }
 
     //====================================================================================================================================//
-    //Ajax Post // Update layout. // change user password.  
+    //Ajax Post // Update layout. // change user password.
     //====================================================================================================================================//
     public function updatePassword(Request $request){
         $user = Auth::user();
@@ -721,14 +788,14 @@ class SiteUserController extends Controller
                 'validator' =>  $validator->getMessageBag()->toArray()
             ]);
         }else{
-            // check if user has enter his current password correct. 
+            // check if user has enter his current password correct.
             if(!Hash::check($request->current_password, $user->password)){
                 return response()->json([
                     'status' => 0,
                     'validator' =>  $validator->getMessageBag()->toArray(),
                     'validator' =>  $validator->errors()->add('current_password', 'Current password is wrong')
                 ]);
-            } 
+            }
             $user->password = Hash::make($request->new_password);
             $user->save();
             return response()->json([
@@ -739,18 +806,18 @@ class SiteUserController extends Controller
     }
 
 
-    // ================================== Update Email Function End Here ======================================================== 
+    // ================================== Update Email Function End Here ========================================================
 
     // ===================================== Update Phone Function ==============================================================
-    public function updatePhone(Request $request){   
+    public function updatePhone(Request $request){
         $user = Auth::user();
-        // dd( $user->id); 
+        // dd( $user->id);
 
 
 
         $rules = array('phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10');
         $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) { 
+        if ($validator->fails()) {
             $valitdaion_message = $validator->getMessageBag()->toArray();
             $mes = $valitdaion_message['phone'];
             return response()->json([
@@ -769,12 +836,12 @@ class SiteUserController extends Controller
         }
     }
 
-    // =============================================== Update Phone Function End Here =========================================  
+    // =============================================== Update Phone Function End Here =========================================
 
-    // =================================================  Delete User Function ================================================ 
-    public function deleteuser(Request $request){   
+    // =================================================  Delete User Function ================================================
+    public function deleteuser(Request $request){
 
-        
+
         $user = Auth::user();
         $del_data = new fbremacc();
         $del_data->user_id = $user->id;
@@ -785,8 +852,8 @@ class SiteUserController extends Controller
         $del_data->company = $user->company;
         $del_data->reason = $request->reasonValue;
         $del_data->save();
-        
-        // dd( $user->email); 
+
+        // dd( $user->email);
 
         if(!empty($user)){
         $user->delete();
@@ -797,7 +864,7 @@ class SiteUserController extends Controller
       }
     }
 
-    // =================================================== Delete User Function End Here ================================================ 
+    // =================================================== Delete User Function End Here ================================================
 
 
     //====================================================================================================================================//
@@ -898,7 +965,7 @@ class SiteUserController extends Controller
 
                 $data = array();
                 $data['user'] = $user;
-                $view = view('site.user.profile.personalInfoTable', $data); 
+                $view = view('site.user.profile.personalInfoTable', $data);
                 $html = $view->render();
 
                 return response()->json([
@@ -921,11 +988,11 @@ class SiteUserController extends Controller
     // Ajax submit request from profile page.
     //====================================================================================================================================//
     public function updateUserPersonalSetting(Request $request)
-    {       
+    {
             $user = Auth::user();
             $data['classes_body'] = 'profile';
             $data['user'] = $user;
-            $view = view('site.user.profile.updateUserPersonalSetting', $data); //  site/user/profile/updateUserPersonalSetting 
+            $view = view('site.user.profile.updateUserPersonalSetting', $data); //  site/user/profile/updateUserPersonalSetting
             $html = $view->render();
             return $view;
     }
@@ -1239,7 +1306,7 @@ class SiteUserController extends Controller
         $user_id = $request->user_id;
 
         if (!empty($user_id)) {
-            
+
             if($user->credit-10 >= 0){
                 $user->users()->attach($user_id, ['type'=> 'User info purchased', 'status'=> 1]);
                 $user->credit = $user->credit-10;
@@ -1371,11 +1438,11 @@ class SiteUserController extends Controller
             // $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
 												$fileName = $fileOriginalName;
 												$storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
-												
+
 
             // store video in private folder by default.
 												$storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
-												
+
 
 
             $video = new Video();
@@ -1457,14 +1524,14 @@ class SiteUserController extends Controller
     public function jobs(){
 		$user = Auth::user();
 		$user->step2 = 10;
-		$user->save(); 
+		$user->save();
         $data['user'] = $user;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
         $data['jobs'] = null; //Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
         return view('site.jobs.index', $data); // site/jobs/index
 				}
-				
+
 				//====================================================================================================================================//
     // Dev Akmal GET // Job Listing For Step2
     //====================================================================================================================================//
@@ -1476,7 +1543,7 @@ class SiteUserController extends Controller
 									return view('site.jobs.step2Jobs', compact('jobs'));
 					}
 	}
- 
+
 
     //====================================================================================================================================//
     // Get // layout for purchasing Credits.

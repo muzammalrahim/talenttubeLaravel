@@ -85,6 +85,7 @@ $(document).ready(function(){
     // Save New job button click //
     /////////////////////////////////////////////////////////////////
     $('.saveNewJob').on('click',function() {
+
         event.preventDefault();
         var formData = $('.new_job_form').serializeArray();
         $('.saveNewJob').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
@@ -119,6 +120,7 @@ $(document).ready(function(){
             }
         });
     })
+
 
 
     //====================================================================================================================================//
