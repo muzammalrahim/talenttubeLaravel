@@ -547,7 +547,7 @@ class EmployerController extends Controller {
         }else{
             return view('site.employer.jobSeekers.index', $data); // site/employer/jobSeekers/index
         }
-        
+
     }
 
 

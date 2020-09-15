@@ -10,7 +10,7 @@
 <div class="newJobCont">
     <div class="head icon_head_browse_matches">Job Seekers List</div>
 
-    
+
     <div class="add_new_job jobSeekersListingCont">
 
         <!-- =============================================================================================================================== -->
@@ -70,7 +70,7 @@ $(document).ready(function() {
 
 
 //====================================================================================================================================//
-// Block User Button click. Show confirm popup modal.  
+// Block User Button click. Show confirm popup modal.
 //====================================================================================================================================//
  $(document).on('click','.jsBlockUserBtn',function(){
      var jobseeker_id = $(this).data('jsid');
@@ -142,27 +142,27 @@ $(document).on('click','.jsLikeUserBtn',function(){
 // Top Filter form submit load data throug ajax.
 //====================================================================================================================================//
 $('#jobSeeker_filter_form').on('submit',function(event){
-    console.log(' jobSeeker_filter_form submit '); 
+    console.log(' jobSeeker_filter_form submit ');
     event.preventDefault();
     $('#paginate').val('');
     getData();
 });
 
-// function to send ajax call for getting data throug filter/Pagination selection. 
+// function to send ajax call for getting data throug filter/Pagination selection.
 var getData = function(){
     var url = '{{route('jobSeekersFilter')}}';
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
-        // console.log(' success data  ', data); 
+        // console.log(' success data  ', data);
         $('.jobSeekers_list').html(data);
     });
 }
 
-getData(); 
+getData();
 
-// Bottom pagination load data throug ajax. 
+// Bottom pagination load data throug ajax.
 $(document).on('click','.jobseeker_pagination .page-item .page-link',function(e){
-    console.log(' page-link click ', $(this) ); 
+    console.log(' page-link click ', $(this) );
     e.preventDefault();
     var page = $(this).attr('href').split('page=')[1];
     $('#paginate').val(page);
@@ -174,21 +174,21 @@ $(document).on('click','.jobseeker_pagination .page-item .page-link',function(e)
 // Enable/Disabled Filtering by google map location.
 //====================================================================================================================================//
 $('input[name="filter_location_status"]').change(function() {
-    console.log(' filter_location_status '); 
-    (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));  
+    console.log(' filter_location_status ');
+    (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
 });
 
 //====================================================================================================================================//
 // Enable/Disabled Filtering by Questions.
 //====================================================================================================================================//
 $('input[name="filter_by_questions"]').change(function() {
-    console.log(' filter_by_questions '); 
-    (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));  
+    console.log(' filter_by_questions ');
+    (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));
      // $('input, select').styler({ selectSearch: true, });
 });
 
 
- 
+
 
 
 
@@ -198,10 +198,10 @@ $('input[name="filter_by_questions"]').change(function() {
 
 
     //====================================================================================================================================//
-    // Google map location script 
+    // Google map location script
     //====================================================================================================================================//
     var map;
- 
+
     var input = document.getElementById('location_search');
     var autocomplete = new google.maps.places.Autocomplete(input);
     var geocoder = new google.maps.Geocoder();
@@ -209,7 +209,7 @@ $('input[name="filter_by_questions"]').change(function() {
     var latlng = new google.maps.LatLng(-31.2532183, 146.921099);
     var marker = "";
     var circle = "";
-   
+
     var options = {
         zoom: 14,
         center: latlng,
@@ -222,13 +222,13 @@ $('input[name="filter_by_questions"]').change(function() {
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
         if(!hasLocation) { map.setZoom(14); }
 
-        // add listner on map, when click on map change the latlong and put a marker over there. 
-        google.maps.event.addListener(map, "click", function(event) { 
-            console.log(' addListener click  '); 
-            reverseGeocode(event.latLng); 
+        // add listner on map, when click on map change the latlong and put a marker over there.
+        google.maps.event.addListener(map, "click", function(event) {
+            console.log(' addListener click  ');
+            reverseGeocode(event.latLng);
         })
 
-        // get the location (city,state,country) on base of text enter in search. 
+        // get the location (city,state,country) on base of text enter in search.
         // jQuery("#location_search_load").click(function() {
         //     if(jQuery("#location_search").val() != "") {
         //         geocode(jQuery("#location_search").val());
@@ -244,10 +244,10 @@ $('input[name="filter_by_questions"]').change(function() {
         //         jQuery("#location_search_load").click();
         // })
 
-        // when click on the Autocomplete suggested locations list 
+        // when click on the Autocomplete suggested locations list
         autocomplete.addListener('place_changed', function() {
-             console.log(' autocomplete place_changed '); 
-               
+             console.log(' autocomplete place_changed ');
+
               var place = autocomplete.getPlace();
               console.log(' place ', place);
 
@@ -266,7 +266,7 @@ $('input[name="filter_by_questions"]').change(function() {
                 map.setZoom(14);  // Why 14? Because it looks good.
               }
 
-              
+
               // var address = '';
               // if (place.address_components) {
               //   address = [
@@ -277,16 +277,16 @@ $('input[name="filter_by_questions"]').change(function() {
               // }
 
 
-              // console.log(' auto place --- ', place); 
-              // console.log(' auto address --- ', address); 
+              // console.log(' auto place --- ', place);
+              // console.log(' auto address --- ', address);
 
-                var address, city, country, state; 
+                var address, city, country, state;
                 var address_components = place.address_components;
                 for ( var j in address_components ) {
                     var types = address_components[j]["types"];
                     var long_name = address_components[j]["long_name"];
-                    var short_name = address_components[j]["short_name"];  
-                    // console.log(' address_components ', address_components); 
+                    var short_name = address_components[j]["short_name"];
+                    // console.log(' address_components ', address_components);
                     if ( jQuery.inArray("locality", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                         city = long_name;
                     }
@@ -297,7 +297,7 @@ $('input[name="filter_by_questions"]').change(function() {
                         country = long_name;
                     }
                 }
-            
+
                 if((city) && (state) && (country))
                     address = city + ", " + state + ", " + country;
                 else if((city) && (state))
@@ -310,19 +310,19 @@ $('input[name="filter_by_questions"]').change(function() {
                  if((place) && (place.name))
                     address = place.name + ',' + address;
 
-                    // console.log(' reverseGeocode place ', place); 
-                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country ); 
-                    // updateLocationInputs(place.name,city,state,country);
+                    // console.log(' reverseGeocode place ', place);
+                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
+                    updateLocationInputs(place.name,city,state,country);
                     jQuery("#location_search").val(address);
                     placeMarker(place.geometry.location);
 
             });
 
         }
-        // location_map length. 
+        // location_map length.
 
     function placeMarker(location) {
-        console.log(' placeMarker location ',location); 
+        console.log(' placeMarker location ',location);
 
         if (marker == "") {
             marker = new google.maps.Marker({
@@ -350,15 +350,15 @@ $('input[name="filter_by_questions"]').change(function() {
     }
 
     function drawCircle(location){
-        // var center = new google.maps.LatLng(19.0822507, 72.8812041); 
-         // place circle. 
+        // var center = new google.maps.LatLng(19.0822507, 72.8812041);
+         // place circle.
         var filter_location_radius =  parseInt(jQuery('select[name="filter_location_radius"]').val())*1000;
         if (circle == "") {
             //  var circle = new google.maps.Circle({
             //     center: location,
             //     map: map,
             //     radius: filter_location_radius,          // IN METERS.
-            //     
+            //
             // });
 
              circle = new google.maps.Circle({
@@ -374,7 +374,7 @@ $('input[name="filter_by_questions"]').change(function() {
         circle.bindTo('center', marker, 'position');
         circle.setRadius(filter_location_radius);
         map.fitBounds(circle.getBounds());
-       
+
     }
 
     function geocode(address) {
@@ -396,7 +396,7 @@ $('input[name="filter_by_questions"]').change(function() {
     }
 
     function reverseGeocode(location) {
-        console.log(' reverseGeocode ', location); 
+        console.log(' reverseGeocode ', location);
         if (geocoder) {
             geocoder.geocode({"latLng": location}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
@@ -407,8 +407,8 @@ $('input[name="filter_by_questions"]').change(function() {
                             var types = address_components[j]["types"];
                             var long_name = address_components[j]["long_name"];
                             var short_name = address_components[j]["short_name"];
-                                
-                            // console.log(' address_components ', address_components); 
+
+                            // console.log(' address_components ', address_components);
 
                             if ( jQuery.inArray("locality", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                                 city = long_name;
@@ -430,9 +430,9 @@ $('input[name="filter_by_questions"]').change(function() {
                     else if(country)
                         address = country;
 
-                    // console.log(' reverseGeocode results ', results); 
-                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country ); 
-                    // updateLocationInputs('',city,state,country);
+                    // console.log(' reverseGeocode results ', results);
+                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
+                    updateLocationInputs('',city,state,country);
                     jQuery("#location_search").val(address);
                     placeMarker(location);
                     return true;
@@ -449,15 +449,15 @@ $('input[name="filter_by_questions"]').change(function() {
     //     jQuery('#location_country').val(country);
     // }
 
-    // by default show this location; 
+    // by default show this location;
     geocode('Sydney New South Wales, Australia');
 
 
     jQuery('.filter_location_radius').on('change', function(){
-        console.log(' filter_location_radius changed.  '); 
-        drawCircle(new google.maps.LatLng(jQuery("#location_lat").val(), jQuery("#location_long").val()));    
-    }); 
-  
+        console.log(' filter_location_radius changed.  ');
+        drawCircle(new google.maps.LatLng(jQuery("#location_lat").val(), jQuery("#location_long").val()));
+    });
+
 
 });
 

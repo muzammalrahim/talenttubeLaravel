@@ -11,7 +11,7 @@
     <div class="head icon_head_browse_matches">JobSeeker Application Submitted</div>
 
     <div class="job_applications_filter mb20">
-   
+
     {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'job_applications_filter_form' )) }}
         <input type="hidden" name="page" id="paginate" value="">
         <input type="hidden" name="job_id" value="{{$job->id}}">
@@ -66,10 +66,10 @@
                 </div>
                 @endif
             </div>
-            {{-- industry selection --}}        
+            {{-- industry selection --}}
         </div>
 
-       
+
 
         <div class="searchField_location mb10">
             <div class="searchFieldLabel dinline_block">Filter by Location: </div>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
             </div>
-            {{-- bl_location --}}        
+            {{-- bl_location --}}
         </div>
 
 
@@ -139,7 +139,7 @@
               <option value="all_candidates">All candidates</option>
             </select>
         </div>
-        
+
         <div class="searchField_action">
             <div class="searchFieldLabel dinline_block"></div>
             <button class="btn small OrangeBtn">Submit</button>
@@ -150,7 +150,7 @@
 
     <div class="job_applications"></div>
 
- 
+
 </div>
 
 {{-- <div style="display:none;">
@@ -183,16 +183,16 @@
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script> 
+<script src="{{ asset('js/site/common.js') }}"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
 
     console.log(' new job doc ready ');
-    // trigger date picker. 
+    // trigger date picker.
     $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
 
-    // job Delete confirmation modal popup open. 
+    // job Delete confirmation modal popup open.
     $('.myJobDeleteBtn').on('click',function(){
         var job_id = $(this).attr('data-jobid');
         console.log(' confirmJobAppRemoval click  job_id ', job_id, $(this) );
@@ -205,7 +205,7 @@ $(document).ready(function() {
         $('#deleteConfirmJobId').val(job_id);
     });
 
-    // confirmation job delete ok trigger. 
+    // confirmation job delete ok trigger.
     $(document).on('click','.confirm_jobDelete_ok',function(){
         $('.confirmJobDeleteModal  .img_chat').html(getLoader('jobDeleteloader'));
         $(this).prop('disabled',true);
@@ -225,7 +225,7 @@ $(document).ready(function() {
         });
     });
 
-    // Show Job Application Question Answers. 
+    // Show Job Application Question Answers.
     $(document).on('click','.ja_load_qa',function(){
         var job_app_id = $(this).attr('data-appid');
         $(this).html(getLoader('jobDeleteloader'));
@@ -240,45 +240,45 @@ $(document).ready(function() {
         });
     });
 
-    // Top Filter form submit load data throug ajax. 
+    // Top Filter form submit load data throug ajax.
     $('#job_applications_filter_form').on('submit',function(event){
-        console.log(' job_applications_filter_form submit '); 
+        console.log(' job_applications_filter_form submit ');
         event.preventDefault();
         $('#paginate').val('');
         getData();
     });
-    
-    // Bottom pagination load data throug ajax. 
+
+    // Bottom pagination load data throug ajax.
     $(document).on('click','.job_pagination .page-item .page-link',function(e){
-        console.log(' page-link click ', $(this) ); 
+        console.log(' page-link click ', $(this) );
         e.preventDefault();
         var page = $(this).attr('href').split('page=')[1];
         $('#paginate').val(page);
         getData();
     });
 
-    // change job application status, send ajax. 
+    // change job application status, send ajax.
     $(document).on('change','select.jobApplicStatus',function(e){
-        console.log(' jobApplicStatus change ', $(this)); 
-        var statusElem = $(this); 
-        var status = $(this).val(); 
-        var application_id = $(this).attr('data-application_id'); 
+        console.log(' jobApplicStatus change ', $(this));
+        var statusElem = $(this);
+        var status = $(this).val();
+        var application_id = $(this).attr('data-application_id');
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/changeJobApplicationStatus',
             data: {status: status, application_id: application_id},
             success: function(data){
-                var jobAppStatusHtml = '<span class="jobApplicationStatusResponse">Updated Succesfully</span>'; 
+                var jobAppStatusHtml = '<span class="jobApplicationStatusResponse">Updated Succesfully</span>';
                 statusElem.closest('.jobApplicationStatusCont').append(jobAppStatusHtml);
-                setTimeout(function(){  
+                setTimeout(function(){
                   statusElem.closest('.jobApplicationStatusCont').find('.jobApplicationStatusResponse').remove();
                 },1500);
             }
         });
     });
 
-    // function to send ajax call for getting data throug filter/Pagination selection. 
+    // function to send ajax call for getting data throug filter/Pagination selection.
     var getData = function(){
         var url = '{{route('jobAppFilter')}}';
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -287,13 +287,13 @@ $(document).ready(function() {
             $('.jobApplicationStatusCont select').styler({ selectSearch: true,});
         });
     }
-    
-    // initially when page load trigger the ajax call to get data. 
+
+    // initially when page load trigger the ajax call to get data.
     getData();
 
     formStyler =  function(){
       $('#job_applications_filter_form input, #job_applications_filter_form select').styler({ selectSearch: true,});
-    } 
+    }
 
 
 
@@ -301,8 +301,8 @@ $(document).ready(function() {
 // Enable/Disabled Filtering by Questions.
 //====================================================================================================================================//
 $('input[name="filter_by_questions"]').change(function() {
-    console.log(' filter_by_questions '); 
-    (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));  
+    console.log(' filter_by_questions ');
+    (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));
      // $('input, select').styler({ selectSearch: true, });
 });
 
@@ -312,13 +312,13 @@ $('input[name="filter_by_questions"]').change(function() {
 // Enable/Disabled Filtering by google map location.
 //====================================================================================================================================//
 $('input[name="filter_location_status"]').change(function() {
-    console.log(' filter_location_status '); 
-    (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));  
+    console.log(' filter_location_status ');
+    (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
 });
 
 
 //====================================================================================================================================//
-// Function to display sub qualification on base of qualification type. 
+// Function to display sub qualification on base of qualification type.
 //====================================================================================================================================//
 // $(document).on('change','select[name="ja_filter_qualification_type"]',function() {
 //     var degreeType =  $(this).val();
@@ -328,18 +328,18 @@ $('input[name="filter_location_status"]').change(function() {
 //      $('.searchField_qualification .dot_list_li_hidden').remove();
 // });
 // $(document).on('click','.dot_list li', function(){
-//     console.log(' dot_list li click '); 
+//     console.log(' dot_list li click ');
 //     if($(this).hasClass('active')){
 //         $(this).removeClass('active');
 //         $(this).find('.dot_list_li_hidden').remove();
 //     }else{
 //         $(this).addClass('active');
-//         var type = $(this).attr('data-type'); 
+//         var type = $(this).attr('data-type');
 //         var qualif_value = $(this).attr('data-id');
-//         var input_hidden_html = '<input type="hidden" class="dot_list_li_hidden" name="'+type+'" value="'+qualif_value+'" />'; 
+//         var input_hidden_html = '<input type="hidden" class="dot_list_li_hidden" name="'+type+'" value="'+qualif_value+'" />';
 //         $(this).append(input_hidden_html);
 //     }
-   
+
 // });
 
 
@@ -347,10 +347,10 @@ $('input[name="filter_location_status"]').change(function() {
 
 
   //====================================================================================================================================//
-  // Google map location script 
+  // Google map location script
   //====================================================================================================================================//
   var map;
- 
+
     var input = document.getElementById('location_search');
     var autocomplete = new google.maps.places.Autocomplete(input);
     var geocoder = new google.maps.Geocoder();
@@ -358,7 +358,7 @@ $('input[name="filter_location_status"]').change(function() {
     var latlng = new google.maps.LatLng(-31.2532183, 146.921099);
     var marker = "";
     var circle = "";
-   
+
     var options = {
         zoom: 14,
         center: latlng,
@@ -371,13 +371,13 @@ $('input[name="filter_location_status"]').change(function() {
         autocomplete.setFields(['address_components', 'geometry', 'icon', 'name']);
         if(!hasLocation) { map.setZoom(14); }
 
-        // add listner on map, when click on map change the latlong and put a marker over there. 
-        google.maps.event.addListener(map, "click", function(event) { 
-            console.log(' addListener click  '); 
-            reverseGeocode(event.latLng); 
+        // add listner on map, when click on map change the latlong and put a marker over there.
+        google.maps.event.addListener(map, "click", function(event) {
+            console.log(' addListener click  ');
+            reverseGeocode(event.latLng);
         })
 
-        // get the location (city,state,country) on base of text enter in search. 
+        // get the location (city,state,country) on base of text enter in search.
         // jQuery("#location_search_load").click(function() {
         //     if(jQuery("#location_search").val() != "") {
         //         geocode(jQuery("#location_search").val());
@@ -393,10 +393,10 @@ $('input[name="filter_location_status"]').change(function() {
         //         jQuery("#location_search_load").click();
         // })
 
-        // when click on the Autocomplete suggested locations list 
+        // when click on the Autocomplete suggested locations list
         autocomplete.addListener('place_changed', function() {
-             console.log(' autocomplete place_changed '); 
-               
+             console.log(' autocomplete place_changed ');
+
               var place = autocomplete.getPlace();
               console.log(' place ', place);
 
@@ -415,7 +415,7 @@ $('input[name="filter_location_status"]').change(function() {
                 map.setZoom(14);  // Why 14? Because it looks good.
               }
 
-              
+
               // var address = '';
               // if (place.address_components) {
               //   address = [
@@ -426,16 +426,16 @@ $('input[name="filter_location_status"]').change(function() {
               // }
 
 
-              // console.log(' auto place --- ', place); 
-              // console.log(' auto address --- ', address); 
+              // console.log(' auto place --- ', place);
+              // console.log(' auto address --- ', address);
 
-                var address, city, country, state; 
+                var address, city, country, state;
                 var address_components = place.address_components;
                 for ( var j in address_components ) {
                     var types = address_components[j]["types"];
                     var long_name = address_components[j]["long_name"];
-                    var short_name = address_components[j]["short_name"];  
-                    // console.log(' address_components ', address_components); 
+                    var short_name = address_components[j]["short_name"];
+                    // console.log(' address_components ', address_components);
                     if ( jQuery.inArray("locality", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                         city = long_name;
                     }
@@ -446,7 +446,7 @@ $('input[name="filter_location_status"]').change(function() {
                         country = long_name;
                     }
                 }
-            
+
                 if((city) && (state) && (country))
                     address = city + ", " + state + ", " + country;
                 else if((city) && (state))
@@ -459,19 +459,19 @@ $('input[name="filter_location_status"]').change(function() {
                  if((place) && (place.name))
                     address = place.name + ',' + address;
 
-                    // console.log(' reverseGeocode place ', place); 
-                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country ); 
-                    // updateLocationInputs(place.name,city,state,country);
+                    // console.log(' reverseGeocode place ', place);
+                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
+                    updateLocationInputs(place.name,city,state,country);
                     jQuery("#location_search").val(address);
                     placeMarker(place.geometry.location);
 
             });
 
         }
-        // location_map length. 
+        // location_map length.
 
     function placeMarker(location) {
-        console.log(' placeMarker location ',location); 
+        console.log(' placeMarker location ',location);
 
         if (marker == "") {
             marker = new google.maps.Marker({
@@ -499,15 +499,15 @@ $('input[name="filter_location_status"]').change(function() {
     }
 
     function drawCircle(location){
-        // var center = new google.maps.LatLng(19.0822507, 72.8812041); 
-         // place circle. 
+        // var center = new google.maps.LatLng(19.0822507, 72.8812041);
+         // place circle.
         var filter_location_radius =  parseInt(jQuery('select[name="filter_location_radius"]').val())*1000;
         if (circle == "") {
             //  var circle = new google.maps.Circle({
             //     center: location,
             //     map: map,
             //     radius: filter_location_radius,          // IN METERS.
-            //     
+            //
             // });
 
              circle = new google.maps.Circle({
@@ -523,7 +523,7 @@ $('input[name="filter_location_status"]').change(function() {
         circle.bindTo('center', marker, 'position');
         circle.setRadius(filter_location_radius);
         map.fitBounds(circle.getBounds());
-       
+
     }
 
     function geocode(address) {
@@ -545,7 +545,7 @@ $('input[name="filter_location_status"]').change(function() {
     }
 
     function reverseGeocode(location) {
-        console.log(' reverseGeocode ', location); 
+        console.log(' reverseGeocode ', location);
         if (geocoder) {
             geocoder.geocode({"latLng": location}, function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
@@ -556,8 +556,8 @@ $('input[name="filter_location_status"]').change(function() {
                             var types = address_components[j]["types"];
                             var long_name = address_components[j]["long_name"];
                             var short_name = address_components[j]["short_name"];
-                                
-                            // console.log(' address_components ', address_components); 
+
+                            // console.log(' address_components ', address_components);
 
                             if ( jQuery.inArray("locality", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                                 city = long_name;
@@ -579,9 +579,9 @@ $('input[name="filter_location_status"]').change(function() {
                     else if(country)
                         address = country;
 
-                    // console.log(' reverseGeocode results ', results); 
-                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country ); 
-                    // updateLocationInputs('',city,state,country);
+                    // console.log(' reverseGeocode results ', results);
+                    // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
+                    updateLocationInputs('',city,state,country);
                     jQuery("#location_search").val(address);
                     placeMarker(location);
                     return true;
@@ -598,14 +598,14 @@ $('input[name="filter_location_status"]').change(function() {
     //     jQuery('#location_country').val(country);
     // }
 
-    // by default show this location; 
+    // by default show this location;
     geocode('Sydney New South Wales, Australia');
 
 
     jQuery('.filter_location_radius').on('change', function(){
-        console.log(' filter_location_radius changed.  '); 
-        drawCircle(new google.maps.LatLng(jQuery("#location_lat").val(), jQuery("#location_long").val()));    
-    }); 
+        console.log(' filter_location_radius changed.  ');
+        drawCircle(new google.maps.LatLng(jQuery("#location_lat").val(), jQuery("#location_long").val()));
+    });
 
 
 
@@ -656,7 +656,7 @@ button.ja_load_qa { background: #40c7db; }
 
 .jobFilterQuestion .fjq_counter {
     float: left;
-    padding: 0px 8px; 
+    padding: 0px 8px;
     border: 1px solid rgb(0 0 0 / 11%);
     height: 33px;
     line-height: 33px;
@@ -673,7 +673,7 @@ button.ja_load_qa { background: #40c7db; }
     float: right;
     margin: 10px 0px;
 }
-.jobApplicationStatusCont .jq-selectbox__select, 
+.jobApplicationStatusCont .jq-selectbox__select,
 .jobApplicationStatusCont .jq-selectbox__trigger {
     height: 28px;
     line-height: 28px;
