@@ -141,6 +141,9 @@ li.sel {
     right: 5px;
 }*/
 
+span.icon_image_profile {
+    right: 3px !important;
+}
 </style>
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">

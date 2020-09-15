@@ -115,27 +115,27 @@ $(document).ready(function() {
 //====================================================================================================================================//
 // Liked User Button Click.
 //====================================================================================================================================//
-$(document).on('click','.jsLikeUserBtn',function(){
-    var btn = $(this);
-    var jobseeker_id = $(this).data('jsid');
-    console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
-    // $(this).html(getLoader('blockJobSeekerLoader'));
-    $(this).html('..');
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
-        success: function(data){
-            btn.prop('disabled',false);
-            if( data.status == 1 ){
-                btn.html('Liked');
-                // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-            }else{
-                btn.html('error');
-            }
-        }
-    });
-});
+// $(document).on('click','.jsLikeUserBtn',function(){
+//     var btn = $(this);
+//     var jobseeker_id = $(this).data('jsid');
+//     console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
+//     // $(this).html(getLoader('blockJobSeekerLoader'));
+//     $(this).html('..');
+//     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+//     $.ajax({
+//         type: 'POST',
+//         url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
+//         success: function(data){
+//             btn.prop('disabled',false);
+//             if( data.status == 1 ){
+//                 btn.html('Liked');
+//                 // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+//             }else{
+//                 btn.html('error');
+//             }
+//         }
+//     });
+// });
 
 
 //====================================================================================================================================//

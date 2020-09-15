@@ -29,7 +29,7 @@
             <ul>
                 <li class="selected">1</li>
                 <li style="display:none;">2</li>
-                <li style="display:none;">3</li>
+                <li style="display:none;">3</li> 
             </ul>
 
         </div>
@@ -49,10 +49,21 @@
             <div id="full_step_1" class="bl_card_question" style="display:none;">
                 <div class="card_question_cont">
                     <div id="card_question_no" class="card_question no hide answer">
-                        <div class="question_vh"><img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /><span>No</span></div>
+                        <div class="question_vh">
+
+                            {{-- <img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /> --}}
+                            <i class="fas fa-times"></i>
+
+                            <span>No</span>
+                        </div>
                     </div>
                     <div id="card_question_yes" class="card_question yes hide answer">
-                        <div class="question_vh"><img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /><span>Yes</span></div>
+                        <div class="question_vh">
+                            {{-- <img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /> --}}
+                            <i class="fas fa-check"></i>
+
+                            <span>Yes</span>
+                        </div>
                     </div>
 
                     <div data-field="graduate_intern" class="card_question ">
@@ -102,17 +113,34 @@
 
                     <div id="frm_card_join" class="card_profile_info card_join">
 
-                        <div class="bl bl_basic">
-                        <div class="title">About Our Organisation</div>
-                        <div id="about_me_error" class="error to_hide">Required field!</div>
-                        <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Give us a brief overview of what your company does" maxlength="1000"></textarea>
+         {{--                <div class="bl bl_basic">
+                            
+                            <div class="title">About Our Organisation</div>
+                            <div id="about_me_error" class="error to_hide">Required field!</div>
+                            <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Give us a brief overview of what your company does" maxlength="1000"></textarea>
                         </div>
 
                         <div class="bl bl_basic">
-                        <div class="title">Interested in</div>
-                        <div id="interested_in_error" class="error to_hide">Required field!</div>
+                            <div class="title">Interested in</div>
+                            <div id="interested_in_error" class="error to_hide">Required field!</div>
+                            <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="Whom would you like to find?" maxlength="1000"></textarea>
+                        </div> --}}
 
-                        <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="Whom would you like to find?" maxlength="1000"></textarea>
+
+                        <div class="bl bl_basic">
+
+                            <div class="title">About me</div>
+                            <div id="about_me_error" class="error to_hide">Required field!</div>
+                            <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Give us a brief overview of what your company does" maxlength="300"></textarea>
+                            <span id="arChars" class="rChars">300</span> Character(s) Remaining
+                        </div>
+    
+                        <div class="bl bl_basic">
+                            <div class="title">Interested in</div>
+                            <div id="interested_in_error" class="error to_hide">Required field!</div>
+
+                            <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="Whom would you like to find?" maxlength="150"></textarea>
+                            <span id="irChars" class="rChars">150</span> Character(s) Remaining
                         </div>
 
                         <button id="step3_done" class="btn turquoise small btn_join_submit">Done</button>
@@ -196,6 +224,26 @@
         var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
         employerStepReload(currentStep);
     });
+
+
+// about me Character count for textarea start
+
+    var aboutMaxLength = 300;
+    $('#about_me').keyup(function() {
+        var textlen = aboutMaxLength - $(this).val().length;
+        $('#arChars').text(textlen);
+    });
+// about me Character count for textarea end
+
+// about me Character count for textarea start
+
+    var maxLength = 150;
+    $('#interested_in').keyup(function() {
+        var textlen = maxLength - $(this).val().length;
+        $('#irChars').text(textlen);
+    });
+// about me Character count for textarea end
+
 </script>
 
 @stop

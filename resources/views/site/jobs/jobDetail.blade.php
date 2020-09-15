@@ -91,7 +91,9 @@
 <div id="jobApplyModal" class="modal p0 jobApplyModal wauto ">
     <div id="job_apply_modal" class="w100 pp_edit_info pp_cont m0">
         <div class="frame">
-            <a class="icon_close" href="#close"><span class="close_hover"></span></a>
+
+            {{-- <a class="icon_close" href="#close"><span class="close_hover"></span></a> --}}
+            
             <div class="head m0">Submit Proposal</div>
             <input type="hidden" value="" name="openModalJobId" id="openModalJobId" />
             <div class="cont">

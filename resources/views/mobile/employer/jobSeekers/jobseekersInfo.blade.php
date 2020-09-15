@@ -237,8 +237,8 @@ $js = $jobseeker;
                   @if(!empty($userquestion))
                       @foreach($userquestion as $qk => $question)
                         <div>
-                          <p>{{$question}} </p>
-                           <p class="QuestionsKeyPTag"><b>{{$userQuestions[$qk]}}</b></p>
+                          <p class="m-0">{{$question}} </p>
+                           <p class="QuestionsKeyPTag my-1 font-weight-bold">{{$userQuestions[$qk]}}</p>
                         </div>
                       @endforeach
                   @endif
@@ -251,6 +251,13 @@ $js = $jobseeker;
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/plyr.css') }}">
+<style type="text/css">
+
+p{
+  font-size: 12px;
+}
+</style>
+
 @stop
 
 
