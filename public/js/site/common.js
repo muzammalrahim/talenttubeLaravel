@@ -273,6 +273,18 @@ $('input[name="filter_industry_status"]').change(function() {
  $(document).on('click','.jsBlockUserBtn',function(){
      var jobseeker_id = $(this).data('jsid');
      console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
+
+     console.log('Block user in employer list', jobseeker_id);
+     $('.apiMessageForBlockingEmp').css("display","none");
+    $('.img_chat').show();
+
+
+                $('.double_btn').show();
+
+
+    // $('.confirmJobSeekerBlockModal .img_chat').remove(data.message);
+
+     // $('.img_chat').show();
      $('#jobSeekerBlockId').val(jobseeker_id);
      $('#confirmJobSeekerBlockModal').modal({
         fadeDuration: 200,
@@ -287,9 +299,10 @@ $('input[name="filter_industry_status"]').change(function() {
     console.log(' confirm_JobSeekerBlock_ok ');
     var jobseeker_id = $('#jobSeekerBlockId').val();
 
-    $('confirmJobSeekerBlockModal  .img_chat').html(getLoader('blockJobSeekerLoader'));
+    $('#confirmJobSeekerBlockModal .showError').html(getLoader('blockJobSeekerLoader')).show();
     var btn = $(this); //
     btn.prop('disabled',true);
+    $('.img_chat').hide();
 
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.ajax({
@@ -298,10 +311,19 @@ $('input[name="filter_industry_status"]').change(function() {
         success: function(data){
             btn.prop('disabled',false);
             if( data.status == 1 ){
-                $('.confirmJobSeekerBlockModal .img_chat').html(data.message);
+                $('.showError').addClass('apiMessageForBlockingEmp').css("display","block");
+                $('.apiMessageForBlockingEmp').html(data.message);
                 $('.jobSeeker_row.js_'+jobseeker_id).remove();
+                $('.blockJobSeekerLoader').hide();
+
+                $('.double_btn').hide();
+
+
+                
+                
+
             }else{
-                $('.confirmJobSeekerBlockModal .img_chat').html(data.error);
+                $('#confirmJobSeekerBlockModal .img_chat').html(data.error);
             }
         }
     });

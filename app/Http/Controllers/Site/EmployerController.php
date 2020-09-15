@@ -142,8 +142,8 @@ class EmployerController extends Controller {
             $requestData['about_me']        = my_sanitize_string($request->about_me);
             $requestData['interested_in']   =  my_sanitize_string($request->interested_in);
             $rules = array(
-                'about_me' => 'required|max:150',
-                'interested_in' => 'required|max:150'
+                'about_me' => 'required|max:310',
+                'interested_in' => 'required|max:160'
             );
             $validator = Validator::make($requestData, $rules);
             if ($validator->fails()){
@@ -719,13 +719,13 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function likeJobSeeker($jobSekerId){
         $user = Auth::user();
-        if (isEmployer($user)){
-            return response()->json([
-                'status' => 0,
-                'error' => 'You are not allwoed to block Job Seekers',
-                // 'redirect' => route('')
-            ]);
-        }
+        // if (isEmployer($user)){
+        //     return response()->json([
+        //         'status' => 0,
+        //         'error' => 'You are not allwoed to block Job Seekers',
+        //         // 'redirect' => route('')
+        //     ]);
+        // }
 
         // check if jobSeeker with id exist
         $jobSeeker = User::JobSeeker()->where('id',$jobSekerId);

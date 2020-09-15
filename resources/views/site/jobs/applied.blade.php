@@ -81,6 +81,8 @@
 
         </div>
         @endforeach
+            @else
+                <h3>You have not applied to any job yet</h3>
         @endif
 
     </div>
@@ -151,6 +153,8 @@ $(document).ready(function() {
         var job_id = $(this).attr('data-jobid');
         console.log(' confirmJobAppRemoval click  job_id ', job_id, $(this) );
         $('.modal.cmodal').removeClass('showLoader').removeClass('showMessage');
+        $('.confirm_close').show();
+
         $('#confirmJobAppDeleteModal').modal({
             fadeDuration: 200,
             fadeDelay: 2.5,
@@ -164,6 +168,7 @@ $(document).ready(function() {
         // $('.confirmJobAppDeleteModal  .img_chat').html(getLoader('jobDeleteloader'));
         // $(this).prop('disabled',true);
         // $.modal.close();
+        // console.log('job delete button');
         $('.confirmJobAppDeleteModal').addClass('showLoader');
         var job_app_id = $('#deleteConfirmJobAppId').val();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -175,6 +180,7 @@ $(document).ready(function() {
                 if( data.status == 1 ){
                     $('.confirmJobAppDeleteModal .apiMessage').html(data.message);
                     $('.jobApp_'+job_app_id).remove();
+                    $('.confirm_close').hide();
                 }else{
                     $('.confirmJobAppDeleteModal .apiMessage').html(data.error);
                 }

@@ -86,7 +86,7 @@
 
                         @if (in_array($js->id,$likeUsers))
 
-                        <a class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
+                        <a id="unlikeEmpButton" class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
                         @else
                         <a class="btn btn-sm btn-primary mr-0 btn-xs likeEmployerButton" data-jsid ="{{$js->id}}">Like</a>
 
@@ -112,7 +112,7 @@
 
 <script type="text/javascript">
 
-$('.unlikeEmpButton').click(function(){
+$('#unlikeEmpButton').click(function(){
         var btn = $(this);
         var jobseeker_id = $(this).data('jsid');
         $('#idEmpInModalHidden').val(jobseeker_id);
