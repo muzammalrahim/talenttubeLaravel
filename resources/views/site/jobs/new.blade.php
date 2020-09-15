@@ -320,7 +320,6 @@
 @stop
 
 @section('custom_js')
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
@@ -539,7 +538,7 @@ $(document).ready(function() {
 
                     // console.log(' reverseGeocode place ', place);
                     // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
-                    // updateLocationInputs(place.name,city,state,country);
+                    updateLocationInputs(place.name,city,state,country);
                     jQuery("#location_search").val(address);
                     placeMarker(place.geometry.location);
 
@@ -659,7 +658,7 @@ $(document).ready(function() {
 
                     // console.log(' reverseGeocode results ', results);
                     // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
-                    // updateLocationInputs('',city,state,country);
+                    updateLocationInputs('',city,state,country);
                     jQuery("#location_search").val(address);
                     placeMarker(location);
                     return true;
@@ -669,12 +668,11 @@ $(document).ready(function() {
         return false;
     }
 
-    // function updateLocationInputs(place,city,state,country){
-    //     jQuery('#location_name').val(place);
-    //     jQuery('#location_city').val(city);
-    //     jQuery('#location_state').val(state);
-    //     jQuery('#location_country').val(country);
-    // }
+    function updateLocationInputs(place,city,state,country){
+        jQuery('#location_city').val(city);
+        jQuery('#location_state').val(state);
+        jQuery('#location_country').val(country);
+    }
 
     // by default show this location;
     geocode('Sydney New South Wales, Australia');

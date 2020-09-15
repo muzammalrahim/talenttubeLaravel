@@ -417,7 +417,7 @@ hr.rounded {
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 
 <script>
-var toggle = false;
+var toggle = true;
 $('input[name="filter_location_status"]').change(function() {
     console.log(' filter_location_status ');
     (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
@@ -548,7 +548,7 @@ function showMap(){
 
                  // console.log(' reverseGeocode place ', place);
                  // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
-                 // updateLocationInputs(place.name,city,state,country);
+                 updateLocationInputs(place.name,city,state,country);
                  jQuery("#location_search").val(address);
                  placeMarker(place.geometry.location);
 
@@ -668,7 +668,7 @@ function showMap(){
 
                  // console.log(' reverseGeocode results ', results);
                  // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
-                 // updateLocationInputs('',city,state,country);
+                 updateLocationInputs('',city,state,country);
                  jQuery("#location_search").val(address);
                  placeMarker(location);
                  return true;

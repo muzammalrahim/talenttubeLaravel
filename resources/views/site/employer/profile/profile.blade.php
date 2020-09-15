@@ -9,14 +9,14 @@
 
 <div class="cont bl_profile">
     <div class="bl_pic_info  my_profile">
-       
+
         <div class="bl_pic">
             <div class="pic">
                 <div class="profile_pic_one to_show">
                     <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
                         <img  data-offset-id="23" class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
                     </a>
-                </div> 
+                </div>
             </div>
         </div>
 
@@ -158,7 +158,7 @@ li.sel {
  $('.EmployerRegQuestion').removeClass('hide_it');
  $('.employerQuestionsPtag').addClass('hide_it');
 });
-//======================= Employer Questions Editing end here =================================									
+//======================= Employer Questions Editing end here =================================
 </script>
 @stop
 
