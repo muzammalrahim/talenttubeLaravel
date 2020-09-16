@@ -25,20 +25,20 @@
 
 
 						@yield('custom_css')
-						
+
 						<input type="hidden" id="layout" name="layout" value="mobile"/>
 
 </head>
 <body class="@yield('classes_body')" @yield('body_data')>
 
 @yield('body')
-  
+
 
 
 @yield('custom_footer_css')
 
 <!-- jQuery -->
-<script type="text/javascript" src="{{ asset('js/mobile/mdb/jquery.min.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('js/mobile/mdb/jquery.min.js') }}"></script>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="{{ asset('js/mobile/mdb/popper.min.js') }}"></script>
 <!-- Bootstrap core JavaScript -->
