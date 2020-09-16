@@ -920,6 +920,7 @@ function showUserStep10(){
 	$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 	var url = base_url+'/m/step2Jobs';
 	$.get(url, function (data) {
+        $('#mdb-preloader').delay(1000).fadeOut(300);
 					$('.jobs_list').html(data);
 	});
 }
