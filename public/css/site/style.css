@@ -4413,3 +4413,8 @@ ul.pp_small_decor_r_show li:last-child a.selected:hover span{ background: url(..
     margin: 0 45px 26px 0;
     font-weight: bold;
 }
+
+.img_chat{
+    display: block !important;
+    margin-top: 20px;
+}

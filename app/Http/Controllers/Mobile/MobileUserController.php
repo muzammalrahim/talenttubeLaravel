@@ -1468,7 +1468,7 @@ class MobileUserController extends Controller
 						$job->addJobQuestions($requestData['jq']);
 						return response()->json([
 										'status' => 1,
-										'message' => '<h3>Job Succesfully Created.</h3><p>Click here to view job detail</p>',
+										'message' => '<h5 class="mt-2 ml-2">Job Succesfully Created.</h5><p class="ml-2">Click here to view job detail</p>',
 										// 'redirect' => route('')
 						]);
 		}

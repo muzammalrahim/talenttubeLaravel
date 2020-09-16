@@ -344,7 +344,7 @@
                 <div class="icon">
                     <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
                 </div>
-                <div class="msg">This action can not be undone. Are you sure you wish to continue?</div>
+                <div class="msg">Are you sure you wish to continue?</div>
             </div>
             <div class="double_btn">
                 <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
@@ -445,5 +445,4 @@ $(document).on('click','.jsLikeUserBtn',function(){
 });
 </script>
 @stop
-
 

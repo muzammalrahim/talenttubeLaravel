@@ -9,16 +9,12 @@
 @section('content')
 <div class="newJobCont">
     <div class="head icon_head_browse_matches">Employer's Detail</div>
-
     {{-- @dump($employers) --}}
     <div class="add_new_job">
         <div class="job_row_heading jobs_filter">
-
             @php
                 $js = $employer;
             @endphp
-
-
             <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
                 <div class="jobSeeker_box relative dinline_block w100">
                 <div class="js_profile w_30p w_box dblock fl_left">
@@ -52,35 +48,13 @@
                     </div>
 
                     <div class="js_location js_field"><span class="js_label">Location:</span>
-                    <p class="js_location"> {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </p>
+                        <p class="js_location"> {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </p>
                     </div>
-
-                    {{-- <div class="js_languages js_field">
-                        <span class="js_label">Languages:</span>
-                        <div class="js_tags dinline_block">
-                            @if ($js->language)
-                            @foreach ($js->language as $lang)
-                                <span class="js_tag">{{getLanguage($lang)}}</span>
-                            @endforeach
-                            @endif
-                        </div>
-                    </div>
-
-                    <div class="js_languages js_field">
-                        <span class="js_label">Hobbies:</span>
-                        <div class="js_tags dinline_block">
-                            @if ($js->hobbies)
-                            @foreach ($js->hobbies as $hobby)
-                                <span class="js_tag">{{getHobby($hobby)}}</span>
-                            @endforeach
-                            @endif
-                        </div>
-                    </div> --}}
 
                 </div>
 
                 <div class="js_actionBtn">
-                    <a class="jsBlockUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Block</a>
+                    <a class="blockEmplyerInEmployerInfoPage graybtn jbtn" data-jsid="{{$js->id}}">Block</a>
                     @if (in_array($js->id,$likeUsers))
                     <a class="active graybtn jbtn" data-jsid="{{$js->id}}">Liked</a>
                     @else
@@ -100,21 +74,12 @@
 <div class="tabs_profile tabContainer">
     <div id="tabs_profile">
         <ul class="tab customTab">
-            <li id="tabs-1_switch" class="switch_tab selected">
-                <a href="#tabs-1" title=""><span>Jobs</span></a>
-            </li>
-
-            <li id="tabs-2_switch" class="switch_tab ">
-                <a href="#tabs-2" title=""><span>Albums</span></a>
-            </li>
-            <li id="tabs-3_switch" class="switch_tab ">
-                <a href="#tabs-3" title=""><span>Questions</span></a>
-            </li>
+            <li id="tabs-1_switch" class="switch_tab selected"><a href="#tabs-1" title=""><span>Jobs</span></a></li>
+            <li id="tabs-2_switch" class="switch_tab "><a href="#tabs-2" title=""><span>Albums</span></a></li>
+            <li id="tabs-3_switch" class="switch_tab "><a href="#tabs-3" title=""><span>Questions</span></a></li>
         </ul>
     </div>
-
     <div id="tabs_content" class="tabs_content">
-
     <!-- tab_jobs -->
     <a id="tabs-1" class="tab_link tab_a target"></a>
     <div class="tab_about tab_cont">
@@ -129,53 +94,19 @@
                         <span>Location : </span>{{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
                     </div>
                 </div>
-
                 <div class="job_info row p10 dblock">
-                    <div class="w_25p">
-                        <div class="j_label bold">Job Type</div>
-                        <div class="j_value">{{$job->type}}</div>
-                    </div>
-
-                    <div class="w_25p">
-                        <div class="j_label bold">Job Experience</div>
-                        <div class="j_value">{{$job->experience}}</div>
-                    </div>
-
-                    <div class="w_25p">
-                        <div class="j_label bold">Job Salary</div>
-                        <div class="j_value">{{$job->salary}}</div>
-                    </div>
-
-                    <div class="w_25p">
-                        <div class="j_label bold">Job Category</div>
-                        <div class="j_value">Web & E-commerce Job</div>
+                    <div class="w_25p"><div class="j_label bold">Job Type</div><div class="j_value">{{$job->type}}</div></div>
+                    <div class="w_25p"><div class="j_label bold">Job Experience</div><div class="j_value">{{$job->experience}}</div></div>
+                    <div class="w_25p"><div class="j_label bold">Job Salary</div><div class="j_value">{{$job->salary}}</div></div>\
+                    <div class="w_25p"><div class="j_label bold">Job Category</div><div class="j_value">Web & E-commerce Job</div>
                     </div>
                 </div>
-
-                <div class="job_detail p10">
-                    <div class="j_label bold">Job Detail</div>
-                    <div>{{$job->description}}</div>
-                </div>
-
+                <div class="job_detail p10"><div class="j_label bold">Job Detail</div> <div>{{$job->description}}</div></div>
                 <div class="job_footer p10">
-                    <div class="w_25p">
-                        <div class="j_label bold">Job Views</div>
-                        <div class="j_value">120</div>
-                    </div>
-
-                    <div class="w_25p">
-                        <div class="j_label bold">Job Likes</div>
-                        <div class="j_value">300</div>
-                    </div>
-
-                    <div class="w_25p">
-                        <div class="j_label bold">Application</div>
-                        <div class="j_value">10</div>
-                    </div>
-
-
-                    <div class="w_25p">
-                        <div class="j_button"><a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Apply</a></div>
+                    <div class="w_25p"><div class="j_label bold">Job Views</div><div class="j_value">120</div></div>
+                    <div class="w_25p"><div class="j_label bold">Job Likes</div><div class="j_value">300</div></div>
+                    <div class="w_25p"><div class="j_label bold">Application</div><div class="j_value">10</div></div>
+                    <div class="w_25p"><div class="j_button"><a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Apply</a></div>
                         {{-- <div class="j_button">Delete</div> --}}
                     </div>
                 </div>
@@ -241,13 +172,10 @@
     <a id="tabs-3" class="tab_link tab_a "></a>
     <div class="tab_photos tab_cont">
         <div class="galleryCont">
-
             @php  
                 $empQuestions = !empty($employer->questions)?(json_decode($employer->questions, true)):(array()); 
             @endphp
-
                 {{-- @dump($empQuestions) --}}
-
                     @if(!empty(getEmpRegisterQuestions()))
                         @foreach (getEmpRegisterQuestions() as $qk => $empq)
 
@@ -262,44 +190,30 @@
                          @endforeach
                     @endif
             {{-- @dump($employer->questions) --}}
-            
         </div>
         <!-- /photos -->
-
     </div>
          <!--Tab question -->
-
             {{-- End here --}}
-
     </div>
 </div>
 <!-- /tabs_employer -->
-
-
-
-
-
-
-
-
 </div>
-
-
 
 <div style="display:none;">
 <div id="confirmJobSeekerBlockModal" class="modal p0 confirmJobSeekerBlockModal wauto">
     <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
         <div class="cont">
-            <div class="title">Block Job Seeker?</div>
+            <div class="title">Block Employer?</div>
             <div class="img_chat">
                 <div class="icon">
                     <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
                 </div>
-                <div class="msg">This action can not be undone. Are you sure you wish to continue?</div>
+                <div class="msg">Are you sure you wish to continue?</div>
             </div>
             <div class="double_btn">
                 <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
-                <button class="confirm_JobSeekerBlock_ok btn small marsh">OK</button>
+                <button class="confirmEmployerBlockInEmpInfoPage btn small marsh">OK</button>
                 <input type="hidden" name="jobSeekerBlockId" id="jobSeekerBlockId" value=""/>
                 <div class="cl"></div>
             </div>
@@ -309,14 +223,12 @@
 </div>
 </div>
 
-
-
 <div style="display: none;">
     <div id="jobApplyModal" class="modal p0 jobApplyModal wauto ">
         <div id="job_apply_modal" class="w100 pp_edit_info pp_cont m0">
             <div class="frame">
-                <a class="icon_close" href="#close"><span class="close_hover"></span></a>
-                <div class="head m0">Submit Proposal</div>
+                {{-- <a class="icon_close" href="#close"><span class="close_hover"></span></a> --}}
+                <div class="head m0" id="submitProposal">Submit Proposal</div>
                 <input type="hidden" value="" name="openModalJobId" id="openModalJobId" />
                 <div class="cont">
                     <div class="css_loader loader_edit_popup">
@@ -348,6 +260,17 @@
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
 
+<style type="text/css">
+#submitProposal{
+    text-align: center;
+    /*padding: 15px 0px;*/
+    background: white;
+    color: #142d69;
+    font-size: 20px;
+    padding-bottom: 20px;
+}
+</style>
+
 @stop
 
 @section('custom_js')
@@ -359,10 +282,12 @@
 $(document).ready(function() {
 
  // ========== Function to show Block popup when click on ==========//
- $(document).on('click','.jsBlockUserBtn',function(){
+ $(document).on('click','.blockEmplyerInEmployerInfoPage',function(){
      var jobseeker_id = $(this).data('jsid');
      console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
      $('#jobSeekerBlockId').val(jobseeker_id);
+     $('.double_btn').show();
+
      $('#confirmJobSeekerBlockModal').modal({
         fadeDuration: 200,
         fadeDelay: 2.5,
@@ -372,7 +297,7 @@ $(document).ready(function() {
  });
 
  // ========== Block Employer Ajax call  ==========//
- $(document).on('click','.confirm_JobSeekerBlock_ok',function(){
+ $(document).on('click','.confirmEmployerBlockInEmpInfoPage',function(){
     console.log(' confirm_JobSeekerBlock_ok ');
     var jobseeker_id = $('#jobSeekerBlockId').val();
 
@@ -389,6 +314,7 @@ $(document).ready(function() {
             if( data.status == 1 ){
                 $('.confirmJobSeekerBlockModal .img_chat').html(data.message);
                 $('.jobSeeker_row.js_'+jobseeker_id).remove();
+                $('.double_btn').hide();
             }else{
                 $('.confirmJobSeekerBlockModal .img_chat').html(data.error);
             }
@@ -481,4 +407,3 @@ $(document).on('click','.jsLikeUserBtn',function(){
 });
 </script>
 @stop
-

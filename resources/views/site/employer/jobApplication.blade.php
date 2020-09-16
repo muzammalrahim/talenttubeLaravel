@@ -153,29 +153,6 @@
 
 </div>
 
-{{-- <div style="display:none;">
-    <div id="confirmJobDeleteModal" class="modal p0 confirmJobDeleteModal wauto">
-        <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-            <div class="cont">
-                <div class="title">Delete Job?</div>
-                <div class="img_chat">
-                    <div class="icon">
-                        <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
-                    </div>
-                    <div class="msg">This action can not be undone. Are you sure you wish to continue?</div>
-                </div>
-                <div class="double_btn">
-                    <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
-                    <button class="confirm_jobDelete_ok btn small marsh">OK</button>
-                    <input type="hidden" name="deleteConfirmJobId" id="deleteConfirmJobId" value=""/>
-                    <div class="cl"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div> --}}
-
-
 @stop
 
 
