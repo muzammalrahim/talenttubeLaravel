@@ -1629,7 +1629,70 @@ class MobileUserController extends Controller
         // mobile/employer/myjobs
     }
 
+    public function MemployerJobsedit($id){
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Job Edit';
+        $data['classes_body'] = 'edit';
+        $job = Jobs::where('id',$id)->first();
+        $data['job'] = $job;
+        $data['location'] = $job->city.' '.$job->country.' ,'.$job->country;
+        return view('mobile.jobs.edit', $data);  //  mobile
+        // mobile/employer/myjobs
+    }
 
+    public function updateJob($job_id, Request $request){
+        $user = Auth::user();
+        $requestData = $request->all();
+        foreach ($requestData as $rk => $rv) { $requestData[$rk] = my_sanitize_string($rv); }
+        $rules = array(
+            "title" => "required|string|max:255",
+            "description" => "required|string",
+            "experience"  => "string|max:255",
+            "type"  => "required|string|max:10",
+            "vacancies"  => "integer",
+            "salary"  => "string|max:255",
+        );
+        $validator = Validator::make( $requestData , $rules);
+        if ($validator->fails()){
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        }else{
+            // dd(' all valiation correct ');
+            $job = Jobs::where('id',$job_id)->first();
+            if ($job->user_id != $user->id){
+                return response()->json([
+                    'status' => 0,
+                    'error' => 'You are not allowed to edit this job'
+                ]);
+            }else{
+                $job->title =  $requestData['title'];
+                $job->description =  $requestData['description'];
+                $job->experience =  $requestData['experience'];
+                $job->type =  $requestData['type'];
+                $job->country =  $requestData['location_country'];
+                $job->state =  $requestData['location_state'];
+                $job->city =  $requestData['location_city'];
+                $job->location_lat =  $requestData['location_lat'];
+                $job->location_long =  $requestData['location_long'];
+                $job->vacancies =  $requestData['vacancies'];
+                $job->salary =  $requestData['salary'];
+                $job->user_id =  $user->id;
+                // $expiration =
+
+                $job->expiration =  $requestData['expiration'].' 00:00:00';
+                $job->save();
+                return response()->json([
+                    'status' => 1,
+                    'message' => '<h3>Job Succesfully Created.</h3><p>Click here to view job detail</p>',
+                    'redirect' => route('MemployerJobs')
+                ]);
+            }
+        }
+
+    }
     //====================================================================================================================================//
     // Get // layout for Employer Detail.
     //====================================================================================================================================//

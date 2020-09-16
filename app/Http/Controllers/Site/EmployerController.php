@@ -418,7 +418,7 @@ class EmployerController extends Controller {
         $data['classes_body'] = 'jobEdit';
         $data['geo_countries'] = get_Geo_Country();
         $data['geo_states'] = get_Geo_State($job->country);
-        $data['geo_cities'] = get_Geo_City($job->country, $job->state);
+        $data['location'] = $job->city.' '.$job->country.' ,'.$job->country;
         return view('site.employer.jobEdit', $data);
     }
 
@@ -476,13 +476,8 @@ class EmployerController extends Controller {
             "description" => "required|string",
             "experience"  => "string|max:255",
             "type"  => "required|string|max:10",
-            "geo_country"  => "integer",
-            "geo_states"  => "integer",
-            "geo_cities"  => "integer",
             "vacancies"  => "integer",
             "salary"  => "string|max:255",
-            "gender" => "required|in:male,female,any",
-            "age" => "string|max:20",
         );
         $validator = Validator::make( $requestData , $rules);
         if ($validator->fails()){
@@ -503,13 +498,13 @@ class EmployerController extends Controller {
                 $job->description =  $requestData['description'];
                 $job->experience =  $requestData['experience'];
                 $job->type =  $requestData['type'];
-                $job->country =  $requestData['geo_country'];
-                $job->state =  $requestData['geo_states'];
-                $job->city =  $requestData['geo_cities'];
+                $job->country =  $requestData['location_country'];
+                $job->state =  $requestData['location_state'];
+                $job->city =  $requestData['location_city'];
+                $job->location_lat =  $requestData['location_lat'];
+                $job->location_long =  $requestData['location_long'];
                 $job->vacancies =  $requestData['vacancies'];
                 $job->salary =  $requestData['salary'];
-                $job->gender =  $requestData['gender'];
-                $job->age =  $requestData['age'];
                 $job->user_id =  $user->id;
                 // $expiration =
 
@@ -518,7 +513,7 @@ class EmployerController extends Controller {
                 return response()->json([
                     'status' => 1,
                     'message' => '<h3>Job Succesfully Created.</h3><p>Click here to view job detail</p>',
-                    // 'redirect' => route('')
+                    'redirect' => route('employerJobs')
                 ]);
             }
         }
