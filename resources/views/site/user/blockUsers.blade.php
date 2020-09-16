@@ -83,7 +83,7 @@
             </div>
             {{-- @dump($likeUsers) --}}
             <div class="js_actionBtn">
-                <a class="jsUnBlockUserBtn graybtn jbtn" data-jsid="{{$js->id}}">UnBlock</a>
+                <a class="empUnBlockUserBtn graybtn jbtn" data-jsid="{{$js->id}}">UnBlock</a>
             </div>
 
             </div>
@@ -91,6 +91,8 @@
         </div>
         @endforeach
         </div>
+            @else
+                    <h3>You have not blocked anyone</h3>
         @endif
 
     </div>
@@ -130,7 +132,7 @@
             <div class="apiMessage mt20"></div>
             <div class="double_btn">
                 <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
-                <button class="confirm_JobSeekerBlock_ok confirm_btn btn small marsh">OK</button>
+                <button class="confirmUnlockEmployer confirm_btn btn small marsh">OK</button>
                 <input type="hidden" name="jobSeekerBlockId" id="jobSeekerBlockId" value=""/>
                 <div class="cl"></div>
             </div>
@@ -155,11 +157,14 @@
 <script type="text/javascript">
 $(document).ready(function() {
 
- $(document).on('click','.jsUnBlockUserBtn',function(){
+ $(document).on('click','.empUnBlockUserBtn',function(){
      var jobseeker_id = $(this).data('jsid');
+     console.log('UnBlock user from block user list');
      console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
      $('#jobSeekerBlockId').val(jobseeker_id);
      $('.modal.cmodal').removeClass('showLoader').removeClass('showMessage');
+     $('.double_btn').show();
+
      $('#confirmJobSeekerBlockModal').modal({
         fadeDuration: 200,
         fadeDelay: 2.5,
@@ -168,7 +173,7 @@ $(document).ready(function() {
     });
  });
 
- $(document).on('click','.confirm_JobSeekerBlock_ok',function(){
+ $(document).on('click','.confirmUnlockEmployer',function(){
     console.log(' confirm_JobSeekerBlock_ok ');
     var jobseeker_id = $('#jobSeekerBlockId').val();
 
@@ -190,6 +195,9 @@ $(document).ready(function() {
             if( data.status == 1 ){
                 $('.confirmJobSeekerBlockModal .apiMessage').html(data.message);
                 $('.jobSeeker_row.js_'+jobseeker_id).remove();
+
+                $('.double_btn').hide();
+
             }else{
                 $('.confirmJobSeekerBlockModal .apiMessage').html(data.error);
             }

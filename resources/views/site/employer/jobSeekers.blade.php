@@ -185,7 +185,7 @@ $(document).ready(function() {
 
  $(document).on('click','.jsBlockUserBtn',function(){
      var jobseeker_id = $(this).data('jsid');
-     console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
+     // console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
      $('#jobSeekerBlockId').val(jobseeker_id);
      $('#confirmJobSeekerBlockModal').modal({
         fadeDuration: 200,

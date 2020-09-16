@@ -1735,7 +1735,7 @@ class SiteUserController extends Controller
         $data['title'] = 'My job applications';
         $data['classes_body'] = 'jobApplications';
         $data['applications'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
-        return view('site.jobs.applied', $data);
+        return view('site.jobs.applied', $data);        //      site/jobs/applied
     }
 
 
@@ -1808,7 +1808,7 @@ class SiteUserController extends Controller
         $data['title'] = 'Block Users';
         $data['classes_body'] = 'blockUsers';
         $data['blockUsers'] = BlockUser::with('user')->where('user_id',$user->id)->get();
-        return view('site.user.blockUsers', $data);
+        return view('site.user.blockUsers', $data);         //      site/user/blockUsers
     }
 
 

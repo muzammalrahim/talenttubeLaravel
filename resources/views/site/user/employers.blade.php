@@ -39,6 +39,8 @@
     <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
         <div class="cont">
             <div class="title">Block Employer?</div>
+
+            <p class="showError mt20"></p>
             <div class="img_chat">
                 <div class="icon">
                     <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
@@ -128,6 +130,7 @@ var getDataCustom = function(){
 					$('.employers_list').html(data);
 	});
 }
+
 
 $('input[name="filter_location_status"]').change(function() {
     console.log(' filter_location_status ');
@@ -398,6 +401,16 @@ $('input[name="filter_location_status"]').change(function() {
         drawCircle(new google.maps.LatLng(jQuery("#location_lat").val(), jQuery("#location_long").val()));
     });
 
+
 </script>
 @stop
 
+{{-- @section('custom_css')
+<style type="text/css">
+
+.showError{
+    margin-top: 20px !important;
+}
+</style>
+
+@stop --}}

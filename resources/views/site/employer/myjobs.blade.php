@@ -77,6 +77,8 @@
 
         </div>
         @endforeach
+            @else
+                <h3>You have not posted any job yet</h3>
         @endif
 
     </div>

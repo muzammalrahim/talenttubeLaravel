@@ -149,28 +149,30 @@
                         <button id="user_step3_done" class="btn turquoise small btn_join_submit">Done</button> --}}
 
                         <div class="bl bl_basic">
-                                    <div class="title">About me</div>
-                                    <div id="about_me_error" class="error to_hide">Required field!</div>
-                                    <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="300"></textarea>
-                                    <span id="arChars" class="rChars">300</span> Character(s) Remaining
-                                    </div>
+
+                            <div class="title">About me</div>
+                            <div id="about_me_error" class="error to_hide">Required field!</div>
+                            <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="300"></textarea>
+                            <span id="arChars" class="rChars">300</span> Character(s) Remaining
+                        </div>
     
-                                    <div class="bl bl_basic">
-                                    <div class="title">Interested in</div>
-                                    <div id="interested_in_error" class="error to_hide">Required field!</div>
-    
-                                    <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
-                                    <span id="irChars" class="rChars">150</span> Character(s) Remaining
-                                    </div>
-                                    <div class="row text-center">
+                        <div class="bl bl_basic">
+                            <div class="title">Interested in</div>
+                            <div id="interested_in_error" class="error to_hide">Required field!</div>
+
+                            <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
+                            <span id="irChars" class="rChars">150</span> Character(s) Remaining
+                        </div>
+
+                        <div class="row text-center">
 
 
-                                    <div class="col">
+                        <div class="col">
 
-                                        <button id="user_step3_done" class="btn_join_submit btn btn-primary">Done</button>
-                                    </div>
+                            <button id="user_step3_done" class="btn_join_submit btn btn-primary">Done</button>
+                        </div>
 
-                                    </div>
+                        </div>
 
 
 
@@ -501,8 +503,6 @@
         var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
         userStepReload(currentStep);
     });
-
-
 
     // Profile Image Upload End
 
