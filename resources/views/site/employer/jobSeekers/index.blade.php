@@ -442,12 +442,12 @@ $('input[name="filter_by_questions"]').change(function() {
         return false;
     }
 
-    // function updateLocationInputs(place,city,state,country){
-    //     jQuery('#location_name').val(place);
-    //     jQuery('#location_city').val(city);
-    //     jQuery('#location_state').val(state);
-    //     jQuery('#location_country').val(country);
-    // }
+    function updateLocationInputs(place,city,state,country){
+        jQuery('#location_name').val(place);
+        jQuery('#location_city').val(city);
+        jQuery('#location_state').val(state);
+        jQuery('#location_country').val(country);
+    }
 
     // by default show this location;
     geocode('Sydney New South Wales, Australia');

@@ -39,7 +39,7 @@
 
 
 
-  
+
 
 
 <style type="text/css">
@@ -52,7 +52,7 @@
 @yield('custom_footer_css')
 
 <!-- jQuery -->
-<script type="text/javascript" src="{{ asset('js/mobile/mdb/jquery.min.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('js/mobile/mdb/jquery.min.js') }}"></script>
 <!-- Bootstrap tooltips -->
 <script type="text/javascript" src="{{ asset('js/mobile/mdb/popper.min.js') }}"></script>
 <!-- Bootstrap core JavaScript -->

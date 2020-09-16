@@ -1,4 +1,4 @@
- 
+
 
  <div class="mJSFilter mb-2">
   {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'jobSeeker_filter_form' )) }}
@@ -17,7 +17,7 @@
 
       <!-- Accordion card -->
       <div class="card">
-							
+
         <!-- Card header -->
         <div class="card-header rgba-stylish-strong z-depth-1 mb-1" role="tab" id="heading1">
           <a data-toggle="collapse" data-parent="#accordionEx7" href="#collapse1" aria-expanded="true"
@@ -30,9 +30,9 @@
         <div id="collapse1" class="collapse" role="tabpanel" aria-labelledby="heading1"
           data-parent="#accordionEx7">
           <div class="p-2 card-body mb-1 rgba-grey-light white-text FilterCont">
-            
+
             <div class="FilterBox">
-													
+
                 <select class="white-text mdb-select md-form colorful-select dropdown-primary filter_qualification_type" name="filter_qualification_type" data-placeholder="Select Qalification & Trades">
                      <option value="">Select Qalification & Trades</option>
                      <option value="certificate">Certificate or Advanced Diploma</option>
@@ -45,7 +45,7 @@
                  @php
                  $qualifications = getQualificationsList();
                 @endphp
-               
+
                 @if(!empty($qualifications))
                 <div class="qualification_degree d-none">
                     <select class="white-text mdb-select md-form qualification_degree" multiple name="qualification_degree[]" id="degreeSelect" data-placeholder="Select a Degree">
@@ -57,7 +57,7 @@
                     </select>
                  {{-- <label class="mdb-main-label">Example label</label> --}}
                 </div>
- 
+
                 <div class="qualification_trade d-none">
                     <select class="white-text mdb-select md-form qualification_trade" multiple name="qualification_trade[]"  id="tradeSelect" data-placeholder="Select Trade">
                         @foreach ($qualifications as $qualif)
@@ -69,7 +69,7 @@
                  {{-- <label class="mdb-main-label">Example label</label> --}}
                 </div>
                 @endif
-																
+
             </div>
 
 
@@ -85,9 +85,9 @@
                 </select>
             </div>
             {{-- Salary Range --}}
-												
 
-												
+
+
              {{-- Industry Experience --}}
             <div class="FilterBox FilterIndustry">
                 <div class="form-check">
@@ -95,7 +95,7 @@
                     <label class="form-check-label" for="filter_industry_status">Filter by Industry</label>
                 </div>
                 <div class="FilterIndustryList d-none">
-                @php 
+                @php
                     $industries = getIndustries()
                 @endphp
                 @if(!empty($industries))
@@ -125,9 +125,9 @@
                   {{-- bl_location --}}
                     <div class="location_search_cont row">
                         <div class="col-10 pl-0 md-form form-sm">
-                          {{-- <input type="text" name="location_search" class="inp" id="location_search" value="" aria-invalid="false"> --}}  
+                          {{-- <input type="text" name="location_search" class="inp" id="location_search" value="" aria-invalid="false"> --}}
                           <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
-                           
+
                         </div>
                         <div class="col-2 p-0">
                             <select class="white-text mdb-select md-form filter_location_radius" name="filter_location_radius" data-placeholder="Select Location Radius">
@@ -138,20 +138,20 @@
                                  <option value="51">50km +</option>
                             </select>
                         </div>
-                        
+
                     <div class="location_latlong d-none w100">
                         <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
                         <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
                     </div>
-                    {{-- <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div> --}}
+                    <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
                     </div>
-                {{-- bl_location --}}      
+                {{-- bl_location --}}
                 </div>
             </div>
             {{-- Location  --}}
 
 
-												<hr class="my-2" style="height: 0.07em;  background: rgb(41, 41, 41); ">
+		    <hr class="my-2" style="height: 0.07em;  background: rgb(41, 41, 41); ">
             {{-- Question  --}}
              <div class="FilterBox FilterLocation">
                  <div class="form-check">
@@ -159,7 +159,7 @@
                     <label class="form-check-label" for="filter_by_questions">Filter by Question</label>
                 </div>
                 <div class="FilterQuestionBox d-none col">
-                   
+
                     <div class="row">
                 @if(!empty(getUserRegisterQuestions()))
 
@@ -176,7 +176,7 @@
                             <option value="yes">Yes</option>
                             <option value="no">No</option>
                         </select>
-                    </div> 
+                    </div>
 
 
                 @endif
@@ -188,7 +188,7 @@
 															<button name="ResetForm" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
 															<button name="CreateConfig" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light " id="CreateConfig" type="submit">Submit</button>
 														</div>
-												</div>	
+												</div>
 
             {{-- Question  --}}
 
@@ -198,12 +198,12 @@
       </div>
       <!-- Accordion card -->
 
-      
 
-							
-						
-							
-					
+
+
+
+
+
 
     </div>
     <!--/.Accordion wrapper-->
@@ -215,11 +215,10 @@
 <!-- Grid row -->
 
   {{ Form::close() }}
- 
+
  </div>
 
-  
 
- 
 
- 
+
+

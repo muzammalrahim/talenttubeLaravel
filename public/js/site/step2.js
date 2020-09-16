@@ -524,7 +524,7 @@ $(function(){
         jQuery.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         jQuery.ajax({
             type:'POST',
-            url: '/ajax/userUploadResume',
+            url: base_url+'/ajax/userUploadResume',
             data:formData,
             cache:false,
             contentType: false,

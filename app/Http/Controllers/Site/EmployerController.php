@@ -363,9 +363,11 @@ class EmployerController extends Controller {
             $job->description =  $requestData['description'];
             $job->experience =  $requestData['experience'];
             $job->type =  $requestData['type'];
-            $job->country =  $requestData['geo_country'];
-            $job->state =  $requestData['geo_states'];
-            $job->city =  $requestData['geo_cities'];
+            $job->country =  $requestData['location_country'];
+            $job->state =  $requestData['location_state'];
+            $job->city =  $requestData['location_city'];
+            $job->location_lat =  $requestData['location_lat'];
+            $job->location_long =  $requestData['location_long'];
             $job->vacancies =  $requestData['vacancies'];
             $job->salary =  $requestData['salary'];
             // $job->gender =  $requestData['gender'];

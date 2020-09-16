@@ -24,14 +24,14 @@
                    {{-- bl_location --}}
                     <div class="bl bl_location">
                     <label>I am from</label>
-                        <div class="location_filed" style="display: none">
+                        <div class="location_filed" >
                             <div class="location_input dtable w100">
                                 <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
                                 <button type="button" id="location_search_load" class="btn btn-success location_search_btn w20 fl_left">Search</button>
                             </div>
                             <div class="location_latlong dtable w100">
-                                <input type="text" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
-                                <input type="text" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+                                <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+                                <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
 
                                 <input type="hidden" name="location_name" id="location_name"  value="">
                                 <input type="hidden" name="location_city" id="location_city"  value="">
@@ -39,7 +39,7 @@
                                 <input type="hidden" name="location_country" id="location_country"  value="">
                             </div>
 
-                            <div class="location_map_box dtable w100">
+                            <div class="location_map_box dtable w100" style="display: none">
                                 <div class="location_map" id="location_map"></div>
                             </div>
                         </div>
@@ -65,12 +65,12 @@
                     <div class="bl">
                         <label>Mobile Number</label>
                         <div class="bl_inp_pos">
-                            <input 
-                                id="phone" 
-                                name="phone" 
-                                class="inp email placeholder w100" 
-                                type="text" 
-                                placeholder="Enter Phone Number" 
+                            <input
+                                id="phone"
+                                name="phone"
+                                class="inp email placeholder w100"
+                                type="text"
+                                placeholder="Enter Phone Number"
                                 value=""
                                 maxlength="10"
                                 minlength="10"

@@ -1,4 +1,4 @@
- 
+
 
  <div class="mJSFilter mb-2">
   {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'filter_form' )) }}
@@ -30,12 +30,12 @@
         <div id="collapse1" class="collapse" role="tabpanel" aria-labelledby="heading1"
           data-parent="#accordionEx7">
           <div class="p-2 card-body mb-1 rgba-grey-light white-text FilterCont">
-            
+
             <div class="FilterBox">
 																<div class="form-group md-form"> <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
 																	<input type="text" name="filter_keyword" class="form-control" style="color:white;" placeholder="Keyword">
 															 </div>
-														
+
 																<div class="form-group">
 																	<select name="filter_jobType" class="white-text mdb-select md-form" data-placeholder="Select Job Type">
 																					<option value="" >Select Job Type</option>
@@ -47,7 +47,7 @@
 																	</select>
 																</div>
 
-              
+
 
 
 
@@ -73,9 +73,9 @@
                   {{-- bl_location --}}
                     <div class="location_search_cont row">
                         <div class="col-10 pl-0 md-form form-sm">
-                          {{-- <input type="text" name="location_search" class="inp" id="location_search" value="" aria-invalid="false"> --}}  
+                          {{-- <input type="text" name="location_search" class="inp" id="location_search" value="" aria-invalid="false"> --}}
                           <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
-                           
+
                         </div>
                         <div class="col-2 p-0">
                             <select class="white-text mdb-select md-form filter_location_radius" name="filter_location_radius" data-placeholder="Select Location Radius">
@@ -86,27 +86,27 @@
                                  <option value="51">50km +</option>
                             </select>
                         </div>
-                        
+
                     <div class="location_latlong d-none w100">
                         <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
                         <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
                     </div>
-                    {{-- <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div> --}}
+                    <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
                     </div>
-                {{-- bl_location --}}      
+                {{-- bl_location --}}
                 </div>
             </div>
             {{-- Location  --}}
 
-											
+
 
 													<div class="FilterBox my-2">
 														<div class="text-center">
 															<button name="ResetForm" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
 															<button name="CreateConfig" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light " id="CreateConfig" type="submit">Submit</button>
 														</div>
-												</div>	
-            
+												</div>
+
 
             </div>
           </div>
@@ -114,9 +114,9 @@
       </div>
       <!-- Accordion card -->
 
-      
 
-       
+
+
     </div>
     <!--/.Accordion wrapper-->
 
@@ -129,13 +129,12 @@
 
 
 
-    
+
   {{ Form::close() }}
- 
+
  </div>
 
-  
 
- 
 
- 
+
+

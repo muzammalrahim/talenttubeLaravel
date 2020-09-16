@@ -4,9 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\JobsQuestions;
+use JustBetter\PaginationWithHavings\PaginationWithHavings;
 
 class Jobs extends Model {
-
+    use PaginationWithHavings;
     // added by Hassan
     protected $attributes = [
     'description' => 0,
@@ -14,7 +15,7 @@ class Jobs extends Model {
     'salary' => 0,
     'gender' => 0,
     'age' => 0,
-    ];     
+    ];
 
     protected $table = 'jobs_data';
 
@@ -43,7 +44,7 @@ class Jobs extends Model {
         // ->groupBy('category_id');
     }
 
- 
+
 
     public function questions(){
         return $this->hasMany('App\JobsQuestions', 'job_id');
@@ -61,12 +62,12 @@ class Jobs extends Model {
     }
 
     function addJobQuestions($questions){
-       
+
         if(!empty($questions)){
             foreach ($questions as $qkey => $qv) {
-                // dd($qv); 
-                $newQuestion = new JobsQuestions(); 
-                $newQuestion->title = $qv['title'];  
+                // dd($qv);
+                $newQuestion = new JobsQuestions();
+                $newQuestion->title = $qv['title'];
                 // $newQuestion->options = json_encode($qv['option']);
 
                 $options_list = array();
@@ -85,7 +86,7 @@ class Jobs extends Model {
                              array_push($goldstar_list,  $opValue['text']);
                         }
                     }
-                } 
+                }
 
                  // $newQuestion->options = json_encode($options_list);
                  // $newQuestion->preffer = json_encode($preffer_list);
@@ -95,20 +96,20 @@ class Jobs extends Model {
                  $newQuestion->preffer =  $preffer_list;
                  $newQuestion->goldstar = $goldstar_list;
 
-                $this->questions()->save($newQuestion); 
+                $this->questions()->save($newQuestion);
             }
         }
 
     }
 
-   
+
     static function generateCode(){
         $code = str_pad(mt_rand(999, 999999), 6, '0', STR_PAD_LEFT);
-        $exist = Jobs::where('code', $code)->first(); 
+        $exist = Jobs::where('code', $code)->first();
         if($exist){
-            $this->generateCode(); 
+            $this->generateCode();
         }else{
-            return $code; 
+            return $code;
         }
     }
 
@@ -118,26 +119,47 @@ class Jobs extends Model {
 
 
     //====================================================================================================================================//
-    // Function to filter jobs. // called from jobs layout. 
+    // Function to filter jobs. // called from jobs layout.
     //====================================================================================================================================//
     public function filterJobs($request){
 
-         
+
         $keyword = my_sanitize_string($request->filter_keyword);
         $salaryRange = $request->filter_salary;
         $jobType = $request->filter_jobType;
-        
-        
-        $locationStatus =  (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on'))?true:false; 
+
+        $filter_location =  (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on'))?true:false;
         $latitude = $request->location_lat;
         $longitude = $request->location_long;
         $radius = $request->filter_location_radius;
 
-        
-        $query    = $this::with(['applicationCount','jobEmployerLogo']); 
-        
 
-        // Filter by salaryRange. 
+        $query    = $this::with(['applicationCount','jobEmployerLogo']);
+
+
+        if($filter_location){
+            if(isset($latitude) && isset($longitude)  && isset($radius)){
+                $radius_sign = ($radius <= 50)?'<':'>';
+                // $query = $query->selectRaw("*,
+                $query = $query->selectRaw("*,
+                ( 6371 * acos( cos(radians('".$latitude."'))
+                * cos( radians(location_lat))
+                * cos( radians(location_long) - radians('".$longitude."'))
+                + sin( radians('".$latitude."'))
+                * sin( radians( location_lat )))
+                ) AS distance")
+                ->having("distance", $radius_sign, $radius);
+               // dd($latitude);
+                //$query = $query->where('location_lat', '<=', -33.8688);
+    //             $query = $query->selectRaw("(3959 * acos(cos(radians($latitude)) * cos(radians(venues.latitude)) * cos(radians(venues.longitude) - radians($longitude)) + sin(radians($latitude)) * sin(radians(venues.latitude)))) AS distance"))
+
+    // ->orderBy('distance', 'asc')
+    // ->having('distance', '<', $distance);
+                //->orderBy("distance",'asc');
+            }
+        }
+
+        // Filter by salaryRange.
         if(!empty($salaryRange)){ $query->where('salary', '>=', $salaryRange); }
 
         // Filter by jobType.
@@ -150,17 +172,24 @@ class Jobs extends Model {
             $query = $query->where(function($q) use($keyword) {
                         $q->where('code','LIKE', "%{$keyword}%")
                         ->orWhere('title','LIKE', "%{$keyword}%")
-                        ->orWhere('description','LIKE', "%{$keyword}%"); 
-                }); 
+                        ->orWhere('description','LIKE', "%{$keyword}%");
+                });
         }
- 
+
         // if( $filter_location ||  !empty($qualification_type) || !empty($salaryRange) || !empty($keyword) || $industry_status ){
         //     $applications = $applications->whereHas('jobseeker', function ($query) use($filter_location,$latitude,$longitude,$radius,$qualification_type,$salaryRange,$keyword, $qualifications, $industry_status, $industries){
         //         if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
         //         if(!empty($keyword)){  $query->where('username', 'LIKE', "%{$keyword}%"); }
-        //         return $query; 
-        //     });  
+        //         return $query;
+        //     });
+
+
         // }
+
+
+
+
+
 
         // if(varExist('ja_filter_sortBy', $request)){
         //     // dd($request->ja_filter_sortBy);
@@ -177,15 +206,22 @@ class Jobs extends Model {
         //         $applications  = $applications->where('status','=','interview');
         //     }else if($request->ja_filter_sortBy == 'unsuccessful'){
         //         $applications  = $applications->where('status','=','unsuccessful');
-        //     }  
+        //     }
         // }else{
         //     $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');
         // }
 
-        // dd( $applications->toSql() ); 
+      //  dd( $query->toSql() );
+
+
+
+
+
+
 
         $jobsList = $query->paginate(2);
-        return $jobsList; 
+       // dd($jobsList);
+        return $jobsList;
 
     }
 

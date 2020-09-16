@@ -20,7 +20,7 @@
                 <h3 class=" job_title"><a>{{$job->title}}</a></h3>
                 <div class="job_location">
                     <span>Location : </span>
-                    {{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
+                    {{$job->city}},  {{($job->state)}}, {{($job->country)}}
                 </div>
             </div>
 

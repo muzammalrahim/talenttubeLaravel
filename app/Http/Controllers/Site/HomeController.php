@@ -54,11 +54,11 @@ class HomeController extends Controller {
     // Get // layout for User/Employer Registeration.
     //====================================================================================================================================//
     public function join(Request $request){
-         
+
         $data['geo_country']    = get_Geo_Country();
         $data['geo_state']      = get_Geo_State(default_Country_id());
         $data['geo_cities']     = get_Geo_City(default_Country_id(), default_State_id());
-        
+
         if ( $request->get('type') === 'user' ){
             $data['title'] = 'Registeration';
             $view_name = 'site.register.user'; // site/register/user
@@ -87,7 +87,7 @@ class HomeController extends Controller {
             );
         }else{
             // create our user data for the authentication
-            $userdata = array( 
+            $userdata = array(
             'email' =>  $request->get('email') ,
             'password' => $request->get('password')
             );
@@ -196,7 +196,7 @@ class HomeController extends Controller {
     }
 
     public function register(Request $request){
-        
+
         // "_token" => "aoBTzArrllzmFQ8fw7zFhktY2lzW8jc1qbw2lH2T"
         // "firstname" => "Creative"
         // "surname" => "khan"
@@ -224,7 +224,7 @@ class HomeController extends Controller {
 
         );
         $validator = Validator::make( $request->all() , $rules);
-        
+
         if ($validator->fails()){
             return response()->json([
                 'status' => 0,
@@ -237,12 +237,12 @@ class HomeController extends Controller {
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->phone = $request->phone;
-            // $user->country = $request->location_country;
-            // $user->state = $request->location_state;
-            // $user->city = $request->location_city;
-            // $user->location = $request->location_name;
-            // $user->location_lat = $request->location_lat;
-            // $user->location_long = $request->location_long;
+            $user->country = $request->location_country;
+            $user->state = $request->location_state;
+            $user->city = $request->location_city;
+            $user->location = $request->location_name;
+            $user->location_lat = $request->location_lat;
+            $user->location_long = $request->location_long;
             $user->username = $request->username;
             // $user->email_verified_at = null;
             $user->email_verified_at = date("Y-m-d H:i:s");
@@ -293,11 +293,16 @@ class HomeController extends Controller {
 						}
 
 						}else{
+                            $userdata = array('email' => $user->email, 'password' => $request->password);
+                            if (Auth::attempt($userdata)){
+                                // validation successful
+                                        $user = Auth::user();
 							return response()->json([
 								'status' => 1,
 								'message' => $success_message,
 								'redirect' => route('step2User')
-							]);
+                            ]);
+                            }
 						}
             }else{
                 return response()->json([
@@ -360,7 +365,7 @@ class HomeController extends Controller {
                 $success_message = '<div class="slogan">'.__('site.Register_Success').'</div>';
                 $success_message .= '<div class="slogan">'.__('site.Verify_Email').'</div>';
                 // $success_message .= '<p>Redirecting to User info page.</p>';
-                
+
 				// $mail_status =  Mail::to($user->email)->send(new EmailVerificationCode($user));
 				if($this->agent->isMobile()){
 					$userData = array('email' => $user->email, 'password' => $request->password);
@@ -378,13 +383,16 @@ class HomeController extends Controller {
 							'message'   => 'Error authenticating user',
 							'redirect' =>  route('mHomepage')
 						);
-					} 
+					}
 				} else {
+                    $userData = array('email' => $user->email, 'password' => $request->password);
+                    if(Auth::attempt($userData)){
 					return response()->json([
 						'status' => 1,
-						'message' => $success_message,
+                        'message' => $success_message,
 						'redirect' => route('step2Employer')
-					]);
+                    ]);
+                    }
 				}
                 return response()->json([
                     'status' => 1,
@@ -517,7 +525,7 @@ class HomeController extends Controller {
     function privateFileshow($userid, $slug){
         $path_var = 'media/private/'.$userid.'/'.$slug;
         $path = storage_path($path_var);
-            // dd( $path_var ); 
+            // dd( $path_var );
         if (!File::exists($path)) {
             return response()->json(['error' => $path_var.' can not be found.']);
         }
@@ -539,17 +547,17 @@ class HomeController extends Controller {
 
         $video_path = 'somedirectory/somefile.mp4';
         $stream = new \App\Helpers\VideoStream($path);
-        $stream->start(); 
+        $stream->start();
 
         // $path_var = 'media/private/'.$userid.'/videos/'.$slug;
         // $path = storage_path($path_var);
         // $fullsize = filesize($path);
-        
+
         // $size = $fullsize;
         // $stream = fopen($path, "r");
         // $response_code = 200;
         // $headers = array("Content-type" => 'video/mp4');
-        
+
         // // Check for request for part of the stream
         // $range = Request::header('Range');
         // if($range != null) {
@@ -565,7 +573,7 @@ class HomeController extends Controller {
         //         $headers["Content-Range"] = $unit . " " . $start . "-" . ($fullsize-1) . "/" . $fullsize;
         //     }
         // }
-        
+
         // $headers["Content-Length"] = $size;
 
         // return Response::stream(function () use ($stream) {
@@ -594,7 +602,7 @@ class HomeController extends Controller {
 
 
         $user_path = Storage::disk('privateMedia');
-      
+
 
         $video_file = FFMpeg::fromFilesystem($user_path)->open('/27/videos/video-1590992473.mp4');
 
@@ -626,13 +634,13 @@ class HomeController extends Controller {
 
         //dump('video_file = ', $video_file);
 
-        $duration = $video_file->getDurationInSeconds(); 
-        dump('duration',  $duration ); 
+        $duration = $video_file->getDurationInSeconds();
+        dump('duration',  $duration );
 
 
-        $thumbnailIntervalTimeArr = $this->getThumbnailIntervalTimeArr($duration); 
+        $thumbnailIntervalTimeArr = $this->getThumbnailIntervalTimeArr($duration);
 
-        dump('thumbnailIntervalTimeArr',  $thumbnailIntervalTimeArr ); 
+        dump('thumbnailIntervalTimeArr',  $thumbnailIntervalTimeArr );
 
 
         $counter = 1;
@@ -643,9 +651,9 @@ class HomeController extends Controller {
             // $counter++;
 
 
-            $image = $video_file->getFrameFromSeconds($interval)->export()->save('FrameAt'.$interval.'sec.png');   
-           
-            // dump(' image ', $image); 
+            $image = $video_file->getFrameFromSeconds($interval)->export()->save('FrameAt'.$interval.'sec.png');
+
+            // dump(' image ', $image);
 
 
             $counter++;
@@ -672,35 +680,35 @@ class HomeController extends Controller {
 
 
 
-     private function getThumbnailIntervalTimeArr($duration){ 
-                $durationInSec = intval($duration); 
-                $intervalArr = range(0,$duration, $duration/4); 
-                return array_slice($intervalArr, 1, -1); 
+     private function getThumbnailIntervalTimeArr($duration){
+                $durationInSec = intval($duration);
+                $intervalArr = range(0,$duration, $duration/4);
+                return array_slice($intervalArr, 1, -1);
         }
 
 
     public function test3(){
-       // $qualifications =  getQualificationsList(); 
-       // // dd( $qualifications ); 
+       // $qualifications =  getQualificationsList();
+       // // dd( $qualifications );
        // foreach ($qualifications as $key => $qualification) {
-       //     $qual = new Qualification(); 
-       //     $qual->type = $qualification['type']; 
-       //     $qual->title = $qualification['title']; 
-       //     $qual->save();  
+       //     $qual = new Qualification();
+       //     $qual->type = $qualification['type'];
+       //     $qual->title = $qualification['title'];
+       //     $qual->save();
        // }
 
-        $jobseekers = User::where('type','user')->get(); 
-        // dd($jobseekers); 
+        $jobseekers = User::where('type','user')->get();
+        // dd($jobseekers);
         foreach ($jobseekers as $key => $js) {
-            
+
             if(!empty($js->qualification)){
 
-                $qualif =  json_decode($js->qualification); 
-                // dump( $js->qualification ); 
-                // dump( $qualif ); 
-                // dump( getQualificationsData(array($qualif[0]))); 
-                // dump( getQualificationsData($js->qualification) ); 
-                
+                $qualif =  json_decode($js->qualification);
+                // dump( $js->qualification );
+                // dump( $qualif );
+                // dump( getQualificationsData(array($qualif[0])));
+                // dump( getQualificationsData($js->qualification) );
+
 
 
             }
