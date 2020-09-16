@@ -45,7 +45,7 @@
                     <option value="contract">Contract</option>
                     <option value="temporary">Temporary</option>
                     <option value="casual">Casual</option>
-                    <option value="Part Time">Part Time</option>
+                    <option value="Part_Time">Part Time</option>
                     <option value="full_time">Full Time</option>
                 </select>
                 <div id="type_error" class="error field_error to_hide">&nbsp;</div>
@@ -676,6 +676,7 @@ $(document).ready(function() {
     }
 
     // by default show this location;
+
     geocode('Sydney New South Wales, Australia');
 
 
