@@ -65,7 +65,7 @@
           </div>
         </div>
         <div class="row text-center mt-3 px-4">
-            <p>This action can not be undone. Are you sure you wish to continue?</p>
+            <p>Are you sure you wish to continue?</p>
         </div>
       </div>
       <!--Footer-->
@@ -137,7 +137,7 @@
           </div>
         </div>
         <div class="row text-center mt-3 px-4">
-            <p>This action can not be undone. Are you sure you wish to continue?</p>
+            <p>Are you sure you wish to continue?</p>
         </div>
       </div>
       <!--Footer-->

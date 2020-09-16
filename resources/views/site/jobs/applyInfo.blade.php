@@ -5,7 +5,7 @@
     <form method="POST" name="job_apply_form" id="job_apply_form" class="job_apply_form jobApply jobApply_validation">
     @csrf
     <div class="ja_header">
-        <h3>{{$job->title}}</h3>
+        <h3 class="jobTitle">{{$job->title}}</h3>
     </div>
     {{-- @dd( $job->questions ) --}}
     @if (!empty($job->questions))
@@ -75,4 +75,3 @@
 </script>
 
 </div>
-

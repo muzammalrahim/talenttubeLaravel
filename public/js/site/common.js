@@ -271,15 +271,14 @@ $('input[name="filter_industry_status"]').change(function() {
  // ========== Function to show Block popup when click on ==========//
  $(document).ready(function(){
  $(document).on('click','.jsBlockUserBtn',function(){
-     var jobseeker_id = $(this).data('jsid');
-     console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
-
-     console.log('Block user in employer list', jobseeker_id);
-     $('.apiMessageForBlockingEmp').css("display","none");
+    var jobseeker_id = $(this).data('jsid');
+    console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
+    console.log('Block user in employer list', jobseeker_id);
+    $('.apiMessageForBlockingEmp').css("display","none");
     $('.img_chat').show();
 
 
-                $('.double_btn').show();
+    $('.double_btn').show();
 
 
     // $('.confirmJobSeekerBlockModal .img_chat').remove(data.message);

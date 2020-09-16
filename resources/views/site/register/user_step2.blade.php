@@ -379,10 +379,10 @@
 
             <div id="full_step_9" class="bl_card_final full_step_9" style="display: none">
                 <div class="ind_exp">
-                    <div class="ind_exp_h">
-                        <p>Almost done, candidates! To help Employers connect with you, we’ve created a tagging system. This allows Employers to search for specific candidates via a search system. In the below section, we encourage you to create as many tags that best describe your key attributes as a Job Seeker.</p>
+                    <div class="ind_exp_h" style="">
+                        <p class="tagging">Almost done, candidates! To help Employers connect with you, we’ve created a tagging system. This allows Employers to search for specific candidates via a search system. In the below section, we encourage you to create as many tags that best describe your key attributes as a Job Seeker.</p>
                         <div class="taging_h_info">
-                            <p>Be sure to tag the following:</p>
+                            <p> Be sure to tag the following:</p>
                             <p>*Names of organisations and companies you’ve worked for, including charities and not for profits</p>
                             <p>*Job Titles you have held</p>
                             <p>*Skills you have (eg; customer service, java Developer, sales, book keeping, etc)</p>
@@ -409,24 +409,24 @@
             <div id="full_step_10" class="bl_card_Final full_step_10" style="display: none">
                 <div class="ind_exp">
                     <div class="ind_exp_h">
-                        <p class="center">Browse Jobs</p>
+                        <p class="center" style="display: none">Browse Jobs</p>
                         <div class="jobs_list">
-																										<div class="css_loader">
-																											<div class="spinner center">
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																												<div class="spinner-blade"></div>
-																											</div>
-																										</div>
+							<div class="css_loader">
+								<div class="spinner center">
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+									<div class="spinner-blade"></div>
+								</div>
+							</div>
                         </div>
                     </div>
                     <div class="join_btn mt20 center">
