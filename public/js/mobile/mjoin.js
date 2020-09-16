@@ -685,9 +685,9 @@ $('#tag_skip_btn').click(function () {
 			// User Step9 End
 
 			// User Step10 Start
-			$(window).on('load', function() {
-				$('#mdb-preloader').delay(1000).fadeOut(300);
-			});
+			// $(window).on('load', function() {
+			// 	$('#mdb-preloader').delay(1000).fadeOut(300);
+			// });
 
 			$('#user_step10_done').click(function () {
 				userStep2Update(step7_formData, 10);
