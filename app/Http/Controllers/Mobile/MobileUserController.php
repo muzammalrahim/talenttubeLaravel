@@ -1365,23 +1365,23 @@ class MobileUserController extends Controller
         // }
 		}
 
-				public function Memployerspost(Request $request){
-        //dd($request);
-					$user = Auth::user();
-					if (isEmployer($user)){ return redirect(route('jobSeekers')); }
-					$data['user']           = $user;
-					$data['title']          = 'Employers';
-					$data['classes_body']   = 'employers';
-					$employersObj          = new User();
-					$employers             = $employersObj->getEmployersp($request, $user);
-					$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
-					$data['likeUsers'] = $likeUsers;
-					$data['employers'] = $employers;
-					return view('mobile.user.employersList', $data); // mobile/user/employers
-					//  $view = view('mobile.user.employers', $data);
-					// $view = $view->render();
-					// echo  $view;
-					// exit;
+    public function Memployerspost(Request $request){
+//dd($request);
+        $user = Auth::user();
+        if (isEmployer($user)){ return redirect(route('jobSeekers')); }
+        $data['user']           = $user;
+        $data['title']          = 'Employers';
+        $data['classes_body']   = 'employers';
+        $employersObj          = new User();
+        $employers             = $employersObj->getEmployersp($request, $user);
+        $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        $data['likeUsers'] = $likeUsers;
+        $data['employers'] = $employers;
+        return view('mobile.user.employersList', $data); // mobile/user/employers
+        //  $view = view('mobile.user.employers', $data);
+        // $view = $view->render();
+        // echo  $view;
+        // exit;
 	}
 
 
@@ -1397,9 +1397,9 @@ class MobileUserController extends Controller
 		$requestData['description']   =  my_sanitize_string($request->description);
 		$requestData['experience']    =  my_sanitize_string($request->experience);
 		$requestData['type']          =  my_sanitize_string($request->type);
-		$requestData['geo_country']   =  my_sanitize_number($request->geo_country);
-		$requestData['geo_states']   =  my_sanitize_number($request->geo_states);
-		$requestData['geo_cities']   =  my_sanitize_number($request->geo_cities);
+		// $requestData['location_country']   =  my_sanitize_number($request->location_country);
+		// $requestData['location_state']   =  my_sanitize_number($request->location_state);
+		// $requestData['location_city']   =  my_sanitize_number($request->location_city);
 		$requestData['vacancies']   =  my_sanitize_number($request->vacancies);
 		$requestData['salary']   =  my_sanitize_string($request->salary);
 		$requestData['expiration']   =  my_sanitize_string($request->expiration);
@@ -1448,16 +1448,18 @@ class MobileUserController extends Controller
 						]);
 		}else{
 						// dd(' all valiation correct ');
-						$job = new Jobs();
-						$job->title =  $requestData['title'];
-						$job->description =  $requestData['description'];
-						$job->experience =  $requestData['experience'];
-						$job->type =  $requestData['type'];
-						$job->country =  $requestData['geo_country'];
-						$job->state =  $requestData['geo_states'];
-						$job->city =  $requestData['geo_cities'];
-						$job->vacancies =  $requestData['vacancies'];
-						$job->salary =  $requestData['salary'];
+                        $job = new Jobs();
+                        $job->title =  $requestData['title'];
+                        $job->description =  $requestData['description'];
+                        $job->experience =  $requestData['experience'];
+                        $job->type =  $requestData['type'];
+                        $job->country =  $requestData['location_country'];
+                        $job->state =  $requestData['location_state'];
+                        $job->city =  $requestData['location_city'];
+                        $job->location_lat =  $requestData['location_lat'];
+                        $job->location_long =  $requestData['location_long'];
+                        $job->vacancies =  $requestData['vacancies'];
+                        $job->salary =  $requestData['salary'];
 						// $job->gender =  $requestData['gender'];
 						// $job->age =  $requestData['age'];
 						$job->user_id =  $user->id;
@@ -1501,6 +1503,7 @@ class MobileUserController extends Controller
 
 
 		public function jobSeekersFilter(Request $request){
+
 			  $user = Auth::user();
         if (!isEmployer($user)){
             return response()->json([
@@ -1529,26 +1532,26 @@ class MobileUserController extends Controller
         }
 
         // Filter by google map location radius.
-        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
-            if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
-                // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
-                 $latitude = $request->location_lat;
-                 $longitude = $request->location_long;
-                 $radius = $request->filter_location_radius;
-                 $radius_sign = ($radius <= 50)?'<':'>';
+        // if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
+        //     if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
+        //         // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
+        //          $latitude = $request->location_lat;
+        //          $longitude = $request->location_long;
+        //          $radius = $request->filter_location_radius;
+        //          $radius_sign = ($radius <= 50)?'<':'>';
 
-                 $query = $query->selectRaw("*,
-                     ( 6371 * acos( cos(radians('".$latitude."'))
-                     * cos( radians(location_lat))
-                     * cos( radians(location_long) - radians('".$longitude."'))
-                     + sin( radians('".$latitude."'))
-                     * sin( radians( location_lat )))
-                     ) AS distance")
-                ->having("distance", $radius_sign, $radius)
-                ->orderBy("distance",'asc');
+        //          $query = $query->selectRaw("*,
+        //              ( 6371 * acos( cos(radians('".$latitude."'))
+        //              * cos( radians(location_lat))
+        //              * cos( radians(location_long) - radians('".$longitude."'))
+        //              + sin( radians('".$latitude."'))
+        //              * sin( radians( location_lat )))
+        //              ) AS distance")
+        //         ->having("distance", $radius_sign, $radius)
+        //         ->orderBy("distance",'asc');
 
-            }
-        }
+        //     }
+        // }
 
         // Filter by Keyword filter_keyword
         if(varExist('filter_keyword', $request)){

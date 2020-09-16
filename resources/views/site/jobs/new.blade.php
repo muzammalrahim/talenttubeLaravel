@@ -669,6 +669,7 @@ $(document).ready(function() {
     }
 
     function updateLocationInputs(place,city,state,country){
+        jQuery('#location_name').val(place);
         jQuery('#location_city').val(city);
         jQuery('#location_state').val(state);
         jQuery('#location_country').val(country);

@@ -18,7 +18,7 @@
 								<div class="js_info center">
 												<div class="js_name"><h4 class="bold">{{$js->name}} {{$js->surname}}</h4></div>
 												{{-- <div class="js_status_label">{{$js->statusText}}</div> --}}
-												
+
 								</div>
 				</div>
 
@@ -36,10 +36,10 @@
 												<p>{{$js->interested_in}}</p>
 								</div>
 								<div class="js_location js_field"><span class="js_label">Location:</span>
-								<p class="js_location"> {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </p>
+								<p class="js_location"> {{$js->city}},  {{$js->state}}, {{$js->country}} </p>
 								</div>
 
-							
+
 
 				</div>
 				{{-- @dump($likeUsers) --}}

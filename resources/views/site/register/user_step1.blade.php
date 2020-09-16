@@ -6,7 +6,7 @@
 <div class="slogan">Almost there! Just a little more to go.</div>
     <div class="bl_form_registration bl_form_registration_step_1">
 
-            
+
 
             <form name="frm_date" method="post" action="{{route('register')}}" autocomplete="off">
             {{ csrf_field() }}
@@ -30,8 +30,8 @@
                             <button type="button" id="location_search_load" class="btn btn-success location_search_btn w20 fl_left">Search</button>
                         </div>
                         <div class="location_latlong dtable w100 hide_it">
-                            <input type="text" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
-                            <input type="text" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+                            <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+                            <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
 
                             <input type="hidden" name="location_name" id="location_name"  value="">
                             <input type="hidden" name="location_city" id="location_city"  value="">
@@ -39,7 +39,7 @@
                             <input type="hidden" name="location_country" id="location_country"  value="">
                         </div>
 
-                        <div class="location_map_box dtable w100 hide_it">
+                        <div class="location_map_box dtable w100" style="display: none">
                             <div class="location_map" id="location_map"></div>
                         </div>
                     </div>
@@ -64,12 +64,12 @@
                 <div class="bl">
                     <label>Mobile Number</label>
                     <div class="bl_inp_pos">
-                        <input 
-                            id="phone" 
-                            name="phone" 
-                            class="inp email placeholder w100" 
-                            type="text" 
-                            placeholder="Enter Phone Number" 
+                        <input
+                            id="phone"
+                            name="phone"
+                            class="inp email placeholder w100"
+                            type="text"
+                            placeholder="Enter Phone Number"
                             value=""
                             maxlength="10"
                             minlength="10"
@@ -96,7 +96,7 @@
                         <div id="password_error" class="error to_hide">&nbsp;</div>
                     </div>
                 </div>
-                
+
                 <div class="bl pb20">
                     <label>Confirm password</label>
                     <div class="bl_inp_pos to_show">
@@ -117,7 +117,7 @@
 
                 <button id="frm_register_submit" class="btn pink disabled" disabled>Next</button>
                 <span id="agree_error" class="error to_hide">You need to agree to the terms</span>
-               
+
             </div>
             </form>
 
@@ -128,7 +128,7 @@
 
 
 
-    
+
 </div>
 
 <div id="success-step-1" class="hide">

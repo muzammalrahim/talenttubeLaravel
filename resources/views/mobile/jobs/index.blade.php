@@ -1,7 +1,7 @@
 @extends('mobile.user.usermaster')
 @section('content')
 
- 
+
 <h6 class="h6 jobAppH6">Browse Jobs</h6>
 
 <!-- =================================================== Jobs Apply Modal =================================================== -->
@@ -9,7 +9,7 @@
 		@include('mobile.jobs.jobsFilter')
 		@include('mobile.spinner')
 <!-- =================================================== Jobs List =================================================== -->
-		<div class="jobs_list">	
+		<div class="jobs_list">
 		@include('mobile.jobs.jobsList')
 		</div>
 
@@ -19,7 +19,7 @@
 @section('custom_footer_css')
 
 @stop
-
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 @section('custom_js')
 
 <script type="text/javascript">
@@ -28,26 +28,26 @@ $(document).ready(function(){
 
 
 	$('#filter_form').on('submit',function(event){
-    console.log(' filter_form submit '); 
+    console.log(' filter_form submit ');
     event.preventDefault();
     $('#paginate').val('');
     getData();
 });
 
-// function to send ajax call for getting data throug filter/Pagination selection. 
+// function to send ajax call for getting data throug filter/Pagination selection.
 var getData = function(){
     var url = '{{route('MjobsFilter')}}';
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.post(url, $('#filter_form').serialize(), function(data){
-						 
+
         $('.jobs_list').html(data);
     });
 }
 
-getData(); 
+getData();
 
 $(document).on('click','.jobs_pagination .page-item .page-link',function(e){
-    console.log(' page-link click ', $(this) ); 
+    console.log(' page-link click ', $(this) );
     e.preventDefault();
     var page = $(this).attr('href').split('page=')[1];
     $('#paginate').val(page);
@@ -81,17 +81,17 @@ $(document).on('click','.jobs_pagination .page-item .page-link',function(e){
 
 
 
-  }); 
+  });
 
 // ======================================== Apply For Job Js and Ajax end ========================================
 
-  // jobApplyBtn click end 
+  // jobApplyBtn click end
 
 $('jobApplyBtn').on('show.bs.modal', function (event) {
     console.log(' jobApplyModal show ');
         var jobPopId = $('#openModalJobId').val();
         console.log(' jobPopId ', jobPopId);
-        console.log(' after open ', event); 
+        console.log(' after open ', event);
         $('.applyJobModalProcessing').removeClass('d-none');
 
         // $('.modalJobApply').show();
@@ -114,13 +114,13 @@ $('jobApplyBtn').on('show.bs.modal', function (event) {
     console.log(' Job Close Button click  ');
     $('input[type="text"],textarea').val('')
 
-  }); 
+  });
 
 // Jobs Modal Close Button
 
 
 });
-// ready end 
+// ready end
 // $(document).on('click','.jobApplyBtnX', function() {
 //   var jobPopId = parseInt($(this).attr('job-id'));
 //   var jobPopTitle = $(this).attr('job-title');

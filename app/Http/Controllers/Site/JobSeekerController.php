@@ -45,22 +45,22 @@ class JobSeekerController extends Controller {
         $data['likeUsers'] = $likeUsers;
        // $data['employers'] = $jobSeekers;
         return view('site.user.employers', $data);
-				}
+		}
 
-				public function employerspost(Request $request){
-					$user = Auth::user();
-					if (isEmployer($user)){ return redirect(route('jobSeekers')); }
-					$data['user']           = $user;
-					$data['title']          = 'Employers';
-					$data['classes_body']   = 'employers';
-					$employersObj          = new User();
-					$jobSeekers             = $employersObj->getEmployersp($request, $user);
-					$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+    public function employerspost(Request $request){
+        $user = Auth::user();
+        if (isEmployer($user)){ return redirect(route('jobSeekers')); }
+        $data['user']           = $user;
+        $data['title']          = 'Employers';
+        $data['classes_body']   = 'employers';
+        $employersObj          = new User();
+        $jobSeekers             = $employersObj->getEmployersp($request, $user);
+        $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 
-					$data['likeUsers'] = $likeUsers;
-				 $data['employers'] = $jobSeekers;
-					return view('site.user.employerslist', $data);     //  site/user/employerslist
-				}
+        $data['likeUsers'] = $likeUsers;
+        $data['employers'] = $jobSeekers;
+        return view('site.user.employerslist', $data);     //  site/user/employerslist
+    }
 
 
 
@@ -187,7 +187,7 @@ class JobSeekerController extends Controller {
                 $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
                 $isallowed = True;
                 $data['attachments'] = $attachments;
-                
+
             }
 
         }

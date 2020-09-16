@@ -1,4 +1,4 @@
- 
+
 
  <div class="mJSFilter mb-2">
   {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'employer_filter_form' )) }}
@@ -25,7 +25,7 @@
             <h5 class="mb-0 white-text font-thin">Filters <i class="fas fa-angle-down rotate-icon"></i></h5>
           </a>
         </div>
-								
+
         <!-- Card body -->
         <div id="collapse1" class="collapse" role="tabpanel" aria-labelledby="heading1"
           data-parent="#accordionEx7">
@@ -34,8 +34,8 @@
 												<div class="form-group md-form"> <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
 													<input type="text" name="filter_keyword" class="form-control" style="color:white;" placeholder="Keyword">
 												</div>
-            
-            
+
+
 
 
 
@@ -46,7 +46,7 @@
                     <label class="form-check-label" for="filter_industry_status">Filter by Industry</label>
                 </div>
                 <div class="FilterIndustryList d-none">
-                @php 
+                @php
                     $industries = getIndustries()
                 @endphp
                 @if(!empty($industries))
@@ -76,9 +76,9 @@
                   {{-- bl_location --}}
                     <div class="location_search_cont row">
                         <div class="col-10 pl-0 md-form form-sm">
-                          {{-- <input type="text" name="location_search" class="inp" id="location_search" value="" aria-invalid="false"> --}}  
+                          {{-- <input type="text" name="location_search" class="inp" id="location_search" value="" aria-invalid="false"> --}}
                           <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
-                           
+
                         </div>
                         <div class="col-2 p-0">
                             <select class="white-text mdb-select md-form filter_location_radius" name="filter_location_radius" data-placeholder="Select Location Radius">
@@ -89,14 +89,14 @@
                                  <option value="51">50km +</option>
                             </select>
                         </div>
-                        
+
                     <div class="location_latlong d-none w100">
                         <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
                         <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
                     </div>
-                    {{-- <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div> --}}
+                    <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
                     </div>
-                {{-- bl_location --}}      
+                {{-- bl_location --}}
                 </div>
             </div>
             {{-- Location  --}}
@@ -110,7 +110,7 @@
                     <label class="form-check-label" for="filter_by_questions">Filter by Question</label>
                 </div>
                 <div class="FilterQuestionBox d-none col">
-                   
+
                     <div class="row">
                 @if(!empty(getUserRegisterQuestions()))
 
@@ -127,7 +127,7 @@
                             <option value="yes">Yes</option>
                             <option value="no">No</option>
                         </select>
-                    </div> 
+                    </div>
 
 
                 @endif
@@ -149,9 +149,9 @@
       </div>
       <!-- Accordion card -->
 
-      
 
-       
+
+
     </div>
     <!--/.Accordion wrapper-->
 
@@ -164,13 +164,12 @@
 
 
 
-    
+
   {{ Form::close() }}
- 
+
  </div>
 
-  
 
- 
 
- 
+
+

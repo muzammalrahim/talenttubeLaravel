@@ -186,9 +186,9 @@ $(function(){
                             $jq('#frm_register_submit_2').prop('disabled',true);
                             $jq('#success-step-1').show(1).addClass('to_show').html(data.message);
                             $jq('#frm_register_submit').html(i18n.site.Next_btn);
-                            // setTimeout(() => {
-                            //     location.href = data.redirect;
-                            // }, 3000);
+                            setTimeout(() => {
+                                location.href = data.redirect;
+                            }, 3000);
                         });
                     }
 
@@ -277,9 +277,9 @@ $(function(){
                     $jq('#frm_register_submit_2').prop('disabled',true);
                     $jq('#success-step-1').show(1).addClass('to_show').html(data.message);
                     $jq('#frm_register_submit').html(i18n.site.Next_btn);
-                    // setTimeout(() => {
-                    //     location.href = data.redirect;
-                    // }, 5000);
+                    setTimeout(() => {
+                        location.href = data.redirect;
+                    }, 1000);
                 });
             }
 

@@ -151,10 +151,10 @@ class User extends Authenticatable
 
 
         $query = $query->selectRaw("*,
-                     ( 6371 * acos( cos(radians('".$latitude."''))
+                     ( 6371 * acos( cos(radians('".$latitude."'))
                      * cos( radians(location_lat))
-                     * cos( radians(location_long) - radians('".$longitude."''))
-                     + sin( radians('".$latitude."''))
+                     * cos( radians(location_long) - radians('".$longitude."'))
+                     + sin( radians('".$latitude."'))
                      * sin( radians( location_lat )))
                      ) AS distance")
         ->having("distance", "<", $radius)
@@ -235,6 +235,7 @@ class User extends Authenticatable
     }
 
 				function getEmployersp( $request, $user ){
+
 					$block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
 					if(!empty($block)){
 									$query = $this::with('profileImage')->where('type','employer')->whereNotIn('id', $block);
@@ -253,7 +254,9 @@ class User extends Authenticatable
 					}
 
 					if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
+
 						if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
+                            //dd($request->filter_location_status);
 										// $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
 											$latitude = $request->location_lat;
 											$longitude = $request->location_long;
@@ -298,7 +301,7 @@ class User extends Authenticatable
 					$query = $query->where('questions', 'LIKE', $question_like);
 					}
 				}
-						// //	dd($request->filter_keyword);
+
 
 
 					return $query->paginate(2);
