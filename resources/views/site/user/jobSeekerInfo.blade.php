@@ -35,9 +35,17 @@
                 <div class="js_profile w_30p w_box dblock fl_left">
                     <div class="js_profile_cont center p10">
                         @php
-                        $profile_image   = asset('images/site/icons/nophoto.jpg');
-                        if ($js->profileImage){
-                            $profile_image = asset('images/user/'.$js->id.'/gallery/'.$js->profileImage->image);
+                       $profile_image  = asset('images/site/icons/nophoto.jpg');
+                        $profile_image_gallery    = $js->profileImage()->first();
+
+                        // dump($profile_image_gallery);
+
+                        if ($profile_image_gallery) {
+                            // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+
+                            $profile_image   = assetGallery2($profile_image_gallery,'small');
+                            // dump($profile_image);
+
                         }
                         @endphp
                         <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}">
@@ -45,7 +53,7 @@
                     <div class="js_info center">
                         <div class="js_name"><h4 class="bold">{{$js->name}} {{$js->surname}}</h4></div>
                         {{-- <div class="js_status_label">{{$js->statusText}}</div> --}}
-                        <div class="js_location">Location: {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </div>
+                        <div class="js_location">Location: {{$js->city}},  {{$js->state}}, {{$js->country}} </div>
                     </div>
                 </div>
 
@@ -338,7 +346,7 @@
 <div style="display:none;">
 <div id="confirmJobSeekerBlockModal" class="modal p0 confirmJobSeekerBlockModal wauto">
     <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-        <div class="cont"> 
+        <div class="cont">
             <div class="title">Block Job Seeker?</div>  {{-- Modal in job seeker info page --}}
             <div class="img_chat">
                 <div class="icon">

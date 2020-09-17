@@ -12,7 +12,7 @@
         <div class="card-header jobInfoFont jobAppHeader p-2">Name:
             <span class="jobInfoFont font-weight-normal">{{$js->name}} {{$js->surname}}</span>
                 <div class="jobInfoFont">Location:
-                <span class="font-weight-normal">{{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}}</span>
+                <span class="font-weight-normal">{{$js->city}},  {{$js->state}}, {{$js->country}}</span>
                 </div>
         </div>
 								@php

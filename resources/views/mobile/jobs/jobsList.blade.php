@@ -24,7 +24,7 @@
                     <div class="row p-0 m-0">
                         <span class="jobInfoFont">Location : </span>
                             <div class="jobDetail" style="margin: 0.2rem 0 0 0.2rem;">
-                             {{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}</div>
+                             {{$job->city}},  {{$job->state}}, {{$job->country}}</div>
                     </div>
                 </div>
 
@@ -38,7 +38,7 @@
             <div class="card-body jobAppBody pt-2">
 
                 <div class="row jobInfo">
-                   
+
                     <div class="col-4 p-0">
 
                         {{-- @dump($job->jobEmployer) --}}
@@ -56,12 +56,12 @@
 
                        {{--  <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" style="height:110px;"> --}}
 
-                        
+
                     </div>
 
                     <div class="col p-0 pl-3">
 
-                        <div class="jobInfoFont float-left mr-1">Job Salary: </div> 
+                        <div class="jobInfoFont float-left mr-1">Job Salary: </div>
                             <div class="jobDetail" style="margin: 0.2rem 0 0 0.2rem; "> {{$job->salary}}</div>
                         <div class="mt-2">
                             <span class="jobInfoFont">Job Experience</span>
@@ -76,10 +76,10 @@
                         <div>
                         Web & E-commerce Job
                         </div>
-                        
+
                     </div>
 
-                </div> 
+                </div>
 
                 <div class="row p-0 mt-2">
                     <div class="card-title col p-0 mb-0 jobInfoFont">Job Detail</div>
@@ -116,16 +116,16 @@
 
                         <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}">Apply</a>
 
-                    
+
                     </div>
-                    
+
                 </div>
 
             </div>
 
         </div>
 
-    </div> 
+    </div>
 
 @endforeach
 <div class="jobs_pagination cpagination">{!! $jobs->render() !!}</div>
