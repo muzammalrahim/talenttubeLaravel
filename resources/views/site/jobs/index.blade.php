@@ -11,7 +11,7 @@
     <div class="head icon_head_browse_matches">Browse Jobs</div>
 
     <div class="add_new_job">
-         
+
         <!-- =============================================================================================================================== -->
         @include('site.jobs.filter')
         <!-- =============================================================================================================================== -->
@@ -86,13 +86,13 @@ $(document).ready(function() {
 // Top Filter form submit load data throug ajax.
 //====================================================================================================================================//
 $('#filter_form').on('submit',function(event){
-    console.log(' filter_form submit '); 
+    console.log(' filter_form submit ');
     event.preventDefault();
     $('#paginate').val('');
     getData();
 });
 
-// function to send ajax call for getting data throug filter/Pagination selection. 
+// function to send ajax call for getting data throug filter/Pagination selection.
 var getData = function(){
     var url = '{{route('jobsFilter')}}';
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -101,11 +101,11 @@ var getData = function(){
     });
 }
 
-getData(); 
+getData();
 
-// Bottom pagination load data throug ajax. 
+// Bottom pagination load data throug ajax.
 $(document).on('click','.jobs_pagination .page-item .page-link',function(e){
-    console.log(' page-link click ', $(this) ); 
+    console.log(' page-link click ', $(this) );
     e.preventDefault();
     var page = $(this).attr('href').split('page=')[1];
     $('#paginate').val(page);
@@ -120,8 +120,27 @@ $("body").click(function(){
 });
 
 $(".reset-btn").click(function(){
-	$("#filter_form").trigger("reset");
-	getDataCustom();
+    //$("#filter_form").trigger("reset");
+
+    jQuery('input[name="filter_location_status"]').styler();
+
+    event.preventDefault();
+    $('#paginate').val('');
+
+    jQuery('input[name="filter_location_status"]').each(function() {
+
+        if(this.checked){
+        $(this).toggleClass('checked').trigger('refresh');
+        this.checked = !this.checked;
+        $(this).toggleClass('checked').trigger('refresh');
+        (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
+
+        }
+    });
+    jQuery('input[name="filter_keyword"]').val("");
+    jQuery('#filter_salary').get(0).selectedIndex = 0;
+    jQuery('#filter_jobType').get(0).selectedIndex = 0;
+    getDataCustom();
 });
 
 
