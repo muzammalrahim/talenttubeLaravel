@@ -169,7 +169,7 @@
                 @if ($videos->count() > 0 )
                 @foreach ($videos as $video)
                     <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-                        <a onclick="UProfile.showVideoModal('{{$video->file}}')" class="video_link" target="_blank">
+                        <a onclick="UProfile.showVideoModal('{{assetVideo($video)}}')" class="video_link" target="_blank">
                             <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
                            {!! generateVideoThumbs($video) !!}
                         </a>
