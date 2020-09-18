@@ -9,14 +9,55 @@
   <h6 class="card-header h6">Company Information {{-- <i class="fas fa-edit float-right"> --}}</i></h6>
 
     <div class="card-body p-2 cardBody">
-    <div id="over" style="/*position:absolute; */width:auto; height:150px">
+
+
+
+
+{{-- ==================================================== For image ==================================================== --}}
+
+
+<!--Section: Testimonials v.1-->
+{{-- <section class="section pb-3 text-center"> --}}
+  <!--Section description-->
+
+  <div class="row">
+
+    <!--Grid column-->
+    <div class="col-lg-4 col-md-12 mb-1">
+
+      <!--Card-->
+      <div class="testimonial-card">
+        <!--Background color-->
+        <div class="card-up teal lighten-2">
+        </div>
+        <!--Avatar-->
+        <div class="avatar mx-auto white">
+          <img src="{{$profile_image}}"
+            alt="avatar mx-auto white" class="rounded-circle img-fluid">
+        </div>
+
+      </div>
+      <!--Card-->
+
+    </div>
+    <!--Grid column-->
+  </div>
+
+{{-- </section> --}}
+<!--Section: Testimonials v.1-->
+
+{{-- ==================================================== For image ==================================================== --}}
+
+    {{-- <div id="over" style="/*position:absolute; */width:auto; height:150px"> --}}
 
       {{-- <img src="https://p16-tiktokcdn-com.akamaized.net/aweme/720x720/tiktok-obj/1646491669975042.jpeg"> --}}
-        <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+      {{--   <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
             <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
+
         </a>
 
     </div>
+
 
     <div class="personalInfo">{{$user->name}} {{$user->surname}}</div>
     <div class="personalInfo"><b>Email:</b> {{$user->email}}</div>
@@ -130,7 +171,7 @@
         <div class="list_photos_public d-flex">
             <div class="list_photos_trans">
             <div id="photo_add_public" class="item add_photo add_photo_public">
-                <a href="#null" class="dblock uploadProgressModalBtn"><img src="{{asset('/images/site/icons/add_photo126x140.png')}}" alt="" class="bg-primary mb-2 float-left mr-2 mt-2 uploadedPhotos" ></a>
+                <a href="#null" class="dblock uploadProgressModalBtn"><img src="{{asset('/images/site/icons/add_photo126x140.png')}}" alt="" class="bg-primary float-left mr-3 ml-1 mt-2 uploadedPhotos" ></a>
             </div>
             @if ($user_gallery)
                 @foreach ($user_gallery as $gallery)
@@ -295,6 +336,10 @@ div#home-just {
     width: 120px;
 
 }
+.teal.lighten-2 {
+    background-color: #254c8e !important;
+}
+
 </style>
 @stop
 

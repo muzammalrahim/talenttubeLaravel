@@ -128,6 +128,10 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
     Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
     Route::post('ajax/MdeleteJobApplication/{id}', 'Mobile\MobileUserController@MdeleteJobApplication')->name('MdeleteJobApplication');
+
+    Route::post('ajax/MchangeJobApplicationStatus', 'Mobile\MobileUserController@MchangeJobApplicationStatus')->name('MchangeJobApplicationStatus');
+
+
  });
 
 });

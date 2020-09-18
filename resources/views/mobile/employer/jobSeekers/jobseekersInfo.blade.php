@@ -7,7 +7,7 @@
 <h6 class="h6 jobAppH6">Job Seeker's Detail </h6>
 
 @php
-$js = $jobseeker;
+$js = $jobSeeker;
 @endphp
 
 <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
@@ -195,7 +195,63 @@ $js = $jobseeker;
                 @endforeach
             @endif
             </div>
+
+         
         </div>
+
+           {{-- private area --}}
+
+           {{-- @dump($isallowed) --}}
+     
+
+            {{-- New  --}}
+            @if($isallowed)
+        
+        {{-- private area --}}
+            <span class="prvate-section text-dark">
+                <div class="title_private_photos" style="margin-bottom: 5px;">
+                    Resume &amp; Contact Details
+                </div>
+
+                <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
+                    <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
+                    <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
+                    {{-- <li> <a class="btn violet view-resume" target="_blank" style="" href="/talenttube/_files/resumeUpload/3687_Pimmys logo.pdf">View Resume</a></li> --}}
+                </ul>
+            </span>
+
+                <br>
+
+                <div class="private_attachments text-dark display-flex">
+                    @foreach ($attachments as $attachment)
+
+                        {{-- {{asset('images/user/'.$attachment->file)}} --}}
+
+                        <div class="attachment_{{$attachment->id}} attachment_file float-left ml-2">
+                                <div class="attachment"><img src="{{asset('images/site/icons/cv.png')}}" style="    height: 100px;" /></div>
+                                <span class="attach_title ml-2">{{ $attachment->name }}</span>
+                                <div class="attach_btns">
+                                    <a class="attach_btn downloadAttachBtn" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
+                                </div>
+
+                        </div>
+                    @endforeach
+            </div>
+            @else
+
+            <span class="prvate-section text-dark">
+                <div class="title_private_photos" style="margin-bottom: 5px;">
+                    Content Locked
+                </div>
+
+                <div class="attach_btns">
+                    <a class="attach_btn downloadAttachBtn btn btn-sm btn-primary m-0" onclick="({{$js->id}});">Unlock <i class="fas fa-unlock-alt ml-2"></i></a>
+                </div>
+            </span>
+
+        @endif
+            {{-- New end --}}
+
 
   </div>
   <div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
