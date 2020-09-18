@@ -25,7 +25,6 @@ use App\Tags;
 use App\JobsAnswers;
 use App\JobsQuestions;
 use App\LikeUser;
-
 use App\fbremacc;
 
 // use App\Hash;
@@ -1742,35 +1741,78 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
     // Get // layout for Employer Detail.
     //====================================================================================================================================//
-    public function MjobSeekersInfo($jobseekerId){
-        $user = Auth::user();
-        // dump($jobseekerId);
+    public function MjobSeekersInfo($jobSeekerId){
+       //  $user = Auth::user();
+       //  // dump($jobseekerId);
 
-        // if (isEmployer($user)){ return redirect(route('employers')); }
+       //  // if (isEmployer($user)){ return redirect(route('employers')); }
+       //  $data['user'] = $user;
+       //  $employer = User::JobSeeker()->where('id',$jobseekerId)->first();
+
+       //  // check if employer with id exist.
+       //  // if(empty($employer) || !isEmployer($employer) ){ return redirect(route('employers')); }
+
+       //  // check if this employer has not block you.
+       // if(hasBlockYou($user, $employer)){ return view('unauthorized', $data); }
+
+       //  $jobs                = Jobs::where('user_id',$jobseekerId)->get();
+       //  $employer_gallery    = UserGallery::Public()->Active()->where('user_id',$jobseekerId)->get();
+       //  $employer_video      = Video::where('user_id', $jobseekerId)->get();
+
+       //  $data['title']          = 'JobSeeker Info';
+       //  $data['classes_body']   = 'Jobseeker Info';
+       //  $data['jobseeker']       = $employer;
+       //  $data['likeUsers']      = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+       //  $data['jobs']           = $jobs;
+       //  $data['galleries']        = $employer_gallery;
+       //  $data['videos']          = $employer_video;
+       //  $data['empquestion'] = getEmpRegisterQuestions();
+       //  $data['userquestion'] = getUserRegisterQuestions();
+
+
+    	 $user = Auth::user();
+        // if not employer then do not allowed him.
+        if (!isEmployer($user)){ return redirect(route('jobSeekers')); }
+
         $data['user'] = $user;
-        $employer = User::JobSeeker()->where('id',$jobseekerId)->first();
 
-        // check if employer with id exist.
-        // if(empty($employer) || !isEmployer($employer) ){ return redirect(route('employers')); }
+
+        $jobSeeker = User::JobSeeker()->where('id',$jobSeekerId)->first();
+
+        $isallowed = False;
+        foreach($user->users as $us){
+            if($us->id = $jobSeeker->id){
+                $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
+                $isallowed = True;
+                $data['attachments'] = $attachments;
+
+            }
+
+        }
+
+        // check if jobseeker not exist then redirect to jobseeker list.
+        if(empty($jobSeeker) || isEmployer($jobSeeker) ){ return redirect(route('jobSeekers')); }
 
         // check if this employer has not block you.
-       if(hasBlockYou($user, $employer)){ return view('unauthorized', $data); }
+       if(hasBlockYou($user, $jobSeeker)){ return view('unauthorized', $data); }
 
-        $jobs                = Jobs::where('user_id',$jobseekerId)->get();
-        $employer_gallery    = UserGallery::Public()->Active()->where('user_id',$jobseekerId)->get();
-        $employer_video      = Video::where('user_id', $jobseekerId)->get();
+        // $jobs                = Jobs::where('user_id',$employerId)->get();
+        $galleries    = UserGallery::Public()->Active()->where('user_id',$jobSeekerId)->get();
+        $videos      = Video::where('user_id', $jobSeekerId)->get();
 
         $data['title']          = 'JobSeeker Info';
-        $data['classes_body']   = 'Jobseeker Info';
-        $data['jobseeker']       = $employer;
-        $data['likeUsers']      = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
-        $data['jobs']           = $jobs;
-        $data['galleries']        = $employer_gallery;
-        $data['videos']          = $employer_video;
-        $data['empquestion'] = getEmpRegisterQuestions();
-        $data['userquestion'] = getUserRegisterQuestions();
+        $data['classes_body']   = 'jobSeekerInfo';
+        $data['jobSeeker']       = $jobSeeker;
+        $data['likeUsers']       = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        $data['isallowed'] = $isallowed;
+        $data['galleries']        = $galleries;
+        $data['videos']          = $videos;
+        $data['qualificationList'] = getQualificationsList();
 
-        return view('mobile.employer.jobSeekers.jobseekersInfo', $data);          // mobile/employer/jobSeekers/jobseekersInfo
+
+        return view('mobile.employer.jobSeekers.jobseekersInfo', $data);          
+
+        // mobile/employer/jobSeekers/jobseekersInfo
 
     }
 
@@ -2466,6 +2508,40 @@ class MobileUserController extends Controller
             return view('mobile.employer.jobApplication', $data); // mobile/employer/jobApplication
         }
     }
+
+        //====================================================================================================================================//
+    // Get // layout for job application question answer.
+    //====================================================================================================================================//
+    public function MchangeJobApplicationStatus(Request $request){
+        $user = Auth::user();
+        if(isEmployer($user)){
+
+            $status         =  $request->status;
+            $application_id = (int) $request->application_id;
+
+            if(!empty($status) && !empty($application_id)){
+                // check if job application belong to this employer job.
+                $jobsApplication = JobsApplication::find($application_id );
+                // dd($jobsApplication->job);
+                if($jobsApplication){
+                    if(!empty($jobsApplication->job) && !empty($jobsApplication->job->user_id) && ($jobsApplication->job->user_id == $user->id)){
+                        // check if status is valide.
+                        $jobAppStatusArray = jobStatusArray();
+                        if(isset($jobAppStatusArray[$status])){
+                            $jobsApplication->status =  $status;
+                            $jobsApplication->save();
+                             return response()->json([
+                                'status' => 1,
+                                'message' => 'Job Application Status Updated',
+                            ]);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
 
 
 }

@@ -157,7 +157,7 @@
         <p>Material Design for Bootstrap</p>
       </div> --}}
 
-      <ul class="nav navbar-nav nav-flex-icons ml-auto">
+      <ul class="nav navbar-nav nav-flex-icons ml-auto mt-2">
         <li class="nav-item">
           {{-- <a class="nav-link"><i class="fas fa-envelope"></i> <span class="clearfix d-none d-sm-inline-block">Contact</span></a> --}}
         </li>

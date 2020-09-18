@@ -778,7 +778,8 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function changeJobApplicationStatus(Request $request){
         $user = Auth::user();
-        if(isEmployer($user)){
+        if(isEmployer($user))
+        {
 
             $status         =  $request->status;
             $application_id = (int) $request->application_id;

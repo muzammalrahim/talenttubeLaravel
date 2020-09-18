@@ -10,6 +10,7 @@
 
 <div class="jobSeekers_list">
 
+{{-- @dump($applications) --}}
 @if ($applications->count() > 0)
 @foreach ($applications as $application)
 	@php
@@ -92,13 +93,33 @@
 
         <div class="card-footer text-muted jobAppFooter p-1">
                 <div class="float-right">
-                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
-                    <a class="jsBlockButton btn btn-sm btn-danger mr-0 btn-xs" data-jsid ="{{$js->id}}">Block</a>
+                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs my-3" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
+                    {{-- <a class="jsBlockButton btn btn-sm btn-danger mr-0 btn-xs" data-jsid ="{{$js->id}}">Block</a> --}}
                     {{-- @if (in_array($js->id,$likeUsers)) --}}
                         {{-- <a class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a> --}}
                     {{-- @else --}}
-                    <a class="jsLikeButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$js->id}}">Like</a>
+                    <a class="jsLikeButton btn btn-sm btn-primary mr-0 btn-xs my-3" data-jsid ="{{$js->id}}">Like</a>
+
+                    {{-- <a class="status btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$js->id}}">Status</a> --}}
                     {{-- @endif --}}
+
+                    <div class="mx-2 float-right jobApplicationStatusCont">
+                        <select name="jobApplicStatus" class="mdb-select sm-form colorful-select dropdown-primary select_aw jobApplicStatus" data-application_id="{{$application->id}}">
+                          @foreach (jobStatusArray() as $statusK => $statusV)
+                                  <option value="{{$statusK}}" {{($application->status == $statusK )?'selected="selected"':''}} >{{$statusV}}</option>
+                             @endforeach
+                        </select>
+                    </div>
+
+      {{--               <div class="jobApplicationStatusCont dinline_block">
+                        <select name="jobApplicStatus" class="select_aw jobApplicStatus" data-application_id="{{$application->id}}">
+                             @foreach (jobStatusArray() as $statusK => $statusV)
+                                  <option value="{{$statusK}}" {{($application->status == $statusK )?'selected="selected"':''}} >{{$statusV}}</option>
+                             @endforeach
+                        </select>
+                    </div> --}}
+
+
                 </div>
         </div>
 
@@ -109,6 +130,9 @@
 
 @endforeach
 {{-- <div class="jobseeker_pagination cpagination">{!! $job->links() !!}</div> --}}
+
+@else
+ <h6 class="h6 jobAppH6">No Application for this job</h6>
 @endif
 
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
@@ -120,11 +144,56 @@
 
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 @section('custom_js')
+<script type="text/javascript">
 
+    // change job application status, send ajax.
+    $(document).on('change','select.jobApplicStatus',function(e){
+        console.log(' jobApplicStatus change ', $(this));
+        var statusElem = $(this);
+        var status = $(this).val();
+        var application_id = $(this).attr('data-application_id');
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/m/ajax/MchangeJobApplicationStatus',
+            data: {status: status, application_id: application_id},
+            success: function(data){
+
+                var jobAppStatusHtml = '<span class="jobApplicationStatusResponse">Updated Succesfully</span>';
+                statusElem.closest('.jobApplicationStatusCont').append(jobAppStatusHtml);
+
+                setTimeout(function(){
+
+                  statusElem.closest('.jobApplicationStatusCont').find('.jobApplicationStatusResponse').remove();
+                },6000);
+            }
+        });
+    });
+
+
+</script>
 
 @stop
 
+@section('custom_css')
 
+<style type="text/css">
+
+.jobApplicationStatusCont{
+    width: 100px;
+}
+input.select-dropdown.form-control {
+    font-size: 12px;
+}
+.jobApplicationStatusResponse {
+    display: block;
+    position: absolute;
+    font-size: 11px;
+    margin: 6px;
+    color: #fba82f;
+}
+</style>
+@stop
 
 
 
