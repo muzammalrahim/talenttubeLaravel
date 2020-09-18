@@ -15,7 +15,7 @@ $js = $jobseeker;
         <div class="card-header jobInfoFont jobAppHeader p-2">Name:
             <span class="jobInfoFont font-weight-normal">{{$js->name}} {{$js->surname}}</span>
                 <div class="jobInfoFont">Location:
-                <span class="font-weight-normal">{{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}}</span>
+                <span class="font-weight-normal">{{$js->city}},  {{$js->state}}, {{$js->country}}</span>
                 </div>
         </div>
 		@php
@@ -122,7 +122,7 @@ $js = $jobseeker;
                         <a class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
                     @else
                     <a class="jsLikeButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$js->id}}">Like</a>
-                        
+
                     @endif
 
 
@@ -182,15 +182,15 @@ $js = $jobseeker;
             @if ($galleries)
                 @foreach ($galleries as $gallery)
                     <div id="{{$gallery->id}}" class="float-left mt-1 item profile_photo_frame gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
-                        <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-                            href="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
-                            data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}"
+                        <a  data-id="{{$gallery->id}}" class="show_photo_gallery js-smartPhoto2" data-group="no-gravity"
+                            href="{{assetGallery2($gallery,'')}}"
+                            data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
                             >
                             <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo m-1 uploadedPhotos"
                             data-src="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
-                            src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}">
+                            src="{{assetGallery2($gallery,'small')}}">
                         </a>
-                        
+
                     </div>
                 @endforeach
             @endif
@@ -203,7 +203,7 @@ $js = $jobseeker;
 
         <!-- Grid column -->
     <div class="col-lg-4 col-md-4 mb-4">
-      
+
     <div class="videos">
                 @if ($videos->count() > 0 )
                 @foreach ($videos as $video)
@@ -316,8 +316,9 @@ div#home-just {
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script> 
-
+<script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script>
+<link rel="stylesheet" href="https://unpkg.com/smartphoto@1.1.0/css/smartphoto.min.css">
+<script src="https://unpkg.com/smartphoto@1.1.0/js/smartphoto.js"></script>
 @section('custom_js')
 <script src="{{ asset('js/site/plyr.polyfilled.js') }}"></script>
 <script>
@@ -363,7 +364,7 @@ $('.unlikeEmpButton').click(function(){
                 success: function(data){
                     if( data.status == 1 ){
                         $('.empLikeAlert').show().delay(3000).fadeOut('slow');
-                        location.reload(); 
+                        location.reload();
                     }
                 }
             });
@@ -371,5 +372,12 @@ $('.unlikeEmpButton').click(function(){
 
 // =============================================== unLike Job Seeker in JS Detail Page end ===============================================
 
+
+document.addEventListener('DOMContentLoaded',function(){
+
+				new SmartPhoto(".js-smartPhoto2",{
+						useOrientationApi: false
+				});
+			});
 </script>
 @stop

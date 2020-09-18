@@ -2,7 +2,7 @@
 @extends('mobile.user.usermaster')
 @section('content')
 
- 
+
 
 <div class="card shadow mb-3 bg-white rounded">
 
@@ -15,13 +15,13 @@
         <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
             <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
         </a>
-        
+
     </div>
 
     <div class="personalInfo">{{$user->name}} {{$user->surname}}</div>
     <div class="personalInfo"><b>Email:</b> {{$user->email}}</div>
     <div class="personalInfo"><b>Phone:</b> {{$user->phone}}</div>
-    <div class="personalInfo"><b>Location: </b>{{$user->location}}</div>
+    <div class="personalInfo"><b>Location: </b>{{userLocation($user)}}</div>
 
         {{-- Interested In --}}
     <div class="aboutMeSection"><b>Interested In: </b>
@@ -58,7 +58,7 @@
 
     </div>
 
-</div> 
+</div>
 
 
 {{-- <div class="card shadow mb-3 bg-white rounded">
@@ -68,8 +68,8 @@
             <p class="loader SaveQuestionsLoader"style="float: left;"></p>
               <div class="cl"></div>
                 <div class="questionsOfUser">
-                    @php  
-                        $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
+                    @php
+                        $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
                     @endphp
                       @if(!empty($empquestion))
                           @foreach($empquestion as $qk => $question)
@@ -89,7 +89,7 @@
                       @endif
                           <div class="col-md-12 text-center mt-3">
                               <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
-                          </div>  
+                          </div>
                 </div>
             <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
               <strong>Success!</strong> Questions have been updated successfully!
@@ -135,7 +135,7 @@
             @if ($user_gallery)
                 @foreach ($user_gallery as $gallery)
                     <div id="{{$gallery->id}}" class="float-left mt-1 item profile_photo_frame gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
-                        <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
+                        <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery js-smartPhoto2" data-group="no-gravity"
                             href="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
                             data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}"
                             >
@@ -154,18 +154,19 @@
                                 <span onclick="UProfile.setPrivateAccess({{$gallery->id}})"  title="Make private" class="icon_private">
                                     {{-- <span class="icon_private_photo"></span> --}}
                                     <div class="iconPosition"><i class="fas fa-lock"></i></div>
-                                    
+
                                     <span class="icon_private_photo_hover"></span>
                                 </span>
                                 <span onclick="UProfile.setAsProfile({{$gallery->id}})" title="Make Profile" class="icon_image_profile">
                                         {{-- <span class=""></span> --}}
                                     <div class="iconPosition"><i class="fas fa-user"></i></div>
-                                        
+
                                 </span>
                         </div>
                     </div>
                 @endforeach
             @endif
+
             </div>
         </div>
   {{-- =================================================================== Photos end =================================================================== --}}
@@ -176,16 +177,16 @@
 
     <div class="video text-dark mt-3">
     <div class="tabs_videos mb-2 font-weight-bold">Videos</div>
-        <div id="video" class="list_videos">
+        <div id="video" >
             <div id="list_videos_public" class="list_videos_public">
                 <div id="photo_add_video" class="item add_photo add_video_public item_video">
-                    <a class="add_photo" onclick="UProfile.SelectVideoFile(); return false;">
+                    <a class="add_photo"">
                         <img id="video_upload_select" class="transparent is_video bg-primary" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
                     </a>
                 </div>
             </div>
             <div class="cl"></div>
-
+            <div class="list_videos">
             @if ($videos->count() > 0 )
                 @foreach ($videos as $video)
                     <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
@@ -203,18 +204,7 @@
                 @endforeach
             @endif
 
-
-            <div style="display:none;">
-                <div id="videoShowModal" class="modal p0 videoShowModal">
-                    <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-                        <div class="cont">
-                            <div class="videoBox"></div>
-                                                                                        
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+        </div>
         </div>
     </div>
   {{-- =================================================================== videos end =================================================================== --}}
@@ -237,10 +227,10 @@
 
                                   @include('mobile.layout.parts.employerQuestions')  {{--  mobile/layout/parts/employerQuestions    --}}
 
-                            
+
                                   <div class="col-md-12 text-center mt-3">
                                       <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
-                                  </div>  
+                                  </div>
                         </div>
                     <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
                       <strong>Success!</strong> Questions have been updated successfully!
@@ -249,7 +239,7 @@
         </div>
     </div>
 
-{{--   <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
+  {{-- <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
     <p>Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro
       fanny pack lo-fi farm-to-table readymade. Messenger bag gentrify pitchfork tattooed craft beer, iphone
       skateboard locavore carles etsy salvia banksy hoodie helvetica. DIY synth PBR banksy irony. Leggings
@@ -303,14 +293,161 @@ div#home-just {
     object-fit: cover;
     height: 119px;
     width: 120px;
-    
+
 }
 </style>
 @stop
 
 @section('custom_js')
+<link rel="stylesheet" href="https://unpkg.com/smartphoto@1.1.0/css/smartphoto.min.css">
+<script src="https://unpkg.com/smartphoto@1.1.0/js/smartphoto.js"></script>
 
+<script src="{{ asset('js/site/plyr.polyfilled.js') }}"></script>
+<script>
+    @if ($videos->count() > 0 )
+    @foreach ($videos as $video)
+
+    $('#modal{{$video->id}}').on('hidden.bs.modal', function (e) {
+  // do something...
+        var src = $(this).find(".videoBox video").find("source").attr('src');
+        $(this).find(".videoBox video").find("source").attr('src');
+        var videoElem  = '<video id="player" controls>';
+        videoElem     += '<source src="'+src+'" type="video/mp4">';
+        videoElem     += '</video>';
+        $(this).find(".videoBox video").remove();
+        $(this).find(".videoBox").html(videoElem);
+    });
+    @endforeach
+    @endif
+
+</script>
 <script type="text/javascript">
+
+
+document.addEventListener('DOMContentLoaded',function(){
+
+new SmartPhoto(".js-smartPhoto2",{
+        useOrientationApi: false
+});
+});
+
+
+
+$('#photo_add_video').on('click', function(){
+
+var input = document.createElement('input');
+input.type = 'file';
+input.onchange = e => {
+    var file = e.target.files[0];
+    console.log(' onchange file  ', file);
+    var formData = new FormData();
+    formData.append('video', file);
+    var item_id = Math.floor((Math.random() * 1000) + 1);
+    var video_item = '';
+    video_item += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">';
+    video_item  +=  '<a class="show_photo_gallery video_link" href="">';
+    video_item  +=  '</a>';
+    video_item  +=  '<span class="v_title">Video title</span>';
+    video_item  +=  '<span title="Delete video" class="icon_delete">';
+    video_item  +=      '<span class="icon_delete_photo"></span>';
+    video_item  +=      '<span class="icon_delete_photo_hover"></span>';
+    video_item  +=  '</span>';
+    video_item  +=  '<div class="v_error error hide_it"></div>';
+    video_item  +=  '<div class="v_progress"></div>';
+    video_item  += '</div>';
+    $('.list_videos').append(video_item);
+    var updateForm = document.querySelector('form');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var request = new XMLHttpRequest();
+    request.upload.addEventListener('progress', function(e){
+        var percent = Math.round((e.loaded / e.total) * 100);
+        console.log(' progress-bar ', percent+'%' );
+        $('#v_'+item_id+' .v_progress').css('width', percent+'%');
+    }, false);
+    request.addEventListener('load', function(e){
+        console.log(' load e ', e);
+        var resp = JSON.parse(e.target.responseText);
+        console.log(' jsonResponse ', resp);
+        $('#v_'+item_id+' .v_progress').remove();
+        if (resp.status == 1) {
+            $('#v_'+item_id).replaceWith(resp.html);
+        } else {
+            console.log(' video error ');
+            if (resp.validator != undefined) {
+                $('#v_'+item_id+' .error').removeClass('hide_it').addClass('to_show').text(res.validator['video'][0]);
+            }
+        }
+    }, false);
+    request.open('post', base_url+'/m/ajax/uploadVideo');
+    request.send(formData);
+}
+input.click();
+});
+
+
+$('.uploadProgressModalBtn').on('click', function() {
+
+            var input = document.createElement('input');
+			input.type = 'file';
+			input.onchange = e => {
+				var file = e.target.files[0];
+				console.log(' onchange file  ', file );
+                var formData = new FormData();
+                console.log(formData);
+                formData.append('file',file);
+                var that = this;
+                var item_id =  Math.floor((Math.random() * 1000) + 1);
+                var gallery_item = '<div class="float-left mt-1 item profile_photo_frame photo_item_'+item_id+'" id="'+item_id+'">';
+                gallery_item += '<a class="show_photo_gallery" style="opacity:0;">';
+                gallery_item += '<img data-photo-id="'+item_id+'" class="photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"\>';
+                gallery_item += '</a>';
+                gallery_item += '<div class="gallery_action float-right">';
+                gallery_item += '<span onclick="" title="Delete photo" class="icon_delete">';
+                gallery_item += ' <div class="iconPosition"><i class="fas fa-trash"></i></div>';
+                gallery_item += ' <span class="icon_delete_photo_hover"></span>';
+                gallery_item += ' </span>';
+                gallery_item += '<span onclick=""  title="Make private" class="icon_private">';
+                gallery_item += '<div class="iconPosition"><i class="fas fa-lock"></i></div>';
+                gallery_item += '<span class="icon_private_photo_hover"></span>';
+                gallery_item += '</span>';
+                gallery_item += '<span onclick="" title="Make Profile" class="icon_image_profile">';
+
+                gallery_item += '<div class="iconPosition"><i class="fas fa-user"></i></div>';
+
+                gallery_item += '</span>';
+                gallery_item += '</div>';
+                gallery_item += '</div>';
+                $('.list_photos_trans').append(gallery_item);
+                alert(base_url);
+                $.ajaxSetup({
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+			    $.ajax({
+
+			       url: base_url+'/m/ajax/uploadUserGallery',
+			       type : 'POST',
+			       data : formData,
+			       processData: false,  // tell jQuery not to process the data
+			       contentType: false,  // tell jQuery not to set contentType
+			       success : function(resp) {
+
+			           console.log('upload_chat_front resp ', resp);
+			          if(resp.status == 1){
+                       $('.photo_item_'+item_id).replaceWith(resp.html);
+                            $('.photo_item_'+item_id).find('img').attr('src',resp.image);
+
+					  }
+			       }
+			    });
+			}
+            input.click();
+    });
 
 
 // {{-- ==================================================== Edit Interested IN ==================================================== --}}
@@ -322,7 +459,7 @@ $('.intInSecButton').click(function(){
         $('.interestedInSec').addClass('editable');
     $('.saveInterestedInButton').removeClass('d-none');
 
-    
+
 });
 
 $(".saveInterestedInButton").click(function(){
@@ -332,7 +469,7 @@ $(".saveInterestedInButton").click(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    var interestedIn = $('.interestedInSec').text(); 
+    var interestedIn = $('.interestedInSec').text();
     console.log(interestedIn);
         $('.IntsdInLoader').show();
     $.ajax({
@@ -341,8 +478,8 @@ $(".saveInterestedInButton").click(function(){
         data: {'interestedIn': interestedIn},
         success: function(resp){
             if(resp.status){
-                $('.IntsdInLoader').hide(); 
-                $('.saveInterestedInButton').addClass('d-none'); 
+                $('.IntsdInLoader').hide();
+                $('.saveInterestedInButton').addClass('d-none');
                 $('.interestedInSec').attr("contentEditable", "false");
                 $('.interestedInSec').removeClass('interestedInEditColor').css("border","none");
                 $('.interestedInAlert').show().delay(3000).fadeOut('slow');
@@ -353,7 +490,7 @@ $(".saveInterestedInButton").click(function(){
     });
 });
 
-// {{-- ==================================================== Edit Interested IN End ==================================================== 
+// {{-- ==================================================== Edit Interested IN End ====================================================
 
 --}}
 
@@ -375,7 +512,7 @@ $(".saveAboutMeButton").click(function(){
         }
     });
 
-    var aboutMe = $('.aboutMeSec').text(); 
+    var aboutMe = $('.aboutMeSec').text();
     console.log(aboutMe);
     $('.AboutMeLoader').show();
     $.ajax({
@@ -384,8 +521,8 @@ $(".saveAboutMeButton").click(function(){
         data: {'aboutMe': aboutMe},
         success: function(resp){
             if(resp.status){
-                $('.AboutMeLoader').hide(); 
-                $('.saveAboutMeButton').addClass('d-none'); 
+                $('.AboutMeLoader').hide();
+                $('.saveAboutMeButton').addClass('d-none');
                 $('.aboutMeSec').attr("contentEditable", "false");
                 $('.aboutMeSec').removeClass('interestedInEditColor').css("border","none");
                 $('.AboutMeAlert').show().delay(3000).fadeOut('slow');
@@ -400,7 +537,7 @@ $(".saveAboutMeButton").click(function(){
 
 //===================================================== Employer Questions Edit =====================================================
 
- $(".editQuestions").click(function(){      
+ $(".editQuestions").click(function(){
      $('.hideme').show();
      $('.saveQuestionsButton').removeClass('d-none');
      $('.QuestionsKeyPTag').addClass('d-none');
@@ -413,13 +550,13 @@ $(".saveAboutMeButton").click(function(){
 //  ======================================= Employer Questions Ajax saveQuestionsButton =======================================
 
     $(".saveQuestionsButton").click(function(){
-        var items = {}; 
-        $('select.jobSeekerRegQuestion').each(function(index,el){  
-        // console.log(index, $(el).attr('name')  , $(el).val()   );  
+        var items = {};
+        $('select.jobSeekerRegQuestion').each(function(index,el){
+        // console.log(index, $(el).attr('name')  , $(el).val()   );
             // items.push({name:  $(el).attr('name') , value: $(el).val()});
-            var elem_name = $(el).attr('name'); 
-            var elem_val = $(el).val(); 
-            items[elem_name] = elem_val; 
+            var elem_name = $(el).attr('name');
+            var elem_val = $(el).val();
+            items[elem_name] = elem_val;
             // items.push({elem_name : elem_val });
         $('.userQuesLoader').show();           //indusExpLoader
 
@@ -434,10 +571,10 @@ $(".saveAboutMeButton").click(function(){
             type: 'POST',
             url: base_url+'/m/ajax/MupdateQuestionsEmp',
             data: {'questions': items},
-            
+
             success: function(data){
                     $('.questionsAlert').show().delay(3000).fadeOut('slow');
-                    $('.saveQuestionsButton').addClass('d-none'); 
+                    $('.saveQuestionsButton').addClass('d-none');
                     $('.userQuesLoader').hide();
                     // $('.QuestionsKeyPTag').removeClass('hide_it');
 
@@ -448,7 +585,7 @@ $(".saveAboutMeButton").click(function(){
                     if(data){
                         // $(".questionsOfUser").load(" .questionsOfUser");
                         // $(".SaveQuestionsSpinner").remove();
-                       
+
                 }
             }
         });

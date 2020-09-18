@@ -37,7 +37,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
 				// video user/employer
 				Route::post('ajax/uploadVideo', 'Mobile\MobileUserController@uploadVideo')->name('mUploadVideo');
-
+                Route::post('ajax/uploadUserGallery', 'Mobile\MobileUserController@uploadUserGallery');
 
 
 	// ========================================== Added by Hassan ==========================================

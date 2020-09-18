@@ -1,8 +1,8 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('mobile.user.usermaster')
-@section('content') 
+@section('content')
 
- 
+
 
 <div class="card shadow mb-3 bg-white rounded">
 
@@ -15,15 +15,15 @@
             <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
             <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
             </a>
-            
+
 		</div>
 
-            
+
             {{-- <div class="personalInfoDiv"> --}}
         		<div class="personalInfo mt-2"> <h6 class="m-0 font-weight-bold">{{$user->name}} {{$user->surname}}</h6></div>
         		<div class="personalInfo"> <b>Email:</b>     <span class="m-0">{{$user->email}}</span></div>
         		<div class="personalInfo"> <b>Phone:</b>     <span class="m-0">{{$user->phone}}</span></div>
-        		<div class="personalInfo"> <b>Location: </b> <span class="m-0 mb-1">{{$user->location}}</span></div>
+        		<div class="personalInfo"> <b>Location: </b> <span class="m-0 mb-1">{{userLocation($user)}}</span></div>
             {{-- </div> --}}
 
 		<div class="aboutMeSection"><b>Interested In: </b>
@@ -60,7 +60,7 @@
 
 	  </div>
 
-</div> 
+</div>
 
 <div class="card shadow mb-3 bg-white rounded">
 
@@ -68,11 +68,11 @@
         <i class="fas fa-edit float-right editQualification"></i></h6>
 
 	<div class="card-body p-2 cardBody">
-	  	<div class="bl qualificationBox">     
+	  	<div class="bl qualificationBox">
 	    	<div class="title qualificationList">
 	        	<p class="loader SaveQualification"style="float: left;"></p>
 	        	<div class="cl"></div>
-	      
+
 		        <div class="jobSeekerQualificationList">
 
                     <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet mr-2"></i>
@@ -95,7 +95,7 @@
                     @include('mobile.layout.parts.jobSeekerQualificationList')
                     {{-- mobile/layout/parts/jobSeekerQualificationList --}}
 
-		        </div>  
+		        </div>
 	    	</div>
 		         <a class="addQualification btn btn-sm btn-primary text-white hide_it2"style = "cursor:pointer;">Add New</a>
 		         <a class="qualificationSaveButton btn btn-sm btn-success hide_it2">Save</a>
@@ -106,7 +106,7 @@
 	    </div>
 	</div>
 
-</div> 
+</div>
 
 <div class="card shadow mb-3 bg-white rounded">
 
@@ -128,16 +128,16 @@
 						    @foreach($user->industry_experience as  $industry )
 						    	<div class="IndustrySelect">
 						              <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
-						              <p class="mb-1"> 
-                                        <i class="fas fa-angle-right mr-2"></i> 
+						              <p class="mb-1">
+                                        <i class="fas fa-angle-right mr-2"></i>
 						              	{{getIndustryName($industry)}}
 						              	<i class="fa fa-trash removeIndustry float-right hide_it2 float-right"></i></p>
 						        </div>
 						    @endforeach
-						@endif  
-			        </div> 
+						@endif
+			        </div>
 		            <span class="addIndus btn btn-sm btn-primary hide_it2"style = "cursor:pointer;">Add New</span>
-		            <a class="btn btn-sm btn-success hide_it2 saveIndus buttonSaveIndustry"style = "cursor:pointer;">Save</a> 
+		            <a class="btn btn-sm btn-success hide_it2 saveIndus buttonSaveIndustry"style = "cursor:pointer;">Save</a>
 		</div>
 
 		  <div class="alert alert-success IndusAlert" role="alert" style="display:none;">
@@ -146,15 +146,15 @@
 
 	</div>
 
-</div> 
+</div>
 
- 
+
 
 {{-- ======================================================================================================================== --}}
 
 
 <ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist" style="font-size:12px">
-  
+
   <li class="nav-item">
     <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
       aria-selected="true">Albums</a>
@@ -208,13 +208,13 @@
                                 <span onclick="UProfile.setPrivateAccess({{$gallery->id}})"  title="Make private" class="icon_private">
                                     {{-- <span class="icon_private_photo"></span> --}}
                                     <div class="iconPosition"><i class="fas fa-lock"></i></div>
-                                    
+
                                     <span class="icon_private_photo_hover"></span>
                                 </span>
                                 <span onclick="UProfile.setAsProfile({{$gallery->id}})" title="Make Profile" class="icon_image_profile">
                                         {{-- <span class=""></span> --}}
                                     <div class="iconPosition"><i class="fas fa-user"></i></div>
-                                        
+
                                 </span>
                         </div>
                     </div>
@@ -257,13 +257,13 @@
                 @endforeach
             @endif
 
-
+            <div class="list_videos"></div>
             <div style="display:none;">
                 <div id="videoShowModal" class="modal p0 videoShowModal">
                     <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
                         <div class="cont">
                             <div class="videoBox"></div>
-                                                                                        
+
                         </div>
                     </div>
                 </div>
@@ -294,12 +294,12 @@
                     <p class="loader SaveQuestionsLoader"style="float: left;"></p>
                       <div class="cl"></div>
 
-                        <div class="questionsOfUser"> 
+                        <div class="questionsOfUser">
                           @include('mobile.layout.parts.jobSeekerQuestions')  {{--  mobile/layout/parts/jobSeekerQuestions    --}}
 
                                 <div class="col-md-12 text-center mt-3">
                                     <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
-                                </div>  
+                                </div>
                         </div>
 
                     <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
@@ -342,7 +342,7 @@
     /*margin-left: 10px;*/
     font-size: 12px;
 }
-.qualifTypeSpan{   
+.qualifTypeSpan{
     text-transform: capitalize;
     font-weight: bold;
 }
@@ -386,11 +386,137 @@ div#home-just {
 @stop
 
 @section('custom_js')
-
+<link rel="stylesheet" href="https://unpkg.com/smartphoto@1.1.0/css/smartphoto.min.css">
+<script src="https://unpkg.com/smartphoto@1.1.0/js/smartphoto.js"></script>
 {{-- <script src="{{ asset('js/mobile/jobSeekerProfile.js') }}"></script> --}}
 
 <script type="text/javascript">
-	
+
+
+document.addEventListener('DOMContentLoaded',function(){
+
+new SmartPhoto(".js-smartPhoto2",{
+        useOrientationApi: false
+});
+});
+
+
+
+$('#photo_add_video').on('click', function(){
+
+var input = document.createElement('input');
+input.type = 'file';
+input.onchange = e => {
+    var file = e.target.files[0];
+    console.log(' onchange file  ', file);
+    var formData = new FormData();
+    formData.append('video', file);
+    var item_id = Math.floor((Math.random() * 1000) + 1);
+    var video_item = '';
+    video_item += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">';
+    video_item  +=  '<a class="show_photo_gallery video_link" href="">';
+    video_item  +=  '</a>';
+    video_item  +=  '<span class="v_title">Video title</span>';
+    video_item  +=  '<span title="Delete video" class="icon_delete">';
+    video_item  +=      '<span class="icon_delete_photo"></span>';
+    video_item  +=      '<span class="icon_delete_photo_hover"></span>';
+    video_item  +=  '</span>';
+    video_item  +=  '<div class="v_error error hide_it"></div>';
+    video_item  +=  '<div class="v_progress"></div>';
+    video_item  += '</div>';
+    $('.list_videos').append(video_item);
+    var updateForm = document.querySelector('form');
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var request = new XMLHttpRequest();
+    request.upload.addEventListener('progress', function(e){
+        var percent = Math.round((e.loaded / e.total) * 100);
+        console.log(' progress-bar ', percent+'%' );
+        $('#v_'+item_id+' .v_progress').css('width', percent+'%');
+    }, false);
+    request.addEventListener('load', function(e){
+        console.log(' load e ', e);
+        var resp = JSON.parse(e.target.responseText);
+        console.log(' jsonResponse ', resp);
+        $('#v_'+item_id+' .v_progress').remove();
+        if (resp.status == 1) {
+            $('#v_'+item_id).replaceWith(resp.html);
+        } else {
+            console.log(' video error ');
+            if (resp.validator != undefined) {
+                $('#v_'+item_id+' .error').removeClass('hide_it').addClass('to_show').text(res.validator['video'][0]);
+            }
+        }
+    }, false);
+    request.open('post', base_url+'/m/ajax/uploadVideo');
+    request.send(formData);
+}
+input.click();
+});
+
+
+$('.uploadProgressModalBtn').on('click', function() {
+
+            var input = document.createElement('input');
+			input.type = 'file';
+			input.onchange = e => {
+				var file = e.target.files[0];
+				console.log(' onchange file  ', file );
+                var formData = new FormData();
+                console.log(formData);
+                formData.append('file',file);
+                var that = this;
+                var item_id =  Math.floor((Math.random() * 1000) + 1);
+                var gallery_item = '<div class="float-left mt-1 item profile_photo_frame photo_item_'+item_id+'" id="'+item_id+'">';
+                gallery_item += '<a class="show_photo_gallery" style="opacity:0;">';
+                gallery_item += '<img data-photo-id="'+item_id+'" class="photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"\>';
+                gallery_item += '</a>';
+                gallery_item += '<div class="gallery_action float-right">';
+                gallery_item += '<span onclick="" title="Delete photo" class="icon_delete">';
+                gallery_item += ' <div class="iconPosition"><i class="fas fa-trash"></i></div>';
+                gallery_item += ' <span class="icon_delete_photo_hover"></span>';
+                gallery_item += ' </span>';
+                gallery_item += '<span onclick=""  title="Make private" class="icon_private">';
+                gallery_item += '<div class="iconPosition"><i class="fas fa-lock"></i></div>';
+                gallery_item += '<span class="icon_private_photo_hover"></span>';
+                gallery_item += '</span>';
+                gallery_item += '<span onclick="" title="Make Profile" class="icon_image_profile">';
+
+                gallery_item += '<div class="iconPosition"><i class="fas fa-user"></i></div>';
+
+                gallery_item += '</span>';
+                gallery_item += '</div>';
+                gallery_item += '</div>';
+                $('.list_photos_trans').append(gallery_item);
+                alert(base_url);
+                $.ajaxSetup({
+                    headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+			    $.ajax({
+
+			       url: base_url+'/m/ajax/uploadUserGallery',
+			       type : 'POST',
+			       data : formData,
+			       processData: false,  // tell jQuery not to process the data
+			       contentType: false,  // tell jQuery not to set contentType
+			       success : function(resp) {
+
+			           console.log('upload_chat_front resp ', resp);
+			          if(resp.status == 1){
+                       $('.photo_item_'+item_id).replaceWith(resp.html);
+                            $('.photo_item_'+item_id).find('img').attr('src',resp.image);
+
+					  }
+			       }
+			    });
+			}
+            input.click();
+    });
 
 // {{-- ==================================================== Edit Interested IN ==================================================== --}}
 
@@ -401,7 +527,7 @@ $('.intInSecButton').click(function(){
         $('.interestedInSec').addClass('editable');
 		$('.saveInterestedInButton').removeClass('d-none');
 
-		
+
 });
 
 $(".saveInterestedInButton").click(function(){
@@ -411,7 +537,7 @@ $(".saveInterestedInButton").click(function(){
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
-    var interestedIn = $('.interestedInSec').text(); 
+    var interestedIn = $('.interestedInSec').text();
     console.log(interestedIn);
         $('.IntsdInLoader').show();
     $.ajax({
@@ -420,8 +546,8 @@ $(".saveInterestedInButton").click(function(){
         data: {'interestedIn': interestedIn},
         success: function(resp){
             if(resp.status){
-                $('.IntsdInLoader').hide(); 
-                $('.saveInterestedInButton').addClass('d-none'); 
+                $('.IntsdInLoader').hide();
+                $('.saveInterestedInButton').addClass('d-none');
                 $('.interestedInSec').attr("contentEditable", "false");
                 $('.interestedInSec').removeClass('interestedInEditColor').css("border","none");
                 $('.interestedInAlert').show().delay(3000).fadeOut('slow');
@@ -452,7 +578,7 @@ $(".saveAboutMeButton").click(function(){
         }
     });
 
-    var aboutMe = $('.aboutMeSec').text(); 
+    var aboutMe = $('.aboutMeSec').text();
     console.log(aboutMe);
     $('.AboutMeLoader').show();
     $.ajax({
@@ -461,8 +587,8 @@ $(".saveAboutMeButton").click(function(){
         data: {'aboutMe': aboutMe},
         success: function(resp){
             if(resp.status){
-                $('.AboutMeLoader').hide(); 
-                $('.saveAboutMeButton').addClass('d-none'); 
+                $('.AboutMeLoader').hide();
+                $('.saveAboutMeButton').addClass('d-none');
                 $('.aboutMeSec').attr("contentEditable", "false");
                 $('.aboutMeSec').removeClass('interestedInEditColor').css("border","none");
                 $('.AboutMeAlert').show().delay(3000).fadeOut('slow');
@@ -479,7 +605,7 @@ $(".saveAboutMeButton").click(function(){
 
 
   $(document).ready(function(){
-  
+
   $(".editQualification").click(function(){
         $(this).closest('.qualificationBox').addClass('editQualif');
         $('.removeQualification').removeClass('hide_it2');
@@ -488,7 +614,7 @@ $(".saveAboutMeButton").click(function(){
 
         // console.log('Testing Qualification');
 
-        
+
   });
 
    $('.qualificationBox').on('click','.removeQualification', function(){
@@ -499,21 +625,21 @@ $(".saveAboutMeButton").click(function(){
  })
    $(document).on('click','.addQualification', function(){
     console.log(' addQualification ');
-    var newQualificationHtml = '<div class="QualificationSelect"><select name="qualification[]" class="userQualification">'; 
+    var newQualificationHtml = '<div class="QualificationSelect"><select name="qualification[]" class="userQualification">';
     @if(!empty($qualificationList))
         @foreach($qualificationList as $lk=>$qualification)
-            newQualificationHtml += '<option value="{{$qualification['id']}}">{{$qualification['title']}}</option>'; 
+            newQualificationHtml += '<option value="{{$qualification['id']}}">{{$qualification['title']}}</option>';
         @endforeach
     @endif
-    newQualificationHtml += '</select>';  
-    newQualificationHtml += '<i class="fa fa-trash removeQualification"></i>'; 
+    newQualificationHtml += '</select>';
+    newQualificationHtml += '<i class="fa fa-trash removeQualification"></i>';
     newQualificationHtml += '</div>';
     $('.jobSeekerQualificationList').append(newQualificationHtml);
    });
 
 
 
-// ====================================================== Edit Qualification Ajax ====================================================== 
+// ====================================================== Edit Qualification Ajax ======================================================
 
     $(".qualificationSaveButton").click(function(){
     	console.log('hi qualification');
@@ -522,7 +648,7 @@ $(".saveAboutMeButton").click(function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get(); 
+        var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get();
         $('.qualifExpLoader').show();           //indusExpLoader
         // $('.SaveQualification').after(getLoader('smallSpinner SaveQualificationSpinner'));
 
@@ -535,8 +661,8 @@ $(".saveAboutMeButton").click(function(){
                     $('.removeQualification ').addClass('hide_it2');
                     $('.addQualification').addClass('hide_it2');
                     $('.qualificationSaveButton').addClass('hide_it2');
-                    $('.qualifExpLoader').hide(); 
-                    $('.jobSeekerQualificationList').html(resp.data); 
+                    $('.qualifExpLoader').hide();
+                    $('.jobSeekerQualificationList').html(resp.data);
 
                     // location.reload();
                 }
@@ -545,22 +671,22 @@ $(".saveAboutMeButton").click(function(){
 })
 
 
-// ====================================================== End Qualification Ajax end here ====================================================== 
+// ====================================================== End Qualification Ajax end here ======================================================
 
-// ==================================================== Edit Qualification ==================================================== 
+// ==================================================== Edit Qualification ====================================================
 
 //===================================================== add remove industry ===================================================
 
  $(".editIndustry").click(function(){
-    $(this).closest('.IndusListBox').addClass('edit');   
+    $(this).closest('.IndusListBox').addClass('edit');
 
     $('.removeIndustry').removeClass('hide_it2');
     $('.addIndus').removeClass('hide_it2');
     $('.buttonSaveIndustry').removeClass('hide_it2');
-    
+
     // console.log('welcome');
   });
- 
+
 // add and remove Industry code
 $(document).ready(function(){
    $(document).on('click','.removeIndustry', function(){
@@ -569,30 +695,30 @@ $(document).ready(function(){
 
    $(document).on('click','.addIndus', function(){
     console.log(' addIndus ');
-    var newIndusHtml = '<div class="IndustrySelect"><select name="industry_experience[]" class="industry_experience userIndustryExperience">'; 
+    var newIndusHtml = '<div class="IndustrySelect"><select name="industry_experience[]" class="industry_experience userIndustryExperience">';
     @if(!empty($industriesList))
         @foreach($industriesList as $lk=>$lv)
-            newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>'; 
+            newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>';
         @endforeach
     @endif
-    newIndusHtml += '</select>';  
+    newIndusHtml += '</select>';
     newIndusHtml += '<i class="fa fa-trash removeIndustry"></i>';
     newIndusHtml += '</div>';
 
     $('.IndusList').append(newIndusHtml);
    });
-}); 
+});
 
 // ======================== Edit Industry Experience for Ajax ========================
 
-$(".saveIndus").click(function(){ 
+$(".saveIndus").click(function(){
 	// console.log('hi industry');
     $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-        var industry_experience = jQuery('.industry_experience').map(function(){ return $(this).val()}).get(); 
+        var industry_experience = jQuery('.industry_experience').map(function(){ return $(this).val()}).get();
 
          // $('.indusExpLoader').after(getLoader('smallSpinner indusExpLoader'));
         $('.indusExpLoader').show();           //indusExpLoader
@@ -603,19 +729,19 @@ $(".saveIndus").click(function(){
             url: base_url+'/m/ajax/MupdateIndustryExperience',
             data: {'industry_experience': industry_experience},
             // $('.IndusAlert').hide();
-            
-			
+
+
             success: function(resp){
                 if(resp.status){
-                  // $('.IndusListBox').removeClass('edit'); 
+                  // $('.IndusListBox').removeClass('edit');
                   $('.IndusAlert').show().delay(3000).fadeOut('slow');
-                  // $('.SaveIndustrySpinner').remove(); 
+                  // $('.SaveIndustrySpinner').remove();
 
-                  $('.IndusList').html(resp.data); 
-                  $('.removeIndustry').addClass('hide_it2'); 
+                  $('.IndusList').html(resp.data);
+                  $('.removeIndustry').addClass('hide_it2');
 			            $('.addIndus').addClass('hide_it2');
 			            $('.buttonSaveIndustry').addClass('hide_it2');
-                  $('.indusExpLoader').hide(); 
+                  $('.indusExpLoader').hide();
 
 
                     }
@@ -623,7 +749,7 @@ $(".saveIndus").click(function(){
     });
  });
 
-// ======================================= Edit Industry Experience For Ajax End Here ======================================= 
+// ======================================= Edit Industry Experience For Ajax End Here =======================================
 
 
 //===================================================== add remove industry end  =====================================================
@@ -632,7 +758,7 @@ $(".saveIndus").click(function(){
 
 //===================================================== User Questions Edit =====================================================
 
- $(".editQuestions").click(function(){      
+ $(".editQuestions").click(function(){
      $('.hideme').show();
      $('.saveQuestionsButton').removeClass('d-none');
      $('.QuestionsKeyPTag').addClass('d-none');
@@ -644,13 +770,13 @@ $(".saveIndus").click(function(){
 //  ======================================= User Questions Ajax saveQuestionsButton =======================================
 
     $(".saveQuestionsButton").click(function(){
-        var items = {}; 
-        $('select.jobSeekerRegQuestion').each(function(index,el){  
-        // console.log(index, $(el).attr('name')  , $(el).val()   );  
+        var items = {};
+        $('select.jobSeekerRegQuestion').each(function(index,el){
+        // console.log(index, $(el).attr('name')  , $(el).val()   );
             // items.push({name:  $(el).attr('name') , value: $(el).val()});
-            var elem_name = $(el).attr('name'); 
-            var elem_val = $(el).val(); 
-            items[elem_name] = elem_val; 
+            var elem_name = $(el).attr('name');
+            var elem_val = $(el).val();
+            items[elem_name] = elem_val;
             // items.push({elem_name : elem_val });
         $('.userQuesLoader').show();           //indusExpLoader
 
@@ -665,10 +791,10 @@ $(".saveIndus").click(function(){
             type: 'POST',
             url: base_url+'/m/ajax/MupdateQuestions',
             data: {'questions': items},
-            
+
             success: function(data){
                     $('.questionsAlert').show().delay(3000).fadeOut('slow');
-                    $('.saveQuestionsButton').addClass('d-none'); 
+                    $('.saveQuestionsButton').addClass('d-none');
                     $('.userQuesLoader').hide();
                     // location.reload();
 
@@ -679,7 +805,7 @@ $(".saveIndus").click(function(){
                     if(data){
                         // $(".questionsOfUser").load(" .questionsOfUser");
                         // $(".SaveQuestionsSpinner").remove();
-                       
+
                 }
             }
         });

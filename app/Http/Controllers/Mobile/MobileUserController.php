@@ -590,7 +590,7 @@ class MobileUserController extends Controller
 
             // dd($user);
             // $user->questions = $request->questions;
-        
+
             $user->questions = json_encode($request->questions);
             $user->save();
             $data['user'] = User::find($user->id);
@@ -809,7 +809,6 @@ class MobileUserController extends Controller
     public function uploadUserGallery(Request $request)
     {
 
-        // dd( $request->toArray() );
         $user = Auth::user();
         $image = $request->file('file');
 
@@ -1486,7 +1485,7 @@ class MobileUserController extends Controller
 										'status' => 1,
 										'message' => '<h5 class="mt-2 ml-2">Job Succesfully Created.</h5>'
 										// <a href='.$job->id.'><p class="jobdetailLink ml-2">Click here to view job detail</p></a>,
-										// 'redirect' => route('MjobDetail', ['id' => $job->id]) 
+										// 'redirect' => route('MjobDetail', ['id' => $job->id])
 										// redirect()->route('MjobDetail', ['id' => $job->id])
 						]);
 		}
