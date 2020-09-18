@@ -6,11 +6,11 @@
 
 <div class="list_photos_public">
     <div class="list_photos_trans">
-    
+
     <div id="photo_add_public" class="item add_photo add_photo_public">
         <a href="#null" class="dblock uploadProgressModalBtn"><img src="{{asset('/images/site/icons/add_photo126x140.png')}}" alt=""></a>
     </div>
-    
+
     {{-- @dump($user_gallery) --}}
 
     @if ($user_gallery)
@@ -46,7 +46,7 @@
     @endif
     </div>
     <div class="cl"></div>
-    
+
     {{-- <span id="some_link_photo_counter_public" class="some_link_photo_counter"></span>
     <div class="some_link_add_photo">
         <div>
@@ -55,9 +55,9 @@
                 <input id="some_link_photo_public_reset" type="reset" value="">
             </form>
         </div>
-         
+
     </div> --}}
-    
+
     <div class="cl"></div>
 </div>
 
@@ -69,8 +69,8 @@
         <div class="frame">
             <a class="icon_close" href="#close"><span class="close_hover"></span></a>
             <div class="head">Upload Photos</div>
-            <div class="cont"> 
-                <div class="select_file">Select File to upload </div>   
+            <div class="cont">
+                <div class="select_file">Select File to upload </div>
                 <div class="css_loader loader_edit_popup">
                     <div class="spinner center">
                         <div class="spinner-blade"></div>
@@ -89,7 +89,7 @@
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 --}}
 <div style="display:none;">

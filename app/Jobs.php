@@ -128,6 +128,11 @@ class Jobs extends Model {
         $salaryRange = $request->filter_salary;
         $jobType = $request->filter_jobType;
 
+
+           // Filter by salaryRange.
+
+
+
         $filter_location =  (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on'))?true:false;
         $latitude = $request->location_lat;
         $longitude = $request->location_long;
@@ -159,8 +164,12 @@ class Jobs extends Model {
             }
         }
 
-        // Filter by salaryRange.
-        if(!empty($salaryRange)){ $query->where('salary', '>=', $salaryRange); }
+        if(!empty($salaryRange))
+           {
+               $query = $query->where('salary', '>=', $salaryRange);
+                // dd( $query);
+            }
+
 
         // Filter by jobType.
         if(!empty($jobType)){ $query->where('type', '=', $jobType); }
