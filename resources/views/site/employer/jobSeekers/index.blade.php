@@ -506,6 +506,8 @@ $(".reset-btn").click(function(){
 
 
     jQuery('#filter_salary').get(0).selectedIndex = 0;
+    jQuery('#jobSeeker_filter_form').find('input, select').trigger('refresh');
+
     jQuery('input[name="filter_keyword"]').val("");
 
     $('input[name="filter_by_questions"]').each(function() {

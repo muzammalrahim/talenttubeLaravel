@@ -131,7 +131,7 @@ $(".reset-btn").click(function(){
         }
     });
     jQuery('input[name="filter_location_status"]').styler();
-
+    jQuery('#employer_filter_form').find('input, select').trigger('refresh');
     event.preventDefault();
     $('#paginate').val('');
 
