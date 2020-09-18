@@ -318,8 +318,8 @@ $('input[name="filter_industry_status"]').change(function() {
                 $('.double_btn').hide();
 
 
-                
-                
+
+
 
             }else{
                 $('#confirmJobSeekerBlockModal .img_chat').html(data.error);

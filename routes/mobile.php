@@ -64,7 +64,8 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	 Route::get('Mmutual-likes',         'Mobile\MobileUserController@MmutualLikes')->name('MmutualLikes');
 	 Route::get('MupdateUserPersonalSetting', 'Mobile\MobileUserController@MupdateUserPersonalSetting')->name('MupdateUserPersonalSetting');
 	 Route::get('Mcredit',       'Mobile\MobileUserController@Mcredit')->name('Mcredit');
-	 Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
+     Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
+     Route::get('Mjobsedit/{id}', 'Mobile\MobileUserController@MemployerJobsedit')->name('Mjobedit');
 	 Route::get('MjobSeekers/{id}', 'Mobile\MobileUserController@MjobSeekersInfo')->name('MjobSeekersInfo');
 
     Route::get('Memployer/job/{id}/applications', 'Mobile\MobileUserController@MempJobApplications')->name('MempJobApplications');
@@ -113,7 +114,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     Route::post('ajax/MupdatePassword', 'Mobile\MobileUserController@MupdatePassword');
     Route::post('ajax/Mdeleteuser', 'Mobile\MobileUserController@Mdeleteuser');
 
-
+    Route::post('ajax/mjob/{id}',    'Mobile\MobileUserController@updateJob')->name('memjobedit');
 	// ======================================= For Updating User Setting =======================================
 
 	Route::get('step2', 'Mobile\MobileUserController@step2User')->name('mStep2User');
@@ -124,7 +125,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     // ==================================== Delete Job from employer =====================================
     Route::post('ajax/MdeleteJob/{id}', 'Mobile\MobileUserController@MdeleteJob')->name('MdeleteJob');
     // Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
-     
+
     Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
     Route::post('ajax/MdeleteJobApplication/{id}', 'Mobile\MobileUserController@MdeleteJobApplication')->name('MdeleteJobApplication');
  });
@@ -155,7 +156,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
 	Route::post('ajax/userUploadResume', 'Mobile\MobileUserController@userUploadResume')->name('mUserUploadResume');
 
-	
+
 	Route::post('ajax/MUserUploadResume', 'Mobile\MobileUserController@MUserUploadResume')->name('MUserUploadResume');
 
 

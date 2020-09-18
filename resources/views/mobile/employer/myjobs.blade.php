@@ -2,7 +2,7 @@
 @extends('mobile.user.usermaster')
 @section('content')
 @include('mobile.modals.jobsModal')
- 
+
 <h6 class="h6 jobAppH6">My Jobs</h6>
 
 
@@ -15,7 +15,7 @@
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 
 
-        <div class="card">  
+        <div class="card">
             {{-- @dump($job) --}}
             {{-- $job->type =  $requestData['type']; --}}
 
@@ -34,14 +34,14 @@
                 </div>
             </div>
 
- 
+
 {{-- ============================================ Card Body ============================================ --}}
 
             <div class="card-body jobAppBody pt-2">
 
- 
+
                 <div class="row jobInfo">
-                   
+
         {{--             <div class="col-4 p-0">
                         <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px">
                     </div> --}}
@@ -62,7 +62,7 @@
                      	<div>Web & E-commerce Job</div>
                     </div>
 
-                </div> 
+                </div>
 
 
                 <div class="row px-1">
@@ -82,6 +82,7 @@
                 		<div>{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</div>
                 	</div>
 
+
                 	<div class="p-0 mt-2 float-right">     
 
                         {{-- @dump($job->applicationCount) --}}
@@ -93,7 +94,7 @@
                     	</a>
 
                 	</div>
-                        
+
                 </div>
 
             </div>
@@ -107,12 +108,12 @@
 
                     <div class="float-right">
                         <a class="myJobDeleteBtn graybtn jbtn m5 btn btn-sm btn-danger ml-0 btn-xs" data-jobid="{{$job->id}}" {{-- href="{{route('MdeleteJob', ['id' => $job->id])}}" --}} data-toggle="modal" data-target="#deleteJobPopup" >Delete</a>
-                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs">Edit</a>
+                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" href="{{route('Mjobedit', ['id' => $job->id]) }}">Edit</a>
 
                         <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" href="{{route('MjobDetail', ['id' => $job->id]) }}">Detail</a>
 
                     </div>
-                    
+
             </div>
 
 {{-- ============================================ Card Footer end ============================================ --}}
@@ -120,14 +121,14 @@
 
         </div>
 
-    </div> 
+    </div>
 
 @endforeach
 
 @else
 <h6 class="h6 jobAppH6">You have not posted any job yet.</h6>
 
-@endif     
+@endif
 
 
 

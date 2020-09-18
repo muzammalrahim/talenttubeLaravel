@@ -100,7 +100,7 @@
 		</div>
 	</div>
 	<!-- Step 1 End -->
-	
+
 	<!-- Step 3 Start -->
 		<div class="row py-3" id="full_step_3" style="display: none">
 			<div class="full_step_error"></div>
@@ -115,11 +115,11 @@
 							<input type="text" id="recentJob" name="recentJob" value="" />
 							<div id="recentJob_error" class="d-none text-danger">Required field!</div>
 						</div>
-	
+
 					</div>
-	
+
 					<div id="frm_card_join" class="card_profile_info card_join">
-	
+
 						<div class="bl bl_basic">
 						<div class="title">About me</div>
 						<div id="about_me_error" class="error to_hide">Required field!</div>
@@ -154,7 +154,7 @@
 			<div class="card wider">
 				<div class="card-body text-center">
 					<p class="card-title text-center">
-						Please select the highest level of tertiary studies you have completed or currently enrolled in and completing <br> 
+						Please select the highest level of tertiary studies you have completed or currently enrolled in and completing <br>
 						<b>(You can only select 1 option)</b>
 					</p>
 					<div class="qualification_selected_type mb20 center mb-2">
@@ -179,7 +179,7 @@
 											@if (!empty($qualifications))
 													@foreach ($qualifications as $qkey => $quaf)
 															<li class="{{$quaf['type']}} list-group-item" data-id="{{$quaf['id']}}"> {{$quaf['title']}} </li>
-													@endforeach                                                 
+													@endforeach
 											@endif
 										</ul>
 								</div>
@@ -213,7 +213,7 @@
 									@if (!empty($industries))
 										@foreach ($industries as $ikey => $industry)
 												<li data-id="{{$ikey}}" class="list-group-item"> {{$industry}} </li>
-										@endforeach                                                 
+										@endforeach
 								@endif
 							</ul>
 						</div>
@@ -246,7 +246,7 @@
 										@if (!empty($salaries))
 												@foreach ($salaries as $ikey => $salary)
 														<li data-id="{{$ikey}}" class="list-group-item"> {{$salary}} </li>
-												@endforeach                                                 
+												@endforeach
 										@endif
 								</ul>
 							</div>
@@ -310,7 +310,7 @@
 					<p class="text-left"><b>2.</b> You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
 					<div class="userUpload">
 						<div class="userResumeCont">
-							<div class="userResume">								
+							<div class="userResume">
 								<div class="title_private_photos title_videos">Resume & Contact Details</div>
 									<form id="frm_upload" class="submit-document md-form" action="{{route('mUserUploadResume')}}" method="post" enctype="multipart/form-data">
 										{{csrf_field()}}
@@ -436,10 +436,11 @@ li.tag.tagItem {
 <script type="text/javascript" src="{{ asset('js/mobile/mjoin.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 <script type="text/javascript">
     $(function(){
 								var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
-        userStepReload(currentStep); 
+        userStepReload(currentStep);
 				});
 </script>
 

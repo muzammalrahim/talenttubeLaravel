@@ -685,9 +685,9 @@ $('#tag_skip_btn').click(function () {
 			// User Step9 End
 
 			// User Step10 Start
-			$(window).on('load', function() {
-				$('#mdb-preloader').delay(1000).fadeOut(300);
-			});
+			// $(window).on('load', function() {
+			// 	$('#mdb-preloader').delay(1000).fadeOut(300);
+			// });
 
 			$('#user_step10_done').click(function () {
 				userStep2Update(step7_formData, 10);
@@ -920,6 +920,7 @@ function showUserStep10(){
 	$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 	var url = base_url+'/m/step2Jobs';
 	$.get(url, function (data) {
+        $('#mdb-preloader').delay(1000).fadeOut(300);
 					$('.jobs_list').html(data);
 	});
 }

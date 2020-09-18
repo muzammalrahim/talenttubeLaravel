@@ -62,7 +62,6 @@
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 
 
 <script type="text/javascript">
@@ -176,6 +175,7 @@ $(document).on('click','.jobseeker_pagination .page-item .page-link',function(e)
 $('input[name="filter_location_status"]').change(function() {
     console.log(' filter_location_status ');
     (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
+
 });
 
 //====================================================================================================================================//
@@ -463,18 +463,76 @@ $('input[name="filter_by_questions"]').change(function() {
 
 
 
+
+
 $(".reset-btn").click(function(){
-	$("#jobSeeker_filter_form").trigger("reset");
+/// 	$("#jobSeeker_filter_form").trigger("reset");
+    jQuery('input[name="filter_location_status"]').styler();
+
+    event.preventDefault();
+    $('#paginate').val('');
+
+    jQuery('input[name="filter_location_status"]').each(function() {
+
+            if(this.checked){
+            $(this).toggleClass('checked').trigger('refresh');
+            this.checked = !this.checked;
+            $(this).toggleClass('checked').trigger('refresh');
+            (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
+
+            }
+        });
+
+    jQuery('select.filter_qualification_type').each(function() {
+
+        var degreeType = "";
+        $(this).get(0).selectedIndex = 0;
+        $(this).closest('.searchField_qualification').attr('class','searchField_qualification '+degreeType);
+        $('.dot_list li').removeClass('active');
+        $('.searchField_qualification .dot_list_li_hidden').remove();
+    });
+
+    $('input[name="filter_industry_status"]').each(function() {
+
+        if(this.checked){
+        $(this).toggleClass('checked').trigger('refresh');
+        this.checked = !this.checked;
+        $(this).toggleClass('checked').trigger('refresh');
+        (this.checked)?(jQuery('.filter_industryList').removeClass('hide_it')):(jQuery('.filter_industryList').addClass('hide_it'));
+
+        }
+
+    });
+
+
+    jQuery('#filter_salary').get(0).selectedIndex = 0;
+    jQuery('#jobSeeker_filter_form').find('input, select').trigger('refresh');
+
+    jQuery('input[name="filter_keyword"]').val("");
+
+    $('input[name="filter_by_questions"]').each(function() {
+
+        if(this.checked){
+        $(this).toggleClass('checked').trigger('refresh');
+        this.checked = !this.checked;
+        $(this).toggleClass('checked').trigger('refresh');
+        (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));
+
+        }
+
+     // $('input, select').styler({ selectSearch: true, });
+    });
 	getDataCustom();
 });
 
 
 	var getDataCustom = function(){
-					var url = '{{route('jobSeekersFilter')}}';
-					$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-					$.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
-									$('.jobSeekers_list').html(data);
-					});
+            var url = '{{route('jobSeekersFilter')}}';
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
+                // console.log(' success data  ', data);
+            $('.jobSeekers_list').html(data);
+    });
 	}
 </script>
 @stop

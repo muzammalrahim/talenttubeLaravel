@@ -118,8 +118,47 @@ $('input[name="filter_by_questions"]').change(function() {
 });
 
 $(".reset-btn").click(function(){
-	$("#employer_filter_form").trigger("reset");
-	getDataCustom();
+//	$("#employer_filter_form").trigger("reset");
+    jQuery('input[name="filter_keyword"]').val("");
+    $('input[name="filter_industry_status"]').each(function() {
+
+    if(this.checked){
+        $(this).toggleClass('checked').trigger('refresh');
+        this.checked = !this.checked;
+        $(this).toggleClass('checked').trigger('refresh');
+        (this.checked)?(jQuery('.filter_industryList').removeClass('hide_it')):(jQuery('.filter_industryList').addClass('hide_it'));
+
+        }
+    });
+    jQuery('input[name="filter_location_status"]').styler();
+    jQuery('#employer_filter_form').find('input, select').trigger('refresh');
+    event.preventDefault();
+    $('#paginate').val('');
+
+    jQuery('input[name="filter_location_status"]').each(function() {
+
+            if(this.checked){
+            $(this).toggleClass('checked').trigger('refresh');
+            this.checked = !this.checked;
+            $(this).toggleClass('checked').trigger('refresh');
+            (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
+
+            }
+        });
+
+    $('input[name="filter_by_questions"]').each(function() {
+
+    if(this.checked){
+        $(this).toggleClass('checked').trigger('refresh');
+        this.checked = !this.checked;
+        $(this).toggleClass('checked').trigger('refresh');
+        (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));
+
+        }
+
+// $('input, select').styler({ selectSearch: true, });
+    });
+    getDataCustom();
 });
 
 

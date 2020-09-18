@@ -1,12 +1,12 @@
 
- 
+
 
 <div class="job_row_heading jobs_filter mb20">
 <div class="job_applications_filter ">
 
     {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'filter_form' )) }}
     <input type="hidden" name="page" id="paginate" value="">
-    
+
     <div class="searchField_keyword dblock mb10">
         <div class="searchFieldLabel dinline_block">Keyword: </div>
         <input type="text" name="filter_keyword" style="margin-left: 53px;">
@@ -14,7 +14,7 @@
 
     <div class="searchField_salaryRange dblock mb10">
         <div class="searchFieldLabel dinline_block" style="margin-right:25px">Salary Range: </div>
-        <select name="filter_salary" class="dinline_block select_aw" data-placeholder="Select Salary Range">
+        <select name="filter_salary" id="filter_salary" class="dinline_block select_aw" data-placeholder="Select Salary Range">
              <option value="">Select Salary Range</option>
             @foreach(getSalariesRange() as $sk => $salary)
                 <option value="{{$sk}}">{{$salary}}</option>
@@ -24,7 +24,7 @@
 
     <div class="searchField_JobType dblock mb10">
         <div class="searchFieldLabel dinline_block" style="margin-right:50px">Job Type: </div>
-        <select name="filter_jobType" class="dinline_block select_aw" data-placeholder="Select Job Type">
+        <select name="filter_jobType" id="filter_jobType" class="dinline_block select_aw" data-placeholder="Select Job Type">
             <option value="">Select Job Type</option>
             <option value="contract">Contract</option>
             <option value="temporary">Temporary</option>
@@ -34,7 +34,7 @@
         </select>
     </div>
 
-  
+
     <div class="searchField_location mb10">
         <div class="searchFieldLabel dinline_block">Filter by Location: </div>
         <div class="search_location_status_cont toggleSwitchButton">

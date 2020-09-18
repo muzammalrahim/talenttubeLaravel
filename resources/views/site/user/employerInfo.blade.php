@@ -20,9 +20,17 @@
                 <div class="js_profile w_30p w_box dblock fl_left">
                     <div class="js_profile_cont center p10">
                         @php
-                        $profile_image   = asset('images/site/icons/nophoto.jpg');
-                        if ($js->profileImage){
-                            $profile_image = asset('images/user/'.$js->id.'/gallery/'.$js->profileImage->image);
+                        $profile_image  = asset('images/site/icons/nophoto.jpg');
+                        $profile_image_gallery    = $js->profileImage()->first();
+
+                        // dump($profile_image_gallery);
+
+                        if ($profile_image_gallery) {
+                        // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+
+                        $profile_image   = assetGallery2($profile_image_gallery,'small');
+                        // dump($profile_image);
+
                         }
                         @endphp
                         <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}">
@@ -48,7 +56,7 @@
                     </div>
 
                     <div class="js_location js_field"><span class="js_label">Location:</span>
-                        <p class="js_location"> {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </p>
+                        <p class="js_location"> {{$js->city}},  {{$js->state}}, {{$js->country}} </p>
                     </div>
 
                 </div>
@@ -126,24 +134,33 @@
         <div class="galleryCont">
             <div class="head2">Gallery Photos</div>
             <div class="photos">
-                @if ($galleries)
-                @foreach ($galleries as $gallery)
-                    <div id="{{$gallery->id}}" class="emp_profile_photo_frame fl_left gallery_{{$gallery->id}}">
-                        <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-                            href="{{asset('images/user/'.$employer->id.'/gallery/'.$gallery->image)}}"
-                            data-lcl-thumb="{{asset('images/user/'.$employer->id.'/gallery/small/'.$gallery->image)}}"
-                            >
-                            <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="w100"
-                            data-src="{{asset('images/user/'.$employer->id.'/gallery/'.$gallery->image)}}"
-                            src="{{asset('images/user/'.$employer->id.'/gallery/small/'.$gallery->image)}}" >
-                        </a>
-                    </div>
-                @endforeach
+            @if ($galleries)
+            @foreach ($galleries as $gallery)
+                <div id="{{$gallery->id}}" class="emp_profile_photo_frame fl_left gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
+                    <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
+                        href="{{assetGallery($gallery->access,$employer->id,'',$gallery->image)}}"
+                        data-lcl-thumb="{{assetGallery($gallery->access,$employer->id,'small',$gallery->image)}}"
+                        >
+                        <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo"
+                        data-src="{{assetGallery($gallery->access,$employer->id,'',$gallery->image)}}"
+                        src="{{assetGallery($gallery->access,$employer->id,'small',$gallery->image)}}" >
+                    </a>
+                </div>
+            @endforeach
             @endif
             </div>
         </div>
         <!-- /photos -->
+        <div style="display:none;">
+            <div id="videoShowModal" class="modal p0 videoShowModal">
+                <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+                    <div class="cont">
+                        <div class="videoBox"></div>
 
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="cl mb20"></div>
 
         <div class="VideoCont">
@@ -151,9 +168,10 @@
             <div class="videos">
                 @if ($videos->count() > 0 )
                 @foreach ($videos as $video)
-                    <div id="v_{{$video->id}}" class="video_box">
-                        <a class="video_link" href="{{asset('images/user/'.$video->file)}}" data-lcl-thumb="{{'images/user/'.asset($video->file)}}" target="_blank">
-                        <span class="v_title">{{$video->title}}</span>
+                    <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
+                        <a onclick="UProfile.showVideoModal('{{assetVideo($video)}}')" class="video_link" target="_blank">
+                            <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
+                           {!! generateVideoThumbs($video) !!}
                         </a>
                     </div>
                 @endforeach
@@ -172,8 +190,8 @@
     <a id="tabs-3" class="tab_link tab_a "></a>
     <div class="tab_photos tab_cont">
         <div class="galleryCont">
-            @php  
-                $empQuestions = !empty($employer->questions)?(json_decode($employer->questions, true)):(array()); 
+            @php
+                $empQuestions = !empty($employer->questions)?(json_decode($employer->questions, true)):(array());
             @endphp
                 {{-- @dump($empQuestions) --}}
                     @if(!empty(getEmpRegisterQuestions()))

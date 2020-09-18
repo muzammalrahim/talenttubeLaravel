@@ -49,7 +49,7 @@ class JobSeekerController extends Controller {
 
     public function employerspost(Request $request){
         $user = Auth::user();
-        if (isEmployer($user)){ return redirect(route('jobSeekers')); }
+      //  if (isEmployer($user)){ return redirect(route('jobSeekers')); }
         $data['user']           = $user;
         $data['title']          = 'Employers';
         $data['classes_body']   = 'employers';

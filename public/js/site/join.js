@@ -182,14 +182,14 @@ $(function(){
                         $jq('#frm_register_submit').html(i18n.site.Next_btn);
 
                     }else{
-                        $jq('#step-1').fadeOut(400,function(){
-                            $jq('#frm_register_submit_2').prop('disabled',true);
-                            $jq('#success-step-1').show(1).addClass('to_show').html(data.message);
-                            $jq('#frm_register_submit').html(i18n.site.Next_btn);
-                            setTimeout(() => {
-                                location.href = data.redirect;
-                            }, 3000);
-                        });
+                        location.href = data.redirect;
+                        // $jq('#step-1').fadeOut(40,function(){
+                        //     $jq('#frm_register_submit_2').prop('disabled',true);
+                        //     $jq('#success-step-1').show(1).addClass('to_show').html(data.message);
+                        //     $jq('#frm_register_submit').html(i18n.site.Next_btn);
+
+
+                        // });
                     }
 
                         // if (!showErrorResponseForm(data,['name','password','captcha','recaptcha'])) {
