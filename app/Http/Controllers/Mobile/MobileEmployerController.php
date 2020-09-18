@@ -128,13 +128,24 @@ class MobileEmployerController extends Controller
             // dd($user);
             // $user->questions = $request->questions;
             $user->questions = json_encode($request->questions);
-
-
             $user->save();
+
+
+            // $user->questions = json_encode($request->questions);
+            // $user->save();
+            $data['user'] = User::find($user->id);
+            $questionsView = view('mobile.layout.parts.employerQuestions', $data);
+            $QuestionsHTML = $questionsView->render();
             return response()->json([
                     'status' => 1,
-                    'data' => $user->questions
+                    'data' => $QuestionsHTML
             ]);
+
+
+            // return response()->json([
+            //         'status' => 1,
+            //         'data' => $user->questions
+            // ]);
         // }
     }
 

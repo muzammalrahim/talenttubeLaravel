@@ -46,6 +46,11 @@
           <label for="materialLoginFormPassword" class="text-info"><h6 class="ml-1">Password</h6></label>
         </div>
 
+        {{-- <p class="errorToShow">Hi there how are u</p> --}}
+        <div class="md-form text-center loginStatus red-text" style="font-size: 12px;">
+
+        </div>
+
         <div class="d-flex row">
           {{-- <div> --}}
             <div class="form-check p-0 col">
@@ -74,9 +79,7 @@
 
 
 
-        <div class="md-form text-center loginStatus red-text">
              
-        </div>
 
 
 

@@ -25,7 +25,7 @@
                     <label for="form_login_remember">Remember me</label>
                 </div>
                 <button id="form_login_submit" type="submit" class="btn pink">Sign in</button>
-                <div class="login_form_errors to_hide"></div>
+                {{-- <div class="login_form_errors to_hide"></div> --}}
             </form>
             <a {{-- id="pp_forgot_pass_open" class="link"  --}} class ="forgetPassword" href="{{route('forgetPassword')}}">Forgot password?</a>
             <div class="line"></div>

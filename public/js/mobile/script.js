@@ -52,8 +52,13 @@ $('#degreeSelect').on('change', function() {
              type : 'POST',
              data : formData,
              success : function(resp) {
-                 console.log('resp ', resp);
+                 // console.log('resp ', resp.message);
 
+                 var signinError = resp.message;
+                 console.log(signinError);
+
+                 // $('.errorToShow').text(signinError);
+                 
                  if(resp.status){
                      setTimeout(() => {
                          location.href = resp.redirect;

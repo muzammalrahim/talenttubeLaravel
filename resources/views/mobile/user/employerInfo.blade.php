@@ -270,45 +270,77 @@
 
 {{-- ================================================================================================= --}}
 
-<div class="galleryCont">
-            <div class="head2 text-primary font-weight-bold">Gallery Photos</div>
-            <div class="photos">
-                @if ($galleries)
+
+
+    <div class="tabs_photos text-dark mb-2 font-weight-bold">Photos</div>
+        <div class="list_photos_public d-flex">
+            <div class="list_photos_trans">
+            @if ($galleries)
                 @foreach ($galleries as $gallery)
-                    <div id="{{$gallery->id}}" class="emp_profile_photo_frame fl_left gallery_{{$gallery->id}}">
+                    <div id="{{$gallery->id}}" class="float-left mt-1 item profile_photo_frame gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
                         <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-                            href="{{asset('images/user/'.$employer->id.'/gallery/'.$gallery->image)}}"
-                            data-lcl-thumb="{{asset('images/user/'.$employer->id.'/gallery/small/'.$gallery->image)}}"
+                            href="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
+                            data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}"
                             >
-                            <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="w100"
-                            data-src="{{asset('images/user/'.$employer->id.'/gallery/'.$gallery->image)}}"
-                            src="{{asset('images/user/'.$employer->id.'/gallery/small/'.$gallery->image)}}" >
+                            <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo m-1 uploadedPhotos"
+                            data-src="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
+                            src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}">
                         </a>
+                        {{--  --}}
                     </div>
                 @endforeach
             @endif
             </div>
         </div>
-        <!-- /photos -->
+  {{-- =================================================================== Photos end =================================================================== --}}
 
-        <div class="cl mb20"></div>
 
-        <div class="VideoCont">
-            <div class="head2 text-primary font-weight-bold">Gallery Videos</div>
-            <div class="videos">
-                @if ($videos->count() > 0 )
+
+      {{-- =================================================================== videos =================================================================== --}}
+
+    <div class="video text-dark mt-3">
+    <div class="tabs_videos mb-2 font-weight-bold">Videos</div>
+        <div id="video" class="list_videos">
+            {{-- <div id="list_videos_public" class="list_videos_public">
+                <div id="photo_add_video" class="item add_photo add_video_public item_video">
+                    <a class="add_photo" onclick="UProfile.SelectVideoFile(); return false;">
+                        <img id="video_upload_select" class="transparent is_video bg-primary uploadedPhotos" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
+                    </a>
+                </div>
+            </div> --}}
+            <div class="cl"></div>
+
+            @if ($videos->count() > 0 )
                 @foreach ($videos as $video)
-                    <div id="v_{{$video->id}}" class="video_box">
-                        <a class="video_link" href="{{asset('images/user/'.$video->file)}}" data-lcl-thumb="{{'images/user/'.asset($video->file)}}" target="_blank">
-                        <span class="v_title">{{$video->title}}</span>
+                    <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
+                        <a onclick="UProfile.showVideoModal('{{$video->file}}')" class="video_link" target="_blank">
+                            <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
+                           {!! generateVideoThumbs($video) !!}
                         </a>
+                        <span title="Delete video" class="icon_delete" data-vid="{{$video->id}}" onclick="UProfile.delteVideo({{$video->id}})">
+                            <span class="icon_delete_photo"></span>
+                            <span class="icon_delete_photo_hover"></span>
+                        </span>
+
+                        <div class="v_error error hide_it"></div>
                     </div>
                 @endforeach
             @endif
+
+
+            <div style="display:none;">
+                <div id="videoShowModal" class="modal p0 videoShowModal">
+                    <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+                        <div class="cont">
+                            <div class="videoBox"></div>
+                                                                                        
+                        </div>
+                    </div>
+                </div>
             </div>
-            {{-- @dump($employer->questions) --}}
 
         </div>
+    </div>
 
 {{-- ================================================================================================== --}}
 
@@ -374,3 +406,32 @@ $(document).ready(function(){
 
   // jobApplyBtn click end 
 </script>
+<style type="text/css">
+
+.tabs_profile .tab_photos .item {
+    position: relative;
+    overflow: hidden;
+    width: 126px;
+    height: 140px;
+    margin: 0 26px 25px 0;
+    transition: 0.5s ease;
+    float: left;
+    width: auto;
+    height: auto;
+    float: none;
+    display: inline-block;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    border-radius: 4px;
+}
+div#home-just {
+    /*display: grid;*/
+}
+.uploadedPhotos {
+    vertical-align: middle;
+    /* overflow: visible; */
+    object-fit: cover;
+    height: 119px;
+    width: 120px;
+}
+
+</style>

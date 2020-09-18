@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="jobApplicationCont">
-    <div class="head icon_head_browse_matches">JobSeeker Application Submitted</div>
+    <div class="head icon_head_browse_matches">Job Seeker's Applications</div>
 
     <div class="job_applications_filter mb20">
 

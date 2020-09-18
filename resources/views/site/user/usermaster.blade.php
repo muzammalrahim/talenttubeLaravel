@@ -78,9 +78,9 @@
             <p>You need to Log In again with your new Email Address.</p>
             <p class="textNewEmailAddress">Your new Email Address will be:</p><p class="updatedEmailInModal"></p>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer d-inline-block">
             <button type="button" class="btn btn-danger" data-dismiss="modal"style="float:left;">Cancel</button>
-            <button id ="c-update-email" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+            <button id ="c-update-email" type="button" class="btn btn-primary float-right" data-dismiss="modal">Confirm</button>
           </div>
         </div>
       </div>
@@ -106,9 +106,9 @@
             {{-- <p>You need to Log In again with your new Email Address.</p> --}}
             <p class="textNewEmailAddress">Your new Phone Number will be:</p><p class="updatedPhoneInModal"></p>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer d-inline-block">
             <button type="button" class="btn btn-danger" data-dismiss="modal"style="float:left;">Cancel</button>
-            <button id ="update-Phone" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+            <button id ="update-Phone" type="button" class="btn btn-primary float-right" data-dismiss="modal">Confirm</button>
           </div>
         </div>
       </div>
@@ -133,9 +133,9 @@
             <p>To continue your session on "TalentTube" </p>
             <p>You need to Log In again with your new Password.</p>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer d-inline-block">
             <button type="button" class="btn btn-danger" data-dismiss="modal"style="float:left;">Cancel</button>
-            <button id ="update-password" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+            <button id ="update-password" type="button" class="btn btn-primary float-right" data-dismiss="modal">Confirm</button>
           </div>
         </div>
       </div>
@@ -159,9 +159,9 @@
             <p><strong> Please!</strong> Tell us why are you removing your account?</p>
               <textarea class="form-control reasonAccRem" rows="5" id="removingAccount"></textarea>
           </div>
-          <div class="modal-footer">
+          <div class="modal-footer d-inline-block">
             <button type="button" class="btn btn-danger" data-dismiss="modal"style="float:left;">Cancel</button>
-            <button id ="delete-profile" type="button" class="btn btn-primary" data-dismiss="modal">Confirm</button>
+            <button id ="delete-profile" type="button" class="btn btn-primary float-right" data-dismiss="modal">Confirm</button>
           </div>
         </div>
       </div>
@@ -192,6 +192,7 @@
     font-size: 20px;
     font-weight: 700;
     color: #254c8e;
+    margin:0 auto;
 }
 .textNewEmailAddress{
     float: left;

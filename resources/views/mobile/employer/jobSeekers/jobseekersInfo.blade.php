@@ -155,9 +155,10 @@ $js = $jobseeker;
   </li>
 </ul>
 <div class="tab-content card pt-5 mb-3" id="myTabContentMD">
+
   <div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">
 
-            <div class="photos">
+            {{-- <div class="photos">
                 @if ($galleries)
                 @foreach ($galleries as $gallery)
                     <div id="{{$gallery->id}}" class="emp_profile_photo_frame fl_left gallery_{{$gallery->id}}">
@@ -174,7 +175,27 @@ $js = $jobseeker;
 
                 @endforeach
             @endif
+            </div> --}}
+
+        <div class="list_photos_public d-flex">
+            <div class="list_photos_trans">
+            @if ($galleries)
+                @foreach ($galleries as $gallery)
+                    <div id="{{$gallery->id}}" class="float-left mt-1 item profile_photo_frame gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
+                        <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
+                            href="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
+                            data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}"
+                            >
+                            <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo m-1 uploadedPhotos"
+                            data-src="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
+                            src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}">
+                        </a>
+                        
+                    </div>
+                @endforeach
+            @endif
             </div>
+        </div>
 
   </div>
   <div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
@@ -182,40 +203,41 @@ $js = $jobseeker;
 
         <!-- Grid column -->
     <div class="col-lg-4 col-md-4 mb-4">
+      
     <div class="videos">
-        @if ($videos->count() > 0 )
-        @foreach ($videos as $video)
-            <div id="v_{{$video->id}}" class="video_box mb-2">
-                <!-- Grid row -->
+                @if ($videos->count() > 0 )
+                @foreach ($videos as $video)
+                    <div id="v_{{$video->id}}" class="video_box mb-2">
+                        <!-- Grid row -->
 
 
-      <!--Modal: Name-->
-      <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-          <!--Content-->
-          <div class="modal-content">
-            <!--Body-->
-            <div class="modal-body mb-0 p-0">
-              <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
-                  <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
-                    <source src="{{assetVideo($video)}}" type="video/mp4" />
-                  </video>
+              <!--Modal: Name-->
+              <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                  <!--Content-->
+                  <div class="modal-content">
+                    <!--Body-->
+                    <div class="modal-body mb-0 p-0">
+                      <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
+                          <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
+                            <source src="{{assetVideo($video)}}" type="video/mp4" />
+                          </video>
+                      </div>
+                    </div>
+                    <!--Footer-->
+                    <div class="modal-footer justify-content-center">
+                      <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
+                    </div>
+                  </div>
+                  <!--/.Content-->
+                </div>
               </div>
-            </div>
-            <!--Footer-->
-            <div class="modal-footer justify-content-center">
-              <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
-            </div>
-          </div>
-          <!--/.Content-->
-        </div>
-      </div>
 
-      <!--Modal: Name-->
-      <a>{!! generateVideoThumbsm($video) !!}</a>
-            </div>
-        @endforeach
-    @endif
+              <!--Modal: Name-->
+              <a>{!! generateVideoThumbsm($video) !!}</a>
+                    </div>
+                @endforeach
+            @endif
     </div>
 
   </div>
@@ -256,6 +278,38 @@ $js = $jobseeker;
 p{
   font-size: 12px;
 }
+.iconPosition {
+    position: relative;
+        right: 20px;
+    top: 5px;
+}
+
+.tabs_profile .tab_photos .item {
+    position: relative;
+    overflow: hidden;
+    width: 126px;
+    height: 140px;
+    margin: 0 26px 25px 0;
+    transition: 0.5s ease;
+    float: left;
+    width: auto;
+    height: auto;
+    float: none;
+    display: inline-block;
+    box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);
+    border-radius: 4px;
+}
+div#home-just {
+    /*display: grid;*/
+}
+.uploadedPhotos {
+    vertical-align: middle;
+    /* overflow: visible; */
+    object-fit: cover;
+    height: 119px;
+    width: 120px;
+}
+
 </style>
 
 @stop

@@ -35,7 +35,7 @@
             <div class="row jobInfo">
 
                 <div class="col-4 p-0">
-                    <img class="img-fluid z-depth-1" src="{{$profile_image}}" height="100px" width="150px">
+                    <img class="img-fluid z-depth-1" src="{{$profile_image}}" height="100px" width="100px">
 
                   {{--   <div class="mt-2">
                         <span class="jobInfoFont">Location:</span>

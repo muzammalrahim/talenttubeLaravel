@@ -18,10 +18,11 @@
 	        </div>
 
 
-
+            <div class="row">
 	        <div class="col-md-3"></div>
-	        <button type="button" class="emailUpdateBUtton" data-toggle="modal" data-target="#emailModal">Update</button> {{-- c-update-email --}}
 
+	        <button type="button" class="emailUpdateBUtton" data-toggle="modal" data-target="#emailModal">Update</button> {{-- c-update-email --}}
+            </div>
 	        <div class="alert alert-success EmailAlert hide_it2" role="alert">
 	            <strong>Success!</strong> Email has been updated successfully!
 	        </div>
@@ -40,9 +41,10 @@
 
 	            </div>
 	        </div>
-
-	        <div class="col-md-3"></div>
-	        <button type="button" class="PhoneUpdateBUtton"data-toggle="modal" data-target="#PhoneModal">Update</button>
+            <div class="row">
+    	        <div class="col-md-3"></div>
+    	        <button type="button" class="PhoneUpdateBUtton"data-toggle="modal" data-target="#PhoneModal">Update</button>
+            </div>
 	        <div class="alert alert-success PhoneAlert hide_it2" role="alert">
 	            <strong>Success!</strong> Phone has been updated successfully!
 	        </div>
@@ -73,9 +75,10 @@
 
                 </div>
             </div>
-
+             <div class="row">
             <div class="col-md-3"></div>
 	        <button type="button" class="PasswordUpdateBUtton" data-toggle="modal" data-target="#PasswordModal">Update</button>
+            </div>
             <div class="alert alert-success PasswordAlert hide_it2" role="alert">
                 <strong>Success!</strong> Password has been updated successfully!
             </div>
@@ -93,7 +96,6 @@
 	 			<button type="button" class="DeleteProfileBUtton" data-toggle="modal" data-target="#DeleteProfileModal" user_id = "{{$user->id}}">Delete</button>
 	            </div>
 	        </div>
-
 
             {{-- ============================================== Delete Account Ending ======================================== --}}
 
@@ -129,7 +131,7 @@ div.cont_w>.column_main {
     border-radius: 10px;
 }
 .emailUpdateBUtton,.PhoneUpdateBUtton,.PasswordUpdateBUtton{
-	margin-left: 9px;
+	margin-left: 19px;
     padding: 5px;
     background:#142d69;
 	color: white;
@@ -143,7 +145,7 @@ div.cont_w>.column_main {
     opacity: 1.0;	  
 }
 .DeleteProfileBUtton{
-	margin-left: 2px;
+	margin-left: 5px;
     padding: 5px;
 	background: #dc3545;
 	color: white;

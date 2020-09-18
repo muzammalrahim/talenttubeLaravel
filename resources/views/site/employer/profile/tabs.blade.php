@@ -204,7 +204,7 @@
     <!-- tab_photos -->
     <a id="tabs-2" class="tab_link tab_a "></a>
     <div class="tab_photos tab_cont">
-        @include('site.employer.profile.album.album')
+        @include('site.employer.profile.album.album')  {{--     site/employer/profile/album/album   --}}
     </div>
 
 

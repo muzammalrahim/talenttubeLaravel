@@ -68,6 +68,9 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
      Route::get('Mjobsedit/{id}', 'Mobile\MobileUserController@MemployerJobsedit')->name('Mjobedit');
 	 Route::get('MjobSeekers/{id}', 'Mobile\MobileUserController@MjobSeekersInfo')->name('MjobSeekersInfo');
 
+    Route::get('Memployer/job/{id}/applications', 'Mobile\MobileUserController@MempJobApplications')->name('MempJobApplications');
+
+
 	// ============================================ Jobs ============================================
 	// Job ApplyInfo Modal
 
