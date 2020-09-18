@@ -76,9 +76,9 @@
                     <div class="float-right">
 
                        {{--  <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" href="{{route('MjobApplyInfo', ['id' => $job->id]) }}" data-toggle="modal" data-target="#modalJobApply" >Apply</a> --}}
-
+                       @if (!isEmployer())
                         <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}">Apply</a>
-
+                        @endif
                     </div>
 
             </div>

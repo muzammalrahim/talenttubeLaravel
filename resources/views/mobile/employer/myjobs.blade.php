@@ -82,9 +82,13 @@
                 		<div>{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</div>
                 	</div>
 
-                	<div class="p-0 mt-2 float-right"> 
+                	<div class="p-0 mt-2 float-right">     
 
-                		<a class="btn btn-sm btn-primary mr-0 btn-xs">Applications
+                        {{-- @dump($job->applicationCount) --}}
+
+                        
+
+                		<a class="btn btn-sm btn-primary mr-0 btn-xs"  href="{{route('MempJobApplications',['id' => $job->id])}}">Applications
                         ({{($job->applicationCount)?($job->applicationCount->aggregate):0}})
                     	</a>
 

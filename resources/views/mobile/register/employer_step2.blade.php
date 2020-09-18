@@ -162,27 +162,27 @@
 			<div class="col">
 				<div class="card wider">
 					<div class="card-body">
-						<h4 class="card-title text-center">Please select from the industries and role types below, that best describe the type of candidates you’d like to match with. You can select up to 5 and change these at any time</h4>
+						<p class="card-title">Please select from the industries and role types below, that best describe the type of candidates you’d like to match with. You can select up to 5 and change these at any time</p>
 						<div class="industry_list">
 							<div class="industry_ul_cont">
-											<ul class="industry_ul item_ul list-group">
-																@php
-																			$industries = getIndustries();
-															@endphp
+								<ul class="industry_ul item_ul list-group">
+									@php
+										$industries = getIndustries();
+									@endphp
 
-																@if (!empty($industries))
-																	@foreach ($industries as $ikey => $industry)
-																			<li data-id="{{$ikey}}" class="list-group-item"> {{$industry}} </li>
-																	@endforeach
-															@endif
-											</ul>
+										@if (!empty($industries))
+											@foreach ($industries as $ikey => $industry)
+													<li data-id="{{$ikey}}" class="list-group-item"> {{$industry}} </li>
+											@endforeach
+									@endif
+								</ul>
 							</div>
-			</div>
+						</div>
 
-			<div class="join_btn mt-3 text-center">
+						<div class="join_btn mt-3 text-center">
 							<div class="join_industry_error"></div>
 							<button id="join_done" class="btn turquoise small btn_join_submit industryExpBtn_done" disabled="true">Done</button>
-			</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -210,4 +210,14 @@
 @stop
 
 @section('custom_footer_css')
+
+<style type="text/css">
+
+.industry_list {
+    height: 250px;
+    overflow-y: auto;
+    border: 1px solid #9d9d9d;
+}
+
+</style>
 @stop

@@ -13,6 +13,8 @@
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 
 
+        {{-- <a href="" class="btn btn-primary d-none"> see job detail</a> --}}
+
         <div class="card add_new_job">
 
             <div class="card-header jobAppHeader p-2 jobInfoFont text-center">
@@ -247,7 +249,7 @@
 
     </div>
 
-
+<a href="{{route('MemployerJobs')}}" class="btn btn-primary d-none seeJobDetail"> See Your Jobs</a>
 
 
 @stop
@@ -370,6 +372,14 @@
                 if( data.status == 1 ){
                     // that.hideMainEditor();
                     $('.add_new_job').html(data.message);
+
+                    $('.seeJobDetail').removeClass('d-none');
+                    $('.rounded').removeClass('border-info');
+                    $('.rounded').removeClass('card');
+                    $('.add_new_job').removeClass('card');
+                    $('.rounded').addClass('p-3');
+                    $('.seeJobDetail').removeClass('jobApp_');
+
                 }else{
                     $('.general_error').html('<p>Error Creating new job</p>').removeClass('to_hide').addClass('to_show');
                     if(data.validator != undefined){
@@ -663,3 +673,10 @@
 
 @stop
 
+<style type="text/css">
+
+form.new_job_form.newJob.job_validation {
+    margin-right: 7%;
+}
+
+</style>

@@ -1,7 +1,7 @@
 
 
 @include('site.employer.profile.album.gallery')
-@include('site.employer.profile.album.private')
+@include('site.employer.profile.album.private')     {{--    site/employer/profile/album/private     --}}
 
 
 

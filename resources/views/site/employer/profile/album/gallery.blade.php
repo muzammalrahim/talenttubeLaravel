@@ -3,6 +3,7 @@
 
 
 
+<div class="tabs_photos">Photos</div>
 
 <div class="list_photos_public">
     <div class="list_photos_trans">

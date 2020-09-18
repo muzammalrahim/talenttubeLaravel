@@ -590,16 +590,30 @@ class MobileUserController extends Controller
 
             // dd($user);
             // $user->questions = $request->questions;
+        
             $user->questions = json_encode($request->questions);
-
-
             $user->save();
+            $data['user'] = User::find($user->id);
+            $questionsView = view('mobile.layout.parts.jobSeekerQuestions', $data);
+            $QuestionsHTML = $questionsView->render();
             return response()->json([
                     'status' => 1,
-                    'data' => $user->questions
+                    'data' => $QuestionsHTML
             ]);
+
+
+
+            // return response()->json([
+            //         'status' => 1,
+            //         'data' => $user->questions
+            // ]);
+
+
         // }
     }
+
+
+
 
     //====================================================================================================================================//
     // Ajax POST // Like Employer on JobSeeker Employer listing page.
@@ -1332,7 +1346,7 @@ class MobileUserController extends Controller
         // dd( $jobs->questions()->first()->options );
 
         $data['geo_country'] = get_Geo_Country();
-        return view('mobile.jobs.new', $data); // site/jobs/new
+        return view('mobile.jobs.new', $data); // mobile/jobs/new
     }
 
 // ========================================== Employers on Mobile Phone ==========================================
@@ -1470,8 +1484,10 @@ class MobileUserController extends Controller
 						$job->addJobQuestions($requestData['jq']);
 						return response()->json([
 										'status' => 1,
-										'message' => '<h5 class="mt-2 ml-2">Job Succesfully Created.</h5><p class="ml-2">Click here to view job detail</p>',
-										// 'redirect' => route('')
+										'message' => '<h5 class="mt-2 ml-2">Job Succesfully Created.</h5>'
+										// <a href='.$job->id.'><p class="jobdetailLink ml-2">Click here to view job detail</p></a>,
+										// 'redirect' => route('MjobDetail', ['id' => $job->id]) 
+										// redirect()->route('MjobDetail', ['id' => $job->id])
 						]);
 		}
 
@@ -2339,7 +2355,6 @@ class MobileUserController extends Controller
 
     public function MupdateIndustryExperience(Request $request){
 
-        // dump($request->tags);
         $user = Auth::user();
         $rules = array(
                 'industry_experience'    => 'required|array',
@@ -2373,5 +2388,21 @@ class MobileUserController extends Controller
     //     $data['job'] = $id;
     //     return view('site.jobs.jobDetail', $data);
     // }
+
+        function MempJobApplications($id){
+        $user = Auth::user();
+        if(isEmployer($user)){
+
+            $job =  Jobs::find($id);
+            $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id',$id)->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC')->paginate(1);
+            $data['applications'] = $applications;
+            $data['job']   = $job;
+            $data['user']   = $user;
+            $data['title']  = 'Job Detail';
+            $data['classes_body'] = 'jobdetail';
+            return view('mobile.employer.jobApplication', $data); // mobile/employer/jobApplication
+        }
+    }
+
 
 }
