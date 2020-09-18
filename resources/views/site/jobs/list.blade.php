@@ -1,7 +1,7 @@
- 
+
 
  @if ($jobs && $jobs->count() > 0)
-      
+
  {{-- @dd($jobs) --}}
 
         @foreach ($jobs as $job)
@@ -14,15 +14,15 @@
                 <div class="job_employer">Employer: {{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</div>
 
                 <div class="job_location">
-                    <span>Location : </span>{{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
+                    <span>Location : </span>{{$job->city}},  {{$job->state}}, {{$job->country}}
                 </div>
             </div>
 
             <div class="job_info row p10 dblock">
-                
+
                 <div class="w_25p companyLogo">
-                    @php 
-                        $user_gallery  =  $job->jobEmployerLogo;   
+                    @php
+                        $user_gallery  =  $job->jobEmployerLogo;
                         $profile_image =  !empty($user_gallery)?(assetGallery2($user_gallery,'small')):(asset('images/site/icons/nophoto.jpg'));
                     @endphp
                     <img class="photo" id="pic_main_img" src="{{$profile_image}}" title="">

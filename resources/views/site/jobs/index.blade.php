@@ -140,6 +140,7 @@ $(".reset-btn").click(function(){
     jQuery('input[name="filter_keyword"]').val("");
     jQuery('#filter_salary').get(0).selectedIndex = 0;
     jQuery('#filter_jobType').get(0).selectedIndex = 0;
+    jQuery('#filter_form').find('input, select').trigger('refresh');
     getDataCustom();
 });
 
