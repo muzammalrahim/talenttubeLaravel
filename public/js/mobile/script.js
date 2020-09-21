@@ -55,9 +55,9 @@ $('#degreeSelect').on('change', function() {
                  // console.log('resp ', resp.message);
 
                  var signinError = resp.message;
-                 console.log(signinError);
+                 // console.log(signinError);
 
-                 // $('.errorToShow').text(signinError);
+                 $('.loginStatus').text(signinError);
                  
                  if(resp.status){
                      setTimeout(() => {

@@ -1,8 +1,6 @@
 
 
 <div class="js_star">
-	{{-- @dump( $application )	 --}}
-
 	@if($application->goldstar)
 		<div class="goldstar">
 			@for ($i = 0; $i < $application->goldstar; $i++)

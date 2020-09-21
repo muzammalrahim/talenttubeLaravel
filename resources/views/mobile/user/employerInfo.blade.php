@@ -358,8 +358,8 @@
                   @if(!empty($empquestion))
                       @foreach($empquestion as $qk => $question)
                         <div>
-                          <p>{{$question}} </p>
-                           <p class="QuestionsKeyPTag"><b>{{$userQuestions[$qk]}}</b></p>
+                          <p class="m-0">{{$question}} </p>
+                           <p class="QuestionsKeyPTag my-1"><b>{{$userQuestions[$qk]}}</b></p>
                         </div>
                       @endforeach
                   @endif
@@ -432,6 +432,9 @@ div#home-just {
     object-fit: cover;
     height: 119px;
     width: 120px;
+}
+.questionsOfUser{
+    font-size: 12px;
 }
 
 </style>

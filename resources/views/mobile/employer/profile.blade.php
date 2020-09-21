@@ -23,7 +23,7 @@
   <div class="row">
 
     <!--Grid column-->
-    <div class="col-lg-4 col-md-12 mb-1">
+    <div class="col-lg-12 col-md-12 mb-1">
 
       <!--Card-->
       <div class="testimonial-card">
@@ -47,16 +47,16 @@
 <!--Section: Testimonials v.1-->
 
 {{-- ==================================================== For image ==================================================== --}}
+{{-- 
+    <div id="over" style="width:auto; height:150px">
 
-    {{-- <div id="over" style="/*position:absolute; */width:auto; height:150px"> --}}
-
-      {{-- <img src="https://p16-tiktokcdn-com.akamaized.net/aweme/720x720/tiktok-obj/1646491669975042.jpeg"> --}}
-      {{--   <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+       <img src="https://p16-tiktokcdn-com.akamaized.net/aweme/720x720/tiktok-obj/1646491669975042.jpeg">
+      <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
             <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
 
         </a>
 
-    </div>
+    </div> --}}
 
 
     <div class="personalInfo">{{$user->name}} {{$user->surname}}</div>
@@ -64,7 +64,8 @@
     <div class="personalInfo"><b>Phone:</b> {{$user->phone}}</div>
     <div class="personalInfo"><b>Location: </b>{{userLocation($user)}}</div>
 
-        {{-- Interested In --}}
+      
+
     <div class="aboutMeSection"><b>Interested In: </b>
             <div class="spinner-border spinner-border-sm text-primary IntsdInLoader ml-2" role="status" style="display:none;"></div>
             <i class="fas fa-edit float-right intInSecButton"></i> <p class="interestedInSec">{{$user->interested_in}}</p>

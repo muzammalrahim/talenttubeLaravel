@@ -783,9 +783,12 @@ function getDays(){
 
 function getJobTypes(){
     return array(
+    'Contract' => 'contract',
+    'temporary' => 'Temporary',
+    'casual' => 'casual',
     'full_time' => 'Full Time',
     'part_time' => 'Part Time',
-    'occassional_time' => 'Occassinal Time',
+    // 'occassional_time' => 'Occassinal Time',
     );
 }
 

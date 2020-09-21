@@ -41,13 +41,19 @@
         <div class="job_type form_field">
             <span class="form_label">Type :</span>
             <div class="form_input">
+                {{-- @dump($jobType) --}}
+
+                {{ Form::select('type', $jobType, ['placeholder' => 'Select Job Type',]) }}
+
+{{-- 
                 <select name="type" class="form_select " >
                     <option value="contract">Contract</option>
                     <option value="temporary">Temporary</option>
                     <option value="casual">Casual</option>
                     <option value="Part_Time">Part Time</option>
                     <option value="full_time">Full Time</option>
-                </select>
+                </select> --}}
+
                 <div id="type_error" class="error field_error to_hide">&nbsp;</div>
             </div>
         </div>

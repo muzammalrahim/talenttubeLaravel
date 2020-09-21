@@ -91,12 +91,22 @@
         <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
             <div class="cont">
                 <div class="title">Delete Job?</div>
+
                 <div class="img_chat">
-                    <div class="icon">
+                    
+                </div>
+
+                <div class="successMessage">
+                    
+                </div>
+
+                <div class="contentBody">
+                    <div class="icon" style="margin: 10px 0px 20px 0px;">
                         <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
                     </div>
                     <div class="msg">This action can not be undone. Are you sure you wish to continue?</div>
                 </div>
+
                 <div class="double_btn">
                     <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
                     <button class="confirm_jobDelete_ok btn small marsh">OK</button>
@@ -137,6 +147,10 @@ $(document).ready(function() {
     $('.myJobDeleteBtn').on('click',function(){
         var job_id = $(this).attr('data-jobid');
         console.log(' confirmJobAppRemoval click  job_id ', job_id, $(this) );
+        $('.contentBody').show();
+        $('.double_btn').show();
+        // $('.img_chat').hide();
+        $('.successMessage').hide();
         $('#confirmJobDeleteModal').modal({
             fadeDuration: 200,
             fadeDelay: 2.5,
@@ -145,19 +159,24 @@ $(document).ready(function() {
         });
         $('#deleteConfirmJobId').val(job_id);
     });
-
     $(document).on('click','.confirm_jobDelete_ok',function(){
-        $('.confirmJobDeleteModal  .img_chat').html(getLoader('jobDeleteloader'));
-        $(this).prop('disabled',true);
+        $('.confirmJobDeleteModal .img_chat').html(getLoader('jobDeleteloader'));
+        // $(this).prop('disabled',true);
         var job_id =  $('#deleteConfirmJobId').val();
+        $('.contentBody').hide();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/deleteJob/'+job_id,
             success: function(data){
                 if( data.status == 1 ){
-                    $('.confirmJobDeleteModal .img_chat').html(data.message);
+                    var jobDeletingMessage = data.message;
+                    console.log(jobDeletingMessage);
+                    $('.successMessage').text(jobDeletingMessage).show();
+                    $('.jobDeleteloader').hide();
+                    // $('.confirmJobDeleteModal .img_chat').html(data.message).show();
                     $('.job_row.job_'+job_id).remove();
+                    $('.double_btn').hide();
                 }else{
                     $('.confirmJobDeleteModal .img_chat').html(data.error);
                 }
