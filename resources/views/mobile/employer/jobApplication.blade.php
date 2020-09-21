@@ -4,7 +4,7 @@
     {{-- <div class="head icon_head_browse_matches">Job Seekers List</div> --}}
 
 
-<h6 class="h6 jobAppH6">Job Seekeers's Applications</h6>
+<h6 class="h6 jobAppH6">Job's Applications</h6>
 
 <!-- =============================================================================================================================== -->
 
@@ -111,6 +111,8 @@
                         </select>
                     </div>
 
+                   
+
       {{--               <div class="jobApplicationStatusCont dinline_block">
                         <select name="jobApplicStatus" class="select_aw jobApplicStatus" data-application_id="{{$application->id}}">
                              @foreach (jobStatusArray() as $statusK => $statusV)
@@ -118,18 +120,43 @@
                              @endforeach
                         </select>
                     </div> --}}
+                </div>
+        </div>
 
+        <div class="jobAppFooter jobAppChangeStatus" style="display: none">
+            <p class="float-right mr-3 text-primary mt-3"> Updated Successfully</p>
+        </div>
 
+        <div class="jobAppFooter">
+            <div class="text-center"><a class="mt-0 btn btn-primary btn-sm questionsAnswers">Questions/Answers</a></div>
+                <div class="application_qa jobDetail p-2 d-none">
+                    @php
+                        $answers = $application->answers;     
+                    @endphp
+                     @if (!empty($answers))
+                            <div class="jobAnswers">
+                                @foreach ($answers as $answer)
+                                <div class="job_answers">
+                                    <div class="jqa_q font-weight-bold">{{$answer->question->title}}</div>
+                                    <div class="jqa_a">{{$answer->answer}}</div>
+                                </div>
+                                @endforeach
+                            </div>         
+                     @endif
+                    <div class="jobAppDescriptionBox">
+                        <span class="font-weight-bold">{{jobApplicationMandatoryQuestion()}}</span>
+                        <div class="jobAppDescription">{{$application->description}}</div>
+                    </div>
                 </div>
         </div>
 
 {{-- ============================================ Card Footer end ============================================ --}}
-
     </div>
 </div>
-
 @endforeach
 {{-- <div class="jobseeker_pagination cpagination">{!! $job->links() !!}</div> --}}
+<div class="cl"></div>
+<div class="job_pagination cpagination">{!! $applications->render() !!}</div>
 
 @else
  <h6 class="h6 jobAppH6">No Application for this job</h6>
@@ -159,18 +186,26 @@
             data: {status: status, application_id: application_id},
             success: function(data){
 
-                var jobAppStatusHtml = '<span class="jobApplicationStatusResponse">Updated Succesfully</span>';
-                statusElem.closest('.jobApplicationStatusCont').append(jobAppStatusHtml);
+                // var jobAppStatusHtml = '<span class="jobApplicationStatusResponse">Updated Succesfully</span>';
+                // statusElem.closest('.jobApplicationStatusCont').append(jobAppStatusHtml);
+                // setTimeout(function(){
+                //   statusElem.closest('.jobApplicationStatusCont').find('.jobApplicationStatusResponse').remove();
+                // },6000);
+
+                $('.jobAppChangeStatus').css("display","block");
 
                 setTimeout(function(){
-
-                  statusElem.closest('.jobApplicationStatusCont').find('.jobApplicationStatusResponse').remove();
-                },6000);
+                  $('.jobAppChangeStatus').hide();
+                },3000);
             }
         });
     });
 
 
+$('.questionsAnswers').click(function(){
+    $('.application_qa').toggleClass('d-none');
+
+})
 </script>
 
 @stop

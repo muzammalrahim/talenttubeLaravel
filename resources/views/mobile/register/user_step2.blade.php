@@ -418,12 +418,19 @@
     overflow-y: scroll;
 }
 
-.skillDiv {
+.skillDiv{
     height: 250px;
     overflow-y: auto;
     font-size: 12px;
     border: 1px solid #e0e0e0;
     padding: 10px;
+}
+.qualification_list {
+    height: 250px;
+    overflow-y: auto;
+/*    font-size: 12px;
+    border: 1px solid #e0e0e0;
+    padding: 10px;*/
 }
 li.tag.tagItem {
     font-size: 12px;

@@ -284,6 +284,8 @@ class EmployerController extends Controller {
         $data['geo_state']      = get_Geo_State(default_Country_id());
         $data['geo_cities']     = get_Geo_City(default_Country_id(), default_State_id());
 
+
+        $data['jobType']     = getJobTypes();
         // $jobs =  Jobs::find(12);
         // dd( json_decode($jobs->questions()->first()->options, true) );
         // dd( $jobs->questions()->first()->options );

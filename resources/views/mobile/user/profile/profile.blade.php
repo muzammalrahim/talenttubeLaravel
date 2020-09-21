@@ -21,7 +21,7 @@
   <div class="row">
 
     <!--Grid column-->
-    <div class="col-lg-4 col-md-12 mb-1">
+    <div class="col-lg-12 col-md-12 mb-1">
 
       <!--Card-->
       <div class="testimonial-card">
@@ -55,9 +55,7 @@
 
 
 
-		</div>
-
-
+	
 
             {{-- <div class="personalInfoDiv"> --}}
         		<div class="personalInfo mt-2"> <h6 class="m-0 font-weight-bold">{{$user->name}} {{$user->surname}}</h6></div>
@@ -99,7 +97,7 @@
 		{{-- @dump($user); --}}
 
 	  </div>
-
+  </div>
 </div>
 
 <div class="card shadow mb-3 bg-white rounded">
