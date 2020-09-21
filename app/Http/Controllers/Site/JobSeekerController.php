@@ -183,7 +183,7 @@ class JobSeekerController extends Controller {
 
         $isallowed = False;
         foreach($user->users as $us){
-            if($us->id = $jobSeeker->id){
+            if($us->id == $jobSeeker->id){
                 $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
                 $isallowed = True;
                 $data['attachments'] = $attachments;

@@ -863,6 +863,32 @@ class MobileUserController extends Controller
         $html .= '</div>';
 
 
+        $html = '<div id="'.$userGallery->id.'" class="float-left mt-1 item profile_photo_frame gallery_'.$userGallery->id.' public">';
+        $html .= '<a  data-offset-id="'.$userGallery->id.'" class="show_photo_gallery js-smartPhoto2" data-group="no-gravity"';
+        $html .= 'href="'.assetGallery($userGallery->access,$user->id,'',$userGallery->image).'"';
+        $html .= 'data-lcl-thumb="'.assetGallery($userGallery->access,$user->id,'small',$userGallery->image).'">';
+        $html .= '<img data-photo-id="'.$userGallery->id.'"  id="photo_'.$userGallery->id.'"   class="photo m-1 uploadedPhotos"';
+        $html .= 'data-src="'.assetGallery($userGallery->access,$user->id,'',$userGallery->image).'"';
+        $html .=  'src="'.assetGallery($userGallery->access,$user->id,'small',$userGallery->image).'">';
+        $html .=  '</a>';
+        $html .=  '<div class="gallery_action float-right">';
+
+        $html .=  '<span onclick="UProfile.confirmPhotoDelete('.$userGallery->id.');" title="Delete photo" class="icon_delete">';
+
+        $html .=  '<div class="iconPosition"><i class="fas fa-trash"></i></div>';
+        $html .=  '<span class="icon_delete_photo_hover"></span>';
+        $html .=  '</span>';
+        $html .=  '<span onclick="UProfile.setPrivateAccess('.$userGallery->id.')"  title="Make private" class="icon_private">';
+        $html .=  '<div class="iconPosition"><i class="fas fa-lock"></i></div>';
+
+        $html .=  '<span class="icon_private_photo_hover"></span>';
+        $html .=  '</span>';
+        $html .=  '<span onclick="UProfile.setAsProfile('.$userGallery->id.')" title="Make Profile" class="icon_image_profile">';
+        $html .=  '<div class="iconPosition"><i class="fas fa-user"></i></div>';
+        $html .=  '</span>';
+        $html .=  '</div>';
+        $html .=  '</div>';
+
         $output = array(
             'status' => '1',
             'success' => 'Image uploaded successfully',
@@ -1215,18 +1241,42 @@ class MobileUserController extends Controller
             $video->generateThumbs();
 
 
-            $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;">';
-            $html .=    '<a onclick="UProfile.showVideoModal(\''.assetVideo($video).'\')" class="video_link" target="_blank">';
-            $html .=        '<div class="v_title_shadow"><span class="v_title">'.$video->title.'</span></div>';
-            $html .=        generateVideoThumbs($video);
-            $html .=    '</a>';
-            $html .=    '<span title="Delete video" class="icon_delete" data-vid="12" onclick="UProfile.delteVideo('.$video->id.')">';
-            $html .=        '<span class="icon_delete_photo"></span>';
-            $html .=        '<span class="icon_delete_photo_hover"></span>';
-            $html .=    '</span>';
+            // $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;">';
+            // $html .=    '<a onclick="UProfile.showVideoModal(\''.assetVideo($video).'\')" class="video_link" target="_blank">';
+            // $html .=        '<div class="v_title_shadow"><span class="v_title">'.$video->title.'</span></div>';
+            // $html .=        generateVideoThumbs($video);
+            // $html .=    '</a>';
+            // $html .=    '<span title="Delete video" class="icon_delete" data-vid="12" onclick="UProfile.delteVideo('.$video->id.')">';
+            // $html .=        '<span class="icon_delete_photo"></span>';
+            // $html .=        '<span class="icon_delete_photo_hover"></span>';
+            // $html .=    '</span>';
 
-            $html .=    '<div class="v_error error hide_it"></div>';
-            $html .=  '</div>';
+            // $html .=    '<div class="v_error error hide_it"></div>';
+            // $html .=  '</div>';
+
+
+            $html  =  '<div id="v_'.$video->id.'" class="video_box mb-2">';
+            $html .=  ' <div class="modal fade" id="modal'.$video->id.'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
+            $html .=   '<div class="modal-dialog modal-lg" role="document">';
+            $html .=   '<div class="modal-content">';
+            $html .= '<div class="modal-body mb-0 p-0">';
+            $html .= '<div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">';
+            $html .= '<video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">';
+            $html .= '<source src="'.assetVideo($video).'" type="video/mp4" />';
+            $html .= '</video>';
+            $html .='</div>';
+            $html .= ' </div>';
+            $html .= ' <div class="modal-footer justify-content-center">';
+            $html .= '<button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>';
+            $html .= ' </div>';
+            $html .= ' </div>';
+            $html .= ' </div>';
+            $html .= ' </div>';
+            $html .= ' <a>'.generateVideoThumbsm($video).'</a>';
+            $html .= ' </div>';
+
+
+
 
             return response()->json([
                 'status' => '1',
@@ -1766,7 +1816,7 @@ class MobileUserController extends Controller
        //  $data['galleries']        = $employer_gallery;
        //  $data['videos']          = $employer_video;
        //  $data['empquestion'] = getEmpRegisterQuestions();
-       //  $data['userquestion'] = getUserRegisterQuestions();
+        $data['userquestion'] = getUserRegisterQuestions();
 
 
     	 $user = Auth::user();
@@ -1780,7 +1830,7 @@ class MobileUserController extends Controller
 
         $isallowed = False;
         foreach($user->users as $us){
-            if($us->id = $jobSeeker->id){
+            if($us->id == $jobSeeker->id){
                 $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
                 $isallowed = True;
                 $data['attachments'] = $attachments;
@@ -1809,12 +1859,41 @@ class MobileUserController extends Controller
         $data['qualificationList'] = getQualificationsList();
 
 
-        return view('mobile.employer.jobSeekers.jobseekersInfo', $data);          
+        return view('mobile.employer.jobSeekers.jobseekersInfo', $data);
 
         // mobile/employer/jobSeekers/jobseekersInfo
 
     }
 
+
+    public function purchaseUserInfo(Request $request)
+    {
+        //  dd($request->toArray());
+        $user = Auth::user();
+        $user_id = $request->user_id;
+
+        if (!empty($user_id)) {
+
+            if($user->credit-10 >= 0){
+                $user->users()->attach($user_id, ['type'=> 'User info purchased', 'status'=> 1]);
+                $user->credit = $user->credit-10;
+                $user->save();
+                $output = array(
+                    'status' => '1',
+                    'message' => 'User info purchased.'
+                );
+            }
+            else{
+                $output = array(
+                    'status' => '2',
+                    'message' => 'Not Enough credit'
+                );
+
+            }
+
+            return response()->json($output);
+        }
+    }
     //====================================================================================================================================//
     // Get // layout for purchasing Credits.
     //====================================================================================================================================//
@@ -2539,7 +2618,6 @@ class MobileUserController extends Controller
             }
         }
     }
-
 
 
 

@@ -32,9 +32,13 @@
         </div>
         <!--Avatar-->
         <div class="avatar mx-auto white">
-          <img src="{{$profile_image}}"
-            alt="avatar mx-auto white" class="rounded-circle img-fluid">
+
+            <div class="avatarimg">
+            <img src="{{$profile_image}}"
+                alt="avatar mx-auto white" class="rounded-circle img-fluid">
+            </div>
         </div>
+
 
       </div>
       <!--Card-->
@@ -160,14 +164,9 @@
 </ul>
 
 <div class="tab-content card pt-5 pl-2" id="myTabContentJust">
-
-
   {{-- ============================================================= Album Tab Start here ============================================================= --}}
-
     <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-
   {{-- =================================================================== Photos =================================================================== --}}
-
     <div class="tabs_photos text-dark mb-2 font-weight-bold">Photos</div>
         <div class="list_photos_public d-flex">
             <div class="list_photos_trans">
@@ -213,7 +212,31 @@
         </div>
   {{-- =================================================================== Photos end =================================================================== --}}
 
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
 
+  <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+  <div class="modal-dialog modal-dialog-centered" role="document">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <h5 class="modal-title" id="exampleModalLongTitle">Are you sure to delete the picture?</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="UProfile.deleteGallery(); return false;">OK</button>
+         <input type="hidden" name="deleteConfirmId" id="deleteConfirmId" value=""/>
+      </div>
+    </div>
+  </div>
+</div>
 
       {{-- =================================================================== videos =================================================================== --}}
 
@@ -227,24 +250,50 @@
                     </a>
                 </div>
             </div>
+
+
             <div class="cl"></div>
             <div class="list_videos">
-            @if ($videos->count() > 0 )
-                @foreach ($videos as $video)
-                    <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-                        <a onclick="UProfile.showVideoModal('{{$video->file}}')" class="video_link" target="_blank">
-                            <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
-                           {!! generateVideoThumbs($video) !!}
-                        </a>
-                        <span title="Delete video" class="icon_delete" data-vid="{{$video->id}}" onclick="UProfile.delteVideo({{$video->id}})">
-                            <span class="icon_delete_photo"></span>
-                            <span class="icon_delete_photo_hover"></span>
-                        </span>
 
-                        <div class="v_error error hide_it"></div>
-                    </div>
-                @endforeach
+            <!-- Grid column -->
+
+
+        <div class="videos mt-2">
+            @if ($videos->count() > 0 )
+            @foreach ($videos as $video)
+                <div id="v_{{$video->id}}" class="video_box mb-2">
+                        <!-- Grid row -->
+                        <!--Modal: Name-->
+                        <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <!--Content-->
+                            <div class="modal-content">
+                            <!--Body-->
+                            <div class="modal-body mb-0 p-0">
+                                <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
+                                    <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
+                                    <source src="{{assetVideo($video)}}" type="video/mp4" />
+                                    </video>
+                                </div>
+                            </div>
+                            <!--Footer-->
+                            <div class="modal-footer justify-content-center">
+                                <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
+                            </div>
+                            </div>
+                            <!--/.Content-->
+                        </div>
+                        </div>
+                    <!--Modal: Name-->
+                    <a>{!! generateVideoThumbsm($video) !!}</a>
+                </div>
+            @endforeach
             @endif
+        </div>
+
+
+    <!-- Grid column -->
+
 
         </div>
         </div>
@@ -266,10 +315,7 @@
                     <p class="loader SaveQuestionsLoader"style="float: left;"></p>
                       <div class="cl"></div>
                         <div class="questionsOfUser">
-
                                   @include('mobile.layout.parts.employerQuestions')  {{--  mobile/layout/parts/employerQuestions    --}}
-
-
                                   <div class="col-md-12 text-center mt-3">
                                       <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
                                   </div>
@@ -347,8 +393,8 @@ div#home-just {
 @section('custom_js')
 <link rel="stylesheet" href="https://unpkg.com/smartphoto@1.1.0/css/smartphoto.min.css">
 <script src="https://unpkg.com/smartphoto@1.1.0/js/smartphoto.js"></script>
-
 <script src="{{ asset('js/site/plyr.polyfilled.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/mobile/userProfile.js') }}"></script>
 <script>
     @if ($videos->count() > 0 )
     @foreach ($videos as $video)
@@ -368,6 +414,40 @@ div#home-just {
 
 </script>
 <script type="text/javascript">
+(function ($) {
+  $.fn.progressBar = function (givenValue) {
+    const $this = $(this);
+
+    function init(selector) {
+      const progressValue = selector.children().attr('aria-valuenow');
+      selector.children().width(progressValue + "%");
+      selector.children().html('<span></span>');
+      $this.hasClass('md-progress') ? selector.children().children().addClass('md-progress-bar-text') : selector.children().children().addClass('progress-bar-text');
+      (progressValue != 100) ? selector.children().children().text(progressValue + "%") : selector.children().children().html('<i class="fas fa-check"></i>');
+    }
+
+    function set(selector, value) {
+      selector.children().removeClass('success fail active');
+      selector.children().attr('aria-valuenow', value);
+      init(selector);
+      if (value > 100) {
+        console.log('value over 100');
+      } else if (value == 100) {
+        selector.children().addClass('success');
+      } else if (value < 30) {
+        selector.children().addClass('fail');
+      } else {
+        selector.children().addClass('active');
+      }
+    }
+
+    set($this, givenValue);
+  }
+}(jQuery));
+
+
+
+
 
 
 document.addEventListener('DOMContentLoaded',function(){
@@ -393,7 +473,7 @@ input.onchange = e => {
     video_item += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">';
     video_item  +=  '<a class="show_photo_gallery video_link" href="">';
     video_item  +=  '</a>';
-    video_item  +=  '<span class="v_title">Video title</span>';
+    video_item  +=  '<span class="v_title"></span>';
     video_item  +=  '<span title="Delete video" class="icon_delete">';
     video_item  +=      '<span class="icon_delete_photo"></span>';
     video_item  +=      '<span class="icon_delete_photo_hover"></span>';
@@ -401,7 +481,13 @@ input.onchange = e => {
     video_item  +=  '<div class="v_error error hide_it"></div>';
     video_item  +=  '<div class="v_progress"></div>';
     video_item  += '</div>';
+    // var video_item = '';
+    video_item += '<div id="bar8" class="progress md-progress my-4">';
+    video_item += '<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">';
+    video_item += '</div>';
+    video_item += '</div>';
     $('.list_videos').append(video_item);
+    $('#bar8').progressBar(0);
     var updateForm = document.querySelector('form');
     $.ajaxSetup({
         headers: {
@@ -413,14 +499,26 @@ input.onchange = e => {
         var percent = Math.round((e.loaded / e.total) * 100);
         console.log(' progress-bar ', percent+'%' );
         $('#v_'+item_id+' .v_progress').css('width', percent+'%');
+        $('#bar8').progressBar(percent);
     }, false);
     request.addEventListener('load', function(e){
         console.log(' load e ', e);
         var resp = JSON.parse(e.target.responseText);
         console.log(' jsonResponse ', resp);
         $('#v_'+item_id+' .v_progress').remove();
+       $( "#bar8" ).remove();
         if (resp.status == 1) {
             $('#v_'+item_id).replaceWith(resp.html);
+            $('#modal'+resp.data.id).on('hidden.bs.modal', function (e) {
+            // do something...
+                var src = $(this).find(".videoBox video").find("source").attr('src');
+                $(this).find(".videoBox video").find("source").attr('src');
+                var videoElem  = '<video id="player" controls>';
+                videoElem     += '<source src="'+src+'" type="video/mp4">';
+                videoElem     += '</video>';
+                $(this).find(".videoBox video").remove();
+                $(this).find(".videoBox").html(videoElem);
+            });
         } else {
             console.log(' video error ');
             if (resp.validator != undefined) {
@@ -434,66 +532,6 @@ input.onchange = e => {
 input.click();
 });
 
-
-$('.uploadProgressModalBtn').on('click', function() {
-
-            var input = document.createElement('input');
-			input.type = 'file';
-			input.onchange = e => {
-				var file = e.target.files[0];
-				console.log(' onchange file  ', file );
-                var formData = new FormData();
-                console.log(formData);
-                formData.append('file',file);
-                var that = this;
-                var item_id =  Math.floor((Math.random() * 1000) + 1);
-                var gallery_item = '<div class="float-left mt-1 item profile_photo_frame photo_item_'+item_id+'" id="'+item_id+'">';
-                gallery_item += '<a class="show_photo_gallery" style="opacity:0;">';
-                gallery_item += '<img data-photo-id="'+item_id+'" class="photo" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsQAAA7EAZUrDhsAAAANSURBVBhXYzh8+PB/AAffA0nNPuCLAAAAAElFTkSuQmCC"\>';
-                gallery_item += '</a>';
-                gallery_item += '<div class="gallery_action float-right">';
-                gallery_item += '<span onclick="" title="Delete photo" class="icon_delete">';
-                gallery_item += ' <div class="iconPosition"><i class="fas fa-trash"></i></div>';
-                gallery_item += ' <span class="icon_delete_photo_hover"></span>';
-                gallery_item += ' </span>';
-                gallery_item += '<span onclick=""  title="Make private" class="icon_private">';
-                gallery_item += '<div class="iconPosition"><i class="fas fa-lock"></i></div>';
-                gallery_item += '<span class="icon_private_photo_hover"></span>';
-                gallery_item += '</span>';
-                gallery_item += '<span onclick="" title="Make Profile" class="icon_image_profile">';
-
-                gallery_item += '<div class="iconPosition"><i class="fas fa-user"></i></div>';
-
-                gallery_item += '</span>';
-                gallery_item += '</div>';
-                gallery_item += '</div>';
-                $('.list_photos_trans').append(gallery_item);
-                alert(base_url);
-                $.ajaxSetup({
-                    headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-			    $.ajax({
-
-			       url: base_url+'/m/ajax/uploadUserGallery',
-			       type : 'POST',
-			       data : formData,
-			       processData: false,  // tell jQuery not to process the data
-			       contentType: false,  // tell jQuery not to set contentType
-			       success : function(resp) {
-
-			           console.log('upload_chat_front resp ', resp);
-			          if(resp.status == 1){
-                       $('.photo_item_'+item_id).replaceWith(resp.html);
-                            $('.photo_item_'+item_id).find('img').attr('src',resp.image);
-
-					  }
-			       }
-			    });
-			}
-            input.click();
-    });
 
 
 // {{-- ==================================================== Edit Interested IN ==================================================== --}}

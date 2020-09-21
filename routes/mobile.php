@@ -70,7 +70,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
     Route::get('Memployer/job/{id}/applications', 'Mobile\MobileUserController@MempJobApplications')->name('MempJobApplications');
 
-
+    Route::get('ajax/purchaseUserInfo/', 'Mobile\MobileUserController@purchaseUserInfo')->name('purchaseUserInfo');
 	// ============================================ Jobs ============================================
 	// Job ApplyInfo Modal
 
@@ -131,6 +131,13 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
     Route::post('ajax/MchangeJobApplicationStatus', 'Mobile\MobileUserController@MchangeJobApplicationStatus')->name('MchangeJobApplicationStatus');
 
+
+
+
+    Route::post('ajax/deleteGallery/{id}', 'Mobile\MobileUserController@deleteGallery');
+
+    Route::post('ajax/setImageAsProfile/{id}', 'Mobile\MobileUserController@setImageAsProfile');
+    Route::post('ajax/setGalleryPrivateAccess/{id}', 'Mobile\MobileUserController@setGalleryPrivateAccess');
 
  });
 
