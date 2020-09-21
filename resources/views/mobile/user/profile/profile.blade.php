@@ -21,7 +21,7 @@
   <div class="row">
 
     <!--Grid column-->
-    <div class="col-lg-4 col-md-12 mb-1">
+    <div class="col-lg-12 col-md-12 mb-1">
 
       <!--Card-->
       <div class="testimonial-card">
@@ -50,11 +50,11 @@
 		{{-- <div id="over" style="/*position:absolute; */width:auto; height:150px"> --}}
         {{-- @dump($profile_image) --}}
 
-            <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+           {{--  <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
             <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
-            </a>
+            </a> --}}
 
-		</div>
+	
 
 
 
@@ -98,7 +98,7 @@
 		{{-- @dump($user); --}}
 
 	  </div>
-
+  </div>
 </div>
 
 <div class="card shadow mb-3 bg-white rounded">

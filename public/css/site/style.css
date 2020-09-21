@@ -4415,7 +4415,7 @@ ul.pp_small_decor_r_show li:last-child a.selected:hover span{ background: url(..
 }
 
 .img_chat{
-    display: block !important;
+    display: block;
     margin-top: 20px;
 }
 .tabs_photos{ 
