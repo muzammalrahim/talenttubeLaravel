@@ -196,17 +196,17 @@ $js = $jobSeeker;
             @endif
             </div>
 
-         
+
         </div>
 
            {{-- private area --}}
 
            {{-- @dump($isallowed) --}}
-     
+
 
             {{-- New  --}}
             @if($isallowed)
-        
+
         {{-- private area --}}
             <span class="prvate-section text-dark">
                 <div class="title_private_photos" style="margin-bottom: 5px;">
@@ -245,7 +245,7 @@ $js = $jobSeeker;
                 </div>
 
                 <div class="attach_btns">
-                    <a class="attach_btn downloadAttachBtn btn btn-sm btn-primary m-0" onclick="({{$js->id}});">Unlock <i class="fas fa-unlock-alt ml-2"></i></a>
+                    <a class="attach_btn downloadAttachBtn btn btn-sm btn-primary m-0" onclick="UProfile.confirmPurchase({{$js->id}});">Unlock <i class="fas fa-unlock-alt ml-2"></i></a>
                 </div>
             </span>
 
@@ -254,6 +254,64 @@ $js = $jobSeeker;
 
 
   </div>
+
+
+
+
+
+  <div class="modal fade" id="confirmPurchaseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+
+  <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+  <div class="modal-dialog modal-dialog-centered" role="document">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Purchase Confirmation</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <h5 class="modal-title" id="exampleModalLongTitle">Are you sure to purchase this user info?</h5>
+       <h5 class="modal-title" id="exampleModalLongTitle">Costs 10 points</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" onclick="UProfile.purchase(); return false;">OK</button>
+         <input type="hidden" name="user_id" id="user_id" value=""/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="lowPointsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+
+  <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
+  <div class="modal-dialog modal-dialog-centered" role="document">
+
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Low Points!</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <h5 class="modal-title" id="exampleModalLongTitle">You don't have sufficient points</h5>
+       <h5 class="modal-title" id="exampleModalLongTitle">Please, purchase points to unlock info</h5>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
   <div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
     <div class="row">
 
@@ -308,20 +366,19 @@ $js = $jobSeeker;
     <p class="loader SaveQuestionsLoader"style="float: left;"></p>
       	<div class="cl"></div>
             <div class="questionsOfUser text-dark">
-
                 @php
                     $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
                 @endphp
                   @if(!empty($userquestion))
                       @foreach($userquestion as $qk => $question)
                         <div>
+
                           <p class="m-0">{{$question}} </p>
                            <p class="QuestionsKeyPTag my-1 font-weight-bold">{{$userQuestions[$qk]}}</p>
                         </div>
                       @endforeach
                   @endif
             </div>
-
   </div>
 </div>
 
@@ -329,6 +386,7 @@ $js = $jobSeeker;
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/plyr.css') }}">
+<script type="text/javascript" src="{{ asset('js/mobile/userProfile.js') }}"></script>
 <style type="text/css">
 
 p{

@@ -51,7 +51,7 @@
             <div class="location_search_cont hide_it">
                 <div class="location_input dtable w100">
                     <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
-                    <select class="dinline_block filter_location_radius select_aw" name="filter_location_radius" data-placeholder="Select Location Radius">
+                    <select class="dinline_block filter_location_radius select_aw hide_it" name="filter_location_radius" data-placeholder="Select Location Radius">
                          <option value="5">5km</option>
                          <option value="10">10km</option>
                          <option value="25">25km</option>
@@ -686,8 +686,9 @@ function showMap(){
  }
 
  // by default show this location;
- geocode('Sydney New South Wales, Australia');
-
+// geocode('Sydney New South Wales, Australia');
+ data = {!! str_replace("'", "\'", json_encode(userLocation($user))) !!};
+geocode(data);
 
  jQuery('.filter_location_radius').on('change', function(){
      console.log(' filter_location_radius changed.  ');
