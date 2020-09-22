@@ -2,7 +2,7 @@
 @extends('mobile.user.usermaster')
 @section('content')
 
- 
+
 <h6 class="h6 jobAppH6">Like User's List</h6>
 
 @if ($likeUsers->count() > 0)
@@ -19,7 +19,7 @@
 
         <div class="card">
 
-            <div class="card-header jobInfoFont jobAppHeader p-2">Company : 
+            <div class="card-header jobInfoFont jobAppHeader p-2">Company :
                 <span class="jobInfoFont">{{$js->name}}</span>
             </div>
 
@@ -28,7 +28,7 @@
             <div class="card-body jobAppBody pt-2">
 
                 <div class="row jobInfo">
-                   
+
                     <div class="col-4 p-0">
 
                    {{--      <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
@@ -58,12 +58,12 @@
                         </div>
 
                         <div>
-                        {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}}
+                        {{$js->city}},  {{$js->state}}, {{$js->country}}
                         </div>
-                        
+
                     </div>
 
-                </div> 
+                </div>
 
                 <div class="row p-0">
 
@@ -73,8 +73,8 @@
 
 
                 <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
-            
-       
+
+
 
             </div>
 
@@ -89,14 +89,14 @@
                     </div>
             </div>
 
-           
+
 
 {{-- ============================================ Card Footer end ============================================ --}}
 
 
         </div>
 
-    </div> 
+    </div>
 
 
 
@@ -106,7 +106,7 @@
 @endforeach
 @else
     <div class="jobAppH6">You have not Liked anyone</div>
-@endif     
+@endif
 
 
 
@@ -157,7 +157,7 @@
                 success: function(data){
                    // btn.prop('disabled',false);
                     // $('.confirmJobSeekerBlockModal').removeClass('showLoader').addClass('showMessage');
-                    
+
                     if( data.status == 1 ){
                         $('.empLikeAlert').show().delay(3000).fadeOut('slow');
                         location.reload();

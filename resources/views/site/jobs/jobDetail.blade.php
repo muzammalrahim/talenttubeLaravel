@@ -11,7 +11,7 @@
     <div class="jobDetail">
         @if ($job)
         <div class="job_row">
-            
+
             {{-- @dd($job) --}}
 
             <div class="job_heading p10">
@@ -22,21 +22,21 @@
                 <div class="job_employer">Employer: {{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</div>
 
                 <div class="job_location">
-                    <span>Location : </span>{{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
+                    <span>Location : </span><div class="js_location">Location: {{$job->city}},  {{$job->state}}, {{$job->country}} </div>
                 </div>
             </div>
 
             <div class="job_info row p10 dblock">
-                
+
                 <div class="w_25p companyLogo">
-                    @php 
-                        $user_gallery  =  $job->jobEmployerLogo;   
+                    @php
+                        $user_gallery  =  $job->jobEmployerLogo;
                         $profile_image =  !empty($user_gallery)?(assetGallery2($user_gallery,'small')):(asset('images/site/icons/nophoto.jpg'));
                     @endphp
                     <img class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
                 </div>
 
-                
+
                 <div class="jobDetail_field">
                     <div class="w_30p dinline_block fl_left j_label bold">Job Experience</div>
                     <div class="w_70p dinline_block fl_left j_value">{{$job->experience}}</div>
@@ -46,7 +46,7 @@
                     <div class="w_30p dinline_block fl_left j_label bold">Job Salary</div>
                     <div class="w_70p dinline_block fl_left j_value">{{$job->salary}}</div>
                 </div>
-                
+
                 <div class="jobDetail_field">
                     <div class="w_30p dinline_block fl_left j_label bold">Job Type</div>
                     <div class="w_70p dinline_block fl_left j_value">{{$job->type}}</div>
@@ -62,8 +62,8 @@
                     <div class="w_70p dinline_block fl_left j_value">{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</div>
                 </div>
 
-                
-                
+
+
             </div>
 
             <div class="job_detail p10">
@@ -72,12 +72,12 @@
             </div>
 
             <div class="job_footer p10">
-                 
+
                 <div class="w_25p fl_right">
                     <div class="j_button fl_right"><a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Apply</a></div>
                 </div>
 
-                 
+
 
             </div>
         </div>
@@ -93,7 +93,7 @@
         <div class="frame">
 
             {{-- <a class="icon_close" href="#close"><span class="close_hover"></span></a> --}}
-            
+
             <div class="head m0">Submit Proposal</div>
             <input type="hidden" value="" name="openModalJobId" id="openModalJobId" />
             <div class="cont">

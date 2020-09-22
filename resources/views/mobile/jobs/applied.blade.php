@@ -2,7 +2,7 @@
 @extends('mobile.user.usermaster')
 @section('content')
 
- 
+
 <h6 class="h6 jobAppH6">My Job Applications</h6>
 
 
@@ -27,9 +27,9 @@
                     <div class="jobAppStatus">{{$application->status}}</div>
                 </div>
 
-                
+
                 <div class="jobInfoFont">Location :
-                    <span style="font-size: 12px">{{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
+                    <span style="font-size: 12px">{{($job->city}},  {{($job->state}}, {{($job->country}}
                     </span>
                 </div>
             </div>
@@ -59,8 +59,8 @@
                     <div class="col">{{$job->experience}}</div>
                     <div class="col">{{$job->salary}}</div>
                     <div class="col">Web & E-commerce Job</div>
-                </div>   --}}       
-              
+                </div>   --}}
+
 {{--                 <table class="table table-striped">
                   <thead>
                     <tr>
@@ -80,7 +80,7 @@
                   </tbody>
                 </table> --}}
 
-            
+
                 <h5 class="card-title jobDetailTitle">Job Detail</h5>
                 <p class="card-text jobDetail">{{$job->description}}</p>
             </div>
@@ -103,7 +103,7 @@
 
         </div>
 
-    </div> 
+    </div>
 
 @endforeach
 
@@ -114,7 +114,7 @@
 
 
 
-@endif     
+@endif
 
 
 

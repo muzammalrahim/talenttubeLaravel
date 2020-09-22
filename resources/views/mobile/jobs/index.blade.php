@@ -10,7 +10,7 @@
 		@include('mobile.spinner')
 <!-- =================================================== Jobs List =================================================== -->
 		<div class="jobs_list">
-		@include('mobile.jobs.jobsList')
+
 		</div>
 
 @stop
@@ -133,12 +133,14 @@ $('jobApplyBtn').on('show.bs.modal', function (event) {
 // });
 $(".reset-btn").click(function(){
 	$("#filter_form").trigger("reset");
-	$("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
+    $("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
+    $('#paginate').val('');
 	getDataCustom();
 });
 
 var getDataCustom = function(){
     var url = '{{route('MjobsFilter')}}';
+    $('.jobs_list').html("");
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.post(url, $('#filter_form').serialize(), function(data){
         $('.jobs_list').html(data);

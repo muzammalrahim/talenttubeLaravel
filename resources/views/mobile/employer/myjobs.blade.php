@@ -29,7 +29,7 @@
                     <div class="row p-0 m-0">
                         <span class="jobInfoFont">Location : </span>
                             <div class="jobDetail font-weight-normal"  style="margin: 0.2rem 0 0 0.2rem;">
-                             {{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}</div>
+                             {{$job->city}},  {{$job->state}}, {{$job->country}}</div>
                     </div>
                 </div>
             </div>
@@ -83,11 +83,11 @@
                 	</div>
 
 
-                	<div class="p-0 mt-2 float-right">     
+                	<div class="p-0 mt-2 float-right">
 
                         {{-- @dump($job->applicationCount) --}}
 
-                        
+
 
                 		<a class="btn btn-sm btn-primary mr-0 btn-xs"  href="{{route('MempJobApplications',['id' => $job->id])}}">Applications
                         ({{($job->applicationCount)?($job->applicationCount->aggregate):0}})

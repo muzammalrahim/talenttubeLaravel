@@ -50,10 +50,8 @@
                 </div>
                 <div class="js_info center">
                     <div class="js_name"><h4 class="bold">{{$js->name}} {{$js->surname}}</h4></div>
-
                     {{-- <div class="js_status_label">{{$js->statusText}}</div> --}}
-
-                    <div class="js_location">Location: {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}} </div>
+                    <div class="js_location">Location: {{$js->city}},  {{ $js->state}}, {{$js->country}} </div>
                 </div>
             </div>
 
@@ -68,7 +66,7 @@
                     <span class="js_label">About me:</span>
                     <p class="js_about_me"> {{$js->about_me}}</p>
                 </div>
-                
+
                 <div class="js_interested js_field">
                     <span class="js_label">Interested in:</span>
                     <p>{{$js->interested_in}}</p>
@@ -77,7 +75,7 @@
                 <div class="js_education js_field">
                     <span class="js_label">Qualification:</span>{{implode(', ',getQualificationNames($js->qualification))}}
                 </div>
-                
+
 
                 <div class="js_interested js_field">
                     <span class="js_label">Industry Experience:</span>

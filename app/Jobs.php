@@ -75,15 +75,16 @@ class Jobs extends Model {
                 $goldstar_list = array();
 
                 if(!empty($qv['option'])){
+
                     foreach ($qv['option'] as $opKey => $opValue) {
                         array_push($options_list,  $opValue['text']);
 
                         if(isset($opValue['preffer'])){
-                             array_push($preffer_list,  $opValue['text']);
+                             array_push($preffer_list,  $opKey);
                         }
 
                         if(isset($opValue['goldstar'])){
-                             array_push($goldstar_list,  $opValue['text']);
+                             array_push($goldstar_list,  $opKey);
                         }
                     }
                 }
@@ -228,7 +229,7 @@ class Jobs extends Model {
 
 
 
-        $jobsList = $query->paginate(2);
+        $jobsList = $query->paginate(2)->onEachSide(1);
        // dd($jobsList);
         return $jobsList;
 
