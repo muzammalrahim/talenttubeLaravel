@@ -1337,7 +1337,7 @@ class MobileUserController extends Controller
         $data['classes_body'] = 'jobs';
        // $data['jobs'] =Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->paginate(2);
         return view('mobile.jobs.index', $data); // mobile/jobs/index
-				}
+		}
 
 
 

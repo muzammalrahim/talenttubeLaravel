@@ -44,7 +44,7 @@
                     <div class="w_80p">
                         <h3 class=" job_title"><a>{{$job->title}}</a></h3>
                         <div class="job_location">
-                            <span>Location : </span>{{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
+                            <span>Location : </span><div class="js_location">Location: {{$job->city}},  {{$job->state}}, {{$job->country}} </div>
                         </div>
                     </div>
 
@@ -100,7 +100,7 @@
         @endif
     </div>
             <div class="cl"></div>
-</div> 
+</div>
 
 <div style="display:none;">
 <div id="confirmJobAppDeleteModal" class="modal cmodal p0 confirmJobAppDeleteModal wauto">

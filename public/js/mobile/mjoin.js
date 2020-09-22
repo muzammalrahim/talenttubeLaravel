@@ -316,7 +316,8 @@ $(document).ready(function(){
 
 			$('#user_step4_done').click(function(){
 				step4_formData.append('qualification_type', $('#qualification_type').val());
-				step4_formData.append('qualification', JSON.stringify(userQualificationList));
+                step4_formData.append('qualification', JSON.stringify(userQualificationList));
+                console.log('Step 3', userQualificationList);
 				userStep2Update(step4_formData, 4);
 			});
 			// User Step4 End
@@ -697,7 +698,8 @@ $('#tag_skip_btn').click(function () {
 			var userType = $('#userType').val();
 			function userStep2Update(data, step){
 				console.log(' userStep2Update data ', data );
-				console.log(' userStep2Update step ', step );
+                console.log(' userStep2Update step ', step );
+
 				$('.full_step_error').html('');
 				data.append('step', step);
 				if (userType == 'user') {
@@ -752,6 +754,7 @@ $('#tag_skip_btn').click(function () {
 								$("#user_step"+step+"_done").html(currentButtonText);
 								// if validation error occure.
 								if (resp.validator !== undefined) {
+
 									const keys = Object.keys(resp.validator);
 									console.log(keys);
 									for(const key of keys){

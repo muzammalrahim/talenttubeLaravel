@@ -1,4 +1,4 @@
- 
+
 @if(isset($employers))
 
 @if ($employers->count() > 0)
@@ -11,7 +11,7 @@
 
         <div class="card">
 
-            <div class="card-header jobInfoFont jobAppHeader p-2">Company : 
+            <div class="card-header jobInfoFont jobAppHeader p-2">Company :
                 <span class="jobInfoFont">{{$js->name}}</span>
                 {{-- @dump($js->id) --}}
             </div>
@@ -21,7 +21,7 @@
             <div class="card-body jobAppBody pt-2">
 
                 <div class="row jobInfo">
-                   
+
                     <div class="col-4 p-0">
 
 
@@ -45,12 +45,12 @@
                         </div>
 
                         <div>
-                        {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}}
+                        {{$js->city}},  {{$js->state}}, {{$js->country}}
                         </div>
-                        
+
                     </div>
 
-                </div> 
+                </div>
 
                 <div class="row p-0">
 
@@ -62,7 +62,7 @@
 
 
                 <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
-            
+
             {{--     <div class="row p-0">
 
                     <div class="card-title col p-0 mb-0 jobInfoFont">Job Detail</div>
@@ -92,7 +92,7 @@
 
                         @endif
                     </div>
-                    
+
             </div>
 
 {{-- ============================================ Card Footer end ============================================ --}}
@@ -100,15 +100,15 @@
 
         </div>
 
-    </div> 
+    </div>
 
- 
+
 
 @endforeach
 <div class="employeer_pagination cpagination">{!! $employers->render() !!}</div>
 @endif
 @endif
- 
+
 
 <script type="text/javascript">
 

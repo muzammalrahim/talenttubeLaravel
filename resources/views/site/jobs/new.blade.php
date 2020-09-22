@@ -45,7 +45,7 @@
 
                 {{ Form::select('type', $jobType, ['placeholder' => 'Select Job Type',]) }}
 
-{{-- 
+{{--
                 <select name="type" class="form_select " >
                     <option value="contract">Contract</option>
                     <option value="temporary">Temporary</option>
@@ -166,6 +166,7 @@
                                      </div>
                                   </div>
                              </div>
+
                              <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn" data-qc="0">Add Option+</a></div>
                          </div>
                          <div class="jq_remove"><span class="close_icon removeJobQuestion"></span></div>

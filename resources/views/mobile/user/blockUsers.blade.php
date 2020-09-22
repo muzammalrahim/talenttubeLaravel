@@ -22,11 +22,11 @@
 
             @if (isEmployer($user))
                 <div class="card-header jobInfoFont jobAppHeader p-2">Job Seeker :
-                    <span class="jobInfoFont">{{$js->name}} {{$js->surname}}</span> 
+                    <span class="jobInfoFont">{{$js->name}} {{$js->surname}}</span>
                 </div>
             @else
                 <div class="card-header jobInfoFont jobAppHeader p-2">Company :
-                    <span class="jobInfoFont">{{$js->name}} {{$js->surname}}</span> 
+                    <span class="jobInfoFont">{{$js->name}} {{$js->surname}}</span>
                 </div>
 
             @endif
@@ -36,7 +36,7 @@
             <div class="card-body jobAppBody pt-2">
 
                 <div class="row jobInfo">
-                   
+
                     <div class="col-4 p-0">
 
                         @php
@@ -63,12 +63,12 @@
                         </div>
 
                         <div>
-                        {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}}
+                        {{$js->city}},  {{$js->state}}, {{$js->country}}
                         </div>
-                        
+
                     </div>
 
-                </div> 
+                </div>
 
                 <div class="row p-0">
 
@@ -78,8 +78,8 @@
 
 
                 <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
-            
-       
+
+
 
             </div>
 
@@ -93,7 +93,7 @@
                     <div class="float-right">
                         <a class="btn btn-sm btn-primary mr-0 btn-xs unBlockEmpButton"  data-jsid="{{$js->id}}">UnBlock</a>
                     </div>
-                    
+
             </div>
 
 {{-- ============================================ Card Footer end ============================================ --}}
@@ -101,14 +101,14 @@
 
         </div>
 
-    </div> 
+    </div>
 
 @endforeach
 
 @else
 	<div class="jobAppH6">You have not blocked anyone</div>
 
-@endif 
+@endif
 
 
 
@@ -153,7 +153,7 @@
 @section('custom_js')
 
 <script type="text/javascript">
-    
+
 {{-- ======================================================== Block Employer ======================================================== --}}
 
 $(document).on('click','.unBlockEmpButton',function(){
@@ -174,7 +174,7 @@ $(document).on('click','.unBlockEmpButton',function(){
                 // $('.empUnBlockAlert').show().delay(3000).fadeOut('slow');
                 $("#getCodeModal").modal('show');
 
-                setTimeout(() => { 
+                setTimeout(() => {
                     $("#getCodeModal").modal('hide');
                 },3000);
 

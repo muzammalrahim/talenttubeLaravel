@@ -24,7 +24,7 @@
                     <div class="row p-0 m-0">
                         <span class="jobInfoFont">Location : </span>
                             <div class="jobDetail" style="margin: 0.2rem 0 0 0.2rem;">
-                             {{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}</div>
+                             {{$job->city}},  {{$job->state}}, {{$job->country}}</div>
                     </div>
                 </div>
 

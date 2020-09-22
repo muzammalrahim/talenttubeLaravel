@@ -23,8 +23,6 @@
             </div>
         </div>
 
-
-
         <div class="job_description form_field" required>
             <span class="form_label">Description :</span>
             <div class="form_input">
@@ -45,7 +43,10 @@
             <span class="form_label">Type :</span>
             <div class="form_input">
                 <select name="type" class="form_select " >
-                    <option value="full_time" {{($job->type == 'full_time')?'selected="selected"':''}}  >Full time</option>
+                    <option value="part_time" {{($job->type == 'Contract')?'selected="selected"':''}} >contract</option>
+                    <option value="full_time" {{($job->type == 'temporary')?'selected="selected"':''}} >temporary</option>
+                    <option value="part_time" {{($job->type == 'casual')?'selected="selected"':''}} >casual</option>
+                    <option value="full_time" {{($job->type == 'full_time')?'selected="selected"':''}} >Full time</option>
                     <option value="part_time" {{($job->type == 'part_time')?'selected="selected"':''}} >Part time</option>
                 </select>
                 <div id="type_error" class="error field_error to_hide">&nbsp;</div>
@@ -132,28 +133,69 @@
             </div>
         </div>
 
-        {{--
-        <div class="job_age form_field">
-            <span class="form_label">Job Questions:</span>
-            <div class="form_input">
-                <div class="jobQuestions">
-
                    @php
                     $questions = json_decode($job->questions, true);
+                    $qnum = sizeof($questions);
+                    //dd($questions)
                    @endphp
-                   @if (!empty($questions) && count($questions) > 0)
-                    @foreach ($questions as $question)
-                        <div class="question mb10 relative">
-                            <input type="text" name="questions[]" class="w100" value="{{$question}}"/>
-                            <span class="close_icon jobQuestion"></span>
-                        </div>
-                    @endforeach
-                   @endif
-                </div>
+
+        <div class="job_age form_field">
+            <span class="form_label">Job Questions:</span>
+            <div class="form_input w100">
+                @if (!empty($questions) && count($questions) > 0)
+                @foreach ($questions as $keyq=>$question)
+                 <div class="jobQuestions">
+                     <div class="jobQuestion q1">
+                         <div class="jq_field_box ">
+                             <div class="jq_field_label">Title</div>
+                             <div class="jq_field title"><input type="text" value="{{$question['title']}}" name="jq[0][title]" /></div>
+                         </div>
+                         <div class="jq_field_box">
+                             <div class="jq_field_label">Options</div>
+                             <div class="jq_field_questions mb20">
+                                @if (!empty($question['options']) && count($question['options']) > 0)
+                                @foreach ($question['options'] as $key=>$option)
+                                 <div class="option">
+                                 <input type="text" name="jq[0][option][{{$key}}][text]" value="{{$option}}" />
+                                     <div class="jq_option_cbx">
+                                        @if (!empty($question['preffer']) && count($question['preffer']) > 0)
+                                        @foreach ($question['preffer'] as $preffer)
+                                            @if($preffer==$key)
+                                            <input type="checkbox" id="jq_0_option_0_preffer" name="jq[{{$keyq}}][option][{{$key}}][preffer]" value="preffer" checked>
+                                            @else
+                                            <input type="checkbox" id="jq_0_option_0_preffer" name="jq[{{$keyq}}][option][{{$key}}][preffer]" value="preffer">
+                                            @endif
+                                        <label for="jq_0_option_0_preffer">Preffer</label>
+                                        @endforeach
+                                        @endif
+                                     </div>
+                                      <div class="jq_option_cbx">
+                                        @if (!empty($question['goldstar']) && count($question['goldstar']) > 0)
+                                        @foreach ($question['goldstar'] as $goldstar)
+                                            @if($goldstar==$key)
+                                            <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[{{$keyq}}][option][{{$key}}][goldstar]" value="goldstar" checked>
+                                            @else
+                                            <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[{{$keyq}}][option][{{$key}}][goldstar]" value="goldstar" >
+                                            @endif
+                                        <label for="jq_0_option_0_goldstar">Gold Star</label>
+                                        @endforeach
+                                        @endif
+                                     </div>
+                                  </div>
+                                @endforeach
+                                @endif
+                             </div>
+                             <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn" data-qc="0">Add Option+</a></div>
+                         </div>
+                         <div class="jq_remove"><span class="close_icon removeJobQuestion"></span></div>
+                     </div>
+                 </div>
+                 @endforeach
+                 @endif
+                 <input type="hidden" name="questionCounter" id="questionCounter" value="{{$qnum}}">
                 <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn">Add+</a></div>
             </div>
         </div>
-        --}}
 
         <div class="form_field">
             <span class="form_label"></span>
@@ -186,6 +228,74 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 
+<style type="text/css">
+    .jq_field_label {
+        float: left;
+        width: 10%;
+    }
+    .jq_field {
+        float: left;
+        width: 90%;
+    }
+    .jq_field_box {
+        display: table;
+        width: 100%;
+        /*border: 1px solid red;*/
+        margin-bottom: 5px;
+    }
+    .jq_field.title input { width: 100%; }
+    .jq_field.option input[type="text"]{
+        width: 60%;
+        float: left;
+    }
+    .jq_option_cbx {
+        width: 20%;
+        float: left;
+        margin: 7px 0px;
+        text-align: center;
+    }
+    .jq_field_box.optionfield {height: 80px;}
+    .addOptionsBtn {
+        float: none;
+        margin-left: 10%;
+        margin-top: 5px;
+        margin-bottom: 10px;
+    }
+    .jq_field_questions.mb20 {
+        min-height: 20px;
+    }
+    .jobQuestion {
+        position: relative;
+        margin: 6px 0px;
+        padding: 10px 4px;
+        border-radius: 4px;
+        background: rgba(0, 0, 0, 0.08);
+    }
+    .jq_remove {
+        position: absolute;
+        right: 0px;
+        bottom: 0px;
+        cursor: pointer;
+    }
+    .jq_option_cbx label {
+        margin: 0px 4px;
+    }
+    .jq_field_questions input[type="text"] {
+        float: left;
+    }
+
+    .jq_field_questions .option {
+        display: table;
+        width: 100%;
+    }
+
+
+
+    .jq_field_questions {
+        float: left;
+        width: 90%;
+    }
+    </style>
 
 @stop
 
@@ -207,9 +317,70 @@ $(document).ready(function() {
 
     $('.addQuestion').on('click',function(){
         console.log(' addQuestion clck  ');
-        var question = '<div class="question mb10 relative"><input type="text" name="questions[]" class="w100" /><span class="close_icon jobQuestion"></span></div>';
-        $('.jobQuestions').append(question);
+        // var question = '<div class="question mb10 relative"><input type="text" name="questions[]" class="w100" /><span class="close_icon jobQuestion"></span></div>';
+        // $('.jobQuestions').append(question);
+        //  $('#addNewQuestionModel').modal({
+        //     fadeDuration: 200,
+        //     fadeDelay: 2.5,
+        //     escapeClose: false,
+        //     clickClose: false,
+        // });
+
+        var qC = parseInt($('#questionCounter').val())+1;
+
+        var jobQuestion  = '<div class="jobQuestion q'+qC+'">';
+            jobQuestion +=  '<div class="jq_field_box ">';
+            jobQuestion +=    '<div class="jq_field_label">Title</div>';
+            jobQuestion +=    '<div class="jq_field title"><input type="text" name="jq['+qC+'][title]" /></div>';
+            jobQuestion +=  '</div>';
+            jobQuestion +=  '<div class="jq_field_box">';
+            jobQuestion +=    '<div class="jq_field_label">Options</div>';
+            jobQuestion +=    '<div class="jq_field_questions mb20">';
+            jobQuestion +=          '<div class="option">';
+            jobQuestion +=             '<input type="text" name="jq['+qC+'][option][0][text]" />';
+            jobQuestion +=                 '<div class="jq_option_cbx">';
+            jobQuestion +=                      '<input type="checkbox" id="jq_'+qC+'_option_0_preffer" name="jq['+qC+'][option][0][preffer]" value="preffer">';
+            jobQuestion +=                       '<label for="jq_'+qC+'_option_0_preffer">Preffer</label> ';
+            jobQuestion +=                  '</div>';
+            jobQuestion +=                  '<div class="jq_option_cbx">';
+            jobQuestion +=                     '<input type="checkbox" id="jq_'+qC+'_option_0_goldstar" name="jq['+qC+'][option][0][goldstar]" value="goldstar">';
+            jobQuestion +=                     '<label for="jq_'+qC+'_option_0_goldstar">Gold Star</label> ';
+            jobQuestion +=                  '</div>';
+            jobQuestion +=          '</div>';
+            jobQuestion +=      '</div>';
+            jobQuestion +=     '<div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn" data-qc="'+qC+'">Add Option+</a></div>';
+            jobQuestion +=    '</div>';
+            jobQuestion +=  '<div class="jq_remove"><span class="close_icon removeJobQuestion"></span></div>';
+            jobQuestion +=  '</div>';
+
+         $('.jobQuestions').append(jobQuestion);
+         $('#questionCounter').val(qC);
+         jQFormStyler(); // rerun the form styler.
+
     });
+
+    // add more option to question
+    $('.jobQuestions').on('click','.addQuestionOption', function(){
+        var oC = $(this).closest('.jobQuestion').find('.jq_field_questions .option').length;
+        // var qC = $(this).attr('data-qc');
+        var qC = parseInt($('#questionCounter').val());
+        var option_html = '';
+            option_html +=          '<div class="jq_option option">';
+            option_html +=             '<input type="text" name="jq['+qC+'][option]['+oC+'][text]" />';
+            option_html +=              '<div class="jq_option_cbx">';
+            option_html +=              '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_preffer" name="jq['+qC+'][option]['+oC+'][preffer]" value="preffer">';
+            option_html +=                '<label for="jq_'+qC+'_option_'+oC+'_preffer">Preffer</label> ';
+            option_html +=                  '</div>';
+            option_html +=                  '<div class="jq_option_cbx">';
+            option_html +=                     '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_goldstar" name="jq['+qC+'][option]['+oC+'][goldstar]" value="goldstar">';
+            option_html +=                     '<label for="jq_'+qC+'_option_'+oC+'_goldstar">Gold Star</label> ';
+            option_html +=                  '</div>';
+            option_html +=          '</div>';
+
+        $(this).closest('.jobQuestion').find('.jq_field_questions').append(option_html);
+        jQFormStyler(); // rerun the form styler.
+    });
+
 
     $(document).on('click','.close_icon.jobQuestion',function(){
         $(this).closest('.question').remove();

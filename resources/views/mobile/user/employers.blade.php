@@ -59,7 +59,8 @@
 
 	$(".reset-btn").click(function(){
 	$("#employer_filter_form").trigger("reset");
-	$("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
+    $("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
+    $('#paginate').val('');
 	getDataCustom();
 });
 

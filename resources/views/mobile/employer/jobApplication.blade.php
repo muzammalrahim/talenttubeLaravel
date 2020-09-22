@@ -24,7 +24,7 @@
         <div class="card-header jobInfoFont jobAppHeader p-2">Name:
             <span class="jobInfoFont font-weight-normal">{{$js->name}} {{$js->surname}}</span>
                 <div class="jobInfoFont">Location:
-                <span class="font-weight-normal">{{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}}</span>
+                    <span class="font-weight-normal">{{$js->city}},  {{$js->city}}, {{$js->country}}</span>
                 </div>
         </div>
 				@php
@@ -111,7 +111,7 @@
                         </select>
                     </div>
 
-                   
+
 
       {{--               <div class="jobApplicationStatusCont dinline_block">
                         <select name="jobApplicStatus" class="select_aw jobApplicStatus" data-application_id="{{$application->id}}">
@@ -131,7 +131,7 @@
             <div class="text-center"><a class="mt-0 btn btn-primary btn-sm questionsAnswers">Questions/Answers</a></div>
                 <div class="application_qa jobDetail p-2 d-none">
                     @php
-                        $answers = $application->answers;     
+                        $answers = $application->answers;
                     @endphp
                      @if (!empty($answers))
                             <div class="jobAnswers">
@@ -141,7 +141,7 @@
                                     <div class="jqa_a">{{$answer->answer}}</div>
                                 </div>
                                 @endforeach
-                            </div>         
+                            </div>
                      @endif
                     <div class="jobAppDescriptionBox">
                         <span class="font-weight-bold">{{jobApplicationMandatoryQuestion()}}</span>

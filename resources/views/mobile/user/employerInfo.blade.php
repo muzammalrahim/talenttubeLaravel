@@ -16,7 +16,7 @@
 
         <div class="card">
 
-            <div class="card-header jobInfoFont jobAppHeader p-2">Company : 
+            <div class="card-header jobInfoFont jobAppHeader p-2">Company :
                 <span class="jobInfoFont">{{$employer->name}}</span>
             </div>
 
@@ -25,12 +25,12 @@
             <div class="card-body jobAppBody pt-2">
 
                 <div class="row jobInfo">
-                   
+
                     <div class="col-4 p-0">
 
 
                         {{-- @dump($employer_video); --}}
-                        
+
                    {{--      <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px"> --}}
 
                         @php
@@ -39,7 +39,7 @@
                         $profile_image = asset('images/user/'.$employer->id.'/gallery/'.$employer->profileImage->image);
                     }
                     @endphp
-                    
+
                     <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}">
 
 
@@ -58,22 +58,22 @@
                         {{-- <div>
                         {{($employer->GeoCity->city_title)}}, {{($employer->GeoState->state_title)}},{{($employer->GeoCountry->country_title)}}
                         </div> --}}
-                        
+
                     </div>
 
-                </div> 
+                </div>
 
                 <div class="row p-0">
                     <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">About Us</div>
                 </div>
                 <p class="card-text jobDetail row mb-1">{{$employer->about_me}}</p>
 
- {{--                
+ {{--
                 <div class="row p-0">
                     <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Questions</div>
                 </div>
-                @php  
-                        $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
+                @php
+                        $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
                 @endphp
 
                 @if(!empty($empquestion))
@@ -107,7 +107,7 @@
 
                     @else
                     <a class="likeEmployerButton btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$employer->id}}">Like</a>
-                        
+
                     @endif
 
 
@@ -120,7 +120,7 @@
 
         </div>
 
-    </div> 
+    </div>
 
 
 
@@ -171,7 +171,7 @@
                     <div class="row p-0 m-0">
                         <span class="jobInfoFont">Location : </span>
                             <div class="jobDetail" style="margin: 0.2rem 0 0 0.2rem;">
-                             {{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}</div>
+                             {{$job->city}},  {{$job->state}}, {{$job->country}}</div>
                     </div>
                 </div>
 
@@ -185,16 +185,16 @@
             <div class="card-body jobAppBody pt-2">
 
                 <div class="row jobInfo">
-                   
+
                     <div class="col-4 p-0">
 
                        {{--  <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" style="height:110px;"> --}}
-                        
+
                     </div>
 
                     <div class="col p-0 pl-3">
 
-                        <div class="jobInfoFont float-left mr-1">Job Salary: </div> 
+                        <div class="jobInfoFont float-left mr-1">Job Salary: </div>
                             <div class="jobDetail" style="margin: 0.2rem 0 0 0.2rem; "> {{$job->salary}}</div>
                         <div class="mt-2">
                             <span class="jobInfoFont">Job Experience</span>
@@ -209,10 +209,10 @@
                         <div>
                         Web & E-commerce Job
                         </div>
-                        
+
                     </div>
 
-                </div> 
+                </div>
 
                 <div class="row p-0 mt-2">
                     <div class="card-title col p-0 mb-0 jobInfoFont">Job Detail</div>
@@ -245,16 +245,16 @@
 
                         <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}">Apply</a>
                     </div>
-                    
+
                 </div>
 
             </div>
 
         </div>
 
-    </div> 
+    </div>
 
-    
+
 
 
 @endforeach
@@ -333,7 +333,7 @@
                     <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
                         <div class="cont">
                             <div class="videoBox"></div>
-                                                                                        
+
                         </div>
                     </div>
                 </div>
@@ -351,9 +351,9 @@
     <p class="loader SaveQuestionsLoader"style="float: left;"></p>
         <div class="cl"></div>
             <div class="questionsOfUser text-dark">
-        
-                @php  
-                    $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
+
+                @php
+                    $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
                 @endphp
                   @if(!empty($empquestion))
                       @foreach($empquestion as $qk => $question)
@@ -370,7 +370,7 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockEmp.js') }}"></script> 
+<script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockEmp.js') }}"></script>
 
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 {{-- <script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script>  --}}
@@ -404,7 +404,7 @@ $(document).ready(function(){
 
   });
 
-  // jobApplyBtn click end 
+  // jobApplyBtn click end
 </script>
 <style type="text/css">
 

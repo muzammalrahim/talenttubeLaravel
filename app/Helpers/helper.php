@@ -442,79 +442,78 @@ function getQualificationsList(){
             'title' => 'Workplace Health & Safety'
         ),
 
-
         array(
-            'id'    =>  '36',
+            'id'    =>  '35',
             'type' => 'trade',
             'title' => 'Automotive (mechanic, auto-electrician, panel beater etc)'
         ),
         array(
-            'id'    =>  '37',
+            'id'    =>  '36',
             'type' => 'trade',
             'title' => 'Building and Construction (carpenter, brick layer, plumber, cabinet maker etc)'
         ),
         array(
-            'id'    =>  '38',
+            'id'    =>  '37',
             'type' => 'trade',
             'title' => 'Design, Printing and Telco (screen printing, printing, and telecommunication networks)'
         ),
         array(
-            'id'    =>  '39',
+            'id'    =>  '38',
             'type' => 'trade',
             'title' => 'Food & Hospitality (Chef, Butcher, Baker etc)'
         ),
         array(
-            'id'    =>  '40',
+            'id'    =>  '39',
             'type' => 'trade',
             'title' => 'Forestry (lumber jack, wood machining & saw doctoring)'
         ),
         array(
-            'id'    =>  '41',
+            'id'    =>  '40',
             'type' => 'trade',
             'title' => 'Furnishing (upholstery, furniture polishing, glass cutting/glazing & floor technology)'
         ),
         array(
-            'id'    =>  '42',
+            'id'    =>  '41',
             'type' => 'trade',
             'title' => 'Textiles (Clothing and footwear mechanic) '
         ),
         array(
-            'id'    =>  '43',
+            'id'    =>  '42',
             'type' => 'trade',
             'title' => 'Naval (boat building, farriery, shipwright, maritime engineers and operations) '
         ),
         array(
-            'id'    =>  '44',
+            'id'    =>  '43',
             'type' => 'trade',
             'title' => 'Engineering (electrical/fabrication and Mechanical)'
         ),
         array(
-            'id'    =>  '45',
+            'id'    =>  '44',
             'type' => 'trade',
             'title' => 'Aviation (avionics, mechanical and structural aircraft maintenance)  '
         ),
         array(
-            'id'    =>  '46',
+            'id'    =>  '45',
             'type' => 'trade',
             'title' => 'Light Manufacturing (jeweller and locksmith) '
         ),
         array(
-            'id'    =>  '47',
+            'id'    =>  '46',
             'type' => 'trade',
             'title' => 'Landscaping (including nursery, green keeping and gardening) '
         ),
         array(
-            'id'    =>  '48',
+            'id'    =>  '47',
             'type' => 'trade',
             'title' => 'Process Manufacturing (polymer technology)'
         ),
         array(
-            'id'    =>  '49',
+            'id'    =>  '48',
             'type' => 'trade',
             'title' => 'Hairdressing and Beauty Therapy'
         ),
         array(
-            'id'    =>  '50',
+            'id'    =>  '49',
             'type' => 'trade',
             'title' => 'Utilities and Electro Technology (electrician, data/cabling, rail systems and communications'
         )

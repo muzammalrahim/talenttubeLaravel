@@ -145,13 +145,13 @@ $(".reset-btn").click(function(){
 });
 
 
-	var getDataCustom = function(){
-					var url = '{{route('jobsFilter')}}';
-					$.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-					$.post(url, $('#filter_form').serialize(), function(data){
-									$('.jobs_list').html(data);
-					});
-	}
+var getDataCustom = function(){
+                var url = '{{route('jobsFilter')}}';
+                $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+                $.post(url, $('#filter_form').serialize(), function(data){
+                                $('.jobs_list').html(data);
+                });
+}
 </script>
 @stop
 
