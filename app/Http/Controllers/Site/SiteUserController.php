@@ -702,7 +702,9 @@ class SiteUserController extends Controller
         $validator = Validator::make($request->all(), $rules);
         // dd( $validator->errors() );
         if (!$validator->fails()) {
-            $user->industry_experience = $request->industry_experience;
+            //$user->industry_experience = $request->industry_experience;
+            $array = array_unique (array_merge ($user->industry_experience, $request->industry_experience));
+            $user->industry_experience = $array;
             $user->save();
             $data['user'] = User::find($user->id);
             $IndustryView = view('site.layout.parts.jobSeekerIndustryList', $data);
@@ -1821,7 +1823,15 @@ class SiteUserController extends Controller
         $data['title'] = 'Like Users';
         $data['classes_body'] = 'likeUsers';
         $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
-        return view('site.user.likeUsers', $data);         //   site/user/likeUsers
+
+        if(isEmployer()){
+
+            return view('site.employer.likeUsers', $data);
+              // return view('mobile.user.profile.profile', $data);
+          }else{
+            return view('site.user.likeUsers', $data);
+          }
+               //   site/user/likeUsers
     }
 
 

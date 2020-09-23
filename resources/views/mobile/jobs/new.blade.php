@@ -200,7 +200,7 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                                        <div class="jobApplyBtn graybtn jbtn btn btn-sm btn-secondary mr-0 btn-xs"><i class="fas fa-backspace close_icon removeJobQuestion"></i></div>
+                                        <div class="jobApplyBtn graybtn jbtn btn btn-sm btn-secondary mr-0 btn-xs removeJobQuestion"><i class="fas fa-backspace close_icon "></i></div>
                         </div>
             </div>
                 </div>
@@ -346,8 +346,7 @@
 
     });
 
-				$(document).on('click','.close_icon.removeJobQuestion',function(){
-								alert('hi');
+				$(document).on('click','.removeJobQuestion',function(){
         $(this).closest('.jobQuestion').remove();
 				});
 

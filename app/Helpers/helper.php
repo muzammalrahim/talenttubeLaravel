@@ -215,7 +215,6 @@ function getIndustries(){
         'company_directors'             => 'Company Directors',
         'construction'                  => 'Construction',
         'consulting_strategy'           => 'Consulting and Strategy',
-
         'design_architecture'           => 'Design and Architecture',
         'disputes_complaint_resolution' => 'Disputes and Complaint Resolution',
         'entertainment_event_management'=> 'Entertainment & Event Management',
@@ -229,7 +228,6 @@ function getIndustries(){
         'human_resources_recruitment'   => 'Human Resources and Recruitment',
         'information_technology'        => 'Information Technology',
         'insurance'                     => 'Insurance',
-
         'legal'                         => 'Legal',
         'manufacturing'                 => 'Manufacturing',
         'marketing_communications'      => 'Marketing and Communications',
@@ -712,6 +710,21 @@ function getQualificationsData($qualification_array_json){
     return $qualification_names;
 }
 
+function getIndustriesData($industrie_array_json){
+    $industries_names = array();
+    $getIndustriesList = getIndustries();
+   // dd($getIndustriesList[0]);
+    if (!empty($industrie_array_json)){
+       $qualification_array =  $industrie_array_json;
+       foreach ($getIndustriesList  as $qvalue) {
+            foreach($industrie_array_json as $sqvalue){
+                if($qvalue!=$sqvalue)
+                $industries_names[] = $qvalue;
+            }
+       }
+    }
+    return $industries_names;
+}
 
 // Added by Hassan
 function getEyeColor(){

@@ -142,56 +142,79 @@
         <div class="job_age form_field">
             <span class="form_label">Job Questions:</span>
             <div class="form_input w100">
-                @if (!empty($questions) && count($questions) > 0)
-                @foreach ($questions as $keyq=>$question)
+
                  <div class="jobQuestions">
+                    @if (!empty($questions) && count($questions) > 0)
+                    @foreach ($questions as $keyq=>$question)
                      <div class="jobQuestion q1">
                          <div class="jq_field_box ">
                              <div class="jq_field_label">Title</div>
-                             <div class="jq_field title"><input type="text" value="{{$question['title']}}" name="jq[0][title]" /></div>
+                             <div class="jq_field title"><input type="text" value="{{$question['title']}}" name="jq[{{$keyq}}][title]" /></div>
                          </div>
                          <div class="jq_field_box">
                              <div class="jq_field_label">Options</div>
                              <div class="jq_field_questions mb20">
                                 @if (!empty($question['options']) && count($question['options']) > 0)
                                 @foreach ($question['options'] as $key=>$option)
+                                @php
+                                $checked = '';
+                                @endphp
                                  <div class="option">
-                                 <input type="text" name="jq[0][option][{{$key}}][text]" value="{{$option}}" />
-                                     <div class="jq_option_cbx">
-                                        @if (!empty($question['preffer']) && count($question['preffer']) > 0)
-                                        @foreach ($question['preffer'] as $preffer)
-                                            @if($preffer==$key)
-                                            <input type="checkbox" id="jq_0_option_0_preffer" name="jq[{{$keyq}}][option][{{$key}}][preffer]" value="preffer" checked>
+                                 <input type="text" name="jq[{{$keyq}}][option][{{$key}}][text]" value="{{$option}}" />
+                                                {{-- @dd($question) --}}
+                                            <div class="jq_option_cbx">
+                                                @if (!empty($question['preffer']) && count($question['preffer']) > 0)
+                                                @php
+                                                        if (in_array($key, $question['preffer'])) {
+                                                            $checked = 'checked';
+                                                        }
+                                                        else{
+                                                            $checked = '';
+                                                        }
+                                                @endphp
+                                                @else
+                                                @php
+                                                    $checked = '';
+                                                @endphp
+                                                @endif
+                                                <input type="checkbox" id="jq_{{$keyq}}_option_{{$key}}_preffer" name="jq[{{$keyq}}][option][{{$key}}][preffer]" value="preffer" {{$checked}}>
+                                                <label for="jq_0_option_0_preffer">Preffer</label>
+                                            </div>
+
+                                            <div class="jq_option_cbx">
+                                            @if (!empty($question['goldstar']) && count($question['goldstar']) > 0)
+                                            @php
+                                                if (in_array($key, $question['goldstar'])) {
+                                                    $checked = 'checked';
+                                                }
+                                                else{
+                                                    $checked = '';
+                                                }
+                                            @endphp
                                             @else
-                                            <input type="checkbox" id="jq_0_option_0_preffer" name="jq[{{$keyq}}][option][{{$key}}][preffer]" value="preffer">
+                                            @php
+                                                $checked = '';
+                                            @endphp
                                             @endif
-                                        <label for="jq_0_option_0_preffer">Preffer</label>
-                                        @endforeach
-                                        @endif
-                                     </div>
-                                      <div class="jq_option_cbx">
-                                        @if (!empty($question['goldstar']) && count($question['goldstar']) > 0)
-                                        @foreach ($question['goldstar'] as $goldstar)
-                                            @if($goldstar==$key)
-                                            <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[{{$keyq}}][option][{{$key}}][goldstar]" value="goldstar" checked>
-                                            @else
-                                            <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[{{$keyq}}][option][{{$key}}][goldstar]" value="goldstar" >
-                                            @endif
-                                        <label for="jq_0_option_0_goldstar">Gold Star</label>
-                                        @endforeach
-                                        @endif
-                                     </div>
+                                            <input type="checkbox" id="jq_{{$keyq}}_option_{{$key}}_goldstar" name="jq[{{$keyq}}][option][{{$key}}][goldstar]" value="goldstar" {{$checked}}>
+                                            <label for="jq_0_option_0_goldstar">Gold Star</label>
+                                            </div>
+
+                                            @php
+                                                $checked = '';
+                                            @endphp
                                   </div>
                                 @endforeach
                                 @endif
                              </div>
                              <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn" data-qc="0">Add Option+</a></div>
-                         </div>
+                             </div>
                          <div class="jq_remove"><span class="close_icon removeJobQuestion"></span></div>
                      </div>
-                 </div>
-                 @endforeach
-                 @endif
+                     @endforeach
+                     @endif
+                    </div>
+
                  <input type="hidden" name="questionCounter" id="questionCounter" value="{{$qnum}}">
                 <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn">Add+</a></div>
             </div>
@@ -363,7 +386,7 @@ $(document).ready(function() {
     $('.jobQuestions').on('click','.addQuestionOption', function(){
         var oC = $(this).closest('.jobQuestion').find('.jq_field_questions .option').length;
         // var qC = $(this).attr('data-qc');
-        var qC = parseInt($('#questionCounter').val());
+        var qC = parseInt($('#questionCounter').val())-1;
         var option_html = '';
             option_html +=          '<div class="jq_option option">';
             option_html +=             '<input type="text" name="jq['+qC+'][option]['+oC+'][text]" />';
@@ -381,11 +404,16 @@ $(document).ready(function() {
         jQFormStyler(); // rerun the form styler.
     });
 
-
+    var jQFormStyler = function(){
+        $('input, select').styler({ selectSearch: true, });
+    }
     $(document).on('click','.close_icon.jobQuestion',function(){
         $(this).closest('.question').remove();
     });
+    $(document).on('click','.close_icon.removeJobQuestion',function(){
 
+        $(this).closest('.jobQuestion').remove();
+	});
 
     // Update New job button click //
     /////////////////////////////////////////////////////////////////

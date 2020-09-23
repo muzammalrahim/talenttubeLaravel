@@ -10,15 +10,15 @@ $(document).on('click','#empdel', function() {
 });
 
   // Ajax for deleting Employer
-
+		
   $('#removeEmp').on('click', function() {
     var delidemp = $('#deleteConfirmEmp').val();
     console.log("Employer Delete"+delidemp);
-
+				
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.ajax({
         type: 'POST',
-        url: 'employers/delete/' + delidemp,
+        url: 'delete/' + delidemp,
         data: {delidemp},
         beforeSend: function(){
            $(".modelProcessingEmp").show();

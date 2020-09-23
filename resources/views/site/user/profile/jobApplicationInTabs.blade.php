@@ -44,7 +44,7 @@
                     <div class="w_80p">
                         <h3 class=" job_title"><a>{{$job->title}}</a></h3>
                         <div class="job_location">
-                            <span>Location : </span><div class="js_location">Location: {{$job->city}},  {{$job->state}}, {{$job->country}} </div>
+                            <div class="js_location">Location: {{$job->city}},  {{$job->state}}, {{$job->country}} </div>
                         </div>
                     </div>
 

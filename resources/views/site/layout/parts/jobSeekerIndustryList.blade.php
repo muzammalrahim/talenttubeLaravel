@@ -1,5 +1,5 @@
 {{--  @php
-    // dd($user->qualification); 
+    // dd($user->qualification);
       $qualificationsData =  ($user->qualification)?(getQualificationsData($user->qualification)):(array());
   @endphp
     @if(!empty($qualificationsData))
@@ -9,13 +9,18 @@
               <p>{{$qualification['title']}} <i class="fa fa-trash removeQualification hide_it"></i></p>
           </div>
        @endforeach
-     @endif  --}}  
+     @endif  --}}
 
 
  {{-- @dd($user->toArray()) --}}
-
-@if(!empty($user->industry_experience))
-    @foreach($user->industry_experience as  $industry )
+ @php
+    // dd($user->qualification);
+    $industry_experienceData =  ($user->industry_experience);
+    // ?(getIndustriesData($user->industry_experience)):(array());
+   // dd( $industry_experienceData);
+  @endphp
+@if(!empty($industry_experienceData))
+    @foreach($industry_experienceData as  $industry )
     	<div class="IndustrySelect">
               <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
               <p>
