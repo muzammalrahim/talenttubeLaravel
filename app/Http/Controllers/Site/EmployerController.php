@@ -472,7 +472,21 @@ class EmployerController extends Controller {
     public function updateJob($job_id, Request $request){
         $user = Auth::user();
         $requestData = $request->all();
-        foreach ($requestData as $rk => $rv) { $requestData[$rk] = my_sanitize_string($rv); }
+        if(!empty($requestData['jq'])){
+        foreach ($requestData['jq'] as $jqk => $jqv) {
+
+            // dump($requestData['jq']);
+            // dump($jqk);
+            // dd($jqv['title']);
+
+            $requestData['jq'][$jqk]['title'] = my_sanitize_string($jqv['title']);
+            if(!empty($jqv['option'])){
+                foreach ($jqv['option'] as $jqok => $jqov) {
+                    $requestData['jq'][$jqk]['option'][$jqok]['text'] = my_sanitize_string($requestData['jq'][$jqk]['option'][$jqok]['text']);
+                }
+            }
+        }
+        }
         $rules = array(
             "title" => "required|string|max:255",
             "description" => "required|string",
@@ -511,6 +525,10 @@ class EmployerController extends Controller {
                 // $expiration =
 
                 $job->expiration =  $requestData['expiration'].' 00:00:00';
+                $job->questions()->delete();
+                if(!empty($requestData['jq'])){
+                $job->addJobQuestions($requestData['jq']);
+                }
                 $job->save();
                 return response()->json([
                     'status' => 1,

@@ -136,7 +136,7 @@ class User extends Authenticatable
 
 					// DB::enableQueryLog();
 					// print_r( $data->toSql() );exit;
-					$data =  $data->paginate(2);
+					$data =  $data->paginate(2)->onEachSide(1);
 					return $data;
 		}
 
@@ -304,7 +304,7 @@ class User extends Authenticatable
 
 
 
-					return $query->paginate(2);
+					return $query->paginate(2)->onEachSide(1);
 	}
 
 

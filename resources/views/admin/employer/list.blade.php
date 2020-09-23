@@ -124,6 +124,11 @@
 @stop
 
 @section('js')
+
+<script type="text/javascript">
+	var APP_URL = {!! json_encode(url('/')) !!}
+</script>
+
 <script src="{{ asset('js/admin_custom.js') }}"></script>
 <script src="{{asset('js/admin_employerdelete.js')}}"></script>
 

@@ -19,7 +19,7 @@ class UserController extends Controller
     public function __construct(){
     	$this->middleware('auth');
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -49,9 +49,9 @@ class UserController extends Controller
     public function employers() {
         $data['title'] = 'Employers';
         $data['content_header'] = 'Employers List';
-        $data['filter_status'] = null; 
+        $data['filter_status'] = null;
         return view('admin.employer.list', $data);
-        // admin/employer/list 
+        // admin/employer/list
     }
 
     public function verifiedEmployers() {
@@ -59,14 +59,14 @@ class UserController extends Controller
         $data['content_header'] = 'Employers List';
         $data['filter_status'] = 'verified';
         return view('admin.employer.list', $data);
-        // admin/employer/list 
+        // admin/employer/list
     }
     public function pendingEmployers() {
         $data['title'] = 'Employers';
         $data['content_header'] = 'Employers List';
         $data['filter_status'] = 'pending';
         return view('admin.employer.list', $data);
-        // admin/employer/list 
+        // admin/employer/list
     }
 
     /** ================ This method returns the datatables data to view ================ */
@@ -84,7 +84,7 @@ class UserController extends Controller
 
         if($request->status == 'pending')
             $records = $records->where('verified','0');
-     
+
      }
 
       return datatables($records)
@@ -107,7 +107,7 @@ class UserController extends Controller
             $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserVideoInfo" user-id='. $records->id.' >Info</button>';
             return $rhtml;
         }})
- 
+
         ->addColumn('resume', function ($records) {
         if (isAdmin()){
             $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserResumeInfo" user-id='. $records->id.' >Info</button>';
@@ -158,7 +158,7 @@ class UserController extends Controller
     /** ================   ================ */
     public function create(){
 
-    
+
 
         $data['record']   = FALSE;
         $data['title']  = 'User';
@@ -177,7 +177,7 @@ class UserController extends Controller
         $data['cities'] = array();
         $data['userquestion'] = getUserRegisterQuestions();
         $data['industry_experience'] = getIndustries();
-        $data['salaryRange'] = getSalariesRange();   
+        $data['salaryRange'] = getSalariesRange();
         return view('admin.user.edit', $data);
     }
 
@@ -203,7 +203,7 @@ class UserController extends Controller
 
     /** ================   ================ */
     public function edit($id){
-            
+
         $user = User::with('profileImage')->where('id',$id)->first();
 
         $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
@@ -211,8 +211,8 @@ class UserController extends Controller
         $attachments = Attachment::where('user_id', $user->id)->get();
 
 
-        if(empty($user)){ return redirect(route('users.create')); } 
-        if($user->type == 'employer'){ 
+        if(empty($user)){ return redirect(route('users.create')); }
+        if($user->type == 'employer'){
             return redirect(route('employers.edit', ['id' => $user->id]));
         }else if($user->type == 'user'){
             $data['record']   = $user;
@@ -228,11 +228,11 @@ class UserController extends Controller
             // $data['eyeColor'] = getEyeColor();
             // $data['Days'] = getDays();
             // $data['Months'] = getMonths();
-            // $data['years'] = getYears(); 
-            
-            $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
-            $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
-            $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
+            // $data['years'] = getYears();
+
+            // $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
+            // $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
+            // $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
             $data['userquestion'] = getUserRegisterQuestions();
             $data['industriesList'] = getIndustries();
             $data['salaryRange'] = getSalariesRange();
@@ -251,9 +251,9 @@ class UserController extends Controller
 
     /** ================  ================ */
     public function editEmployer(User $id){
-        
 
-        $user = $id; 
+
+        $user = $id;
 
         $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
 
@@ -275,7 +275,7 @@ class UserController extends Controller
         $data['questionsList'] = getEmpRegisterQuestions();
 
             $data['user_gallery'] = $user_gallery;
-        
+
 
         // edit end
 
@@ -313,7 +313,7 @@ class UserController extends Controller
             'created_at' => 'max:250',
             'updated_at' => 'max:250',
             'credit' => 'max:250',
-        ]);     
+        ]);
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
@@ -338,7 +338,7 @@ class UserController extends Controller
 
          // dd(  $request->toArray() );
 
-        $user->questions = json_encode($request->questions); 
+        $user->questions = json_encode($request->questions);
         $user->created_at = $request->created_at;
         $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
@@ -368,7 +368,7 @@ class UserController extends Controller
             'state' => 'max:15',
             'city' => 'max:15',
             'age' => 'max:15',
-            'bday' => 'max:2',    
+            'bday' => 'max:2',
             'bmonth' => 'max:2',
             'byear' => 'max:4',
             'statusText' => 'max:25',
@@ -429,7 +429,7 @@ class UserController extends Controller
             'state' => 'max:15',
             'city' => 'max:15',
             'age' => 'max:15',
-            'bday' => 'max:2',    
+            'bday' => 'max:2',
             'bmonth' => 'max:2',
             'byear' => 'max:4',
             'statusText' => 'max:125',
@@ -471,7 +471,7 @@ class UserController extends Controller
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
-       
+
         // $user->questions = implode(',',$request->questions);
 
         $user->created_at = $request->created_at;
@@ -498,7 +498,7 @@ class UserController extends Controller
             'state' => 'max:15',
             'city' => 'max:15',
             'age' => 'max:15',
-            'bday' => 'max:2',    
+            'bday' => 'max:2',
             'bmonth' => 'max:2',
             'byear' => 'max:4',
             'statusText' => 'max:25',
@@ -543,7 +543,7 @@ class UserController extends Controller
         $user->company = $request->company;
         $user->credit = $request->credit;
         $user->type = "employer";
-        
+
         if( $user->save() ){
             $user->roles()->attach([config('app.employer_role')]);
             return redirect(route('adminEmployers'))->withSuccess( __('admin.record_updated_successfully'));
@@ -565,7 +565,7 @@ class UserController extends Controller
     }
     // Destroy User end here
 
-    
+
     // Destroy Employer
     public function destroyemployers($id){
       $user = User::find($id);
@@ -579,22 +579,22 @@ class UserController extends Controller
     }
 
     public function profilePopup(Request $request){
-     $user = User::with(['Gallery','profileImage'])->where('id',$request->id)->first(); 
+     $user = User::with(['Gallery','profileImage'])->where('id',$request->id)->first();
      if($user){
         // $gallery =  UserGallery::where('user_id',$request->id)->get();
         $data['user'] = $user;
-        
+
         return view('admin.user.profilePopup', $data);
         // admin/user/profilePopup
      }
     }
 
- 
+
     //===============================================================================================================//
     // return user uploaded videos for user lising page popup .
     //===============================================================================================================//
     public function profileVideoPopup(Request $request){
-     $user = User::with('vidoes')->where('id',$request->id)->first(); 
+     $user = User::with('vidoes')->where('id',$request->id)->first();
      if($user){
         $data['user'] = $user;
         return view('admin.user.profileVideoPopup', $data);
@@ -607,11 +607,11 @@ class UserController extends Controller
     // return JobSeeker uploaded Resume link.
     //===============================================================================================================//
     public function resumeData(Request $request){
-     $resume = Attachment::where('user_id',$request->id)->first(); 
+     $resume = Attachment::where('user_id',$request->id)->first();
      if(!empty($resume))
         return assetResume($resume);
     }
-    
+
     //===============================================================================================================//
     // make all selected checkbox user account verified/enabled.
     //===============================================================================================================//
@@ -625,7 +625,7 @@ class UserController extends Controller
                 'message' => '<h3 class="text-center">('.$result.') JobSeekers Succesfully Approved</h3>',
           ]);
         }
-      }    
+      }
     }
 
     // end here

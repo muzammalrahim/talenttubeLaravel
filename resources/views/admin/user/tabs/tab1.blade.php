@@ -36,7 +36,7 @@
           </div>
       </div>
 
-       <div class="form-group row country_dd">
+       {{-- <div class="form-group row country_dd">
           {{ Form::label('country', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
           {{ Form::select('country', $countries, null, ['placeholder' => 'Select Country']) }}
@@ -55,7 +55,7 @@
           <div class="col-md-10">
           {{ Form::select('city', $cities, null, ['placeholder' => 'Select state']) }}
           </div>
-      </div>
+      </div> --}}
 
       <div class="form-group row">
           {{ Form::label('statusText', null, ['class' => 'col-md-2 form-control-label']) }}

@@ -106,7 +106,7 @@
             {{-- @dump($likeUsers) --}}
             <div class="js_actionBtn">
                 <a class="jsUnLikeUserBtn graybtn jbtn" data-jsid="{{$js->id}}">UnLike</a>
-                <a class="graybtn jbtn" href="{{route('employerInfo', ['id' => $js->id])}}" >View Profile</a>
+                <a class="graybtn jbtn" href="{{route('jobSeekerInfo', ['id' => $js->id])}}" >View Profile</a>
             </div>
 
             </div>

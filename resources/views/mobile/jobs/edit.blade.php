@@ -16,7 +16,7 @@
         <div class="card add_new_job">
 
             <div class="card-header jobAppHeader p-2 jobInfoFont text-center">
-               <h5 class="font-weight-bold">Add New Job</h5>
+               <h5 class="font-weight-bold">Edit Job</h5>
             <div>
              {{--        <div class="row p-0 m-0">
                         <span class="jobInfoFont">Location : </span>
@@ -152,10 +152,106 @@
                                 <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
                     </div>
                 </div>
+                @php
+                $questions = json_decode($job->questions, true);
+                $qnum = sizeof($questions);
+                //dd($questions)
+                @endphp
+                <div class="jobQuestions">
+                    @if (!empty($questions) && count($questions) > 0)
+                    @foreach ($questions as $keyq=>$question)
+                    @php
+                    $checked = '';
+                    @endphp
+                    <div class="jobQuestion q1">
+
+                        <div class="form-group row">
+
+                            <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Title</label>
+
+                            <div class="col-sm-10">
+
+                                    <input type="text" class="form-control" value="{{$question['title']}}" id="question-id" name="jq[{{$keyq}}][title]">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group row option">
+                                <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Options</label>
+                                <div class="col-sm-10 jq_field_questions">
+                                    @if (!empty($question['options']) && count($question['options']) > 0)
+                                    @foreach ($question['options'] as $key=>$option)
+                                        <div class="option form-group">
+                                                    <input type="text" class="col-sm-3 form-control float-left mr-5" name="jq[{{$keyq}}][option][{{$key}}][text]" value="{{$option}}" id="question-id">
+                                                    @if (!empty($question['goldstar']) && count($question['goldstar']) > 0)
+                                                    @php
+                                                        if (in_array($key, $question['goldstar'])) {
+                                                            $checked = 'checked';
+                                                        }
+                                                        else{
+                                                            $checked = '';
+                                                        }
+                                                    @endphp
+                                                    @else
+                                                    @php
+                                                        $checked = '';
+                                                    @endphp
+                                                    @endif
+                                                        <div class="col-sm-3 custom-control custom-checkbox custom-control-inline mt-2">
+                                                            <input type="checkbox" class="custom-control-input" id="jq[{{$keyq}}][option][{{$key}}][goldstar]"  name="jq[{{$keyq}}][option][{{$key}}][goldstar]" value="goldstar" {{$checked}}>
+                                                            <label class="custom-control-label font-weight-bold" for="jq[{{$keyq}}][option][{{$key}}][goldstar]">Gold Star</label>
+                                                        </div>
 
 
+                                                    @if (!empty($question['preffer']) && count($question['preffer']) > 0)
+                                                    @php
+                                                            if (in_array($key, $question['preffer'])) {
+                                                                $checked = 'checked';
+                                                            }
+                                                            else{
+                                                                $checked = '';
+                                                            }
+                                                    @endphp
+                                                    @else
+                                                    @php
+                                                        $checked = '';
+                                                    @endphp
+                                                    @endif
+                                                            <div class="col-sm-3 custom-control custom-checkbox custom-control-inline mt-2">
+                                                                    <input type="checkbox" class="custom-control-input" id="jq[{{$keyq}}][option][{{$key}}][preffer]" name="jq[{{$keyq}}][option][{{$key}}][preffer]" value="preffer" {{$checked}}>
+                                                                    <label class="custom-control-label font-weight-bold" for="jq[{{$keyq}}][option][{{$key}}][preffer]">Prefer</label>
+                                                            </div>
 
+                                        </div>
 
+                                    @endforeach
+                                    @endif
+                                </div>
+                                <div class="form-group">
+                                        <label class="col-sm-2 col-form-label"></label>
+                                        <div class="col-sm-12">
+                                            <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn btn btn-sm btn-primary ml-2 btn-xs" data-qc="0">Add option</a></div>
+                                        </div>
+                                </div>
+                        </div>
+                            <div class="form-group row">
+                                <div class="col-sm-12">
+                                                <div class="jobApplyBtn graybtn jbtn btn btn-sm btn-secondary mr-0 btn-xs removeJobQuestion"><i class="fas fa-backspace close_icon "></i></div>
+                                </div>
+                        </div>
+                        </div>
+                        @endforeach
+                        @endif
+                </div>
+
+                <input type="hidden" name="questionCounter" id="questionCounter" value="0">
+
+                        <div class="form-group row float-right">
+                                    <label class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-10">
+                                                    <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-secondary mr-0 btn-xs addQuestion">Add+</a>
+                                    </div>
+                        </div>
 
 
 </div>
@@ -287,7 +383,7 @@
     });
 
 				$(document).on('click','.close_icon.removeJobQuestion',function(){
-								alert('hi');
+
         $(this).closest('.jobQuestion').remove();
 				});
 
@@ -530,7 +626,7 @@
         if (geocoder) {
             geocoder.geocode({"address": address}, function(results, status) {
                 if (status != google.maps.GeocoderStatus.OK) {
-                    alert("Cannot find address");
+                    // alert("Cannot find address");
                     return;
                 }
                 placeMarker(results[0].geometry.location);

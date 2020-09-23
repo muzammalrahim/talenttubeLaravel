@@ -743,7 +743,7 @@ geocode(data);
         $('.addQualification').removeClass('hide_it2');
         $('.qualificationSaveButton').removeClass('hide_it2');
 
-        // console.log('Testing Qualification');
+        console.log('Testing Qualification');
 
 
   });

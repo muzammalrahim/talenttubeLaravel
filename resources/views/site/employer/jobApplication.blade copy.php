@@ -96,6 +96,33 @@
         </div>
 
 
+        <div class="searchField_questions mb10">
+            <div class="searchFieldLabel dinline_block">Filter by Question: </div>
+            <div class="toggleSwitchButton dinline_block"><label class="switch"><input type="checkbox" name="filter_by_questions"></label></div>
+            <div class="filter_question_cont hide_it">
+                 <div class="questionFilter">
+                 @if(varExist('questions', $job))
+                 @foreach ($job->questions as $qkey =>  $jq)
+                    <div class="jobFilterQuestion">
+                        <span class="fjq_counter">Question {{($qkey+1)}}: </span>
+                        <span class="fjq_title">{{$jq->title}}</span>
+                        <div class="fjq_options">
+                            @if($jq->options)
+                            <select class="filter_question select_aw" name="filter_question[{{$jq->id}}]" >
+                                <option value="">Select</option>
+                                @foreach ($jq->options as $qk => $jqopt)
+                                    <option value="{{$jqopt}}">{{$jqopt}}</option>
+                                @endforeach
+                            </select>
+                            @endif
+                        </div>
+                    </div>
+                 @endforeach
+                 @endif
+                 </div>
+            </div>
+        </div>
+
         <div class="searchField_keyword dblock mb10">
             <div class="searchFieldLabel dinline_block">Keyword: </div>
             <input type="text" name="ja_filter_keyword">
@@ -299,7 +326,7 @@ $('input[name="filter_location_status"]').change(function() {
   //====================================================================================================================================//
   // Google map location script
   //====================================================================================================================================//
-  		var map;
+  var map;
 
     var input = document.getElementById('location_search');
     var autocomplete = new google.maps.places.Autocomplete(input);
@@ -541,12 +568,12 @@ $('input[name="filter_location_status"]').change(function() {
         return false;
     }
 
-    function updateLocationInputs(place,city,state,country){
-        jQuery('#location_name').val(place);
-        jQuery('#location_city').val(city);
-        jQuery('#location_state').val(state);
-        jQuery('#location_country').val(country);
-    }
+    // function updateLocationInputs(place,city,state,country){
+    //     jQuery('#location_name').val(place);
+    //     jQuery('#location_city').val(city);
+    //     jQuery('#location_state').val(state);
+    //     jQuery('#location_country').val(country);
+    // }
 
     // by default show this location;
     geocode('Sydney New South Wales, Australia');
