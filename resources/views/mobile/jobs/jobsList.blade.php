@@ -52,7 +52,11 @@
                     @endphp
                         <img lass="img-fluid z-depth-1" src="{{$profile_image}}"> --}}
 
-
+                        @php
+                        $user_gallery  =  $job->jobEmployerLogo;
+                        $profile_image =  !empty($user_gallery)?(assetGallery2($user_gallery,'small')):(asset('images/site/icons/nophoto.jpg'));
+                        @endphp
+                    <img  class="img-fluid z-depth-1" id="pic_main_img" src="{{$profile_image}}" title="">
 
                        {{--  <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" style="height:110px;"> --}}
 

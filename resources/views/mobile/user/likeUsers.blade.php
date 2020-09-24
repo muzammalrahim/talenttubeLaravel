@@ -35,12 +35,20 @@
                         <img  class="img-fluid z-depth-1" id="pic_main_img" src="{{$profile_image}}" title="" height="100px" width="100px">
                         </a> --}}
 
-                           @php
-                    $profile_image   = asset('images/site/icons/nophoto.jpg');
-                    if ($js->profileImage){
-                        $profile_image = asset('images/user/'.$js->id.'/gallery/'.$js->profileImage->image);
-                    }
-                    @endphp
+                        @php
+                        $profile_image  = asset('images/site/icons/nophoto.jpg');
+                        $profile_image_gallery    = $js->profileImage()->first();
+
+                        // dump($profile_image_gallery);
+
+                        if ($profile_image_gallery) {
+                        // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+
+                        $profile_image   = assetGallery2($profile_image_gallery,'small');
+                        // dump($profile_image);
+
+                        }
+                        @endphp
                         <img lass="img-fluid z-depth-1" src="{{$profile_image}}">
 
                     </div>

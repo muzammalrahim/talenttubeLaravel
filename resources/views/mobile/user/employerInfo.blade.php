@@ -33,11 +33,20 @@
 
                    {{--      <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px"> --}}
 
-                        @php
-                    $profile_image   = asset('images/site/icons/nophoto.jpg');
-                    if ($employer->profileImage){
-                        $profile_image = asset('images/user/'.$employer->id.'/gallery/'.$employer->profileImage->image);
-                    }
+
+                    @php
+                    $profile_image  = asset('images/site/icons/nophoto.jpg');
+                    $profile_image_gallery    = $employer->profileImage()->first();
+
+                    // dump($profile_image_gallery);
+
+                        if ($profile_image_gallery) {
+                                    // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+
+                                    $profile_image   = assetGallery2($profile_image_gallery,'small');
+                                        // dump($profile_image);
+
+                        }
                     @endphp
 
                     <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}">
@@ -275,18 +284,18 @@
     <div class="tabs_photos text-dark mb-2 font-weight-bold">Photos</div>
         <div class="list_photos_public d-flex">
             <div class="list_photos_trans">
-            @if ($galleries)
+                @if ($galleries)
                 @foreach ($galleries as $gallery)
                     <div id="{{$gallery->id}}" class="float-left mt-1 item profile_photo_frame gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
-                        <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-                            href="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
-                            data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}"
+                        <a  data-id="{{$gallery->id}}" class="show_photo_gallery js-smartPhoto2" data-group="no-gravity"
+                            href="{{assetGallery2($gallery,'')}}"
+                            data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
                             >
                             <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo m-1 uploadedPhotos"
                             data-src="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
-                            src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}">
+                            src="{{assetGallery2($gallery,'small')}}">
                         </a>
-                        {{--  --}}
+
                     </div>
                 @endforeach
             @endif
@@ -299,46 +308,49 @@
       {{-- =================================================================== videos =================================================================== --}}
 
     <div class="video text-dark mt-3">
-    <div class="tabs_videos mb-2 font-weight-bold">Videos</div>
-        <div id="video" class="list_videos">
-            {{-- <div id="list_videos_public" class="list_videos_public">
-                <div id="photo_add_video" class="item add_photo add_video_public item_video">
-                    <a class="add_photo" onclick="UProfile.SelectVideoFile(); return false;">
-                        <img id="video_upload_select" class="transparent is_video bg-primary uploadedPhotos" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
-                    </a>
-                </div>
-            </div> --}}
-            <div class="cl"></div>
 
-            @if ($videos->count() > 0 )
-                @foreach ($videos as $video)
-                    <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-                        <a onclick="UProfile.showVideoModal('{{$video->file}}')" class="video_link" target="_blank">
-                            <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
-                           {!! generateVideoThumbs($video) !!}
-                        </a>
-                        <span title="Delete video" class="icon_delete" data-vid="{{$video->id}}" onclick="UProfile.delteVideo({{$video->id}})">
-                            <span class="icon_delete_photo"></span>
-                            <span class="icon_delete_photo_hover"></span>
-                        </span>
+            <div class="row">
 
-                        <div class="v_error error hide_it"></div>
-                    </div>
-                @endforeach
-            @endif
+                <!-- Grid column -->
+            <div class="col-lg-4 col-md-4 mb-4">
+
+            <div class="videos">
+                        @if ($videos->count() > 0 )
+                        @foreach ($videos as $video)
+                            <div id="v_{{$video->id}}" class="video_box mb-2">
+                                <!-- Grid row -->
 
 
-            <div style="display:none;">
-                <div id="videoShowModal" class="modal p0 videoShowModal">
-                    <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-                        <div class="cont">
-                            <div class="videoBox"></div>
-
+                      <!--Modal: Name-->
+                      <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <!--Content-->
+                          <div class="modal-content">
+                            <!--Body-->
+                            <div class="modal-body mb-0 p-0">
+                              <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
+                                  <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
+                                    <source src="{{assetVideo($video)}}" type="video/mp4" />
+                                  </video>
+                              </div>
+                            </div>
+                            <!--Footer-->
+                            <div class="modal-footer justify-content-center">
+                              <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                          <!--/.Content-->
                         </div>
-                    </div>
-                </div>
+                      </div>
+
+                      <!--Modal: Name-->
+                      <a>{!! generateVideoThumbsm($video) !!}</a>
+                            </div>
+                        @endforeach
+                    @endif
             </div>
 
+          </div>
         </div>
     </div>
 
@@ -371,10 +383,12 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockEmp.js') }}"></script>
-
+<script type="text/javascript" src="{{ asset('js/mobile/userProfile.js') }}"></script>
+<link rel="stylesheet" href="https://unpkg.com/smartphoto@1.1.0/css/smartphoto.min.css">
+<script src="https://unpkg.com/smartphoto@1.1.0/js/smartphoto.js"></script>
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 {{-- <script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script>  --}}
-
+<script src="{{ asset('js/site/plyr.polyfilled.js') }}"></script>
 <script type="text/javascript">
 $(document).ready(function(){
     $('.graybtn').click(function(){
@@ -404,7 +418,41 @@ $(document).ready(function(){
 
   });
 
+
+
+
+
+  document.addEventListener('DOMContentLoaded',function(){
+
+new SmartPhoto(".js-smartPhoto2",{
+        useOrientationApi: false
+});
+});
+
+
+
+
+
   // jobApplyBtn click end
+</script>
+
+<script>
+    @if ($videos->count() > 0 )
+    @foreach ($videos as $video)
+
+    $('#modal{{$video->id}}').on('hidden.bs.modal', function (e) {
+  // do something...
+        var src = $(this).find(".videoBox video").find("source").attr('src');
+        $(this).find(".videoBox video").find("source").attr('src');
+        var videoElem  = '<video id="player" controls>';
+        videoElem     += '<source src="'+src+'" type="video/mp4">';
+        videoElem     += '</video>';
+        $(this).find(".videoBox video").remove();
+        $(this).find(".videoBox").html(videoElem);
+    });
+    @endforeach
+    @endif
+
 </script>
 <style type="text/css">
 
