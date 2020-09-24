@@ -645,7 +645,7 @@ class EmployerController extends Controller {
         }
 
         // Filter by Question
-        if(varExist('filter_question', $request) && varExist('filter_question_value', $request) ){
+        if(varExist('filter_question', $request) &&varExist('filter_by_questions', $request)&& varExist('filter_question_value', $request) ){
             // SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
             $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';
             $query = $query->where('questions', 'LIKE', $question_like);

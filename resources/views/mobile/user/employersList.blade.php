@@ -24,10 +24,23 @@
 
                     <div class="col-4 p-0">
 
+                        @php
+                        $profile_image  = asset('images/site/icons/nophoto.jpg');
+                        $profile_image_gallery    = $js->profileImage()->first();
 
-                   {{--      <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+                        // dump($profile_image_gallery);
+
+                            if ($profile_image_gallery) {
+                                        // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+
+                                        $profile_image   = assetGallery2($profile_image_gallery,'small');
+                                            // dump($profile_image);
+
+                            }
+                        @endphp
+                        <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
                             <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
-                        </a> --}}
+                        </a>
 
 
                     </div>

@@ -2596,13 +2596,30 @@ class MobileUserController extends Controller
         if(isEmployer($user)){
 
             $job =  Jobs::find($id);
-            $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id',$id)->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC')->paginate(1);
-            $data['applications'] = $applications;
+            $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id',$id)->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC')->paginate(2);
+           // $data['applications'] = $applications;
             $data['job']   = $job;
             $data['user']   = $user;
             $data['title']  = 'Job Detail';
             $data['classes_body'] = 'jobdetail';
             return view('mobile.employer.jobApplication', $data); // mobile/employer/jobApplication
+        }
+    }
+
+
+    function MempJobApplicationsFilter(Request $request){
+        $user = Auth::user();
+        if(isEmployer($user)){
+            $applications = new JobsApplication();
+            $applications = $applications->getFilterApplication($request);
+            $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+            $data['applications'] = $applications;
+            $data['user']       = $user;
+            $data['title']      = 'Job Detail';
+            $data['likeUsers']  =  $likeUsers;
+            $data['classes_body'] = 'jobdetail';
+            return view('mobile.employer.jobApplicationList', $data);
+            // site/employer/jobApplicationAjax
         }
     }
 

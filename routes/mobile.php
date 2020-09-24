@@ -131,7 +131,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
     Route::post('ajax/MchangeJobApplicationStatus', 'Mobile\MobileUserController@MchangeJobApplicationStatus')->name('MchangeJobApplicationStatus');
 
-
+    Route::post('employer/jobAppFilter', 'Mobile\MobileUserController@MempJobApplicationsFilter')->name('mjobAppFilter');
 
 
     Route::post('ajax/deleteGallery/{id}', 'Mobile\MobileUserController@deleteGallery');

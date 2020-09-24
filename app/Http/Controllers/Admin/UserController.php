@@ -243,7 +243,6 @@ class UserController extends Controller
             $data['attachments'] = $attachments;
 
 
-
             return view('admin.user.edit', $data);
         }
         // admin/user/edit

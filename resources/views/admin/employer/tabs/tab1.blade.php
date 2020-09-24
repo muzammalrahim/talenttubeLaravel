@@ -35,24 +35,24 @@
                         </div>
                     </div>
 
-                    <div class="form-group row country_dd">
-                        {{ Form::label('country', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                        {{ Form::select('country', $countries, null, ['placeholder' => 'Select Country']) }}
-                        </div>
-                    </div>
-
-                    <div class="form-group row state_dd">
-                        {{ Form::label('state', null, ['class' => 'col-md-2 form-control-label']) }}
-                        <div class="col-md-10">
-                            {{ Form::select('state', $states, null, ['placeholder' => 'Select state']) }}
-                        </div>
-                    </div>
-
-                    <div class="form-group row city_dd">
+                    <div class="form-group row">
                         {{ Form::label('city', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                        {{ Form::select('city', $cities, null, ['placeholder' => 'Select state']) }}
+                          {{ Form::text('city', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'city','required'=> 'false')) }}
+                        </div>
+                     </div>
+
+                    <div class="form-group row">
+                        {{ Form::label('state', null, ['class' => 'col-md-2 form-control-label']) }}
+                        <div class="col-md-10">
+                          {{ Form::text('state', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'state','required'=> 'false')) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        {{ Form::label('country', null, ['class' => 'col-md-2 form-control-label']) }}
+                        <div class="col-md-10">
+                          {{ Form::text('country', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'country','required'=> 'false')) }}
                         </div>
                     </div>
 
@@ -96,17 +96,17 @@
                         {{ Form::label('eye', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
                           {{ Form::select('eye', $eyeColor, null, ['placeholder' => 'Eye Color']) }}
-                        </div> 
+                        </div>
                     </div>
 
                      <div class="form-group row">
                         {{ Form::label('family', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
                           {{ Form::select('family', $familyType, null, ['placeholder' => 'Family Type']) }}
-                        </div> 
+                        </div>
                     </div>
 
-                 
+
 
                      <a class="btn btn-primary btnNext text-white" style="float: right;" onclick="scrollToTop()">Next</a>
   </div>

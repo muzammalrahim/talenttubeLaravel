@@ -1,7 +1,7 @@
 
 
  <div class="mJSFilter mb-2">
-  {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'jobSeeker_filter_form' )) }}
+  {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'jobapp_filter_form' )) }}
     <input type="hidden" name="page" id="paginate" value="">
 
 
@@ -33,7 +33,7 @@
 
             <div class="FilterBox">
 
-                <select class="white-text mdb-select md-form colorful-select dropdown-primary filter_qualification_type" name="filter_qualification_type" data-placeholder="Select Qalification & Trades">
+                <select class="white-text mdb-select md-form colorful-select dropdown-primary filter_qualification_type" id="ja_filter_qualification_type" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
                      <option value="">Select Qalification & Trades</option>
                      <option value="certificate">Certificate or Advanced Diploma</option>
                      <option value="trade">Trade Certificate</option>
@@ -61,7 +61,7 @@
                 <div class="qualification_trade d-none">
                     <select class="white-text mdb-select md-form qualification_trade" multiple name="qualification_trade[]"  id="tradeSelect" data-placeholder="Select Trade">
                         @foreach ($qualifications as $qualif)
-                            @if($qualif['type']  !== 'degree')
+                            @if($qualif['type']  !== 'trade')
                               <option value="{{$qualif['id']}}">{{$qualif['title']}}</option>
                             @endif
                         @endforeach
@@ -72,12 +72,14 @@
 
             </div>
 
-
+												<div class="form-group md-form"> <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
+													<input type="text" name="ja_filter_keyword" class="form-control" style="color:white;" placeholder="Keyword">
+												</div>
 
             {{-- Salary Range --}}
 
             <div class="FilterBox">
-                <select class="white-text mdb-select md-form colorful-select dropdown-primary filter_qualification_type" name="filter_salary" data-placeholder="Select Salary Range">
+                <select class="white-text mdb-select md-form colorful-select dropdown-primary filter_qualification_type" name="ja_filter_salary" data-placeholder="Select Salary Range">
                 <option value="">Select Salary Range</option>
                 @foreach(getSalariesRange() as $sk => $salary)
                     <option value="{{$sk}}">{{$salary}}</option>
@@ -153,36 +155,42 @@
 
 		    <hr class="my-2" style="height: 0.07em;  background: rgb(41, 41, 41); ">
             {{-- Question  --}}
-             <div class="FilterBox FilterLocation">
-                 <div class="form-check">
-                    <input type="checkbox" class="form-check-input filter_showDetail" id="filter_by_questions" name="filter_by_questions" data-dc="FilterQuestionBox">
-                    <label class="form-check-label" for="filter_by_questions">Filter by Question</label>
-                </div>
-                <div class="FilterQuestionBox d-none col">
-
-                    <div class="row">
-                @if(!empty(getUserRegisterQuestions()))
-
-                    <div class="col-12 p-0">
-                        <select class="white-text mdb-select md-form filter_question" name="filter_question">
-                            @foreach (getUserRegisterQuestions() as $qk => $question)
-                                <option value="{{$qk}}">{{$question}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="col-4 p-0">
-                        <select class="white-text mdb-select md-form filter_question_value"  name="filter_question_value">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
 
 
-                @endif
-                </div>
-                </div>
-             </div>
+
+                        <div class="FilterBox FilterLocation">
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input filter_showDetail" id="filter_by_questions" name="filter_by_questions" data-dc="FilterQuestionBox">
+                                <label class="form-check-label" for="filter_by_questions">Filter by Question</label>
+                            </div>
+                            <div class="FilterQuestionBox d-none col">
+                                 <div class="row">
+                                 @if(varExist('questions', $job))
+                                 @foreach ($job->questions as $qkey =>  $jq)
+                                    <div class="col-12 p-0">
+                                        <span class="fjq_counter">Question {{($qkey+1)}}: </span>
+                                        <span class="fjq_title">{{$jq->title}}</span>
+
+                                            @if($jq->options)
+                                            <select class="white-text mdb-select md-form filter_question_value" name="filter_question[{{$jq->id}}]" >
+                                                <option value="">Select</option>
+                                                @foreach ($jq->options as $qk => $jqopt)
+                                                    <option value="{{$jqopt}}">{{$jqopt}}</option>
+                                                @endforeach
+                                            </select>
+                                            @endif
+
+                                    </div>
+                                 @endforeach
+                                 @endif
+                                 </div>
+                            </div>
+                        </div>
+
+
+
+
+
 													<div class="FilterBox my-2">
 														<div class="text-center">
 															<button name="ResetForm" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
