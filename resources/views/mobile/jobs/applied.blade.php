@@ -29,7 +29,7 @@
 
 
                 <div class="jobInfoFont">Location :
-                    <span style="font-size: 12px">{{($job->city}},  {{($job->state}}, {{($job->country}}
+                    <span style="font-size: 12px">{{$job->city}},  {{$job->state}}, {{$job->country}}
                     </span>
                 </div>
             </div>

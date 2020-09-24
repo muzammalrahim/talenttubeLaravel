@@ -40,11 +40,19 @@
                     <div class="col-4 p-0">
 
                         @php
-                    $profile_image   = asset('images/site/icons/nophoto.jpg');
-                    if ($js->profileImage){
-                        $profile_image = asset('images/user/'.$js->id.'/gallery/'.$js->profileImage->image);
-                    }
-                    @endphp
+                        $profile_image  = asset('images/site/icons/nophoto.jpg');
+                        $profile_image_gallery    = $js->profileImage()->first();
+
+                        // dump($profile_image_gallery);
+
+                        if ($profile_image_gallery) {
+                        // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+
+                        $profile_image   = assetGallery2($profile_image_gallery,'small');
+                        // dump($profile_image);
+
+                        }
+                        @endphp
                         <img lass="img-fluid z-depth-1" src="{{$profile_image}}">
 
                         {{-- <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px"> --}}
