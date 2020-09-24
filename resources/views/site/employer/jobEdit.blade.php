@@ -135,7 +135,7 @@
 
                    @php
                     $questions = json_decode($job->questions, true);
-                    $qnum = sizeof($questions);
+                    $qnum = sizeof($questions)-1;
                     //dd($questions)
                    @endphp
 
@@ -386,7 +386,7 @@ $(document).ready(function() {
     $('.jobQuestions').on('click','.addQuestionOption', function(){
         var oC = $(this).closest('.jobQuestion').find('.jq_field_questions .option').length;
         // var qC = $(this).attr('data-qc');
-        var qC = parseInt($('#questionCounter').val())-1;
+        var qC = parseInt($('#questionCounter').val());
         var option_html = '';
             option_html +=          '<div class="jq_option option">';
             option_html +=             '<input type="text" name="jq['+qC+'][option]['+oC+'][text]" />';

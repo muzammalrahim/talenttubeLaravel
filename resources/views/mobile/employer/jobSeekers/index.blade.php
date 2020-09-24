@@ -120,6 +120,9 @@ $('input[name="filter_by_questions"]').change(function() {
 $(".reset-btn").click(function(){
 	$("#jobSeeker_filter_form").trigger("reset");
     $("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
+    $('.FilterQuestionBox').addClass("d-none");
+    $('.FilterLocationBox').addClass("d-none");
+    $('.FilterIndustryList').addClass("d-none");
     $('#paginate').val('');
 	getDataCustom();
 });

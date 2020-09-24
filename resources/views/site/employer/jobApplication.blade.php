@@ -42,7 +42,7 @@
 
         <div class="searchField_salaryRange dblock mb10">
             <div class="searchFieldLabel dinline_block">Salary Range: </div>
-            <select name="ja_filter_salary" class="dinline_block" data-placeholder="Select Salary Range">
+            <select name="ja_filter_salary" id="filter_salary" class="dinline_block" data-placeholder="Select Salary Range">
                  <option value="">Select Salary Range</option>
                 @foreach(getSalariesRange() as $sk => $salary)
                     <option value="{{$sk}}">{{$salary}}</option>
@@ -95,6 +95,32 @@
             {{-- bl_location --}}
         </div>
 
+        <div class="searchField_questions mb10">
+            <div class="searchFieldLabel dinline_block">Filter by Question: </div>
+            <div class="toggleSwitchButton dinline_block"><label class="switch"><input type="checkbox" name="filter_by_questions"></label></div>
+            <div class="filter_question_cont hide_it">
+                 <div class="questionFilter">
+                 @if(varExist('questions', $job))
+                 @foreach ($job->questions as $qkey =>  $jq)
+                    <div class="jobFilterQuestion">
+                        <span class="fjq_counter">Question {{($qkey+1)}}: </span>
+                        <span class="fjq_title">{{$jq->title}}</span>
+                        <div class="fjq_options">
+                            @if($jq->options)
+                            <select class="filter_question select_aw" name="filter_question[{{$jq->id}}]" >
+                                <option value="">Select</option>
+                                @foreach ($jq->options as $qk => $jqopt)
+                                    <option value="{{$jqopt}}">{{$jqopt}}</option>
+                                @endforeach
+                            </select>
+                            @endif
+                        </div>
+                    </div>
+                 @endforeach
+                 @endif
+                 </div>
+            </div>
+        </div>
 
         <div class="searchField_keyword dblock mb10">
             <div class="searchFieldLabel dinline_block">Keyword: </div>
@@ -116,6 +142,7 @@
         <div class="searchField_action">
             <div class="searchFieldLabel dinline_block"></div>
             <button class="btn small OrangeBtn">Submit</button>
+            <button class="btn small OrangeBtn reset-btn" >Reset</button>
         </div>
 
     {{ Form::close() }}
@@ -137,6 +164,84 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+
+
+
+    $(".reset-btn").click(function(){
+/// 	$("#jobSeeker_filter_form").trigger("reset");
+    jQuery('input[name="filter_location_status"]').styler();
+
+    event.preventDefault();
+    $('#paginate').val('');
+
+    jQuery('input[name="filter_location_status"]').each(function() {
+
+            if(this.checked){
+            $(this).toggleClass('checked').trigger('refresh');
+            this.checked = !this.checked;
+            $(this).toggleClass('checked').trigger('refresh');
+            (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
+
+            }
+        });
+
+    jQuery('select.filter_qualification_type').each(function() {
+
+        var degreeType = "";
+        $(this).get(0).selectedIndex = 0;
+        $(this).closest('.searchField_qualification').attr('class','searchField_qualification '+degreeType);
+        $('.dot_list li').removeClass('active');
+        $('.searchField_qualification .dot_list_li_hidden').remove();
+    });
+
+    $('input[name="filter_industry_status"]').each(function() {
+
+        if(this.checked){
+        $(this).toggleClass('checked').trigger('refresh');
+        this.checked = !this.checked;
+        $(this).toggleClass('checked').trigger('refresh');
+        (this.checked)?(jQuery('.filter_industryList').removeClass('hide_it')):(jQuery('.filter_industryList').addClass('hide_it'));
+
+        }
+
+    });
+
+
+    jQuery('#filter_salary').get(0).selectedIndex = 0;
+    jQuery('#job_applications_filter_form').find('input, select').trigger('refresh');
+
+    jQuery('input[name="ja_filter_keyword"]').val("");
+
+    $('input[name="filter_by_questions"]').each(function() {
+
+        if(this.checked){
+        $(this).toggleClass('checked').trigger('refresh');
+        this.checked = !this.checked;
+        $(this).toggleClass('checked').trigger('refresh');
+        (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));
+
+        }
+
+     // $('input, select').styler({ selectSearch: true, });
+    });
+	getData();
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     console.log(' new job doc ready ');
     // trigger date picker.

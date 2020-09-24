@@ -554,7 +554,14 @@ class SiteUserController extends Controller
             $user = Auth::user();
             $user->location_lat     = $request->location_lat;
             $user->location_long    = $request->location_long;
-            $user->location         = $request->location_name;
+
+
+            if($request->location_name == $request->location_city){
+                $user->location = '';
+            }
+            else{
+                $user->location         = $request->location_name;
+            }
             $user->country = $request->location_country;
             $user->state = $request->location_state;
             $user->city = $request->location_city;

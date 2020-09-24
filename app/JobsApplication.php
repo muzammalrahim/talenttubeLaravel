@@ -88,13 +88,14 @@ class JobsApplication extends Model{
                             $radius_sign = ($radius <= 50)?'<':'>';
                             // $query = $query->selectRaw("*,
                             $query = $query->selectRaw("
-                                ( 6371 * acos( cos(radians('".$latitude."'))
-                                * cos( radians(;))
-                                * cos( radians(location_long) - radians('".$longitude."'))
-                                + sin( radians('".$latitude."'))
-                                * sin( radians( location_lat )))
-                            ) AS distance")
-                            ->having("distance",$radius_sign,$radius);
+                     ( 6371 * acos( cos(radians('".$latitude."'))
+                     * cos( radians(location_lat))
+                     * cos( radians(location_long) - radians('".$longitude."'))
+                     + sin( radians('".$latitude."'))
+                     * sin( radians( location_lat )))
+                     ) AS distance")
+                        ->having("distance", "<", $radius)
+                        ->orderBy("distance",'asc');
                             //->orderBy("distance",'asc');
                         }
                     }
@@ -171,7 +172,7 @@ class JobsApplication extends Model{
 
         //    dd( $applications->toSql() );
 
-            $applications = $applications->paginate(3);
+            $applications = $applications->paginate(2)->onEachSide(1);
 
             return $applications;
     }

@@ -134,6 +134,7 @@ $('jobApplyBtn').on('show.bs.modal', function (event) {
 $(".reset-btn").click(function(){
 	$("#filter_form").trigger("reset");
     $("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
+    $('.FilterLocationBox').addClass("d-none");
     $('#paginate').val('');
 	getDataCustom();
 });
