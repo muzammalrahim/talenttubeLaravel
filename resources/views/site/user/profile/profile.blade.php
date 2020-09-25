@@ -671,6 +671,7 @@ function showMap(){
                  updateLocationInputs('',city,state,country);
                  jQuery("#location_search").val(address);
                  placeMarker(location);
+                 map.setZoom(10)
                  return true;
              }
          })

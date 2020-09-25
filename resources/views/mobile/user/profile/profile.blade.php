@@ -55,7 +55,7 @@
 
 
 
-	
+
 
             {{-- <div class="personalInfoDiv"> --}}
         		<div class="personalInfo mt-2"> <h6 class="m-0 font-weight-bold">{{$user->name}} {{$user->surname}}</h6></div>
@@ -281,7 +281,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" onclick="UProfile.deleteGallery(); return false;">OK</button>
+        <button type="button" class="btn btn-primary" onclick="UProfile.deleteGallery(); return false;">Yes</button>
          <input type="hidden" name="deleteConfirmId" id="deleteConfirmId" value=""/>
       </div>
     </div>
@@ -321,6 +321,7 @@
                           <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
                             <source src="{{assetVideo($video)}}" type="video/mp4" />
                           </video>
+                          
                       </div>
                     </div>
                     <!--Footer-->
@@ -333,7 +334,9 @@
               </div>
 
               <!--Modal: Name-->
-              <a>{!! generateVideoThumbsm($video) !!}</a>
+              <a>
+                  {!! generateVideoThumbsm($video) !!}
+                </a>
                     </div>
                 @endforeach
             @endif

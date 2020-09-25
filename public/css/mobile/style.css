@@ -6,8 +6,8 @@ body{ background: #f3f5f9!important; }
 
 .grey-skin .navbar{ background: #254c8e!important; }
 .btn.btn-xs { padding: .25rem 1.2rem; }
-main .container-fluid{ 
-    padding: 8px;  
+main .container-fluid{
+    padding: 8px;
     background: #f3f5f9;
     text-align: justify;
 }
@@ -24,9 +24,13 @@ main .container-fluid{
     -webkit-animation: rotation 2s infinite linear;
 }
 /*========================= Container Background Color ========================= */
+.container1 { position: relative; }
+.container1 img { display: block; }
+.container1 .fa-trash { position: absolute; top:4; right:3; }
 
- 
-
+.private {
+    border: 1px solid #ff5f4e;
+}
 
 /* ================== Profile page css. ================== */
 .cardBody {}
@@ -195,7 +199,7 @@ input.select-dropdown.form-control {
     color: black;
     border-bottom: 1px solid black !important;
 }
- 
+
 /* ================== Jobs Filter page ================== */
 .collapsing {
   position: relative;
@@ -222,13 +226,13 @@ input.select-dropdown.form-control {
 .FilterBox.trade div.qualification_trade, .FilterBox.degree div.qualification_degree { display: block !important; }
 
 
- 
+
 div#heading1,.p-2.card-body.mb-1.rgba-grey-light.white-text.FilterCont {
     background: #254c8e;
 }
 
 
-select option[data-placeholder] { 
+select option[data-placeholder] {
 color : rgb(255, 255, 255);
 
 /* =================================================== Display None Class ===================================================*/
@@ -258,7 +262,7 @@ color : rgb(255, 255, 255);
     /*margin-left: 10px;*/
     font-size: 14px;
 }
-.qualifTypeSpan{   
+.qualifTypeSpan{
     text-transform: capitalize;
     font-weight: bold;
 }

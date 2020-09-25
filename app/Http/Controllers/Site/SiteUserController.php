@@ -479,11 +479,17 @@ class SiteUserController extends Controller
             $user->byear = $request->year;
             $user->location_lat     = $request->location_lat;
             $user->location_long    = $request->location_long;
-            $user->location         = $request->location_name;
+            // $user->location         = $request->location_name;
             $user->country = $request->location_country;
             $user->state = $request->location_state;
             $user->city = $request->location_city;
 
+                if($request->location_name==$request->location_city){
+                    $user->location         = '';
+                }
+                else {
+                     $user->location         = $request->location_name;
+                }
 
             try {
                 $user->save();
@@ -673,22 +679,26 @@ class SiteUserController extends Controller
 
         // dump($request->questions);
         $user = Auth::user();
-
+        $user->questions = json_encode($request->questions);
         // dd($user->questions);
-
+        $user->save();
         $rules = array('questions' => 'string|max:100');
         // $validator = Validator::make($request->all(), $rules);
         // if (!$validator->fails()) {
-
+            $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
+            $data['userQuestions'] =$userQuestions ;
+            $data['userquestion'] = getUserRegisterQuestions();
+            $EmpQuestionsView = view('site.user.profile.questionsuserpart', $data);
+            $EmpQuestionsHtml = $EmpQuestionsView->render();
             // dd($user);
             // $user->questions = $request->questions;
-            $user->questions = json_encode($request->questions);
 
 
-            $user->save();
+
+
             return response()->json([
                     'status' => 1,
-                    'data' => $user->questions
+                    'data' => $EmpQuestionsHtml
             ]);
         // }
     }
@@ -710,8 +720,8 @@ class SiteUserController extends Controller
         // dd( $validator->errors() );
         if (!$validator->fails()) {
             //$user->industry_experience = $request->industry_experience;
-            $array = array_unique (array_merge ($user->industry_experience, $request->industry_experience));
-            $user->industry_experience = $array;
+            // $array = array_unique (array_merge ($user->industry_experience, $request->industry_experience));
+            $user->industry_experience = array_unique($request->industry_experience);
             $user->save();
             $data['user'] = User::find($user->id);
             $IndustryView = view('site.layout.parts.jobSeekerIndustryList', $data);
@@ -734,10 +744,12 @@ class SiteUserController extends Controller
         // dump($request->questions);
         $user = Auth::user();
 
-        $rules = array('questions' => 'string|max:100');
+             $rules = array('questions' => 'string|max:100');
             $user->questions = json_encode($request->questions);
             $user->save();
             $data['user'] = User::find($user->id);
+            $data['userQuestions'] =$userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
+            $data['empquestion'] =$empquestion = getEmpRegisterQuestions();
             $EmpQuestionsView = view('site.layout.parts.EmployerQuestionsList', $data);
             $EmpQuestionsHtml = $EmpQuestionsView->render();
 

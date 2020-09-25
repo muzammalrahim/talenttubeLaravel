@@ -327,10 +327,11 @@ this.updateIndustryExperience = function(){
                     $('.saveQuestionsButton').css("display","none");
                     $('.jobSeekerRegQuestion').addClass('hide_it');
                     $('.QuestionsKeyPTag').removeClass('hide_it2');
-                    if(data){
+                    if(data.status==1){
                         // $(".questionsOfUser").load(" .questionsOfUser");
                         $(".SaveQuestionsSpinner").remove();
-
+                        $('.questionsOfUser').html(data.data);
+                        $('input, select').styler();
                 }
             }
         });
@@ -369,11 +370,11 @@ this.updateIndustryExperience = function(){
                     $('.saveEmployerQuestionsButton').hide();
                     $('.EmployerRegQuestion').addClass('hide_it');
                     $('.employerQuestionsPtag').removeClass('hide_it');
-
-                    if(resp.status){
+                    console.log(resp.data);
+                    if(resp.status==1){
                         $(".SaveEmployerQuestionsSpinner").remove();
-                        $('.EmpQuestionList').html();
-                        $(".employerRegisterQuestions").load(true);
+                        $('.EmpQuestionList').html(resp.data);
+                        $('input, select').styler();
 
 
                 }
@@ -838,8 +839,12 @@ this.updateIndustryExperience = function(){
                         else if(country)
                             address = country;
 
-                         if((place) && (place.name))
+                        if(place.name!=city){
+                            alert("hi");
+                            if((place) && (place.name))
                             address = place.name + ',' + address;
+                        }
+
 
                             // console.log(' reverseGeocode place ', place);
                             // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
