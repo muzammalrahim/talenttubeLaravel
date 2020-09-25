@@ -66,7 +66,6 @@
 <script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/jquery.form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script>
-
 <script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>

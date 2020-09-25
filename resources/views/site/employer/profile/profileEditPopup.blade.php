@@ -15,7 +15,7 @@
 							<th><div class="name">Company Name</div></th>
 							<td>
                 <div class="field">
-                    <input id="profile_edit_main_nickname" class="inp nickname" name="nickname" type="text" value="{{$user->name}}" 
+                    <input id="profile_edit_main_nickname" class="inp nickname" name="nickname" type="text" value="{{$user->company}}"
                     title="The username needs to be between 3 and 20 symbols in length.">
                     <div id="nickname_error" class="error to_hide">&nbsp;</div>
                 </div>
@@ -37,10 +37,10 @@
 								<td>
 									<div class="locationContainer">
 										<div class="bl bl_location">
-                     
+
                         <div class="location_filed">
                             <div class="location_input dtable w100">
-                                <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" 
+                                <input type="text" name="location_search" class="inp w80 fl_left" id="location_search"
                                 value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
                                {{--  <button type="button" id="location_search_load" class="btn btn-success location_search_btn w20 fl_left">Search</button> --}}
                             </div>
@@ -76,7 +76,7 @@
 						</tbody>
 					</table>
 				</form>
-				
+
 			</div>
 			<div class="css_loader loader_edit_popup hidden">
 				<div class="spinner center">
@@ -97,7 +97,7 @@
 		</div>
 		<div class="foot">
 			<div class="fl_right bl_btn to_show" style="transition-delay: 0s;">
-                
+
                 <div id="general_error" class="error to_hide">&nbsp;</div>
 
 				<button class="btn small white_frame frm_editor_cancel" onclick="UProfile.hideMainEditor()">Cancel</button>

@@ -70,7 +70,7 @@ class EmployerController extends Controller {
             $data['attachments'] = $attachments;
             $data['activities'] = $activities;
             $data['videos'] = $videos;
-
+            $data['industriesList'] = getIndustries();
 			$view_name = 'site.employer.profile.profile'; // site/employer/profile/profile
             return view($view_name, $data);
         }else{

@@ -321,8 +321,8 @@ class HomeController extends Controller {
     public function registerEmployer(Request $request){
 								// dd( $request->toArray() );
         $rules = array(
-            'firstname' => 'required|alpha_num|max:12',
-            'surname' => 'required|alpha_num|max:12',
+            // 'firstname' => 'required|alpha_num|max:12',
+            // 'surname' => 'required|alpha_num|max:12',
             // 'location_city' => 'required',
             // 'location_state' => 'required',
             // 'location_city' => 'required',
@@ -340,8 +340,8 @@ class HomeController extends Controller {
             ]);
         }else{
             $user = new User();
-            $user->name = $request->firstname;
-            $user->surname = $request->surname;
+            $user->name = '';
+            $user->surname = '';
             $user->email = $request->email;
             $user->password = Hash::make($request->password);
             $user->phone = $request->phone;

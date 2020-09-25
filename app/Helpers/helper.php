@@ -652,6 +652,7 @@ function generateVideoThumbs($video){
 }
 
 function generateVideoThumbsm($video){
+								// $html = '<div class="container1">';
         $html = '<img class="img-fluid z-depth-1" alt="video" data-toggle="modal"';
         $html .= 'data-target="#modal'.$video->id.'"';
         if (!empty($video->thumbs)){
@@ -661,9 +662,11 @@ function generateVideoThumbsm($video){
             $vPath      = $vBasePath.$video->thumbs[0];
             $html .= ' src="'.asset($vPath).'"';
 
-
+												
         }
-    $html .= '/>';
+						$html .= '/>';
+						// $html .= '<a onclick="UProfile.delteVideo('.$video->id.')">	<i class="fas fa-trash"></i></a>';
+						// $html .= '</div>';
     return $html;
 }
 

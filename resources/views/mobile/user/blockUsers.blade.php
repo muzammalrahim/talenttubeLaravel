@@ -39,6 +39,8 @@
 
                     <div class="col-4 p-0">
 
+
+
                         @php
                         $profile_image  = asset('images/site/icons/nophoto.jpg');
                         $profile_image_gallery    = $js->profileImage()->first();

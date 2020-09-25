@@ -5,7 +5,7 @@
 			<form name="frm_date" method="POST" autocomplete="on" class="text-center needs-validation" novalidate>
 				@csrf
 
-				<!-- First Name -->
+				{{-- <!-- First Name -->
 				<div class="md-form bgShad">
 					<input type="text" name="firstname" id="field_firstname" class="form-control" required>
 					<label for="field_firstname">First Name</label>
@@ -19,6 +19,13 @@
 					<label for="field_firstname">Surname</label>
 					<div class="invalid-feedback">Please choose first surname.</div>
 					<div id="surname_error" class="invalid-feedback d-none"></div>
+                </div> --}}
+
+                <div class="md-form bgShad">
+					<input type="text" name="companyname" id="field_company" class="form-control" required>
+					<label for="field_company">Company Name</label>
+					<div class="invalid-feedback">Please choose a company name.</div>
+					<div id="company_error" class="invalid-feedback d-none"></div>
 				</div>
 
 				{{-- bl_location --}}
@@ -35,7 +42,7 @@
 						<input type="hidden" name="location_city" id="location_city"  value="">
 						<input type="hidden" name="location_state" id="location_state"  value="">
 						<input type="hidden" name="location_country" id="location_country"  value="">
-					</div> 
+					</div>
 				</div> --}}
 
 				<!-- Email -->
@@ -55,12 +62,7 @@
 				</div>
 
 				<!-- Company Name -->
-				<div class="md-form bgShad">
-					<input type="text" name="companyname" id="field_company" class="form-control" required>
-					<label for="field_company">Company Name</label>
-					<div class="invalid-feedback">Please choose a company name.</div>
-					<div id="company_error" class="invalid-feedback d-none"></div>
-				</div>
+
 
 				<!-- Password -->
 				<div class="md-form bgShad">

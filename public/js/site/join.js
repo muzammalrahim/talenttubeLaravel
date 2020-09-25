@@ -273,14 +273,9 @@ $(function(){
                 }
                 $jq('#frm_register_submit').html(i18n.site.Next_btn);
             }else{
-                $jq('#step-1.emp-step-1').fadeOut(400,function(){
-                    $jq('#frm_register_submit_2').prop('disabled',true);
-                    $jq('#success-step-1').show(1).addClass('to_show').html(data.message);
-                    $jq('#frm_register_submit').html(i18n.site.Next_btn);
-                    setTimeout(() => {
-                        location.href = data.redirect;
-                    }, 1000);
-                });
+
+                    location.href = data.redirect;
+
             }
 
             $jq('#frm_register_submit').prop('disabled',false);
@@ -1837,8 +1832,8 @@ jQuery(document).ready(function() {
                 else if(country)
                     address = country;
 
-                 if((place) && (place.name))
-                    address = place.name + ',' + address;
+                //  if((place) && (place.name))
+                //     address = place.name + ',' + address;
 
                     // console.log(' reverseGeocode place ', place);
                     // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );

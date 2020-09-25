@@ -9,7 +9,7 @@
                 <form name="frm_date" id="employer_reg_form" method="post" action="{{route('registerEmployer')}}" autocomplete="off">
                 {{ csrf_field() }}
                 <div id="bl_frm_register" class="part float_none margin_auto">
-                    <div class="bl">
+                    {{-- <div class="bl">
                         <label>First Name</label>
                         <div class="col-sm-12 " style="display: flex;">
                             <input type="text" name="firstname" class="inp w49" placeholder="First Name" required />
@@ -19,6 +19,14 @@
                         <div class="col-md-6"><div id="surname_error" class="error to_hide">&nbsp;</div></div>
 
                         <div class="cl"></div>
+                    </div> --}}
+                    <div class="bl">
+                        <label>Company name</label>
+                        <div class="bl_inp_pos to_show">
+                            <input id="name" class="inp username placeholder w100" name="companyname" maxlength="20" type="text" placeholder="This will be public" value="" required>
+                            <div id="companyname_check" class="icon_check to_hide"></div>
+                            <div id="companyname_error" class="error to_hide">&nbsp;</div>
+                        </div>
                     </div>
 
                    {{-- bl_location --}}
@@ -80,14 +88,7 @@
                         </div>
                     </div>
 
-                    <div class="bl">
-                        <label>Company name</label>
-                        <div class="bl_inp_pos to_show">
-                            <input id="name" class="inp username placeholder w100" name="companyname" maxlength="20" type="text" placeholder="This will be public" value="" required>
-                            <div id="companyname_check" class="icon_check to_hide"></div>
-                            <div id="companyname_error" class="error to_hide">&nbsp;</div>
-                        </div>
-                    </div>
+
 
                     <div class="bl">
                         <label>Password</label>

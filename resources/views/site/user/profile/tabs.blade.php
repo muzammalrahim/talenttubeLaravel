@@ -82,10 +82,10 @@
 
 {{-- ======================================== Qualification ======================================= --}}
 
-                
+
                 {{-- @dump($user->qualificationType) --}}
 <div class="bl qualificationBox">
-            
+
     <div class="title qualificationList">
       <div id="basic" class="title_icon_edit">Qualification <i class="editQualification fas fa-edit "></i>
         </div><p class="loader SaveQualification"style="float: left;"></p>
@@ -95,7 +95,7 @@
         </div>
         <div class="jobSeekerQualificationList">
            @include('site.layout.parts.jobSeekerQualificationList')   {{--   site/layout/parts/jobSeekerQualificationList  --}}
-        </div>  
+        </div>
     </div>
          <a class="addQualification btn btn-sm btn-primary text-white hide_it"style = "cursor:pointer;">Add New</a>
          <a class="btn btn-sm btn-success hide_it saveQualification" onclick="UProfile.updateQualifications()">Save</a>
@@ -105,7 +105,7 @@
       </div>
 
 {{-- ======================================== Qualification End here ======================================= --}}
-  
+
   <hr class="rounded">
 
 {{-- ======================================== Industry Experience ======================================= --}}
@@ -122,9 +122,9 @@
         <div class="cl"></div>
           <div class="IndusList">
                @include('site.layout.parts.jobSeekerIndustryList')
-          </div> 
+          </div>
             <span class="addIndus btn btn-primary hide_it"style = "cursor:pointer;">+ Add</span>
-            <a class="btn btn-sm btn-success hide_it saveIndus"style = "cursor:pointer;" onclick="UProfile.updateIndustryExperience()">Save</a> 
+            <a class="btn btn-sm btn-success hide_it saveIndus"style = "cursor:pointer;" onclick="UProfile.updateIndustryExperience()">Save</a>
 </div>
 
   <div class="alert alert-success IndusAlert hide_it2" role="alert">
@@ -134,7 +134,7 @@
 
 {{-- ======================================== Industry Experience end here  ======================================= --}}
 
- 
+
 
 
 
@@ -172,7 +172,7 @@
 									<span class="act_label">Date :</span>
 									<div class="act_field_input">
 									<select id="act_month" name="month" class="select_main month" data-search="true"  data-placeholder="Select Month">
-                                         
+
 										@foreach (getMonths() as $mkey => $month)
 												<option value="{{$mkey}}">{{$month}}</option>
 										@endforeach
@@ -215,7 +215,7 @@
 
 
 
-        {{-- 
+        {{--
         <div class="col_right">
             <div class="bl">
                 <div class="title">
@@ -245,11 +245,11 @@
 
 
 
-            
+
             {{-- @dump($user->questions) --}}
 
-           {{--  @php  
-                $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
+           {{--  @php
+                $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
             @endphp --}}
             {{-- @dump($userQuestions) --}}
             {{-- @if(!empty(getUserRegisterQuestions()))
@@ -264,7 +264,7 @@
                         @endif
                     </p></b> --}}
 
-{{-- 
+{{--
             @endforeach
             @endif
  --}}
@@ -272,34 +272,19 @@
         {{-- <div id="basic_anchor_Questions" class="title_icon_edit">Questions <i class="editQuestions fas fa-edit "></i> --}}
         {{-- <p class="loader SaveQuestionsLoader"></p> --}}
         {{-- </div> --}}
-    <div> 
+    <div>
         <div id="basic" class="title_icon_edit"style="float:left;">Questions <i class="editQuestions fas fa-edit "></i></div>
             <p class="loader SaveQuestionsLoader"style="float: left;"></p>
               <div class="cl"></div>
+              @php
+                        $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
+             @endphp
                 <div class="questionsOfUser">
-            
-                    @php  
-                        $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
-                    @endphp
-                      @if(!empty($userquestion))
-                          @foreach($userquestion as $qk => $question)
-                            <div>
-                              <p>{{$question}} </p>
-                               <p class="QuestionsKeyPTag"><b>{{$userQuestions[$qk]}}</b></p>
-                                <select name="{{$qk}}" class="jobSeekerRegQuestion hide_it">
-                                    <option value="yes"
-                                    {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
-                                    >Yes</option>
-                                    <option value="no"
-                                    {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'no'))?'selected':''}}
-                                    >No</option>
-                                </select>
-                            </div>
-                          @endforeach
-                      @endif
-                          <div class="col-md-12 text-center"style="margin-top: 15px;">
-                              <a class="btn btn-sm btn-success saveQuestionsButton hide_it2" onclick="UProfile.updateQuestions()">Save</a>
-                          </div>  
+                     @include('site.user.profile.questionsuserpart')
+                </div>
+
+                <div class="col-md-12 text-center"style="margin-top: 15px;">
+                    <a class="btn btn-sm btn-success saveQuestionsButton hide_it2" onclick="UProfile.updateQuestions()">Save</a>
                 </div>
     </div>
 
@@ -323,29 +308,29 @@
    <div class="tab_photos tab_cont">
 
           <div class="col_left">
-              <div> 
+              <div>
                   <div id="basic" class="title_icon_edit"style="float:left;">Tags {{-- <i class="editTags fas fa-edit "></i> --}}</div>
                   <p class="loader SaveTagsLoader"style="float: left;"></p>
                   <div class="cl"></div>
-            {{--       <div class="tagsOfUser">    
+            {{--       <div class="tagsOfUser">
                     @foreach($userTags as $uTags)
                         <div class="userTag">
 
                           <span class="userTagLabel">{{$uTags->title}}</span>
                           <input type="hidden" name="userTags[]" value="{{$uTags->id}}" class="UserTagsHidden">
                         </div>
-                    @endforeach     
+                    @endforeach
                   </div> --}}
-      
+
                     {{-- <a class="btn btn-sm btn-success saveTagsButton hide2" style="margin-top: 5px;">Save</a> --}}
             </div>
-{{-- 
+{{--
             <div class="alert alert-success TagsAlert hide2" role="alert">
               <strong>Success!</strong> Tags have been updated successfully!
             </div> --}}
         </div>
 
-    <div class="userTagsEditingLayout">  
+    <div class="userTagsEditingLayout">
       @include('site.layout.tagging')
     </div>
 
@@ -362,7 +347,7 @@
 <a id="tabs-5" class="tab_link tab_a"></a>
     <div class="tab_photos tab_cont" style="padding:0px;">
 
-        <div> 
+        <div>
            {{-- <div id="basic" class="title_icon_edit"style="float:left;">Jobs <i class="editQuestions fas fa-edit "></i></div> --}}
 
             {{-- <p class="loader SaveQuestionsLoader"style="float: left;"></p> --}}

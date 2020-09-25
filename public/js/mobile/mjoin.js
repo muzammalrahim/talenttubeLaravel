@@ -55,11 +55,10 @@ var profile_img_selected = false;
 										}
 									}
 								} else {
-									$('#step-1').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>').prop('disabled', true);
-									$('#success-step-1').html(data.message);
-									setTimeout(() => {
+
+
 										location.href = data.redirect;
-									}, 2000);
+
 								}
 							});
 						} else {
@@ -76,11 +75,10 @@ var profile_img_selected = false;
 										}
 									}
 								} else {
-									$('#step-1').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>').prop('disabled', true);
-									$('#success-step-1').html(data.message);
-									setTimeout(() => {
+
+
 										location.href = data.redirect;
-									}, 2000);
+
 								}
 							});
 						}

@@ -1,12 +1,11 @@
 
-
-@if(!empty($empquestion))
-        @foreach ($empquestion as $qk => $empq)
-            <p>{{($empq)}}</p>
-                <b><p class="employerQuestionsPtag">
+@if(!empty($userquestion))
+        @foreach ($userquestion as $qk => $question)
+            <p>{{($question)}}</p>
+                <b><p class="QuestionsKeyPTag">
                     {{$userQuestions[$qk]}}
                 </p></b>
-                <select name="{{$qk}}" class="EmployerRegQuestion hide_it">
+                <select name="{{$qk}}" class="jobSeekerRegQuestion hide_it">
                     <option value="yes"
                     {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
                     >Yes</option>
@@ -16,3 +15,5 @@
                 </select>
 @endforeach
 @endif
+
+
