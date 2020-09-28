@@ -264,6 +264,7 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
 
 
     Route::post('ajax/updateIndustryExperience', 'Site\SiteUserController@updateIndustryExperience')->name('updateIndustryExperience');
+    Route::post('ajax/updateNewJobIndustryExperience', 'Site\EmployerController@updateNewJobIndustryExperience')->name('updateNewJobIndustryExperience');
 
     Route::post('ajax/updateEmail', 'Site\SiteUserController@updateEmail');
     Route::post('ajax/updatePhone', 'Site\SiteUserController@updatePhone');

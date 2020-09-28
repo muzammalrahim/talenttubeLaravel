@@ -22,6 +22,27 @@
 
             @php
                 $job = $application->job;
+            $experience = json_decode($job->experience);
+            $jobType = '';
+            if($job->type == 'Contract')
+            {
+                $jobType = 'Contract';
+            }
+            elseif ($job->type == 'temporary') {
+                $jobType = 'Temporary';
+            }
+            elseif ($job->type == 'casual') {
+                $jobType = 'casual';
+            }
+            elseif ($job->type == 'full_time') {
+                $jobType = 'Full time';
+            }
+            elseif ($job->type == 'part_time') {
+                $jobType = 'Part time';
+            }
+
+
+
             @endphp
 
             <div class="job_heading p10">
@@ -42,12 +63,22 @@
             <div class="job_info row p10 dblock">
                 <div class="w_25p">
                     <div class="j_label bold">Job Type</div>
-                    <div class="j_value">{{$job->type}}</div>
+                    <div class="j_value">{{$jobType}}</div>
                 </div>
 
                 <div class="w_25p">
                     <div class="j_label bold">Job Experience</div>
-                    <div class="j_value">{{$job->experience}}</div>
+                    <div class="j_value">@if(!empty($experience))
+                        @foreach($experience as $industry )
+                            <div class="IndustrySelect">
+
+                                  <p>
+                                    <i class="fas fa-angle-right qualifiCationBullet"></i>
+                                      {{getIndustryName($industry)}}
+                                      <i class="fa fa-trash removeIndustry hide_it"></i></p>
+                            </div>
+                        @endforeach
+                    @endif</div>
                 </div>
 
                 <div class="w_25p">
@@ -55,10 +86,7 @@
                     <div class="j_value">{{$job->salary}}</div>
                 </div>
 
-                <div class="w_25p">
-                    <div class="j_label bold">Job Category</div>
-                    <div class="j_value">Web & E-commerce Job</div>
-                </div>
+
             </div>
 
             <div class="job_detail p10">

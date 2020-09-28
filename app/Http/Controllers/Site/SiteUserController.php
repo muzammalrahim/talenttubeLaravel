@@ -733,6 +733,7 @@ class SiteUserController extends Controller
         }
     }
 
+
  // ============================= Ajax For updating Industry Experience End here =================================
 
 
@@ -1847,7 +1848,9 @@ class SiteUserController extends Controller
 
             return view('site.employer.likeUsers', $data);
               // return view('mobile.user.profile.profile', $data);
-          }else{
+          }
+
+          else{
             return view('site.user.likeUsers', $data);
           }
                //   site/user/likeUsers

@@ -146,11 +146,11 @@ h4{ font-size: 12px; line-height: 18px; padding: 0; margin: 0 0 10px; color: #00
 .page_3dchat .content{ padding: 0; height: auto; }
 .page_3dchat .footer{ position: absolute; bottom: 0; width: 100%; }
 .cont_w{ width: 1166px; margin: 0 auto; }
-.column_main{ 
-    width: 780px; 
-    min-height: 1000px; 
-    margin: 0 auto; 
-    background-color: #f3f5f9; 
+.column_main{
+    width: 780px;
+    min-height: 1000px;
+    margin: 0 auto;
+    background-color: #f3f5f9;
     position: relative;
     margin-left: 200px;
     width: auto;
@@ -708,7 +708,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
 
 .tabs_profile.choose_profile .tab_cont{visibility:visible; opacity:1; -height: auto;}
 
-.tabs_profile .tab_photos .item{ position: relative; overflow: hidden; width: 126px; height: 140px; margin: 0 26px 25px 0; transition: 0.5s ease; float: left; 
+.tabs_profile .tab_photos .item{ position: relative; overflow: hidden; width: 126px; height: 140px; margin: 0 26px 25px 0; transition: 0.5s ease; float: left;
     width: auto;
     height: auto;
     float: none;
@@ -787,7 +787,7 @@ width: 14px; height: 14px;	margin: -8px 0 0 -8px;
 
 .tabs_profile .tab_photos img.photo{
     width: auto;
-    height: auto; 
+    height: auto;
     max-width: 300px;
     max-height: 3000px;
     min-width: 150px;
@@ -4418,12 +4418,12 @@ ul.pp_small_decor_r_show li:last-child a.selected:hover span{ background: url(..
     display: block;
     margin-top: 20px;
 }
-.tabs_photos{ 
-    line-height: 16px; 
-    color: #7d7d7d; 
+.tabs_photos{
+    line-height: 16px;
+    color: #7d7d7d;
     /*background: url(../../images/site/icon_private_photos.png) -2px 0 no-repeat; */
-    border-bottom: 1px solid #dcdee2; 
-    padding: 0 0 8px 0px; 
-    margin: 0 45px 26px 0; 
-    font-weight: bold; 
+    border-bottom: 1px solid #dcdee2;
+    padding: 0 0 8px 0px;
+    margin: 0 45px 26px 0;
+    font-weight: bold;
 }

@@ -11,7 +11,26 @@
     <div class="jobDetail">
         @if ($job)
         <div class="job_row">
-
+            @php
+            $experience = json_decode($job->experience);
+            $jobType = '';
+            if($job->type == 'Contract')
+            {
+                $jobType = 'Contract';
+            }
+            elseif ($job->type == 'temporary') {
+                $jobType = 'Temporary';
+            }
+            elseif ($job->type == 'casual') {
+                $jobType = 'casual';
+            }
+            elseif ($job->type == 'full_time') {
+                $jobType = 'Full time';
+            }
+            elseif ($job->type == 'part_time') {
+                $jobType = 'Part time';
+            }
+            @endphp
             {{-- @dd($job) --}}
 
             <div class="job_heading p10">
@@ -22,7 +41,7 @@
                 <div class="job_employer">Employer: {{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</div>
 
                 <div class="job_location">
-                    <span>Location : </span><div class="js_location">Location: {{$job->city}},  {{$job->state}}, {{$job->country}} </div>
+                    <div class="js_location">Location: {{$job->city}},  {{$job->state}}, {{$job->country}} </div>
                 </div>
             </div>
 
@@ -39,7 +58,17 @@
 
                 <div class="jobDetail_field">
                     <div class="w_30p dinline_block fl_left j_label bold">Job Experience</div>
-                    <div class="w_70p dinline_block fl_left j_value">{{$job->experience}}</div>
+                    <div class="w_70p dinline_block fl_left j_value">@if(!empty($experience))
+                        @foreach($experience as $industry )
+                            <div class="IndustrySelect">
+
+                                  <p>
+                                    <i class="fas fa-angle-right qualifiCationBullet"></i>
+                                      {{getIndustryName($industry)}}
+                                      <i class="fa fa-trash removeIndustry hide_it"></i></p>
+                            </div>
+                        @endforeach
+                    @endif</div>
                 </div>
 
                 <div class="jobDetail_field">
@@ -49,7 +78,7 @@
 
                 <div class="jobDetail_field">
                     <div class="w_30p dinline_block fl_left j_label bold">Job Type</div>
-                    <div class="w_70p dinline_block fl_left j_value">{{$job->type}}</div>
+                    <div class="w_70p dinline_block fl_left j_value">{{$jobType}}</div>
                 </div>
 
                 {{-- <div class="jobDetail_field">

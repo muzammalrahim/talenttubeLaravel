@@ -30,12 +30,23 @@
             </div>
         </div>
 
-        <div class="job_experience form_field">
-            <span class="form_label">Experience :</span>
-            <div class="form_input">
-                <input type="text" value="" name="experience" class="w100">
-                <div id="experience_error" class="error field_error to_hide">&nbsp;</div>
-            </div>
+
+        <div class="form_field">
+
+            {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
+          <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
+          <div class="cl"></div> --}}
+          <span class="form_label">Industry Experience :<i class="editIndustry fas fa-edit"></i></span>
+              <p class="loader SaveindustryExperience"style="float: left;"></p>
+
+                  <div class="IndusList form_input">
+                    <div class="IndustrySelect">
+                    </div>
+                  </div>
+                  <div class="buttonGroup">
+                    <a class="addIndus graybtn jbtn hide_it marginButton" style = "cursor:pointer;">+ Add</a>
+                    <a class="greenbtn jbtn hide_it buttonSaveIndustry"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
+                  </div>
         </div>
 
         <div class="job_type form_field">
@@ -322,6 +333,365 @@
     float: left;
     width: 90%;
 }
+
+
+
+div.tab_about.tab_cont>div#basic {
+margin: 0px 10px 20px 0px;
+}
+i.editEmployerQuestions.fas.fa-edit {
+    cursor: pointer;
+    font-size: 14px;
+    color: mediumseagreen;
+}
+.button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;;
+  text-align: center;
+  text-decoration: none;
+  display: none;
+  font-size: 14px;
+  margin: 4px 2px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.button:hover {background-color: #3e8e41}
+div.employerRegisterQuestions>div#basic {
+    margin: 0px 10px 20px 0px;
+}
+i.editEmployerQuestions.fas.fa-edit {
+    cursor: pointer;
+    font-size: 14px;
+    color: mediumseagreen;
+    float:left;
+}
+.jq-selectbox.jqselect.EmployerRegQuestion{
+    margin-bottom: 15px;
+}
+.jq-selectbox__select {
+    width: 25px;
+    border-radius: 0px;
+}
+li.sel {
+    width: 35px;
+}
+
+/*chechking spinner*/
+
+.smallSpinner.SaveEmployerQuestionsSpinner {
+    float: left;
+    position: relative;
+    margin:8px 0px 0px 10px;
+    font-size: 18px;
+}
+.alert.alert-success.EmployerQuestionsAlert {
+    background: #3e8e41;
+    height: 30px;
+    width: 50%;
+    text-align: center;
+    padding: 15px 0px 0px 0px;
+    color: white;
+    font-size: 16px;
+    margin: 0px auto;
+    border-radius: 20px;
+}
+/*chechking spinner*/
+.fa-edit{
+    cursor: pointer;
+    font-size: 14px;
+    color: mediumseagreen;
+}
+
+.title.IndusListBox.edit .hide_it {
+    display: block !important;
+}
+
+div.title.IndusListBox>div#basic {
+    margin-bottom: 13px;
+}
+
+i.fa.fa-trash.removeIndustry {
+    margin-top: 7px;
+}
+
+.qualifiCationBullet {
+    margin-right: 10px;
+}
+
+
+.saveIndus,.saveQualification{
+    background: #28a745;
+    text-align: center;
+    height: 22px;
+    padding-top: 6px;
+    border-radius: 4px;
+    opacity: 0.7;
+    color: white;
+    cursor: pointer;
+}
+
+
+div#basic_anchor_industry_experience,div.title.qualificationList>div#basic {
+    margin-bottom: 13px;
+}
+
+.job{
+    margin: 5px 23px;
+}
+.jq-selectbox.jqselect.salaryRangeField.dropup.opened{ width: 100px;}
+.jq-selectbox__select {
+    min-width: 120px;
+}
+.jq-selectbox__select-text{
+        display: table;
+}
+div.jq-selectbox__dropdown.drop_down>ul {
+    width: 136px;
+}
+div.jq-selectbox__dropdown.drop_down>ul>li {
+    font-size: 11px;
+}
+.fa-edit{
+    cursor: pointer;
+    font-size: 14px;
+    color: mediumseagreen;
+}
+.fa-trash{
+    cursor: pointer;
+    font-size: 14px;
+    float: right;
+    color: #a94442;
+    margin-top: 5px;
+}
+
+/*.SaveQuestionsSpinner{
+    position: relative;
+    right: 774px;
+    top: 5px;
+    float: right;
+}*/
+select{
+        display: block;
+        width: 100%;
+        height: calc(2.75rem + 2px);
+        padding: .375rem .75rem;
+        font-size: 1.5rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        margin: 5px 0px 5px 0px ;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        box-shadow: inset 0 0 0 transparent;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+
+.QualificationSelect{
+    font-size: 14px;
+}
+div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {
+    font-size: 12px;
+}
+.spinner.center{
+    position: relative;
+    opacity: 1;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.qualificationBox.editQualif .hide_it {
+    display: block !important;
+}
+.title.IndusListBox.edit .hide_it {
+    display: block !important;
+}
+div#basic_anchor_industry_experience,div.title.qualificationList>div#basic {
+    margin-bottom: 13px;
+}
+div.title.IndusListBox>div#basic {
+
+    margin-bottom: 13px;
+}
+.smallSpinner.SaveIndustrySpinner {
+    font-size: 20px;
+}
+
+select.userQualification {
+    width: 90%;
+    display: inline-block;
+}
+div>div.jq-selectbox__dropdown.drop_down>ul {
+    width: 155px;
+    /*height: 150px;*/
+}
+div.questionsOfUser>div>p {
+    margin: 10px 0px 0;
+    padding: 0px;
+}
+.alert.alert-success.questionsAlert {
+    margin-top: 50px;
+}
+/*span.addIndus.btn.btn-primary.hide_it {
+    margin: 25px 0px 5px 0px;
+}*/
+.questionsAlert{
+    display: none;
+}
+.SaveIndustryLoader{
+    font-size: 20px;
+}
+.hide2{
+    display: none;
+}
+select.jobSeekerRegQuestion {
+    width: auto;
+    cursor: pointer;
+}
+div.smallSpinner.SaveQuestionsSpinner>.spinner.center {
+    font-size: 20px;
+    margin: 5px 0px 0px 10px;
+}
+div.IndusList>div.IndustrySelect>select {
+    width: 40%;
+    display: inline-block;
+}
+i.fa.fa-trash.removeIndustry {
+    margin-top: 7px;
+}
+
+.rounded{
+    /*border-top: 3px solid #bbb;*/
+    border-top: 3px solid #142d69;
+
+    border-radius: 3px;
+}
+.lineDivivder {
+   width: 100%;
+   text-align: center;
+   border-bottom: 1px solid #000;
+   line-height: 0.1em;
+   margin: 10px 0 20px;
+}
+
+.lineDivivder span {
+    background:#f3f5f9;
+    padding:0 10px;
+}
+
+span.addTags.btn.btn-primary
+{
+    display: block;
+    margin-top: 15px;
+}
+div.col_left>div>div#basic {
+    margin-bottom: 13px;
+}
+.userTag {
+    margin-bottom: 7px;
+}
+select.userTags.userTagsSelect {
+    width: 45%;
+    display: inline-block;
+}
+
+.tab_photos>.col_left {
+    float: none !important;
+}
+.savebuttonUsertags{
+    text-align: center;
+    margin-top:10px
+}
+.jobSeekerProfileUpdate,.signOutButtonHeader{
+    color: white !important;
+}
+
+
+
+/*===================================================== Save Resume ===========================================*/
+
+button.btn.violet.save-resume-btn.valign-top {
+    margin-bottom: 23px;
+}
+
+/*===================================================== Image Sizing ===========================================*/
+/*.tabs_profile .tab_photos img.photo {
+    width: auto;
+    height: 150px;
+    max-width: 200px ;
+    min-width: 150px ;
+}*/
+
+/*===================================================== Make Profile Icon ===========================================*/
+span.icon_image_profile {
+    bottom: 42px;
+    right: 5px;
+}
+
+
+div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{
+    position: unset !important;
+}
+
+.jq-selectbox__search {
+    display: none;
+}
+.qualifiCationBullet {
+    margin-right: 10px;
+}
+.qualifType{
+    /*margin-left: 10px;*/
+    font-size: 16px;
+}
+.qualifTypeSpan{
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+.QuestionsKeyPTag{
+    padding: 0px;
+}
+.jq-selectbox__dropdown.drop_down {
+    width: 100% !important;
+}
+hr.rounded {
+    margin: 20px 0px 20px 0px;
+}
+
+
+.saveIndus,.saveQualification{
+    background: #28a745;
+    text-align: center;
+    height: 22px;
+    padding-top: 6px;
+    border-radius: 4px;
+    opacity: 0.7;
+    color: white;
+    cursor: pointer;
+}
+.saveQuestionsButton {
+    background: #28a745;
+    text-align: center;
+    border-radius: 4px;
+    height: 22px;
+    padding-top: 6px;
+    /*display: block;*/
+    opacity: 0.7;
+    color: white;
+    cursor: pointer;
+}
+.buttonGroup{
+    margin-top: 10%;
+}
+
+.marginButton{
+    margin-right: 1%;
+}
+
 </style>
 
 @stop
@@ -335,6 +705,75 @@
 {{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
 
 <script type="text/javascript">
+
+
+
+
+$('input:checkbox').change(function() {
+	if ($(this).is(':checked')) {
+        $(this).closest('label').addClass('checked');
+
+        if($(this).attr('name').includes('preffer')){
+            var res = $(this).attr('name').replace("preffer", "goldstar");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+        if($(this).attr('name').includes('goldstar')){
+            var res = $(this).attr('name').replace("goldstar", "preffer");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+
+	} else {
+		$(this).closest('label').removeClass('checked');
+	}
+});
+
+
+$(document).ready(function(){
+   $(document).on('click','.removeIndustry', function(){
+    $(this).closest('.IndustrySelect').remove();
+   });
+
+   $(document).on('click','.addIndus', function(){
+    console.log(' addIndus ');
+    var newIndusHtml = '<div class="IndustrySelect"><select name="industry_experience[]" class="industry_experience userIndustryExperience">';
+    @if(!empty($industriesList))
+        @foreach($industriesList as $lk=>$lv)
+            newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>';
+        @endforeach
+    @endif
+    newIndusHtml += '</select>';
+    newIndusHtml += '<i class="fa fa-trash removeIndustry"></i>';
+    newIndusHtml += '</div>';
+
+    $('.IndusList').append(newIndusHtml);
+
+   });
+});
+
+$(".editIndustry").click(function(){
+    $(this).closest('.IndusListBox').addClass('edit');
+    $('.removeIndustry').removeClass('hide_it');
+    $('.addIndus').removeClass('hide_it');
+    $('.buttonSaveIndustry').removeClass('hide_it');
+
+    // console.log('welcome');
+  });
+
+
+
+
+
+
+
+
+
+
+
+
 $(document).ready(function() {
     console.log(' new job doc ready  ');
     $(".datepicker").datepicker({
