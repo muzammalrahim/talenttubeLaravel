@@ -213,6 +213,7 @@ class JobSeekerController extends Controller {
 
 
         return view('site.user.jobSeekerInfo', $data);      //  site/user/jobSeekerInfo
+
     }
 
 

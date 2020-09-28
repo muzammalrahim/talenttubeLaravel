@@ -101,8 +101,38 @@
                         @endif
                     </div>
                 </div>
+                <div class="js_education js_field">
+                    <span class="js_label">Qualification:</span>
+                    <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
+                                    <span class="qualifTypeSpan">{{$js->qualificationType}}</span>
+                    </div>
+                    {{-- {{implode(', ', getQualificationNames($js->qualification))}} --}}
+                @php
+                            $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
+                @endphp
+                    @if(!empty($qualificationsData))
+                                @foreach($qualificationsData as $qualification)
+                                            <div class="QualificationSelect">
+                                                            <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
+                                            </div>
+                                @endforeach
+                        @endif
+                </div>
 
+                <div class="js_interested js_field">
+                    <span class="js_label">Industry Experience:</span>
+                                    @if(isset($js->industry_experience))
+                                    @foreach ($js->industry_experience as $ind)
+                                                    <div class="indsutrySelect">
+                                                        <p style="margin-bottom: 0px;"><i class="fas fa-angle-right qualifiCationBullet"></i>{{getIndustryName($ind)}} </p>
+                                                    </div>
+                                    @endforeach
+                                    @endif
+                </div>
             </div>
+
+
+
             {{-- @dump($likeUsers) --}}
             <div class="js_actionBtn">
                 <a class="jsUnLikeUserBtn graybtn jbtn" data-jsid="{{$js->id}}">UnLike</a>
