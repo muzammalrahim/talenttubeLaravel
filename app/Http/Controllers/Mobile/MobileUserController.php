@@ -593,6 +593,7 @@ class MobileUserController extends Controller
             $user->questions = json_encode($request->questions);
             $user->save();
             $data['user'] = User::find($user->id);
+            $data['userquestion'] = getUserRegisterQuestions();
             $questionsView = view('mobile.layout.parts.jobSeekerQuestions', $data);
             $QuestionsHTML = $questionsView->render();
             return response()->json([
@@ -2596,14 +2597,14 @@ class MobileUserController extends Controller
         $validator = Validator::make($request->all(), $rules);
         // dd( $validator->errors() );
         if (!$validator->fails()) {
-            $user->industry_experience = $request->industry_experience;
+            $user->industry_experience = array_unique($request->industry_experience);
             $user->save();
             $data['user'] = User::find($user->id);
             $IndustryView = view('site.layout.parts.jobSeekerIndustryList', $data);
             $IndustryHtml = $IndustryView->render();
             return response()->json([
                     'status' => 1,
-                    'data' => $IndustryHtml
+                    'data' => "hi"
             ]);
         }
     }
@@ -2649,6 +2650,7 @@ class MobileUserController extends Controller
             $data['title']      = 'Job Detail';
             $data['likeUsers']  =  $likeUsers;
             $data['classes_body'] = 'jobdetail';
+
             return view('mobile.employer.jobApplicationList', $data);
             // site/employer/jobApplicationAjax
         }

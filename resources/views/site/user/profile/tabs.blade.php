@@ -273,7 +273,7 @@
         {{-- <p class="loader SaveQuestionsLoader"></p> --}}
         {{-- </div> --}}
     <div>
-        <div id="basic" class="title_icon_edit"style="float:left;">Questions <i class="editQuestions fas fa-edit "></i></div>
+        <div id="basic" class="title_icon_edit"style="float:left;">Questions <i class="editQuestions fas fa-edit"></i></div>
             <p class="loader SaveQuestionsLoader"style="float: left;"></p>
               <div class="cl"></div>
               @php

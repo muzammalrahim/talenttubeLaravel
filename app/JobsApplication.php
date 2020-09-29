@@ -29,7 +29,7 @@ class JobsApplication extends Model{
     // Function to filter jobApplication. // called from jobSeeker->job->applications layout.
     //====================================================================================================================================//
     public function getFilterApplication($request){
-
+        // dd($request);
         $job_id = $request->job_id;
         $keyword = my_sanitize_string($request->ja_filter_keyword);
 

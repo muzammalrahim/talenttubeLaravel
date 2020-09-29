@@ -210,7 +210,7 @@ $(document).ready(function(){
          console.log(' application_description changed ');
          var application_description = $.trim($('textarea[name="application_description"]').val());
          $('.characterCount .count').text(application_description.length);
-         if(application_description.length < 250){
+         if(application_description.length < 150){
             $('.submitApplication').prop('disabled', true);
             $('.characterCount').removeClass('hide_it');
          }else{

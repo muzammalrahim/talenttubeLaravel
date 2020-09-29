@@ -1,4 +1,4 @@
-{{-- @dump($applications) --}}
+
 @if ($applications->count() > 0)
 @foreach ($applications as $application)
 	@php

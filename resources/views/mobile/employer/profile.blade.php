@@ -51,7 +51,7 @@
 <!--Section: Testimonials v.1-->
 
 {{-- ==================================================== For image ==================================================== --}}
-{{-- 
+{{--
     <div id="over" style="width:auto; height:150px">
 
        <img src="https://p16-tiktokcdn-com.akamaized.net/aweme/720x720/tiktok-obj/1646491669975042.jpeg">
@@ -68,7 +68,7 @@
     <div class="personalInfo"><b>Phone:</b> {{$user->phone}}</div>
     <div class="personalInfo"><b>Location: </b>{{userLocation($user)}}</div>
 
-      
+
 
     <div class="aboutMeSection"><b>Interested In: </b>
             <div class="spinner-border spinner-border-sm text-primary IntsdInLoader ml-2" role="status" style="display:none;"></div>
@@ -316,10 +316,11 @@
                       <div class="cl"></div>
                         <div class="questionsOfUser">
                                   @include('mobile.layout.parts.employerQuestions')  {{--  mobile/layout/parts/employerQuestions    --}}
-                                  <div class="col-md-12 text-center mt-3">
-                                      <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
-                                  </div>
-                        </div>
+
+																								</div>
+																								<div class="col-md-12 text-center mt-3">
+																									<a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
+																					</div>
                     <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
                       <strong>Success!</strong> Questions have been updated successfully!
                     </div>
@@ -666,9 +667,10 @@ $(".saveAboutMeButton").click(function(){
                     $('.jobSeekerRegQuestion').addClass('d-none');
 
                     // location.reload();
-                    if(data){
-                        // $(".questionsOfUser").load(" .questionsOfUser");
+                    if(data.status==1){
+                        $(".questionsOfUser").html(data.data);
                         // $(".SaveQuestionsSpinner").remove();
+
 
                 }
             }

@@ -35,35 +35,35 @@ class MobileEmployerController extends Controller
         $this->middleware('auth');
     }
 
- 
+
     // ============================================ Ajax For updating Interested In of Employer ============================================
 
     public function MupdateInterested_inEmp(Request $request){
 
         // dd($request->interestedIn);
-        
-        $requestData = $request->all(); 
+
+        $requestData = $request->all();
         // dd($requestData);
         // $rules = array(
-        //             'interested_in'    => 'required|array', 
+        //             'interested_in'    => 'required|array',
         //             'interested_in.*'  => 'required|integer'
         //         );
-        // $validator = Validator::make($requestData, $rules); 
-        // dd( $validator->errors() ); 
+        // $validator = Validator::make($requestData, $rules);
+        // dd( $validator->errors() );
         // if (!$validator->fails()) {
             $user = Auth::user();
             // dd($user);
-            
+
             $user->interested_in = $request->interestedIn;
 
             // dd($request->interestedIn);
 
-            // $user->qualificationRelation()->sync($requestData['qualification']); 
+            // $user->qualificationRelation()->sync($requestData['qualification']);
 
             $user->save();
 
 
-            $data['user'] = User::find($user->id); 
+            $data['user'] = User::find($user->id);
             // $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
             // $QualificationHtml = $QualificationView->render();
             return response()->json([
@@ -77,29 +77,29 @@ class MobileEmployerController extends Controller
 
 
     // ==================================================== Ajax For updating About Me ====================================================
-    
+
 
     public function Mabout_meEmp(Request $request){
 
         // dd($request->interestedIn);
-        
-        $requestData = $request->all(); 
+
+        $requestData = $request->all();
         // dd($requestData);
         // $rules = array(
-        //             'interested_in'    => 'required|array', 
+        //             'interested_in'    => 'required|array',
         //             'interested_in.*'  => 'required|integer'
         //         );
-        // $validator = Validator::make($requestData, $rules); 
-        // dd( $validator->errors() ); 
+        // $validator = Validator::make($requestData, $rules);
+        // dd( $validator->errors() );
         // if (!$validator->fails()) {
             $user = Auth::user();
             // dd($user);
-            
+
             $user->about_me = $request->aboutMe;
             // dd($request->interestedIn);
-            // $user->qualificationRelation()->sync($requestData['qualification']); 
+            // $user->qualificationRelation()->sync($requestData['qualification']);
             $user->save();
-            $data['user'] = User::find($user->id); 
+            $data['user'] = User::find($user->id);
             // $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
             // $QualificationHtml = $QualificationView->render();
             return response()->json([
@@ -115,16 +115,16 @@ class MobileEmployerController extends Controller
 
 
     public function MupdateQuestionsEmp(Request $request){
-        
-        // dump($request->questions); 
+
+        // dump($request->questions);
         $user = Auth::user();
 
-        // dd($user->questions); 
-        
+        // dd($user->questions);
+
         $rules = array('questions' => 'string|max:100');
         // $validator = Validator::make($request->all(), $rules);
         // if (!$validator->fails()) {
-            
+
             // dd($user);
             // $user->questions = $request->questions;
             $user->questions = json_encode($request->questions);
@@ -133,7 +133,8 @@ class MobileEmployerController extends Controller
 
             // $user->questions = json_encode($request->questions);
             // $user->save();
-            $data['user'] = User::find($user->id);
+            $data['user'] =  $user;
+            $data['empquestion'] = getEmpRegisterQuestions();
             $questionsView = view('mobile.layout.parts.employerQuestions', $data);
             $QuestionsHTML = $questionsView->render();
             return response()->json([
