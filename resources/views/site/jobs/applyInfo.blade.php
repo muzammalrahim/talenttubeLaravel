@@ -27,10 +27,10 @@
                 <div class="form_qstn_options">
                     @if(!empty($question->options))
 
-                    {{--    
+                    {{--
                     @dump($question)
                     @dump($question->options)
-                    @dump(is_array($question->options)) 
+                    @dump(is_array($question->options))
                     --}}
 
                         <select name="answer[{{$question['id']}}][option]">
@@ -55,7 +55,7 @@
         </div>
         <div class="ja_descriptionAnswer">
             <textarea name="application_description" class="w100" title="Add a 250 character word minimum" style="height: 100px;"></textarea>
-            <div class="characterCount"><span class="count">0</span> / 250 minimum character</div>
+            <div class="characterCount"><span class="count">0</span> / 150 minimum character</div>
         </div>
     </div>
 
@@ -71,7 +71,7 @@
 <script type="text/javascript">
   jQuery(document).ready(function(){
     $('.jobApplyform input, .jobApplyform select').styler({ selectSearch: true,});
-  });    
+  });
 </script>
 
 </div>

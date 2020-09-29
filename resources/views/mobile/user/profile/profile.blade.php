@@ -321,7 +321,7 @@
                           <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
                             <source src="{{assetVideo($video)}}" type="video/mp4" />
                           </video>
-                          
+
                       </div>
                     </div>
                     <!--Footer-->
@@ -373,11 +373,11 @@
                         <div class="questionsOfUser">
                           @include('mobile.layout.parts.jobSeekerQuestions')  {{--  mobile/layout/parts/jobSeekerQuestions    --}}
 
-                                <div class="col-md-12 text-center mt-3">
-                                    <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
-                                </div>
-                        </div>
 
+                        </div>
+                        <div class="col-md-12 text-center mt-3">
+                            <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
+                        </div>
                     <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
                       <strong>Success!</strong> Questions have been updated successfully!
                     </div>
@@ -894,8 +894,8 @@ $(".saveIndus").click(function(){
                     $('.jobSeekerRegQuestion').addClass('d-none');
 
 
-                    if(data){
-                        // $(".questionsOfUser").load(" .questionsOfUser");
+                    if(data.status==1){
+                         $(".questionsOfUser").html(data.data);
                         // $(".SaveQuestionsSpinner").remove();
 
                 }

@@ -812,7 +812,7 @@ geocode(data);
 
  $(".editIndustry").click(function(){
     $(this).closest('.IndusListBox').addClass('edit');
-
+    $('input, select').styler();
     $('.removeIndustry').removeClass('hide_it2');
     $('.addIndus').removeClass('hide_it2');
     $('.buttonSaveIndustry').removeClass('hide_it2');
@@ -892,12 +892,8 @@ $(document).ready(function(){
  $(".editQuestions").click(function(){
      // $('.hideme').show();
      $('.saveQuestionsButton').css("display","block");
-     $('.QuestionsKeyPTag').addClass('hide_it2');
+     $('.QuestionsKeyPTag').addClass('hide_it');
      $('.jobSeekerRegQuestion').removeClass('hide_it');
-
-
-
-
 
 });
 

@@ -3,7 +3,7 @@
  <div class="mJSFilter mb-2">
   {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'jobapp_filter_form' )) }}
     <input type="hidden" name="page" id="paginate" value="">
-
+    <input type="hidden" name="job_id" value="{{$job->id}}">
 
 
     <!-- Grid row -->
