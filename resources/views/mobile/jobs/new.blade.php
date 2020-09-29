@@ -54,12 +54,17 @@
                 </div>
 
 
-                <div class="form-group row">
-                    <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Experience</label>
-                    <div class="col-sm-10">
-                      <input type="text" name="experience" class="form-control" id="experience">
-                      <div id="experience_error" class="error field_error to_hide">&nbsp;</div>
-                    </div>
+                <div class="title IndusListBox">
+
+
+                    <div id="basic" class="title_icon_edit">Industry Experience <i class="editIndustry fas fa-edit "></i></div>
+                      <p class="loader SaveindustryExperience"style="float: left;"></p>
+                        <div class="cl"></div>
+                          <div class="IndusList">
+
+                          </div>
+                            <span class="addIndus btn btn-sm btn-primary hide_it2" style = "cursor:pointer;">+ Add</span>
+                            <a class="btn btn-sm btn-success hide_it2 saveIndus"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
                 </div>
 
                 <div class="form-group row">
@@ -257,9 +262,65 @@
 
 
 @section('custom_js')
+<script type="text/javascript" src="{{ asset('js/mobile/userProfile.js') }}"></script>
 <script>
 
-	$(document).ready(function() {
+$(document).ready(function() {
+
+        $(".editIndustry").click(function(){
+    $(this).closest('.IndusListBox').addClass('edit');
+    $('.removeIndustry').removeClass('hide_it2');
+    $('.addIndus').removeClass('hide_it2');
+    $('.saveIndus').removeClass('hide_it2');
+
+    // console.log('welcome');
+  });
+
+  $(document).on('click','.removeIndustry', function(){
+    $(this).closest('.IndustrySelect').remove();
+   });
+  $(document).on('click','.addIndus', function(){
+    console.log(' addIndus ');
+    var newIndusHtml = '<div class="IndustrySelect"><select name="industry_experience[]" class="industry_experience userIndustryExperience">';
+    @if(!empty($industriesList))
+        @foreach($industriesList as $lk=>$lv)
+            newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>';
+        @endforeach
+    @endif
+    newIndusHtml += '</select>';
+    newIndusHtml += '<i class="fa fa-trash removeIndustry"></i>';
+    newIndusHtml += '</div>';
+
+    $('.IndusList').append(newIndusHtml);
+
+   });
+
+
+            $('input:checkbox').change(function() {
+            if ($(this).is(':checked')) {
+                $(this).closest('label').addClass('checked');
+
+                if($(this).attr('name').includes('preffer')){
+                    var res = $(this).attr('name').replace("preffer", "goldstar");
+                    var arrChkBox = $('[name="'+res+'"]');
+                    arrChkBox.prop('checked', false).trigger('refresh');
+                }
+
+                if($(this).attr('name').includes('goldstar')){
+                    var res = $(this).attr('name').replace("goldstar", "preffer");
+                    var arrChkBox = $('[name="'+res+'"]');
+                    arrChkBox.prop('checked', false).trigger('refresh');
+                }
+
+
+            } else {
+                $(this).closest('label').removeClass('checked');
+            }
+        });
+
+
+
+
 
 
 		$('.datepicker').pickadate();
@@ -282,6 +343,28 @@
             option_html += '</div>';
 
         			$(this).closest('.jobQuestion').find('.jq_field_questions').append(option_html);
+                    $('input:checkbox').change(function() {
+	if ($(this).is(':checked')) {
+        $(this).closest('label').addClass('checked');
+
+        if($(this).attr('name').includes('preffer')){
+            var res = $(this).attr('name').replace("preffer", "goldstar");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+        if($(this).attr('name').includes('goldstar')){
+            var res = $(this).attr('name').replace("goldstar", "preffer");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+
+	} else {
+		$(this).closest('label').removeClass('checked');
+	}
+});
+
 
 				});
 				  // add new question html to dom.
@@ -342,6 +425,27 @@
 
          $('.jobQuestions').append(jobQuestion);
          $('#questionCounter').val(qC);
+         $('input:checkbox').change(function() {
+	if ($(this).is(':checked')) {
+        $(this).closest('label').addClass('checked');
+
+        if($(this).attr('name').includes('preffer')){
+            var res = $(this).attr('name').replace("preffer", "goldstar");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+        if($(this).attr('name').includes('goldstar')){
+            var res = $(this).attr('name').replace("goldstar", "preffer");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+
+	} else {
+		$(this).closest('label').removeClass('checked');
+	}
+});
 
 
     });
@@ -677,5 +781,6 @@
 form.new_job_form.newJob.job_validation {
     margin-right: 7%;
 }
+
 
 </style>

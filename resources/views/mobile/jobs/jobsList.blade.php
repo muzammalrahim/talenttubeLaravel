@@ -62,7 +62,30 @@
 
 
                     </div>
+                    @php
+                    // dd($user->qualification);
+                    $industry_experienceData =  json_decode($job->experience);
+                    // ?(getIndustriesData($user->industry_experience)):(array());
+                   // dd( $industry_experienceData);
 
+                    $jobType = '';
+                    if($job->type == 'Contract')
+                    {
+                    $jobType = 'Contract';
+                    }
+                    elseif ($job->type == 'temporary') {
+                    $jobType = 'Temporary';
+                    }
+                    elseif ($job->type == 'casual') {
+                    $jobType = 'casual';
+                    }
+                    elseif ($job->type == 'full_time') {
+                    $jobType = 'Full time';
+                    }
+                    elseif ($job->type == 'part_time') {
+                    $jobType = 'Part time';
+                    }
+                    @endphp
                     <div class="col p-0 pl-3">
 
                         <div class="jobInfoFont float-left mr-1">Job Salary: </div>
@@ -71,15 +94,19 @@
                             <span class="jobInfoFont">Job Experience</span>
                         </div>
                         <div>
-                        {{$job->experience}}
-                        </div>
-                        <div class="mt-2">
-                            <span class="jobInfoFont">Job Category</span>
+                            @if(!empty($industry_experienceData))
+                            @foreach($industry_experienceData as  $industry )
+                                <div class="IndustrySelect">
+                                      <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
+                                      <p>
+                                        <i class="fas fa-angle-right qualifiCationBullet"></i>
+                                          {{getIndustryName($industry)}}
+
+                                </div>
+                            @endforeach
+                        @endif
                         </div>
 
-                        <div>
-                        Web & E-commerce Job
-                        </div>
 
                     </div>
 
@@ -105,7 +132,7 @@
                     </div>
 
                     <div class="p-0 float-right mr-2"><span>Job Type</span><br>
-                        {{$job->type}}
+                        {{$jobType}}
                     </div>
                 </div>
 

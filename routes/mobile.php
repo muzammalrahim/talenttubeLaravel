@@ -76,6 +76,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
 	 Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfo')->name('MjobApplyInfo');
 
+     Route::post('ajax/updateNewJobIndustryExperience', 'Mobile\MobileUserController@updateNewJobIndustryExperience')->name('updateNewJobIndustryExperience');
 	 // Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfoAjax')->name('MjobApplyInfoAjax');
 
 	 // Job Application Submission

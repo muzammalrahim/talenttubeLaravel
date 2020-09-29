@@ -10,7 +10,30 @@
 @foreach ($jobs as $job)
 
     {{-- @dump($job) --}}
+    @php
+    // dd($user->qualification);
+    $industry_experienceData =  json_decode($job->experience);
+    // ?(getIndustriesData($user->industry_experience)):(array());
+   // dd( $industry_experienceData);
 
+    $jobType = '';
+    if($job->type == 'Contract')
+    {
+    $jobType = 'Contract';
+    }
+    elseif ($job->type == 'temporary') {
+    $jobType = 'Temporary';
+    }
+    elseif ($job->type == 'casual') {
+    $jobType = 'casual';
+    }
+    elseif ($job->type == 'full_time') {
+    $jobType = 'Full time';
+    }
+    elseif ($job->type == 'part_time') {
+    $jobType = 'Part time';
+    }
+    @endphp
 
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 
@@ -22,7 +45,7 @@
 
              <div class="card-header jobAppHeader p-2 jobInfoFont">
 
-                <button class="jobsTypeLablel float-right font-weight-normal" disabled> {{$job->type}} Job</button>
+                <button class="jobsTypeLablel float-right font-weight-normal" disabled> {{$jobType}} Job</button>
 
                 <a>{{$job->title}}</a>
                 <div>
@@ -58,21 +81,32 @@
                      	<div>{{$job->salary}}</div>
                     </div>
 
-                   	<div class="col px-1"> <span class="jobInfojobInfo"> Job Category </span>
-                     	<div>Web & E-commerce Job</div>
-                    </div>
+
 
                 </div>
 
 
                 <div class="row px-1">
                     <div class="card-title col-12 p-0 mt-2 mb-0 jobInfoFont">Job Experience</div>
-                	<p class="card-text jobDetail row m-0">{{$job->experience}}</p>
+                	<p class="card-text jobDetail row m-0">@if(!empty($industry_experienceData))
+                        @foreach($industry_experienceData as  $industry )
+                            <div class="IndustrySelect">
+                                  <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
+                                  <p>
+                                    <i class="fas fa-angle-right qualifiCationBullet"></i>
+                                      {{getIndustryName($industry)}}
+
+                            </div>
+                        @endforeach
+                    @endif</p>
                 </div>
 
                 <div class="row px-1">
-                    <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Job Detail</div>
-                    <p class="card-text jobDetail row m-0">{{$job->description}}</p>
+                    <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Job Detail
+
+                        <p class="card-text jobDetail row m-0">{{$job->description}}</p>
+                    </div>
+
                 </div>
 
 

@@ -1392,7 +1392,7 @@ class MobileUserController extends Controller
         // $jobs =  Jobs::find(12);
         // dd( json_decode($jobs->questions()->first()->options, true) );
         // dd( $jobs->questions()->first()->options );
-
+        $data['industriesList'] = getIndustries();
         $data['geo_country'] = get_Geo_Country();
         return view('mobile.jobs.new', $data); // mobile/jobs/new
     }
@@ -1457,7 +1457,7 @@ class MobileUserController extends Controller
 		$requestData = $request->all();
 		$requestData['title']         = my_sanitize_string($request->title);
 		$requestData['description']   =  my_sanitize_string($request->description);
-		$requestData['experience']    =  my_sanitize_string($request->experience);
+
 		$requestData['type']          =  my_sanitize_string($request->type);
 		// $requestData['location_country']   =  my_sanitize_number($request->location_country);
 		// $requestData['location_state']   =  my_sanitize_number($request->location_state);
@@ -1491,7 +1491,6 @@ class MobileUserController extends Controller
 		$rules = array(
 						"title" => "required|string|max:255",
 						"description" => "required|string",
-						"experience"  => "string|max:255",
 						"type"  => "required|string|max:10",
 						"geo_country"  => "integer",
 						"geo_states"  => "integer",
@@ -1513,7 +1512,9 @@ class MobileUserController extends Controller
                         $job = new Jobs();
                         $job->title =  $requestData['title'];
                         $job->description =  $requestData['description'];
-                        $job->experience =  $requestData['experience'];
+                        if(!empty($request->industry_experience)){
+                            $job->experience = json_encode(array_unique($request->industry_experience));
+                        }
                         $job->type =  $requestData['type'];
                         $job->country =  $requestData['location_country'];
                         $job->state =  $requestData['location_state'];
@@ -1701,6 +1702,7 @@ class MobileUserController extends Controller
         $job = Jobs::where('id',$id)->first();
         $data['job'] = $job;
         $data['location'] = $job->city.' '.$job->state.' ,'.$job->country;
+        $data['industriesList'] = getIndustries();
         return view('mobile.jobs.edit', $data);   //  mobile
         // mobile/employer/myjobs
     }
@@ -1727,7 +1729,6 @@ class MobileUserController extends Controller
         $rules = array(
             "title" => "required|string|max:255",
             "description" => "required|string",
-            "experience"  => "string|max:255",
             "type"  => "required|string|max:10",
             "vacancies"  => "integer",
             "salary"  => "string|max:255",
@@ -1749,7 +1750,9 @@ class MobileUserController extends Controller
             }else{
                 $job->title =  $requestData['title'];
                 $job->description =  $requestData['description'];
-                $job->experience =  $requestData['experience'];
+                if(!empty($request->industry_experience)){
+                    $job->experience = json_encode(array_unique($request->industry_experience));
+                }
                 $job->type =  $requestData['type'];
                 $job->country =  $requestData['location_country'];
                 $job->state =  $requestData['location_state'];
@@ -2089,7 +2092,34 @@ class MobileUserController extends Controller
 
     }
 
+    public function updateNewJobIndustryExperience(Request $request){
 
+        // dump($request->tags);
+        $user = Auth::user();
+        $rules = array(
+                'industry_experience'    => 'required|array',
+                'industry_experience.*'  => 'string|max:100'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        // dd( $validator->errors() );
+        if (!$validator->fails()) {
+            //$user->industry_experience = $request->industry_experience;
+            // $array = array_unique (array_merge ($user->industry_experience, $request->industry_experience));
+            $industry_experience = array_unique($request->industry_experience);
+            $data['industry_experience'] =  $industry_experience;
+            $IndustryView = view('site.layout.parts.newJobIndustryList', $data);
+            $IndustryHtml = $IndustryView->render();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $IndustryHtml
+            ]);
+        }
+
+        return response()->json([
+            'status' => 2,
+
+    ]);
+    }
 
 
     //====================================================================================================================================//
