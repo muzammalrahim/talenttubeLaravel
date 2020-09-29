@@ -304,6 +304,7 @@ this.updateIndustryExperience = function(){
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
+        alert("Hi");
         var industry_experience = jQuery('.industry_experience').map(function(){ return $(this).val()}).get();
          $('.SaveindustryExperience').after(getLoader('smallSpinner SaveIndustrySpinner'));
         $.ajax({

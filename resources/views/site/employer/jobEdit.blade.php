@@ -886,6 +886,28 @@ $(document).ready(function() {
          $('.jobQuestions').append(jobQuestion);
          $('#questionCounter').val(qC);
          jQFormStyler(); // rerun the form styler.
+         $('input:checkbox').change(function() {
+	if ($(this).is(':checked')) {
+        $(this).closest('label').addClass('checked');
+
+        if($(this).attr('name').includes('preffer')){
+            var res = $(this).attr('name').replace("preffer", "goldstar");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+        if($(this).attr('name').includes('goldstar')){
+            var res = $(this).attr('name').replace("goldstar", "preffer");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+
+	} else {
+		$(this).closest('label').removeClass('checked');
+	}
+});
+
 
     });
 
@@ -909,6 +931,28 @@ $(document).ready(function() {
 
         $(this).closest('.jobQuestion').find('.jq_field_questions').append(option_html);
         jQFormStyler(); // rerun the form styler.
+        $('input:checkbox').change(function() {
+	if ($(this).is(':checked')) {
+        $(this).closest('label').addClass('checked');
+
+        if($(this).attr('name').includes('preffer')){
+            var res = $(this).attr('name').replace("preffer", "goldstar");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+        if($(this).attr('name').includes('goldstar')){
+            var res = $(this).attr('name').replace("goldstar", "preffer");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+
+	} else {
+		$(this).closest('label').removeClass('checked');
+	}
+});
+
     });
 
     var jQFormStyler = function(){
