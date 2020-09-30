@@ -230,7 +230,7 @@
                                                     @endif
                                                             <div class="col-sm-3 custom-control custom-checkbox custom-control-inline mt-2">
                                                                     <input type="checkbox" class="custom-control-input" id="jq[{{$keyq}}][option][{{$key}}][preffer]" name="jq[{{$keyq}}][option][{{$key}}][preffer]" value="preffer" {{$checked}}>
-                                                                    <label class="custom-control-label font-weight-bold" for="jq[{{$keyq}}][option][{{$key}}][preffer]">Prefer</label>
+                                                                    <label class="custom-control-label font-weight-bold" for="jq[{{$keyq}}][option][{{$key}}][preffer]">Undiserable</label>
                                                             </div>
 
                                         </div>
@@ -396,7 +396,7 @@
             option_html += '</div>';
             option_html +=	'<div class="col-sm-3 custom-control custom-checkbox custom-control-inline mt-2">';
             option_html +=	'<input type="checkbox" class="custom-control-input" id="jq_'+qC+'_option_'+oC+'_preffer" name="jq['+qC+'][option]['+oC+'][preffer]">';
-            option_html +=	'<label class="custom-control-label font-weight-bold" for="jq_'+qC+'_option_'+oC+'_preffer">Prefer</label>';
+            option_html +=	'<label class="custom-control-label font-weight-bold" for="jq_'+qC+'_option_'+oC+'_preffer">Undiserable</label>';
             option_html += '</div>';
             option_html += '</div>';
 
@@ -462,7 +462,7 @@
 																	jobQuestion +=										'</div>';
 																	jobQuestion +=										'<div class="col-sm-3 custom-control custom-checkbox custom-control-inline mt-2">';
 																		jobQuestion +=											'<input type="checkbox" class="custom-control-input" id="jq_'+qC+'_option_0_preffer" name="jq['+qC+'][option][0][preffer]" value="preffer">';
-																		jobQuestion +=											'<label class="custom-control-label font-weight-bold" for="jq_'+qC+'_option_0_preffer">Prefer</label>';
+																		jobQuestion +=											'<label class="custom-control-label font-weight-bold" for="jq_'+qC+'_option_0_preffer">Undiserable</label>';
 																		jobQuestion +=								'</div>';
 																		jobQuestion +=				'</div>';
 																		jobQuestion +=			'</div>';

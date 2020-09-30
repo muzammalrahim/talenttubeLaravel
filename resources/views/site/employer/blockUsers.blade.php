@@ -96,6 +96,10 @@
                         @endif
                     </div>
                 </div>
+
+
+
+
                 <div class="js_education js_field">
                     <span class="js_label">Qualification:</span>
                     <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
@@ -125,6 +129,8 @@
                                     @endif
                 </div>
             </div>
+
+
             {{-- @dump($likeUsers) --}}
             <div class="js_actionBtn">
                 <a class="empUnBlockUserBtn graybtn jbtn" data-jsid="{{$js->id}}">UnBlock</a>

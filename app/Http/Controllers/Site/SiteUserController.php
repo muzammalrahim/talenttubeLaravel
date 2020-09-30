@@ -1744,6 +1744,13 @@ class SiteUserController extends Controller
             }
         }
 
+
+
+                    // return response()->json([
+                    //     'status' => 1,
+                    //     'message' => $request['answer']
+                    // ]);
+
     }
 
 
@@ -1830,6 +1837,15 @@ class SiteUserController extends Controller
         $data['title'] = 'Block Users';
         $data['classes_body'] = 'blockUsers';
         $data['blockUsers'] = BlockUser::with('user')->where('user_id',$user->id)->get();
+        if(isEmployer()){
+
+            return view('site.employer.blockUsers', $data);
+              // return view('mobile.user.profile.profile', $data);
+          }
+
+          else{
+            return view('site.user.blockUsers', $data);
+          }
         return view('site.user.blockUsers', $data);         //      site/user/blockUsers
     }
 
