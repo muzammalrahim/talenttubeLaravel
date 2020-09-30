@@ -60,6 +60,26 @@
                 </div>
             </div>
 
+            <div class="title IndusListBox">
+
+                {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
+              <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
+              <div class="cl"></div> --}}
+                <div id="basic" class="title_icon_edit">Industry Experience <i class="editIndustry fas fa-edit"></i></div>
+                  <p class="loader SaveindustryExperience"style="float: left;"></p>
+                    <div class="cl"></div>
+                      <div class="IndusList">
+                           @include('site.layout.parts.jobSeekerIndustryList')
+                      </div>
+                        <span class="addIndus btn btn-primary hide_it"style = "cursor:pointer;">+ Add</span>
+                        <a class="btn btn-sm btn-success hide_it saveIndus"style = "cursor:pointer;" onclick="UProfile.updateIndustryExperience()">Save</a>
+            </div>
+
+              <div class="alert alert-success IndusAlert hide_it2" role="alert">
+              {{--    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
+                <strong>Success!</strong> Industry Experience have been updated successfully!
+              </div>
+
             {{-- Company --}}
 
      {{--        <div class="bl">
@@ -249,22 +269,3 @@
     </div>
 </div>
 <!-- /tabs_profile -->
-<div class="title IndusListBox">
-
-    {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
-  <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
-  <div class="cl"></div> --}}
-    <div id="basic" class="title_icon_edit">Industry Experience <i class="editIndustry fas fa-edit"></i></div>
-      <p class="loader SaveindustryExperience"style="float: left;"></p>
-        <div class="cl"></div>
-          <div class="IndusList">
-               @include('site.layout.parts.jobSeekerIndustryList')
-          </div>
-            <span class="addIndus btn btn-primary hide_it"style = "cursor:pointer;">+ Add</span>
-            <a class="btn btn-sm btn-success hide_it saveIndus"style = "cursor:pointer;" onclick="UProfile.updateIndustryExperience()">Save</a>
-</div>
-
-  <div class="alert alert-success IndusAlert hide_it2" role="alert">
-  {{--    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
-    <strong>Success!</strong> Industry Experience have been updated successfully!
-  </div>

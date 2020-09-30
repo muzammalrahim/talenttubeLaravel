@@ -169,7 +169,7 @@
                                      <input type="text" name="jq[0][option][0][text]" />
                                      <div class="jq_option_cbx">
                                         <input type="checkbox" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer">
-                                        <label for="jq_0_option_0_preffer">Preffer</label>
+                                        <label for="jq_0_option_0_preffer">Undiserable</label>
                                      </div>
                                       <div class="jq_option_cbx">
                                         <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar">
@@ -808,7 +808,7 @@ $(document).ready(function() {
             jobQuestion +=             '<input type="text" name="jq['+qC+'][option][0][text]" />';
             jobQuestion +=                 '<div class="jq_option_cbx">';
             jobQuestion +=                      '<input type="checkbox" id="jq_'+qC+'_option_0_preffer" name="jq['+qC+'][option][0][preffer]" value="preffer">';
-            jobQuestion +=                       '<label for="jq_'+qC+'_option_0_preffer">Preffer</label> ';
+            jobQuestion +=                       '<label for="jq_'+qC+'_option_0_preffer">Undiserable</label> ';
             jobQuestion +=                  '</div>';
             jobQuestion +=                  '<div class="jq_option_cbx">';
             jobQuestion +=                     '<input type="checkbox" id="jq_'+qC+'_option_0_goldstar" name="jq['+qC+'][option][0][goldstar]" value="goldstar">';
@@ -859,7 +859,7 @@ $(document).ready(function() {
             option_html +=             '<input type="text" name="jq['+qC+'][option]['+oC+'][text]" />';
             option_html +=              '<div class="jq_option_cbx">';
             option_html +=              '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_preffer" name="jq['+qC+'][option]['+oC+'][preffer]" value="preffer">';
-            option_html +=                '<label for="jq_'+qC+'_option_'+oC+'_preffer">Preffer</label> ';
+            option_html +=                '<label for="jq_'+qC+'_option_'+oC+'_preffer">Undiserable</label> ';
             option_html +=                  '</div>';
             option_html +=                  '<div class="jq_option_cbx">';
             option_html +=                     '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_goldstar" name="jq['+qC+'][option]['+oC+'][goldstar]" value="goldstar">';
