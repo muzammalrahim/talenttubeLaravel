@@ -1,9 +1,9 @@
- 
+
 <div class="application_qa">
 @php
     // dd( $application  );
     // dd( $application->answers->first()  );
-    $answers = $application->answers;     
+    $answers = $application->answers;
 @endphp
 
  @if (!empty($answers))
@@ -18,12 +18,13 @@
                 <div class="jqa_a">{{$answer->answer}}</div>
             </div>
             @endforeach
-        </div>         
+        </div>
  @endif
 
 <div class="jobAppDescriptionBox">
     <span>{{jobApplicationMandatoryQuestion()}}</span>
-    <div class="jobAppDescription">{{$application->description}}</div>
+    <div class="jobAppDescription">
+        <p>{{ $application->description}}</p></div>
 </div>
 
 </div>

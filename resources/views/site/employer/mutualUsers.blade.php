@@ -25,8 +25,8 @@
         <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
             <div class="jobSeeker_box relative dinline_block w100">
                 @php
-$profile_image  = asset('images/site/icons/nophoto.jpg');
-$profile_image_gallery    = $js->profileImage()->first();
+        $profile_image  = asset('images/site/icons/nophoto.jpg');
+        $profile_image_gallery    = $js->profileImage()->first();
 
 // dump($profile_image_gallery);
 
@@ -84,20 +84,12 @@ $profile_image_gallery    = $js->profileImage()->first();
 
     {{-- @dump($js) --}}
 
-
-
-    <div class="js_education js_field">
-        <span class="js_label">Qualification:</span>
-        @php
-         $qualification_names =  getQualificationNames($js->qualification)
-        @endphp
-
-         @if(!empty($qualification_names))
-            @foreach ($qualification_names as $qnKey => $qnValue)
-               <span class="qualification dblock">{{$qnValue}}</span>
-            @endforeach
-         @endif
+    <div class="js_about js_field">
+        <span class="js_label">Recent Job:</span>
+        <span class="js_about_me"> {{$js->recentJob}}</span>
     </div>
+
+
 
     <div class="js_about js_field">
         <span class="js_label">About me:</span>
@@ -118,6 +110,10 @@ $profile_image_gallery    = $js->profileImage()->first();
             @endif
         </div>
     </div> --}}
+
+    <div class="js_interested js_field">
+        <span class="js_label">Salary Range:</span> {{getSalariesRangeLavel($js->salaryRange)}}
+    </div>
     <div class="js_education js_field">
         <span class="js_label">Qualification:</span>
         <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
@@ -133,9 +129,8 @@ $profile_image_gallery    = $js->profileImage()->first();
                                                 <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
                                 </div>
                     @endforeach
-        @endif
+            @endif
     </div>
-
 
     <div class="js_interested js_field">
     <span class="js_label">Industry Experience:</span>

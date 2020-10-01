@@ -92,6 +92,51 @@
 
 
                 <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
+                <div class="row p-0">
+                    <span class="jobInfoFont">Qualification:</span>
+                </div>
+                    <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
+                                    <span class="qualifTypeSpan">{{$js->qualificationType}}</span>
+                    </div>
+                    {{-- {{implode(', ', getQualificationNames($js->qualification))}} --}}
+                @php
+                            $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
+                @endphp
+                    @if(!empty($qualificationsData))
+                                @foreach($qualificationsData as $qualification)
+                                            <div class="jobDetail">
+                                                            <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
+                                            </div>
+                                @endforeach
+                    @endif
+
+
+
+
+
+
+
+
+
+
+                <div class="row p-0">
+                    <span class="jobInfoFont">Industry Experience </span>
+                </div>
+                <div class="">
+                    @if(!empty($js->industry_experience))
+                       @foreach($js->industry_experience as  $industry )
+                           <div class="">
+
+                                 <div class="jobDetail">
+                                   <i class="fas fa-angle-right"></i>
+                                     {{getIndustryName($industry)}}
+                                     <i class="fa fa-trash removeIndustry float-right hide_it2 float-right"></i>
+                                </div>
+                           </div>
+                       @endforeach
+                   @endif
+               </div>
+
 
 
 

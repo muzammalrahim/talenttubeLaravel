@@ -80,28 +80,16 @@
                     <p>{{$js->interested_in}}</p>
                 </div>
 
-                <div class="js_languages js_field">
-                    <span class="js_label">Languages:</span>
-                    <div class="js_tags dinline_block">
-                        @if ($js->language)
-                        @foreach ($js->language as $lang)
-                            <span class="js_tag">{{getLanguage($lang)}}</span>
+                <div class="js_interested js_field">
+                    <span class="js_label">Industry Experience:</span>
+                        @if(isset($js->industry_experience))
+                        @foreach ($js->industry_experience as $ind)
+                                        <div class="indsutrySelect">
+                                            <p style="margin-bottom: 0px;"><i class="fas fa-angle-right qualifiCationBullet"></i>{{getIndustryName($ind)}} </p>
+                                        </div>
                         @endforeach
                         @endif
-                    </div>
                 </div>
-
-                <div class="js_languages js_field">
-                    <span class="js_label">Hobbies:</span>
-                    <div class="js_tags dinline_block">
-                        @if ($js->hobbies)
-                        @foreach ($js->hobbies as $hobby)
-                            <span class="js_tag">{{getHobby($hobby)}}</span>
-                        @endforeach
-                        @endif
-                    </div>
-                </div>
-
             </div>
             {{-- @dump($likeUsers) --}}
             <div class="js_actionBtn">

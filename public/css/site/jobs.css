@@ -76,6 +76,7 @@
     margin: 2px 0px;
     border-radius: 4px;
     line-height: 17px;
+    word-break: break-all;
 }
 .jobAppDescriptionBox span {
     padding: 5px 0px;

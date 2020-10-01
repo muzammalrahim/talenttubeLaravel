@@ -1920,7 +1920,17 @@ class SiteUserController extends Controller
         // dd( $mutualUser );
 
         $data['likeUsers'] = $mutualUser;
-        return view('site.user.mutualUsers', $data);
+
+        if(isEmployer()){
+
+            return view('site.employer.mutualUsers', $data);
+              // return view('mobile.user.profile.profile', $data);
+          }
+
+          else{
+            return view('site.user.mutualUsers', $data);
+          }
+
         // site/user/mutualUsers
     }
 
