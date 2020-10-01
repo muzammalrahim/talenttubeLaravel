@@ -240,7 +240,9 @@ function getIndustries(){
         'team_leader_people_management' => 'Team Leader and People Management',
         'telecommunications'            => 'Telecommunications',
         'trades_services'               => 'Trades and Services',
-        'transport_logistics'           => 'Transport and Logistics'
+        'transport_logistics'           => 'Transport and Logistics',
+        'hospitality_hotels'            => 'Hospitality & Hotels' ,
+        'aviation'                      => 'Aviation'
     );
 
     return  $industries_list;
@@ -662,7 +664,7 @@ function generateVideoThumbsm($video){
             $vPath      = $vBasePath.$video->thumbs[0];
             $html .= ' src="'.asset($vPath).'"';
 
-												
+
         }
 						$html .= '/>';
 						// $html .= '<a onclick="UProfile.delteVideo('.$video->id.')">	<i class="fas fa-trash"></i></a>';
