@@ -346,12 +346,8 @@ class EmployerController extends Controller {
 
 
         // sanitize all questions data.
+        if (!empty($requestData['jq'])){
         foreach ($requestData['jq'] as $jqk => $jqv) {
-
-            // dump($requestData['jq']);
-            // dump($jqk);
-            // dd($jqv['title']);
-
             $requestData['jq'][$jqk]['title'] = my_sanitize_string($jqv['title']);
             if(!empty($jqv['option'])){
                 foreach ($jqv['option'] as $jqok => $jqov) {
@@ -359,7 +355,7 @@ class EmployerController extends Controller {
                 }
             }
         }
-
+        }
         // Jobs::find(12)->addJobQuestions($requestData['jq']);
 
 
@@ -408,7 +404,9 @@ class EmployerController extends Controller {
 
             $job->save();
 
+            if (!empty($requestData['jq'])){
             $job->addJobQuestions($requestData['jq']);
+            }
 
             return response()->json([
                 'status' => 1,

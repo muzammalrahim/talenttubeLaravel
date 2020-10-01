@@ -381,7 +381,7 @@ $(document).ready(function() {
 
         var qC = parseInt($('#questionCounter').val())+1;
 
-
+            if(qC<=5){
 
 											var	jobQuestion  = 	'<div class="jobQuestion q'+qC+'">';
 												jobQuestion +=	'<div class="form-group row">';
@@ -447,13 +447,14 @@ $(document).ready(function() {
 	}
 });
 
-
+}
     });
 
 				$(document).on('click','.removeJobQuestion',function(){
-        $(this).closest('.jobQuestion').remove();
+                $(this).closest('.jobQuestion').remove();
+                var qC = parseInt($('#questionCounter').val())-1;
+                $('#questionCounter').val(qC);
 				});
-
 
 
     });

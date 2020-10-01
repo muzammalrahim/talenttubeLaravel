@@ -98,25 +98,28 @@ button.btn:disabled, button.btn.disabled {
     border-radius: 3px !important;
     max-width: 48%;
 }
-.goldstar,
+.goldstar{
+    margin-top: 10px;
+    margin-left: -18px;
+}
 .silverstar {
-    position: absolute;
-    top: 10px;
-    left: -18px;
+    margin-left: -18px;
 }
 /*.silverstar img { height: 40px; }*/
 .goldstar img, .silverstar img {
-    display: inline-block;
+
     margin: 0;
     padding: 0;
     width: 18px;
-    display: block;
-}
 
+}
+.js_star{
+ position: absolute;
+}
 .js_profile_video {
     position: absolute;
-    left: 0px;
-    top: 20px;
+    margin-left: 0px;
+    margin-top: 20px;
     width: 55px;
     border-radius: 4px;
     padding: 4px;
@@ -157,7 +160,7 @@ button.btn:disabled, button.btn.disabled {
   width: 60px;
   height: 34px;
 }
-.toggleSwitchButton .switch input { 
+.toggleSwitchButton .switch input {
   opacity: 0;
   width: 0;
   height: 0;
@@ -190,7 +193,7 @@ button.btn:disabled, button.btn.disabled {
   -webkit-transform: translateX(26px);
   -ms-transform: translateX(26px);
   transform: translateX(26px);
-} 
+}
 .toggleSwitchButton .slider.round { border-radius: 34px; }
 .toggleSwitchButton .slider.round:before { border-radius: 50%; }
 */
@@ -198,7 +201,7 @@ button.btn:disabled, button.btn.disabled {
 .toggleSwitchButton {
     display: inline-block;
     margin: 10px;
-    margin-left: 0px; 
+    margin-left: 0px;
 }
 
 .info ul.list_info li:nth-child(3) {
@@ -212,7 +215,7 @@ button.btn:disabled, button.btn.disabled {
 
 .searchField_qualification .dot_list li { display: none; }
 .searchField_qualification.degree .degree { display: inline-block; }
-.dot_list li { 
+.dot_list li {
   width: 50%;
   vertical-align: top;
   cursor: pointer;
@@ -261,7 +264,7 @@ width: 103%;
     /*margin-left: 10px;*/
     font-size: 14px;
 }
-.qualifTypeSpan{   
+.qualifTypeSpan{
     text-transform: capitalize;
     font-weight: bold;
 }

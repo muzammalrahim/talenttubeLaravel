@@ -857,7 +857,8 @@ $(document).ready(function() {
         // });
 
         var qC = parseInt($('#questionCounter').val())+1;
-
+        console.log(qC);
+        if(qC<=5){
         var jobQuestion  = '<div class="jobQuestion q'+qC+'">';
             jobQuestion +=  '<div class="jq_field_box ">';
             jobQuestion +=    '<div class="jq_field_label">Title</div>';
@@ -907,7 +908,7 @@ $(document).ready(function() {
 		$(this).closest('label').removeClass('checked');
 	}
 });
-
+}
 
     });
 
@@ -962,8 +963,10 @@ $(document).ready(function() {
         $(this).closest('.question').remove();
     });
     $(document).on('click','.close_icon.removeJobQuestion',function(){
-
         $(this).closest('.jobQuestion').remove();
+        var qC = parseInt($('#questionCounter').val());
+        qC -=1;
+        $('#questionCounter').val(qC);
 	});
 
     // Update New job button click //

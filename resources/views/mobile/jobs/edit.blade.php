@@ -165,7 +165,7 @@
                 </div>
                 @php
                 $questions = json_decode($job->questions, true);
-                $qnum = sizeof($questions);
+                $qnum = sizeof($questions)-1;
                 //dd($questions)
                 @endphp
                 <div class="jobQuestions">
@@ -255,7 +255,7 @@
                         @endif
                 </div>
 
-                <input type="hidden" name="questionCounter" id="questionCounter" value="0">
+                <input type="hidden" name="questionCounter" id="questionCounter" value="{{$qnum}}">
 
                         <div class="form-group row float-right">
                                     <label class="col-sm-2 col-form-label"></label>
@@ -438,7 +438,7 @@
 
         var qC = parseInt($('#questionCounter').val())+1;
 
-
+            if(qC<=5){
 
 											var	jobQuestion  = 	'<div class="jobQuestion q'+qC+'">';
 												jobQuestion +=	'<div class="form-group row">';
@@ -504,12 +504,14 @@
 		$(this).closest('label').removeClass('checked');
 	}
 });
-
+}
     });
 
     $(document).on('click','.removeJobQuestion',function(){
 
         $(this).closest('.jobQuestion').remove();
+        var qC = parseInt($('#questionCounter').val())-1;
+        $('#questionCounter').val(qC);
 				});
 
 
