@@ -33,25 +33,56 @@
                     </span>
                 </div>
             </div>
+            @php
+            // dd($user->qualification);
+            $industry_experienceData =  json_decode($job->experience);
+            // ?(getIndustriesData($user->industry_experience)):(array());
+           // dd( $industry_experienceData);
 
+            $jobType = '';
+            if($job->type == 'Contract')
+            {
+            $jobType = 'Contract';
+            }
+            elseif ($job->type == 'temporary') {
+            $jobType = 'Temporary';
+            }
+            elseif ($job->type == 'casual') {
+            $jobType = 'casual';
+            }
+            elseif ($job->type == 'full_time') {
+            $jobType = 'Full time';
+            }
+            elseif ($job->type == 'part_time') {
+            $jobType = 'Part time';
+            }
+            @endphp
             <div class="card-body jobAppBody p-2">
 
                 <div class="row jobInfo">
-                    <div class="col"><span>Job Type</span><br>
-                        {{$job->type}}
+                    <div class="p-0 float-right mr-2"><span>Job Type</span><br>
+                        {{$jobType}}
                     </div>
 
-                    <div class="col jobInfo"><span>Job Experience</span><br>
-                        {{$job->experience}}
+                    <div>
+                        @if(!empty($industry_experienceData))
+                        @foreach($industry_experienceData as  $industry )
+                            <div class="IndustrySelect">
+                                  <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
+                                  <p>
+                                    <i class="fas fa-angle-right qualifiCationBullet"></i>
+                                      {{getIndustryName($industry)}}
+
+                            </div>
+                        @endforeach
+                    @endif
                     </div>
 
                     <div class="col jobInfo"><span>Job Salary</span><br>
                         {{$job->salary}}
                     </div>
 
-                    <div class="col jobInfo"><span>Job Category</span><br>
-                        Web & E-commerce Job
-                    </div>
+
                 </div>
 
 {{--                 <div class="row">
