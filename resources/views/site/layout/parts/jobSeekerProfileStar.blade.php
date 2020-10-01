@@ -3,16 +3,21 @@
 <div class="js_star">
 	@if($application->goldstar)
 		<div class="goldstar">
-			@for ($i = 0; $i < $application->goldstar; $i++)
-				<img src="{{asset('images/site/gold_star_icon.png')}}" />
+
+            @for ($i = 0; $i < $application->goldstar && $i<=5; $i++)
+            <div>
+                <img src="{{asset('images/site/gold_star_icon.png')}}" >
+            </div>
 			@endfor
 		</div>
-	@endif 
+	@endif
 
 	@if($application->preffer)
 		<div class="silverstar">
-			@for ($i = 0; $i < $application->preffer; $i++)
-				<img src="{{asset('images/site/silver_star_icon.png')}}" />
+            @for ($j = 0; $j < $application->preffer && $j<=5; $j++)
+                <div>
+                <img src="{{asset('images/site/silver_star_icon.png')}}" >
+            </div>
 			@endfor
 		</div>
 	@endif

@@ -1470,7 +1470,8 @@ class MobileUserController extends Controller
 		// $requestData['age']   =  my_sanitize_string($request->age);
 
 
-		// sanitize all questions data.
+        // sanitize all questions data.
+        if(!empty($requestData['jq'])){
 		foreach ($requestData['jq'] as $jqk => $jqv) {
 
 						// dump($requestData['jq']);
@@ -1484,7 +1485,7 @@ class MobileUserController extends Controller
 										}
 						}
 		}
-
+    }
 		// Jobs::find(12)->addJobQuestions($requestData['jq']);
 
 
@@ -1530,8 +1531,11 @@ class MobileUserController extends Controller
 						$job->expiration =  $requestData['expiration'].' 00:00:00';
 						// $job->questions =  $requestData['questions'];
 						$job->code =  Jobs::generateCode(); //
-						$job->save();
-						$job->addJobQuestions($requestData['jq']);
+                        $job->save();
+                        if(!empty($requestData['jq'])){
+                            $job->addJobQuestions($requestData['jq']);
+                        }
+
 						return response()->json([
 										'status' => 1,
 										'message' => '<h5 class="mt-2 ml-2">Job Succesfully Created.</h5>'
@@ -2017,56 +2021,59 @@ class MobileUserController extends Controller
                         // $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
 
                         $jobQuestion = JobsQuestions::find($ansV['question_id']);
+                        $goldstar = 0;
+                        $preffer = 0;
 
                         // check if jqb question exist
                         if(!empty($jobQuestion)){
-
                             // get the goldstar and preffer option
                             // $goldstar = !empty($jobQuestion->goldstar)?(json_decode($jobQuestion->goldstar, true)):(array());
                             // $preffer  = !empty($jobQuestion->preffer)?(json_decode($jobQuestion->preffer, true)):(array());
+                        $key = array_search($ansV['option'], $jobQuestion->options);
 
-                            $goldstar = array();
-                            if(!empty($jobQuestion->goldstar)){
-                                if(!is_array($jobQuestion->goldstar)){
-                                   $goldstar = json_decode($jobQuestion->goldstar, true);
-                                }else{
-                                   $goldstar =  $jobQuestion->goldstar;
-                                }
+                        foreach ($jobQuestion->preffer as $preferQ) {
+                            if($preferQ == $key){
+                                $preffer +=1;
                             }
+                        }
 
-                            $preffer = array();
-                            if(!empty($jobQuestion->preffer)){
-                                if(!is_array($jobQuestion->preffer)){
-                                   $preffer = json_decode($jobQuestion->preffer, true);
-                                }else{
-                                     $preffer = $jobQuestion->preffer;
-                                }
+                        foreach ($jobQuestion->goldstar as $goldstarQ) {
+                            if($goldstarQ == $key){
+                                $goldstar +=1;
                             }
+                        }
+
+                            // $goldstar = array();
+                            // if(!empty($jobQuestion->goldstar)){
+                            //     if(!is_array($jobQuestion->goldstar)){
+                            //        $goldstar = json_decode($jobQuestion->goldstar, true);
+                            //     }else{
+                            //        $goldstar =  $jobQuestion->goldstar;
+                            //     }
+                            // }
+
+                            // $preffer = array();
+                            // if(!empty($jobQuestion->preffer)){
+                            //     if(!is_array($jobQuestion->preffer)){
+                            //        $preffer = json_decode($jobQuestion->preffer, true);
+                            //     }else{
+                            //          $preffer = $jobQuestion->preffer;
+                            //     }
+                            // }
 
                             // dump('goldstar', $goldstar);
                             // dump('preffer', $preffer);
                             // dump('ansV', $ansV);
-
                             $jobAnswer              = new JobsAnswers();
                             $jobAnswer->question_id = $ansV['question_id'];
                             $jobAnswer->user_id     = $user->id;
                             $jobAnswer->answer      = $ansV['option'];
 
-                            $newJobApplicationUpdate = false;
-
-                            if(in_array($jobAnswer->answer,  $goldstar)){
-                                $newJobApplication->goldstar = $newJobApplication->goldstar+1;
-                                $newJobApplicationUpdate = true;
-                            }
-
-                            if(in_array($jobAnswer->answer,  $preffer)){
-                                $newJobApplication->preffer = $newJobApplication->preffer+1;
-                                $newJobApplicationUpdate = true;
-                            }
-
-                            if( $newJobApplicationUpdate ){  $newJobApplication->save(); }
-
-
+                            $newJobApplication->goldstar += $goldstar;
+                            $newJobApplication->preffer += $preffer;
+                            $goldstar = 0;
+                            $preffer = 0;
+                            $newJobApplication->save();
                             $newJobApplication->answers()->save($jobAnswer);
 
                         }

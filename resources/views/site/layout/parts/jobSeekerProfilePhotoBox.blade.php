@@ -5,15 +5,14 @@
 $profile_image  = asset('images/site/icons/nophoto.jpg');
 $profile_image_gallery    = $js->profileImage()->first();
 
-// dump($profile_image_gallery); 
+// dump($profile_image_gallery);
 
  if ($profile_image_gallery) {
     // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
-
     $profile_image   = assetGallery2($profile_image_gallery,'small');
-     // dump($profile_image); 
+     // dump($profile_image);
+ }
 
- } 
 @endphp
 
 <div class="js_profile w_30p w_box dblock fl_left">
@@ -51,7 +50,7 @@ $profile_image_gallery    = $js->profileImage()->first();
         <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
             <div class="cont">
                 <div class="videoBox"></div>
-                
+
             </div>
         </div>
     </div>
