@@ -50,7 +50,7 @@
             </div>
             <div class="location_search_cont hide_it">
                 <div class="location_input dtable w100">
-                    <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
+                    <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
                     <select class="dinline_block filter_location_radius select_aw hide_it" name="filter_location_radius" data-placeholder="Select Location Radius">
                          <option value="5">5km</option>
                          <option value="10">10km</option>
@@ -543,14 +543,20 @@ function showMap(){
              else if(country)
                  address = country;
 
-              if((place) && (place.name))
+              if((place) && (place.name) && (place.name != city))
                  address = place.name + ',' + address;
 
                  // console.log(' reverseGeocode place ', place);
                  // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
+
                  updateLocationInputs(place.name,city,state,country);
                  jQuery("#location_search").val(address);
                  placeMarker(place.geometry.location);
+                 marker.setPosition(location);
+                marker.setVisible(true);
+                map.setCenter(location);
+                map.setZoom(14);
+
 
          });
 
@@ -578,11 +584,13 @@ function showMap(){
      marker.setVisible(true);
      map.setCenter(location);
      map.setZoom(14);
+    //  alert("executed");
      if((location.lat() != "") && (location.lng() != "")) {
          jQuery("#location_lat").val(location.lat());
          jQuery("#location_long").val(location.lng());
      }
      drawCircle(location);
+     map.setZoom(12);
  }
 
  function drawCircle(location){
@@ -636,7 +644,8 @@ function showMap(){
      if (geocoder) {
          geocoder.geocode({"latLng": location}, function(results, status) {
              if (status == google.maps.GeocoderStatus.OK) {
-                 var address, city, country, state;
+                 var address,place, city, country, state;
+
                  for ( var i in results ) {
                      var address_components = results[i]["address_components"];
                      for ( var j in address_components ) {
@@ -649,12 +658,14 @@ function showMap(){
                          if ( jQuery.inArray("locality", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                              city = long_name;
                          }
+
                          else if ( jQuery.inArray("administrative_area_level_1", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                              state = long_name;
                          }
                          else if ( jQuery.inArray("country", types) >= 0 && jQuery.inArray("political", types) >= 0 ) {
                              country = long_name;
                          }
+
                      }
                  }
                  if((city) && (state) && (country))
@@ -666,12 +677,21 @@ function showMap(){
                  else if(country)
                      address = country;
 
+                     place = results[0]["address_components"][2]["long_name"];
                  // console.log(' reverseGeocode results ', results);
                  // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
-                 updateLocationInputs('',city,state,country);
+                 if((place) && (place != city)){
+                    address = place + ',' + address;
+                 }
+                //  marker.setPosition(location);
+                //  marker.setVisible(true);
+                //     map.setCenter(location);
+                //     map.setZoom(14);
+
+                 updateLocationInputs(place,city,state,country);
                  jQuery("#location_search").val(address);
                  placeMarker(location);
-                 map.setZoom(10)
+                //  map.setZoom(10)
                  return true;
              }
          })
@@ -688,7 +708,7 @@ function showMap(){
 
  // by default show this location;
 // geocode('Sydney New South Wales, Australia');
- data = {!! str_replace("'", "\'", json_encode(userLocation($user))) !!};
+data = {!! str_replace("'", "\'", json_encode(userLocation($user))) !!};
 geocode(data);
 
  jQuery('.filter_location_radius').on('change', function(){

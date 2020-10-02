@@ -869,7 +869,6 @@ this.updateIndustryExperience = function(){
                             address = country;
 
                         if(place.name!=city){
-                            alert("hi");
                             if((place) && (place.name))
                             address = place.name + ',' + address;
                         }
@@ -935,7 +934,7 @@ this.updateIndustryExperience = function(){
                 if (geocoder) {
                     geocoder.geocode({"latLng": location}, function(results, status) {
                         if (status == google.maps.GeocoderStatus.OK) {
-                            var address, city, country, state;
+                            var address, city, place, country, state;
                             for ( var i in results ) {
                                 var address_components = results[i]["address_components"];
                                 for ( var j in address_components ) {
@@ -963,9 +962,15 @@ this.updateIndustryExperience = function(){
                             else if(country)
                                 address = country;
 
+                            place = results[0]["address_components"][2]["long_name"];
                             // console.log(' reverseGeocode results ', results);
                             // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
-                            updateLocationInputs('',city,state,country);
+                            if((place) && (place != city)){
+                                address = place + ',' + address;
+                            }
+                            // console.log(' reverseGeocode results ', results);
+                            // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
+                            updateLocationInputs(place,city,state,country);
                             jQuery("#location_search").val(address);
                             placeMarker(location);
                             return true;

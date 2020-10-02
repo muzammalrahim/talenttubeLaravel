@@ -334,6 +334,9 @@ class UserController extends Controller
         $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
+        if(!empty($request->password)){
+            $user->password = Hash::make($request->password);
+        }
 
          // dd(  $request->toArray() );
 
@@ -400,6 +403,9 @@ class UserController extends Controller
         $user->gender = $request->gender;
         $user->eye = $request->eye;
         $user->family = $request->family;
+        if(!empty($request->password)){
+            $user->password = Hash::make($request->password);
+        }
         $user->education = $request->education;
         $user->language = $request->language;
         $user->hobbies = $request->hobbies;

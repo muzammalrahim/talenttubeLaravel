@@ -99,13 +99,15 @@
                 <div class="j_label bold">Job Detail</div>
                 <div>{{$job->description}}</div>
             </div>
-
+            @php
+            $user = Auth::user();
+            @endphp
             <div class="job_footer p10">
-
+                @if(!isEmployer($user))
                 <div class="w_25p fl_right">
                     <div class="j_button fl_right"><a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Apply</a></div>
                 </div>
-
+                @endif
 
 
             </div>
