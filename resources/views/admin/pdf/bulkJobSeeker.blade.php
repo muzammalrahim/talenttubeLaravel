@@ -71,7 +71,7 @@ td.center.left_info {
 					<img src="{{asset('images/site/icons/nophoto.jpg')}}">
 				@endif
 			</div>
-			<a class="contactBtn" href="{{route('jobSeekerInfo',['id' => $user->id])}}">Watch Video</a>
+			<a class="contactBtn" href="{{route('publicuservideo',['id' => $user->id])}}">Watch Video</a>
 		</td>
 
     <td width="80%" class="updf_detai">

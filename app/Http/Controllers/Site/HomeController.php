@@ -537,6 +537,14 @@ class HomeController extends Controller {
     }
 
 
+    public function profileVideoPopup(Request $request){
+        $user = User::with('vidoes')->where('id',$request->id)->first();
+        if($user){
+           $data['user'] = $user;
+           return view('admin.user.profileVideoPopup', $data);
+           // admin/user/profileVideoPopup
+        }
+    }
 
     // Provide a streaming file with support for scrubbing
     // $contentType, $path
