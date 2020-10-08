@@ -655,7 +655,7 @@ function generateVideoThumbs($video){
 
 function generateVideoThumbsm($video){
 								// $html = '<div class="container1">';
-        $html = '<img class="img-fluid z-depth-1" alt="video" data-toggle="modal"';
+        $html = '<img class="img-fluid imageSizeModal z-depth-1" alt="video" data-toggle="modal"';
         $html .= 'data-target="#modal'.$video->id.'"';
         if (!empty($video->thumbs)){
             // $html .= ' src="'.$video->thumbs[0].'"  ';

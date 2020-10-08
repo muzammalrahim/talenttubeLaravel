@@ -1968,6 +1968,7 @@ class MobileUserController extends Controller
          // dd($request->toArray());
         $user = Auth::user();
         $requestData = $request->all();
+        dd($requestData);
         $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
 
         if(isset($requestData['answer']) && !empty($requestData['answer'])){

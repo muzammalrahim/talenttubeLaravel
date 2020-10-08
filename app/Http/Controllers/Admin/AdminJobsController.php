@@ -10,11 +10,11 @@ use App\Jobs;
 use App\JobsApplication;
 use App\User;
 use App\JobsAnswers;
-
+use App\JobsQuestions;
 use App\Exports\JobApplicationExport;
 use App\Exports\JobAllApplicationExport;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Illuminate\Support\Facades\Validator;
 
 use Yajra\Datatables\Datatables;
 // use Illuminate\Support\Facades\Hash;
@@ -63,18 +63,17 @@ class AdminJobsController extends Controller
         $data['classes_body'] = 'jobs';
         $data['jobs'] = Jobs::with('applicationCount')->get();
 
-        // dd($data); 
+        // dd($data);
 
        return view('admin.jobs.list', $data);
     }
 
-    
+
     //===============================================================================================================//
     // Ajax GET // Jobs list for dataTable
     //===============================================================================================================//
     function getDatatable(){
-         $records = Jobs::select(['id', 'title','country','state','city','experience','salary','created_at'])
-         ->with(['GeoCountry','GeoState','GeoCity'])
+         $records = Jobs::select(['id', 'title','country','state','city','salary','created_at'])
         ->orderBy('created_at', 'desc');
       return datatables($records)
       ->addColumn('action', function ($records) {
@@ -93,18 +92,177 @@ class AdminJobsController extends Controller
 
       })
       ->editColumn('country', function ($records) {
-          return ($records->GeoCountry)?($records->GeoCountry->country_title):'';
+          return ($records->country);
       })
       ->editColumn('state', function ($records) {
-         return  ($records->GeoState)?($records->GeoState->state_title):'';
+         return  ($records->state);
       })
       ->editColumn('city', function ($records) {
-         return  ($records->GeoCity)?($records->GeoCity->city_title):'';
+         return  ($records->city);
       })
       ->toJson();
     }
 
-   
+    function getDatatablejob(){
+        $records = Jobs::select(['id', 'title','country','state','city','salary','created_at'])
+       ->orderBy('created_at', 'desc');
+     return datatables($records)
+     ->addColumn('action', function ($records) {
+       if (isAdmin()){
+           $rhtml = '<a href="javascript:void(0);" onclick="nextTabQuestion('.$records->id.');"><button type="button" class="btn btn-primary btn-sm" style = "margin-bottom:2px; "><i class="far fa-check-circle"></i> Choose this</button></a>';
+           return $rhtml;
+       }
+
+     })
+     ->toJson();
+   }
+
+
+
+   public function jobApplyInfo($job_id){
+    // dd($job_id);
+    $user = Auth::user();
+    $data['user'] = $user;
+    $data['job'] = Jobs::with('questions')->find($job_id);
+    return view('admin.user.applyInfo', $data);
+
+    }
+
+
+    public function massJobApplySubmit(Request $request){
+
+        // dd($request->toArray());
+       $user = Auth::user();
+        $requestData = $request->all();
+    //    $requestData = array($request['applyFormData']);
+
+        $str_arr = explode (",", $request->cbx);
+
+
+       $job = Jobs::find($requestData['job_id']);
+       // check to confirm job with id exist
+       if ($job == null){
+           return response()->json([
+               'status' => 0,
+               'error' => 'Job with id '.$requestData['job_id'].' does not exist'
+           ]);
+       }else{
+           // check if user has not submitted application already.
+           foreach($str_arr as $userID){
+           $jobApplication = JobsApplication::where('user_id',$userID)->where('job_id',$requestData['job_id'])->first();
+           if (!empty($jobApplication)) {
+               return response()->json([
+                   'status' => 0,
+                   'error' => 'You already submit application for this job'
+               ]);
+           }
+        }
+
+           // check application description which is mandatory.
+           if(empty($request->application_description)){
+                return response()->json([
+                   'status' => 0,
+                   'error' => 'Please answer all mandatory question.'
+               ]);
+           }
+
+
+           foreach($str_arr as $userID){
+           $newJobApplication = new JobsApplication();
+           $newJobApplication->user_id = $userID;
+           $newJobApplication->job_id = $job->id;
+           $newJobApplication->status = 'applied';
+           $newJobApplication->description = $request->application_description;
+           // $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
+           // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
+           $newJobApplication->save();
+
+           // if jobApplication is succesfully added then add job answers.
+           if( $newJobApplication->id > 0 ){
+
+               if(isset($requestData['answer']) && !empty($requestData['answer'])){
+                   foreach ($requestData['answer'] as $ansK => $ansV) {
+                       // $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']);
+                       // $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
+
+                       $jobQuestion = JobsQuestions::find($ansV['question_id']);
+                       $goldstar = 0;
+                       $preffer = 0;
+
+                       // check if jqb question exist
+                       if(!empty($jobQuestion)){
+                           // get the goldstar and preffer option
+                           // $goldstar = !empty($jobQuestion->goldstar)?(json_decode($jobQuestion->goldstar, true)):(array());
+                           // $preffer  = !empty($jobQuestion->preffer)?(json_decode($jobQuestion->preffer, true)):(array());
+                       $key = array_search($ansV['option'], $jobQuestion->options);
+
+                       foreach ($jobQuestion->preffer as $preferQ) {
+                           if($preferQ == $key){
+                               $preffer +=1;
+                           }
+                       }
+
+                       foreach ($jobQuestion->goldstar as $goldstarQ) {
+                           if($goldstarQ == $key){
+                               $goldstar +=1;
+                           }
+                       }
+
+                           // $goldstar = array();
+                           // if(!empty($jobQuestion->goldstar)){
+                           //     if(!is_array($jobQuestion->goldstar)){
+                           //        $goldstar = json_decode($jobQuestion->goldstar, true);
+                           //     }else{
+                           //        $goldstar =  $jobQuestion->goldstar;
+                           //     }
+                           // }
+
+                           // $preffer = array();
+                           // if(!empty($jobQuestion->preffer)){
+                           //     if(!is_array($jobQuestion->preffer)){
+                           //        $preffer = json_decode($jobQuestion->preffer, true);
+                           //     }else{
+                           //          $preffer = $jobQuestion->preffer;
+                           //     }
+                           // }
+
+                           // dump('goldstar', $goldstar);
+                           // dump('preffer', $preffer);
+                           // dump('ansV', $ansV);
+                           $jobAnswer              = new JobsAnswers();
+                           $jobAnswer->question_id = $ansV['question_id'];
+                           $jobAnswer->user_id     = $user->id;
+                           $jobAnswer->answer      = $ansV['option'];
+
+                           $newJobApplication->goldstar += $goldstar;
+                           $newJobApplication->preffer += $preffer;
+                           $goldstar = 0;
+                           $preffer = 0;
+                           $newJobApplication->save();
+                           $newJobApplication->answers()->save($jobAnswer);
+
+                       }
+
+
+
+                   }
+               }
+
+
+
+           }
+
+            }
+            // dd($request->toArray());
+
+               return response()->json([
+                   'status' => 1,
+                   'message' => 'You Job Application has been submitted succesfully'
+               ]);
+
+       }
+
+   }
     //===============================================================================================================//
     // .
     //===============================================================================================================//
@@ -119,8 +277,8 @@ class AdminJobsController extends Controller
         //     'city' => 'max:15',
         //     'experience' => 'max:15',
         //     'type' => 'max:15',
-        //     'expiration' => 'max:15',   
-        //     'user_id' => 'max:15',    
+        //     'expiration' => 'max:15',
+        //     'user_id' => 'max:15',
         // ]);
 
         $job = new Jobs();
@@ -133,16 +291,16 @@ class AdminJobsController extends Controller
         $job->expiration = $request->expiration;
         $job->created_at = $request->created_at;
         $job->user_id = $request->user_id;
-    
+
         if( $job->save() ){
             return redirect(route('adminJobs'))->withSuccess( __('admin.record_updated_successfully'));
         }
     }
-    
 
- 
-      
-     public function createJobs(Request $request) 
+
+
+
+     public function createJobs(Request $request)
      {
 
         $records = FALSE;
@@ -157,7 +315,7 @@ class AdminJobsController extends Controller
         $data['employers']  = User::where('type','employer')->pluck('name','id')->toArray();
         $data['type']  = getJobTypes();
         $data['user_id']  = User::where('type','employer')->pluck('name','id')->toArray();
- 
+
         return view('admin.jobs.create', $data);
     }
 
@@ -180,7 +338,7 @@ class AdminJobsController extends Controller
 
         ]);
         $job = new Jobs();
-        $job->title = $request->title;       
+        $job->title = $request->title;
         $job->country = $request->country;
         $job->state = $request->state;
         $job->city = $request->city;
@@ -196,51 +354,54 @@ class AdminJobsController extends Controller
 
         }
     }
-    // create job 
- 
+    // create job
+
     public function show($id){ }
 
     public function editJob($id){
         $records = Jobs::where('id',$id)->first();
 
-        // dd(); 
+        //  dd($records);
         $data['content_header'] = 'Edit Job';
         $data['record'] = $records;
         $data['title']  = 'Jobs';
-        $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
-        $data['states'] = get_Geo_State($records->country)->pluck('state_title','state_id')->toArray();
-        $data['cities'] = get_Geo_City($records->country,$records->state)->pluck('city_title','city_id')->toArray();
         $data['type']  = getJobTypes();
         $data['user_id']  = User::where('type','employer')->pluck('name','id')->toArray();
+        $data['industriesList'] = getIndustries();
         return view('admin.jobs.edit', $data);
         // admin/jobs/edit
     }
 
-     
+
     public function updateJob(Request $request, $id){
         // dump( $request->toArray() );
         // dd( $id );
         $this->validate($request, [
             'title' => 'required|max:255',
-            'country' => 'max:15',
-            'state' => 'max:15',
-            'city' => 'max:15',
+            'country' => 'max:50',
+            'state' => 'max:50',
+            'city' => 'max:50',
             'experience' => 'max:100',
             // 'type' => 'max:15',
-            'expiration' => 'max:100',   
-            'created_by' => 'max:19',    
+            'expiration' => 'max:100',
+            'created_by' => 'max:19',
         ]);
         $job = Jobs::find($id);
         $job->title = $request->title;
         $job->country = $request->country;
         $job->state = $request->state;
         $job->city = $request->city;
-        $job->experience = $request->experience;
+        if(!empty($request->industry_experience)){
+            $job->experience = $request->industry_experience;
+        }
+        else{
+            $job->experience = '';
+        }
         $job->type = $request->type;
         $job->expiration = $request->expiration;
         $job->created_at = $request->created_at;
         $job->user_id = $request->user_id;
-    
+
         if( $job->save() ){
             return redirect(route('adminJobs'))->withSuccess( __('admin.record_updated_successfully'));
         }
@@ -273,8 +434,8 @@ class AdminJobsController extends Controller
             'city' => 'max:15',
             'experience' => 'max:15',
             // 'type' => 'max:15',
-            'expiration' => 'max:19',   
-            'created_by' => 'max:19',    
+            'expiration' => 'max:19',
+            'created_by' => 'max:19',
         ]);
 
         $job = Jobs::find($id);
@@ -287,7 +448,7 @@ class AdminJobsController extends Controller
         $job->expiration = $request->expiration;
         $job->created_at = $request->created_at;
         $job->created_by = $request->created_by;
-    
+
         if( $job->save() ){
             return redirect(route('adminJobs'))->withSuccess( __('admin.record_updated_successfully'));
         }
@@ -296,7 +457,7 @@ class AdminJobsController extends Controller
     // deleting job ends
 
 
-  // Job Application Functions and dataTable 
+  // Job Application Functions and dataTable
   public function job_applications(Request $request){
         $user = Auth::user();
         $data['user'] = $user;
@@ -305,7 +466,7 @@ class AdminJobsController extends Controller
         $data['classes_body'] = 'jobs';
         $data['request'] = $request;
         $data['jobs'] = Jobs::with('applicationCount')->get();
-        // dd($data); 
+        // dd($data);
         return view('admin.job_applications.list', $data);
         // admin/job_applications/list
   }
@@ -336,23 +497,23 @@ class AdminJobsController extends Controller
             foreach ($request->user_answers as $akey => $anvalue) {
               $JobsAnswers = JobsAnswers::find($akey);
               if($JobsAnswers){
-                $JobsAnswers->answer = $anvalue; 
+                $JobsAnswers->answer = $anvalue;
                 $JobsAnswers->save();
-              } 
+              }
             }
           }
           return redirect(route('job_applications'))->withSuccess( __('admin.record_updated_successfully'));
       }
   }
 
-// Job Application editting function End Here 
+// Job Application editting function End Here
 
   // Getting Job Application DataTable Start
   public function getJobAppDatatable(Request $request){
-      $records =  JobsApplication::with(['jobseeker','job']); 
+      $records =  JobsApplication::with(['jobseeker','job']);
 
       if(!empty($request->filter_job)){
-        $records = $records->where('job_id',$request->filter_job); 
+        $records = $records->where('job_id',$request->filter_job);
       }
 
       return datatables($records)
@@ -390,7 +551,7 @@ class AdminJobsController extends Controller
 //         select('id', 'status','title', 'goldstar', 'preffer')
 //          ->where('status', $request->filter_status)
 //          ->get();
-      
+
 //    }
 
 //  }
@@ -405,9 +566,9 @@ class AdminJobsController extends Controller
     // .
     //===============================================================================================================//
     public function ExportCSV(Request $request) {
-      // dd($request->toArray()); 
+      // dd($request->toArray());
       if(!empty($request->cbx)){
-         $jsExport = new JobApplicationExport($request->cbx); 
+         $jsExport = new JobApplicationExport($request->cbx);
         return Excel::download($jsExport, 'jobApplications.xlsx');
       }
     }
@@ -418,7 +579,7 @@ class AdminJobsController extends Controller
     //===============================================================================================================//
     public function ExportApplicationCSV(Request $request) {
       if(!empty($request->id)){
-         $jsExport = new JobAllApplicationExport($request->id); 
+         $jsExport = new JobAllApplicationExport($request->id);
         return Excel::download($jsExport, 'JobAllApplications.xlsx');
       }
     }
@@ -430,10 +591,10 @@ class AdminJobsController extends Controller
     public function pdfExport(Request $request, $id) {
       if(!empty($id)){
 
-          $job = Jobs::find($id); 
-          $applications = JobsApplication::with('jobseeker')->where('job_id',$id)->get(); 
-          // dump( $job ); 
-          // dd( $applications ); 
+          $job = Jobs::find($id);
+          $applications = JobsApplication::with('jobseeker')->where('job_id',$id)->get();
+          // dump( $job );
+          // dd( $applications );
            $data['title'] = 'Generate PDF';
            $data['job'] = $job;
            $data['applications'] = $applications;
@@ -441,15 +602,84 @@ class AdminJobsController extends Controller
            if($request->test){
             return view('admin.pdf.jobWithApplication', $data);
            }else{
-            $pdf = PDF::loadView('admin.pdf.jobWithApplication', $data); 
-            $pdf->setPaper('A4'); 
+            $pdf = PDF::loadView('admin.pdf.jobWithApplication', $data);
+            $pdf->setPaper('A4');
             return $pdf->download('JobApplications.pdf');
-            // admin/pdf/jobWithApplication 
+            // admin/pdf/jobWithApplication
            }
       }
     }
 
 
+    public function addNewJobLocation(Request $request) {
+        $rules = array(
+            'location' => 'max:100',
+            'country' => 'max:100',
+            'state' => 'max:100',
+            'city' => 'max:100',
+            'location_lat' => 'max:50',
+            'location_long' => 'max:50',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        } else {
+            // check country state city correction.
+            // $geo_country = \App\GeoCountry::where('country_id', $request->country)->first();
+            // if (!$geo_country) {
+            //     return response()->json([
+            //         'status' => 0,
+            //         'validator' =>  $validator->errors()->add('country', 'Wrong Country id')
+            //     ]);
+            // }
+            // $geo_validate_state = $geo_country->validateState($request->state);
+            // if (!$geo_validate_state) {
+            //     $validator->errors()->add('state', 'Wrong State selected');
+            //     return response()->json([
+            //         'status' => 0,
+            //         'validator' => $validator->getMessageBag()->toArray()
+            //     ]);
+            // }
+            // $geo_validate_city  = $geo_country->validateCity($request->state, $request->city);
+            // if (!$geo_validate_city) {
+            //     $validator->errors()->add('city', 'Wrong City selected');
+            //     return response()->json([
+            //         'status' => 0,
+            //         'validator' => $validator->getMessageBag()->toArray()
+            //     ]);
+            // }
+
+            // $lati = $request->location_lat;
+
+            $user = Jobs::findOrFail($request->user_id);
+            $user->location_lat     = $request->location_lat;
+            $user->location_long    = $request->location_long;
+
+
+            $user->country = $request->country;
+            $user->state = $request->state;
+            $user->city = $request->city;
+
+
+            try {
+                $user->save();
+                return response()->json([
+                    'status' => 1,
+                    'validator' => 'record Succesfully saved',
+                    'data' => userLocation($user)
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 0,
+                    'error' => $e->errorInfo[2]
+                ]);
+            }
+        }
+    }
 
 
 }

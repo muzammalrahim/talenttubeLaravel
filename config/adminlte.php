@@ -208,17 +208,12 @@ return [
         ],
         [   'header'      => 'Job Seekers'],
         [
-            'text'        => 'Approved Job Seekers',
+            'text'        => 'Job Seekers',
             'url'         => 'admin/users/verified',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
-        [
-            'text'        => 'Pending Job Seekers',
-            'url'         => 'admin/users/pending',
-            'icon'        => 'far fa-fw fa-file',
-            'label_color' => 'success',
-        ],
+
 
         [   'header'      => 'Employers'],
         [

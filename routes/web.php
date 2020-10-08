@@ -105,17 +105,20 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('users/getList', 'Admin\UserController@getDatatable')->name('users.dataTable');
     Route::get('users/pending', 'Admin\UserController@pendingUsers')->name('pendingUsers');
     Route::get('users/verified', 'Admin\UserController@verifiedUsers')->name('verifiedUsers');
+    Route::get('users/list', 'Admin\UserController@verifiedUsers')->name('userslist');
 
-
+    Route::get('ajax/removeAttachment/', 'Admin\UserController@removeAttachment')->name('removeAttachmentadmin');
+    Route::post('ajax/deleteVideo', 'Admin\UserController@deleteVideo')->name('deleteVideoadmin');
+    Route::post('ajax/uploadUserGallery', 'Admin\UserController@uploadUserGallery');
     // for deleting
     Route::post('users/delete/{id}', 'Admin\UserController@destroyUser')->name('users.destroy');
-
+    Route::post('ajax/uploadVideo1', 'Admin\UserController@uploadVideo')->name('uploadvideoadmin');
     // user Info
     Route::get('users/userinfo', 'Admin\UserController@profilePopup')->name('users.profilePopup');
     Route::get('users/videoInfo', 'Admin\UserController@profileVideoPopup')->name('users.profileVideoPopup');
     Route::get('users/resumeData', 'Admin\UserController@resumeData')->name('users.resumeData');
     Route::post('users/confirmAccount', 'Admin\UserController@confirmAccount')->name('users.confirmAccount');
-
+    Route::post('ajax/userUploadResume', 'Admin\UserController@userUploadResume')->name('userUploadResumeadmin');
     Route::get('employers', 'Admin\UserController@employers')->name('adminEmployers');
     Route::get('employers/verified', 'Admin\UserController@verifiedEmployers')->name('adminVerifiedEmployers');
     Route::get('employers/pending', 'Admin\UserController@pendingEmployers')->name('adminPendingEmployers');
@@ -132,6 +135,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     // Route added by Hassaan
     Route::get('jobs','Admin\AdminJobsController@jobs')->name('adminJobs');
     Route::get('jobs/getList', 'Admin\AdminJobsController@getDatatable')->name('jobs.dataTable');
+    Route::get('jobs/getListjob', 'Admin\AdminJobsController@getDatatablejob')->name('jobs.dataTablejob');
     Route::get('jobs/create', 'Admin\AdminJobsController@createJobs')->name('jobs.create');
     Route::post('jobs/store', 'Admin\AdminJobsController@storeNewJob')->name('jobs.store');
     Route::get('jobs/edit/{id}', 'Admin\AdminJobsController@editJob')->name('jobs.edit');
@@ -170,8 +174,15 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     // for filtering
     Route::post('job_applications/search', 'Admin\AdminJobsController@filter')->name('job_applications.filter');
 
-
+    Route::post('ajax/addNewLocation', 'Admin\UserController@addNewLoaction');
+    Route::post('ajax/addNewJobLocation', 'Admin\AdminJobsController@addNewJobLocation');
     // Job Application End Here
+    Route::get('ajax/jobApplyInfoa/{id}', 'Admin\AdminJobsController@jobApplyInfo')->name('jobApplyInfo');
+    Route::post('ajax/massJobApplySubmit', 'Admin\AdminJobsController@massJobApplySubmit')->name('massJobApplySubmit');
+
+
+    Route::post('ajax/deleteGallery/{id}/{userID}', 'Admin\UserController@deleteGallery');
+
 });
 
 
@@ -345,22 +356,14 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::get('employer/jobs',    'Site\EmployerController@jobs')->name('employerJobs');
     Route::get('employer/jobsEdit/{id}',    'Site\EmployerController@jobEdit')->name('employerJobEdit');
     Route::get('employer/job/{id}/applications', 'Site\EmployerController@empJobApplications')->name('empJobApplications');
-
     Route::post('employer/jobAppFilter', 'Site\EmployerController@jobAppFilter')->name('jobAppFilter');
-
-
     Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
-
-				Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
-				Route::get('step2Jobs', 'Site\SiteUserController@step2Jobs')->name('step2Jobs');
+    Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
+    Route::get('step2Jobs', 'Site\SiteUserController@step2Jobs')->name('step2Jobs');
     Route::post('jobsFilter', 'Site\SiteUserController@jobsFilter')->name('jobsFilter');
-
     Route::get('jobs/{id}', 'Site\SiteUserController@jobDetail')->name('jobDetail');
-
     Route::post('ajax/deleteJob/{id}', 'Site\SiteUserController@deleteJob')->name('deleteJob');
     Route::get('jobApplications', 'Site\SiteUserController@jobApplications')->name('jobApplications');
-
-
     Route::get('ajax/jobApplyInfo/{id}', 'Site\SiteUserController@jobApplyInfo')->name('jobApplyInfo');
     Route::post('ajax/jobApplySubmit', 'Site\SiteUserController@jobApplySubmit')->name('jobApplySubmit');
     Route::post('ajax/deleteJobApplication/{id}', 'Site\SiteUserController@deleteJobApplication')->name('deleteJobApplication');
