@@ -20,13 +20,13 @@ a.contactBtn {
     text-decoration: none;
     display: inline-block;
     display: block;
-    margin: 0 auto; 
+    margin: 0 auto;
     width: 80px;
 }
 .name_title {
     font-size: 18px;
     font-weight: 700;
-} 
+}
 td.updf_detai .label { font-weight: 700; margin-right: 5px;}
 .updf_row{ padding: 10px;  }
 tr.updf_row td {
@@ -41,8 +41,8 @@ tr.updf_row td {
     border-radius: 50%;
     text-align: center;
     display: block;
-    margin: 0px; 
-    margin-bottom: 4px; 
+    margin: 0px;
+    margin-bottom: 4px;
 }
 .updf_thumb img{  border-radius: 50%; }
 .updf_detailbtn{ display: table; }
@@ -53,7 +53,7 @@ td.center.left_info {
 @stop
 
 @section('content')
- 
+
 {{-- @dd($users) --}}
 
 {{-- <div style="border: 2px solid red; padding: 20px; width: 700px;"></div> --}}
@@ -71,9 +71,9 @@ td.center.left_info {
 					<img src="{{asset('images/site/icons/nophoto.jpg')}}">
 				@endif
 			</div>
-			<a class="contactBtn" href="{{route('jobSeekerInfo',['id' => $user->id])}}">Contact Details</a>
+			<a class="contactBtn" href="{{route('jobSeekerInfo',['id' => $user->id])}}">Watch Video</a>
 		</td>
-    
+
     <td width="80%" class="updf_detai">
     		<div class="name_title">{{$user->surname}} {{$user->name}}</div>
     		<div class="updf_recent_job">{{$user->recentJob}}</div>
@@ -86,7 +86,7 @@ td.center.left_info {
     					@foreach (getQualificationNames($user->qualification) as $qualification)
     						<span>{{$qualification}}</span>
     					@endforeach
-    				@endif    				
+    				@endif
     		</div>
     		<div class="updf_industryexp">
     			<span class="label">Industry Experience:</span>
@@ -94,11 +94,11 @@ td.center.left_info {
     					@foreach ($user->industry_experience as $exp)
     						<span>{{getIndustryName($exp)}}</span>
     					@endforeach
-    				@endif  
+    				@endif
     		</div>
     		<div class="updf_aboutme">
     			<span class="label">About:</span>
-    			<p style="margin:0px; display: inline-block;">{{$user->about_me}}</p>
+    			{{$user->about_me}}
     		</div>
     </td>
   </tr>

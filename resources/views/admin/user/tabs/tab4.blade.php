@@ -1,87 +1,100 @@
 
 <div class="tab-pane fade" id="custom-tabs-one-private" role="tabpanel" aria-labelledby="custom-tabs-one-private-tab">
 
-    <div class="mb-2 bg-secondary text-white text-center"><b>Imges</b></div>
-
+    <div class="mb-2 bg-secondary text-white text-center"><b>Images</b> </div>
+    <a style="color: white;" class="btn btn-info uploadProgressModalBtn">Add Image</a>
     <div class="imagesAdmin">
 	     @if ($user_gallery)
+         <div id="images" class="imagesDiv">
 	        @foreach ($user_gallery as $gallery)
-	            <div id="{{$gallery->id}}" class="imagesDiv item profile_photo_frame gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
-	               <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-	                    href="{{assetGallery($gallery->access,$record->id,'',$gallery->image)}}"
-	                    data-lcl-thumb="{{assetGallery($gallery->access,$record->id,'small',$gallery->image)}}"
-	                    >
-	                    <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo imgStyling"
-	                    data-src="{{assetGallery($gallery->access,$record->id,'',$gallery->image)}}"
-	                    src="{{assetGallery($gallery->access,$record->id,'small',$gallery->image)}}" >
-	                </a>
-	                <div class="gallery_action">
-	                <span onclick="UProfile.confirmPhotoDelete({{$gallery->id}});" title="Delete photo" class="icon_delete">
-	                    <span class="icon_delete_photo"></span>
-	                    <span class="icon_delete_photo_hover"></span>
-	                </span>
-	                <span onclick="UProfile.setPrivateAccess({{$gallery->id}})"  title="Make private" class="icon_private">
-	                    <span class="icon_private_photo"></span>
-	                    <span class="icon_private_photo_hover"></span>
-	                </span>
-	            	<span onclick="UProfile.setAsProfile({{$gallery->id}})" title="Make Profile" class="icon_image_profile">
-	            			<span class=""></span>
-	            	</span>
-	                </div>
+                <div class="imageDiv" id="photodiv_{{$gallery->id}}" style="display: inline-block;">
+                <img src="{{assetGallery($gallery->access,$record->id,'',$gallery->image)}}" id="photo_{{$gallery->id}}" class="photo">
+                <div class="img-overlay text-center">
+                    <button onclick="UProfile.confirmPhotoDelete({{$gallery->id}}); return false;" class="btn btn-sm btn-success">Delete</button>
+                </div>
+                </div>
+           @endforeach
 
-	            </div>
-	        @endforeach
+
+        </div>
 	    @endif
     </div>
-
+    <div style="display: none;">
+        <img id="image" src="" alt="Picture">
+    </div>
         <div class="mb-2 bg-secondary text-white text-center"><b>Videos</b></div>
-    
-	<div id="video" class="list_videos">
-	    <div id="list_videos_public" class="list_videos_public">
-	        <div id="photo_add_video" class="item add_photo add_video_public item_video">
-	            <a class="add_photo" onclick="UProfile.SelectVideoFile(); return false;">
-	                <img id="video_upload_select" class="transparent is_video" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
-	            </a>
-	        </div>
-	    </div>
-	    <div class="cl"></div>
 
-	    @if ($videos->count() > 0 )
-	        @foreach ($videos as $video)
-	            <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-	                <a onclick="UProfile.showVideoModal('{{assetVideo($video)}}')" class="video_link" target="_blank">
-	                    <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
-	                   {!! generateVideoThumbs($video) !!}
-	                </a>
-	                <span title="Delete video" class="icon_delete" data-vid="{{$video->id}}" onclick="UProfile.delteVideo({{$video->id}})">
-	                    <span class="icon_delete_photo"></span>
-	                    <span class="icon_delete_photo_hover"></span>
-	                </span>
-
-	                <div class="v_error error hide_it"></div>
-	            </div>
-	        @endforeach
-	    @endif
+        <div class="video text-dark mt-3">
+            <div class="tabs_videos mb-2 font-weight-bold">Videos</div>
+                <div id="video" class="list_videos">
+                    <div id="list_videos_public" class="list_videos_public">
+                        <div id="photo_add_video" class="item add_photo add_video_public item_video">
+                            <a class="add_photo" return false;">
+                                <img id="video_upload_select" class="transparent is_video bg-primary uploadedPhotos" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
+                            </a>
+                        </div>
+                    </div>
+                    <div class="cl"></div>
 
 
-	    <div style="display:none;">
-	        <div id="videoShowModal" class="modal p0 videoShowModal">
-	            <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-	                <div class="cont">
-	                    <div class="videoBox"></div>
-	                    {{-- <div class="double_btn">
-	                        <button class="confirm_close btn small dgrey" onclick="UProfile.cancelVideoModal(); return false;">Close</button>
-	                        <div class="cl"></div>
-	                    </div> --}}
-	                </div>
-	            </div>
-	        </div>
-	    </div>
+                    <div class="videos mt-2">
+                        @if ($videos->count() > 0 )
+                        @foreach ($videos as $video)
+                            <div id="v_{{$video->id}}" class="showinline video_box mb-2">
+                                <!-- Grid row -->
 
-	</div>  
+
+                      <!--Modal: Name-->
+                      <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                          <!--Content-->
+                          <div class="modal-content">
+                            <!--Body-->
+                            <div class="modal-body mb-0 p-0">
+                              <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
+                                  <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
+                                    <source src="{{assetVideo($video)}}" type="video/mp4" />
+                                  </video>
+
+                              </div>
+                            </div>
+                            <!--Footer-->
+                            <div class="modal-footer justify-content-center">
+                              <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
+                            </div>
+                          </div>
+                          <!--/.Content-->
+                        </div>
+                      </div>
+
+                      <!--Modal: Name-->
+                    <a class="showinline">
+                        <div class="text-center">
+                          {!! generateVideoThumbsm($video) !!}
+
+                          <div class="img-overlay">
+                            <button onclick="UProfile.deleteVideoConfirm({{$video->id}}); return false;" class="btn btn-sm btn-success">Delete</button>
+                          </div>
+                        </div>
+                    </a>
+                            </div>
+                        @endforeach
+                    @endif
+
+                 </div>
+
+
+
+
+                </div>
+            </div>
 
         <div class="mb-2 bg-secondary text-white text-center"><b>Resume</b></div>
-
+        <div id="photo_add_resume" class="item add_photo add_video_public item_video md-2">
+            <a class="add_photo" return false;">
+                <img id="video_upload_select" class="transparent is_video bg-primary uploadedPhotos" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
+            </a>
+        </div>
 	<div class="private_attachments">
 		@foreach ($attachments as $attachment)
 			<div class="attachment_{{$attachment->id}} attachment_file">
@@ -89,12 +102,12 @@
 					<span class="attach_title">{{ $attachment->name }}</span>
 					<div class="attach_btns">
 						<a class="attach_btn downloadAttachBtn btn btn-primary" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
-				{{-- 		<a class="attach_btn removeAttachBtn" data-attachmentid="{{$attachment->id}}" onclick="UProfile.confirmAttachmentDelete({{$attachment->id}});">Remvoe</a> --}}
+						<a class="attach_btn downloadAttachBtn btn btn-primary" style="color: white;" data-attachmentid="{{$attachment->id}}" onclick="UProfile.deleteAttachment({{$attachment->id}});">Remove</a>
 					</div>
 			</div>
-		@endforeach		
+		@endforeach
 	</div>
-         
+
      <a class="btn btn-primary btnPrevious text-white text-white" onclick="scrollToTop()" >Previous</a>
 
 

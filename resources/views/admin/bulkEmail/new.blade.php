@@ -8,11 +8,11 @@
 @section('content')
 
 <div class="container">
-    
+
     @include('admin.errors',[ 'error' => $errors, 'record' => $record ])
-   
+
         {!! Form::open(array('url' => route('bulkEmail.store'), 'method' => 'POST', 'files' => true, 'name'=>'formJob', 'novalidate'=>'')) !!}
-    
+
     <div class="card">
         <div class="card-body">
             <div class="row">
@@ -41,7 +41,7 @@
                     <div class="form-group row">
                         {{ Form::label('Users', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                        <select name="user_ids[]" multiple="multiple" class="multiSelectBox">
+                        <select name="user_ids[]" multiple class="form-control">
                             @foreach ($jobSeekers as $js)
                                 <option value="{{$js->id}}">{{$js->name.' '.$js->email}}</option>
                             @endforeach
@@ -49,7 +49,7 @@
                         </div>
                     </div>
 
-      
+
                 </div><!--col-->
             </div><!--row-->
         </div><!--card-body-->
@@ -73,7 +73,7 @@
 <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
 <link rel="stylesheet"  href="{{ asset('css/multi-select.css') }}">
 <style>
-textarea { width: 100%; }    
+textarea { width: 100%; }
 select{
     display: block;
     width: 100%;
@@ -100,8 +100,8 @@ select{
 {{-- country city state --}}
 <script type="text/javascript">
 $(document).ready(function(){
-    $('.multiSelectBox').multiSelect();
-}); 
+    // $('.multiSelectBox').multiSelect();
+});
 </script>
 {{-- country state city--}}
     <!-- added by Hassan -->

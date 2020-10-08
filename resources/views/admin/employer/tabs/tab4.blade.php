@@ -1,48 +1,32 @@
 
 <div class="tab-pane fade" id="custom-tabs-one-private" role="tabpanel" aria-labelledby="custom-tabs-one-private-tab">
-    
-    <div class="mb-2 bg-secondary text-white text-center"><b>Imges</b></div>
 
+    <div class="mb-2 bg-secondary text-white text-center"><b>Images</b></div>
+    <a style="color: white;" class="btn btn-info uploadProgressModalBtn">Add Image</a>
     <div class="imagesAdmin">
-	     @if ($user_gallery)
-	        @foreach ($user_gallery as $gallery)
-	            <div id="{{$gallery->id}}" class="imagesDiv item profile_photo_frame gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
-	               <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-	                    href="{{assetGallery($gallery->access,$record->id,'',$gallery->image)}}"
-	                    data-lcl-thumb="{{assetGallery($gallery->access,$record->id,'small',$gallery->image)}}"
-	                    >
-	                    <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo imgStyling"
-	                    data-src="{{assetGallery($gallery->access,$record->id,'',$gallery->image)}}"
-	                    src="{{assetGallery($gallery->access,$record->id,'small',$gallery->image)}}" >
-	                </a>
-	                <div class="gallery_action">
-	                <span onclick="UProfile.confirmPhotoDelete({{$gallery->id}});" title="Delete photo" class="icon_delete">
-	                    <span class="icon_delete_photo"></span>
-	                    <span class="icon_delete_photo_hover"></span>
-	                </span>
-	                <span onclick="UProfile.setPrivateAccess({{$gallery->id}})"  title="Make private" class="icon_private">
-	                    <span class="icon_private_photo"></span>
-	                    <span class="icon_private_photo_hover"></span>
-	                </span>
-	            	<span onclick="UProfile.setAsProfile({{$gallery->id}})" title="Make Profile" class="icon_image_profile">
-	            			<span class=""></span>
-	            	</span>
-	                </div>
-
-	            </div>
-	        @endforeach
-	    @endif
+        @if ($user_gallery)
+        <div id="images" class="imagesDiv">
+           @foreach ($user_gallery as $gallery)
+               <div class="imageDiv" id="photodiv_{{$gallery->id}}" style="display: inline-block;">
+               <img src="{{assetGallery($gallery->access,$record->id,'',$gallery->image)}}" id="photo_{{$gallery->id}}" class="photo">
+               <div class="img-overlay text-center">
+                   <button onclick="UProfile.confirmPhotoDelete({{$gallery->id}}); return false;" class="btn btn-sm btn-success">Delete</button>
+               </div>
+               </div>
+          @endforeach
+       </div>
+       @endif
     </div>
 
 
 
-     
+
      <a class="btn btn-primary btnPrevious text-white text-white" onclick="scrollToTop()" >Previous</a>
 
 </div>
 
 <style type="text/css">
-	
+
 
 .imagesDiv{
 position: relative;

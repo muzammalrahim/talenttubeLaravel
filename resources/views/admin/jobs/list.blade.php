@@ -31,7 +31,6 @@
             <th>country</th>
             <th>state</th>
             <th>city</th>
-            <th>experience</th>
             <th>created_at</th>
             {{-- <th>created_by</th> --}}
             <th>action</th>
@@ -62,7 +61,7 @@
 @section('css')
     <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
     <style type="text/css">
-        
+
         .modal.showProcessing  .modalContent{ display: none;  }
         .modal.showProcessing  .modelProcessing{ display: block !important;  }
 
@@ -96,32 +95,31 @@ jQuery('#dataTable').DataTable({
         { data: 'country', name: 'country' },
         { data: 'state', name: 'state' },
         { data: 'city', name: 'city' },
-        { data: 'experience', name: 'experience' },
         { data: 'created_at', name: 'created_at' },
         // { data: 'created_by', name: 'created_by' },
         { data: 'action', name: 'action'},
     ]
 });
 
- 
+
 //========================================================================//
-// Click to open model to confirm before delte. 
-//========================================================================// 
+// Click to open model to confirm before delte.
+//========================================================================//
 $(document).on('click', '.btnJobDelete', function() {
     console.log(' btnJobDelete ');
   var item_id = parseInt($(this).attr('data-id'));
   var job_title = $(this).attr('data-title');
   // $('#deleteConfirmId').val(item_id);
-  
-  var   delete_modalContent =  '<div style="text-align:center;">'; 
-        delete_modalContent += '<input type="hidden" name="deleteConfirmId" id="deleteConfirmId" value="'+item_id+'"  />'; 
+
+  var   delete_modalContent =  '<div style="text-align:center;">';
+        delete_modalContent += '<input type="hidden" name="deleteConfirmId" id="deleteConfirmId" value="'+item_id+'"  />';
         delete_modalContent += '<p>Are you sure to delete job "'+job_title+'"</p>';
         delete_modalContent += '</div>';
 
 
   $('#deleteModal .modalContent').html(delete_modalContent);
   $('#deleteModal').modal('show');
-   
+
 
 });
 
@@ -137,8 +135,8 @@ $('#removejob').on('click', function() {
         type: 'POST',
         url:  'jobs/delete/' + del_id,
         data: {del_id},
-        beforeSend: function(){ 
-           $("#removejob").prop("disabled", true);            
+        beforeSend: function(){
+           $("#removejob").prop("disabled", true);
         },
         success: function(data) {
           console.log(' data ', data);
