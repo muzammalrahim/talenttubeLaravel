@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->name('publicuservideo');
 
 Route::get('test', 'Site\SiteUserController@test')->name('test');
 Route::get('test2', 'Site\HomeController@test2')->name('test2');
@@ -60,6 +61,7 @@ Route::get('stream/{userid}/videos/{any}', [
     'middleware' => 'auth',
     'uses'       => 'Site\HomeController@videoStream',
 ])->where('any', '.*');
+
 
 
 //Media access gallery
