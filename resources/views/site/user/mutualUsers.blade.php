@@ -162,7 +162,7 @@ $profile_image_gallery    = $js->profileImage()->first();
 
                 <div class="jobApplicAction">
                     <a class="active graybtn jbtn" data-jsid="{{$js->id}}">Liked</a>
-                    <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" >View Profile</a>
+                    <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" target="_blank">View Profile</a>
                 </div>
             </div>
         </div>

@@ -174,7 +174,7 @@ class JobSeekerController extends Controller {
     public function jobSeekerInfo($jobSeekerId){
         $user = Auth::user();
         // if not employer then do not allowed him.
-        if (!isEmployer($user)){ return redirect(route('jobSeekers')); }
+        // if (!isEmployer($user)){ return redirect(route('jobSeekers')); }
 
         $data['user'] = $user;
 

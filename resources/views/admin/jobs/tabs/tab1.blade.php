@@ -15,6 +15,13 @@
                     </div>
 
                     <div class="form-group row">
+                        {{ Form::label('Description', null, ['class' => 'col-md-2 form-control-label']) }}
+                        <div class="col-md-10">
+                          {{ Form::textarea('description', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'title','required'=> 'true')) }}
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
                         <div class="col-md-12">
                             <div id="accordion">
                                 <div class="card">

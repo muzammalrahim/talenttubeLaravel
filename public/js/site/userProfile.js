@@ -1176,23 +1176,22 @@ $(document).ready(function() {
                     var attachments = data.attachments;
                     var attach_html = '';
 
-                    if( attachments.length > 0 ){
-                        for (let ai = 0; ai < attachments.length; ai++) {
 
 
-                            attach_html += '<div class="attachment_'+attachments[ai].id+' attachment_file">';
+
+                            attach_html += '<div class="attachment_'+attachments.id+' attachment_file">';
                             attach_html +=   '<div class="attachment"><img src="'+base_url+'/images/site/icons/cv.png" /></div>';
-                            attach_html +=   '<span class="attach_title">'+attachments[ai].name+'</span>';
+                            attach_html +=   '<span class="attach_title">'+attachments.name+'</span>';
                             attach_html +=   '<div class="attach_btns">';
-                            attach_html +=      '<a class="attach_btn downloadAttachBtn" href="'+base_url+'/'+attachments[ai].file+'">Download</a>';
-                            attach_html +=      '<a class="attach_btn removeAttachBtn" data-attachmentid="'+attachments[ai].id+'" onclick="UProfile.confirmAttachmentDelete('+attachments[ai].id+');">Remvoe</a>';
+                            attach_html +=      '<a class="attach_btn downloadAttachBtn" href="'+data.file+'">Download</a>';
+
+                            attach_html +=      '<a class="attach_btn removeAttachBtn" data-attachmentid="'+attachments.id+'" onclick="UProfile.confirmAttachmentDelete('+attachments.id+');">Remvoe</a>';
                             attach_html +=    '</div>';
                             attach_html +=  '</div>';
 
-                        }
-                    }
 
-                    $('.private_attachments').html(attach_html);
+
+                    $('.private_attachments').append(attach_html);
 
 
                 }

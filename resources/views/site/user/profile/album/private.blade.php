@@ -2,14 +2,14 @@
     <div class="title_private_photos" style="margin-bottom: 5px;">
         Resume &amp; Contact Details
     </div>
-    
+
     <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
         <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$user->email}}</span></li>
         <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$user->phone}}</span></li>
         {{-- <li> <a class="btn violet view-resume" target="_blank" style="" href="/talenttube/_files/resumeUpload/3687_Pimmys logo.pdf">View Resume</a></li> --}}
     </ul>
-    
-    
+
+
     <form id="frm_upload" class=" submit-document" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
 				 {{ csrf_field() }}
         <br>
@@ -29,14 +29,14 @@
 							<span class="attach_title">{{ $attachment->name }}</span>
 							<div class="attach_btns">
 								<a class="attach_btn downloadAttachBtn" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
-								<a class="attach_btn removeAttachBtn" data-attachmentid="{{$attachment->id}}" onclick="UProfile.confirmAttachmentDelete({{$attachment->id}});">Remvoe</a>
+								<a class="attach_btn removeAttachBtn" data-attachmentid="{{$attachment->id}}" onclick="UProfile.confirmAttachmentDelete({{$attachment->id}});">Remove</a>
 							</div>
-							
+
 					</div>
-				@endforeach		
+				@endforeach
 		</div>
 
-		
+
 <div style="display:none;">
 <div id="confirmDeleteAttachmentModal" class="modal p0 confirmDeleteModal">
 <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">

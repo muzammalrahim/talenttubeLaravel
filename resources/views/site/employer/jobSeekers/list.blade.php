@@ -1,11 +1,11 @@
- 
- 
- 
-    
+
+
+
+
     @if ($jobSeekers && $jobSeekers->count() > 0)
-   
+
     @foreach ($jobSeekers as $js)
-    
+
     <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
         <div class="jobSeeker_box relative dinline_block w100">
             @include('site.layout.parts.jobSeekerProfilePhotoBox')
@@ -16,13 +16,13 @@
              @else
                 <a class="jsLikeUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Like</a>
              @endif
-                <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" >View Profile</a> 
+                <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" target="_blank">View Profile</a>
             </div>
         </div>
     </div>
 
 
-{{-- 
+{{--
     <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
 
         <div class="jobSeeker_box relative dinline_block w100">
@@ -66,7 +66,7 @@
             </div>
 
         </div>
-       
+
         <div class="js_actionBtn">
             <a class="graybtn jbtn" href="{{route('jobSeekerInfo', ['id' => $js->id])}}">Detail</a>
             <a class="jsBlockUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Block</a>
@@ -82,7 +82,7 @@
     </div>
  --}}
     @endforeach
-   
+
 
     <div class="jobseeker_pagination cpagination">{!! $jobSeekers->render() !!}</div>
 
@@ -90,10 +90,10 @@
 
 
 
- 
 
- 
 
- 
 
- 
+
+
+
+

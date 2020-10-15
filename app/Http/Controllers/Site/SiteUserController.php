@@ -27,7 +27,7 @@ use App\JobsQuestions;
 use App\LikeUser;
 use App\fbremacc;
 
-
+use Session;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -647,6 +647,8 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     public function updateQualification(Request $request){
 
+        if(!empty($request->qualification)){
+
         $requestData = $request->all();
         $rules = array(
                     'qualification'    => 'required|array',
@@ -670,6 +672,26 @@ class SiteUserController extends Controller
                     'data' => $QualificationHtml,
             ]);
         }
+
+        }
+        else{
+
+            $user = Auth::user();
+            $user->qualification = '';
+            // $user->qualificationRelation()->sync($requestData['qualification']);
+            $user->save();
+            $data['user'] = User::find($user->id);
+            $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
+
+                //  site/layout/parts/jobSeekerQualificationList
+
+            $QualificationHtml = $QualificationView->render();
+            return response()->json([
+                    'status' => 1,
+                    'data' => $QualificationHtml,
+            ]);
+        }
+
     }
 
  // ================================== Ajax For updating Questions. ==================================
@@ -710,18 +732,36 @@ class SiteUserController extends Controller
 
     public function updateIndustryExperience(Request $request){
 
-        // dump($request->tags);
-        $user = Auth::user();
-        $rules = array(
-                'industry_experience'    => 'required|array',
-                'industry_experience.*'  => 'string|max:100'
-        );
-        $validator = Validator::make($request->all(), $rules);
-        // dd( $validator->errors() );
-        if (!$validator->fails()) {
-            //$user->industry_experience = $request->industry_experience;
-            // $array = array_unique (array_merge ($user->industry_experience, $request->industry_experience));
-            $user->industry_experience = array_unique($request->industry_experience);
+        if(!empty($request->industry_experience)){
+
+            $user = Auth::user();
+            $rules = array(
+                    'industry_experience'    => 'required|array',
+                    'industry_experience.*'  => 'string|max:100'
+            );
+            $validator = Validator::make($request->all(), $rules);
+            // dd( $validator->errors() );
+
+            if (!$validator->fails()) {
+                //$user->industry_experience = $request->industry_experience;
+                // $array = array_unique (array_merge ($user->industry_experience, $request->industry_experience));
+                $user->industry_experience = array_unique($request->industry_experience);
+                $user->save();
+                $data['user'] = User::find($user->id);
+                $IndustryView = view('site.layout.parts.jobSeekerIndustryList', $data);
+                $IndustryHtml = $IndustryView->render();
+                return response()->json([
+                        'status' => 1,
+                        'data' => $IndustryHtml
+                ]);
+            }
+
+        }
+
+        else {
+            // dd("hi");
+            $user = Auth::user();
+            $user->industry_experience = '';
             $user->save();
             $data['user'] = User::find($user->id);
             $IndustryView = view('site.layout.parts.jobSeekerIndustryList', $data);
@@ -731,6 +771,7 @@ class SiteUserController extends Controller
                     'data' => $IndustryHtml
             ]);
         }
+
     }
 
 
@@ -874,14 +915,14 @@ class SiteUserController extends Controller
         $del_data->company = $user->company;
         $del_data->reason = $request->reasonValue;
         $del_data->save();
-
+        Session::flush();
         // dd( $user->email);
-
+        Auth::logout();
         if(!empty($user)){
         $user->delete();
           return response()->json([
                 'status' => 1,
-                'message' => 'Job Seeker Succesfully Deleted',
+                'message' => 'User Succesfully Deleted',
           ]);
       }
     }
@@ -1275,7 +1316,7 @@ class SiteUserController extends Controller
                     'status' => '1',
                     'message' => 'Resume successfully uploaded',
                     'file' => asset('images/user/' . $user->id . '/private/' . $fileName),
-                    'attachments' => $userAttachments,
+                    'attachments' => $attachment,
 
                 );
                 return response()->json($output);

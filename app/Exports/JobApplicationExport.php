@@ -14,7 +14,7 @@ class JobApplicationExport implements FromCollection, WithHeadings
     */
     private $ids;
 
-    public function __construct($ids) 
+    public function __construct($ids)
     {
         $this->ids = $ids;
     }
@@ -31,36 +31,45 @@ class JobApplicationExport implements FromCollection, WithHeadings
     public function collection(){
 
          $applications = JobsApplication::with([
-                    'jobseeker:id,name,surname,email,phone,city,state,country,salaryRange,recentJob',
+                    'jobseeker:id,name,questions,industry_experience,surname,email,phone,city,state,country,salaryRange,recentJob',
                     'job:id,title,type,experience,expiration'
-                ])->whereIn('id', $this->ids)->get();    
+                ])->whereIn('id', $this->ids)->get();
 
-        $collectionData = []; 
+        $collectionData = [];
         if(!empty($applications)){
             foreach ($applications as $application) {
-             $collRow = []; 
-             $collRow['job_id'] = $application->job->id; 
-             $collRow['title'] = $application->job->title; 
+             $collRow = [];
+             $collRow['job_id'] = $application->job->id;
+             $collRow['title'] = $application->job->title;
              $collRow['type'] = $application->job->type;
-             $collRow['experience'] = $application->job->experience; 
+             $industries = "";
+             foreach( $application->jobseeker->industry_experience as $indus)
+             $industries = $industries."\r\n ".getIndustryName($indus);
+             $collRow['experience'] = $industries;
              $collRow['expiration'] = $application->job->expiration;
-             $collRow['app_id'] = $application->id; 
-             $collRow['name'] = $application->jobseeker->name; 
-             $collRow['surname'] = $application->jobseeker->surname; 
-             $collRow['email'] = $application->jobseeker->email; 
-             $collRow['phone'] = $application->jobseeker->phone; 
-             $collRow['city'] = $application->jobseeker->city; 
-             $collRow['state'] = $application->jobseeker->state; 
-             $collRow['country'] = $application->jobseeker->country; 
-             $collRow['salaryRange'] = $application->jobseeker->salaryRange; 
-             $collRow['recentJob'] = $application->jobseeker->recentJob;    
-             $collectionData[] =  $collRow; 
+             $collRow['app_id'] = $application->id;
+             $collRow['name'] = $application->jobseeker->name;
+             $collRow['surname'] = $application->jobseeker->surname;
+             $collRow['email'] = $application->jobseeker->email;
+             $collRow['phone'] = $application->jobseeker->phone;
+             $collRow['city'] = $application->jobseeker->city;
+             $collRow['state'] = $application->jobseeker->state;
+             $collRow['country'] = $application->jobseeker->country;
+             $collRow['salaryRange'] = $application->jobseeker->salaryRange;
+             $collRow['recentJob'] = $application->jobseeker->recentJob;
+
+
+
+
+            //    $collectionData[] =  $collRow;
+
+             $collectionData[] =  $collRow;
             }
         }
         $collection = collect($collectionData);
-        return $collection; 
+        return $collection;
     }
 
 
-    
+
 }

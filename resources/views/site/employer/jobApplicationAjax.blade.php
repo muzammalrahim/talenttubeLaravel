@@ -21,7 +21,7 @@
                  @else
                     <a class="jsLikeUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Like</a>
                  @endif
-                    <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" >View Profile</a>
+                    <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" target="_blank" >View Profile</a>
                     <div class="jobApplicationStatusCont dinline_block">
                         <select name="jobApplicStatus" class="select_aw jobApplicStatus" data-application_id="{{$application->id}}">
                              @foreach (jobStatusArray() as $statusK => $statusV)

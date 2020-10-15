@@ -1,53 +1,91 @@
 <div class="tab-pane fade " id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-                    
+
     {{-- @dump($record->questions) --}}
+    @php
+    $questions = json_decode($record->questions, true);
+    $qnum = sizeof($questions)-1;
+    //dd($questions)
+   @endphp
 
     <div class="col-md-10">
     @if(!empty($record->questions))
-        @foreach($record->questions as $qk => $question)
-	           <div class="questionbox q_{{$question->id}}">
-	           	<p>{{$question->title}}</p> 	
+        @foreach($record->questions as $keyq => $question)
+               <div class="questionbox q_{{$question->id}}">
+                <span>Question {{($keyq+1)}} </span>
+                <input type="text" value="{{$question['title']}}" class="mt-2 mb-2" name="jq[{{$keyq}}][title]" />
+
 	           	   @if(!empty($question->options))
-	         	   		@foreach ($question->options as $optk => $option)
-	         	   		 
-
+                            @foreach ($question->options as $key => $option)
+                            @php
+                            $checked = '';
+                            @endphp
 		         	   		<div class="option">
-		         	   				<span>Options {{($optk+1)}} </span> 
-		         	   				<input type="text" name="question[{{$question->id}}][option][{{$optk}}][value]" value="{{$option}}">
-		         	   				<div class="option_goldstar">	  
-				         	   				<input 
-				         	   				type="checkbox" 
-				         	   				id="jq_{{$question->id}}_option_{{$optk}}_star" 
-				         	   				name="question[{{$question->id}}][option][{{$optk}}][goldstar]" 
-				         	   				value="goldstar" 
-				         	   				{{ (!empty($question->goldstar) &&  (in_array($option,$question->goldstar)))?'checked':''}}
-				         	   				/>	
-				         	   				<label for="jq_{{$question->id}}_option_{{$optk}}_star" class="goldStar"><i class="fa fa-star"></i>Gold Star</label>
+		         	   				<span>Options {{($key+1)}} </span>
+                                    <input type="text" name="jq[{{$keyq}}][option][{{$key}}][text]" value="{{$option}}" />
+		         	   				<div class="option_goldstar">
+                                        @if (!empty($question['goldstar']) && count($question['goldstar']) > 0)
+                                        @php
+                                                if (in_array($key, $question['goldstar'])) {
+                                                    $checked = 'checked';
+                                                }
+                                                else{
+                                                    $checked = '';
+                                                }
+                                        @endphp
+                                        @else
+                                        @php
+                                            $checked = '';
+                                        @endphp
+                                        @endif
+				         	   				<input
+				         	   				type="checkbox"
+                                            id="jq_{{$keyq}}_option_{{$key}}_goldstar"
+                                            name="jq[{{$keyq}}][option][{{$key}}][goldstar]"
+                                            value="goldstar"
+				         	   				{{$checked}}
+				         	   				/>
+				         	   				<label for="jq_{{$question->id}}_option_{{$key}}_star" class="goldStar"><i class="fa fa-star"></i>Gold Star</label>
 		         	   				</div>
 
-		         	   				<div class="option_preffer">	  
-				         	   				<input 
-				         	   				type="checkbox" 
-				         	   				id="jq_{{$question->id}}_option_{{$optk}}_preffer" 
-				         	   				name="question[{{$question->id}}][option][{{$optk}}][preffer]" 
-				         	   				value="preffer" 
-				         	   				{{ (!empty($question->preffer) &&  (in_array($option,$question->preffer)))?'checked':''}}
-				         	   				/>	
-				         	   				<label for="jq_{{$question->id}}_option_{{$optk}}_preffer" class="goldStar">Preffer</label>
+		         	   				<div class="option_preffer">
+                                        @if (!empty($question['preffer']) && count($question['preffer']) > 0)
+                                        @php
+                                                if (in_array($key, $question['preffer'])) {
+                                                    $checked = 'checked';
+                                                }
+                                                else{
+                                                    $checked = '';
+                                                }
+                                        @endphp
+                                        @else
+                                        @php
+                                            $checked = '';
+                                        @endphp
+                                        @endif
+				         	   				<input
+				         	   				type="checkbox"
+				         	   				id="jq_{{$keyq}}_option_{{$key}}_preffer"
+				         	   				name="jq[{{$keyq}}][option][{{$key}}][preffer]"
+				         	   				value="preffer"
+				         	   				{{$checked}}
+				         	   				/>
+				         	   				<label for="jq_{{$question->id}}_option_{{$key}}_preffer" class="goldStar">Undiserable</label>
 		         	   				</div>
 
-
+                                    @php
+                                    $checked = '';
+                                    @endphp
 		         	   		</div>
 	            		@endforeach
-	            	@endif     
+	            	@endif
 
-		      
-	         
+
+
 	         </div>
 	    @endforeach
 				    @endif
 
- </div> 
+ </div>
 
 
       <a class="btn btn-primary btnPrevious text-white"onclick="scrollToTop()" >Previous</a>
