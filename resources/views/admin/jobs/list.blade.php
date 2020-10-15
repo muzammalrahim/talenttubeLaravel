@@ -5,12 +5,31 @@
 @section('content_header')
 
 <div class="block row">
-    <div class="col-md-6"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
-    <div class="col-md-6">
+    <div class="col-md-2"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
+
+
+
+    {{-- <div class="block row col-md-6 text-white">
+
+
+        <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign Job</a></div>
+        <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
+        <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
+        <div class="col-md-1.5 bulkButton mr-1"><a href="{{route('bulkEmail.new')}}" class="btn btn-block btn-primary ">Bulk Email</a></div>
+
+    </div> --}}
+
+
+
+    {{-- <div class="col-md-10">
         <div class="float-right">
             <a href="{!! route('jobs.create') !!}" class="btn btn-block btn-success">Add New</a>
         </div>
-    </div>
+    </div> --}}
+
+
+
+
 </div>
 
 @stop

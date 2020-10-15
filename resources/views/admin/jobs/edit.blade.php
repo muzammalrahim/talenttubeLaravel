@@ -98,6 +98,42 @@
     $(document).ready(function(){
 
 
+
+
+        $('input:checkbox').change(function() {
+	if ($(this).is(':checked')) {
+        $(this).closest('label').addClass('checked');
+
+        if($(this).attr('name').includes('preffer')){
+            var res = $(this).attr('name').replace("preffer", "goldstar");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+        if($(this).attr('name').includes('goldstar')){
+            var res = $(this).attr('name').replace("goldstar", "preffer");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+
+	} else {
+		$(this).closest('label').removeClass('checked');
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
         $('.saveNewLocation').on('click',function() {
         event.preventDefault();
         var formData = $('.location_latlong :input').serializeArray();

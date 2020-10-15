@@ -142,7 +142,7 @@ div.cont_w>.column_main {
     opacity: 0.7;
 }
 .emailUpdateBUtton:hover,.PhoneUpdateBUtton:hover,.PasswordUpdateBUtton:hover{
-    opacity: 1.0;	  
+    opacity: 1.0;
 }
 .DeleteProfileBUtton{
 	margin-left: 5px;
@@ -230,7 +230,7 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
     });
 
  // =========================================== Update Email Ajax End here ===========================================
- 
+
  // =============================================== Update Phone Ajax ================================================
 
     $(document).ready(function (){
@@ -284,7 +284,7 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
         // console.log('hi');
         var new_password 	 = $('input[name="new_password"]').val();
         var current_password  = $('input[name="current_password"]').val();
-        
+
         // console.log(new_password);
 
            $.ajaxSetup({
@@ -304,7 +304,7 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
                     $('.SavePasswordSpinner').remove();
                     $('.PasswordAlert').show().delay(3000).fadeOut('slow');
                     $('.PasswordValidatorErrorTextOld').addClass('hide_it2');
-                    $('.PasswordValidatorErrorTextNew').addClass('hide_it2');  
+                    $('.PasswordValidatorErrorTextNew').addClass('hide_it2');
                 }
                 else{
                     $('.SavePasswordSpinner').remove();
@@ -334,7 +334,7 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
         console.log('hi');
         var reasonValue = $('.reasonAccRem').val();
         // var current_password  = $('input[name="current_password"]').val();
-        
+
         console.log(reasonValue);
 
            $.ajaxSetup({
@@ -350,11 +350,13 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
             url: base_url+'/ajax/deleteuser',
             data: {'reasonValue': reasonValue},
             success: function(resp){
-                if(resp.status == true){
+                if(resp.status == 1){
+                    var newpath = '{!! route('homepage') !!}';
+                    window.location.href = newpath;
                     // $('.SavePasswordSpinner').remove();
                     // $('.PasswordAlert').show().delay(3000).fadeOut('slow');
                     // $('.PasswordValidatorErrorTextOld').addClass('hide_it2');
-                    // $('.PasswordValidatorErrorTextNew').addClass('hide_it2');  
+                    // $('.PasswordValidatorErrorTextNew').addClass('hide_it2');
                 }
                 else{
                     // $('.SavePasswordSpinner').remove();

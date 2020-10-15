@@ -821,6 +821,7 @@ $('#photo_add_resume').on('click', function(){
 var input = document.createElement('input');
 var x = document.getElementById("formUserId").value;
 input.type = 'file';
+input.accept = '.pdf,.doc,.docx';
 input.onchange = e => {
     var file = e.target.files[0];
     console.log(' onchange file  ', file);

@@ -56,7 +56,7 @@
 
         <div class="card-footer">
             <div class="row">
-                <div class="col"><a class="btn btn-danger btn-sm" href=" {!! route('jobs') !!}">Cancel</a></div>
+                <div class="col"><a class="btn btn-danger btn-sm" href=" {!! route('verifiedUsers') !!}">Cancel</a></div>
                 <div class="col text-right"><button class="btn btn-success btn-sm pull-right" type="submit">Save</button></div>
             </div>
         </div><!--card-footer-->

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
-
+use App\UserGallery;
 function checkRole($roles){
     echo "test helper working ";
 }
@@ -670,6 +670,26 @@ function generateVideoThumbsm($video){
 						// $html .= '<a onclick="UProfile.delteVideo('.$video->id.')">	<i class="fas fa-trash"></i></a>';
 						// $html .= '</div>';
     return $html;
+}
+
+
+function getProfileImage($id){
+
+    $user_gallery    = UserGallery::where('user_id',$id)->where('status',1)->get();
+    $profile_image   = UserGallery::where('user_id',$id)->where('status',1)->where('profile',1)->first();
+    if(!$profile_image){
+        if( $user_gallery->count() > 0){
+            // $profile_image   = asset('images/user/'.$user->id.'/'.$user_gallery->first()->image);
+            $profile_image   = assetGallery($user_gallery->first()->access,$id,'',$user_gallery->first()->image);
+        }else{
+            $profile_image   = asset('images/site/icons/nophoto.jpg');
+        }
+    }else{
+        // $profile_image   = asset('images/user/'.$user->id.'/gallery/'.$profile_image->image);
+        $profile_image   = assetGallery($profile_image->access,$id,'',$profile_image->image);
+    }
+
+    return  $profile_image;
 }
 
 

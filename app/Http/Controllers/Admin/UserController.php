@@ -318,9 +318,9 @@ class UserController extends Controller
             ]);
         } else {
             $user = User::find($request->userID);
-												$resume = $request->file('resume');
-												// $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
-												$fileName = $resume->getClientOriginalName();
+            $resume = $request->file('resume');
+            // $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
+            $fileName = $resume->getClientOriginalName();
             $storeStatus = Storage::disk('user')->put($user->id . '/private/' . $fileName, file_get_contents($resume), 'public');
             if ($storeStatus) {
 

@@ -23,7 +23,8 @@
       <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign Job</a></div>
       <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
       <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
-      <div class="col-md-1.5 bulkButton"><a href="{{route('bulkEmail.new')}}" class="btn btn-block btn-primary ">Bulk Email</a></div>
+      <div class="col-md-1.5 bulkButton"><a  class="btn btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
       {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
     </div>
     {{-- testing --}}
@@ -205,6 +206,15 @@
     </div>
   </form>
 </div>
+
+
+<div class="d-none">
+    <form method="POST" class="BulkCompileCVForm" action="{{route('bulk.BulkGenerateCVPDF')}}">
+      @csrf
+      <div class="cbx_list">
+      </div>
+    </form>
+  </div>
 {{-- BulkCSV download end --}}
 
 
@@ -215,6 +225,14 @@
     <div class="cbx_list">
     </div>
   </form>
+</div>
+
+<div class="d-none">
+    <form method="GET" class="bulkEmailForm" action="{{route('bulkEmail.new')}}">
+      @csrf
+      <div class="cbx_list">
+      </div>
+    </form>
 </div>
 {{-- BulkCSV download end --}}
 
@@ -624,6 +642,21 @@ $(document).on('click','.btnBulkCSVExport', function(){
     $('.bulkCSVExportForm').submit();
 });
 
+
+$(document).on('click','.btnBulkCompileCV', function(){
+  console.log(' btnBulkCompileCV click ');
+  var cbx = $('input[name="cbx[]"]:checked').map(function(){return $(this).val(); }).toArray();
+    if(cbx.length <= 0){
+      alert('Please Select Checkboxes');
+      return false;
+    }
+    var cbx_hidden =  '';
+    cbx.forEach(function(id){ cbx_hidden += '<input type="hidden" name="cbx[]" value="'+id+'" />'  });
+    $('.BulkCompileCVForm .cbx_list').html(cbx_hidden);
+    $('.BulkCompileCVForm').submit();
+});
+
+
 //========================================================================//
 // Click on btnBulkApproved Button show confirmation popup.
 //========================================================================//
@@ -642,7 +675,18 @@ $(document).on('click','.btnBulkPDFGenerate', function(){
 
 
 
-
+$(document).on('click','.btnBulkEmail', function(){
+  console.log(' btnBulkPDFGenerate click ');
+  var cbx = $('input[name="cbx[]"]:checked').map(function(){return $(this).val(); }).toArray();
+    if(cbx.length <= 0){
+      alert('Please Select Checkboxes');
+      return false;
+    }
+    var cbx_hidden =  '';
+    cbx.forEach(function(id){ cbx_hidden += '<input type="hidden" name="cbx[]" value="'+id+'" />'  });
+    $('.bulkEmailForm .cbx_list').html(cbx_hidden);
+    $('.bulkEmailForm').submit();
+});
 
 
 

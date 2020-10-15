@@ -39,7 +39,7 @@
   /*border-radius: 20px;*/
   height: 250px;
  }
- 
+
  .description{
   height: 250px;
   width: 67%;
@@ -76,14 +76,37 @@
 
 </style>
 
-  
+
 @stop
 
 @section('content')
   {{-- @dump($applications) --}}
 
 
+  @php
+  // dd($user->qualification);
+  $industry_experienceData =  json_decode($job->experience);
+  // ?(getIndustriesData($user->industry_experience)):(array());
+ // dd( $industry_experienceData);
 
+  $jobType = '';
+  if($job->type == 'Contract')
+  {
+  $jobType = 'Contract';
+  }
+  elseif ($job->type == 'temporary') {
+  $jobType = 'Temporary';
+  }
+  elseif ($job->type == 'casual') {
+  $jobType = 'casual';
+  }
+  elseif ($job->type == 'full_time') {
+  $jobType = 'Full time';
+  }
+  elseif ($job->type == 'part_time') {
+  $jobType = 'Part time';
+  }
+  @endphp
 
 {{-- @dump($users) --}}
 {{-- @dump($job->jobEmployer) --}}
@@ -93,7 +116,6 @@
 {{-- <img src="..." class="rounded float-left" alt="..."> --}}
 
 
-  
 <div class="container">
 
 <div class="header">
@@ -102,11 +124,11 @@
 
   <div class="navbar">
     <div class="image">
-      <img src="https://images.pexels.com/photos/927451/pexels-photo-927451.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" class="rounded" alt="Cinque Terre" width="100%" height="236">
+      <img src="{{$profile_image}}" class="rounded" alt="profile image" width="100%" height="236">
     </div>
 
     <div class="description">
- 		
+
         <b style="margin-right: 50px;">Title:</b> {{$value = $job->title }}
         <br>
          {{-- @dump($job) --}}
@@ -117,7 +139,7 @@
          <br>
          <b style="margin-right: 17px;">Location: </b>{{$job->jobEmployer->country }}, {{$job->jobEmployer->state }}, {{$job->jobEmployer->city }}
          {{-- {{$value+ = $job->jobEmployer->city }} --}}
-  
+
   	 </div>
 
 </div> {{-- row --}}
@@ -126,41 +148,33 @@
     <thead>
       <tr>
         <th>Experience</th>
-        <td>{{$value = $job->experience}}</td>
+        <td>
+            @if(!empty($industry_experienceData))
+            @foreach($industry_experienceData as  $industry )
+                          {{getIndustryName($industry)}}<br>
+            @endforeach
+        @endif
+        </div></td>
         <th>Salary</th>
         <td>{{$value = $job->salary}}</td>
       </tr>
 
       <tr>
         <th>Job Type</th>
-        <td>{{$value = $job->type}}</td>
-        <th>Gender</th>
-        <td>{{$value = $job->gender}}</td>
-      </tr>
-
-      <tr>
-        <th>Age</th>
-        <td>{{$value = $job->age}}</td>
-        <th>Vacancies</th>
-        <td>{{$value = $job->vacancies}}</td>
-      </tr>
-
-      <tr>
+        <td>{{$jobType}}</td>
         <th>Posted on</th>
         <td>{{$value = $job->created_at}}</td>
-        <th>Expiration</th>
-        <td>{{$value = $job->expiration}}</td>
       </tr>
 
       <tr>
         <th>Location</th>
-        <td>{{$value = $job->city}}</td>
+        <td>{{$job->jobEmployer->country }}, {{$job->jobEmployer->state }}, {{$job->jobEmployer->city }}</td>
         <th>Expiration</th>
         <td>{{$value = $job->expiration}}</td>
       </tr>
 
     </thead>
-   
+
   </table>
 
 
@@ -173,25 +187,11 @@
       {{-- @dump($application->id) --}}
 
   <div class="navbar">
-
         <div class="image">
-
-
- {{--        @if($application->jobseeker)
-
-            @if($application->jobseeker->profileImage)
-                 <img src="{{assetGallery2($application->profileImage,'small')}}">
-                 @else
-                 <img src="{{asset('images/site/icons/nophoto.jpg')}}">
-            @endif
-        @else
-          
-        @endif --}}
-
-                <img src="https://images.pexels.com/photos/927451/pexels-photo-927451.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" class="rounded" alt="Cinque Terre" width="100%" height="236">
-
-
-
+            @php
+              $profile_image2 = getProfileImage($application->jobseeker->id)
+            @endphp
+                <img src="{{$profile_image2}}" class="rounded" alt="Cinque Terre" width="100%" height="236">
       </div>
 
       {{-- <a class="contactBtn" href="{{route('jobSeekerInfo',['id' => $application->id])}}">Contact Details</a> --}}
@@ -208,7 +208,7 @@
            <br>
          <b style="margin-right: 3px;">Expected Salary: </b>{{$application->jobseeker->salaryRange }}
          <br>
-         <b style="margin-right: 10px;">Job Status: </b>{{$application->status }}
+         <b style="margin-right: 10px;">Job Status: </b> {{$application->status }}
          <br>
          <b style="margin-right: 1px;">Interested In: </b>{{$application->jobseeker->interested_in }}
          <br>
@@ -221,8 +221,8 @@
 
 </div>
 
-  <table class="table"style="    margin-bottom: 20px;">
-    <thead>
+  <table class="table">
+
       <tr>
         <th>Questions</th>
 
@@ -230,28 +230,23 @@
 
 {{-- @dump($application->answers) --}}
 
-                @foreach($job->questions as $question)
-                      {{$question->title}}
-                    @foreach($application->answers as $ans) 
-                    
-                      {{$ans->answer}}
-                      
-                    @endforeach  
-
+                @foreach($job->questions as $key =>$question)
+                      <h4>{{$question->title}}</h4>
+                    <p>{{$application->answers[$key]->answer}}</p>
                 @endforeach
         </td>
 
 
 
-       
+
       </tr>
 
 
-    </thead>
+
         {{-- @dump($job->questions) --}}
 
 {{-- @dump($job->questions) --}}
-   
+
   </table>
 {{-- @dump($application->jobseeker) --}}
 
@@ -273,6 +268,6 @@
 
 
 
- 
+
 
 @stop

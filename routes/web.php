@@ -148,20 +148,23 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::post('jobs/delete/{id}', 'Admin\AdminJobsController@destroyJob')->name('jobs.destroy');
 
 
-    // bulkEmail
+    // bulkEmailnewBulkEmailApplicant
     Route::get('bulkEmail/new', 'Admin\AdminEmailsController@newBulkEmail')->name('bulkEmail.new');
+    Route::get('bulkEmailApllicant/new', 'Admin\AdminEmailsController@newBulkEmailApplicant')->name('bulkEmailApplicant.new');
     Route::post('bulkEmail/store', 'Admin\AdminEmailsController@storeBulkEmail')->name('bulkEmail.store');
     Route::get('bulkEmail/list', 'Admin\AdminEmailsController@list')->name('bulkEmail.list');
     Route::get('bulkEmail/getList', 'Admin\AdminEmailsController@getDatatable')->name('bulkEmail.dataTable');
     Route::post('bulkEmail/SendEmail', 'Admin\AdminEmailsController@SendEmail')->name('bulkEmail.SendEmail');
 
+
     // bulkCVS
     Route::post('bulk/generateCVS', 'Admin\AdminEmailsController@GenerateCVS')->name('bulk.GenerateCVS');
     Route::get('bulk/generateCVS', 'Admin\AdminEmailsController@GenerateCVS');
     Route::post('bulk/generatePDF', 'Admin\AdminEmailsController@GeneratePDF')->name('bulk.GeneratePDF');
+    Route::post('bulk/generatePDFApplicant', 'Admin\AdminEmailsController@generatePDFApplicant')->name('bulk.generatePDFApplicant');
     Route::get('bulk/generatePDF', 'Admin\AdminEmailsController@GeneratePDF');
-
-
+    Route::post('bulk/BulkGenerateCVPDF', 'Admin\AdminEmailsController@BulkGenerateCVPDF')->name('bulk.BulkGenerateCVPDF');
+    Route::post('bulk/BulkGenerateCVPDFApplicant', 'Admin\AdminEmailsController@BulkGenerateCVPDFApplicant')->name('bulk.BulkGenerateCVPDFApplicant');
     // End here
 
     // Job Application Start here
@@ -181,7 +184,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     // Job Application End Here
     Route::get('ajax/jobApplyInfoa/{id}', 'Admin\AdminJobsController@jobApplyInfo')->name('jobApplyInfo');
     Route::post('ajax/massJobApplySubmit', 'Admin\AdminJobsController@massJobApplySubmit')->name('massJobApplySubmit');
-
+    Route::post('ajax/massJobApplySubmitApplicant', 'Admin\AdminJobsController@massJobApplySubmitApplicant')->name('massJobApplySubmitApplicant');
 
     Route::post('ajax/deleteGallery/{id}/{userID}', 'Admin\UserController@deleteGallery');
 

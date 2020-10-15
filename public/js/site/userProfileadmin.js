@@ -1142,7 +1142,7 @@ $(document).ready(function() {
 
     $('.submit-document').on('submit',(function(e) {
         e.preventDefault();
-        alert("called");
+
         var formData = new FormData(this);
         formData.append('submit', true);
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});

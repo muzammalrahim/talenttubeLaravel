@@ -15,7 +15,7 @@ use App\Exports\JobApplicationExport;
 use App\Exports\JobAllApplicationExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
-
+use App\UserGallery;
 use Yajra\Datatables\Datatables;
 // use Illuminate\Support\Facades\Hash;
 use PDF;
@@ -263,6 +263,156 @@ class AdminJobsController extends Controller
        }
 
    }
+
+
+
+
+
+
+    public function massJobApplySubmitApplicant(Request $request){
+
+        // dd($request->toArray());
+       $user = Auth::user();
+        $requestData = $request->all();
+    //    $requestData = array($request['applyFormData']);
+
+        $str_arr = explode (",", $request->cbx);
+
+
+       $job = Jobs::find($requestData['job_id']);
+       // check to confirm job with id exist
+       if ($job == null){
+           return response()->json([
+               'status' => 0,
+               'error' => 'Job with id '.$requestData['job_id'].' does not exist'
+           ]);
+       }else{
+           // check if user has not submitted application already.
+
+        $userIDs = array();
+
+        foreach($str_arr as $userID){
+        $jobApp = JobsApplication::where('id',$userID)->first();
+        $userIDs[] = $jobApp->user_id;
+        }
+
+        // dd($userIDs);
+
+        foreach($userIDs as $userID){
+            $jobApplication = JobsApplication::where('user_id',$userID)->where('job_id',$requestData['job_id'])->first();
+            if (!empty($jobApplication)) {
+                return response()->json([
+                    'status' => 0,
+                    'error' => 'You already submit application for this job'
+                ]);
+            }
+         }
+
+           // check application description which is mandatory.
+           if(empty($request->application_description)){
+                return response()->json([
+                   'status' => 0,
+                   'error' => 'Please answer all mandatory question.'
+               ]);
+           }
+
+
+           foreach($userIDs as $userID){
+           $newJobApplication = new JobsApplication();
+           $newJobApplication->user_id = $userID;
+           $newJobApplication->job_id = $job->id;
+           $newJobApplication->status = 'applied';
+           $newJobApplication->description = $request->application_description;
+           // $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
+           // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
+           $newJobApplication->save();
+
+           // if jobApplication is succesfully added then add job answers.
+           if( $newJobApplication->id > 0 ){
+
+               if(isset($requestData['answer']) && !empty($requestData['answer'])){
+                   foreach ($requestData['answer'] as $ansK => $ansV) {
+                       // $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']);
+                       // $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
+
+                       $jobQuestion = JobsQuestions::find($ansV['question_id']);
+                       $goldstar = 0;
+                       $preffer = 0;
+
+                       // check if jqb question exist
+                       if(!empty($jobQuestion)){
+                           // get the goldstar and preffer option
+                           // $goldstar = !empty($jobQuestion->goldstar)?(json_decode($jobQuestion->goldstar, true)):(array());
+                           // $preffer  = !empty($jobQuestion->preffer)?(json_decode($jobQuestion->preffer, true)):(array());
+                       $key = array_search($ansV['option'], $jobQuestion->options);
+
+                       foreach ($jobQuestion->preffer as $preferQ) {
+                           if($preferQ == $key){
+                               $preffer +=1;
+                           }
+                       }
+
+                       foreach ($jobQuestion->goldstar as $goldstarQ) {
+                           if($goldstarQ == $key){
+                               $goldstar +=1;
+                           }
+                       }
+
+                           // $goldstar = array();
+                           // if(!empty($jobQuestion->goldstar)){
+                           //     if(!is_array($jobQuestion->goldstar)){
+                           //        $goldstar = json_decode($jobQuestion->goldstar, true);
+                           //     }else{
+                           //        $goldstar =  $jobQuestion->goldstar;
+                           //     }
+                           // }
+
+                           // $preffer = array();
+                           // if(!empty($jobQuestion->preffer)){
+                           //     if(!is_array($jobQuestion->preffer)){
+                           //        $preffer = json_decode($jobQuestion->preffer, true);
+                           //     }else{
+                           //          $preffer = $jobQuestion->preffer;
+                           //     }
+                           // }
+
+                           // dump('goldstar', $goldstar);
+                           // dump('preffer', $preffer);
+                           // dump('ansV', $ansV);
+                           $jobAnswer              = new JobsAnswers();
+                           $jobAnswer->question_id = $ansV['question_id'];
+                           $jobAnswer->user_id     = $user->id;
+                           $jobAnswer->answer      = $ansV['option'];
+
+                           $newJobApplication->goldstar += $goldstar;
+                           $newJobApplication->preffer += $preffer;
+                           $goldstar = 0;
+                           $preffer = 0;
+                           $newJobApplication->save();
+                           $newJobApplication->answers()->save($jobAnswer);
+
+                       }
+
+
+
+                   }
+               }
+
+
+
+           }
+
+            }
+            // dd($request->toArray());
+
+               return response()->json([
+                   'status' => 1,
+                   'message' => 'You Job Application has been submitted succesfully'
+               ]);
+
+       }
+
+   }
     //===============================================================================================================//
     // .
     //===============================================================================================================//
@@ -323,7 +473,7 @@ class AdminJobsController extends Controller
 
     public function storeNewJob(Request $request){
 
-        // dd( $request->toArray() );
+         dd( $request->toArray() );
 
         $this->validate($request, [
             'title' => 'required|max:255',
@@ -339,6 +489,7 @@ class AdminJobsController extends Controller
         ]);
         $job = new Jobs();
         $job->title = $request->title;
+        // $job->description = $request->description;
         $job->country = $request->country;
         $job->state = $request->state;
         $job->city = $request->city;
@@ -388,14 +539,22 @@ class AdminJobsController extends Controller
         ]);
         $job = Jobs::find($id);
         $job->title = $request->title;
+        $job->description = $request->description;
         $job->country = $request->country;
         $job->state = $request->state;
         $job->city = $request->city;
+        $job->location_lat =  $request->location_lat;
+        $job->location_long = $request->location_long;
         if(!empty($request->industry_experience)){
             $job->experience = $request->industry_experience;
         }
         else{
             $job->experience = '';
+        }
+
+        $job->questions()->delete();
+        if(!empty($request['jq'])){
+        $job->addJobQuestions($request['jq']);
         }
         $job->type = $request->type;
         $job->expiration = $request->expiration;
@@ -523,6 +682,11 @@ class AdminJobsController extends Controller
               return $rhtml;
         }
       })
+      ->addColumn('profile', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<a class="btn btn-primary btn-sm btnUserInfo" href="'.route('jobSeekerInfo',['id'=>$records->jobseeker->id]).'" target="_blank" >Info</a>';
+            return $rhtml;
+        }})
       ->editColumn('user_id', function ($records) {
           return ($records->jobseeker)?($records->jobseeker->name.' '.$records->jobseeker->surname.' ('.$records->user_id.')'):'';
       })
@@ -532,6 +696,7 @@ class AdminJobsController extends Controller
       ->editColumn('city', function ($records) {
          return  ($records->GeoCity)?($records->GeoCity->city_title):'';
       })
+      ->rawColumns(['profile','action'])
       ->toJson();
     }
 
@@ -566,7 +731,7 @@ class AdminJobsController extends Controller
     // .
     //===============================================================================================================//
     public function ExportCSV(Request $request) {
-      // dd($request->toArray());
+    //   dd($request->toArray());
       if(!empty($request->cbx)){
          $jsExport = new JobApplicationExport($request->cbx);
         return Excel::download($jsExport, 'jobApplications.xlsx');
@@ -600,8 +765,26 @@ class AdminJobsController extends Controller
            $data['applications'] = $applications;
 
            if($request->test){
+
+
             return view('admin.pdf.jobWithApplication', $data);
            }else{
+
+            $user_gallery    = UserGallery::where('user_id',$job->jobEmployer->id)->where('status',1)->get();
+            $profile_image   = UserGallery::where('user_id',$job->jobEmployer->id)->where('status',1)->where('profile',1)->first();
+            if(!$profile_image){
+                if( $user_gallery->count() > 0){
+                    // $profile_image   = asset('images/user/'.$user->id.'/'.$user_gallery->first()->image);
+                    $profile_image   = assetGallery($user_gallery->first()->access,$job->jobEmployer->id,'',$user_gallery->first()->image);
+                }else{
+                    $profile_image   = asset('images/site/icons/nophoto.jpg');
+                }
+            }else{
+				// $profile_image   = asset('images/user/'.$user->id.'/gallery/'.$profile_image->image);
+                $profile_image   = assetGallery($profile_image->access,$job->jobEmployer->id,'',$profile_image->image);
+            }
+
+            $data['profile_image'] = $profile_image;
             $pdf = PDF::loadView('admin.pdf.jobWithApplication', $data);
             $pdf->setPaper('A4');
             return $pdf->download('JobApplications.pdf');
