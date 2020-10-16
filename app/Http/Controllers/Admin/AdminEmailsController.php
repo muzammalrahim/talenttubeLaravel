@@ -211,33 +211,64 @@ class AdminEmailsController extends Controller {
              $userAttachment = null;
              $pdf = new PDFMerger();
 
+
+             dd(PHP_OS);
             foreach($users as $user){
                 $userAttachment = Attachment::where('user_id', $user->id)->first();
                 if($userAttachment->type=="pdf"){
+
+                    if(PHP_OS=="WINNT"){
                     $str = str_replace('/', '\\', $userAttachment->file);
                     chdir('..');
                     $cwd = getcwd();
                     $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$str, 'all');
                     chdir('public');
+                    }
+                    else if(PHP_OS=="Linux"){
+                        $str =  $userAttachment->file;
+                        chdir('..');
+                        $cwd = getcwd();
+                        $pdf->addPDF($cwd.'/storage/images/user/'.$str, 'all');
+                        chdir('public');
+                    }
                 }
 
                 else if($userAttachment->type=="doc" || $userAttachment->type=="docx" ){
-
+                    if(PHP_OS=="WINNT"){
                     $str = str_replace('/', '\\', $userAttachment->file);
-                 //   dd($userAttachment);
+
                     $copystr = str_replace(".docx",".pdf",$userAttachment->name);
                     $copystr = str_replace(".doc",".pdf",$copystr);
-                    // dd(getcwd());
+
                     chdir('..');
                     $cwd = getcwd();
                     $converter = new OfficeConverter($cwd.'\\storage\\images\\user\\'.$str);
                     $converter->convertTo($copystr);
 
-                    // $phpWord->save('document.pdf', 'PDF');
+
 
                     $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$userAttachment->user_id.'\\private\\'.$copystr, 'all');
-                    //unlink("document.pdf");
+
                     chdir('public');
+                    }
+
+                    else if(PHP_OS=="Linux"){
+                        $str = $userAttachment->file;
+
+                        $copystr = str_replace(".docx",".pdf",$userAttachment->name);
+                        $copystr = str_replace(".doc",".pdf",$copystr);
+
+                        chdir('..');
+                        $cwd = getcwd();
+                        $converter = new OfficeConverter($cwd.'/storage/images/user/'.$str);
+                        $converter->convertTo($copystr);
+
+
+
+                        $pdf->addPDF($cwd.'/storage/images/user/'.$userAttachment->user_id.'/private/'.$copystr, 'all');
+
+                        chdir('public');
+                    }
                 }
             }
 
