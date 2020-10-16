@@ -213,6 +213,11 @@ class AdminEmailsController extends Controller {
 														
 													
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> ea0c01d80f29c972ae747339afd405966c55a431
             foreach($users as $user){
                 $userAttachment = Attachment::where('user_id', $user->id)->first();
                 if($userAttachment->type=="pdf"){
@@ -360,7 +365,7 @@ class AdminEmailsController extends Controller {
             foreach($request->cbx as $userID){
                 $jobApp = JobsApplication::where('id',$userID)->first();
                 $userIDs[] = $jobApp->user_id;
-                }
+            }
 
              $data['title'] = 'Generate PDF';
              $users = User::whereIn('id', $userIDs)->get();
