@@ -210,6 +210,18 @@ class AdminEmailsController extends Controller {
              $data['users'] = $users;
              $userAttachment = null;
              $pdf = new PDFMerger();
+														
+													
+											
+
+
+													dd(PHP_OS);
+
+
+
+
+
+
 
             foreach($users as $user){
                 $userAttachment = Attachment::where('user_id', $user->id)->first();
