@@ -19,8 +19,27 @@
   /*border:1px solid black;*/
 
  }
+
+ .wrapper{
+
+    margin-top: 10px;
+ }
+
+ a.contactBtn {
+    background: #384171;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 0px;
+    font-size: 12px;
+    text-decoration: none;
+    display: inline-block;
+    display: block;
+    margin: 0 auto;
+    width: 80px;
+}
  .navbar{
-  height: 270px;
+  height: 300px;
   /*width: 98.7%;*/
   width: 98%;
   margin-bottom: 20px;
@@ -192,6 +211,10 @@
               $profile_image2 = getProfileImage($application->jobseeker->id)
             @endphp
                 <img src="{{$profile_image2}}" class="rounded" alt="Cinque Terre" width="100%" height="236">
+                <div class="wrapper">
+                    <a class="contactBtn" href="{{route('publicuservideo',['id' => $application->jobseeker->id])}}">Watch Video</a>
+                </div>
+
       </div>
 
       {{-- <a class="contactBtn" href="{{route('jobSeekerInfo',['id' => $application->id])}}">Contact Details</a> --}}
@@ -234,6 +257,12 @@
                       <h4>{{$question->title}}</h4>
                     <p>{{$application->answers[$key]->answer}}</p>
                 @endforeach
+
+                <div class="jobAppDescriptionBox">
+                    <h4>{{jobApplicationMandatoryQuestion()}}</h4>
+                    <div class="jobAppDescription">
+                        <p>{{ $application->description}}</p></div>
+                </div>
         </td>
 
 
