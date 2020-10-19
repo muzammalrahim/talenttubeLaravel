@@ -98,11 +98,11 @@ class UserController extends Controller
             }
             return $rhtml;
         }})
-       ->addColumn('profile', function ($records) {
-        if (isAdmin()){
-            $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserInfo" user-id='. $records->id.' >Info</button>';
-            return $rhtml;
-        }})
+        ->addColumn('profile', function ($records) {
+            if (isAdmin()){
+                $rhtml = '<a class="btn btn-primary btn-sm" href="'.route('jobSeekerInfo',['id'=>$records->id]).'" target="_blank" >Info</a>';
+                return $rhtml;
+            }})
         ->addColumn('videoInfo', function ($records) {
         if (isAdmin()){
             $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserVideoInfo" user-id='. $records->id.' >Info</button>';

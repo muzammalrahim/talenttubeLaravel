@@ -19,7 +19,9 @@
   /*border:1px solid black;*/
 
  }
-
+ .page-break {
+    page-break-after: always;
+}
  .wrapper{
 
     margin-top: 10px;
@@ -199,7 +201,7 @@
 
 
     @foreach($applications as $application)
-
+    <div class="page-break"></div>
       <div class="header" >
   <h1>Talent Tube Job Applicants</h1>
   </div>
