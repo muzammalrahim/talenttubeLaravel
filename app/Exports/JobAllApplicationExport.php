@@ -79,9 +79,12 @@ class JobAllApplicationExport implements FromCollection, WithHeadings
              $collRow['title'] = $application->job->title;
              $collRow['type'] = $application->job->type;
              $industries = "";
-             foreach( $application->jobseeker->industry_experience as $indus)
-             $industries = $industries."\r\n ".getIndustryName($indus);
-             $collRow['experience'] = $industries;
+             if(!empty($application->jobseeker->industry_experience)){
+                foreach( $application->jobseeker->industry_experience as $indus)
+                $industries = $industries."\r\n ".getIndustryName($indus);
+                $collRow['experience'] = $industries;
+             }
+
 
              $collRow['expiration'] = $application->job->expiration;
              $collRow['app_id'] = $application->id;
