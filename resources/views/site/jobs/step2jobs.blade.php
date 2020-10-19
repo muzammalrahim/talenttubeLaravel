@@ -9,7 +9,7 @@
                 <div class="job_employer">Employer: {{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</div>
 
                 <div class="job_location">
-                    <span>Location : </span><div class="js_location">Location: {{$js->city}},  {{$js->state}}, {{$js->country}} </div>
+                    <span>Location : </span>{{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
                 </div>
             </div>
 
