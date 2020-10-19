@@ -210,7 +210,7 @@ class AdminEmailsController extends Controller {
              $data['users'] = $users;
              $userAttachment = null;
              $pdf = new PDFMerger();
-
+             $isFileAdded = False;
 
 
             foreach($users as $user){
@@ -222,14 +222,22 @@ class AdminEmailsController extends Controller {
                     $str = str_replace('/', '\\', $userAttachment->file);
                     chdir('..');
                     $cwd = getcwd();
-                    $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$str, 'all');
+
+                    if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
+                        $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$str, 'all');
+                        $isFileAdded = True;
+                    }
+
                     chdir('public');
                     }
                     else if(PHP_OS=="Linux"){
                         $str =  $userAttachment->file;
                         chdir('..');
                         $cwd = getcwd();
-                        $pdf->addPDF($cwd.'/storage/images/user/'.$str, 'all');
+                        if(file_exists($cwd.'/storage/images/user/'.$str)){
+                            $pdf->addPDF($cwd.'/storage/images/user/'.$str, 'all');
+                            $isFileAdded = True;
+                        }
                         chdir('public');
                     }
                 }
@@ -237,44 +245,45 @@ class AdminEmailsController extends Controller {
                 else if($userAttachment->type=="doc" || $userAttachment->type=="docx" ){
                     if(PHP_OS=="WINNT"){
                     $str = str_replace('/', '\\', $userAttachment->file);
-
                     $copystr = str_replace(".docx",".pdf",$userAttachment->name);
                     $copystr = str_replace(".doc",".pdf",$copystr);
-
                     chdir('..');
                     $cwd = getcwd();
-                    $converter = new OfficeConverter($cwd.'\\storage\\images\\user\\'.$str);
-                    $converter->convertTo($copystr);
 
+                    if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
+                        $converter = new OfficeConverter($cwd.'\\storage\\images\\user\\'.$str);
+                        $converter->convertTo($copystr);
+                        $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$userAttachment->user_id.'\\private\\'.$copystr, 'all');
+                        $isFileAdded = True;
+                    }
 
-
-                    $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$userAttachment->user_id.'\\private\\'.$copystr, 'all');
 
                     chdir('public');
                     }
 
                     else if(PHP_OS=="Linux"){
                         $str = $userAttachment->file;
-
                         $copystr = str_replace(".docx",".pdf",$userAttachment->name);
                         $copystr = str_replace(".doc",".pdf",$copystr);
-
                         chdir('..');
                         $cwd = getcwd();
-                        $converter = new OfficeConverter($cwd.'/storage/images/user/'.$str);
-                        $converter->convertTo($copystr);
 
-
-
-                        $pdf->addPDF($cwd.'/storage/images/user/'.$userAttachment->user_id.'/private/'.$copystr, 'all');
-
+                        if(file_exists($cwd.'/storage/images/user/'.$str)){
+                            $converter = new OfficeConverter($cwd.'/storage/images/user/'.$str);
+                            $converter->convertTo($copystr);
+                            $pdf->addPDF($cwd.'/storage/images/user/'.$userAttachment->user_id.'/private/'.$copystr, 'all');
+                            $isFileAdded = True;
+                        }
                         chdir('public');
                     }
                 }
             }
         }
         }
+        if($isFileAdded)
         $pdf->merge('download', "bundledCVs.pdf");
+        else
+        return redirect()->back();
 
         }
 
@@ -295,7 +304,7 @@ class AdminEmailsController extends Controller {
              $data['users'] = $users;
              $userAttachment = null;
              $pdf = new PDFMerger();
-
+             $isFileAdded = False;
 
              foreach($users as $user){
                 $userAttachment = Attachment::where('user_id', $user->id)->first();
@@ -306,14 +315,20 @@ class AdminEmailsController extends Controller {
                     $str = str_replace('/', '\\', $userAttachment->file);
                     chdir('..');
                     $cwd = getcwd();
-                    $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$str, 'all');
+                    if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
+                        $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$str, 'all');
+                        $isFileAdded = True;
+                    }
                     chdir('public');
                     }
                     else if(PHP_OS=="Linux"){
                         $str =  $userAttachment->file;
                         chdir('..');
                         $cwd = getcwd();
-                        $pdf->addPDF($cwd.'/storage/images/user/'.$str, 'all');
+                        if(file_exists($cwd.'/storage/images/user/'.$str)){
+                            $pdf->addPDF($cwd.'/storage/images/user/'.$str, 'all');
+                            $isFileAdded = True;
+                        }
                         chdir('public');
                     }
                 }
@@ -327,12 +342,12 @@ class AdminEmailsController extends Controller {
 
                     chdir('..');
                     $cwd = getcwd();
-                    $converter = new OfficeConverter($cwd.'\\storage\\images\\user\\'.$str);
-                    $converter->convertTo($copystr);
-
-
-
-                    $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$userAttachment->user_id.'\\private\\'.$copystr, 'all');
+                    if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
+                        $converter = new OfficeConverter($cwd.'\\storage\\images\\user\\'.$str);
+                        $converter->convertTo($copystr);
+                        $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$userAttachment->user_id.'\\private\\'.$copystr, 'all');
+                        $isFileAdded = True;
+                    }
 
                     chdir('public');
                     }
@@ -345,12 +360,13 @@ class AdminEmailsController extends Controller {
 
                         chdir('..');
                         $cwd = getcwd();
-                        $converter = new OfficeConverter($cwd.'/storage/images/user/'.$str);
-                        $converter->convertTo($copystr);
 
-
-
-                        $pdf->addPDF($cwd.'/storage/images/user/'.$userAttachment->user_id.'/private/'.$copystr, 'all');
+                        if(file_exists($cwd.'/storage/images/user/'.$str)){
+                            $converter = new OfficeConverter($cwd.'/storage/images/user/'.$str);
+                            $converter->convertTo($copystr);
+                            $pdf->addPDF($cwd.'/storage/images/user/'.$userAttachment->user_id.'/private/'.$copystr, 'all');
+                            $isFileAdded = True;
+                        }
 
                         chdir('public');
                     }
@@ -358,7 +374,10 @@ class AdminEmailsController extends Controller {
             }
         }
 
+        if($isFileAdded)
         $pdf->merge('download', "bundledCVs.pdf");
+        else
+        return redirect()->back();
 
         }
       }
