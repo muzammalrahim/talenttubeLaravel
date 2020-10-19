@@ -55,6 +55,13 @@ $('#jobapp_filter_form').on('submit',function(event){
     getData();
 });
 
+$(document).on('click','.job_pagination .page-item .page-link',function(e){
+    console.log(' page-link click ', $(this) );
+    e.preventDefault();
+    var page = $(this).attr('href').split('page=')[1];
+    $('#paginate').val(page);
+    getData();
+});
     // change job application status, send ajax.
     $(document).on('change','select.jobApplicStatus',function(e){
         console.log(' jobApplicStatus change ', $(this));

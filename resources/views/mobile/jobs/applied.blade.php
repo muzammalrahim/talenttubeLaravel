@@ -57,7 +57,7 @@
             $jobType = 'Part time';
             }
             @endphp
-            <div class="card-body jobAppBody p-2">
+            <div class="card-body jobAppBody">
 
                 <div class="row jobInfo">
                     <div class="p-0 float-right mr-2"><span>Job Type</span><br>

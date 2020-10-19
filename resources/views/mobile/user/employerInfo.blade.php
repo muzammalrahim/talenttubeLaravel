@@ -159,6 +159,31 @@
 @if ($jobs->count() > 0)
 @foreach ($jobs as $job)
 
+
+@php
+// dd($user->qualification);
+$industry_experienceData =  json_decode($job->experience);
+// ?(getIndustriesData($user->industry_experience)):(array());
+// dd( $industry_experienceData);
+
+$jobType = '';
+if($job->type == 'Contract')
+{
+$jobType = 'Contract';
+}
+elseif ($job->type == 'temporary') {
+$jobType = 'Temporary';
+}
+elseif ($job->type == 'casual') {
+$jobType = 'casual';
+}
+elseif ($job->type == 'full_time') {
+$jobType = 'Full time';
+}
+elseif ($job->type == 'part_time') {
+$jobType = 'Part time';
+}
+@endphp
 {{-- @include('mobile.modals.jobsModal')          mobile/modals/jobsModal       --}}
 
 {{-- @dump( $job->questions ) --}}
@@ -209,14 +234,24 @@
                             <span class="jobInfoFont">Job Experience</span>
                         </div>
                         <div>
-                        {{$job->experience}}
+                            @if(!empty($industry_experienceData))
+                            @foreach($industry_experienceData as  $industry )
+                                <div class="IndustrySelect">
+                                      <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
+                                      <p>
+                                        <i class="fas fa-angle-right qualifiCationBullet"></i>
+                                          {{getIndustryName($industry)}}
+
+                                </div>
+                            @endforeach
+                        @endif
                         </div>
                         <div class="mt-2">
-                            <span class="jobInfoFont">Job Category</span>
+                            <span class="jobInfoFont">Job Type</span>
                         </div>
 
                         <div>
-                        Web & E-commerce Job
+                            {{$jobType}}
                         </div>
 
                     </div>
@@ -240,9 +275,7 @@
                     </button>
 
                     </div>
-                    <div class="p-0 float-right mr-2"><span>Job Type</span><br>
-                        {{$job->type}}
-                    </div>
+
                 </div>
                 <div class="card-footer row p-0 mt-3">
                     <div class="col p-0">
