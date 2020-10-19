@@ -29,11 +29,11 @@
     </div>
     {{-- testing --}}
 
-    <div class="col-md-2">
+    {{-- <div class="col-md-2">
         <div class="float-right">
             <a href="{!! route('users.create') !!}" class="btn btn-block btn-success">Add New</a>
         </div>
-    </div>
+    </div> --}}
 
 </div>
 
