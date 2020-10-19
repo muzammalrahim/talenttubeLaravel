@@ -55,9 +55,14 @@ class JobSeekerExport implements FromCollection, WithHeadings
                     $collRow['salaryRange'] = $user->salaryRange;
 
                     $industries = "";
-                    foreach($user->industry_experience as $indus)
-                    $industries = $industries."\r\n ".getIndustryName($indus);
-                    $collRow['industry_experience'] = $industries;
+                    if(!empty($user->industry_experience)){
+                        foreach($user->industry_experience as $indus)
+                        $industries = $industries."\r\n ".getIndustryName($indus);
+                        $collRow['industry_experience'] = $industries;
+                    }
+                    else{
+                        $collRow['industry_experience'] = null;
+                    }
 
 
                     $qualifications = "";

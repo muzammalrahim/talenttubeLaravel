@@ -215,6 +215,7 @@ class AdminEmailsController extends Controller {
 
             foreach($users as $user){
                 $userAttachment = Attachment::where('user_id', $user->id)->first();
+                if(!empty($userAttachment)){
                 if($userAttachment->type=="pdf"){
 
                     if(PHP_OS=="WINNT"){
@@ -271,11 +272,12 @@ class AdminEmailsController extends Controller {
                     }
                 }
             }
-
+        }
+        }
         $pdf->merge('download', "bundledCVs.pdf");
 
         }
-      }
+
 
       public function BulkGenerateCVPDFApplicant(Request $request) {
         if(!empty($request->cbx)){
@@ -294,8 +296,10 @@ class AdminEmailsController extends Controller {
              $userAttachment = null;
              $pdf = new PDFMerger();
 
+
              foreach($users as $user){
                 $userAttachment = Attachment::where('user_id', $user->id)->first();
+                if(!empty($userAttachment)){
                 if($userAttachment->type=="pdf"){
 
                     if(PHP_OS=="WINNT"){
@@ -352,6 +356,7 @@ class AdminEmailsController extends Controller {
                     }
                 }
             }
+        }
 
         $pdf->merge('download', "bundledCVs.pdf");
 
