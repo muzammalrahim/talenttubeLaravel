@@ -177,8 +177,8 @@ class AdminEmailsController extends Controller {
                 foreach ($users as $user) {
                   // $details = ['email' => $user->email];
                   // SendBulkEmailJob::dispatch($details);
-                  $when = now()->addSeconds(2);
-                  Mail::to($user->email)->cc('creativedev22@gmail.com')->later($when, new BulkEmailForQueuing($bulkEmail));
+                 // $when = now()->addSeconds(2);
+                  Mail::to($user->email)->cc('creativedev22@gmail.com')->send(new BulkEmailForQueuing($bulkEmail));
                 }
               }
 
