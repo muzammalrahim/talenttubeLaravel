@@ -25,14 +25,14 @@
                     <div class="form-group row">
                         {{ Form::label('title', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                          {{ Form::text('title', null , $attributes = array('class'=>'form-control', 'placeholder' => 'title','required'=> 'true')) }}
+                          {{ Form::text('title', null , $attributes = array('class'=>'form-control', 'placeholder' => 'Write the title of Bulk Email')) }}
                         </div>
                     </div>
 
                      <div class="form-group row country_dd">
                         {{ Form::label('content', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                         <textarea class="" name="content"></textarea>
+                         <textarea name="content" placeholder="Write your email content here" required="required"></textarea>
                         </div>
                     </div>
 
@@ -41,13 +41,26 @@
                     <div class="form-group row">
                         {{ Form::label('Users', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">
-                        <select name="user_ids[]" multiple class="form-control">
+                        <select name="user_ids2" multiple class="form-control" disabled>
                             @foreach ($jobSeekers as $js)
-                                <option value="{{$js->id}}">{{$js->name.' '.$js->email}}</option>
+                                <option>{{$js->name.' '.$js->email}}</option>
                             @endforeach
                         </select>
                         </div>
                     </div>
+
+
+                    <div class="form-group row d-none">
+                        {{ Form::label('Users', null, ['class' => 'col-md-2 form-control-label']) }}
+                        <div class="col-md-10">
+                        <select name="user_ids[]" multiple class="form-control" >
+                            @foreach ($jobSeekers as $js)
+                                <option value="{{$js->id}}" selected>{{$js->name.' '.$js->email}}</option>
+                            @endforeach
+                        </select>
+                        </div>
+                    </div>
+
 
 
                 </div><!--col-->
@@ -101,11 +114,16 @@ select{
 <script type="text/javascript">
 $(document).ready(function(){
     // $('.multiSelectBox').multiSelect();
+   // $("#mymultiselect").attr("disabled", true);
+    // $('#mymultiselect option:not(:selected)').attr('disabled', true);
 });
+
+
 </script>
 {{-- country state city--}}
     <!-- added by Hassan -->
     <script type="text/javascript"> var base_url = '{!! url('/') !!}';</script>
+
 @stop
 
 @section('plugins.Datatables')
