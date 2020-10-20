@@ -36,6 +36,29 @@
     </div>
   </div>
 </div>
+
+
+
+<div id="ModalBulkDeleteInfo" class="modal fade ModalBulkDeleteInfo" role="dialog">
+    <div class="modal-dialog">
+      <!-- Modal content-->
+      <div class="modal-content">
+           {{-- <div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button></div> --}}
+           <div class="modal-body p-3 text-center">
+              <div class="modalContentUser">
+                  <h3>Are you sure to Delete Bulk Email?</h3>
+                  <p class="bulkTitle"></p>
+              </div>
+              <div class="modalProcessing hidden"></div>
+           </div>
+           <div class="modal-footer text-center margin_auto">
+                  <input type="hidden" name="bulkConfirmId" id="bulkConfirmId" value="">
+                  <button type="button" class="btn btn-primary btn-md modelConfirmDeleteAction">Yes</button>
+                  <button type="button" class="btn btn-default btn-md modelCancelAction" data-dismiss="modal">Cancel</button>
+           </div>
+      </div>
+    </div>
+  </div>
 {{-- Bulk Approved Pop Up End --}}
 
 
@@ -88,10 +111,10 @@ jQuery(function() {
     });
 
     //========================================================================//
-    // Click on btnBulkApproved Button show confirmation popup. 
-    //========================================================================// 
+    // Click on btnBulkApproved Button show confirmation popup.
+    //========================================================================//
     $(document).on('click','.BulkEmailConfirmEmail', function(){
-      console.log(' btnBulkApproved click '); 
+      console.log(' btnBulkApproved click ');
       var bulkId = parseInt($(this).attr('data-id'));
       var bulkTitle = $(this).attr('data-title');
 
@@ -101,6 +124,21 @@ jQuery(function() {
       $('#bulkConfirmId').val(bulkId);
       $('.ModalBulkApprovedInfo .bulkTitle').html(bulkTitle);
       $('#ModalBulkApprovedInfo').modal('show');
+    });
+
+
+
+    $(document).on('click','.BulkEmailDeleteConfirmEmail', function(){
+      console.log(' btnBulkApproved click ');
+      var bulkId = parseInt($(this).attr('data-id'));
+      var bulkTitle = $(this).attr('data-title');
+
+      $('.ModalBulkDeleteInfo .modalContentUser').removeClass('d-none');
+      $('.ModalBulkDeleteInfo .modalProcessing').addClass('d-none');
+
+      $('#bulkConfirmId').val(bulkId);
+      $('.ModalBulkDeleteInfo .bulkTitle').html(bulkTitle);
+      $('#ModalBulkDeleteInfo').modal('show');
     });
 
 
@@ -116,16 +154,47 @@ jQuery(function() {
              $('.ModalBulkApprovedInfo .modalProcessing').removeClass('d-none');
              $('#ModalBulkApprovedInfo .modalProcessing').html(getLoader('smallSpinner'));
 
-             $('#ModalBulkApprovedInfo .modelConfirmAction').prop('disabled', true); 
+             $('#ModalBulkApprovedInfo .modelConfirmAction').prop('disabled', true);
           },
           success: function(data) {
-            $('#ModalBulkApprovedInfo .modelConfirmAction').prop('disabled', false); 
+            $('#ModalBulkApprovedInfo .modelConfirmAction').prop('disabled', false);
             console.log('data ', data);
             console.log('data ', data.status);
             if(data.status){
-               $('#ModalBulkApprovedInfo .modalProcessing').html(data.message); 
+               $('#ModalBulkApprovedInfo .modalProcessing').html(data.message);
+               location.reload();
             }else{
-               $('#ModalBulkApprovedInfo .modalProcessing').html('Error'); 
+               $('#ModalBulkApprovedInfo .modalProcessing').html('Error');
+            }
+          }
+      });
+   });
+
+
+   $(document).on('click','.modelConfirmDeleteAction', function(){
+      var bulkConfirmId = $('#bulkConfirmId').val();
+      $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+      $.ajax({
+          type: 'POST',
+          url: '{!! route('bulkEmail.DeleteEmail') !!}',
+          data: {'id': bulkConfirmId},
+          beforeSend: function(){
+             $('.ModalBulkDeleteInfo .modalContentUser').addClass('d-none');
+             $('.ModalBulkDeleteInfo .modalProcessing').removeClass('d-none');
+             $('#ModalBulkDeleteInfo .modalProcessing').html(getLoader('smallSpinner'));
+
+             $('#ModalBulkDeleteInfo .modelConfirmAction').prop('disabled', true);
+          },
+          success: function(data) {
+            $('#ModalBulkDeleteInfo .modelConfirmAction').prop('disabled', false);
+            console.log('data ', data);
+            console.log('data ', data.status);
+            if(data.status){
+               $('#ModalBulkDeleteInfo .modalProcessing').html(data.message);
+
+               location.reload();
+            }else{
+               $('#ModalBulkDeleteInfo .modalProcessing').html('Error');
             }
           }
       });

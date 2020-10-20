@@ -26,7 +26,7 @@ class BulkEmailForQueuing extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->from('admin@creativedev22.xyz')
+        return $this->from('creativetechali@gmail.com')
             ->subject($this->bulkEmail->title)
             ->view('emails.user.bulkEmail'); // emails/user/bulkEmail
     }

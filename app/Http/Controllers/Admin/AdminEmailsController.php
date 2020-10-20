@@ -63,6 +63,7 @@ class AdminEmailsController extends Controller {
             // $rhtml = '<a href="'.route('bulkEmail.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
             $rhtml = '';
             $rhtml .= '<button id="itemdel" type="button" class="btn btn-danger btn-sm BulkEmailConfirmEmail" data-id='.$records->id.' data-title="'.$records->title.'">SendEmail</button>';
+            $rhtml .= '<button id="itemdel" type="button" class="ml-2 btn btn-danger btn-sm BulkEmailDeleteConfirmEmail" data-id='.$records->id.' data-title="'.$records->title.'">Delete Email</button>';
             return $rhtml;
         }
       })
@@ -137,8 +138,17 @@ class AdminEmailsController extends Controller {
     //===============================================================================================================//
     public function storeBulkEmail(Request $request){
         $new = new BulkEmail();
+
+        // dd($request->user_ids);
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+        ]);
+
+
         $new->title = $request->title;
         $new->content = $request->content;
+
         $new->user_ids = $request->user_ids;
         $new->status = 'new';
         if( $new->save() ){
@@ -184,6 +194,27 @@ class AdminEmailsController extends Controller {
         }
        }
     }
+
+
+
+    public function DeleteEmail(Request $request) {
+        // dd( $request->toArray() );
+        if(!empty($request->id)){
+
+
+
+
+
+        $res=BulkEmail::where('id',$request->id)->delete();
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Bulk Email Succesfully Deleted',
+          ]);
+
+
+        }
+     }
 
 
 

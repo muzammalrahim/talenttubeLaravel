@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\TestEmail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,6 +13,15 @@ use Illuminate\Support\Facades\Auth;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('testEmail', function () {
+
+
+    $data = ['message' => 'This is a test!'];
+
+    Mail::to('aliasgharatwork@gmail.com')->send(new TestEmail($data));
+});
+
+
 
 Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->name('publicuservideo');
 
@@ -155,6 +165,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('bulkEmail/list', 'Admin\AdminEmailsController@list')->name('bulkEmail.list');
     Route::get('bulkEmail/getList', 'Admin\AdminEmailsController@getDatatable')->name('bulkEmail.dataTable');
     Route::post('bulkEmail/SendEmail', 'Admin\AdminEmailsController@SendEmail')->name('bulkEmail.SendEmail');
+    Route::post('bulkEmail/DeleteEmail', 'Admin\AdminEmailsController@DeleteEmail')->name('bulkEmail.DeleteEmail');
 
 
     // bulkCVS
