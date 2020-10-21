@@ -135,6 +135,7 @@ $(".reset-btn").click(function(){
 	$("#filter_form").trigger("reset");
     $("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
     $('.FilterLocationBox').addClass("d-none");
+    $('.FilterIndustryList').addClass("d-none");
     $('#paginate').val('');
 	getDataCustom();
 });

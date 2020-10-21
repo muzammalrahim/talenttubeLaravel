@@ -313,6 +313,7 @@ class EmployerController extends Controller {
 
 
         $data['jobType']     = getJobTypes();
+        $data['salaryRange'] = getSalariesRange();
         // $jobs =  Jobs::find(12);
         // dd( json_decode($jobs->questions()->first()->options, true) );
         // dd( $jobs->questions()->first()->options );
@@ -447,6 +448,7 @@ class EmployerController extends Controller {
         $data['title']  = 'Job Edit';
         $data['classes_body'] = 'jobEdit';
         $data['industriesList'] = getIndustries();
+        $data['salaryRange'] = getSalariesRange();
         $data['geo_countries'] = get_Geo_Country();
         $data['geo_states'] = get_Geo_State($job->country);
         $data['location'] = $job->city.' '.$job->country.' ,'.$job->country;

@@ -145,7 +145,8 @@
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Salary  </label>
                     <div class="col-sm-10">
-                      <input type="text" name="salary" class="form-control" id="Salary">
+                    {{ Form::select('salary', $salaryRange, ['placeholder' => 'Select Salary Range', 'id' => 'salaryRangeFieldnew', 'class' => 'browser-default custom-select']) }}
+
                       <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
                     </div>
                 </div>

@@ -9,7 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use JustBetter\PaginationWithHavings\PaginationWithHavings;
 
 use App\BlockUser;
-
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -179,7 +179,14 @@ class User extends Authenticatable
         // return $restaurants;
     }
 
-
+    public function getCreatedAtAttribute($value){
+        $date = Carbon::parse($value);
+        return $date->format('Y-m-d H:i');
+    }
+    public function getUpdatedAtAttribute($value){
+        $date = Carbon::parse($value);
+        return $date->format('Y-m-d H:i');
+    }
 
     function scopeJobSeeker($query){
         return $query->where('type','user');

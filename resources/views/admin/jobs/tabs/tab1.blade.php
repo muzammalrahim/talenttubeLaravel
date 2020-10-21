@@ -98,6 +98,15 @@
                         </div>
                     </div>
 
+
+                    <div class="form-group row ">
+                        {{ Form::label('Salary', null, ['class' => 'col-md-2 form-control-label']) }}
+                        <div class="col-md-10">
+                            {{ Form::select('salary', $salaryRange, $record->salary, ['placeholder' => 'Select Salary Range', 'onchange' => '', 'id' => 'salaryRangeFieldnew', 'class' => ' browser-default custom-select']) }}
+                        </div>
+                    </div>
+
+
                     <div class="form-group row">
                         {{ Form::label('Expiration', null, ['class' => 'col-md-2 form-control-label']) }}
                         <div class="col-md-10">

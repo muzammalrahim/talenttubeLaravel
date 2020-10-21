@@ -1593,7 +1593,8 @@ class SiteUserController extends Controller
         $data['classes_body'] = 'jobs';
         $data['jobs'] = null; //Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
         return view('site.jobs.index', $data); // site/jobs/index
-				}
+
+    }
 
 				//====================================================================================================================================//
     // Dev Akmal GET // Job Listing For Step2

@@ -15,7 +15,7 @@
             <option value="pending" {!! ($filter_status == 'pending')?('selected'):'' !!}>Pending</option>
         </select>
       </div>
-      
+
       {{-- <div class="col-md-2"><a class="btn btn-block btn-primary btnBulkApproved">Bulk Approved</a></div>
       <div class="col-md-2"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Compile CV</a></div>
       <div class="col-md-2"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
@@ -57,11 +57,11 @@
 
                 <div class="modalContentEmp">
                     <p>Do you want to Delete <b><span id="delConfirmIdEmp"></span></b> Employer ?</p>
-                    
+
                 </div>
 
                 <div class="modelProcessingEmp" style="display: none;">
-                        <h4>Deleting Employer...</h4>    
+                        <h4>Deleting Employer...</h4>
                  </div>
 
              </div>
@@ -98,14 +98,14 @@
     <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
 
     <style type="text/css">
-        
+
         .modal.showProcessing  .modalContentEmp{
-         display: none;  
+         display: none;
 
         }
-        
-        .modal.showProcessing  .modelProcessingEmp{ 
-            display: block !important;  
+
+        .modal.showProcessing  .modelProcessingEmp{
+            display: block !important;
         }
 
         #delConfirmIdEmp{
@@ -155,7 +155,7 @@ jQuery(function() {
   });
 
 //========================================================================//
-// Change filter_status append value to url 
+// Change filter_status append value to url
 //========================================================================//
 $('.filter_status').on('change', function(){
   var filter_status = $(this).val();
@@ -165,10 +165,10 @@ $('.filter_status').on('change', function(){
 
 
 //========================================================================//
-// Click on btnVerifyUser Button show confirmation popup. 
+// Click on btnVerifyUser Button show confirmation popup.
 //========================================================================//
 $(document).on('click','.btnVerifyUser', function(){
-  console.log(' btnVerifyUser click '); 
+  console.log(' btnVerifyUser click ');
   var user_id = parseInt($(this).attr('user-id'));
   var elem = $(this);
   elem.html(getLoader('smallSpinner btnSpinner',false,true));
@@ -178,12 +178,12 @@ $(document).on('click','.btnVerifyUser', function(){
       url: '{!! route('users.confirmAccount') !!}',
       data: {'cbx': [user_id]},
       success: function(data) {
-        console.log('data ', data); 
+        console.log('data ', data);
         if(data.status){
-          setTimeout(function(){ elem.text('verified');}, 1000); 
+          setTimeout(function(){ elem.text('verified');}, 1000);
           setTimeout(function(){ elem.remove();}, 1500);
         }else{
-            elem.text('Error'); 
+            elem.text('Error');
         }
       }
   });
@@ -192,7 +192,7 @@ $(document).on('click','.btnVerifyUser', function(){
 
 
 //========================================================================//
-// Click on btnVerifyUser Button show confirmation popup. 
+// Click on btnVerifyUser Button show confirmation popup.
 //========================================================================//
 $(document).on('click', '.btnUserInfo', function() {
   var UserInfoId = parseInt($(this).attr('user-id'));
@@ -203,41 +203,41 @@ $(document).on('click', '.btnUserInfo', function() {
         url: '{!! route('users.profilePopup') !!}',
         data: {'id': UserInfoId},
         beforeSend: function(){
-           $('#ModaluserInfo').modal('show');  
+           $('#ModaluserInfo').modal('show');
         },
         success: function(data) {
           console.log(' data ', data);
-          $('.ModaluserInfo .modalContentUser').html(data);  
-          
+          $('.ModaluserInfo .modalContentUser').html(data);
+
         }
     });
 });
- 
+
 
 //========================================================================//
 // ModaluserInfo script to show full image when click on thumb
-//========================================================================// 
+//========================================================================//
  $('.ModaluserInfo').on('click','.profleMediaGalleryImage img', function(){
-  console.log(' profleMediaGalleryImage click ');  
+  console.log(' profleMediaGalleryImage click ');
     var imageFullPath = $(this).attr('data-fullpath');
     var imgTag = '<img src="'+imageFullPath+'" />';
-    $('.ModaluserInfo .profileImg').html(imgTag); 
- }); 
+    $('.ModaluserInfo .profileImg').html(imgTag);
+ });
 $('.ModaluserInfo').on('click','.profleVideos img', function(){
-    console.log(' profleVideos click '); 
+    console.log(' profleVideos click ');
     var videoFullPath = $(this).attr('data-src');
     var videoTag = '<video class="videoPlayer" controls="true"><source src="'+videoFullPath+'"></video>';
     $('.ModaluserInfo .profileVideoShow').html(videoTag);  // attr('src', videoFullPath);//
-    $(".profileVideoShow video")[0].load(); 
-    $(".profileVideoShow video")[0].play(); 
- }); 
+    $(".profileVideoShow video")[0].load();
+    $(".profileVideoShow video")[0].play();
+ });
 $('.ModaluserInfo').on('hidden.bs.modal', function () {
-  $('.ModaluserInfo  .modalContentUser').html(getLoader('smallSpinner'));  
+  $('.ModaluserInfo  .modalContentUser').html(getLoader('smallSpinner'));
 })
 
 
 
- 
+
 });
 </script>
 @stop

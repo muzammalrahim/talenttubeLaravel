@@ -75,6 +75,10 @@
                     <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Type</label>
                     <div class="col-sm-10">
                     <select name="type" class="browser-default custom-select" >
+
+                        <option value="casual" {{($job->type == 'casual')?'selected="selected"':''}}  >Casual</option>
+                        <option value="temporary" {{($job->type == 'temporary')?'selected="selected"':''}}  >Temporary</option>
+                        <option value="contract" {{($job->type == 'contract')?'selected="selected"':''}}  >Contract</option>
                         <option value="full_time" {{($job->type == 'full_time')?'selected="selected"':''}}  >Full time</option>
                         <option value="part_time" {{($job->type == 'part_time')?'selected="selected"':''}} >Part time</option>
                     </select>
@@ -146,7 +150,7 @@
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Salary  </label>
                     <div class="col-sm-10">
-                      <input type="text" name="salary"   value="{{$job->salary}}" class="form-control" id="Salary">
+                        {{ Form::select('salary', $salaryRange, $job->salary, ['placeholder' => 'Select Salary Range', 'onchange' => '', 'id' => 'salaryRangeFieldnew', 'class' => ' browser-default custom-select']) }}
                       <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
                     </div>
                 </div>
