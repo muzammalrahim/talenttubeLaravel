@@ -22,6 +22,9 @@
         </select>
     </div>
 
+
+
+
     <div class="searchField_JobType dblock mb10">
         <div class="searchFieldLabel dinline_block" style="margin-right:50px">Job Type: </div>
         <select name="filter_jobType" id="filter_jobType" class="dinline_block select_aw" data-placeholder="Select Job Type">
@@ -34,7 +37,26 @@
         </select>
     </div>
 
-
+    <div class="searchField_industry mb10">
+        <div class="searchFieldLabel dinline_block">Filter by Industry: </div>
+        <div class="toggleSwitchButton dinline_block"><label class="switch"><input type="checkbox" name="filter_industry_status"></label></div>
+        {{-- industry selection --}}
+        <div class="filter_industryList hide_it">
+            @php
+                $industries = getIndustries()
+            @endphp
+            @if(!empty($industries))
+            <div class="filter_industries_list ">
+                <ul class="industries_ul item_ul dot_list">
+                    @foreach ($industries as $indK => $indV)
+                        <li class="" data-id="{{$indK}}" data-type="filter_industry[]"><span>{{$indV}}</span></li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+        </div>
+        {{-- industry selection --}}
+    </div>
     <div class="searchField_location mb10">
         <div class="searchFieldLabel dinline_block">Filter by Location: </div>
         <div class="search_location_status_cont toggleSwitchButton">

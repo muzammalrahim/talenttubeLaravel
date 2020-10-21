@@ -63,6 +63,33 @@
                 </select>
             </div>
             {{-- Salary Range --}}
+
+
+            <div class="FilterBox FilterIndustry">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input filter_showDetail" id="filter_industry_status" name="filter_industry_status" data-dc="FilterIndustryList">
+                    <label class="form-check-label" for="filter_industry_status">Filter by Industry</label>
+                </div>
+                <div class="FilterIndustryList d-none">
+                @php
+                    $industries = getIndustries()
+                @endphp
+                @if(!empty($industries))
+                    <div class="filter_industries_list ">
+																							@foreach ($industries as $indK => $indV)
+																							<div class="form-check">
+																											<input type="checkbox" class="form-check-input" id="industry_{{$indK}}" name="filter_industry[]" value="{{$indK}}">
+																											<label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
+																										</div>
+																						@endforeach
+                    </div>
+                @endif
+                </div>
+            </div>
+
+
+
+
             {{-- Location  --}}
             <div class="FilterBox FilterLocation">
                 <div class="form-check">

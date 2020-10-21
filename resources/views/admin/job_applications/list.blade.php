@@ -7,19 +7,6 @@
 <div class="block row">
     <div class="col-md-3"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
 
-    {{-- <div class="col-md-9">
-        <div class="float-left">
-            <div class="form-group">
-                <select name="filter_status" id="filter_status" class="form-control" required>
-                    <option value="" class="filter-input "data-colmn ="0">Search Status</option>
-                    <option value="pending" class="filter-input "data-colmn ="1" onclick="filter()">Pending</option>
-                    <option value="approved" class="filter-input "data-colmn ="2">Approved</option>
-                </select>
-
-
-        </div>
-    </div> --}}
-
 </div>
 
 @stop
@@ -36,11 +23,11 @@
 {{-- @dump( $jobs->toArray() ) --}}
 <div class="row" style="margin-bottom: 15px;">
 
-  <div class="col-md-2">
+  <div class="col-md-3 ">
     <div class="dtHeader">
-        <div class="dtFilter dtHead">
+        <div class="dtFilter dtHead form-group">
             <label class="dtFilterLabel">Select Job</label>
-            <select name="filter_job" id="filter_job">
+            <select class="form-control" name="filter_job" id="filter_job">
                 <option value="">Filter By Job</option>
                 @if(!empty($jobs))
                     @foreach ($jobs as $job)
@@ -53,14 +40,14 @@
       </div>
   </div>
 
-  <div class="block row mt-4 col-md-6 text-white">
+  <div class="block row ml-4 mt-4 col-md-7 text-white">
 
 
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right:5px;">Bulk Assign Job</a></div>
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnExportCSV">Bulk Export CSV</a></div>
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
-    <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkApproved mt-1" style="margin-right:5px;">Bulk Assign Job</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkPDFGenerate mt-1">Bulk Snapshot</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnExportCSV mt-1">Bulk Export CSV</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkEmail mt-1">Bulk Email</a></div>
+    <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV mt-1">Bulk Compile CV</a></div>
     {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
   </div>
 </div>

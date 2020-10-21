@@ -515,6 +515,7 @@ class AdminJobsController extends Controller
         //  dd($records);
         $data['content_header'] = 'Edit Job';
         $data['record'] = $records;
+        $data['salaryRange'] = getSalariesRange();
         $data['title']  = 'Jobs';
         $data['type']  = getJobTypes();
         $data['user_id']  = User::where('type','employer')->pluck('name','id')->toArray();
@@ -557,6 +558,7 @@ class AdminJobsController extends Controller
         $job->addJobQuestions($request['jq']);
         }
         $job->type = $request->type;
+        $job->salary = $request->salary;
         $job->expiration = $request->expiration;
         $job->created_at = $request->created_at;
         $job->user_id = $request->user_id;

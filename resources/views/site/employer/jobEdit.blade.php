@@ -107,7 +107,7 @@
         <div class="job_salary form_field">
             <span class="form_label">Salary :</span>
             <div class="form_input">
-                <input type="text" value="{{$job->salary}}" name="salary" class="">
+                {{ Form::select('salary', $salaryRange, $job->salary, ['placeholder' => 'Select Salary Range', 'onchange' => '', 'id' => 'salaryRangeFieldnew', 'class' => ' salaryRangeField']) }}
                 <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
             </div>
         </div>

@@ -54,7 +54,7 @@
         <tr style = "text-align: center">
             {{-- <th>select</th> --}}
             <th><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th>
-            <th>name</th>
+            <th>Surname</th>
             <th>city</th>
             <th>email</th>
             <th>phone</th>
@@ -351,7 +351,7 @@ jQuery(function() {
         columns: [
             // { data: 'select', name: 'select' },
             { data: 'id', name: 'id' },
-            { data: 'name', name: 'name' },
+            { data: 'surname', name: 'surname' },
             { data: 'city', name: 'city' },
             { data: 'email', name: 'email' },
             { data: 'phone', name: 'phone' },

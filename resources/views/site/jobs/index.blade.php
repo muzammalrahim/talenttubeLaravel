@@ -127,6 +127,19 @@ $(".reset-btn").click(function(){
     event.preventDefault();
     $('#paginate').val('');
 
+        $('input[name="filter_industry_status"]').each(function() {
+
+        if(this.checked){
+        $(this).toggleClass('checked').trigger('refresh');
+        this.checked = !this.checked;
+        $(this).toggleClass('checked').trigger('refresh');
+        (this.checked)?(jQuery('.filter_industryList').removeClass('hide_it')):(jQuery('.filter_industryList').addClass('hide_it'));
+
+        }
+
+        });
+
+
     jQuery('input[name="filter_location_status"]').each(function() {
 
         if(this.checked){

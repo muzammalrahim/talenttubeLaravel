@@ -75,7 +75,7 @@ class UserController extends Controller
       $records = array();
 
        // dd($request->toArray());
-      $records = User::select(['id', 'name', 'city','email','phone','verified','created_at'])
+      $records = User::select(['id', 'surname', 'city','email','phone','verified','created_at'])
         ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
         ->orderBy('created_at', 'desc');
      if(isset($request->status) && !empty($request->status)){

@@ -1389,7 +1389,7 @@ class MobileUserController extends Controller
 
         $data['geo_state']      = get_Geo_State(default_Country_id());
         $data['geo_cities']     = get_Geo_City(default_Country_id(), default_State_id());
-
+        $data['salaryRange'] = getSalariesRange();
         // $jobs =  Jobs::find(12);
         // dd( json_decode($jobs->questions()->first()->options, true) );
         // dd( $jobs->questions()->first()->options );
@@ -1703,6 +1703,7 @@ class MobileUserController extends Controller
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Job Edit';
+        $data['salaryRange'] = getSalariesRange();
         $data['classes_body'] = 'edit';
         $job = Jobs::where('id',$id)->first();
         $data['job'] = $job;

@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\JobsQuestions;
 use JustBetter\PaginationWithHavings\PaginationWithHavings;
-
+use Carbon\Carbon;
 class Jobs extends Model {
     use PaginationWithHavings;
     // added by Hassan
@@ -20,7 +20,14 @@ class Jobs extends Model {
     protected $table = 'jobs_data';
 
      // added by Hassan
-
+     public function getCreatedAtAttribute($value){
+        $date = Carbon::parse($value);
+        return $date->format('Y-m-d H:i');
+    }
+    public function getUpdatedAtAttribute($value){
+        $date = Carbon::parse($value);
+        return $date->format('Y-m-d H:i');
+    }
     protected $casts = [
         'expiration' => 'datetime'
     ];
@@ -131,7 +138,8 @@ class Jobs extends Model {
 
 
            // Filter by salaryRange.
-
+        $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
+        $industries = $request->filter_industry;
 
 
         $filter_location =  (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on'))?true:false;
@@ -223,7 +231,17 @@ class Jobs extends Model {
 
       //  dd( $query->toSql() );
 
-
+      if($industry_status && !empty($industries)){
+        $query = $query->where(function($q) use($industries) {
+            $q->where('experience','LIKE', "%{$industries[0]}%");
+            if(count($industries) > 1){
+                foreach ($industries as $indk =>  $industry) {
+                    if($indk == 0) continue;
+                    $q->orWhere('experience','LIKE', "%{$industry}%");
+                }
+            }
+        });
+    }
 
 
 
