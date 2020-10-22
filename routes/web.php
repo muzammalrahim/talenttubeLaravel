@@ -196,6 +196,7 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('ajax/jobApplyInfoa/{id}', 'Admin\AdminJobsController@jobApplyInfo')->name('jobApplyInfo');
     Route::post('ajax/massJobApplySubmit', 'Admin\AdminJobsController@massJobApplySubmit')->name('massJobApplySubmit');
     Route::post('ajax/massJobApplySubmitApplicant', 'Admin\AdminJobsController@massJobApplySubmitApplicant')->name('massJobApplySubmitApplicant');
+    Route::post('ajax/massStatusChange', 'Admin\AdminJobsController@massStatusChange')->name('massStatusChange');
 
     Route::post('ajax/deleteGallery/{id}/{userID}', 'Admin\UserController@deleteGallery');
 

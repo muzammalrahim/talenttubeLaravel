@@ -23,11 +23,11 @@
 {{-- @dump( $jobs->toArray() ) --}}
 <div class="row" style="margin-bottom: 15px;">
 
-  <div class="col-md-3 ">
+  <div class="col-md-3 mt-4">
     <div class="dtHeader">
-        <div class="dtFilter dtHead form-group">
+        <div class="dtFilter dtHead">
             <label class="dtFilterLabel">Select Job</label>
-            <select class="form-control" name="filter_job" id="filter_job">
+            <select name="filter_job" id="filter_job">
                 <option value="">Filter By Job</option>
                 @if(!empty($jobs))
                     @foreach ($jobs as $job)
@@ -40,7 +40,7 @@
       </div>
   </div>
 
-  <div class="block row ml-4 mt-4 col-md-7 text-white">
+  <div class="block row ml-4 mt-4 col-md-8 text-white">
 
 
     <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkApproved mt-1" style="margin-right:5px;">Bulk Assign Job</a></div>
@@ -48,6 +48,7 @@
     <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnExportCSV mt-1">Bulk Export CSV</a></div>
     <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkEmail mt-1">Bulk Email</a></div>
     <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV mt-1">Bulk Compile CV</a></div>
+    <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkStatus ml-1 mt-1">Multi Bulk Status</a></div>
     {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
   </div>
 </div>
@@ -60,19 +61,18 @@
 
 
 
-<table class="table table-bordered text-center cbxDataTable" id="dataTable"t>
+<table class="table table-bordered text-center cbxDataTable" id="dataTable">
 
     <thead>
         <tr style = "text-align: center">
-            <th><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th>
+            <th><label>Bulk Select</label><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th>
+            <th><label>Status</label><input name="selecta_all" class="specialinputblue" value="1" id="cxx_all" type="checkbox" /><input name="selecta_all" class="specialinputgreen" value="1" id="cyx_all" type="checkbox" /><input name="selecta_all" class="specialinputred" value="1" id="czx_all" type="checkbox" /></th>
             <th>status</th>
             <th>JobSeeker</th>
             <th>Job</th>
             <th>Profile</th>
             <th>goldstar</th>
             <th>undesirable</th>
-            {{-- <th>experience</th> --}}
-            {{-- <th>created_at</th> --}}
             <th>action</th>
         </tr>
     </thead>
@@ -337,13 +337,61 @@ $(document).on('click','.modelConfirmAction', function(){
 
 
 
+$(document).on('click','.btnBulkStatus', function(){
 
+    var cxx = $('input[name="cxx"]:checked').map(function(){return $(this).val(); }).toArray();
+    var cyx = $('input[name="cyx"]:checked').map(function(){return $(this).val(); }).toArray();
+    var czx = $('input[name="czx"]:checked').map(function(){return $(this).val(); }).toArray();
+
+
+  if(cxx.length <= 0 && cyx.length <= 0 && czx.length <= 0 ){
+      alert('Please Select Checkboxes');
+      return false;
+    }
+
+
+  var applyFormData = $('#job_apply_form').serializeArray();
+  applyFormData[applyFormData.length] = { name: "cxx", value: cxx };
+  applyFormData[applyFormData.length] = { name: "cyx", value: cyx };
+  applyFormData[applyFormData.length] = { name: "czx", value: czx };
+
+//   applyFormData.push(cbx);
+   console.log(' form data  ', applyFormData);
+
+  $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+  $.ajax({
+      type: 'POST',
+      url: base_url+'/admin/ajax/massStatusChange',
+      data: applyFormData,
+      beforeSend: function(){
+
+        $('#dataTable_processing').css("display", "block");
+
+      },
+      success: function(data) {
+        if(data.status==1){
+            $('#cxx_all').prop('checked', false);
+            $('#cyx_all').prop('checked', false);
+            $('#czx_all').prop('checked', false);
+            tableObj.ajax.reload();
+        }else{
+           alert("Couldn't changed status of applications. Contact Developer");
+           $('#dataTable_processing').css("display", "none");
+        }
+      }
+  });
+
+});
 
 
 
 
     var tableObj = jQuery('#dataTable').DataTable({
         processing: true,
+        'language': {
+            'loadingRecords': '&nbsp;',
+            'processing': '<div class="spinner"></div>'
+        },
         serverSide: true,
         ajax: {
           url: '{!! route('job.jobAppDatatable') !!}',
@@ -353,6 +401,7 @@ $(document).on('click','.modelConfirmAction', function(){
         },
         columns: [
             { data: 'id', name: 'id' },
+            { data: 'id', name: 'id2' },
             { data: 'status', name: 'status' },
             { data: 'user_id', name: 'user_id' },
             { data: 'job_id', name: 'job_id' },
@@ -367,9 +416,19 @@ $(document).on('click','.modelConfirmAction', function(){
          'orderable':false,
          'className': 'dt-body-center',
          'render': function (data, type, full, meta){
-             return '<input type="checkbox" name="cbx[]" value="'+ $('<div/>').text(data).html() + '">';
+             return '<input type="checkbox" name="cbx" value="'+ $('<div/>').text(data).html() + '">';
          }
-      }],
+      },{
+         'targets': 1,
+         'searchable':false,
+         'orderable':false,
+         'className': 'dt-body-center',
+         'render': function (data, type, full, meta){
+             return '<div><input type="checkbox" class="specialinputblue" name="cxx" value="'+ $('<div/>').text(data).html() + '">'+'<input type="checkbox" class="specialinputgreen" name="cyx" value="'+ $('<div/>').text(data).html() + '">'+'<input type="checkbox" class="specialinputred" name="czx" value="'+ $('<div/>').text(data).html() + '"></div>';
+         }
+      },
+
+      ],
     });
 
     $('#filter_job').change(function() { tableObj.ajax.reload();});
@@ -443,5 +502,7 @@ $(document).on('click','.btnBulkCompileCV', function(){
 <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
 <style type="text/css">
 .JobAppDatatable_filter{ display: none;  }
+
+
 </style>
 @stop

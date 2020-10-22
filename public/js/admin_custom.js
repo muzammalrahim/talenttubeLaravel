@@ -16,10 +16,10 @@ function getLoader(cl,isHide,isWhite){
     <div class="spinner-blade"></div>
     </div>`;
     var $loader = $("<div>").html(spinner_html).addClass(cl).removeAttr('id');
-     
+
     isWhite&&$loader.find('.spinner').addClass('spinnerw');
     var key='loader_'+cl;
-     
+
     return $loader;
 }
 
@@ -52,7 +52,7 @@ $(document).ready(function() {
    //      beforeSend: function(){
    //         $(".modelProcessing").show();
    //         $(".modalContent p").hide();
-   //         $("#removejob").prop("disabled", true);            
+   //         $("#removejob").prop("disabled", true);
    //      },
    //      success: function(data) {
    //      	console.log(' data ', data);
@@ -93,7 +93,7 @@ $('#removeuser').on('click', function() {
         beforeSend: function(){
            $(".modelProcessingUser").show();
            $(".modalContentUser p").hide();
-           $("#removeuser").prop("disabled", true);            
+           $("#removeuser").prop("disabled", true);
         },
         success: function(data) {
           console.log(' data ', data);
@@ -124,16 +124,96 @@ $('.btnPrevious').click(function(){
  // Handle click on "Select all" control
  $('#cbx_all').on('click', function(event){
    var checked_status = this.checked;
-   console.log(' checked_status ', checked_status, this );   
+   console.log(' checked_status ', checked_status, this );
     // Check/uncheck all checkboxes in the table
     // var rows =  jQuery('#dataTable').DataTable().rows().nodes();
-    $('input[type="checkbox"]', jQuery('.cbxDataTable')).prop('checked', checked_status);
+
+    $.each($("input[name='cbx']"), function(){
+       $(this).prop('checked', checked_status);
+
+    });
     // event.preventDefault();
  });
 
+ $('#cxx_all').on('click', function(event){
+    var checked_status = this.checked;
+    console.log(' checked_status ', checked_status, this );
+     // Check/uncheck all checkboxes in the table
+     // var rows =  jQuery('#dataTable').DataTable().rows().nodes();
+     $.each($("input[name='cxx']"), function(){
+        $(this).prop('checked', checked_status);
+
+     });
+
+     $.each($("input[name='cyx']"), function(){
+        $(this).prop('checked', false);
+
+     });
+
+     $.each($("input[name='czx']"), function(){
+        $(this).prop('checked', false);
+
+     });
+     // event.preventDefault();
+  });
+
+  $('#cyx_all').on('click', function(event){
+    var checked_status = this.checked;
+    console.log(' checked_status ', checked_status, this );
+     // Check/uncheck all checkboxes in the table
+     // var rows =  jQuery('#dataTable').DataTable().rows().nodes();
+     $.each($("input[name='cxx']"), function(){
+        $(this).prop('checked', false);
+
+     });
+
+     $.each($("input[name='cyx']"), function(){
+        $(this).prop('checked', checked_status);
+
+     });
+
+     $.each($("input[name='czx']"), function(){
+        $(this).prop('checked', false);
+
+     });
+     // event.preventDefault();
+  });
+
+  $('#czx_all').on('click', function(event){
+    var checked_status = this.checked;
+    console.log(' checked_status ', checked_status, this );
+     // Check/uncheck all checkboxes in the table
+     // var rows =  jQuery('#dataTable').DataTable().rows().nodes();
+     $.each($("input[name='cxx']"), function(){
+        $(this).prop('checked', false);
+
+     });
+
+     $.each($("input[name='cyx']"), function(){
+        $(this).prop('checked', false);
+
+     });
+
+     $.each($("input[name='czx']"), function(){
+        $(this).prop('checked', checked_status);
+
+     });
+     // event.preventDefault();
+  });
+
+
+$('input[type="checkbox"]').on('change', function() {
+    $(this).siblings('input[type="checkbox"]').prop('checked', false);
+ });
+
+$(document).on("click",'input[type="checkbox"]', function() {
+    $(this).siblings('input[type="checkbox"]').prop('checked', false);
+});
+
+
  // Handle click on checkbox to set state of "Select all" control
- $('.cbxDataTable tbody').on('change', 'input[type="checkbox"]', function(event){ 
-    console.log(' dataTable tbody '); 
+ $('.cbxDataTable tbody').on('change', 'input[type="checkbox"]', function(event){
+    console.log(' dataTable tbody ');
     // If checkbox is not checked
     if(!this.checked){
        var el = $('#cbx_all').get(0);
@@ -144,4 +224,4 @@ $('.btnPrevious').click(function(){
  });
 
 
-// JavaScript For Next and Previous Tab End 
+// JavaScript For Next and Previous Tab End
