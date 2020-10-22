@@ -265,9 +265,59 @@ class AdminJobsController extends Controller
    }
 
 
+   public function massStatusChange(Request $request){
+
+    $user = Auth::user();
+    //$requestData = $request->all();
+    $statusblue = explode (",", $request->cxx);
+    $statusgreen = explode (",", $request->cyx);
+    $statusred = explode (",", $request->czx);
 
 
+    if(!empty($statusblue) || !empty($statusgreen) || !empty($statusred) ){
 
+        if(!empty($statusblue))
+        foreach($statusblue as $userID){
+            if(!empty($userID)){
+            $jobApp = JobsApplication::where('id',$userID)->first();
+            $jobApp->status= 'inreview';
+            $jobApp->save();
+            }
+        }
+
+
+    if(!empty($statusgreen))
+    foreach($statusgreen as $userID){
+        if(!empty($userID)){
+        $jobApp = JobsApplication::where('id',$userID)->first();
+        $jobApp->status= 'interview';
+        $jobApp->save();
+        }
+    }
+    if(!empty($statusred))
+    foreach($statusred as $userID){
+        if(!empty($userID)){
+        $jobApp = JobsApplication::where('id',$userID)->first();
+        $jobApp->status= 'unsuccessful';
+        $jobApp->save();
+        }
+    }
+
+    return response()->json([
+        'status' => 1,
+        'message' => 'status updates'
+    ]);
+
+    }
+
+    else{
+        return response()->json([
+            'status' => 0,
+            'message' => 'status updates failed'
+        ]);
+    }
+
+}
 
     public function massJobApplySubmitApplicant(Request $request){
 
@@ -696,8 +746,24 @@ class AdminJobsController extends Controller
          return  ($records->job)?($records->job->title.' ('.$records->job_id.')'):'';
       })
       ->editColumn('city', function ($records) {
-         return  ($records->GeoCity)?($records->GeoCity->city_title):'';
+         return ($records->city);
       })
+      ->editColumn('status', function ($records) {
+        if($records->status=='applied'){
+            return 'Applied';
+        }
+        else if($records->status=='inreview'){
+            return 'In Review';
+        }
+        else if($records->status=='interview'){
+            return 'Interview';
+        }
+        else if($records->status=='unsuccessful'){
+            return 'Unsuccessful';
+        }
+     })
+
+
       ->rawColumns(['profile','action'])
       ->toJson();
     }
