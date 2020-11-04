@@ -78,6 +78,7 @@
 {{--             <div class="job_title form_field">
                 <span class="form_label">Number of Slots :</span>
                 <div class="form_input">
+                    
                     <input type="number" class="jq-number__field" value="1" name="numberofslots" min="1" max="20" class="w20" >
 
                     <div id="title_error" class="error field_error to_hide">&nbsp;</div>  
@@ -96,13 +97,13 @@
                                 <div class="notbrak">Time</div>
                                 <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot[1][start]" size="8" required /></div>
                                 <div class="notbrak">To</div>
-                                <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot[1][end]" size="8" required /></div>
+                                <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus1" autocomplete="off" name="slot[1][end]" size="8" required /></div>
                             </div>
 
 
                             <div class="date topMargin">
                                 <span class="notbrak">Date</span>
-                                <input type="text" name="date[1]" class="datepicker notbrak checkstatus"  autocomplete="off" size="8" required />
+                                <input type="text" name="date[1]" class="datepicker notbrak checkstatusDate"  autocomplete="off" size="8" required />
                             </div>
                             <div>
                                 <label class="w50 notbrak my10" style="margin-right: 5px;">Maximum number of interviewees:</label>
@@ -302,8 +303,26 @@ var i = 2;
 $(".addSlot").bind('click', function(){
 
     var timeValue = $('.checkstatus').val();
+    var timeEndValue = $('.checkstatus1').val();
+    var timeDateValue = $('.checkstatusDate').val();
+    var checkstatusjq = $('.checkstatusjq').last().val();
+
     console.log("This is the vlaue" , timeValue);
-    if(timeValue != "")
+    console.log("This is the vlaue" , timeEndValue);
+    console.log("This is the vlaue" , timeDateValue);
+    console.log("This is the vlaue" , checkstatusjq);
+
+    var array = [timeValue,timeEndValue,timeDateValue];
+    // const obj = Object.assign({}, array);
+    console.log(array);
+
+if($.inArray(checkstatusjq, array)){
+    if(($('.ui-timepicker-viewport li a').text()) == timeValue ){
+        $(this).css('display', 'none');
+  
+    }
+}
+    if(timeValue != "" && timeEndValue != "" && timeDateValue != "")
     {
 
     if(i <= 20){
@@ -312,13 +331,13 @@ $(".addSlot").bind('click', function(){
                 slot  += '<div class="mb10 dynamicTextStyle">Interview Slot '+i+'</div>';
                 slot  += '<div class="time">';
                 slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot['+i+'][start]" size="8" required /></div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatusjq" autocomplete="off" name="slot['+i+'][start]" size="8" required /></div>';
                 slot  += '<div class="notbrak dynamicTextStyle">To</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot['+i+'][end]" size="8" required /></div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end]" size="8" required /></div>';
                 slot  += '</div>';
                 slot  += '<div class="date topMargin">';
                 slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
-                slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak checkstatus" autocomplete="off" size="8" required />';
+                slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" autocomplete="off" size="8" required />';
                 slot  += '</div>';
 
                 slot  += '<div>';
@@ -359,8 +378,9 @@ $(".addSlot").bind('click', function(){
         $('#slotsCounter').val(this.value);
         $('input, select').styler();
      i++;
+
     }
- 
+
     else  {
         return false;
     }
@@ -373,9 +393,6 @@ else{
     $( ".checkStatusError" ).show().delay(4000).fadeOut('slow');
     console.log(timeValue);
 }
-
-// $('.checkStatusError').fadeOut('slow').delay(3000).hide(0);
-// $('.checkStatusError').fadeIn('slow').delay(1000).hide(0);
 
 });
 

@@ -109,7 +109,7 @@ class InterviewController extends Controller
         $interview->employerpassword = $data['employerpassword'];
         $interview->instruction = $data['instruction'];
         $interview->additionalmanagers = $data['additionalmanagers'];
-        $interview->numberofslots = $data['numberofslots'];
+        // $interview->numberofslots = $data['numberofslots'];
         $interview->uniquedigits = rand(10000,99999);
         $interview->url = generateRandomString();
         $interview->save();
