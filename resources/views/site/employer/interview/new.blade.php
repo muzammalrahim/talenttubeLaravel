@@ -91,6 +91,9 @@
             <div class="slot form_field">
                 <div class="form_input w100">
                     <div class="slots">
+
+                       <div>   <button type="button" class="btn btn-danger font-weight-bold">x</button> </div>
+                       
                         <div class="slot s1 notbrak leftMargin topMargin">
                             <div class="mb10">Interview Slot 1</div>
                             <div class="time">

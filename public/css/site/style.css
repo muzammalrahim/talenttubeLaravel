@@ -4438,3 +4438,5 @@ h2.interSlotHeading{background: #254c8e; padding: 10px 0px;color: white; text-al
 
 .float-left{float: left;}
 /*.mb-10{margin-bottom: 10px;}*/
+
+.add_new_job>.new_job_form>.job_salary>.form_input,.job_type>.form_input{ position: absolute;}
