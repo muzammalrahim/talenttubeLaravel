@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Mail;
 use FFMpeg;
 use Jenssegers\Agent\Agent;
-
+use Redirect;
 class HomeController extends Controller {
 
 				public $agent;
@@ -536,6 +536,42 @@ class HomeController extends Controller {
         return $response;
     }
 
+
+    public function userurl(Request $request){
+
+       $user = Auth::user();
+
+    //    dd(Auth::check());
+       if(Auth::check()){
+
+        return Redirect::route('userinterviewconciergeloggedin.url', ['url' => $request->url]);
+       }
+       else {
+
+        dd("unlogged");
+
+       }
+       // // $interview = Interview::where('uniquedigits',"12340")->first();
+       // $bookingid = session('bookingid');
+       // session()->forget('bookingid');
+
+       // if(!empty($bookingid)){
+
+       //     $interview = Interview::where('id',$bookingid)->first();
+
+       // }
+       // else {
+
+       //     return Redirect::route('interviewconcierge');
+       // }
+
+       // $data['user'] = $user;
+       // $data['interview'] = $interview;
+       // $data['title'] = 'My Jobs';
+       // $data['classes_body'] = 'myJob';
+       // return view('site.employer.interview.url', $data);
+       // site/employer/myjobs
+   }
 
     public function profileVideoPopup(Request $request){
         $user = User::with('vidoes')->where('id',$request->id)->first();

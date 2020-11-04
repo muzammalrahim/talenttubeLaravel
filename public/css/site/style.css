@@ -4427,3 +4427,14 @@ ul.pp_small_decor_r_show li:last-child a.selected:hover span{ background: url(..
     margin: 0 45px 26px 0;
     font-weight: bold;
 }
+
+/* Interview slots */
+h2.interSlotHeading{background: #254c8e; padding: 10px 0px;color: white; text-align: center;}
+.checkStatusError {
+    margin: 15px 0px 0px 10px;
+    color: red;
+}
+/* Interview slots end */
+
+.float-left{float: left;}
+/*.mb-10{margin-bottom: 10px;}*/

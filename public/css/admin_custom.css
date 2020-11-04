@@ -375,3 +375,10 @@ input[type=checkbox] {
 }
 .profileVideoShow .videoPlayer { max-width: 100%; }
 
+select#filter_job {
+    width: 100%;
+}
+.adminStatus{
+  display: block;
+  width: 100px;
+}

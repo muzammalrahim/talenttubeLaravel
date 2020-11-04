@@ -23,7 +23,7 @@
 {{-- @dump( $jobs->toArray() ) --}}
 <div class="row" style="margin-bottom: 15px;">
 
-  <div class="col-md-3 mt-4">
+  <div class="col-md-3 mt-2">
     <div class="dtHeader">
         <div class="dtFilter dtHead">
             <label class="dtFilterLabel">Select Job</label>
@@ -40,7 +40,7 @@
       </div>
   </div>
 
-  <div class="block row ml-4 mt-4 col-md-8 text-white">
+  <div class="block row mt-4 col-md-9 text-white">
 
 
     <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkApproved mt-1" style="margin-right:5px;">Bulk Assign Job</a></div>
@@ -66,7 +66,7 @@
     <thead>
         <tr style = "text-align: center">
             <th><label>Bulk Select</label><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th>
-            <th><label>Status</label><input name="selecta_all" class="specialinputblue" value="1" id="cxx_all" type="checkbox" /><input name="selecta_all" class="specialinputgreen" value="1" id="cyx_all" type="checkbox" /><input name="selecta_all" class="specialinputred" value="1" id="czx_all" type="checkbox" /></th>
+            <th><label class="adminStatus">Status</label><input name="selecta_all" class="specialinputblue" value="1" id="cxx_all" type="checkbox" /><input name="selecta_all" class="specialinputgreen" value="1" id="cyx_all" type="checkbox" /><input name="selecta_all" class="specialinputred" value="1" id="czx_all" type="checkbox" /></th>
             <th>status</th>
             <th>JobSeeker</th>
             <th>Job</th>
