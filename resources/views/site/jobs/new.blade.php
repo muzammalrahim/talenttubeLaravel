@@ -376,7 +376,7 @@ i.editEmployerQuestions.fas.fa-edit {
     border-radius: 0px;
 }
 li.sel {
-    width: 35px;
+    /*width: 35px;*/
 }
 
 /*chechking spinner*/
@@ -443,17 +443,26 @@ div#basic_anchor_industry_experience,div.title.qualificationList>div#basic {
 }
 .jq-selectbox.jqselect.salaryRangeField.dropup.opened{ width: 100px;}
 .jq-selectbox__select {
-    min-width: 120px;
+    min-width: 151px;
 }
 .jq-selectbox__select-text{
         display: table;
 }
 div.jq-selectbox__dropdown.drop_down>ul {
     width: 136px;
+    
+ 
 }
 div.jq-selectbox__dropdown.drop_down>ul>li {
-    font-size: 11px;
+    font-size: 15px;
 }
+
+div.jq-selectbox__dropdown.drop_up>ul>li {
+    font-size: 15px;
+}
+
+
+
 .fa-edit{
     cursor: pointer;
     font-size: 14px;
@@ -526,8 +535,19 @@ select.userQualification {
     width: 90%;
     display: inline-block;
 }
+
+div>div.jq-selectbox__dropdown.drop_up>ul {
+    width: 189px;
+    text-align: center;
+    /*height: 150px;*/
+}
+
+
 div>div.jq-selectbox__dropdown.drop_down>ul {
-    width: 155px;
+    
+    width: 189px;
+    text-align: center;
+
     /*height: 150px;*/
 }
 div.questionsOfUser>div>p {
@@ -636,6 +656,7 @@ span.icon_image_profile {
 
 div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{
     position: unset !important;
+
 }
 
 .jq-selectbox__search {
