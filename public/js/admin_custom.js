@@ -128,7 +128,7 @@ $('.btnPrevious').click(function(){
     // Check/uncheck all checkboxes in the table
     // var rows =  jQuery('#dataTable').DataTable().rows().nodes();
 
-    $.each($("input[name='cbx']"), function(){
+    $.each($("input[name='cbx[]'"), function(){
        $(this).prop('checked', checked_status);
 
     });

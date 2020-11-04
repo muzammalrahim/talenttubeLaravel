@@ -535,6 +535,32 @@ function getSalariesRange(){
     return $salaries;
 }
 
+
+function getMaximumInterviews(){
+    $range = array(
+        '1' => '1',
+        '2' => '2',
+        '3' => '3',
+        '4' => '4',
+        '5' => '5',
+        '6' => '6',
+        '7' => '7',
+        '8' => '8',
+        '9' => '9',
+        '10' => '10',
+        '12' => '12',
+        '13' => '13',
+        '14' => '14',
+        '15' => '15',
+        '16' => '16',
+        '17' => '17',
+        '18' => '18',
+        '19' => '19',
+        '20' => '20',
+    );
+    return $range;
+}
+
 function getSalariesRangeLavel($salary){
     $salaries = getSalariesRange();
     return (isset($salaries[$salary]))?($salaries[$salary]):$salary;
@@ -889,4 +915,9 @@ function varExist($var, $obj){ return (isset($obj->$var) && !empty($obj->$var));
 
 function jobApplicationMandatoryQuestion(){
     return 'What motivated you to apply for this job and why do think you will be suitable?';
+}
+
+
+function generateRandomString($length = 10) {
+    return substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil($length/strlen($x)) )),1,$length);
 }

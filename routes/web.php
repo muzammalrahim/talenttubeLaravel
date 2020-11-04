@@ -21,7 +21,7 @@ Route::get('testEmail', function () {
     Mail::to('aliasgharatwork@gmail.com')->send(new TestEmail($data));
 });
 
-
+Route::get('userinterviewconcierge/url', 'Site\HomeController@userurl')->name('userinterviewconcierge.url');
 
 Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->name('publicuservideo');
 
@@ -389,8 +389,6 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
 
     // Route::get('employer/jobapplications', 'Site\EmployerController@empJobApplications')->name('empJobApplications');
 
-
-
     // Credits
     Route::get('credit',       'Site\EmployerController@credit')->name('credit');
     Route::get('paymentStatus', 'Site\PaymentController@paymentInfo')->name('paymentStatus');
@@ -398,7 +396,32 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::get('employer/{username}',   'Site\EmployerController@index');
 
 
+    //Interview concierge
+    Route::get('interviewconcierge',       'Site\InterviewController@index')->name('interviewconcierge');
+    Route::get('interviewconcierge/new',       'Site\InterviewController@new')->name('interviewconcierge.new');
+    Route::get('interviewconcierge/edit',       'Site\InterviewController@edit')->name('interviewconcierge.edit');
+    Route::get('interviewconcierge/created',       'Site\InterviewController@created')->name('interviewconcierge.created');
+    Route::get('interviewconcierge/url',       'Site\InterviewController@bookingurl')->name('interviewconcierge.url');
+    Route::get('interviewconcierge/manualjobseekers',       'Site\InterviewController@manualjobseekers')->name('interviewconcierge.manualjobseekers');
+    Route::get('interviewconcierge/formedit','Site\InterviewController@editbookingform')->name('interviewconcierge.formedit');
+    Route::get('interviewconcierge/getlikedlistjobseekers','Site\InterviewController@getlikedjobseekers')->name('interviewconcierge.getlikedlistjobseekers');
 
+    Route::get('interviewconcierge/getlikedlistjobseekersdatatable','Site\InterviewController@getlikedlistjobseekersdatatable')->name('interviewconcierge.getlikedlistjobseekersdatatable');
+    //adding new interview booking to the system
+    Route::post('ajax/booking/new',    'Site\InterviewController@newInterviewBooking')->name('addNewInterview');
+    Route::post('ajax/booking/update',    'Site\InterviewController@updateInterviewBooking')->name('updateInterview');
+    Route::post('ajax/booking/firstlogin',    'Site\InterviewController@editInterviewLogin')->name('editInterviewlogin');
+
+    Route::post('ajax/booking/sendnotification',    'Site\InterviewController@sendnotification')->name('sendnotificationInterview');
+    Route::post('ajax/booking/manualsendnotification',    'Site\InterviewController@manualsendnotification')->name('manualsendnotification');
+
+
+    Route::get('userinterviewconciergeloggedin/url', 'Site\InterviewController@userurl')->name('userinterviewconciergeloggedin.url');
+
+
+    Route::get('interviewconcierge/user',       'Site\InterviewController@userindex')->name('interviewconcierg.user');
+
+    Route::get('ajax/userbooking/login',    'Site\InterviewController@userbookinglogin')->name('userbooking.login');
 });
 
 // Front End With Authentication except step2

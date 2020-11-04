@@ -12,8 +12,9 @@
             @if (isEmployer($user))
                 <li><a href="{{route('employerProfile')}}" class="column_narrow_search_results {{(request()->is('employer/'.$user->username))?'active':''}}">
                 <span class="icon"></span>My Profile</a></li>
+                <li><a href="{{route('interviewconcierge')}}" class="column_narrow_search_results {{(request()->is('interviewconcierge*'))?'active':''}}"><span class="icon"></span>Interview Concierge</a></li>
                 <li><a href="{{route('employerJobs')}}" class="column_narrow_search_results {{(request()->is('employer/jobs*'))?'active':''}}"><span class="icon"></span>My jobs</a></li>
-                <li><a href="{{route('newJob')}}" class="column_narrow_search_results {{(request()->is('employer/job/new'))?'active':''}}"><span class="icon"></span>Add New job</a></li>
+				<li><a href="{{route('newJob')}}" class="column_narrow_search_results {{(request()->is('employer/job/new'))?'active':''}}"><span class="icon"></span>Add New job</a></li>
                 <li><a href="{{route('jobSeekers')}}" class="column_narrow_search_results {{(request()->is('jobSeekers'))?'active':''}}"><span class="icon"></span>Job Seekers</a></li>
             @else
                 <li><a href="{{route('profile')}}" class="column_narrow_search_results {{(request()->is('user/'.$user->username))?'active':''}}">
@@ -21,9 +22,11 @@
 
                 <li><a href="{{route('jobApplications')}}" class="column_narrow_search_results {{(request()->is('jobApplications'))?'active':''}}"><span class="icon"></span>My jobs Application</a></li>
 
+                <li><a href="{{route('interviewconcierg.user')}}" class="column_narrow_search_results {{(request()->is('interviewconcierg.user'))?'active':''}}"><span class="icon"></span>Interview Concierge</a></li>
+
                 <li><a href="{{route('jobs')}}" class="column_narrow_search_results {{(request()->is('jobs'))?'active':''}}"><span class="icon"></span>Browse jobs</a></li>
                 <li><a href="{{route('employers')}}" class="column_narrow_search_results {{(request()->is('employers'))?'active':''}}"><span class="icon"></span>Employers</a></li>
-                
+
             @endif
 
                 <li><a href="{{route('blockList')}}" class="column_narrow_search_results {{(request()->is('block'))?'active':''}}"><span class="icon"></span>Block Users</a></li>
@@ -31,7 +34,7 @@
                 {{-- Like User List --}}
 
                 <li><a href="{{route('likeList')}}" class="column_narrow_search_results {{(request()->is('like'))?'active':''}}"><span class="icon"></span>Like Users</a></li>
-                
+
 
                 <li>
                     <a id="narrow_menu_link_31" href="{{route('mutualLikes')}}" class="column_narrow_mutual_likes {{(request()->is('mutual-likes'))?'active':''}}">
@@ -70,7 +73,7 @@
                 </a>
             </li> --}}
 
-         
+
 
             {{-- <li>
                 <a id="" href="interest-parties.html" class="column_narrow_who_likes_you  ">
@@ -84,7 +87,7 @@
                     <span class="icon"></span>JOBS
                 </a>
             </li> --}}
-{{-- 
+{{--
             <li>
                 <a id="narrow_menu_link_30" href="myinterest.html" class="column_narrow_whom_you_like  ">
                     <span class="icon"></span>My Interest

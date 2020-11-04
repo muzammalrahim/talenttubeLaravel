@@ -17,7 +17,7 @@
         </select>
       </div> --}}
 
-    <div class="block row col-md-6 text-white">
+    <div class="block row col-md-8 text-white">
 
 
       <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign Job</a></div>
