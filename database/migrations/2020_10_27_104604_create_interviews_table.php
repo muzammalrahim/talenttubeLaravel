@@ -24,7 +24,7 @@ class CreateInterviewsTable extends Migration
             $table->string('employerpassword');
             $table->text('instruction');
             $table->string('additionalmanagers')->nullable();
-            $table->integer('numberofslots');
+            // $table->integer('numberofslots')->nullable();
             $table->timestamps();
         });
     }
