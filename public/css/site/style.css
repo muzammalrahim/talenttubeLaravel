@@ -4440,3 +4440,44 @@ h2.interSlotHeading{background: #254c8e; padding: 10px 0px;color: white; text-al
 /*.mb-10{margin-bottom: 10px;}*/
 
 .add_new_job>.new_job_form>.job_salary>.form_input,.job_type>.form_input{ position: absolute;}
+
+.m_no_i {
+    display: inline-flex;
+    margin-top: 2%;
+}
+
+.deleteSlot {
+    cursor: pointer;
+}
+
+.job_salary > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_down {
+    min-width: 189px;
+    overflow-y: auto;
+    max-height: 172px;
+}
+.job_salary > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_up {
+    min-width: 189px;
+    overflow-y: auto;
+    max-height: 172px;
+}
+
+.job_type > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_up {
+    min-width: 189px;
+    overflow-y: auto;
+    max-height: 172px;
+}
+
+.job_type > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_down {
+    min-width: 189px;
+    overflow-y: auto;
+    max-height: 172px;
+}
+
+.jq-selectbox > .jq-selectbox__dropdown.drop_up > ul {
+    width: 172px;
+    text-align: center;
+}
+.jq-selectbox > .jq-selectbox__dropdown.drop_down > ul {
+    width: 172px;
+    text-align: center;
+}

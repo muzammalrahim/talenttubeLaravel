@@ -92,10 +92,10 @@
                 <div class="form_input w100">
                     <div class="slots">
 
-                       <div>   <button type="button" class="btn btn-danger font-weight-bold">x</button> </div>
+                     
                        
                         <div class="slot s1 notbrak leftMargin topMargin">
-                            <div class="mb10">Interview Slot 1</div>
+                            <div class="mb10">Interview Slot 1 <span class="deleteSlot fl_right"> <i class="fas fa-trash"></i></span></div>
                             <div class="time">
                                 <div class="notbrak">Time</div>
                                 <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot[1][start]" size="8" required /></div>
@@ -108,9 +108,9 @@
                                 <span class="notbrak">Date</span>
                                 <input type="text" name="date[1]" class="datepicker notbrak checkstatusDate"  autocomplete="off" size="8" required />
                             </div>
-                            <div>
+                              <div class="m_no_i">
                                 <label class="w50 notbrak my10" style="margin-right: 5px;">Maximum number of interviewees:</label>
-                                <div class="form_input">
+                                <div class="form_input form_input_C2">
                                     <select name="maximumnumber[1]" class="form_select" >
                                         <option value="1">1</option>
                                         <option value="2">2</option>
@@ -136,7 +136,6 @@
                                 </div>
 
                             </div>
-
                         </div>
 
 
@@ -304,7 +303,7 @@
 
 var i = 2;
 $(".addSlot").bind('click', function(){
-
+ 
     var timeValue = $('.checkstatus').val();
     var timeEndValue = $('.checkstatus1').val();
     var timeDateValue = $('.checkstatusDate').val();
@@ -321,7 +320,7 @@ $(".addSlot").bind('click', function(){
 
 if($.inArray(checkstatusjq, array)){
     if(($('.ui-timepicker-viewport li a').text()) == timeValue ){
-        $(this).css('display', 'none');
+        $(this).css('display', 'block');
   
     }
 }
