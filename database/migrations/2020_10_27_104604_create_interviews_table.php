@@ -15,6 +15,7 @@ class CreateInterviewsTable extends Migration
     {
         Schema::create('interviews', function (Blueprint $table) {
             $table->id();
+            $table->integer('emp_id');
             $table->string('title');
             $table->string('companyname');
             $table->string('positionname');

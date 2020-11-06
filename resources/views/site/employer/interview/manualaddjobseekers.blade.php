@@ -53,7 +53,7 @@
         </div>
 
             <div class="fomr_btn act_field">
-                <button class="btn small leftMargin turquoise loginEditInterview1">Resent Notification</button>
+                <button class="btn small leftMargin turquoise loginEditInterview1">Send Notification</button>
             </div>
 
         </form>
@@ -102,7 +102,7 @@
                 <div class="fomr_btn act_field">
 
                     {{-- <input type="type" value="academic" /> --}}
-                    <button class="btn small leftMargin turquoise loginEditInterview2">Resent Notification</button>
+                    <button class="btn small leftMargin turquoise loginEditInterview2">Sed Notification</button>
                 </div>
 
             </form>
@@ -150,7 +150,7 @@
                     <div class="fomr_btn act_field">
 
                         {{-- <input type="type" value="academic" /> --}}
-                        <button class="btn small leftMargin turquoise loginEditInterview3">Resent Notification</button>
+                        <button class="btn small leftMargin turquoise loginEditInterview3">Send Notification</button>
                     </div>
 
                 </form>

@@ -11,6 +11,7 @@
     <div class="heading icon_head_browse_matches">Select Job Seekers to send them notifications</div>
 
     <hr class="new">
+      {{-- @dump($interview); --}}
     @php
     session()->put('bookingid',$interview->id);
     @endphp
@@ -30,9 +31,6 @@
       </table>
 
       <butto class="button w20 small colorSendButton sendNotification turquoise">Send notifications</butto>
-
-
-
 </div>
 
 <div class="form_field">
@@ -47,10 +45,9 @@
       <div class="cbx_list">
       </div>
 
-      <input type="hidden" name="url" id="url" value="{{$interview->url}}">
+      {{-- <input type="hidden" name="url" id="url" value="{{$interview->url}}"> --}}
     </form>
 </div>
-
 
 @stop
 
@@ -131,7 +128,6 @@ text-align: center;
   color: White;
 }
 
-
 </style>
 @stop
 
@@ -140,7 +136,6 @@ text-align: center;
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
 
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
@@ -148,7 +143,6 @@ text-align: center;
 {{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
 
 <script type="text/javascript">
-
 
  $( document ).ready(function() {
     var checked = false;
@@ -168,10 +162,6 @@ text-align: center;
         }
         return false;
     });
-
-
-
-
 
 $(document).on('click','.sendNotification', function(){
 var cbx = $('input[name="cbx[]"]:checked').map(function(){return $(this).val(); }).toArray();
@@ -210,23 +200,9 @@ $.ajax({
         }
     });
 
-
 });
 
-
 });
-
-
-
-
-
-
-
-
-
-
-
-
 
 var table = jQuery('#dataTable').DataTable({
         processing: true,
