@@ -75,13 +75,15 @@
             </div>
 
 
-            <div class="job_title form_field">
+         {{--    <div class="job_title form_field">
                 <span class="form_label">Number of Slots :</span>
                 <div class="form_input">
                     <input type="number" class="jq-number__field" value="{{$interview->numberofslots}}" name="numberofslots" min="1" max="20" class="w20" >
-                    {{-- <div id="title_error" class="error field_error to_hide">&nbsp;</div> --}}
+
+                    <div id="title_error" class="error field_error to_hide">&nbsp;</div>
+                    
                 </div>
-            </div>
+            </div> --}}
 
 
             <div class="slot form_field">

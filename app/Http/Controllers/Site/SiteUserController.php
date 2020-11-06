@@ -1359,9 +1359,6 @@ class SiteUserController extends Controller
         }
     }
 
-
-
-
     public function purchaseUserInfo(Request $request)
     {
         //  dd($request->toArray());
@@ -1390,20 +1387,6 @@ class SiteUserController extends Controller
             return response()->json($output);
         }
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     //====================================================================================================================================//
@@ -1469,8 +1452,6 @@ class SiteUserController extends Controller
             ]);
         }
     }
-
-
 
     //====================================================================================================================================//
     // Add new user activity.

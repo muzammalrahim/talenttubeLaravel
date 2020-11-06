@@ -33,18 +33,24 @@ class InterviewController extends Controller
 
     public $agent;
     public function __construct(){
-					$this->middleware('auth');
-					$this->agent = new Agent();
+		$this->middleware('auth');
+		$this->agent = new Agent();
     }
 
 
     public function index(){
         $user = Auth::user();
+        // dd($user->id);
+        $interview = Interview::where('emp_id',$user->id)->get();
+
+        $data['interview'] = $interview;
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
+        // $interview = Interview::all()->toArray();
+
         return view('site.employer.interview.index', $data);
-        // site/employer/myjobs
+        // site/employer/interview/index
     }
 
     public function new(){
@@ -57,6 +63,8 @@ class InterviewController extends Controller
     }
     public function newInterviewBooking(Request $request){
 
+        $user = Auth::user();
+        $data['user'] = $user;
         $data = $request->all();
        //  dd($data);
         $rules = array(
@@ -67,8 +75,6 @@ class InterviewController extends Controller
             "employeremail"  => 'required|email',
             "employerpassword" => "required|string",
         );
-
-
         $validator = Validator::make( $data , $rules);
         if ($validator->fails()){
             return response()->json([
@@ -102,6 +108,7 @@ class InterviewController extends Controller
         $slots = array();
         //array_push($slots, $data['slot']);
         $interview = new Interview;
+        $interview->emp_id = $user->id;
         $interview->title = $data['title'];
         $interview->companyname = $data['companyname'];
         $interview->positionname = $data['positionname'];
@@ -114,9 +121,7 @@ class InterviewController extends Controller
         $interview->url = generateRandomString();
         $interview->save();
        // dd($data['slot']);
-
         foreach ($data['slot'] as $key => $value) {
-
             $slot = new Slot;
             $slot->date = $data['date'][$key];
             $slot->maximumnumberofinterviewees = $data['maximumnumber'][$key];
@@ -192,11 +197,14 @@ class InterviewController extends Controller
         $interview->employerpassword = $data['employerpassword'];
         $interview->instruction = $data['instruction'];
         $interview->additionalmanagers = $data['additionalmanagers'];
-        $interview->numberofslots = $data['numberofslots'];
+        // $interview->numberofslots = $data['numberofslots'];
 
 
         // $interview->uniquedigits = rand(10000,99999);
         // $interview->url = generateRandomString();
+
+        $request->session()->put('bookingid',$interview->id);
+
         $interview->save();
        // dd($data['slot']);
         $interview->slots()->delete();
@@ -216,7 +224,7 @@ class InterviewController extends Controller
         $interview->save();
         return response()->json([
             'status' => 1,
-            'route' => route('interviewconcierge'),
+            'route' => route('interviewconcierge.created'),
             // 'redirect' => route('')
         ]);
         }
@@ -308,9 +316,6 @@ class InterviewController extends Controller
                 "password" => "required|string",
                 "email"  => 'required|email',
                 );
-
-
-
             $validator = Validator::make( $data , $rules);
             if ($validator->fails()){
                 return response()->json([
@@ -322,8 +327,6 @@ class InterviewController extends Controller
         }
 
     }
-
-
     public function editbookingform(){
         $user = Auth::user();
 
@@ -405,7 +408,7 @@ class InterviewController extends Controller
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.manualaddjobseekers', $data);
-        // site/employer/myjobs
+        // site/employer/interview/manualaddjobseekers
     }
 
     public function created(){
@@ -436,7 +439,13 @@ class InterviewController extends Controller
     public function getlikedjobseekers(){
         // dd(URL::full());
         $user = Auth::user();
-        $interview = Interview::where('uniquedigits',"12340")->first();
+        // $interview = Interview::where('uniquedigits',"12340")->first();
+
+        $bookingid = session('bookingid');
+        $interview = Interview::where('id',$bookingid)->first();
+
+
+
         // $bookingid = session('bookingid');
         // session()->forget('bookingid');
 
