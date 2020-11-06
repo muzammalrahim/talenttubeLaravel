@@ -303,7 +303,7 @@
 
 var i = 2;
 $(".addSlot").bind('click', function(){
-
+ 
     var timeValue = $('.checkstatus').val();
     var timeEndValue = $('.checkstatus1').val();
     var timeDateValue = $('.checkstatusDate').val();
