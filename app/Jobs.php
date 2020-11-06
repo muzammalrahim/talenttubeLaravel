@@ -17,6 +17,8 @@ class Jobs extends Model {
     'age' => 0,
     ];
 
+    // this is testing ;
+
     protected $table = 'jobs_data';
 
      // added by Hassan
