@@ -88,27 +88,18 @@ Route::get('media/private/{userid}/{any}', [
 ])->where('any', '.*');
 
 
+    // Backend Admin with out Authentication
+    Route::get('admin', 'Admin\AdminController@index');
+    Route::post('admin/login', 'Admin\AdminController@login');
+    Route::get('logout', function(){
+        Auth::logout();
+        return redirect('/');
+    })->name('logout');
 
-
-
-
-// Backend Admin with out Authentication
-Route::get('admin', 'Admin\AdminController@index');
-Route::post('admin/login', 'Admin\AdminController@login');
-
-Route::get('logout', function(){
-    Auth::logout();
-    return redirect('/');
-})->name('logout');
-
-
-
-// Backend Admin with Authentication
-Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), function(){
-
+    // Backend Admin with Authentication
+    Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), function(){
     Route::get('dashboard','Admin\AdminController@dashboard')->name('adminDashboard');
     Route::get('adminDashboard','Admin\AdminController@dashboard');
-
     Route::get('users', 'Admin\UserController@index')->name('users');
     Route::get('users/create', 'Admin\UserController@create')->name('users.create');
     Route::get('users/edit/{id}', 'Admin\UserController@edit')->name('users.edit');
@@ -118,7 +109,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('users/pending', 'Admin\UserController@pendingUsers')->name('pendingUsers');
     Route::get('users/verified', 'Admin\UserController@verifiedUsers')->name('verifiedUsers');
     Route::get('users/list', 'Admin\UserController@verifiedUsers')->name('userslist');
-
     Route::get('ajax/removeAttachment/', 'Admin\UserController@removeAttachment')->name('removeAttachmentadmin');
     Route::post('ajax/deleteVideo', 'Admin\UserController@deleteVideo')->name('deleteVideoadmin');
     Route::post('ajax/uploadUserGallery', 'Admin\UserController@uploadUserGallery');
@@ -134,7 +124,6 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
     Route::get('employers', 'Admin\UserController@employers')->name('adminEmployers');
     Route::get('employers/verified', 'Admin\UserController@verifiedEmployers')->name('adminVerifiedEmployers');
     Route::get('employers/pending', 'Admin\UserController@pendingEmployers')->name('adminPendingEmployers');
-
     Route::get('employers/edit/{id}', 'Admin\UserController@editEmployer')->name('employers.edit');
     Route::patch('employers/update/{id}', 'Admin\UserController@updateEmployer')->name('employers.update');
     Route::get('employers/create', 'Admin\UserController@createEmployer')->name('employers.create');
@@ -202,17 +191,10 @@ Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), funct
 
 });
 
-
-
-
-
-
-
-
-// Front End without Authentication
-// User Registeration.
-Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
-// Route::get('step2', 'Site\HomeController@step2')->name('step2');
+    // Front End without Authentication
+    // User Registeration.
+    Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
+    // Route::get('step2', 'Site\HomeController@step2')->name('step2');
 	Route::post('login', 'Site\HomeController@loginUser')->name('login');
 
 
@@ -223,22 +205,18 @@ Route::post('register', 'Site\HomeController@register')->name('register'); // us
 
     // =============================================== Forget Password ===============================================
 
-
-
 	//Employer Registeration.
 	Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer');
 	Route::get('employer/verification', 'Site\HomeController@employerNotVerified')->name('employerNotVerified');
 	Route::post('employer/verification', 'Site\HomeController@resendVerificationCode')->name('resendVerificationCode');
 	Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
 
-// Desktop layout only.
-Route::group(array('middleware' => ['devicecheck']), function(){
-
+    // Desktop layout only.
+    Route::group(array('middleware' => ['devicecheck']), function(){
     Route::get('/', 'Site\HomeController@index')->name('homepage');
 
 	// Login.
 	Route::get('login', function () { return redirect('/'); });
-
     Route::post('join', 'Site\HomeController@join')->name('join');
     Route::get('join', function () { return redirect('/'); });
 
@@ -267,14 +245,11 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
 // ======================================= For Updating User Setting =======================================
 
     Route::get('updateUserPersonalSetting', 'Site\SiteUserController@updateUserPersonalSetting')->name('updateUserPersonalSetting');
-
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
     Route::post('ajax/updateRecentJob', 'Site\SiteUserController@updateRecentJob');
 
     // Added by ALi
     Route::post('ajax/addNewLocation', 'Site\SiteUserController@addNewLoaction');
-
-
 
     // Added by Hassan
 
@@ -282,24 +257,18 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/updateQualification', 'Site\SiteUserController@updateQualification')->name('updateQualification');
     Route::post('ajax/updateQuestions', 'Site\SiteUserController@updateQuestions');
 
-
-
     // ========================== Update Employer Questions ===========================================
 
     Route::post('ajax/updateEmployerQuestions', 'Site\SiteUserController@updateEmployerQuestions');
 
     // ========================== Update Employer Questions ===========================================
 
-
     Route::post('ajax/updateIndustryExperience', 'Site\SiteUserController@updateIndustryExperience')->name('updateIndustryExperience');
     Route::post('ajax/updateNewJobIndustryExperience', 'Site\EmployerController@updateNewJobIndustryExperience')->name('updateNewJobIndustryExperience');
-
     Route::post('ajax/updateEmail', 'Site\SiteUserController@updateEmail');
     Route::post('ajax/updatePhone', 'Site\SiteUserController@updatePhone');
     Route::post('ajax/updatePassword', 'Site\SiteUserController@updatePassword');
     Route::post('ajax/deleteuser', 'Site\SiteUserController@deleteuser');
-
-
 
     // Added by Hassan
 
@@ -337,36 +306,27 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     // Like Route and unlike route
     Route::get('like',         'Site\SiteUserController@likeList')->name('likeList');
     Route::post('ajax/unLikeUser', 'Site\SiteUserController@unLikeUser')->name('unLikeUser');
-
     Route::get('mutual-likes',         'Site\SiteUserController@mutualLikes')->name('mutualLikes');
-
-
-				// User Step2
-				Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
-				Route::post('step2',      'Site\SiteUserController@Step2');
-
+	// User Step2
+	Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
+	Route::post('step2',      'Site\SiteUserController@Step2');
 
     // Employer
     Route::get('employer/profile', function () { return redirect('employer/'.Auth::user()->username); })->name('employerProfile');
     Route::get('employer/step2',       'Site\EmployerController@step2Employer')->name('step2Employer');
     Route::post('employer/step2',      'Site\EmployerController@Step2');
-
     Route::get('jobSeekers',        'Site\EmployerController@jobSeekers')->name('jobSeekers');
     Route::post('jobSeekersFilter', 'Site\EmployerController@jobSeekersFilter')->name('jobSeekersFilter');
-
     Route::post('ajax/blockJobSeeker/{id}', 'Site\EmployerController@blockJobSeeker')->name('blockJobSeeker');
     Route::post('ajax/likeJobSeeker/{id}', 'Site\EmployerController@likeJobSeeker')->name('likeJobSeeker');
-				Route::get('employers',         'Site\JobSeekerController@employers')->name('employers');
-				Route::post('employers',         'Site\JobSeekerController@employerspost')->name('employers');
+	Route::get('employers',         'Site\JobSeekerController@employers')->name('employers');
+	Route::post('employers',         'Site\JobSeekerController@employerspost')->name('employers');
     Route::get('employerInfo/{id}', 'Site\JobSeekerController@employerInfo')->name('employerInfo');
     Route::get('jobSeekerInfo/{id}', 'Site\JobSeekerController@jobSeekerInfo')->name('jobSeekerInfo');
     Route::post('ajax/blockEmployer/{id}', 'Site\JobSeekerController@blockEmployer')->name('blockEmployer');
     Route::post('ajax/likeEmployer/{id}', 'Site\JobSeekerController@likeEmployer')->name('likeEmployer');
 
-
     // job
-
-
 
     Route::get('employer/job/new',    'Site\EmployerController@newJob')->name('newJob');
     Route::post('ajax/job/new',    'Site\EmployerController@addNewJob')->name('addNewJob');
@@ -411,17 +371,11 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/booking/new',    'Site\InterviewController@newInterviewBooking')->name('addNewInterview');
     Route::post('ajax/booking/update',    'Site\InterviewController@updateInterviewBooking')->name('updateInterview');
     Route::post('ajax/booking/firstlogin',    'Site\InterviewController@editInterviewLogin')->name('editInterviewlogin');
-
     Route::post('ajax/booking/sendnotification',    'Site\InterviewController@sendnotification')->name('sendnotificationInterview');
     Route::post('ajax/booking/manualsendnotification',    'Site\InterviewController@manualsendnotification')->name('manualsendnotification');
-
-
     Route::get('userinterviewconciergeloggedin/url', 'Site\InterviewController@userurl')->name('userinterviewconciergeloggedin.url');
-
-
     Route::get('interviewconcierge/user',       'Site\InterviewController@userindex')->name('interviewconcierg.user');
-
-    Route::get('ajax/userbooking/login',    'Site\InterviewController@userbookinglogin')->name('userbooking.login');
+    Route::post('ajax/userbooking/login',    'Site\InterviewController@userbookinglogin')->name('userbooking.login');
 });
 
 // Front End With Authentication except step2
@@ -443,9 +397,6 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
 // 					Route::get('ajax/searchTags', 'Site\SiteUserController@searchTags')->name('searchTags');
 // 					Route::post('ajax/addNewTag', 'Site\SiteUserController@addNewTag')->name('addNewTag');
 // });
-
-
-
 
 // Localization
 Route::get('/js/lang.js', function () {

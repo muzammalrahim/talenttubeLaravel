@@ -539,10 +539,11 @@ class InterviewController extends Controller
 
 
     public function userurl(Request $request){
-         dd($request->url);
-        // $user = Auth::user();
-        // // $interview = Interview::where('uniquedigits',"12340")->first();
-        // $bookingid = session('bookingid');
+         // dd($request->url);
+        $user = Auth::user();
+        $bookingid = session('bookingid');
+
+        $interview = Interview::where('uniquedigits',"12340")->first();
         // session()->forget('bookingid');
 
         // if(!empty($bookingid)){
@@ -555,26 +556,43 @@ class InterviewController extends Controller
         //     return Redirect::route('interviewconcierge');
         // }
 
-        // $data['user'] = $user;
-        // $data['interview'] = $interview;
-        // $data['title'] = 'My Jobs';
-        // $data['classes_body'] = 'myJob';
-        // return view('site.employer.interview.url', $data);
-        // site/employer/myjobs
+        $data['user'] = $user;
+        $data['interview'] = $interview;
+        $data['title'] = 'My Jobs';
+        $data['classes_body'] = 'myJob';
+        return view('site.user.interview.userurl', $data);
+        // site/user/interview/userurl
     }
 
 
     public function userindex(){
         $user = Auth::user();
         $data['user'] = $user;
+
+        $bookingid = session('bookingid');
+
+        $interview = Interview::where('uniquedigits',"12340")->first();
+
+        
+        $data['title'] = 'My Jobs';
+        $data['interview'] = $interview ;
+        $data['classes_body'] = 'myJob';
+        return view('site.employer.interview.indexuser', $data);
+        // site/employer/interview/indexuser
+    }
+
+    public function userbookinglogin(Request $request){
+
+       // return 1;
+
+
+        $user = Auth::user();
+
+        // dd($request);
+
+        $data['user'] = $user;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.indexuser', $data);
-        // site/employer/myjobs
-    }
-
-    public function userbookinglogin(){
-
-       return 1;
     }
 }

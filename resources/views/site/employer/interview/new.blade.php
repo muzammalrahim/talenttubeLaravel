@@ -95,7 +95,7 @@
                      
                        
                         <div class="slot s1 notbrak leftMargin topMargin">
-                            <div class="mb10">Interview Slot 1 <span class="deleteSlot fl_right"> <i class="fas fa-trash"></i></span></div>
+                            <div class="mb10">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot"></i></span></div>
                             <div class="time">
                                 <div class="notbrak">Time</div>
                                 <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot[1][start]" size="8" required /></div>
@@ -324,8 +324,8 @@ if($.inArray(checkstatusjq, array)){
   
     }
 }
-    if(timeValue != "" && timeEndValue != "" && timeDateValue != "")
-    {
+    // if(timeValue != "" && timeEndValue != "" && timeDateValue != "")
+    // {
 
     if(i <= 20){
         i=i;
@@ -387,29 +387,48 @@ if($.inArray(checkstatusjq, array)){
         return false;
     }
 
-}
+// }
 
-else{
+// else{
 
-    timeValue = '';
-    $( ".checkStatusError" ).show().delay(4000).fadeOut('slow');
-    console.log(timeValue);
-}
+//     timeValue = '';
+//     $( ".checkStatusError" ).show().delay(4000).fadeOut('slow');
+//     console.log(timeValue);
+// }
 
 });
 
 // ============================================= Add new buttton end here =============================================
 
+
+
+// ============================================= Deleting Slot FUnction =============================================
+
+$('.deleteSlot').click(function(){
+
+
+    $(this).closest('.slot').remove();
+
+   // var parentSlot =  $('.slot').parent();
+   // var childSlot = parentSlot.children();
+   // $(childSlot).remove();
+   // var childSlot =  parentSlot.children();
+   // $(this).remove(childSlot);
+   // console.log(childSlot);
+});
+
+// ============================================= Deleting Slot FUnction end here =============================================
+
 $(document).ready(function(){
     $('input.timepicker').timepicker({});
     $('input, select').styler();
-$('.saveNewBooking').on('click',function() {
-event.preventDefault();
-var formData = $('.new_booking_form').serializeArray();
-$('.saveNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
-console.log(' formData ', formData);
-$('.general_error').html('');
-$.ajax({
+    $('.saveNewBooking').on('click',function() {
+    event.preventDefault();
+    var formData = $('.new_booking_form').serializeArray();
+    $('.saveNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+    console.log(' formData ', formData);
+    $('.general_error').html('');
+    $.ajax({
     type: 'POST',
     url: base_url+'/ajax/booking/new',
     data: formData,

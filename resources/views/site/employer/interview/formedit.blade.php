@@ -100,10 +100,10 @@
 
                         @foreach ($slots as $key => $slot)
                         <div class="slot s{{$key+1}} notbrak leftMargin topMargin">
-                            <div class="textCenter">Interview Slot {{$key+1}}</div>
+                            <div class="textCenter">Interview Slot <span class="test">{{$key+1}}</span></div>
                             <div class="time">
                                 <div class="notbrak">Time</div>
-                                <div class="notbrak"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" required /></div>
+                                <div class="notbrak"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" value="slot[{{$key+1}}]" required /></div>
                                 <div class="notbrak">To</div>
                                 <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][end]" size="8" required /></div>
                             </div>
@@ -130,26 +130,23 @@
                 </div>
             </div>
 
-
             <div class="form_field">
                 <span class="form_label"></span>
                 <div class="form_input">
                     <div class="general_error error to_hide">&nbsp;</div>
                 </div>
             </div>
-
+             <div class="interviewSlot">
+                <span class="btn small violet addSlot" style="cursor: pointer;"> Add Interview slot</span>
+            </div>
 
             <div class="fomr_btn act_field">
                 <span class="form_label"></span>
                 {{-- <input type="type" value="academic" /> --}}
                 <button class="btn small turquoise updateNewBooking">Update</button>
             </div>
-
         </form>
         </div>
-
-
-
 
     <div class="cl"></div>
 </div>
@@ -204,160 +201,203 @@
 
 <script type="text/javascript">
 
-$("input[type=number]").bind('keyup input', function(){
-   // alert("fired");
-   console.log("This value",this.value);
-    if(this.value>20 || this.value <1){
-        this.value =1;
-        return 0;
+//   ============================================= Code commented for adding new slot on click function =============================================
+
+// $("input[type=number]").bind('keyup input', function(){
+//    // alert("fired");
+//    console.log("This value",this.value);
+//     if(this.value>20 || this.value <1){
+//         this.value =1;
+//         return 0;
+//     }
+//     var sC = parseInt($('#slotsCounter').val());
+//     console.log("Slot counter",sC);
+//     if(sC<this.value){
+//     for (i=sC+1; i<=this.value; i++)
+//     {
+//         var slot  = '<div class="slot s'+i+' notbrak leftMargin topMargin">';
+//             slot  += '<div class="textCenter">Interview Slot '+i+'</div>';
+//             slot  += '<div class="time">';
+//             slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
+//             slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][start]" size="8" required /></div>';
+//             slot  += '<div class="notbrak dynamicTextStyle">To</div>';
+//             slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][end]" size="8" required /></div>';
+//             slot  += '</div>';
+//             slot  += '<div class="date topMargin">';
+//             slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
+//             slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" size="8" required />';
+//             slot  += '</div>';
+
+//             slot  += '<div>';
+//                 slot  += '<label class="form_label notbrak" style="margin-right: 5px;">Maximum number of interviewees:</label>';
+
+//                 slot  += '               <div class="form_input">';
+//                     slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
+//                         slot  += '                      <option value="1">1</option>';
+//                         slot  += '                       <option value="2">2</option>';
+//                         slot  += '                       <option value="3">3</option>';
+//                         slot  += '                       <option value="4">4</option>';
+//                         slot  += '             <option value="5">5</option>';
+//                         slot  += '           <option value="6">6</option>';
+//                         slot  += '              <option value="7">7</option>';
+//                         slot  += '              <option value="8">8</option>';
+//                         slot  += '               <option value="9">9</option>';
+//                         slot  += '              <option value="10">10</option>';
+//                         slot  += '              <option value="11">11</option>';
+//                         slot  += '             <option value="12">12</option>';
+//                         slot  += '             <option value="13">13</option>';
+//                         slot  += '             <option value="14">14</option>';
+//                         slot  += '            <option value="15">15</option>';
+//                         slot  += '            <option value="16">16</option>';
+//                         slot  += '           <option value="17">17</option>';
+//                         slot  += '           <option value="18">18</option>';
+//                         slot  += '           <option value="19">19</option>';
+//                         slot  += '           <option value="20">20</option>';
+//                         slot  += '       </select>';
+//                         slot  += '       </div>';
+//                         slot  += '   </div>';
+//                         slot  += '  </div>';
+//             slot  += '</div>';
+//             $('.slots').append(slot);
+//     }
+//     $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+//     $('input.timepicker').timepicker({});
+//     $('#slotsCounter').val(this.value);
+//     $('input, select').styler();
+//     }
+
+//     else if(sC > this.value){
+
+//         for (i=sC; i>this.value; i--){
+
+//             $( ".s"+i ).remove();
+
+//         }
+
+//     $('#slotsCounter').val(this.value);
+//     }
+
+// });
+
+//   ============================================= Code commented for adding new slot on click function =============================================
+
+
+// ============================================= Added new slot button start =============================================
+
+var vals = $('.test').last().text();
+var i = Number(vals)+1;
+$(".addSlot").bind('click', function(){
+    if(i <= 20){
+        i=i;
+            var slot  = '<div class="slot s'+i+' notbrak leftMargin topMargin">';
+                slot  += '<div class="mb10 dynamicTextStyle">Interview Slot '+i+'</div>';
+                slot  += '<div class="time">';
+                slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][start]" size="8" required /></div>';
+                slot  += '<div class="notbrak dynamicTextStyle">To</div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end]" size="8" required /></div>';
+                slot  += '</div>';
+                slot  += '<div class="date topMargin">';
+                slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
+                slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" autocomplete="off" size="8" required />';
+                slot  += '</div>';
+
+                slot  += '<div>';
+                    slot  += '<label class="w50 notbrak my10" style="margin-left: 5px;">Maximum number of interviewees:</label>';
+
+                    slot  += '               <div class="form_input">';
+                        slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
+                            slot  += '                      <option value="1">1</option>';
+                            slot  += '                       <option value="2">2</option>';
+                            slot  += '                       <option value="3">3</option>';
+                            slot  += '                       <option value="4">4</option>';
+                            slot  += '             <option value="5">5</option>';
+                            slot  += '           <option value="6">6</option>';
+                            slot  += '              <option value="7">7</option>';
+                            slot  += '              <option value="8">8</option>';
+                            slot  += '               <option value="9">9</option>';
+                            slot  += '              <option value="10">10</option>';
+                            slot  += '              <option value="11">11</option>';
+                            slot  += '             <option value="12">12</option>';
+                            slot  += '             <option value="13">13</option>';
+                            slot  += '             <option value="14">14</option>';
+                            slot  += '            <option value="15">15</option>';
+                            slot  += '            <option value="16">16</option>';
+                            slot  += '           <option value="17">17</option>';
+                            slot  += '           <option value="18">18</option>';
+                            slot  += '           <option value="19">19</option>';
+                            slot  += '           <option value="20">20</option>';
+                            slot  += '       </select>';
+                            slot  += '       </div>';
+                            slot  += '   </div>';
+                            slot  += '  </div>';
+                slot  += '</div>';
+                slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
+
+        $('.slots').append(slot);
+        $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+        $('input.timepicker').timepicker({});
+        $('#slotsCounter').val(this.value);
+        $('input, select').styler();
+     i++;
+
     }
-
-    var sC = parseInt($('#slotsCounter').val());
-
-
-    console.log("Slot counter",sC);
-
-
-    if(sC<this.value){
-    for (i=sC+1; i<=this.value; i++){
-        var slot  = '<div class="slot s'+i+' notbrak leftMargin topMargin">';
-            slot  += '<div class="textCenter">Interview Slot '+i+'</div>';
-            slot  += '<div class="time">';
-            slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
-            slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][start]" size="8" required /></div>';
-            slot  += '<div class="notbrak dynamicTextStyle">To</div>';
-            slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][end]" size="8" required /></div>';
-            slot  += '</div>';
-            slot  += '<div class="date topMargin">';
-            slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
-            slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" size="8" required />';
-            slot  += '</div>';
-
-            slot  += '<div>';
-                slot  += '<label class="form_label notbrak" style="margin-right: 5px;">Maximum number of interviewees:</label>';
-
-                slot  += '               <div class="form_input">';
-                    slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
-                        slot  += '                      <option value="1">1</option>';
-                        slot  += '                       <option value="2">2</option>';
-                        slot  += '                       <option value="3">3</option>';
-                        slot  += '                       <option value="4">4</option>';
-                        slot  += '             <option value="5">5</option>';
-                        slot  += '           <option value="6">6</option>';
-                        slot  += '              <option value="7">7</option>';
-                        slot  += '              <option value="8">8</option>';
-                        slot  += '               <option value="9">9</option>';
-                        slot  += '              <option value="10">10</option>';
-                        slot  += '              <option value="11">11</option>';
-                        slot  += '             <option value="12">12</option>';
-                        slot  += '             <option value="13">13</option>';
-                        slot  += '             <option value="14">14</option>';
-                        slot  += '            <option value="15">15</option>';
-                        slot  += '            <option value="16">16</option>';
-                        slot  += '           <option value="17">17</option>';
-                        slot  += '           <option value="18">18</option>';
-                        slot  += '           <option value="19">19</option>';
-                        slot  += '           <option value="20">20</option>';
-                        slot  += '       </select>';
-                        slot  += '       </div>';
-                        slot  += '   </div>';
-                        slot  += '  </div>';
-            slot  += '</div>';
-            $('.slots').append(slot);
+    else  {
+        return false;
     }
-    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
-    $('input.timepicker').timepicker({});
-    $('#slotsCounter').val(this.value);
-    $('input, select').styler();
-    }
-
-    else if(sC > this.value){
-
-        for (i=sC; i>this.value; i--){
-
-            $( ".s"+i ).remove();
-
-        }
-
-    $('#slotsCounter').val(this.value);
-    }
-
-
 
 });
+
+// ============================================= Add new slot buttton end here =============================================
 
 $(document).ready(function(){
     $('input.timepicker').timepicker({});
     $('input, select').styler();
 
-
-
-
-$('.updateNewBooking').on('click',function() {
-
-    event.preventDefault();
-    var formData = $('.new_booking_form').serializeArray();
-    $('.updateNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
-    console.log(' formData ', formData);
-    $('.general_error').html('');
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/ajax/booking/update',
-        data: formData,
-        success: function(data){
-            console.log(' data ', data);
-            $('.updateNewBooking').html('Save').prop('disabled',false);
-            if( data.status == 1 ){
-                // that.hideMainEditor();
-                window.location.replace(data.route);
-            }else{
-                $('.general_error').html('<p>Error Creating new Booking</p>').removeClass('to_hide').addClass('to_show');
-                if(data.validator != undefined){
-                    const keys = Object.keys(data.validator);
-                    for (const key of keys) {
-                        if($('#'+key+'_error').length > 0){
-                            $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(data.validator[key][0]);
-                        }
-                    }
-
-                    setTimeout(() => {
+    $('.updateNewBooking').on('click',function() {
+        event.preventDefault();
+        var formData = $('.new_booking_form').serializeArray();
+        $('.updateNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+        console.log(' formData ', formData);
+        $('.general_error').html('');
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/booking/update',
+            data: formData,
+            success: function(data){
+                console.log(' data ', data);
+                $('.updateNewBooking').html('Save').prop('disabled',false);
+                if( data.status == 1 ){
+                    // that.hideMainEditor();
+                    window.location.replace(data.route);
+                }else{
+                    $('.general_error').html('<p>Error Creating new Booking</p>').removeClass('to_hide').addClass('to_show');
+                    if(data.validator != undefined){
+                        const keys = Object.keys(data.validator);
                         for (const key of keys) {
                             if($('#'+key+'_error').length > 0){
-                                $('#'+key+'_error').removeClass('to_show').addClass('to_hide').text(data.validator[key][0]);
+                                $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(data.validator[key][0]);
                             }
                         }
+
+                        setTimeout(() => {
+                            for (const key of keys) {
+                                if($('#'+key+'_error').length > 0){
+                                    $('#'+key+'_error').removeClass('to_show').addClass('to_hide').text(data.validator[key][0]);
+                                }
+                            }
+                        }
+                            ,3000);
                     }
-                        ,3000);
+                if(data.error != undefined){
+                    $('.general_error').append(data.error);
                 }
-            if(data.error != undefined){
-                $('.general_error').append(data.error);
-            }
-            setTimeout(() => { $('.general_error').removeClass('to_show').addClass('to_hide').text(''); },3000);
-            }
+                setTimeout(() => { $('.general_error').removeClass('to_show').addClass('to_hide').text(''); },3000);
+                }
 
-        }
+            }
+        });
     });
-});
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 });
 
