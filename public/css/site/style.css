@@ -4451,13 +4451,11 @@ h2.interSlotHeading{background: #254c8e; padding: 10px 0px;color: white; text-al
 }
 
 .job_salary > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_down {
-    min-width: 189px;
-    overflow-y: auto;
+   
     max-height: 172px;
 }
 .job_salary > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_up {
-    min-width: 189px;
-    overflow-y: auto;
+   
     max-height: 172px;
 }
 
@@ -4469,7 +4467,6 @@ h2.interSlotHeading{background: #254c8e; padding: 10px 0px;color: white; text-al
 
 .job_type > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_down {
     min-width: 189px;
-    overflow-y: auto;
     max-height: 172px;
 }
 
@@ -4480,4 +4477,28 @@ h2.interSlotHeading{background: #254c8e; padding: 10px 0px;color: white; text-al
 .jq-selectbox > .jq-selectbox__dropdown.drop_down > ul {
     width: 172px;
     text-align: center;
+}
+
+
+
+
+
+.m_no_i>.form_input.jq-selectbox>.jq-selectbox__dropdown.drop_up{
+	                min-width: 172px;
+}
+
+.form_input.jq-selectbox>.jq-selectbox__dropdown.drop_up>{
+    min-width: 179px;
+  
+}
+
+.jq-selectbox > .jq-selectbox__dropdown.drop_up > ul {
+    width: 189px;
+    text-align: center;
+    height: 213px;
+}
+
+
+label.form_label.notbrak {
+    width: 47%;
 }
