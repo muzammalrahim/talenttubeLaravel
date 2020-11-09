@@ -1478,17 +1478,12 @@ class SiteUserController extends Controller
             $mime == "video/MP2T"             || $mime == "video/3gpp"             || $mime == "video/quicktime" ||
             $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"
         ) {
-											$fileOriginalName = $video->getClientOriginalName();
+			$fileOriginalName = $video->getClientOriginalName();
             // $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
-												$fileName = $fileOriginalName;
-												$storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
-
-
+			$fileName = $fileOriginalName;
+			$storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
             // store video in private folder by default.
-												$storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
-
-
-
+			$storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
             $video = new Video();
             $video->title = $fileName;
             $video->type = $mime;
@@ -1500,8 +1495,6 @@ class SiteUserController extends Controller
 
             // generate video thumbs.
             $video->generateThumbs();
-
-
             $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;">';
             $html .=    '<a onclick="UProfile.showVideoModal(\''.assetVideo($video).'\')" class="video_link" target="_blank">';
             $html .=        '<div class="v_title_shadow"><span class="v_title">'.$video->title.'</span></div>';
@@ -1511,7 +1504,6 @@ class SiteUserController extends Controller
             $html .=        '<span class="icon_delete_photo"></span>';
             $html .=        '<span class="icon_delete_photo_hover"></span>';
             $html .=    '</span>';
-
             $html .=    '<div class="v_error error hide_it"></div>';
             $html .=  '</div>';
 
@@ -1527,11 +1519,6 @@ class SiteUserController extends Controller
             ]);
         }
     }
-
-
-
-
-
 
     //====================================================================================================================================//
     // Delete user video.
@@ -1558,10 +1545,6 @@ class SiteUserController extends Controller
         }
     }
 
-
-
-
-
     //====================================================================================================================================//
     // GET // Job Search/Listing layout.
     //====================================================================================================================================//
@@ -1577,16 +1560,16 @@ class SiteUserController extends Controller
 
     }
 
-				//====================================================================================================================================//
+	//====================================================================================================================================//
     // Dev Akmal GET // Job Listing For Step2
     //====================================================================================================================================//
     public function step2Jobs(){
-					$user = Auth::user();
-//        $data = array();
-					if (!isEmployer($user)){
-									$jobs = Jobs::take(10)->get();
-									return view('site.jobs.step2Jobs', compact('jobs'));
-					}
+		$user = Auth::user();
+    //  data = array();
+		if (!isEmployer($user)){
+						$jobs = Jobs::take(10)->get();
+						return view('site.jobs.step2Jobs', compact('jobs'));
+		}
 	}
 
 
@@ -1748,12 +1731,8 @@ class SiteUserController extends Controller
 
                         }
 
-
-
                     }
                 }
-
-
 
             }
 
@@ -1769,11 +1748,7 @@ class SiteUserController extends Controller
             }
         }
 
-
-
-
     }
-
 
 
     //====================================================================================================================================//
@@ -1787,7 +1762,6 @@ class SiteUserController extends Controller
         $data['applications'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
         return view('site.jobs.applied', $data);        //      site/jobs/applied
     }
-
 
     //====================================================================================================================================//
     // POST // delete job application.
@@ -1817,7 +1791,6 @@ class SiteUserController extends Controller
 
     }
 
-
     //====================================================================================================================================//
     // POST // delete job.
     //====================================================================================================================================//
@@ -1846,9 +1819,6 @@ class SiteUserController extends Controller
 
     }
 
-
-
-
     //====================================================================================================================================//
     // Get // layout for Block User List.
     //====================================================================================================================================//
@@ -1870,8 +1840,6 @@ class SiteUserController extends Controller
         return view('site.user.blockUsers', $data);         //      site/user/blockUsers
     }
 
-
-
     //=====================Like Function ==============================================//
 
     public function likeList(){
@@ -1892,8 +1860,6 @@ class SiteUserController extends Controller
           }
                //   site/user/likeUsers
     }
-
-
 
     //====================================================================================================================================//
     // Ajax Post // Remove user from user block User List.
@@ -2087,8 +2053,6 @@ class SiteUserController extends Controller
         }
     }
 
-
-
     //====================================================================================================================================//
     // Get // show job detail page.
     //====================================================================================================================================//
@@ -2102,7 +2066,5 @@ class SiteUserController extends Controller
         return view('site.jobs.jobDetail', $data);
 
     }
-
-
 
 }
