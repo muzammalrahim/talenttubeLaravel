@@ -348,7 +348,7 @@ class InterviewController extends Controller
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.formedit', $data);
-        // site/employer/myjobs
+        // site/employer/interview/formedit
     }
 
     public function edit(Request $request){

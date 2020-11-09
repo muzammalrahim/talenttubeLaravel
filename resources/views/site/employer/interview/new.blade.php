@@ -95,7 +95,11 @@
                      
                        
                         <div class="slot s1 notbrak leftMargin topMargin">
-                            <div class="mb10">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot"></i></span></div>
+
+                            <div class="mb10">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot fl_right tk"></i></span></div>
+
+                      
+
                             <div class="time">
                                 <div class="notbrak">Time</div>
                                 <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot[1][start]" size="8" required /></div>
@@ -107,7 +111,8 @@
                             <div class="date topMargin">
                                 <span class="notbrak">Date</span>
                                 <input type="text" name="date[1]" class="datepicker notbrak checkstatusDate"  autocomplete="off" size="8" required />
-                            </div>
+																												</div>
+																												
                               <div class="m_no_i">
                                 <label class="w50 notbrak my10" style="margin-right: 5px;">Maximum number of interviewees:</label>
                                 <div class="form_input form_input_C2">
@@ -187,6 +192,9 @@
 
 .leftMargin{
     margin-left: 10px;
+}
+.leftMargin2{
+    margin-left: 3%;
 }
 
 .topMargin{
@@ -304,6 +312,8 @@
 var i = 2;
 $(".addSlot").bind('click', function(){
  
+   
+
     var timeValue = $('.checkstatus').val();
     var timeEndValue = $('.checkstatus1').val();
     var timeDateValue = $('.checkstatusDate').val();
@@ -329,8 +339,10 @@ if($.inArray(checkstatusjq, array)){
 
     if(i <= 20){
         i=i;
-            var slot  = '<div class="slot s'+i+' notbrak leftMargin topMargin">';
-                slot  += '<div class="mb10 dynamicTextStyle">Interview Slot '+i+'</div>';
+            var slot  = '<div class="slot s'+i+' notbrak leftMargin leftMargin2 topMargin">';
+                slot  += '<div class="mb10 dynamicTextStyle">Interview Slot '+i+' <span class="deleteSlot fl_right tk"> <i class="fas fa-trash"></i></span></div>';
+														
+																	
                 slot  += '<div class="time">';
                 slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
                 slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatusjq" autocomplete="off" name="slot['+i+'][start]" size="8" required /></div>';
@@ -342,11 +354,11 @@ if($.inArray(checkstatusjq, array)){
                 slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" autocomplete="off" size="8" required />';
                 slot  += '</div>';
 
-                slot  += '<div>';
+                slot  += '<div class="m_no_i">';
                     slot  += '<label class="w50 notbrak my10" style="margin-left: 5px;">Maximum number of interviewees:</label>';
 
-                    slot  += '               <div class="form_input">';
-                        slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
+                    slot  += ' <div class="form_input form_input_C2">';
+                        slot  += ' <select name="maximumnumber['+i+']" class="form_select" >';
                             slot  += '                      <option value="1">1</option>';
                             slot  += '                       <option value="2">2</option>';
                             slot  += '                       <option value="3">3</option>';

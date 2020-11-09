@@ -99,8 +99,11 @@
                         @endphp
 
                         @foreach ($slots as $key => $slot)
-                        <div class="slot s{{$key+1}} notbrak leftMargin topMargin">
-                            <div class="textCenter">Interview Slot <span class="test">{{$key+1}}</span></div>
+
+                      
+                        <div class="slot s{{$key+1}} notbrak leftMargin topMargin rightMargin">
+                            <div class="textCenter2">Interview Slot {{$key+1}} <span class="test">{{$key+1}}</span> <span class="deleteSlot fl_right tk"> <i class="fas fa-trash"></i></span></div>
+
                             <div class="time">
                                 <div class="notbrak">Time</div>
                                 <div class="notbrak"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" value="slot[{{$key+1}}]" required /></div>
@@ -112,14 +115,15 @@
                                 <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
                             </div>
 
-                            <div>
+                            <div >
                                 <label class="form_label notbrak" style="margin-right: 5px;">Maximum number of interviewees:</label>
 
-                                <div class="form_input">
+                                <div class="form_input formedit_C2">
                                     {{ Form::select('salary', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'maximumnumber['.($key+1).']', 'class' => '']) }}
                                 </div>
                             </div>
                         </div>
+																								
                         @endforeach
 
 
@@ -140,10 +144,10 @@
                 <span class="btn small violet addSlot" style="cursor: pointer;"> Add Interview slot</span>
             </div>
 
-            <div class="fomr_btn act_field">
+            <div class="fomr_btn act_field leftMargin2" style="margin-left:10%">
                 <span class="form_label"></span>
                 {{-- <input type="type" value="academic" /> --}}
-                <button class="btn small turquoise updateNewBooking">Update</button>
+                <button class="btn small turquoise updateNewBooking ">Update</button>
             </div>
         </form>
         </div>
@@ -172,6 +176,12 @@
 .leftMargin{
     margin-left: 10px;
 }
+.leftMargin2{
+    margin-left: 10%;
+}
+.rightMargin{
+	 margin-right : 4%;
+}
 
 .topMargin{
     margin-top: 10px;
@@ -180,6 +190,12 @@
 .textCenter{
    margin-left: 40%;
    padding-bottom: 10px !important;
+}
+
+.textCenter2{
+  
+			padding-bottom: 10px !important;
+			font-weight: 600;
 }
 
 .dynamicTextStyle{
@@ -340,6 +356,59 @@ $(".addSlot").bind('click', function(){
         $('#slotsCounter').val(this.value);
         $('input, select').styler();
      i++;
+
+    var sC = parseInt($('#slotsCounter').val());
+
+
+    console.log("Slot counter",sC);
+
+
+    if(sC<this.value){
+    for (i=sC+1; i<=this.value; i++){
+        var slot  = '<div class="slot s'+i+' notbrak leftMargin topMargin">';
+            slot  += '<div class="textCenter2">Interview Slot '+i+'</div>';
+            slot  += '<div class="time">';
+            slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
+            slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][start]" size="8" required /></div>';
+            slot  += '<div class="notbrak dynamicTextStyle">To</div>';
+            slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][end]" size="8" required /></div>';
+            slot  += '</div>';
+            slot  += '<div class="date topMargin">';
+            slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
+            slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" size="8" required />';
+            slot  += '</div>';
+
+            slot  += '<div>';
+                slot  += '<label class="form_label notbrak" style="margin-right: 5px;">Maximum number of interviewees:</label>';
+
+                slot  += '               <div class="form_input">';
+                    slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
+                        slot  += '                      <option value="1">1</option>';
+                        slot  += '                       <option value="2">2</option>';
+                        slot  += '                       <option value="3">3</option>';
+                        slot  += '                       <option value="4">4</option>';
+                        slot  += '             <option value="5">5</option>';
+                        slot  += '           <option value="6">6</option>';
+                        slot  += '              <option value="7">7</option>';
+                        slot  += '              <option value="8">8</option>';
+                        slot  += '               <option value="9">9</option>';
+                        slot  += '              <option value="10">10</option>';
+                        slot  += '              <option value="11">11</option>';
+                        slot  += '             <option value="12">12</option>';
+                        slot  += '             <option value="13">13</option>';
+                        slot  += '             <option value="14">14</option>';
+                        slot  += '            <option value="15">15</option>';
+                        slot  += '            <option value="16">16</option>';
+                        slot  += '           <option value="17">17</option>';
+                        slot  += '           <option value="18">18</option>';
+                        slot  += '           <option value="19">19</option>';
+                        slot  += '           <option value="20">20</option>';
+                        slot  += '       </select>';
+                        slot  += '       </div>';
+                        slot  += '   </div>';
+                        slot  += '  </div>';
+            slot  += '</div>';
+            $('.slots').append(slot);
 
     }
     else  {
