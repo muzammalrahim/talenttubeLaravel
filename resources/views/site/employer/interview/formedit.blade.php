@@ -99,8 +99,8 @@
                         @endphp
 
                         @foreach ($slots as $key => $slot)
-                        <div class="slot s{{$key+1}} notbrak leftMargin topMargin">
-                            <div class="textCenter">Interview Slot {{$key+1}}</div>
+                        <div class="slot s{{$key+1}} notbrak leftMargin topMargin rightMargin">
+                            <div class="textCenter2">Interview Slot {{$key+1}} <span class="deleteSlot fl_right tk"> <i class="fas fa-trash"></i></span></div>
                             <div class="time">
                                 <div class="notbrak">Time</div>
                                 <div class="notbrak"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" required /></div>
@@ -112,14 +112,15 @@
                                 <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
                             </div>
 
-                            <div>
+                            <div >
                                 <label class="form_label notbrak" style="margin-right: 5px;">Maximum number of interviewees:</label>
 
-                                <div class="form_input">
+                                <div class="form_input formedit_C2">
                                     {{ Form::select('salary', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'maximumnumber['.($key+1).']', 'class' => '']) }}
                                 </div>
                             </div>
                         </div>
+																								
                         @endforeach
 
 
@@ -139,10 +140,10 @@
             </div>
 
 
-            <div class="fomr_btn act_field">
+            <div class="fomr_btn act_field leftMargin2" style="margin-left:10%">
                 <span class="form_label"></span>
                 {{-- <input type="type" value="academic" /> --}}
-                <button class="btn small turquoise updateNewBooking">Update</button>
+                <button class="btn small turquoise updateNewBooking ">Update</button>
             </div>
 
         </form>
@@ -175,6 +176,12 @@
 .leftMargin{
     margin-left: 10px;
 }
+.leftMargin2{
+    margin-left: 10%;
+}
+.rightMargin{
+	 margin-right : 4%;
+}
 
 .topMargin{
     margin-top: 10px;
@@ -183,6 +190,12 @@
 .textCenter{
    margin-left: 40%;
    padding-bottom: 10px !important;
+}
+
+.textCenter2{
+  
+			padding-bottom: 10px !important;
+			font-weight: 600;
 }
 
 .dynamicTextStyle{
@@ -221,7 +234,7 @@ $("input[type=number]").bind('keyup input', function(){
     if(sC<this.value){
     for (i=sC+1; i<=this.value; i++){
         var slot  = '<div class="slot s'+i+' notbrak leftMargin topMargin">';
-            slot  += '<div class="textCenter">Interview Slot '+i+'</div>';
+            slot  += '<div class="textCenter2">Interview Slot '+i+'</div>';
             slot  += '<div class="time">';
             slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
             slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][start]" size="8" required /></div>';

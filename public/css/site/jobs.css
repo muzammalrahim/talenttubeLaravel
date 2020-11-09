@@ -27,6 +27,14 @@
     width: 0%;
 }
 
+.formedit_C2 {
+    /* margin-left: 34%; */
+    width: 0%;
+    float: right;
+				margin-right: 17%;
+}
+
+
 .newJob select {
     min-width: 200px;
 }
@@ -339,4 +347,17 @@ span.js_tag {
     background: #142d69;
     color: white;
     border-radius: 5px;
+}
+
+
+.jq-selectbox__dropdown.drop_down {
+	min-width: 171px;
+}
+.jq-selectbox__dropdown.drop_up {
+	min-width: 171px;
+}
+
+
+.label.form_label.notbrak {
+    width: 47%;
 }
