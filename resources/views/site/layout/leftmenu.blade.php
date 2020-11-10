@@ -12,7 +12,9 @@
             @if (isEmployer($user))
                 <li><a href="{{route('employerProfile')}}" class="column_narrow_search_results {{(request()->is('employer/'.$user->username))?'active':''}}">
                 <span class="icon"></span>My Profile</a></li>
+                
                 <li><a href="{{route('interviewconcierge')}}" class="column_narrow_search_results {{(request()->is('interviewconcierge*'))?'active':''}}"><span class="icon"></span>Interview Concierge</a></li>
+                
                 <li><a href="{{route('employerJobs')}}" class="column_narrow_search_results {{(request()->is('employer/jobs*'))?'active':''}}"><span class="icon"></span>My jobs</a></li>
 				<li><a href="{{route('newJob')}}" class="column_narrow_search_results {{(request()->is('employer/job/new'))?'active':''}}"><span class="icon"></span>Add New job</a></li>
                 <li><a href="{{route('jobSeekers')}}" class="column_narrow_search_results {{(request()->is('jobSeekers'))?'active':''}}"><span class="icon"></span>Job Seekers</a></li>

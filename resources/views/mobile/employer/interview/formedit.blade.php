@@ -1,10 +1,6 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster')
+@extends('mobile.user.usermaster')
 
-@section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
-@stop
 
 @section('content')
 <div class="newJobCont">
@@ -73,17 +69,6 @@
                     <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
-
-
-         {{--    <div class="job_title form_field">
-                <span class="form_label">Number of Slots :</span>
-                <div class="form_input">
-                    <input type="number" class="jq-number__field" value="{{$interview->numberofslots}}" name="numberofslots" min="1" max="20" class="w20" >
-
-                    <div id="title_error" class="error field_error to_hide">&nbsp;</div>
-                    
-                </div>
-            </div> --}}
 
 
             <div class="slot form_field">
@@ -217,87 +202,6 @@
 
 <script type="text/javascript">
 
-//   ============================================= Code commented for adding new slot on click function =============================================
-
-// $("input[type=number]").bind('keyup input', function(){
-//    // alert("fired");
-//    console.log("This value",this.value);
-//     if(this.value>20 || this.value <1){
-//         this.value =1;
-//         return 0;
-//     }
-//     var sC = parseInt($('#slotsCounter').val());
-//     console.log("Slot counter",sC);
-//     if(sC<this.value){
-//     for (i=sC+1; i<=this.value; i++)
-//     {
-//         var slot  = '<div class="slot s'+i+' notbrak leftMargin topMargin">';
-//             slot  += '<div class="textCenter">Interview Slot '+i+'</div>';
-//             slot  += '<div class="time">';
-//             slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
-//             slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][start]" size="8" required /></div>';
-//             slot  += '<div class="notbrak dynamicTextStyle">To</div>';
-//             slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][end]" size="8" required /></div>';
-//             slot  += '</div>';
-//             slot  += '<div class="date topMargin">';
-//             slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
-//             slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" size="8" required />';
-//             slot  += '</div>';
-
-//             slot  += '<div>';
-//                 slot  += '<label class="form_label notbrak" style="margin-right: 5px;">Maximum number of interviewees:</label>';
-
-//                 slot  += '               <div class="form_input">';
-//                     slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
-//                         slot  += '                      <option value="1">1</option>';
-//                         slot  += '                       <option value="2">2</option>';
-//                         slot  += '                       <option value="3">3</option>';
-//                         slot  += '                       <option value="4">4</option>';
-//                         slot  += '             <option value="5">5</option>';
-//                         slot  += '           <option value="6">6</option>';
-//                         slot  += '              <option value="7">7</option>';
-//                         slot  += '              <option value="8">8</option>';
-//                         slot  += '               <option value="9">9</option>';
-//                         slot  += '              <option value="10">10</option>';
-//                         slot  += '              <option value="11">11</option>';
-//                         slot  += '             <option value="12">12</option>';
-//                         slot  += '             <option value="13">13</option>';
-//                         slot  += '             <option value="14">14</option>';
-//                         slot  += '            <option value="15">15</option>';
-//                         slot  += '            <option value="16">16</option>';
-//                         slot  += '           <option value="17">17</option>';
-//                         slot  += '           <option value="18">18</option>';
-//                         slot  += '           <option value="19">19</option>';
-//                         slot  += '           <option value="20">20</option>';
-//                         slot  += '       </select>';
-//                         slot  += '       </div>';
-//                         slot  += '   </div>';
-//                         slot  += '  </div>';
-//             slot  += '</div>';
-//             $('.slots').append(slot);
-//     }
-//     $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
-//     $('input.timepicker').timepicker({});
-//     $('#slotsCounter').val(this.value);
-//     $('input, select').styler();
-//     }
-
-//     else if(sC > this.value){
-
-//         for (i=sC; i>this.value; i--){
-
-//             $( ".s"+i ).remove();
-
-//         }
-
-//     $('#slotsCounter').val(this.value);
-//     }
-
-// });
-
-//   ============================================= Code commented for adding new slot on click function =============================================
-
-
 // ============================================= Added new slot button start =============================================
 
 var vals = $('.test').last().text();
@@ -374,8 +278,6 @@ $('i').click(function(){
 
 // ============================================= Delete Slot JS =============================================
 
-
-
 });
 
 // ============================================= Add new slot buttton end here =============================================
@@ -390,18 +292,18 @@ $('i').click(function(){
 // ============================================= Delete Slot JS end here =============================================
 
 $(document).ready(function(){
-    $('input.timepicker').timepicker({});
-    $('input, select').styler();
+    // $('input.timepicker').timepicker({});
+    // $('input, select').styler();
 
     $('.updateNewBooking').on('click',function() {
         event.preventDefault();
         var formData = $('.new_booking_form').serializeArray();
-        $('.updateNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+        // $('.updateNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
         console.log(' formData ', formData);
         $('.general_error').html('');
         $.ajax({
             type: 'POST',
-            url: base_url+'/ajax/booking/update',
+            url: base_url+'/m/ajax/booking/update',
             data: formData,
             success: function(data){
                 console.log(' data ', data);

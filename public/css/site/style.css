@@ -4502,3 +4502,6 @@ h2.interSlotHeading{background: #254c8e; padding: 10px 0px;color: white; text-al
 label.form_label.notbrak {
     width: 47%;
 }
+#deleteSlot:hover{
+    cursor: pointer;
+}

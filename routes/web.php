@@ -21,7 +21,8 @@ Route::get('testEmail', function () {
     Mail::to('aliasgharatwork@gmail.com')->send(new TestEmail($data));
 });
 
-Route::get('userinterviewconcierge/url', 'Site\HomeController@userurl')->name('userinterviewconcierge.url');
+Route::get('userinterviewconcierge/url', 'Site\HomeController@userUniqueurl')->name('userinterviewconcierge.url');
+
 
 Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->name('publicuservideo');
 
@@ -373,7 +374,6 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/booking/firstlogin',    'Site\InterviewController@editInterviewLogin')->name('editInterviewlogin');
     Route::post('ajax/booking/sendnotification',    'Site\InterviewController@sendnotification')->name('sendnotificationInterview');
     Route::post('ajax/booking/manualsendnotification',    'Site\InterviewController@manualsendnotification')->name('manualsendnotification');
-    Route::get('userinterviewconciergeloggedin/url', 'Site\InterviewController@userurl')->name('userinterviewconciergeloggedin.url');
     Route::get('interviewconcierge/user',       'Site\InterviewController@userindex')->name('interviewconcierg.user');
     Route::post('ajax/userbooking/login',    'Site\InterviewController@userbookinglogin')->name('userbooking.login');
 });
@@ -418,3 +418,4 @@ Route::get('/js/lang.js', function () {
 
 
 Route::get('textLog', 'Site\HomeController@textLog')->name('textLog');
+Route::get('userinterviewconciergeloggedin/url', 'Site\InterviewController@userurl')->name('userinterviewconciergeloggedin.url');
