@@ -133,6 +133,21 @@ Route::post('ajax/deleteGallery/{id}', 'Mobile\MobileUserController@deleteGaller
 Route::post('ajax/setImageAsProfile/{id}', 'Mobile\MobileUserController@setImageAsProfile');
 Route::post('ajax/setGalleryPrivateAccess/{id}', 'Mobile\MobileUserController@setGalleryPrivateAccess');
 
+// ==================================== Interview concierge ====================================
+Route::get('Minterviewconcierge',       'Mobile\InterviewController@Mindex')->name('Minterviewconcierge');
+Route::get('Minterviewconcierge/created',       'Mobile\InterviewController@Mcreated')->name('Minterviewconcierge.created');
+
+Route::get('Minterviewconcierge/new',       'Mobile\InterviewController@Mnew')->name('Minterviewconcierge.new');
+Route::get('Minterviewconcierge/edit',       'Mobile\InterviewController@Medit')->name('Minterviewconcierge.edit');
+Route::post('ajax/booking/firstlogin',    'Mobile\InterviewController@MeditInterviewLogin')->name('MeditInterviewlogin');
+Route::get('Minterviewconcierge/formedit','Mobile\InterviewController@Meditbookingform')->name('Minterviewconcierge.formedit');
+Route::post('ajax/booking/update',    'Mobile\InterviewController@MupdateInterviewBooking')->name('MupdateInterview');
+
+
+
+
+
+
 });
 
 });

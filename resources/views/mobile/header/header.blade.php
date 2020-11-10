@@ -86,9 +86,21 @@
             @if (isEmployer($user))
                 <li><a href="{{route('employerProfile')}}" class="column_narrow_search_results {{(request()->is('m/employer/'.$user->username))?'active':''}}">
                 <span class="icon"></span>My Profile</a></li>
+
+                {{-- Interview Concirge  --}}
+
+                <li><a href="{{route('Minterviewconcierge')}}" class="column_narrow_search_results {{(request()->is('m/Minterviewconcierge'))?'active':''}}"><span class="icon"></span>Interview Concierge</a></li>
+
+                
                 <li><a href="{{route('MemployerJobs')}}" class="column_narrow_search_results {{(request()->is('m/Memployer/jobs*'))?'active':''}}"><span class="icon"></span>My jobs</a></li>
                 <li><a href="{{route('MnewJob')}}" class="column_narrow_search_results {{(request()->is('m/employer/Mjob/new'))?'active':''}}"><span class="icon"></span>Add New job</a></li>
                 <li><a href="{{route('MjobSeekers')}}" class="column_narrow_search_results {{(request()->is('m/MjobSeekers'))?'active':''}}"><span class="icon"></span>Job Seekers</a></li>
+
+                <li><a href="{{route('MjobSeekers')}}" class="column_narrow_search_results {{(request()->is('m/MjobSeekers'))?'active':''}}"><span class="icon"></span>Job Seekers</a></li>
+
+                
+
+
             @else
                 <li><a href="{{route('profile')}}" class="column_narrow_search_results {{(request()->is('m/user/'.$user->username))?'active':''}}">
                 <span class="icon"></span>My Profile</a></li>

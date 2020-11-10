@@ -537,20 +537,20 @@ class HomeController extends Controller {
     }
 
 
-    public function userurl(Request $request){
+    public function userUniqueurl(Request $request){
 
-       $user = Auth::user();
-
+       // $user = Auth::user();
+            // dd($request);
     //    dd(Auth::check());
-       if(Auth::check()){
+       // if(Auth::check()){
 
         return Redirect::route('userinterviewconciergeloggedin.url', ['url' => $request->url]);
-       }
-       else {
+       // }
+       // else {
 
-        dd("unlogged");
+       //  dd("unlogged");
 
-       }
+       // }
        // // $interview = Interview::where('uniquedigits',"12340")->first();
        // $bookingid = session('bookingid');
        // session()->forget('bookingid');

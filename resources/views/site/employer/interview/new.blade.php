@@ -106,13 +106,10 @@
                                 <div class="notbrak">To</div>
                                 <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus1" autocomplete="off" name="slot[1][end]" size="8" required /></div>
                             </div>
-
-
                             <div class="date topMargin">
                                 <span class="notbrak">Date</span>
                                 <input type="text" name="date[1]" class="datepicker notbrak checkstatusDate"  autocomplete="off" size="8" required />
-																												</div>
-																												
+							</div>																			
                               <div class="m_no_i">
                                 <label class="w50 notbrak my10" style="margin-right: 5px;">Maximum number of interviewees:</label>
                                 <div class="form_input form_input_C2">
@@ -319,10 +316,10 @@ $(".addSlot").bind('click', function(){
     var timeDateValue = $('.checkstatusDate').val();
     var checkstatusjq = $('.checkstatusjq').last().val();
 
-    console.log("This is the vlaue" , timeValue);
-    console.log("This is the vlaue" , timeEndValue);
-    console.log("This is the vlaue" , timeDateValue);
-    console.log("This is the vlaue" , checkstatusjq);
+    // console.log("This is the vlaue" , timeValue);
+    // console.log("This is the vlaue" , timeEndValue);
+    // console.log("This is the vlaue" , timeDateValue);
+    // console.log("This is the vlaue" , checkstatusjq);
 
     var array = [timeValue,timeEndValue,timeDateValue];
     // const obj = Object.assign({}, array);
@@ -339,10 +336,11 @@ if($.inArray(checkstatusjq, array)){
 
     if(i <= 20){
         i=i;
-            var slot  = '<div class="slot s'+i+' notbrak leftMargin leftMargin2 topMargin">';
-                slot  += '<div class="mb10 dynamicTextStyle">Interview Slot '+i+' <span class="deleteSlot fl_right tk"> <i class="fas fa-trash"></i></span></div>';
-														
-																	
+            var slot  = '<div class="slot s'+i+' notbrak m_rb20">';
+                slot  += '<div class="mb10 dynamicTextStyle">Interview Slot '+i+' ';
+                slot  += '<i id = "deleteSlot" class="fas fa-trash deleteSlot'+i+' fl_right">';
+                slot  += '</i>';                                  
+				slot  += '</div>';																										
                 slot  += '<div class="time">';
                 slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
                 slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatusjq" autocomplete="off" name="slot['+i+'][start]" size="8" required /></div>';
@@ -353,10 +351,8 @@ if($.inArray(checkstatusjq, array)){
                 slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
                 slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" autocomplete="off" size="8" required />';
                 slot  += '</div>';
-
                 slot  += '<div class="m_no_i">';
                     slot  += '<label class="w50 notbrak my10" style="margin-left: 5px;">Maximum number of interviewees:</label>';
-
                     slot  += ' <div class="form_input form_input_C2">';
                         slot  += ' <select name="maximumnumber['+i+']" class="form_select" >';
                             slot  += '                      <option value="1">1</option>';
@@ -385,7 +381,6 @@ if($.inArray(checkstatusjq, array)){
                             slot  += '  </div>';
                 slot  += '</div>';
                 slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
-
         $('.slots').append(slot);
         $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
         $('input.timepicker').timepicker({});
@@ -408,6 +403,11 @@ if($.inArray(checkstatusjq, array)){
 //     console.log(timeValue);
 // }
 
+$('i').click(function(){
+    $(this).closest('.slot').remove();
+});
+
+
 });
 
 // ============================================= Add new buttton end here =============================================
@@ -416,18 +416,18 @@ if($.inArray(checkstatusjq, array)){
 
 // ============================================= Deleting Slot FUnction =============================================
 
-$('.deleteSlot').click(function(){
+// $('.deleteSlot').click(function(){
 
 
-    $(this).closest('.slot').remove();
+//     $(this).closest('.slot').remove();
 
-   // var parentSlot =  $('.slot').parent();
-   // var childSlot = parentSlot.children();
-   // $(childSlot).remove();
-   // var childSlot =  parentSlot.children();
-   // $(this).remove(childSlot);
-   // console.log(childSlot);
-});
+//    // var parentSlot =  $('.slot').parent();
+//    // var childSlot = parentSlot.children();
+//    // $(childSlot).remove();
+//    // var childSlot =  parentSlot.children();
+//    // $(this).remove(childSlot);
+//    // console.log(childSlot);
+// });
 
 // ============================================= Deleting Slot FUnction end here =============================================
 
