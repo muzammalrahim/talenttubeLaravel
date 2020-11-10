@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Site;
+namespace App\Http\Controllers\Mobile;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Interview;
@@ -38,28 +38,27 @@ class InterviewController extends Controller
     }
 
 
-    public function index(){
+    public function Mindex(){
         $user = Auth::user();
         // dd($user->id);
         $interview = Interview::where('emp_id',$user->id)->get();
-
         $data['interview'] = $interview;
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         // $interview = Interview::all()->toArray();
 
-        return view('site.employer.interview.index', $data);
-        // site/employer/interview/index
+        return view('mobile.employer.interview.index', $data);
+        // mobile/employer/interview/index
     }
 
-    public function new(){
+    public function Mnew(){
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
-        return view('site.employer.interview.new', $data);
-        // site/employer/interview/new
+        return view('mobile.employer.interview.new', $data);
+        // mobile/employer/interview/new
     }
     public function newInterviewBooking(Request $request){
 
@@ -143,7 +142,7 @@ class InterviewController extends Controller
         }
 
     }
-    public function updateInterviewBooking(Request $request){
+    public function MupdateInterviewBooking(Request $request){
 
         $data = $request->all();
        //  dd($data);
@@ -224,14 +223,14 @@ class InterviewController extends Controller
         $interview->save();
         return response()->json([
             'status' => 1,
-            'route' => route('interviewconcierge.created'),
+            'route' => route('Minterviewconcierge.created'),
             // 'redirect' => route('')
         ]);
         }
 
     }
 
-    public function editInterviewLogin(Request $request){
+    public function MeditInterviewLogin(Request $request){
 
         $data = $request->all();
 
@@ -255,7 +254,7 @@ class InterviewController extends Controller
                 $request->session()->put('bookingid',$interview->id);
                 return response()->json([
                     'status' => 1,
-                    'route' =>route('interviewconcierge.formedit'),
+                    'route' =>route('Minterviewconcierge.formedit'),
                 ]);
 
                }
@@ -327,7 +326,7 @@ class InterviewController extends Controller
         }
 
     }
-    public function editbookingform(){
+    public function Meditbookingform(){
         $user = Auth::user();
 
         $bookingid = session('bookingid');
@@ -347,17 +346,17 @@ class InterviewController extends Controller
         $data['interview'] = $interview;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
-        return view('site.employer.interview.formedit', $data);
-        // site/employer/interview/formedit
+        return view('mobile.employer.interview.formedit', $data);
+        // mobile/employer/interview/formedit
     }
 
-    public function edit(Request $request){
+    public function Medit(Request $request){
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
-        return view('site.employer.interview.edit', $data);
-        // site/employer/myjobs
+        return view('mobile.employer.interview.edit', $data);
+        // mobile/employer/interview/edit
     }
 
     public function bookingurl(){
@@ -411,7 +410,7 @@ class InterviewController extends Controller
         // site/employer/interview/manualaddjobseekers
     }
 
-    public function created(){
+    public function Mcreated(){
 
         $user = Auth::user();
         $bookingid = session('bookingid');
@@ -424,15 +423,15 @@ class InterviewController extends Controller
         }
         else {
 
-            return Redirect::route('interviewconcierge');
+            return Redirect::route('Minterviewconcierge');
         }
 
         $data['user'] = $user;
         $data['interview'] = $interview;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
-        return view('site.employer.interview.created', $data);
-        // site/employer/myjobs
+        return view('mobile.employer.interview.created', $data);
+        // mobile/employer/interview/created
     }
 
 
@@ -538,9 +537,9 @@ class InterviewController extends Controller
     }
 
 
-    public function userurl(Request $request){
+    public function Muserurl(Request $request){
          // dd($request->url);
-        // $user = Auth::user();
+        $user = Auth::user();
         $bookingid = session('bookingid');
 
         $interview = Interview::where('uniquedigits',"12340")->first();
@@ -556,7 +555,7 @@ class InterviewController extends Controller
         //     return Redirect::route('interviewconcierge');
         // }
 
-        // $data['user'] = $user;
+        $data['user'] = $user;
         $data['interview'] = $interview;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';

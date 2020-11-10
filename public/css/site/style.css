@@ -4492,8 +4492,9 @@ label.form_label.notbrak {
     width: 47%;
 }
 
-
 .IndustrySelect>.industry_experience.userIndustryExperience {
-				
 				min-width: 350px;
+}
+#deleteSlot:hover{
+    cursor: pointer;
 }
