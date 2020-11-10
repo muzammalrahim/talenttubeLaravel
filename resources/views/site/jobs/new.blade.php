@@ -31,23 +31,24 @@
         </div>
 
 
-        <div class="form_field">
+        <div class="form_field2">
 
             {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
           <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
           <div class="cl"></div> --}}
-          <span class="form_label">Industry Experience :<i class="editIndustry fas fa-edit"></i></span>
+          <span class="form_label2 form_label2_font">Industry Experience :
+											<i class="editIndustry fas fa-edit baw "></i></span>
               <p class="loader SaveindustryExperience"style="float: left;"></p>
 
                   <div class="IndusList form_input">
-                    <div class="IndustrySelect">
+                    <div class="IndustrySelect" style="width:80%;">
                     </div>
-                  </div>
+																		</div>
+																		
                   <div class="buttonGroup">
-                    <a class="addIndus graybtn jbtn hide_it marginButton" style = "cursor:pointer;">+ Add</a>
-                    <a class="greenbtn jbtn hide_it buttonSaveIndustry"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
-                  </div>
-        </div>
+                 <a class=" block addIndus jbtn hide_it " style="background: #499ffd;">+ Add</a>
+                    <a class="block jbtn hide_it buttonSaveIndustry"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
+												</div>
 
         <div class="job_type form_field">
             <span class="form_label">Type :</span>
@@ -141,7 +142,7 @@
         </div> --}}
 
 
-        <div class="job_age form_field">
+        <div class="job_age form_field margintop">
             <span class="form_label">Expiration Date:</span>
             <div class="form_input">
                 <input type="text" name="expiration" class="datepicker" />
@@ -272,6 +273,7 @@
 
 
 <style type="text/css">
+
 .jq_field_label {
     float: left;
     width: 10%;
@@ -421,6 +423,8 @@ i.fa.fa-trash.removeIndustry {
     margin-top: 7px;
 }
 
+
+
 .qualifiCationBullet {
     margin-right: 10px;
 }
@@ -479,6 +483,17 @@ div.jq-selectbox__dropdown.drop_up>ul>li {
     color: #a94442;
     margin-top: 5px;
 }
+
+.fa-trash2 {
+    cursor: pointer;
+    font-size: 26px;
+    float: right;
+    color: #a94442;
+    margin-top: 5px;
+    margin-top: 15px;
+    margin-right: -18%;
+}
+
 
 /*.SaveQuestionsSpinner{
     position: relative;
@@ -659,7 +674,7 @@ span.icon_image_profile {
 
 
 div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{
-    position: unset !important;
+    position: absolute !important;
 
 }
 
@@ -717,6 +732,28 @@ hr.rounded {
 .marginButton{
     margin-right: 1%;
 }
+.margintop{
+    margin-top: 17px;
+}
+
+
+.block {
+  display: inline-block;
+  width: 88%;
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 28px;
+  font-size: 16px;
+  cursor: pointer;
+		text-align: center;
+		margin-top:13px;
+}
+
+.block:hover {
+  background-color: #ddd;
+  color: black;
+}
 
 </style>
 
@@ -772,7 +809,7 @@ $(document).ready(function(){
         @endforeach
     @endif
     newIndusHtml += '</select>';
-    newIndusHtml += '<i class="fa fa-trash removeIndustry"></i>';
+    newIndusHtml += '<i class="fa fa-trash fa-trash2  removeIndustry"></i>';
     newIndusHtml += '</div>';
 
     $('.IndusList').append(newIndusHtml);

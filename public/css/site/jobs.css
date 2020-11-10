@@ -6,6 +6,14 @@
     display: table;
     width: 100%;
 }
+
+.form_field2 {
+    margin: 10px 0px;
+    vertical-align: top;
+    display: table;
+    width: 50%;
+}
+
 .field_error {
     display: none;
 }
@@ -16,6 +24,23 @@
     padding: 6px 0px;
     float: left;
 }
+
+.form_label2 {
+    display: inline-block;
+    vertical-align: top;
+    padding: 6px 0px;
+    float: left;
+}
+
+.form_label2_font{
+	font-size: 23px;
+}
+
+
+i.editIndustry.fas.fa-edit.baw {
+    font-size: 25px;
+}
+
 .form_input {
     display: inline-block;
     width: 85%;
@@ -361,3 +386,4 @@ span.js_tag {
 .label.form_label.notbrak {
     width: 47%;
 }
+
