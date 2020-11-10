@@ -2232,7 +2232,7 @@ ul.list_rate li:last-child{ width: 30px; /*padding: 0 1px 0 0;*/ }
 .pp_photos .foot .items .post .info{ text-align: left; }
 .pp_photos .foot .items .post .info a{ color: #6796dd; text-decoration: underline; }
 .pp_photos .foot .items .post .info a:hover{ text-decoration: none; }
-.pp_photos .foot a.link_load_comments{ float: left; color: #b1b1b1; display: inline-block; margin: 0 0 10px; padding: 0 0 0 20px; background: url(../images/load_more.png) 0 0 no-repeat; font-size: 14px; }
+.pp_photos .foot a.link_load_comments{ float:left; color: #b1b1b1; display: inline-block; margin: 0 0 10px; padding: 0 0 0 20px; background: url(../images/load_more.png) 0 0 no-repeat; font-size: 14px; }
 
 .photo_funk{ height: 62px; background-color: rgba(37,37,37,1); box-sizing: border-box; padding: 20px 27px 0 17px; }
 .photo_funk span{ color: #fff; font-size: 16px; line-height: 19px; }
@@ -4450,38 +4450,28 @@ h2.interSlotHeading{background: #254c8e; padding: 10px 0px;color: white; text-al
     cursor: pointer;
 }
 
-.job_salary > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_down {
-   
-    max-height: 172px;
-}
-.job_salary > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_up {
-   
-    max-height: 172px;
-}
 
 .job_type > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_up {
     min-width: 189px;
     overflow-y: auto;
-    max-height: 172px;
+   
 }
 
 .job_type > .form_input .jq-selectbox > .jq-selectbox__dropdown.drop_down {
-    min-width: 189px;
-    max-height: 172px;
+      min-width: 189px;
+    max-height: 150px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .jq-selectbox > .jq-selectbox__dropdown.drop_up > ul {
-    width: 172px;
+ 
     text-align: center;
 }
 .jq-selectbox > .jq-selectbox__dropdown.drop_down > ul {
-    width: 172px;
+  
     text-align: center;
 }
-
-
-
-
 
 .m_no_i>.form_input.jq-selectbox>.jq-selectbox__dropdown.drop_up{
 	                min-width: 172px;
@@ -4495,10 +4485,15 @@ h2.interSlotHeading{background: #254c8e; padding: 10px 0px;color: white; text-al
 .jq-selectbox > .jq-selectbox__dropdown.drop_up > ul {
     width: 189px;
     text-align: center;
-    height: 213px;
+  
 }
-
 
 label.form_label.notbrak {
     width: 47%;
+}
+
+
+.IndustrySelect>.industry_experience.userIndustryExperience {
+				
+				min-width: 350px;
 }
