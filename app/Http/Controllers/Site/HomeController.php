@@ -21,6 +21,11 @@ use Illuminate\Support\Facades\Mail;
 use FFMpeg;
 use Jenssegers\Agent\Agent;
 use Redirect;
+use App\Interview;
+use App\Interviews_booking;
+use App\Slot;
+
+
 class HomeController extends Controller {
 
 				public $agent;
@@ -539,38 +544,20 @@ class HomeController extends Controller {
 
     public function userUniqueurl(Request $request){
 
-       // $user = Auth::user();
-            // dd($request);
-    //    dd(Auth::check());
-       // if(Auth::check()){
-
-        return Redirect::route('userinterviewconciergeloggedin.url', ['url' => $request->url]);
-       // }
-       // else {
-
-       //  dd("unlogged");
-
-       // }
-       // // $interview = Interview::where('uniquedigits',"12340")->first();
-       // $bookingid = session('bookingid');
-       // session()->forget('bookingid');
-
-       // if(!empty($bookingid)){
-
-       //     $interview = Interview::where('id',$bookingid)->first();
-
-       // }
-       // else {
-
-       //     return Redirect::route('interviewconcierge');
-       // }
+         
+        if (!empty( $request->url )){
+            $interview = Interview::where('url',$request->url)->first();
+            // dump( $interview->toArray() );
+            // dump( $interview->slots->toArray() );
+        }
+      
 
        // $data['user'] = $user;
-       // $data['interview'] = $interview;
-       // $data['title'] = 'My Jobs';
-       // $data['classes_body'] = 'myJob';
-       // return view('site.employer.interview.url', $data);
-       // site/employer/myjobs
+       $data['interview'] = $interview;
+       $data['title'] = 'My Jobs';
+       $data['classes_body'] = 'myJob';
+       return view('site.user.interview.userurl', $data);  // site/user/interview/userurl
+       
    }
 
     public function profileVideoPopup(Request $request){
@@ -759,11 +746,42 @@ class HomeController extends Controller {
         }
     }
 
-function forgetPassword(){
+    function forgetPassword(){
         // dd(' employerNotVerified ');
         // $data['title'] = '';
         // $view_name = ($this->agent->isMobile()) ? 'mobile.register.employer_notvarified' : 'site.register.testingForgetPassword.blade';
         return view ('site.register.testingForgetPassword');
     }
+
+
+        public function saveSlot(Request $request){
+        // dd($request);
+
+        $data = $request->all();
+        // dd($data);
+        $rules = array(
+            "name" => "required|string|max:255",
+            "mobile" => "required|max:10|min:10",
+            'email' => 'bail|required|email|unique:email',
+
+            );
+        // dd($slot);
+        $Interviews_booking = new Interviews_booking();
+        $Interviews_booking->interview_id =$request->interviewId;
+        $Interviews_booking->slot_id = $request->slotId;
+        $Interviews_booking->name = $request->name;
+        $Interviews_booking->email = $request->email;
+        $Interviews_booking->mobile = $request->mobile;
+        $Interviews_booking->status = 0;
+
+        $Interviews_booking->save();
+
+
+        // $data['user'] = $user;
+        $data['title'] = 'My Jobs';
+        $data['classes_body'] = 'myJob';
+        // return view('site.employer.interview.indexuser', $data);
+    }
+
 
 }

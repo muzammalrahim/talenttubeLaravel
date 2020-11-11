@@ -22,9 +22,11 @@ Route::get('testEmail', function () {
 });
 
 Route::get('userinterviewconcierge/url', 'Site\HomeController@userUniqueurl')->name('userinterviewconcierge.url');
-
-
 Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->name('publicuservideo');
+
+// ================================================ Save interview from unique url ================================================ 
+Route::post('ajax/booking/saveSlot',    'Site\HomeController@saveSlot')->name('saveSlot');
+// =========================================== Save interview from unique url end here ============================================
 
 Route::get('test', 'Site\SiteUserController@test')->name('test');
 Route::get('test2', 'Site\HomeController@test2')->name('test2');
@@ -236,7 +238,10 @@ Route::get('media/private/{userid}/{any}', [
 
 
 // Front End  with Authentication
-Route::group(array('middleware' => ['auth','devicecheck']), function(){
+
+
+Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
+
 
     Route::get('profile', function () { return redirect('user/'.Auth::user()->username); })->name('profile');
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
@@ -376,6 +381,9 @@ Route::group(array('middleware' => ['auth','devicecheck']), function(){
     Route::post('ajax/booking/manualsendnotification',    'Site\InterviewController@manualsendnotification')->name('manualsendnotification');
     Route::get('interviewconcierge/user',       'Site\InterviewController@userindex')->name('interviewconcierg.user');
     Route::post('ajax/userbooking/login',    'Site\InterviewController@userbookinglogin')->name('userbooking.login');
+
+
+
 });
 
 // Front End With Authentication except step2
