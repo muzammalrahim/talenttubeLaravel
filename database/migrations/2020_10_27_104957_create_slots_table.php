@@ -24,7 +24,7 @@ class CreateSlotsTable extends Migration
             $table->boolean('is_housefull');
             $table->foreign('interview_id')->references('id')->on('interviews')
             ->onDelete('cascade');
-            $table->timestamps();
+            $table->timestamps(); 
         });
     }
 

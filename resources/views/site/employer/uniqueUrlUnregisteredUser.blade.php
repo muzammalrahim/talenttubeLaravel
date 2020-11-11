@@ -12,61 +12,50 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/>
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/style.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    
+    {{-- <script type="text/javascript"> var base_url = '{!! url('/') !!}';</script> --}}
 
     @yield('meta_tags')
     @yield('custom_css')
-
-
-    {{-- <script type="text/javascript"> var base_url = '{!! url('/') !!}';</script> --}}
-
-    <script src="{{ asset('vendor/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-    <script src="{{ asset('vendor/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
 
 </head>
 <body class="{{$classes_body}}">
 
 {{-- @yield('body') --}}
 
-<div class="main">
- <div class="wrapper">
+{{-- <div class="main"> --}}
+ {{-- <div class="wrapper"> --}}
      {{-- @include('site.layout.userheader') --}}
 
-    <div class="content">
-    <div class="cont_w">
-        <div class="column_main">
+    {{-- <div class="content"> --}}
+    {{-- <div class="cont_w"> --}}
+        <div class="columnCenters">
         <div class="col_center">
             @yield('content')
         </div>
         {{-- @include('site.layout.leftmenu') --}}
         </div>
-    </div>
-    </div>
-</div>
-</div>
-
-
- {{-- @include('site.user.footer') --}}
-
-<script src="{{asset('/js/lang.js')}}"></script>
-
-<script src="{{ asset('js/site/modernizr.js') }}"></script>
-<script src="{{ asset('js/site/jquery.popup.js') }}"></script>
-<script src="{{ asset('js/site/impact_lib.js') }}"></script>
-<script src="{{ asset('js/site/lib.js') }}"></script>
-<script src="{{ asset('js/site/script.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
-
-
-{{-- <script src="{{ asset('js/site/profile.js') }}"></script>  --}}
-
-<script src="{{ asset('js/site/userProfile.js') }}"></script>
+    {{-- </div> --}}
+    {{-- </div> --}}
+{{-- </div> --}}
+{{-- </div> --}}
 
 
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
-{{-- <script type="text/javascript" src="{{ asset('js/site/location_gmap.js') }}"></script> --}}
-
+{{-- <script src="jquery-3.5.1.min.js"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
 @yield('custom_footer_css')
+
+<style type="text/css">    
+
+    .col_center { width: 70%; background: #e9ecef; margin: 0 auto;border-radius: 10px; }
+    .columnCenters {padding-top: 4%;}
+    body{overflow: auto; background-image: url(http://creativedev22.xyz/images/homepage_bg.jpg) !important}
+    .notbrak{display: inline-block;}
+    .btn-sm {font-size: 14px !important;padding: .375rem .75rem !important;}
+    label {font-weight: 700;}
+</style>
 @yield('custom_js')
 
 </body>

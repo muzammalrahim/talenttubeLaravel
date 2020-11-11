@@ -32,7 +32,7 @@ class InterviewController extends Controller
 {
 
     public $agent;
-    public function __construct(){
+    public function __construct(){      
 		$this->middleware('auth');
 		$this->agent = new Agent();
     }
@@ -595,4 +595,19 @@ class InterviewController extends Controller
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.indexuser', $data);
     }
+
+    // public function saveSlot(Request $request){
+
+
+    //     dd($request);
+
+    //     // $data['user'] = $user;
+    //     $data['title'] = 'My Jobs';
+    //     $data['classes_body'] = 'myJob';
+    //     return view('site.employer.interview.indexuser', $data);
+    // }
+
+
+
+    
 }
