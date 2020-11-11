@@ -3,7 +3,7 @@
 
 @section('content')
 <div class="newJobCont">
-    <div class="head icon_head_browse_matches">Editing a Booking Schedule</div>
+    <div class="head icon_head_browse_matches head_concierge_botmline">Editing a Booking Schedule</div>
     <div class="add_new_job">
 
         <form method="POST" name="login_booking_form" class="login_booking_form newJob job_validation">
@@ -18,7 +18,7 @@
 
 
             <div class="job_title form_field w20">
-                <span class="form_label textCenter">Or</span>
+                <span class="form_label textCenter2 ">Or</span>
             </div>
 
 
@@ -53,7 +53,7 @@
             <div class="fomr_btn act_field">
                 <span class="form_label"></span>
                 {{-- <input type="type" value="academic" /> --}}
-                <button class="btn small turquoise loginEditInterview">Login</button>
+                <button class="btn btn-cyan btn-sm  ml-5 loginEditInterview">Login</button>
             </div>
 
         </form>

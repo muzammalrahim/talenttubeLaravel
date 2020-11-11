@@ -4,24 +4,25 @@
 @section('content')
 <div class="newJobCont"> 
 
-    {{-- <div class="head icon_head_browse_matches">Welcome to Mobile Interview Concierge</div> --}}
+    <div class="head icon_head_browse_matches head_concierge_botmline">Welcome to Mobile Interview Concierge</div> 
     <div class="add_new_job">
         <div class="job_row_heading jobs_filter"></div>
-        <a class="w50" href="{{route('Minterviewconcierge.new')}}">Click here to create a new Booking Schedule</a> <br>
-        <a class="w50" href="{{route('Minterviewconcierge.edit')}}">Click here to edit an existing Booking Schedule</a>
+        <a class="w50 job_anchors" href="{{route('Minterviewconcierge.new')}}">Click here to create a new Booking Schedule</a> <br>
+        <a class="w50 job_anchors" href="{{route('Minterviewconcierge.edit')}}">Click here to edit an existing Booking Schedule</a>
     </div>
 
-    <h4 class="h6 jobAppH6 mt-3"> My Booked Interviews</h4>
+				<h4 class="h6 jobAppH6 mt-3"> My Booked Interviews</h4>
 
-      <table class="table">
-        <thead>
+   <table class="table">
+  <thead class="">
           <tr >
             <th scope="col" class="font-weight-bold">Company</th>
             <th scope="col" class="font-weight-bold">Position</th>
             <th scope="col" class="font-weight-bold">Action</th>
           </tr>
         </thead>
-        <tbody>
+								
+								<tbody>
 
            @foreach ($interview as $int) 
           <tr>
@@ -34,7 +35,7 @@
 
         </tbody>
       </table>
-      
+
     
 </div>
 

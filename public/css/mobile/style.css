@@ -6,6 +6,7 @@ body{ background: #f3f5f9!important; }
 
 .grey-skin .navbar{ background: #254c8e!important; }
 .btn.btn-xs { padding: .25rem 1.2rem; }
+
 main .container-fluid{
     padding: 8px;
     background: #f3f5f9;
@@ -100,6 +101,14 @@ i#logoOverImg{
     font-size: 20px;
     text-align: center;
 }
+
+ .job_anchors{
+	
+		font-size: 14px;
+		font: 14px Tahoma, Arial, Verdana, sans-serif;
+	}
+
+
 
 .jobAppBody,.jobAppFooter{
 	background: #dddfe3;
@@ -234,7 +243,7 @@ div#heading1,.p-2.card-body.mb-1.rgba-grey-light.white-text.FilterCont {
 
 select option[data-placeholder] {
 color : rgb(255, 255, 255);
-
+}
 /* =================================================== Display None Class ===================================================*/
 .hideme{
   display:none;
@@ -265,4 +274,41 @@ color : rgb(255, 255, 255);
 .qualifTypeSpan{
     text-transform: capitalize;
     font-weight: bold;
+}
+
+ .m_no_i {
+    display: inline-flex;
+    margin-top: 2%;
+}
+
+.form_input_C2 {
+    margin-left: 29%;
+    margin-right: 4%;
+}
+
+.head_concierge_botmline{
+	border-bottom: 1px solid #dcdee2;
+	
+	padding-bottom: 1%;
+	
+	
+}
+.fl_right {
+				float: right;
+				margin-right: 3%;
+}
+
+button.btn.turquoise {
+    background: #40c7db;
+}
+
+button.btn.small {
+    line-height: 31px;
+    height: 33px;
+    font-size: 12px;
+}
+
+.textCenter2{
+	margin-left: 19%;
+	font-weight: bold;
 }

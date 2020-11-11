@@ -357,7 +357,7 @@ class InterviewController extends Controller
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.edit', $data);
-        // site/employer/myjobs
+        // site/employer/interview/edit
     }
 
     public function bookingurl(){

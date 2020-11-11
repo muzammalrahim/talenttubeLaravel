@@ -3,16 +3,16 @@
 
 
 @section('content')
-<div class="newJobCont">
-    <div class="head icon_head_browse_matches">Interview Concierge - Creating New Booking Schedule</div>
-    <div class="add_new_job">
+<div class="newJobCont card border-info mb-3 shadow mb-3 bg-white rounded">
+    <div class="card-header jobAppHeader  icon_head_browse_matches head_concierge_botmline pb-3 pt-3 ">Interview Concierge - Creating New Booking Schedule</div>
+    <div class="card-body jobAppBody add_new_job  ">
 
         <form method="POST" name="new_job_form" class="new_booking_form newJob job_validation">
             @csrf
             <div class="job_title form_field">
                 <span class="form_label">Booking Title :</span>
                 <div class="form_input">
-                    <input type="text" value="" name="title" class="w100" required>
+																				<input class="form-control form-control-sm" type="text" value="" name="title" class="w100" required>
                     <div id="title_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
             <div class="job_title form_field">
                 <span class="form_label">Company Name :</span>
                 <div class="form_input">
-                    <input type="text" value="" name="companyname" class="w100" required>
+                    <input class="form-control form-control-sm"type="text" value="" name="companyname" class="w100" required>
                     <div id="companyname_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="job_title form_field">
                 <span class="form_label">Position Name :</span>
                 <div class="form_input">
-                    <input type="text" value="" name="positionname" class="w100" required>
+                    <input class="form-control form-control-sm" type="text" value="" name="positionname" class="w100" required>
                     <div id="positionname_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
             <div class="job_title form_field">
                 <span class="form_label">Employer Email :</span>
                 <div class="form_input">
-                    <input type="email" value="" name="employeremail" class="w100" required>
+                    <input class="form-control form-control-sm" type="email" value="" name="employeremail" class="w100" required>
                     <div id="employeremail_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
             <div class="job_title form_field">
                 <span class="form_label">Booking Password :</span>
                 <div class="form_input">
-                    <input type="text" value="" name="employerpassword" class="w100" required>
+                    <input class="form-control form-control-sm" type="text" value="" name="employerpassword" class="w100" required>
                     <div id="employerpassword_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="job_description form_field" required>
                 <span class="form_label">Interview Instruction: </span>
                 <div class="form_input">
-                    <textarea name="instruction" class="form_editor w100" maxlength="1000" style="min-height: 120px;"></textarea>
+                    <textarea name="instruction" class="form_editor w100" maxlength="1000" style="min-height: 120px; width:100%"></textarea>
                     <div id="instruction_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -65,30 +65,30 @@
             <div class="job_title form_field">
                 <span class="form_label">Additional Managers :</span>
                 <div class="form_input">
-                    <input type="text" value="" name="additionalmanagers" class="w100" >
+                    <input class="form-control form-control-sm" type="text" value="" name="additionalmanagers" class="w100" >
                     <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
 
-            <h2 class="interSlotHeading">Interview Slots</h2>
+            <h4 class="interSlotHeading">Interview Slots</h4>
  
             <div class="slot form_field">
                 <div class="form_input w100">
                     <div class="slots">
-                        <div class="slot s1 notbrak leftMargin topMargin">
+                        <div class="slot s1 notbrak  topMargin">
 
-                            <div class="mb10">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot fl_right tk"></i></span></div>
-                            <div class="time">
+                            <div class="mb10 font-weight-bold">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot fl_right tk"></i></span></div>
+                            <div class="time mt-2">
                                 <div class="notbrak">Time</div>
-                                <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot[1][start]" size="8" required /></div>
-                                <div class="notbrak">To</div>
-                                <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus1" autocomplete="off" name="slot[1][end]" size="8" required /></div>
+                                <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot[1][start]" size="12" required /></div>
+                                <div class="notbrak mr-2 ml-1">To</div>
+                                <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus1" autocomplete="off" name="slot[1][end]" size="12" required /></div>
                             </div>
-                            <div class="date topMargin">
+                            <div class="date mt-3 topMargin">
                                 <span class="notbrak">Date</span>
-                                <input type="text" name="date[1]" class="datepicker notbrak checkstatusDate"  autocomplete="off" size="8" required />
+                                <input type="text" name="date[1]" style="margin-left:2px"  class=" datepicker notbrak checkstatusDate"  autocomplete="off" size="34" required />
 							</div>																			
-                              <div class="m_no_i">
+                              <div class="mt-3 m_no_i ">
                                 <label class="w50 notbrak my10" style="margin-right: 5px;">Maximum number of interviewees:</label>
                                 <div class="form_input form_input_C2">
                                     <select name="maximumnumber[1]" class="form_select" >
@@ -136,13 +136,13 @@
             </div>
 
             <div class="interviewSlot">
-                <button class="btn small violet addSlot"> Add Interview slot</button>
+                <button class="btn btn-primary btn-sm addSlot"> Add Interview slot</button>
             </div>
 
-            <div class="fomr_btn act_field center">
+            <div class="fomr_btn act_field center text-center">
                 {{-- <span class="form_label"></span> --}}
                 {{-- <input type="type" value="academic" /> --}}
-                <button class="btn small turquoise saveNewBooking">Save</button>
+                <button class="btn mt-4 btn-cyan btn-sm  saveNewBooking" >Save</button>
             </div>
 
         </form>
@@ -300,19 +300,19 @@ if($.inArray(checkstatusjq, array)){
     if(i <= 20){
         i=i;
             var slot  = '<div class="slot s'+i+' notbrak m_rb20">';
-                slot  += '<div class="mb10 dynamicTextStyle">Interview Slot '+i+' ';
+                slot  += '<div class="mb10 mt-3 dynamicTextStyle font-weight-bold">Interview Slot '+i+' ';
                 slot  += '<i id = "deleteSlot" class="fas fa-trash deleteSlot'+i+' fl_right">';
                 slot  += '</i>';                                  
 				slot  += '</div>';																										
                 slot  += '<div class="time">';
-                slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatusjq" autocomplete="off" name="slot['+i+'][start]" size="8" required /></div>';
-                slot  += '<div class="notbrak dynamicTextStyle">To</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end]" size="8" required /></div>';
+                slot  += '<div class="notbrak mr-2">Time</div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatusjq" autocomplete="off" name="slot['+i+'][start]" size="12" required /></div>';
+                slot  += '<div class="notbrak mr-2  dynamicTextStyle">To</div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end]" size="12" required /></div>';
                 slot  += '</div>';
-                slot  += '<div class="date topMargin">';
+                slot  += '<div class="date topMargin mt-3">';
                 slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
-                slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" autocomplete="off" size="8" required />';
+                slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" autocomplete="off" size="33" required />';
                 slot  += '</div>';
                 slot  += '<div class="m_no_i">';
                     slot  += '<label class="w50 notbrak my10" style="margin-left: 5px;">Maximum number of interviewees:</label>';

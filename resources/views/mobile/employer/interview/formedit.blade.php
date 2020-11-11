@@ -4,7 +4,7 @@
 
 @section('content')
 <div class="newJobCont">
-    <div class="head icon_head_browse_matches">Interview Concierge - Editing Booking Schedule</div>
+    <div class="head icon_head_browse_matches head_concierge_botmline">Interview Concierge - Editing Booking Schedule</div>
     <div class="add_new_job">
 
         <form method="POST" name="new_job_form" class="new_booking_form newJob job_validation">
@@ -95,9 +95,9 @@
                                 <span class="notbrak">Date</span>
                                 <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
                             </div>
-                            <div >
-                                <label class="form_label notbrak" style="margin-right: 5px;">Maximum number of interviewees:</label>
-                                <div class="form_input formedit_C2">
+                            <div class="m_no_i">
+                                <label class="w50 notbrak" style="margin-right: 5px;">Maximum number of interview:</label>
+																																<div class="form_input form_input_C2">
                                     {{ Form::select('salary', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'maximumnumber['.($key+1).']', 'class' => '']) }}
                                 </div>
                             </div>
@@ -115,13 +115,17 @@
                     <div class="general_error error to_hide">&nbsp;</div>
                 </div>
             </div>
-             <div class="interviewSlot addSlot">
-                <span class="btn small violet"> Add Interview slot</span>
+												
+												<div class="interviewSlot">
+                <button class="btn btn-primary btn-sm addSlot waves-effect waves-light"> Add Interview slot</button>
             </div>
 
-            <div class="fomr_btn act_field center">
-                <button class="btn small turquoise updateNewBooking ">Update</button>
-            </div>
+            <div class="fomr_btn act_field center text-center">
+                <button class="btn mt-4 btn-cyan btn-sm  updateNewBooking ">Update</button>
+												</div>
+												
+					
+
         </form>
         </div>
 
@@ -176,7 +180,7 @@
     margin-right: 5px;
 }
 .interviewSlot {
-    border: 2px solid #142d69;
+    
     width: fit-content;
     padding: 10px 10px;
     color: #142d69;
@@ -225,10 +229,10 @@ $(".addSlot").bind('click', function(){
                 slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" autocomplete="off" size="8" required />';
                 slot  += '</div>';
 
-                slot  += '<div>';
-                    slot  += '<label class="form_label notbrak" style="margin-left: 5px;">Maximum number of interviewees:</label>';
+                slot  += '<div class="m_no_i">';
+                    slot  += '<label class="w50 notbrak" style="margin-left: 5px;">Maximum number of interviewees:</label>';
 
-                    slot  += '               <div class="form_input formedit_C2">';
+                    slot  += ' <div class="form_input form_input_C2" >';
                         slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
                             slot  += '                      <option value="1">1</option>';
                             slot  += '                       <option value="2">2</option>';
