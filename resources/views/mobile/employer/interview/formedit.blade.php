@@ -3,16 +3,16 @@
 
 
 @section('content')
-<div class="newJobCont">
-    <div class="head icon_head_browse_matches head_concierge_botmline">Interview Concierge - Editing Booking Schedule</div>
-    <div class="add_new_job">
+<div class="card .border-info mb-3 bg-white rounded newJobCont">
+    <div class="card-header reponsive_header jobAppHeader icon_head_browse_matches head_concierge_botmline">Interview Concierge - Editing Booking Schedule</div>
+    <div style="background: #dddfe3;" class="card-body add_new_job">
 
         <form method="POST" name="new_job_form" class="new_booking_form newJob job_validation">
             @csrf
             <div class="job_title form_field">
                 <span class="form_label">Booking Title :</span>
                 <div class="form_input">
-                    <input type="text" value="{{$interview->title}}" name="title" class="w100" required>
+                    <input class="form-control form-control-sm" type="text" value="{{$interview->title}}" name="title" class="w100" required>
                     <div id="title_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -21,7 +21,7 @@
             <div class="job_title form_field">
                 <span class="form_label">Company Name :</span>
                 <div class="form_input">
-                    <input type="text" value="{{$interview->companyname}}" name="companyname" class="w100" required>
+                    <input class="form-control form-control-sm" type="text" value="{{$interview->companyname}}" name="companyname" class="w100" required>
                     <div id="companyname_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -30,7 +30,7 @@
             <div class="job_title form_field">
                 <span class="form_label">Position Name :</span>
                 <div class="form_input">
-                    <input type="text" value="{{$interview->positionname}}" name="positionname" class="w100" required>
+                    <input class="form-control form-control-sm" type="text" value="{{$interview->positionname}}" name="positionname" class="w100" required>
                     <div id="positionname_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -39,7 +39,7 @@
             <div class="job_title form_field">
                 <span class="form_label">Employer Email :</span>
                 <div class="form_input">
-                    <input type="email" value="{{$interview->employeremail}}" name="employeremail" class="w100" required>
+                    <input class="form-control form-control-sm" type="email" value="{{$interview->employeremail}}" name="employeremail" class="w100" required>
                     <div id="employeremail_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
             <div class="job_title form_field">
                 <span class="form_label">Booking Password :</span>
                 <div class="form_input">
-                    <input type="text" value="{{$interview->employerpassword}}" name="employerpassword" class="w100" required>
+                    <input class="form-control form-control-sm" type="text" value="{{$interview->employerpassword}}" name="employerpassword" class="w100" required>
                     <div id="bookingpassword_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -55,7 +55,7 @@
             <div class="job_description form_field" required>
                 <span class="form_label">Interview Instruction: </span>
                 <div class="form_input">
-                    <textarea name="instruction" class="form_editor w100" maxlength="1000" style="min-height: 120px;">{{$interview->instruction}}</textarea>
+                    <textarea name="instruction" class="form_editor w100" maxlength="1000" style="min-height: 120px; width:100%;">{{$interview->instruction}}</textarea>
                     <div id="instruction_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
@@ -65,48 +65,79 @@
             <div class="job_title form_field">
                 <span class="form_label">Additional Managers :</span>
                 <div class="form_input">
-                    <input type="text" value="{{$interview->additionalmanagers}}" name="additionalmanagers" class="w100" >
+                    <input class="form-control form-control-sm" type="text" value="{{$interview->additionalmanagers}}" name="additionalmanagers" class="w100" >
                     <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
 
 
             <div class="slot form_field">
-                <label class="form_label">Interview Slots:</label>
-                <div class="form_input w100">
+                <label class="form_label slotFontSize">Interview Slots:</label>
+               
+															 <div class="form_input w100">
                     <div class="slots">
                         @php
                         $slots = $interview->slots;
                         @endphp
                         @foreach ($slots as $key => $slot)
-                        
-
-                        <div class="slot s{{$key+1}} notbrak m_rb20">
-                            <div class="textCenter2">Interview Slot <span class="test">{{$key+1}}</span> 
+                      
+                        <div class=" slot s{{$key+1}} borderline m_rb20">
+                            <div class="textCenter2 slotFontSize">Interview Slot <span class="test">{{$key+1}}</span> 
                                 <i class="fas fa-trash fl_right deleteSlot"></i>
                             </div>
-                            <div class="time">
-                                <div class="notbrak">Time</div>
-                                <div class="notbrak"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" value="slot[{{$key+1}}]" required /></div>
-                                <div class="notbrak">To</div>
-                                <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][end]" size="8" required /></div>
-                            </div>
-                            <div class="date topMargin">
-                                <span class="notbrak">Date</span>
-                                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
-                            </div>
-                            <div class="m_no_i">
-                                <label class="w50 notbrak" style="margin-right: 5px;">Maximum number of interview:</label>
-																																<div class="form_input form_input_C2">
-                                    {{ Form::select('salary', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'maximumnumber['.($key+1).']', 'class' => '']) }}
-                                </div>
-                            </div>
+
+						<div class="row  slotRowMargin">
+												<div class="col-2 slotColPadding slotFontSize mt-1">
+												
+																	<p>
+           									Time
+       													 </p>
+													</div>
+  										<div  class="col-4  slotColPadding"><input class="form-control form-control-sm timepicker slotFontSize" type="text" value="{{$slot->starttime}}"  name="slot[{{$key+1}}][start]"  twelvehour="true" value="slot[{{$key+1}}]" required /></div>
+ 											 <div  class="col-2 slotColPadding mt-1 slotFontSize textCen"> 
+																		<p>
+          											 To
+       								 </p>
+														</div>
+													<div  class="col-4 slotColPadding"><input class="form-control form-control-sm timepicker slotFontSize" type="text" value="{{$slot->endtime}}"  name="slot[{{$key+1}}][end]" required />
+    					  </div></div>
+										
+
+																			<div class="row slotRowMargin">
+
+																						<div class="col-2 slotColPadding slotFontSize mt-1">
+												
+																	<p>
+           								Date
+       													 </p>
+													</div>
+
+  																			<div class="col-10 slotColPadding "><input type="date" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" name="date[{{$key+1}}]" class="form-control form-control-sm datepicker slotFontSize "></div>
+																				</div>
+            
+																	
+																		<div class="row slotRowMargin">
+
+																			<div class="col-9 slotColPadding slotFontSize mt-1">
+												
+																							<p>
+           														Maximum number of interview:
+       													 </p>
+																							</div>
+
+  																			<div class="col-3 slotColPadding mt-1"> {{ Form::select('salary', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'maximumnumber['.($key+1).']', 'class' => '']) }}
+																					</div>
+																			</div>
+
+
                         </div>																	
                         @endforeach
                     </div>
                     <input type="hidden" name="slotsCounter" id="slotsCounter" value="{{$interview->numberofslots}}">
                     <input type="hidden" name="id" id="id" value="{{$interview->id}}">
                 </div>
+
+
             </div>
 
             <div class="form_field">
@@ -146,6 +177,32 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 
 <style>
+	
+	.textCen{
+		text-align:center;
+	}
+
+	.slotFontSize{
+		font-size: 3vw;
+	}
+ .slotRowMargin{
+		 margin-left:0;
+			margin-right:0;
+	}
+.slotColPadding{
+	  padding-right:0;
+			padding-left:0;
+}
+
+	.reponsive_header{
+		
+    font-size: 4vw;
+				text-align: center;
+				padding-bottom: 5%;
+
+	}
+
+
 .notbrak{
     display: inline-block;
 }
@@ -192,6 +249,8 @@
 }
 .interviewSlot:hover{background: #142d69;color: white;}
 
+.w_100{  width:100%}
+
 </style>
 @stop
 
@@ -206,6 +265,9 @@
 
 <script type="text/javascript">
 
+
+
+
 // ============================================= Added new slot button start =============================================
 
 var vals = $('.test').last().text();
@@ -213,26 +275,39 @@ var i = Number(vals)+1;
 $(".addSlot").bind('click', function(){
     if(i <= 20){
         i=i;
-            var slot  = '<div class="slot s'+i+' notbrak m_rb20 addNewInterviewSlot">';
-                slot  += '<div class="textCenter2">Interview Slot '+i+' ';
+            var slot ='<div class="w_100 slot s'+i+' notbrak borderline m_rb20 addNewInterviewSlot">';
+                slot  += '<div class="textCenter2 slotFontSize">Interview Slot '+i+' ';
                 slot  += '<i class="fas fa-trash fl_right deleteSlot">'
                 slot  += '</i>'
-                slot  +=  '</div>';
-                slot  += '<div class="time">';
-                slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][start]" size="8" required /></div>';
-                slot  += '<div class="notbrak dynamicTextStyle">To</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end]" size="8" required /></div>';
-                slot  += '</div>';
-                slot  += '<div class="date topMargin">';
-                slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
-                slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" autocomplete="off" size="8" required />';
-                slot  += '</div>';
+																slot  +=  '</div>';
+																
+																slot  += '<div class="row slotRowMargin">';
+																
+																slot  += '<div class="col-2 slotColPadding slotFontSize mt-1"><p>Time </p></div>';
+																
+																slot  += '<div  class="col-4  slotColPadding"><input type="text" class=" form-control form-control-sm timepicker timepicker-without-dropdown  slotFontSize" autocomplete="off" name="slot['+i+'][start]" twelvehour="true" required /></div>';
+																
+               slot  +='<div class="col-2 slotColPadding mt-1 slotFontSize textCen"><p>To</p></div>';
+															
+															slot  += '<div class="col-4 slotColPadding"><input type="text" class="form-control form-control-sm  timepicker timepicker-without-dropdown slotFontSize" autocomplete="off" name="slot['+i+'][end]" twelvehour="true" required /></div>';
+																slot  += '</div>';
+																
+																slot  += '<div class="row slotRowMargin">';
+																	slot  += '<div class="col-2 slotColPadding slotFontSize mt-1"><p>Date</p></div>';
+															
+																	slot  += '<div class="col-10 slotColPadding">';
+                slot  += '<input type="date" name="date['+i+']" class="form-control form-control-sm slotFontSize datepicker" autocomplete="off"  required />';
+																	slot  += '</div>';
 
-                slot  += '<div class="m_no_i">';
-                    slot  += '<label class="w50 notbrak" style="margin-left: 5px;">Maximum number of interviewees:</label>';
+																slot  += '</div>';
+																
 
-                    slot  += ' <div class="form_input form_input_C2" >';
+
+																slot  += '<div class="row slotRowMargin">';
+																	slot  += '<div class="col-9 slotColPadding slotFontSize mt-1"><p>Maximum number of interview:</p></div>';
+																	
+
+                    slot  += ' <div class="col-3 slotColPadding mt-1" >';
                         slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
                             slot  += '                      <option value="1">1</option>';
                             slot  += '                       <option value="2">2</option>';
@@ -255,13 +330,19 @@ $(".addSlot").bind('click', function(){
                             slot  += '           <option value="19">19</option>';
                             slot  += '           <option value="20">20</option>';
                             slot  += '       </select>';
-                            slot  += '       </div>';
-                            slot  += '   </div>';
+																												slot  += '       </div>';
+																										
+																												slot  += '   </div>';
+																												
+
+
+
                             slot  += '  </div>';
                 slot  += '</div>';
                 slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
 
-        $('.slots').append(slot);
+								
+						  $('.slots').append(slot);
         $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
         $('input.timepicker').timepicker({});
         $('#slotsCounter').val(this.value);
@@ -345,7 +426,15 @@ $(document).ready(function(){
     });
 
 });
+// ========================================for Add date =============================================
 
+$('.datepicker').datepicker({
+// Escape any “rule” characters with an exclamation mark (!).
+format: 'You selecte!d: dddd, dd mmm, yyyy',
+formatSubmit: 'yyyy/mm/dd',
+hiddenPrefix: 'prefix__',
+hiddenSuffix: '__suffix'
+})
 </script>
 @stop
 
