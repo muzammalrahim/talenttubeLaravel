@@ -312,3 +312,9 @@ button.btn.small {
 	margin-left: 19%;
 	font-weight: bold;
 }
+
+.borderline{
+	border: 1px solid;
+    margin-bottom: 4%;
+    padding: 3%;
+}
