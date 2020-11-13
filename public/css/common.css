@@ -280,3 +280,21 @@ width: 103%;
 body.register.step2>div.jquery-modal.blocker.current>div#jobApplyModal {
     margin-top: 100px;
 }
+
+
+/* ================================================= Interview Concierge Home Page ================================================= */
+.interviewConcierge{
+    position: absolute;
+    top: 4%;
+    width: auto;
+    left: 14%;
+    color: white;
+    z-index: 5;
+    border: 1px solid #ffffffbd;
+    height: auto;
+    padding: 10px 10px 10px 10px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.interviewConciergeRoute {color: white; text-decoration: none;}

@@ -19,7 +19,7 @@
                 <input id="form_login_pass"  type="password" name="password" class="inp placeholder" placeholder="Password" />
 
 
-                    <span class="errorMessageLogIn"></span>
+                <span class="errorMessageLogIn"></span>
                 <div class="bl_remember">
                     <input id="form_login_remember" name="remember" value="1" type="checkbox" checked="checked"/>
                     <label for="form_login_remember">Remember me</label>

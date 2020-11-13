@@ -28,12 +28,12 @@ use App\Slot;
 
 class HomeController extends Controller {
 
-				public $agent;
+		public $agent;
 
-				public function __construct()
-				{
-					$this->agent = new Agent();
-				}
+		public function __construct()
+		{
+			$this->agent = new Agent();
+		}
 
     public function index(){
         $data['title'] = 'Home Page';
@@ -542,23 +542,7 @@ class HomeController extends Controller {
     }
 
 
-    public function userUniqueurl(Request $request){
-
-         
-        if (!empty( $request->url )){
-            $interview = Interview::where('url',$request->url)->first();
-            // dump( $interview->toArray() );
-            // dump( $interview->slots->toArray() );
-        }
-      
-
-       // $data['user'] = $user;
-       $data['interview'] = $interview;
-       $data['title'] = 'My Jobs';
-       $data['classes_body'] = 'myJob';
-       return view('site.user.interview.userurl', $data);  // site/user/interview/userurl
-       
-   }
+    
 
     public function profileVideoPopup(Request $request){
         $user = User::with('vidoes')->where('id',$request->id)->first();
@@ -753,35 +737,144 @@ class HomeController extends Controller {
         return view ('site.register.testingForgetPassword');
     }
 
+    public function userUniqueurl(Request $request){
 
-        public function saveSlot(Request $request){
+         
+        if (!empty( $request->url )){
+            $interview = Interview::where('url',$request->url)->first();
+            // dump( $interview->toArray() );
+            // dump( $interview->slots->toArray() );
+        }
+      
+
+       // $data['user'] = $user;
+       $data['interview'] = $interview;
+       $data['title'] = 'My Jobs';
+       $data['classes_body'] = 'myJob';
+       return view('site.user.interview.userurl', $data);  // site/user/interview/userurl
+       
+   }
+   
+
+
+    public function saveSlot(Request $request){
         // dd($request);
-
         $data = $request->all();
         // dd($data);
         $rules = array(
             "name" => "required|string|max:255",
-            "mobile" => "required|max:10|min:10",
-            'email' => 'bail|required|email|unique:email',
+            "mobile" => "required|string|max:10|min:10",
+            'email' => "bail|required|email|unique:Interviews_bookings",
 
             );
-        // dd($slot);
-        $Interviews_booking = new Interviews_booking();
-        $Interviews_booking->interview_id =$request->interviewId;
-        $Interviews_booking->slot_id = $request->slotId;
-        $Interviews_booking->name = $request->name;
-        $Interviews_booking->email = $request->email;
-        $Interviews_booking->mobile = $request->mobile;
-        $Interviews_booking->status = 0;
 
-        $Interviews_booking->save();
+        $validator = Validator::make( $request->all() , $rules);
 
+        if ($validator->fails()){
+            // dd($validator->getMessageBag()->toArray());
+            return array(
+                'status'    => 0,
+                'message'   => $validator->getMessageBag()->toArray()
+            );
+        }
+        else
 
-        // $data['user'] = $user;
-        $data['title'] = 'My Jobs';
-        $data['classes_body'] = 'myJob';
-        // return view('site.employer.interview.indexuser', $data);
+        {
+            // dd($slot);
+            $Interviews_booking = new Interviews_booking();
+            $Interviews_booking->interview_id =$request->interviewId;
+            $Interviews_booking->slot_id = $request->slotId;
+            $Interviews_booking->name = $request->name;
+            $Interviews_booking->email = $request->email;
+            $Interviews_booking->mobile = $request->mobile;
+            $Interviews_booking->status = 0;
+            $Interviews_booking->save();
+
+            // return redirect('/');
+        }
     }
+
+    public function interViewSlotCreated(Request $request){
+        
+        $data['classes_body'] = 'interViewCreated';
+        return view('site.home.interviewCreated' , $data);
+    }
+
+    
+    public function interviewConLogin(Request $request){
+// dd($request);
+           
+        // session()->forget('int_conc_email');
+        // session()->forget('int_conc_mobile');
+
+        $data = $request->all();
+        $rules = array(
+            "mobile"    => "required|string|max:10|min:10",
+            'email'     => "bail|required|email",
+        );
+
+        $validator = Validator::make( $request->all() , $rules);
+
+        if ($validator->fails()){
+            // dd($validator->getMessageBag()->toArray());
+            return array(
+                'status'    => 0,
+                'message'   => $validator->getMessageBag()->toArray()
+            );
+        }else{
+            
+            $Interviews_booking = Interviews_booking::where('email', $request->email)->where('mobile', $request->mobile)->first();
+            if (!empty($Interviews_booking)) { 
+                $request->session()->put('int_conc_email', $request->email );
+                $request->session()->put('int_conc_mobile', $request->mobile );     
+                return array(
+                    'status'    => 1,
+                    'redirect'   => route('interviewCon')
+                );
+            }
+        }
+    }
+
+    public function interviewConLayout(Request $request){
+
+      
+
+        $int_conc_email = $request->session()->pull('int_conc_email');
+        $int_conc_mobile = $request->session()->pull('int_conc_mobile');
+        // $int_pos_name = $request->session()->pull('int_pos_name');
+         
+        
+        if( empty($int_conc_email) || empty($int_conc_mobile)){
+            dd(' session expired  ');
+            // redirect  to haome page ;
+        }else{
+            
+            $Interviews_booking = Interviews_booking::where('email', $int_conc_email)->where('mobile', $int_conc_mobile)->get();
+
+            // $interviewID = $Interviews_booking->interview_id;
+            // $interview_Data = Interview::where('id', $interviewID)->first();
+
+            
+            // $slot_id = $Interviews_booking->slot_id;
+            // $abc = Slot::where('id', $slot_id)->first();
+
+            // Putting interview and slot data in session
+            // $position_name = $interview_Data->positionname;
+
+            // $request->session()->put('int_pos_name', $position_name);
+
+
+            $data['Interviews_booking'] = $Interviews_booking;
+            // $data['classes_body'] = 'interviewLayout';
+            return view('site.home.interviewLayout')->with('data', $data);
+            // 
+            // site/home/interviewLayout
+        }
+
+       
+    }   
+
+
 
 
 }

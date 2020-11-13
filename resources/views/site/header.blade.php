@@ -1,4 +1,6 @@
 <!-- header_top  -->
+
+
 <div class="head_top absolute">
    <div class="bl">
       <div class="fl_right">
@@ -16,11 +18,21 @@
       </div>
       <div class="cl"></div>
    </div>
+
+   
    <div class="cl"></div>
 </div>
+
+
+<div class="interviewConcierge">
+  <a   class = "interviewConciergeRoute" > Interview Concierge</a>
+</div>
+
 <!-- /header_top  -->
 
 
 <div class="header ">
    <div id="bg_cover" class="cover show" style="background-image: url({{asset('/images/homepage_bg.jpg')}});"></div>
 </div>
+
+

@@ -26,7 +26,16 @@ Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->na
 
 // ================================================ Save interview from unique url ================================================ 
 Route::post('ajax/booking/saveSlot',    'Site\HomeController@saveSlot')->name('saveSlot');
+Route::get('/interViewSlotCreated',    'Site\HomeController@interViewSlotCreated')->name('interViewSlotCreated');
+Route::post('interviewConLogin',    'Site\HomeController@interviewConLogin')->name('interviewConLogin');
+Route::get('/interviewCon',    'Site\HomeController@interviewConLayout')->name('interviewCon');
+
+
+
 // =========================================== Save interview from unique url end here ============================================
+
+// Route::get('userInterview',    'Site\HomeController@unregisteredUserInterview')->name('userInterview');
+
 
 Route::get('test', 'Site\SiteUserController@test')->name('test');
 Route::get('test2', 'Site\HomeController@test2')->name('test2');

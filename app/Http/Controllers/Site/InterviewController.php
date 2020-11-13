@@ -382,7 +382,7 @@ class InterviewController extends Controller
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.url', $data);
-        // site/employer/myjobs
+        // site/employer/interview/url
     }
 
 
@@ -432,7 +432,7 @@ class InterviewController extends Controller
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.created', $data);
-        // site/employer/myjobs
+        // site/employer/interview/created
     }
 
 
