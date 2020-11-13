@@ -93,13 +93,13 @@
            									Time
        													 </p>
 													</div>
-  										<div  class="col-4  slotColPadding"><input class="form-control form-control-sm timepicker slotFontSize" type="text" value="{{$slot->starttime}}"  name="slot[{{$key+1}}][start]"  twelvehour="true" value="slot[{{$key+1}}]" required /></div>
+  										<div  class="col-4  slotColPadding"><input class="form-control form-control-sm timepicker timepicker-without-dropdown slotFontSize" type="text" value="{{$slot->starttime}}"  name="slot[{{$key+1}}][start]"  twelvehour="true" value="slot[{{$key+1}}]" required /></div>
  											 <div  class="col-2 slotColPadding mt-1 slotFontSize textCen"> 
 																		<p>
           											 To
        								 </p>
 														</div>
-													<div  class="col-4 slotColPadding"><input class="form-control form-control-sm timepicker slotFontSize" type="text" value="{{$slot->endtime}}"  name="slot[{{$key+1}}][end]" required />
+													<div  class="col-4 slotColPadding"><input class="form-control form-control-sm timepicker  timepicker-without-dropdown slotFontSize" type="text" value="{{$slot->endtime}}"  name="slot[{{$key+1}}][end]" required />
     					  </div></div>
 										
 
@@ -112,7 +112,7 @@
        													 </p>
 													</div>
 
-  																			<div class="col-10 slotColPadding "><input type="date" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" name="date[{{$key+1}}]" class="form-control form-control-sm datepicker slotFontSize "></div>
+  																			<div class="col-10 slotColPadding "><input type="date" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" name="date[{{$key+1}}]" class="form-control form-control-sm  slotFontSize "></div>
 																				</div>
             
 																	
@@ -256,8 +256,8 @@
 
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
@@ -276,10 +276,11 @@ $(".addSlot").bind('click', function(){
     if(i <= 20){
         i=i;
             var slot ='<div class="w_100 slot s'+i+' notbrak borderline m_rb20 addNewInterviewSlot">';
+
                 slot  += '<div class="textCenter2 slotFontSize">Interview Slot '+i+' ';
                 slot  += '<i class="fas fa-trash fl_right deleteSlot">'
                 slot  += '</i>'
-																slot  +=  '</div>';
+																slot  += '</div>';
 																
 																slot  += '<div class="row slotRowMargin">';
 																
@@ -291,12 +292,15 @@ $(".addSlot").bind('click', function(){
 															
 															slot  += '<div class="col-4 slotColPadding"><input type="text" class="form-control form-control-sm  timepicker timepicker-without-dropdown slotFontSize" autocomplete="off" name="slot['+i+'][end]" twelvehour="true" required /></div>';
 																slot  += '</div>';
+
+
+
 																
 																slot  += '<div class="row slotRowMargin">';
 																	slot  += '<div class="col-2 slotColPadding slotFontSize mt-1"><p>Date</p></div>';
 															
 																	slot  += '<div class="col-10 slotColPadding">';
-                slot  += '<input type="date" name="date['+i+']" class="form-control form-control-sm slotFontSize datepicker" autocomplete="off"  required />';
+                slot  += '<input type="date" name="date['+i+']" class="form-control form-control-sm slotFontSize " autocomplete="off"  required />';
 																	slot  += '</div>';
 
 																slot  += '</div>';
@@ -338,7 +342,11 @@ $(".addSlot").bind('click', function(){
 
 
                             slot  += '  </div>';
+
+																												
                 slot  += '</div>';
+
+
                 slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
 
 								

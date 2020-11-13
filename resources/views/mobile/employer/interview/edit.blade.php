@@ -1,21 +1,23 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('mobile.user.usermaster')
-
+<div  class="full-height">
 @section('content')
-<div class="newJobCont">
-    <div class="head icon_head_browse_matches head_concierge_botmline">Editing a Booking Schedule</div>
+<div class="card newJobCont">
+    <div class="card-header responsive_header  jobAppHeader icon_head_browse_matches head_concierge_botmline">Editing a Booking Schedule</div>
+
+				<div class="card-body c_bg">
     <div class="add_new_job">
 
         <form method="POST" name="login_booking_form" class="login_booking_form newJob job_validation">
             @csrf
-            <div class="job_title form_field">
+            <div style="" class="job_title form_field">
                 <span class="form_label">Booking ID :</span>
                 <div class="form_input">
-                    <input type="text" value="" name="bookingid" class="w20" required>
+                    <input type="text" value="" name="bookingid" class="" required>
                     <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
-            </div>
 
+            </div>
 
             <div class="job_title form_field w20">
                 <span class="form_label textCenter2 ">Or</span>
@@ -48,8 +50,6 @@
         </div>
 
 
-
-
             <div class="fomr_btn act_field">
                 <span class="form_label"></span>
                 {{-- <input type="type" value="academic" /> --}}
@@ -59,10 +59,8 @@
         </form>
         </div>
 
-
-
-
     <div class="cl"></div>
+				   </div>
 </div>
 
 
@@ -71,8 +69,18 @@
 @stop
 
 @section('custom_footer_css')
-
+</div>
 <style>
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+.full-height {
+  height: 100%;
+ background: #f3f5f9;
+}
 .notbrak{
     display: inline-block;
 }
