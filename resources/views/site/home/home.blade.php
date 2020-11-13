@@ -83,6 +83,8 @@
 
    @include('site.home.login')
 
+   @include('site.home.interviewLogin')
+
    @include('site.footer')
 
 

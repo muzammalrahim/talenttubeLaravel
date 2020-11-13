@@ -157,6 +157,95 @@ $(function () {
 		},1);
         $input.prop('disabled', false);
     }
+
+
+//================================== Interview Concierge login  ================================== // 
+
+if( $('#intConc_sign_in').length ){
+    var $interviewSignIn = $('#intConc_sign_in').modalPopup({shClass: ''});
+    $('.interviewConciergeRoute').click(function(){
+        console.log(' open ');
+        $interviewSignIn.open();
+        return false;
+    });
+ }
+
+
+// ================================= interview Log in =================================
+
+$('#intConform_login').click(function ($event) {
+
+    $event.preventDefault();
+        event.preventDefault();
+        var formData = $('.intCon_login').serializeArray();
+        console.log(' formData ', formData);
+        $.ajax({
+            type: 'POST',
+            url:  base_url + '/interviewConLogin',
+            data: formData,
+            success: function(response){
+            console.log(' data >>>> ', response);
+              
+                if( response.status) {
+                    location.href = response.redirect;
+                }else{                    
+                    // that.hideMainEditor();
+                   var errorIntCon = response['message'];
+                   // console.log(errorIntCon);
+                   // var nameError = errorIntCon['name'];
+                   var mobileError = errorIntCon['mobile'];
+                   var emailError = errorIntCon['email'];
+                   // console.log(errorInNameCon);
+
+                   // ==================== name validation ====================
+                   // if (nameError){
+                   //      var nameError2 = nameError.toString();
+                   //      $('.errorInName').text(nameError2);
+                   //      $('.errorInName').show();
+                   //      // console.log(nameError);
+
+                   //  } else {
+                   //      $('.errorInName').hide();
+                   //  }
+                    // ==================== name validation end here ====================
+
+                   // ==================== mobile validation ====================
+                   if (mobileError){
+                        var mobileError2 = mobileError.toString();
+                        $('.errorInMobile').text(mobileError2);
+                        $('.errorInMobile').show();
+                        // console.log(nameError);
+
+                    } else {
+                        $('.errorInMobile').hide();
+                    }
+                    // ==================== mobile validation end here ====================
+                    // ==================== email validation ====================
+                   if (emailError){
+                        var emailError2 = emailError.toString();
+                        $('.errorInEmail').text(emailError2);
+                        $('.errorInemail').show();
+                        // console.log(nameError);
+
+                    } else {
+                        $('.errorInemail').hide();
+                    }
+                    // ==================== email validation end here ====================
+
+                            
+                }
+
+            }
+
+        });
+}); 
+
+// ================================= interview Log in end here =================================
+
+
+//================================== Interview Concierge login  ================================== // 
+
+
 })
 
 function hideErrorLoginFrom(el, $input,cl){
@@ -164,3 +253,5 @@ function hideErrorLoginFrom(el, $input,cl){
     $(el).next(cl).removeClass('to_show').css({height:0});
     $input.prop('disabled', false);
 }
+
+

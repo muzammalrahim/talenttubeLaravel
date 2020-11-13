@@ -14,13 +14,13 @@
     <link rel="stylesheet" href="{{ asset('css/site/style.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     
-    {{-- <script type="text/javascript"> var base_url = '{!! url('/') !!}';</script> --}}
+    <script type="text/javascript"> var base_url = '{!! url('/') !!}';</script>
 
     @yield('meta_tags')
     @yield('custom_css')
 
 </head>
-<body class="{{$classes_body}}">
+<body class="{{-- {{$classes_body}} --}}" style="background-image: url({{asset('/images/homepage_bg.jpg')}}) !important;">
 
 {{-- @yield('body') --}}
 
@@ -51,7 +51,7 @@
 
     .col_center { width: 70%; background: #e9ecef; margin: 0 auto;border-radius: 10px; }
     .columnCenters {padding-top: 4%;}
-    body{overflow: auto; background-image: url(http://creativedev22.xyz/images/homepage_bg.jpg) !important}
+    body{overflow: auto;}
     .notbrak{display: inline-block;}
     .btn-sm {font-size: 14px !important;padding: .375rem .75rem !important;}
     label {font-weight: 700;}

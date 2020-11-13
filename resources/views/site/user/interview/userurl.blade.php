@@ -120,23 +120,29 @@
 		            <div class="form-group row mt-4">
 				        {{ Form::label('Name', null, ['class' => 'col-md-2 form-control-label']) }}
 				        <div class="col-md-10">
-				          {{ Form::text('name', $value =  null, $attributes = array('class'=>'form-control', 'required' =>'true')) }}
+				          {{ Form::text('name', $value =  null, $attributes = array('class'=>'form-control nameErrorClass', 'required' =>'true')) }}
 				        </div>
 				    </div>
+			   
+		    		<p class="errorInName p-0 m-0 text-danger hide"></p>	
 
 				    <div class="form-group row mt-4">
 				        {{ Form::label('Mobile', null, ['class' => 'col-md-2 form-control-label']) }}
 				        <div class="col-md-10">
-				          {{ Form::text('mobile', $value =  null, $attributes = array('class'=>'form-control', 'required' =>'true')) }}
+				          {{ Form::text('mobile', $value =  null, $attributes = array('class'=>'form-control mobileErrorClass', 'required' =>'true')) }}
 				        </div>
 				    </div>
+		    		
+		    		<p class="errorInMobile p-0 m-0 text-danger hide"> </p>	
 
 				    <div class="form-group row mt-4">
 				        {{ Form::label('Email', null, ['class' => 'col-md-2 form-control-label']) }}
 				        <div class="col-md-10">
-				          {{ Form::text('email', $value =  null, $attributes = array('class'=>'form-control', 'required' =>'true')) }}
+				          {{ Form::text('email', $value =  null, $attributes = array('class'=>'form-control emailErrorClass', 'required' =>'true')) }}
 				        </div>
 				    </div>
+
+		    		<p class="errorInEmail p-0 m-0 text-danger hide"> </p>	
 
 		            <div class="text-center my-3">
 		                <button class="btn-sm btn btn-success saveSlot"> Continue</button>
@@ -197,19 +203,61 @@ $(document).ready(function(){
         event.preventDefault();
         var formData = $('.new_slot_form').serializeArray();
         // console.log('hi how are you');
-        console.log(' formData ', formData);
+        // console.log(' formData ', formData);
         $.ajax({
             type: 'POST',
             url:  '{{route('saveSlot')}}',
             data: formData,
-            success: function(data){
-                console.log(' data ', data);
-                if( data.status == 1 ){
+            success: function(response){
+                console.log(' data ', response);
+                if( response.status == 0 ) {
                     // that.hideMainEditor();
-                    window.location.replace(data.route);
-                }
+                   var errorIntCon = response['message'];
+                   // console.log(errorIntCon);
+                   var nameError = errorIntCon['name'];
+                   var mobileError = errorIntCon['mobile'];
+                   var emailError = errorIntCon['email'];
+                   // console.log(errorInNameCon);
+
+                   // ==================== name validation ====================
+                   if (nameError){
+		               	var nameError2 = nameError.toString();
+		                $('.errorInName').text(nameError2);
+		                $('.errorInName').show();
+		                // console.log(nameError);
+
+                   	} else {
+                   		$('.errorInName').hide();
+                   	}
+                    // ==================== name validation end here ====================
+
+                   // ==================== mobile validation ====================
+                   if (mobileError){
+		               	var mobileError2 = mobileError.toString();
+		                $('.errorInMobile').text(mobileError2);
+		                $('.errorInMobile').show();
+		                // console.log(nameError);
+
+                   	} else {
+                   		$('.errorInMobile').hide();
+                   	}
+                    // ==================== mobile validation end here ====================
+                    // ==================== email validation ====================
+                   if (emailError){
+		               	var emailError2 = emailError.toString();
+		                $('.errorInEmail').text(emailError2);
+		                $('.errorInemail').show();
+		                // console.log(nameError);
+
+                   	} else {
+                   		$('.errorInemail').hide();
+                   	}
+                    // ==================== email validation end here ====================
+	                }
+
                 else{
 
+                	location.href = base_url + '/interViewSlotCreated';
                 }
 
             }
@@ -221,4 +269,16 @@ $(document).ready(function(){
 // =========================================================== Ajax for saving slot ===========================================================
 
 </script>
+@stop
+
+@section('custom_css')
+
+<style type="text/css">
+	
+	.errorInName{
+		color: red;
+	}
+
+</style>
+
 @stop
