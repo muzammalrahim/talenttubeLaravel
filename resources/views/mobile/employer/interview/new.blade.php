@@ -87,11 +87,11 @@
 																																		<p class="mr-1">
           																										 Time
        																									 </p>
-                                <div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot[1][start]"  required /></div>
+                                <div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot[1][start]" twelvehour="true"  required /></div>
                               								<p style="margin:5px">
          																																				  To
        																															 </p>
-																																<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown text-center checkstatus1" autocomplete="off" name="slot[1][end]" required />
+																																<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown  " autocomplete="off" name="slot[1][end]" twelvehour="true" required />
 																															</div>
 
      																								 </div>
@@ -101,7 +101,7 @@
                             
                             <div class="date mt-3 topMargin w100">
                                 <span class="notbrak">Date</span>
-                                <input  type="date"  name="date[1]" style="margin-left:2px"  class=" form-control form-control-sm datepicker notbrak checkstatusDate"  autocomplete="off"  required />
+                                <input  type="date"  name="date[1]" style="margin-left:2px"  class=" form-control form-control-sm  notbrak checkstatusDate"  autocomplete="off"  required />
 																										</div>																			
                               <div class="mt-3 m_no_i ">
                                 <label class="w80 notbrak my10" style="margin-right: 5px;">Maximum number of interviewees:</label>
@@ -216,6 +216,10 @@
 @stop
 
 @section('custom_js')
+
+<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script type="text/javascript">
 
 
@@ -335,17 +339,17 @@ if($.inArray(checkstatusjq, array)){
 																
 																slot  += '<div style="display:flex;" class="form-group  w-100">';
 																slot  += '	<p class="mr-1">		 Time </p>';
-																slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown text-center checkstatusjq" autocomplete="off" name="slot['+i+'][start]"  required /></div>';
+																slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown  checkstatusjq" autocomplete="off" name="slot['+i+'][start]"  required /></div>';
 																
 																slot  += '	<p style="margin:5px">		 To </p>';
 																
-																slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end]"  required /></div>';
+																slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot['+i+'][end]"  required /></div>';
 																slot  += '</div>';
 																slot  += '</div>';
 																
                 slot  += '<div class="date topMargin mt-3 w100">';
                 slot  += '<span class="notbrak ">Date</span>';
-                slot  += '<input type="date" name="date['+i+']" class="form-control form-control-sm datepicker notbrak checkstatusDate" autocomplete="off" size="33" required />';
+                slot  += '<input type="date" name="date['+i+']" class="form-control form-control-sm  notbrak checkstatusDate" autocomplete="off" size="33" required />';
                 slot  += '</div>';
                 slot  += '<div class="m_no_i mt-3">';
                     slot  += '<label class="w80 notbrak my10" style="margin-left: 5px;">Maximum number of interviewees:</label>';
@@ -377,13 +381,13 @@ if($.inArray(checkstatusjq, array)){
                             slot  += '  </div>';
                 slot  += '</div>';
                 slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
-        $('.slots').append(slot);
+				
+						  $('.slots').append(slot);
         $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
         $('input.timepicker').timepicker({});
         $('#slotsCounter').val(this.value);
         $('input, select').styler();
      i++;
-
     }
 
     else  {
