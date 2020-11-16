@@ -3,7 +3,7 @@
 <div  class="full-height">
 @section('content')
 <div class="card newJobCont">
-    <div class="card-header responsive_header  jobAppHeader icon_head_browse_matches head_concierge_botmline">Editing a Booking Schedule</div>
+    <div class="card-header responsive_header font-weight-bold  jobAppHeader icon_head_browse_matches head_concierge_botmline">Editing a Booking Schedule</div>
 
 				<div class="card-body c_bg">
     <div class="add_new_job">

@@ -83,7 +83,7 @@
                       
                         <div class=" slot s{{$key+1}} borderline m_rb20">
                             <div class="textCenter2 slotFontSize">Interview Slot <span class="test">{{$key+1}}</span> 
-                                <i class="fas fa-trash fl_right deleteSlot"></i>
+                              <i class="fas fa-trash fl_right deleteSlot"></i>
                             </div>
 
 						<div class="row  slotRowMargin">
@@ -100,7 +100,8 @@
        								 </p>
 														</div>
 													<div  class="col-4 slotColPadding"><input class="form-control form-control-sm timepicker  timepicker-without-dropdown slotFontSize" type="text" value="{{$slot->endtime}}"  name="slot[{{$key+1}}][end]" required />
-    					  </div></div>
+    					  </div>
+											</div>
 										
 
 																			<div class="row slotRowMargin">
@@ -127,6 +128,8 @@
 
   																			<div class="col-3 slotColPadding mt-1"> {{ Form::select('salary', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'maximumnumber['.($key+1).']', 'class' => '']) }}
 																					</div>
+																					
+            
 																			</div>
 
 
@@ -193,7 +196,9 @@
 	  padding-right:0;
 			padding-left:0;
 }
-
+.slotFontSize {
+    font-size: 3vw;
+}
 	.reponsive_header{
 		
     font-size: 4vw;
@@ -256,8 +261,8 @@
 
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
+<script src="{{ asset('js/site/common.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
@@ -278,7 +283,7 @@ $(".addSlot").bind('click', function(){
             var slot ='<div class="w_100 slot s'+i+' notbrak borderline m_rb20 addNewInterviewSlot">';
 
                 slot  += '<div class="textCenter2 slotFontSize">Interview Slot '+i+' ';
-                slot  += '<i class="fas fa-trash fl_right deleteSlot">'
+                slot  += '<i  class="fas fa-trash fl_right deleteSlot">'
                 slot  += '</i>'
 																slot  += '</div>';
 																
@@ -365,6 +370,7 @@ else {
 
 // ============================================= Delete Slot JS =============================================
 
+
 $('i').click(function(){
     $(this).closest('.slot').remove();
 });
@@ -381,6 +387,7 @@ $('i').click(function(){
 
     $(this).closest('.slot').remove();
 });
+
 
 // ============================================= Delete Slot JS end here =============================================
 
@@ -436,7 +443,7 @@ $(document).ready(function(){
 });
 // ========================================for Add date =============================================
 
-$('.datepicker').datepicker({
+$('input.datepicker').datepicker({
 // Escape any “rule” characters with an exclamation mark (!).
 format: 'You selecte!d: dddd, dd mmm, yyyy',
 formatSubmit: 'yyyy/mm/dd',
