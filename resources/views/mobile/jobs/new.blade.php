@@ -60,7 +60,7 @@
                     <div id="basic" class="title_icon_edit">Industry Experience <i class="editIndustry fas fa-edit "></i></div>
                       <p class="loader SaveindustryExperience"style="float: left;"></p>
                         <div class="cl"></div>
-                          <div class="IndusList">
+                          <div class="IndusList mt-2">
 
                           </div>
                             <span class="addIndus btn btn-sm btn-primary hide_it2" style = "cursor:pointer;">+ Add</span>
@@ -154,7 +154,7 @@
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Expiration Date</label>
                     <div class="col-sm-10">
-                                <input placeholder="Selected date" name="expirationtype=" text" id="datepicker" class="form-control datepicker">
+                                <input placeholder="Selected date" name="expirationtype=" id="datepicker" class="form-control datepicker">
                                 <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
                     </div>
                 </div>

@@ -9,66 +9,70 @@
 
         <form method="POST" name="new_job_form" class="new_booking_form newJob job_validation">
             @csrf
-            <div class="job_title form_field">
-                <span class="form_label">Booking Title :</span>
-                <div class="form_input">
-																				<input class="form-control form-control-sm" type="text" value="" name="title" class="w100" required>
-                    <div id="title_error" class="error field_error to_hide">&nbsp;</div>
+												
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Booking Title :</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="title" class="form-control" value="" required >
+                      <div id="title_error" class="error field_error to_hide">&nbsp;</div>
+                    </div>
                 </div>
-            </div>
 
-
-            <div class="job_title form_field">
-                <span class="form_label">Company Name :</span>
-                <div class="form_input">
-                    <input class="form-control form-control-sm"type="text" value="" name="companyname" class="w100" required>
-                    <div id="companyname_error" class="error field_error to_hide">&nbsp;</div>
+             <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Company Name :</label>
+                    <div class="col-sm-10">
+                    <input type="text" name="companyname" class="form-control" value=""  required>
+                      <div id="companyname_error" class="error field_error to_hide">&nbsp;</div>
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="job_title form_field">
-                <span class="form_label">Position Name :</span>
-                <div class="form_input">
-                    <input class="form-control form-control-sm" type="text" value="" name="positionname" class="w100" required>
-                    <div id="positionname_error" class="error field_error to_hide">&nbsp;</div>
+               <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Position Name :</label>
+                    <div class="col-sm-10">
+                    <input type="text" value=""  name="positionname" class="form-control" required>
+                      <div id="positionname_error" class="error field_error to_hide">&nbsp;</div>
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="job_title form_field">
-                <span class="form_label">Employer Email :</span>
-                <div class="form_input">
-                    <input class="form-control form-control-sm" type="email" value="" name="employeremail" class="w100" required>
-                    <div id="employeremail_error" class="error field_error to_hide">&nbsp;</div>
+           <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Employer Email :</label>
+                    <div class="col-sm-10">
+                  <input type="email"  class="form-control"  value="" name="employeremail" required>
+                      <div id="employeremail_error" class="error field_error to_hide">&nbsp;</div>
+                    </div>
                 </div>
-            </div>
 
-            <div class="job_title form_field">
-                <span class="form_label">Booking Password :</span>
-                <div class="form_input">
-                    <input class="form-control form-control-sm" type="text" value="" name="employerpassword" class="w100" required>
-                    <div id="employerpassword_error" class="error field_error to_hide">&nbsp;</div>
+
+    												<div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Booking Password :</label>
+                    <div class="col-sm-10">
+                  <input type="text"  class="form-control"  value="" name="employerpassword" required>
+                      <div id="employerpassword_error" class="error field_error to_hide">&nbsp;</div>
+                    </div>
                 </div>
-            </div>
-
-            <div class="job_description form_field" required>
-                <span class="form_label">Interview Instruction: </span>
-                <div class="form_input">
-                    <textarea name="instruction" class="form_editor w100" maxlength="1000" style="min-height: 120px; width:100%"></textarea>
-                    <div id="instruction_error" class="error field_error to_hide">&nbsp;</div>
+        
+															<div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Interview Instruction:</label>
+                    <div class="col-sm-10">
+                  <textarea class="form_editor"  value="" name="instruction"  maxlength="1000" style="min-height: 120px; width:100%"></textarea>
+                      <div id="instruction_error" class="error field_error to_hide">&nbsp;</div>
+                    </div>
                 </div>
-            </div>
 
+        
 
-
-            <div class="job_title form_field">
-                <span class="form_label">Additional Managers :</span>
-                <div class="form_input">
-                    <input class="form-control form-control-sm" type="text" value="" name="additionalmanagers" class="w100" >
-                    <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
+           
+															<div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Additional Managers :</label>
+                    <div class="col-sm-10">
+                  <input type="text"  class="form-control"  value="" name="additionalmanagers" required>
+                      <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
+                    </div>
                 </div>
-            </div>
+
+
 
             <h5 class="interSlotHeading">Interview Slots</h5>
  
@@ -79,28 +83,29 @@
 
                             <div class="mb10 font-weight-bold">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot fl_right tk"></i></span></div>
                             <div class="time mt-2">
-																															
-																												
-																												
-																												<div style="display:flex;" class="form-group  w-100">
-																															
-																																		<p class="mr-1">
-          																										 Time
-       																									 </p>
-                                <div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot[1][start]" twelvehour="true"  required /></div>
-                              								<p style="margin:5px">
-         																																				  To
-       																															 </p>
-																																<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown  " autocomplete="off" name="slot[1][end]" twelvehour="true" required />
-																															</div>
 
-     																								 </div>
 
-																		
+
+		<div class="row  slotRowMargin">
+												<div class="col-2 slotColPadding slotFontSize mt-1 textCen">
+												
+																	<p>
+           									Time
+       													 </p>
+													</div>
+  										<div  class="col-4  slotColPadding"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot[1][start]" twelvehour="true"  required /></div>
+ 											 <div  class="col-2 slotColPadding mt-1 slotFontSize textCen"> 
+																		<p>
+          											 To
+       								 </p>
+														</div>
+													<div  class="col-4 slotColPadding"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown  " autocomplete="off" name="slot[1][end]" twelvehour="true" required />
+    					  </div>
+											</div>
 
                             
-                            <div class="date mt-3 topMargin w100">
-                                <span class="notbrak">Date</span>
+                            <div class="date mt-3 topMargin w100 d-flex">
+                                <span class="notbrak mr-1">Date</span>
                                 <input  type="date"  name="date[1]" style="margin-left:2px"  class=" form-control form-control-sm  notbrak checkstatusDate"  autocomplete="off"  required />
 																										</div>																			
                               <div class="mt-3 m_no_i ">
@@ -184,9 +189,18 @@
    
     font-weight: 700;
 }
+.textCen {
+    text-align: center;
+}
 
+	.slotRowMargin{
+		 margin-left:0;
+			margin-right:0;
 	}
-
+.slotColPadding{
+	  padding-right:0;
+			padding-left:0;
+}
 .notbrak{
     display: inline-block;
 }
@@ -330,9 +344,9 @@ if($.inArray(checkstatusjq, array)){
     if(i <= 20){
         i=i;
             var slot  = '<div class="slot s'+i+' notbrak m_rb20 borderline">';
-                slot  += '<div class="mb10  dynamicTextStyle font-weight-bold">Interview Slot '+i+' ';
-                slot  += '<i id = "deleteSlot" class="fas fa-trash deleteSlot'+i+' fl_right">';
-																slot  += '</i>'; 
+             slot  += '<div class="mb10  dynamicTextStyle font-weight-bold">Interview Slot '+i+' ';
+               slot  += '<i id ="deleteSlot" class="fas fa-trash deleteSlot'+i+' fl_right">';
+                slot  += '</i>';  
 																                                 
 																slot  += '</div>';		
 																slot  += '<div class="time mt-2">';
@@ -347,8 +361,8 @@ if($.inArray(checkstatusjq, array)){
 																slot  += '</div>';
 																slot  += '</div>';
 																
-                slot  += '<div class="date topMargin mt-3 w100">';
-                slot  += '<span class="notbrak ">Date</span>';
+                slot  += '<div class="date topMargin mt-3 w100 d-flex">';
+                slot  += '<span class="notbrak mr-1">Date</span>';
                 slot  += '<input type="date" name="date['+i+']" class="form-control form-control-sm  notbrak checkstatusDate" autocomplete="off" size="33" required />';
                 slot  += '</div>';
                 slot  += '<div class="m_no_i mt-3">';
@@ -408,6 +422,7 @@ $('i').click(function(){
 });
 
 
+
 });
 
 // ============================================= Add new buttton end here =============================================
@@ -428,6 +443,13 @@ $('.deleteSlot').click(function(){
 //    // $(this).remove(childSlot);
 //    // console.log(childSlot);
 });
+
+
+
+ 
+
+
+
 
 // ============================================= Deleting Slot FUnction end here =============================================
 
@@ -487,6 +509,9 @@ formatSubmit: 'yyyy/mm/dd',
 hiddenPrefix: 'prefix__',
 hiddenSuffix: '__suffix'
 })
+
+
+
 
 </script>
 @stop
