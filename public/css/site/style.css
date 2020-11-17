@@ -4498,3 +4498,15 @@ label.form_label.notbrak {
 #deleteSlot:hover{
     cursor: pointer;
 }
+.interviewSlot {
+    
+    width: fit-content;
+    padding: 10px 10px;
+    color: #142d69;
+    border-radius: 5px;
+    opacity: 0.8;
+    font-weight: 600;
+    transition: all 0.5s ease;
+    cursor: pointer;
+}
+.interviewSlot:hover{background: #142d69;color: white;}

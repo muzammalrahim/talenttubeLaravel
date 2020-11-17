@@ -332,20 +332,20 @@ if($.inArray(checkstatusjq, array)){
             var slot  = '<div class="slot s'+i+' notbrak m_rb20 borderline">';
                 slot  += '<div class="mb10  dynamicTextStyle font-weight-bold">Interview Slot '+i+' ';
                 slot  += '<i id = "deleteSlot" class="fas fa-trash deleteSlot'+i+' fl_right">';
-																slot  += '</i>'; 
-																                                 
-																slot  += '</div>';		
-																slot  += '<div class="time mt-2">';
-																
-																slot  += '<div style="display:flex;" class="form-group  w-100">';
-																slot  += '	<p class="mr-1">		 Time </p>';
-																slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown  checkstatusjq" autocomplete="off" name="slot['+i+'][start]"  required /></div>';
-																
-																slot  += '	<p style="margin:5px">		 To </p>';
-																
-																slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot['+i+'][end]"  required /></div>';
-																slot  += '</div>';
-																slot  += '</div>';
+				slot  += '</i>'; 
+				                                 
+				slot  += '</div>';		
+				slot  += '<div class="time mt-2">';
+				
+				slot  += '<div style="display:flex;" class="form-group  w-100">';
+				slot  += '	<p class="mr-1">		 Time </p>';
+				slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown  checkstatusjq" autocomplete="off" name="slot['+i+'][start]"  required /></div>';
+				
+				slot  += '	<p style="margin:5px">		 To </p>';
+				
+				slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot['+i+'][end]"  required /></div>';
+				slot  += '</div>';
+				slot  += '</div>';
 																
                 slot  += '<div class="date topMargin mt-3 w100">';
                 slot  += '<span class="notbrak ">Date</span>';

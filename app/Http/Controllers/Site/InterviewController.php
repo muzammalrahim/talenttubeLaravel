@@ -144,9 +144,10 @@ class InterviewController extends Controller
 
     }
     public function updateInterviewBooking(Request $request){
-
         $data = $request->all();
-       //  dd($data);
+        // dd($data);
+        $interURL = $data['interviewURL'];
+        // dd($interURL);
         $rules = array(
             "title" => "required|string|max:255",
             "instruction" => "required|string",
@@ -497,7 +498,7 @@ class InterviewController extends Controller
       }
 
       public function sendnotification(Request $request){
-
+            // dd($request->toArray());
         if(!empty($request->cbx)){
                     $users = User::whereIn('id',$request->cbx)->get();
                     if(!empty($users)){
@@ -568,15 +569,14 @@ class InterviewController extends Controller
     public function userindex(){
         $user = Auth::user();
         $data['user'] = $user;
-
         $bookingid = session('bookingid');
-
-        $interview = Interview::where('uniquedigits',"12340")->first();
-
+        $interview = Interview::where('uniquedigits',$bookingid)->first();
+        
+        // dd($interview);            
         
         $data['title'] = 'My Jobs';
         $data['interview'] = $interview ;
-        $data['classes_body'] = 'myJob';
+        $data['classes_body'] = 'Interviews';
         return view('site.employer.interview.indexuser', $data);
         // site/employer/interview/indexuser
     }

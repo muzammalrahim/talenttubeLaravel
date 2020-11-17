@@ -764,7 +764,7 @@ class HomeController extends Controller {
         $rules = array(
             "name" => "required|string|max:255",
             "mobile" => "required|string|max:10|min:10",
-            'email' => "bail|required|email|unique:Interviews_bookings",
+            'email' => "bail|required|email|",
 
             );
 
@@ -802,18 +802,20 @@ class HomeController extends Controller {
 
     
     public function interviewConLogin(Request $request){
-// dd($request);
+
+        // dd($request->toArray() );
            
         // session()->forget('int_conc_email');
         // session()->forget('int_conc_mobile');
 
-        $data = $request->all();
+    $data = $request->all();
         $rules = array(
             "mobile"    => "required|string|max:10|min:10",
             'email'     => "bail|required|email",
         );
 
         $validator = Validator::make( $request->all() , $rules);
+        // dd( $validator->fails() );
 
         if ($validator->fails()){
             // dd($validator->getMessageBag()->toArray());
@@ -824,9 +826,11 @@ class HomeController extends Controller {
         }else{
             
             $Interviews_booking = Interviews_booking::where('email', $request->email)->where('mobile', $request->mobile)->first();
+            // dd($Interviews_booking );
+
             if (!empty($Interviews_booking)) { 
                 $request->session()->put('int_conc_email', $request->email );
-                $request->session()->put('int_conc_mobile', $request->mobile );     
+                $request->session()->put('int_conc_mobile', $request->mobile ); 
                 return array(
                     'status'    => 1,
                     'redirect'   => route('interviewCon')
@@ -845,30 +849,47 @@ class HomeController extends Controller {
          
         
         if( empty($int_conc_email) || empty($int_conc_mobile)){
-            dd(' session expired  ');
-            // redirect  to haome page ;
+            // dd(' session expired  ');
+            return redirect(route('homepage'));
+            // 'redirect' => route('homepage')
         }else{
-            
+
+            // new code 
+
             $Interviews_booking = Interviews_booking::where('email', $int_conc_email)->where('mobile', $int_conc_mobile)->get();
+            $Interviews_bookingToArray = $Interviews_booking->toArray();
+            // dd($Interviews_bookingToArray);
+            $interviewID = $Interviews_bookingToArray[0]['interview_id'];
+            // dd($interviewID);
+            $slotID = $Interviews_bookingToArray[0]['slot_id'];      
+            // dd($slotID);  
+            $interview_Data = Interview::where('id', $interviewID)->first();    
+            $slot_data = Slot::where('id', $slotID)->first();
+            // dd($slot_data);
+            if($slot_data == ""){
+            return redirect(route('homepage'));
 
-            // $interviewID = $Interviews_booking->interview_id;
-            // $interview_Data = Interview::where('id', $interviewID)->first();
+            }else{
+                    $data['Interviews_booking'] = $Interviews_booking;
+                    $data['interview_Data'] = $interview_Data;
+                    $data['slot_data'] = $slot_data;
+                    // $data['classes_body'] = 'interviewLayout';
+                    return view('site.home.interviewLayout')->with('data', $data);    
+            }
+            
+
+            // end here
+            
+            //  Commented Code
+            // $Interviews_booking = Interviews_booking::where('email', $int_conc_email)->where('mobile', $int_conc_mobile)->get();
+            // $data['Interviews_booking'] = $Interviews_booking;
+            // return view('site.home.interviewLayout')->with('data', $data);
+            //  Commented Code
+            
+            // site/home/interviewLayout
+
 
             
-            // $slot_id = $Interviews_booking->slot_id;
-            // $abc = Slot::where('id', $slot_id)->first();
-
-            // Putting interview and slot data in session
-            // $position_name = $interview_Data->positionname;
-
-            // $request->session()->put('int_pos_name', $position_name);
-
-
-            $data['Interviews_booking'] = $Interviews_booking;
-            // $data['classes_body'] = 'interviewLayout';
-            return view('site.home.interviewLayout')->with('data', $data);
-            // 
-            // site/home/interviewLayout
         }
 
        
