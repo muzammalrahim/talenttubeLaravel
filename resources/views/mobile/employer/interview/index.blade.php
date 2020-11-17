@@ -4,7 +4,7 @@
 @section('content')
 <div class="card newJobCont "> 
 
-    <div class="card-header responsive_header  jobAppHeader icon_head_browse_matches head_concierge_botmline">Welcome to Mobile Interview Concierge</div> 
+    <div class="card-header responsive_header  jobAppHeader icon_head_browse_matches head_concierge_botmline font-weight-bold pb-3">Welcome to Mobile Interview Concierge</div> 
    
 			<div class="card-body c_bg">
 			
