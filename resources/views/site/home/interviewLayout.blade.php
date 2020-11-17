@@ -8,12 +8,36 @@
 		<h4 class="font-weight-bold">Interview Concierge Bookings</h4>
 	</div> 
 
-	<div class="row">
-		<div class="col-md-2">  </div>
-	</div>
-	{{-- @dump($data['ab']); --}}
-	
-	@dump( $data );
+	{{-- @dd($data['slot_data']->starttime); --}}
+
+	@php
+		$interviewPositionName = $data['interview_Data']->positionname;
+		$interBookingData = $data ['Interviews_booking'];
+		$interSlotData = $data ['slot_data'];
+	@endphp
+
+	<p class="p-0 m-0"> You have applied for the position of : <b>{{$interviewPositionName}}</b></p>
+	<div class="slot1"> <p> Your slot for interview is with below timetable </p> </div>
+
+	<div class="form-group row">
+        {{ Form::label('From', null, ['class' => 'col-md-1 form-control-label']) }}
+        <div class="col-md-2">
+          {{ Form::text('Start Time', $value = $interSlotData->starttime , $attributes = array('class'=>'form-control')) }}
+        </div>
+
+        {{ Form::label('To', null, ['class' => 'col-md-1 form-control-label']) }}
+        <div class="col-md-2">
+          {{ Form::text('End TIme', $value = $interSlotData->endtime , $attributes = array('class'=>'form-control')) }}
+        </div>
+    </div>
+
+    	<div class="form-group row">
+        {{ Form::label('Date', null, ['class' => 'col-md-1 form-control-label']) }}
+        <div class="col-md-2">
+          {{ Form::text('date', $value = $interSlotData->date , $attributes = array('class'=>'form-control')) }}
+        </div>
+    </div>
+
 
 	<div class="goHome text-center pb-3"> 
 		<a href="{{route('homepage')}}"> Click here to go home page</a>

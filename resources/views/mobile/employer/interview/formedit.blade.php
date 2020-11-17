@@ -241,18 +241,7 @@
     margin-left: 5px;
     margin-right: 5px;
 }
-.interviewSlot {
-    
-    width: fit-content;
-    padding: 10px 10px;
-    color: #142d69;
-    border-radius: 5px;
-    opacity: 0.8;
-    font-weight: 600;
-    transition: all 0.5s ease;
-    cursor: pointer;
-}
-.interviewSlot:hover{background: #142d69;color: white;}
+
 
 .w_100{  width:100%}
 

@@ -8,12 +8,13 @@
 
 @section('content')
 <div class="">
-    <div class="heading icon_head_browse_matches">Good news, your booking is now created, booking ID {{$interview->uniquedigits}}. You can now Select Job Seekers from your liked list to invite to interview, manually enter own Job Seeker details below to receive notification about the interviews, or send the below link directly to anyone you'd like interview</div>
+    <div class="heading icon_head_browse_matches">
+      <p class="bookingCreated ">Good news, your booking is now created, booking ID {{$interview->uniquedigits}}. You can now Select Job Seekers from your liked list to invite to interview, manually enter own Job Seeker details below to receive notification about the interviews, or send the below link directly to anyone you'd like interview </p> </div>
     <hr class="new">
     <div class="">
-        <a  class="button w50" href="{{route('interviewconcierge.getlikedlistjobseekers')}}">Click here to invite job Seekers from your liked list</a>
-        <a  class="button w50"  href="{{route('interviewconcierge.manualjobseekers')}}">Click here to manually enter Job Seeker contact details</a>
-        <a  class="button w50"  href="{{route('interviewconcierge.url')}}">Click here to access the unique URL to send to Job Seekers</a>
+        <a class="button w50" href="{{route('interviewconcierge.getlikedlistjobseekers')}}">Click here to invite job Seekers from your liked list</a>
+        <a class="button w50"  href="{{route('interviewconcierge.manualjobseekers')}}">Click here to manually enter Job Seeker contact details</a>
+        <a class="button w50"  href="{{route('interviewconcierge.url')}}">Click here to access the unique URL to send to Job Seekers</a>
         @php
          session()->put('bookingid',$interview->id);
         @endphp
@@ -56,7 +57,7 @@
 
 .heading{
 
-    font-size: 1.4em !important;
+    /*font-size: 1.4em !important;*/
     margin-bottom: 10px;
     line-height: 26pt;
 }
@@ -83,7 +84,10 @@ hr.new{
   background-color: rgb(52, 49, 238);
   color: White;
 }
-
+.bookingCreated{
+  font-size: 16px;
+  text-align: justify;
+}
 
 </style>
 @stop

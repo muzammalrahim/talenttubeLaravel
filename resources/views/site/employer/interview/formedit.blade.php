@@ -74,6 +74,8 @@
                 </div>
             </div>
 
+            <input type="hidden" name="interviewURL" value="{{$interview->url}}">
+
 
          {{--    <div class="job_title form_field">
                 <span class="form_label">Number of Slots :</span>

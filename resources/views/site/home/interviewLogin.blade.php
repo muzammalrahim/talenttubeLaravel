@@ -2,7 +2,7 @@
 
 
 <div id="intConc_sign_in" class="popup intConc_sign_inPP">
-    <div class="head"> Interview Concierg
+    <div class="head"> Interview Concierge
         <a id="#intConc_sign_in_close" class="icon_close" href="">
             <span class="close_hover"></span>
         </a>
@@ -25,6 +25,8 @@
                 
                 
                 <div class="bl_remember">
+
+                    <p class="errorInBooking p-0 m-0 text-danger hide errorPtag"> </p>  
                     
                 </div>
 
@@ -47,6 +49,13 @@
     margin: 7px;
     font-size: 13px;
 }
+.popup .head{
+    font-size: 20px;
+}
+.popup {
+    min-height: 290px;
+}
+
 
 </style>
 
