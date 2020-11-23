@@ -764,7 +764,7 @@ class HomeController extends Controller {
         $rules = array(
             "name" => "required|string|max:255",
             "mobile" => "required|string|max:10|min:10",
-            'email' => "bail|required|email|unique:Interviews_bookings",
+            'email' => "bail|required|email|",
 
             );
 
@@ -802,18 +802,20 @@ class HomeController extends Controller {
 
     
     public function interviewConLogin(Request $request){
-// dd($request);
+
+        // dd($request->toArray() );
            
         // session()->forget('int_conc_email');
         // session()->forget('int_conc_mobile');
 
-        $data = $request->all();
+    $data = $request->all();
         $rules = array(
             "mobile"    => "required|string|max:10|min:10",
             'email'     => "bail|required|email",
         );
 
         $validator = Validator::make( $request->all() , $rules);
+        // dd( $validator->fails() );
 
         if ($validator->fails()){
             // dd($validator->getMessageBag()->toArray());
@@ -824,9 +826,11 @@ class HomeController extends Controller {
         }else{
             
             $Interviews_booking = Interviews_booking::where('email', $request->email)->where('mobile', $request->mobile)->first();
+            // dd($Interviews_booking );
+
             if (!empty($Interviews_booking)) { 
                 $request->session()->put('int_conc_email', $request->email );
-                $request->session()->put('int_conc_mobile', $request->mobile );     
+                $request->session()->put('int_conc_mobile', $request->mobile ); 
                 return array(
                     'status'    => 1,
                     'redirect'   => route('interviewCon')
@@ -836,44 +840,68 @@ class HomeController extends Controller {
     }
 
     public function interviewConLayout(Request $request){
-
-      
-
         $int_conc_email = $request->session()->pull('int_conc_email');
         $int_conc_mobile = $request->session()->pull('int_conc_mobile');
         // $int_pos_name = $request->session()->pull('int_pos_name');
-         
-        
         if( empty($int_conc_email) || empty($int_conc_mobile)){
-            dd(' session expired  ');
-            // redirect  to haome page ;
+            // dd(' session expired  ');
+            return redirect(route('homepage'));
+            // 'redirect' => route('homepage')
         }else{
+
+            $Interviews_booking = Interviews_booking::with(['slot','interview'])->where('email', $int_conc_email)->where('mobile', $int_conc_mobile)->get();
+                // dd($Interviews_booking->slot);
+
+                if($Interviews_booking == ""){
+                return redirect(route('noBookingMade'));
+            }else{
+                    $data['Interviews_booking'] = $Interviews_booking;
+                    return view('site.home.interviewLayout')->with('data', $data);    
+            }
             
-            $Interviews_booking = Interviews_booking::where('email', $int_conc_email)->where('mobile', $int_conc_mobile)->get();
-
-            // $interviewID = $Interviews_booking->interview_id;
-            // $interview_Data = Interview::where('id', $interviewID)->first();
-
-            
-            // $slot_id = $Interviews_booking->slot_id;
-            // $abc = Slot::where('id', $slot_id)->first();
-
-            // Putting interview and slot data in session
-            // $position_name = $interview_Data->positionname;
-
-            // $request->session()->put('int_pos_name', $position_name);
-
-
-            $data['Interviews_booking'] = $Interviews_booking;
-            // $data['classes_body'] = 'interviewLayout';
-            return view('site.home.interviewLayout')->with('data', $data);
-            // 
-            // site/home/interviewLayout
         }
 
        
     }   
 
+    public function noBookingMade(Request $request){
+
+        if ($request->session()->exists('int_conc_email'))
+        {
+            return view('site.home.noBookingMade');
+        }else{
+            return redirect(route('homepage'));
+
+        }
+
+        
+    }
+
+    public function deleteBooking(Request $request){
+
+            $intBookId = (int) $request->id;
+            // dd( $intBookId);
+            Interviews_booking::where('id',$intBookId)->delete();
+            return response()->json([
+            'status' => 1,
+            'message' => 'Booking Deleted Succesfully'
+        ]);
+
+             
+    }
+
+        public function sendEmailEmployer(Request $request){
+
+            $intBookId = $request->id;
+            // dd( $intBookId);
+            $slots = Slot::where('interview_id',$intBookId)->get();
+            $data['slots'] = $slots;
+
+            $data['classes_body'] = 'interview';
+            return view('site.home.preferred' , $data);
+
+             
+    }
 
 
 

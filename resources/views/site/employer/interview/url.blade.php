@@ -18,8 +18,9 @@
     <a  class="w60 copy_text" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
     {{-- <a  class="button w50" href="{{$interview->url}}">{{$interview->url}}</a> --}}
     </div>
-  </div>
 
+    <a href="{{ url()->previous() }}" class="btn btn-default backToCreated">Back</a>
+    
 </div>
 
 
@@ -43,6 +44,36 @@
     font-size: 14px;
 }
 
+
+.button {
+  background-color: rgb(31, 120, 236);
+  border-radius: 5px;
+  color: white;
+  padding: .5em;
+  text-decoration: none;
+  margin-top: 20px !important;
+  margin-bottom: 20px !important;
+  display:block
+}
+
+.button:focus,
+.button:hover {
+  background-color: rgb(52, 49, 238);
+  color: White;
+}
+
+.backToCreated {
+    background: blue;
+    color: white;
+    width: fit-content;
+    padding: 5px 20px 5px 20px;
+    border-radius: 3px;
+    font-size: 16px;
+    opacity: 0.7;
+}
+.backToCreated:hover{
+  opacity: 1.0;
+}
 </style>
 @stop
 

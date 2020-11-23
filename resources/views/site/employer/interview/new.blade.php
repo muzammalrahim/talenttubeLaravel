@@ -40,7 +40,7 @@
             </div>
 
 
-            <div class="job_title form_field">
+            {{-- <div class="job_title form_field">
                 <span class="form_label">Employer Email :</span>
                 <div class="form_input">
                     <input type="email" value="" name="employeremail" class="w100" required>
@@ -54,7 +54,7 @@
                     <input type="text" value="" name="employerpassword" class="w100" required>
                     <div id="employerpassword_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="job_description form_field" required>
                 <span class="form_label">Interview Instruction: </span>

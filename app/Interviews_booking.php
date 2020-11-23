@@ -6,8 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Interviews_booking extends Model
 {
-     public function slots()
+
+	 protected $table = 'interviews_bookings';
+	 
+    //  public function slots()
+    // {
+    //     return $this->hasMany('App\Interview', 'interview_id');
+    // }
+
+    public function slot()
     {
-        return $this->hasMany('App\Interview', 'interview_id');
+        return $this->belongsTo('App\Slot', 'slot_id');
     }
+
+    public function interview()
+    {
+        return $this->belongsTo('App\Interview', 'interview_id');
+    }
+    
 }

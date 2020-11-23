@@ -42,7 +42,6 @@ class InterviewController extends Controller
         $user = Auth::user();
         // dd($user->id);
         $interview = Interview::where('emp_id',$user->id)->get();
-
         $data['interview'] = $interview;
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
@@ -72,8 +71,8 @@ class InterviewController extends Controller
             "instruction" => "required|string",
             "companyname"  => "required|string",
             "positionname" => "required|string",
-            "employeremail"  => 'required|email',
-            "employerpassword" => "required|string",
+            // "employeremail"  => 'required|email',
+            // "employerpassword" => "required|string",
         );
         $validator = Validator::make( $data , $rules);
         if ($validator->fails()){
@@ -112,8 +111,8 @@ class InterviewController extends Controller
         $interview->title = $data['title'];
         $interview->companyname = $data['companyname'];
         $interview->positionname = $data['positionname'];
-        $interview->employeremail = $data['employeremail'];
-        $interview->employerpassword = $data['employerpassword'];
+        // $interview->employeremail = $data['employeremail'];
+        // $interview->employerpassword = $data['employerpassword'];
         $interview->instruction = $data['instruction'];
         $interview->additionalmanagers = $data['additionalmanagers'];
         // $interview->numberofslots = $data['numberofslots'];
@@ -144,16 +143,17 @@ class InterviewController extends Controller
 
     }
     public function updateInterviewBooking(Request $request){
-
         $data = $request->all();
-       //  dd($data);
+        // dd($data);
+        $interURL = $data['interviewURL'];
+        // dd($interURL);
         $rules = array(
             "title" => "required|string|max:255",
             "instruction" => "required|string",
             "companyname"  => "required|string",
             "positionname" => "required|string",
-            "employeremail"  => 'required|email',
-            "employerpassword" => "required|string",
+            // "employeremail"  => 'required|email',
+            // "employerpassword" => "required|string",
         );
 
         $validator = Validator::make( $data , $rules);
@@ -189,12 +189,12 @@ class InterviewController extends Controller
         // $slots = array();
         //array_push($slots, $data['slot']);
 
-        $interview = Interview::where('id',$data['id'])->first();
+        $interview = Interview::where('id',$data['interview_id'])->first();
         $interview->title = $data['title'];
         $interview->companyname = $data['companyname'];
         $interview->positionname = $data['positionname'];
-        $interview->employeremail = $data['employeremail'];
-        $interview->employerpassword = $data['employerpassword'];
+        // $interview->employeremail = $data['employeremail'];
+        // $interview->employerpassword = $data['employerpassword'];
         $interview->instruction = $data['instruction'];
         $interview->additionalmanagers = $data['additionalmanagers'];
         // $interview->numberofslots = $data['numberofslots'];
@@ -207,14 +207,16 @@ class InterviewController extends Controller
 
         $interview->save();
        // dd($data['slot']);
+
         $interview->slots()->delete();
         foreach ($data['slot'] as $key => $value) {
-
+            // dd($data['interview_id']);
             $slot = new Slot;
             $slot->date = $data['date'][$key];
             $slot->maximumnumberofinterviewees = $data['maximumnumber'][$key];
             $slot->starttime =$value['start'];
             $slot->endtime = $value['end'];
+            $slot->interview_id = $data['interview_id'];
             $slot->numberofintervieweesbooked =0;
             $slot->is_housefull = false;
             $interview->slots()->save($slot);
@@ -365,7 +367,7 @@ class InterviewController extends Controller
         $user = Auth::user();
         // $interview = Interview::where('uniquedigits',"12340")->first();
         $bookingid = session('bookingid');
-        session()->forget('bookingid');
+        // session()->forget('bookingid');
 
         if(!empty($bookingid)){
 
@@ -391,7 +393,7 @@ class InterviewController extends Controller
         $user = Auth::user();
         // $interview = Interview::where('uniquedigits',"12340")->first();
         $bookingid = session('bookingid');
-        session()->forget('bookingid');
+        // session()->forget('bookingid');
 
         if(!empty($bookingid)){
 
@@ -415,7 +417,7 @@ class InterviewController extends Controller
 
         $user = Auth::user();
         $bookingid = session('bookingid');
-        session()->forget('bookingid');
+        // session()->forget('bookingid');
 
         if(!empty($bookingid)){
 
@@ -497,7 +499,7 @@ class InterviewController extends Controller
       }
 
       public function sendnotification(Request $request){
-
+            // dd($request->toArray());
         if(!empty($request->cbx)){
                     $users = User::whereIn('id',$request->cbx)->get();
                     if(!empty($users)){
@@ -568,15 +570,14 @@ class InterviewController extends Controller
     public function userindex(){
         $user = Auth::user();
         $data['user'] = $user;
-
         $bookingid = session('bookingid');
-
-        $interview = Interview::where('uniquedigits',"12340")->first();
-
+        $interview = Interview::where('uniquedigits',$bookingid)->first();
+        
+        // dd($interview);            
         
         $data['title'] = 'My Jobs';
         $data['interview'] = $interview ;
-        $data['classes_body'] = 'myJob';
+        $data['classes_body'] = 'Interviews';
         return view('site.employer.interview.indexuser', $data);
         // site/employer/interview/indexuser
     }

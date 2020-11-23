@@ -4,7 +4,7 @@
 @section('content')
 
 <div class="container">
-	<div class="header text-center">
+	<div class="header1 text-center">
 		<h4 class="pt-4 font-weight-bold">Interview Concierge - Booking {{$interview->uniquedigits}} </h4>
 	</div> 
 
@@ -39,7 +39,8 @@
 	    </div>
 
 	    <p class="text-center moreDetails"> Please select from the below available time/date for your interview.If you have already selected an <br>
-	    	interview time and wish to cancel or reschedule, please click here
+	    	interview time and wish to cancel or reschedule, please click 
+	    	<span class="clickHere interviewConciergeRoute" > here  </span> 
 	    </p>
 
 
@@ -157,10 +158,18 @@
     
 </div>
 
+@include('site.home.interviewLogin')
+
 
 @stop
 
 @section('custom_js')
+
+<script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/site/jquery.form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script>
+
 
 <script type="text/javascript">
 jQuery('.selectTimeUrl').click(function(){
@@ -268,17 +277,27 @@ $(document).ready(function(){
 
 // =========================================================== Ajax for saving slot ===========================================================
 
+
 </script>
 @stop
 
 @section('custom_css')
+
+    {{-- <link rel="stylesheet" href="{{ asset('css/common.css') }}"> --}}
+
+    <link rel="stylesheet" href="{{ asset('css/master.css') }}">
+
 
 <style type="text/css">
 	
 	.errorInName{
 		color: red;
 	}
-
+	.clickHere{
+		text-decoration: underline;
+	    color: black;
+    	cursor: pointer;
+	}
 </style>
 
 @stop

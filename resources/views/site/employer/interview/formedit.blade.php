@@ -40,7 +40,7 @@
             </div>
 
 
-            <div class="job_title form_field">
+            {{-- <div class="job_title form_field">
                 <span class="form_label">Employer Email :</span>
                 <div class="form_input">
                     <input type="email" value="{{$interview->employeremail}}" name="employeremail" class="w100" required>
@@ -54,7 +54,7 @@
                     <input type="text" value="{{$interview->employerpassword}}" name="employerpassword" class="w100" required>
                     <div id="bookingpassword_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="job_description form_field" required>
                 <span class="form_label">Interview Instruction: </span>
@@ -73,6 +73,8 @@
                     <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
+
+            <input type="hidden" name="interviewURL" value="{{$interview->url}}">
 
 
          {{--    <div class="job_title form_field">
@@ -117,11 +119,13 @@
                                     {{ Form::select('salary', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'maximumnumber['.($key+1).']', 'class' => '']) }}
                                 </div>
                             </div>
-                        </div>																	
+                        </div>	
+
+
                         @endforeach
                     </div>
-                    <input type="hidden" name="slotsCounter" id="slotsCounter" value="{{$interview->numberofslots}}">
-                    <input type="hidden" name="id" id="id" value="{{$interview->id}}">
+                    {{-- <input type="hidden" name="slotsCounter" id="slotsCounter" value="{{$interview->numberofslots}}"> --}}
+                    <input type="hidden" name="interview_id" id="" value="{{$interview->id}}">
                 </div>
             </div>
 

@@ -16,7 +16,6 @@
     session()->put('bookingid',$interview->id);
     @endphp
     <a class="button w10 small turquoise" href="{{route('interviewconcierge.created')}}">Go Back</a>
-
     <table class="table table-bordered cbxDataTable" id="dataTable">
         <thead>
             <tr style="text-align: center" >
@@ -30,7 +29,7 @@
         </thead>
       </table>
 
-      <butto class="button w20 small colorSendButton sendNotification turquoise">Send notifications</butto>
+      <butto class="button small colorSendButton sendNotification turquoise">Send notifications</butto>
 </div>
 
 <div class="form_field">
@@ -45,7 +44,7 @@
       <div class="cbx_list">
       </div>
 
-      {{-- <input type="hidden" name="url" id="url" value="{{$interview->url}}"> --}}
+      <input type="hidden" name="url" id="url" value="{{$interview->url}}">
     </form>
 </div>
 
@@ -107,14 +106,16 @@ text-align: center;
 }
 
 .button {
-  background-color: rgb(31, 120, 236);
+  background: rgb(31, 120, 236);
   border-radius: 5px;
   color: white;
-  padding: .5em;
+  padding: .5em 1.5em .5em 1.5em;
   text-decoration: none;
   margin-top: 20px !important;
   margin-bottom: 20px !important;
-  display:block
+  display:block;
+  width: fit-content;
+  cursor: pointer;
 }
 
 

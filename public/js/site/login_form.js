@@ -184,8 +184,12 @@ $('#intConform_login').click(function ($event) {
             url:  base_url + '/interviewConLogin',
             data: formData,
             success: function(response){
-            console.log(' data >>>> ', response);
-              
+
+            if (response == "") {
+                $('.errorInBooking').text('This "Email" and "Mobile" is not registered with any booking.');
+            }else{
+                console.log(' data >>>> ', response);
+                    
                 if( response.status) {
                     location.href = response.redirect;
                 }else{                    
@@ -234,6 +238,10 @@ $('#intConform_login').click(function ($event) {
 
                             
                 }
+            }
+
+
+                
 
             }
 
@@ -244,6 +252,16 @@ $('#intConform_login').click(function ($event) {
 
 
 //================================== Interview Concierge login  ================================== // 
+
+// ================================= Interview Consierge Log in Close onclick =================================
+
+    $('.close_hover').click(function() {
+        $('#intConc_sign_in').close();
+
+    });
+
+// ================================= Interview Consierge Log in Close onclick =================================
+
 
 
 })
