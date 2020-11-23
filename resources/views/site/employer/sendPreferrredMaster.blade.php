@@ -22,24 +22,12 @@
 </head>
 <body class="{{-- {{$classes_body}} --}}" style="background-image: url({{asset('/images/homepage_bg.jpg')}}) !important; background-attachment: fixed !important;">
 
-{{-- @yield('body') --}}
 
-{{-- <div class="main"> --}}
- {{-- <div class="wrapper"> --}}
-     {{-- @include('site.layout.userheader') --}}
-
-    {{-- <div class="content"> --}}
-    {{-- <div class="cont_w"> --}}
-        <div class="columnCenters">
-        <div class="col_center">
+        <div class="columnCenters1">
+        <div class="col_center1">
             @yield('content')
         </div>
-        {{-- @include('site.layout.leftmenu') --}}
         </div>
-    {{-- </div> --}}
-    {{-- </div> --}}
-{{-- </div> --}}
-{{-- </div> --}}
 
 
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
@@ -54,13 +42,8 @@
 @yield('custom_footer_css')
 
 <style type="text/css">    
-
-    .col_center { width: 70%; background: #e9ecef; margin: 0 auto;border-radius: 10px; }
-    .columnCenters{padding-top: 4%;}
+    .col_center1{width: 100%; background: #e9ecef; margin: 0 auto;}
     body{overflow: auto;}
-    .notbrak{display: inline-block;}
-    .btn-sm {font-size: 14px !important;padding: .375rem .75rem !important;}
-    label {font-weight: 700;}
 </style>
 @yield('custom_js')
 

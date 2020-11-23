@@ -17,11 +17,8 @@
 
 
     </div>
-
-
-
-
-
+    <a href="{{ url()->previous() }}" class="btn btn-default backToCreated">Back</a>
+    
 </div>
 
 
@@ -77,7 +74,7 @@ hr.new{
 
 .button {
   background-color: rgb(31, 120, 236);
-  border-radius: 10px;
+  border-radius: 5px;
   color: white;
   padding: .5em;
   text-decoration: none;
@@ -92,7 +89,18 @@ hr.new{
   color: White;
 }
 
-
+.backToCreated {
+    background: blue;
+    color: white;
+    width: fit-content;
+    padding: 5px 20px 5px 20px;
+    border-radius: 3px;
+    font-size: 16px;
+    opacity: 0.7;
+}
+.backToCreated:hover{
+  opacity: 1.0;
+}
 </style>
 @stop
 

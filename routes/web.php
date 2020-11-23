@@ -29,6 +29,10 @@ Route::post('ajax/booking/saveSlot',    'Site\HomeController@saveSlot')->name('s
 Route::get('/interViewSlotCreated',    'Site\HomeController@interViewSlotCreated')->name('interViewSlotCreated');
 Route::post('interviewConLogin',    'Site\HomeController@interviewConLogin')->name('interviewConLogin');
 Route::get('/interviewCon',    'Site\HomeController@interviewConLayout')->name('interviewCon');
+Route::get('/noBookingMade',    'Site\HomeController@noBookingMade')->name('noBookingMade');
+
+Route::post('ajax/booking/deleteBooking',    'Site\HomeController@deleteBooking')->name('deleteBooking');
+Route::post('ajax/booking/sendEmailEmployer',    'Site\HomeController@sendEmailEmployer')->name('sendEmailEmployer');
 
 
 
@@ -376,7 +380,7 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('interviewconcierge/new',       'Site\InterviewController@new')->name('interviewconcierge.new');
     Route::get('interviewconcierge/edit',       'Site\InterviewController@edit')->name('interviewconcierge.edit');
     Route::get('interviewconcierge/created',       'Site\InterviewController@created')->name('interviewconcierge.created');
-    Route::get('interviewconcierge/url',       'Site\InterviewController@bookingurl')->name('interviewconcierge.url');
+    Route::get('interviewconcierge/created/url',       'Site\InterviewController@bookingurl')->name('interviewconcierge.url');
     Route::get('interviewconcierge/manualjobseekers',       'Site\InterviewController@manualjobseekers')->name('interviewconcierge.manualjobseekers');
     Route::get('interviewconcierge/formedit','Site\InterviewController@editbookingform')->name('interviewconcierge.formedit');
     Route::get('interviewconcierge/getlikedlistjobseekers','Site\InterviewController@getlikedjobseekers')->name('interviewconcierge.getlikedlistjobseekers');
@@ -436,3 +440,11 @@ Route::get('/js/lang.js', function () {
 
 Route::get('textLog', 'Site\HomeController@textLog')->name('textLog');
 Route::get('userinterviewconciergeloggedin/url', 'Site\InterviewController@userurl')->name('userinterviewconciergeloggedin.url');
+
+
+
+Route::get('phpinfo', function () {
+
+    phpinfo();
+     
+});

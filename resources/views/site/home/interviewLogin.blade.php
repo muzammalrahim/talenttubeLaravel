@@ -3,9 +3,8 @@
 
 <div id="intConc_sign_in" class="popup intConc_sign_inPP">
     <div class="head"> Interview Concierge
-        <a id="#intConc_sign_in_close" class="icon_close" href="">
-            <span class="close_hover"></span>
-        </a>
+
+        <span class="close_hover"> </span>
 
     </div>
     <div class="cont">
@@ -56,12 +55,21 @@
     min-height: 290px;
 }
 
-
+.close_hover{
+    position: absolute;
+    background-image: url(/images/site/icon_close.png);
+    width: 24px;
+    height: 24px;
+    background-repeat: no-repeat;
+    display: block;
+    top: 15px;
+    right: 3px;
+    cursor: pointer;
+}
 </style>
 
 
  <script type="text/javascript">
 
- 	
 
  </script>

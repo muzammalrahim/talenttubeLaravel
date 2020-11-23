@@ -77,17 +77,9 @@
 
       </div>
 
-
-
-             
-
-
-
       </form>
     <!-- Form -->
-         
-        
-    
+
       </div>
 
       <!--Footer-->
@@ -157,3 +149,70 @@
   <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">Launch
     Modal Login Form</a>
 </div> --}}
+
+{{-- ================================================ Interview COncierge Pop Up ================================================ --}}
+
+<div class="modal fade right" id="mIntConLogin" tabindex="-1" role="dialog" aria-labelledby="mIntConLogin"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Interview Concierge</p>
+        <button type="button" class="close modalCloseTopButton" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body p-2 mt-3">
+        
+        <div class="mProcessing d-none text-center">
+         <div class="preloader-wrapper big active crazy">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+      <form id="MintCon_login" style="color: #757575;"  class="MintCon_login text-center" method="post" autocomplete="on" action="{{-- {{route('login')}} --}}">
+          @csrf
+        <!-- Mobile -->
+        <div class="md-form my-4">
+          <input type="text" id="materialLoginFormPassword"  type="text" name="mobile" class="form-control black-text pl-2">
+          <label for="materialLoginFormPassword" class="text-info"><h6 class="ml-1">Mobile</h6></label>
+          <p class="errorInMobile p-0 m-0 text-danger hide errorPtag"> </p> 
+        </div>
+        <!-- Email -->
+        <div class="md-form mb-4">
+          <input type="text" id="materialLoginFormEmail"  type="text" name="email" class="form-control black-text pl-2">
+          <label for="materialLoginFormEmail" class="text-info"><h6 class=" ml-1">E-mail</h6></label>
+          <p class="errorInEmail p-0 m-0 text-danger hide errorPtag"> </p> 
+        </div>
+        <div class="bl_remember">
+            <p class="errorInBooking p-0 m-0 text-danger hide errorPtag"> </p>  
+        </div>
+
+      </form>
+    <!-- Form -->
+    
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" id="MintConform_login" class="btn btn-primary waves-effect waves-light interviewConciergeRoute">Sign in<i class="fa fa-paper-plane ml-1"></i></a>
+        <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{{-- ================================================ Interview COncierge Pop Up ================================================ --}}

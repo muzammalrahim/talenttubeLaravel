@@ -55,10 +55,11 @@
 
       <div class="row font-weight-bold p-2">
         {{-- <div class="col-md-2">Sr#</div> --}}
-        <div class="col-md-3">Company</div>
+        <div class="col-md-2">Company</div>
+        <div class="col-md-2">Booking ID</div>
         <div class="col-md-3">Position</div>
         <div class="col-md-3">Mangers</div>
-        <div class="col-md-3">Action</div>
+        <div class="col-md-2">Action</div>
       </div> 
       
    @foreach ($interview as $int)
@@ -69,10 +70,11 @@
         @endfor --}}
         
         {{-- <div class="col-md-2">{{$x}}</div> --}}
-        <div class="col-md-3">{{$int->companyname}}</div>
+        <div class="col-md-2">{{$int->companyname}}</div>
+        <div class="col-md-2">{{$int->uniquedigits}}</div>
         <div class="col-md-3">{{$int->positionname}}</div>
         <div class="col-md-3">{{$int->additionalmanagers}}</div>
-        <div class="col-md-3"><a href="{{route('interviewconcierge.edit')}}"> <i class="fas fa-edit text-primary"></i></a></div>
+        <div class="col-md-2"><a href="{{route('interviewconcierge.edit')}}"> <i class="fas fa-edit text-primary"></i></a></div>
       </div> 
       
      

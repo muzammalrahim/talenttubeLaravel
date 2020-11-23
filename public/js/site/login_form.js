@@ -253,6 +253,16 @@ $('#intConform_login').click(function ($event) {
 
 //================================== Interview Concierge login  ================================== // 
 
+// ================================= Interview Consierge Log in Close onclick =================================
+
+    $('.close_hover').click(function() {
+        $('#intConc_sign_in').close();
+
+    });
+
+// ================================= Interview Consierge Log in Close onclick =================================
+
+
 
 })
 

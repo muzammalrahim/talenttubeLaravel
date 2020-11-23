@@ -21,8 +21,8 @@ class CreateInterviewsTable extends Migration
             $table->string('positionname');
             $table->string('uniquedigits');
             $table->string('url');
-            $table->string('employeremail');
-            $table->string('employerpassword');
+            // $table->string('employeremail');
+            // $table->string('employerpassword');
             $table->text('instruction');
             $table->string('additionalmanagers')->nullable();
             // $table->integer('numberofslots')->nullable();

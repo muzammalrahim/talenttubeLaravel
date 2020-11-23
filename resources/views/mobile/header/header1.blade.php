@@ -19,9 +19,14 @@
    </div>
    <div class="cl"></div>
 </div>
+
+<a class = "interviewConciergeRoute" data-target = "#mIntConLogin" data-toggle = "modal">
+    <div class="interviewConcierge">Interview Concierge</div>
+</a>
 <!-- /header_top  -->
 
 
 <div class="header ">
    <div id="bg_cover" class="cover show" style="background-image: url({{asset('/images/homepage_bg.jpg')}});"></div>
 </div>
+

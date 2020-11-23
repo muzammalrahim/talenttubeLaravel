@@ -9,8 +9,19 @@ class Interviews_booking extends Model
 
 	 protected $table = 'interviews_bookings';
 	 
-     public function slots()
+    //  public function slots()
+    // {
+    //     return $this->hasMany('App\Interview', 'interview_id');
+    // }
+
+    public function slot()
     {
-        return $this->hasMany('App\Interview', 'interview_id');
+        return $this->belongsTo('App\Slot', 'slot_id');
     }
+
+    public function interview()
+    {
+        return $this->belongsTo('App\Interview', 'interview_id');
+    }
+    
 }
