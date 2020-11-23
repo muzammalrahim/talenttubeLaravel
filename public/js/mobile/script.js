@@ -377,3 +377,71 @@ $( document ).ajaxStart(function() {
 $( document ).ajaxComplete(function() {
 	$( ".spin" ).hide();
 });
+
+
+// ================================= interview Log in =================================
+
+$('#MintConform_login').click(function ($event) {
+    $event.preventDefault();
+        event.preventDefault();
+        var formData = $('.MintCon_login').serializeArray();
+        console.log(' formData ', formData);
+        $.ajax({
+            type: 'POST',
+            url:  base_url + '/m/MinterviewConLogin',
+            data: formData,
+            success: function(response){
+
+            if (response == "") {
+                $('.errorInBooking').text('This "Email" and "Mobile" is not registered with any booking.');
+            }else{
+                console.log(' data >>>> ', response);
+                    
+                if( response.status) {
+                    location.href = response.redirect;
+                }else{                    
+                    // that.hideMainEditor();
+                   var errorIntCon = response['message'];
+                   // console.log(errorIntCon);
+                   // var nameError = errorIntCon['name'];
+                   var mobileError = errorIntCon['mobile'];
+                   // console.log(mobileError);
+                   var emailError = errorIntCon['email'];
+                   console.log(emailError);
+
+                   // ==================== mobile validation ====================
+                   if (mobileError){
+                        var mobileError2 = mobileError.toString();
+                        $('.errorInMobile').text(mobileError2);
+                        $('.errorInMobile').show();
+                        // console.log(nameError);
+
+                    } else {
+                        $('.errorInMobile').hide();
+                    }
+                    // ==================== mobile validation end here ====================
+                    // ==================== email validation ====================
+                   if (emailError){
+                        var emailError2 = emailError.toString();
+                        $('.errorInEmail').text(emailError2);
+                        $('.errorInemail').show();
+                        // console.log(nameError);
+
+                    } else {
+                        $('.errorInemail').hide();
+                    }
+                    // ==================== email validation end here ====================
+
+                            
+                }
+            }
+
+
+                
+
+            }
+
+        });
+}); 
+
+// ================================= interview Log in end here =================================

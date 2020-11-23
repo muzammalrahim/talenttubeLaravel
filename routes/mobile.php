@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Auth;
 
 
 
-
 // Front End  with Authentication
 Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
@@ -189,9 +188,19 @@ Route::get('employer/profile', function () { return redirect('employer/'.Auth::u
 Route::get('employer/step2',       'Site\EmployerController@step2Employer')->name('mStep2Employer');
 Route::post('employer/step2',      'Site\EmployerController@Step2');
 
+Route::post('MinterviewConLogin',    'Mobile\MobileHomeController@MinterviewConLogin')->name('MinterviewConLogin');
+Route::get('/MinterviewCon',    'Mobile\MobileHomeController@MinterviewConLayout')->name('MinterviewCon');
+
+
+
+Route::get('/MnoBookingMade',    'Mobile\MobileHomeController@MnoBookingMade')->name('MnoBookingMade');
+
+
 });
 
 // Akmal routes work.
+
+
 
 
 

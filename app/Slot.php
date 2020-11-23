@@ -14,5 +14,5 @@ class Slot extends Model
         return $this->belongsTo(Interview::class);
     }
 
-
+ 
 }
