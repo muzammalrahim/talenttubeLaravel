@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{csrf_token()}}">
     <title>@yield('title')</title>
+
     @yield('meta_tags')
+
     <script type="text/javascript">
         var base_url = '{!! url('/') !!}';
     </script>
 
+
       <!-- MDB icon -->
-      <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
+      <!-- <link rel="icon" href="{{ URL::asset('/img/favicon.ico') }}" type="image/x-icon"/> -->
+						<link rel="icon" href="{{ URL::asset('favicon.ico') }}" type="image/x-icon"/>
       <!-- Font Awesome -->
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
       <!-- Bootstrap core CSS -->

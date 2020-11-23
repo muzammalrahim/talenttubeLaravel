@@ -378,9 +378,12 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     //Interview concierge
     Route::get('interviewconcierge',       'Site\InterviewController@index')->name('interviewconcierge');
     Route::get('interviewconcierge/new',       'Site\InterviewController@new')->name('interviewconcierge.new');
+
+
     Route::get('interviewconcierge/edit',       'Site\InterviewController@edit')->name('interviewconcierge.edit');
     Route::get('interviewconcierge/created',       'Site\InterviewController@created')->name('interviewconcierge.created');
     Route::get('interviewconcierge/created/url',       'Site\InterviewController@bookingurl')->name('interviewconcierge.url');
+
     Route::get('interviewconcierge/manualjobseekers',       'Site\InterviewController@manualjobseekers')->name('interviewconcierge.manualjobseekers');
     Route::get('interviewconcierge/formedit','Site\InterviewController@editbookingform')->name('interviewconcierge.formedit');
     Route::get('interviewconcierge/getlikedlistjobseekers','Site\InterviewController@getlikedjobseekers')->name('interviewconcierge.getlikedlistjobseekers');

@@ -1,49 +1,60 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster')
+@extends('mobile.user.usermaster')
 
 @section('custom_css')
+
+
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 @stop
 
 @section('content')
-<div class="newJobCont">
-    <div class="head icon_head_browse_matches">Manual Invitation</div>
+     
+<div class="card newJobCont">
+    <div class="card-header jobAppHeader text-center head icon_head_browse_matches">Manual Invitation</div>
     @php
     session()->put('bookingid',$interview->id);
     @endphp
-    <a class="button w10 small turquoise" href="{{route("interviewconcierge.created")}}">Go Back</a>
-    <div class="add_new_job">
+
+
+				<div class="card-body">
+				<a class="btn btn-sm btn-info  text-left " href="{{route('Minterviewconcierge.created')}}"><i  style="font-size:12px"class="far fa-arrow-alt-circle-left"></i>  Go Back</a>
+    
+    <div class="add_new_job borderline">
 
         <form method="POST" name="login_booking_form1" class="login_booking_form1 newJob job_validation">
             @csrf
-            <div class="job_title form_field">
-                <span class="form_label">Name :</span>
-                <div class="form_input">
-                    <input type="text" value="" name="name" class="w20" required>
-                    <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
+
+												 <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Name </label>
+                    <div class="col-sm-10">
+                      <input type="text" name="name" class="form-control form-control-sm" value="" required >
+                      <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
+                    </div>
                 </div>
-            </div>
 
 
-            <div class="job_title form_field">
-                <span class="form_label">Mobile :</span>
-                <div class="form_input">
-                    <input type="text" value="" name="mobile" class="w20" required>
+            
+
+
+            <div class="form-group row">
+                  <label class="col-sm-2 col-form-label ">Mobile </label>
+                <div class="col-sm-10">
+                    <input type="text" value="" name="mobile" class="form-control form-control-sm" required>
                     <div id="password_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
 
 
-            <div class="job_title form_field">
-                <span class="form_label">Email :</span>
-                <div class="form_input">
-                    <input type="email" value="" name="email" class="w20" required>
+            <div class="form-group row">
+												   <label class="col-sm-2 col-form-label ">Email  </label>
+                <div class="col-sm-10">
+                    <input type="email" value="" name="email" class="form-control form-control-sm" required>
                     <div id="email_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
             </div>
 
-        <input type="hidden" value="{{$interview->url}}" name="url" class="w20" required>
+        <input type="hidden" value="{{$interview->url}}" name="url" class="form-control form-control-sm" required>
 
         <div class="form_field">
             <span class="form_label"></span>
@@ -52,43 +63,48 @@
             </div>
         </div>
 
-            <div class="fomr_btn act_field">
-                <button class="btn small leftMargin turquoise loginEditInterview1">Send Notification</button>
+            <div class="fomr_btn act_field text-center">
+                <button class="btn btn-sm leftMargin turquoise loginEditInterview1">Send Notification</button>
             </div>
 
         </form>
         </div>
 
 
-        <div class="add_new_job ">
+        <div class="add_new_job  borderline">
 
             <form method="POST" name="login_booking_form2" class="login_booking_form2 newJob job_validation ">
                 @csrf
-                <div class="job_title form_field">
-                    <span class="form_label">Name :</span>
-                    <div class="form_input">
-                        <input type="text" value="" name="bookingid" class="w20" required>
-                        <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
+
+
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Name </label>
+                    <div class="col-sm-10">
+                      <input type="text" name="name" class="form-control form-control-sm" value="" required >
+                      <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
                     </div>
                 </div>
 
 
-                <div class="job_title form_field">
-                    <span class="form_label">Mobile :</span>
-                    <div class="form_input">
-                        <input type="text" value="" name="mobile" class="w20" required>
-                        <div id="password_error" class="error field_error to_hide">&nbsp;</div>
-                    </div>
-                </div>
+            
 
 
-                <div class="job_title form_field">
-                    <span class="form_label">Email :</span>
-                    <div class="form_input">
-                        <input type="email" value="" name="email" class="w20" required>
-                        <div id="email_error" class="error field_error to_hide">&nbsp;</div>
-                    </div>
+            <div class="form-group row">
+                  <label class="col-sm-2 col-form-label ">Mobile </label>
+                <div class="col-sm-10">
+                    <input type="text" value="" name="mobile" class="form-control form-control-sm" required>
+                    <div id="password_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
+            </div>
+
+
+            <div class="form-group row">
+												   <label class="col-sm-2 col-form-label ">Email  </label>
+                <div class="col-sm-10">
+                    <input type="email" value="" name="email" class="form-control form-control-sm" required>
+                    <div id="email_error" class="error field_error to_hide">&nbsp;</div>
+                </div>
+            </div>
 
 
 
@@ -99,45 +115,52 @@
                 </div>
             </div>
 
-                <div class="fomr_btn act_field">
+
+
+                <div class="fomr_btn act_field text-center">
 
                     {{-- <input type="type" value="academic" /> --}}
-                    <button class="btn small leftMargin turquoise loginEditInterview2">Sed Notification</button>
+                <button class="btn btn-sm leftMargin turquoise loginEditInterview2">Sed Notification</button>
                 </div>
 
             </form>
             </div>
 
-            <div class="add_new_job ">
+            <div class="add_new_job  borderline">
 
                 <form method="POST" name="login_booking_form3" class="login_booking_form3 newJob job_validation ">
                     @csrf
-                    <div class="job_title form_field">
-                        <span class="form_label">Name :</span>
-                        <div class="form_input">
-                            <input type="text" value="" name="name" class="w20" required>
-                            <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
-                        </div>
+
+
+                    
+                <div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Name </label>
+                    <div class="col-sm-10">
+                      <input type="text" name="name" class="form-control form-control-sm" value="" required >
+                      <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
                     </div>
+                </div>
 
 
-                    <div class="job_title form_field">
-                        <span class="form_label">Mobile :</span>
-                        <div class="form_input">
-                            <input type="text" value="" name="mobile" class="w20" required>
-                            <div id="password_error" class="error field_error to_hide">&nbsp;</div>
-                        </div>
-                    </div>
+            
 
 
-                    <div class="job_title form_field">
-                        <span class="form_label">Email :</span>
-                        <div class="form_input">
-                            <input type="email" value="" name="email" class="w20" required>
-                            <div id="email_error" class="error field_error to_hide">&nbsp;</div>
-                        </div>
-                    </div>
+            <div class="form-group row">
+                  <label class="col-sm-2 col-form-label ">Mobile </label>
+                <div class="col-sm-10">
+                    <input type="text" value="" name="mobile" class="form-control form-control-sm" required>
+                    <div id="password_error" class="error field_error to_hide">&nbsp;</div>
+                </div>
+            </div>
 
+
+            <div class="form-group row">
+												   <label class="col-sm-2 col-form-label ">Email  </label>
+                <div class="col-sm-10">
+                    <input type="email" value="" name="email" class="form-control form-control-sm" required>
+                    <div id="email_error" class="error field_error to_hide">&nbsp;</div>
+                </div>
+            </div>
 
 
                 <div class="form_field">
@@ -147,14 +170,16 @@
                     </div>
                 </div>
 
-                    <div class="fomr_btn act_field">
+                    <div class="fomr_btn act_field text-center">
 
                         {{-- <input type="type" value="academic" /> --}}
-                        <button class="btn small leftMargin turquoise loginEditInterview3">Send Notification</button>
+                        <button class="btn btn-sm leftMargin turquoise loginEditInterview3">Send Notification</button>
                     </div>
 
                 </form>
                 </div>
+
+<div>
 
     <div class="cl"></div>
 </div>
@@ -195,6 +220,9 @@
     margin-right: 5px;
 }
 
+.goBackBtnM{
+	margin: -6% 0% 6% -5%;
+}
 
 .button {
   background-color: rgb(214, 90, 32);
@@ -205,6 +233,11 @@
   margin-top: 20px !important;
   margin-bottom: 20px !important;
   display:block
+}
+.borderline{
+	border: 1px solid #e6e6e6;
+    padding: 3%;
+				margin-top: 4%;
 }
 
 .button:focus,

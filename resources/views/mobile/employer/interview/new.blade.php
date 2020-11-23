@@ -78,8 +78,8 @@
  
             <div class="slot form_field">
                 <div class="form_input w100">
-                    <div class="slots ">
-                        <div class="slot s1 notbrak  topMargin borderline">
+                    <div class="slots textStart">
+                        <div class="slot s1 notbrak col-md-5 slotMargin topMargin borderline">
 
                             <div class="mb10 font-weight-bold">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot fl_right tk"></i></span></div>
                             <div class="time mt-2">
@@ -87,15 +87,15 @@
 
 
 		<div class="row  slotRowMargin">
-												<div class="col-2 slotColPadding slotFontSize mt-1 textCen">
+												<div class="col-2 slotColPadding slotFontSize mt-1 ">
 												
-																	<p>
+																	<p class="pRes pl-2">
            									Time
        													 </p>
 													</div>
   										<div  class="col-4  slotColPadding"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot[1][start]" twelvehour="true"  required /></div>
  											 <div  class="col-2 slotColPadding mt-1 slotFontSize textCen"> 
-																		<p>
+																		<p class="pRes">
           											 To
        								 </p>
 														</div>
@@ -104,11 +104,11 @@
 											</div>
 
                             
-                            <div class="date mt-3 topMargin w100 d-flex">
-                                <span class="notbrak mr-1">Date</span>
-                                <input  type="date"  name="date[1]" style="margin-left:2px"  class=" form-control form-control-sm  notbrak checkstatusDate"  autocomplete="off"  required />
+                            <div class="row date mt-3 topMargin w100 d-flex">
+                                <span class="col-2 pr-0 notbrak ml-2 pt-1 pRes">Date</span>
+                                <input  type="date"  name="date[1]" style="margin-left:2px"  class="m0   col-9 form-control form-control-sm  notbrak checkstatusDate"  autocomplete="off"  required />
 																										</div>																			
-                              <div class="mt-3 m_no_i ">
+                              <div class="mt-3 m_no_i ml-2">
                                 <label class="w80 notbrak my10" style="margin-right: 5px;">Maximum number of interviewees:</label>
                                 <div style="" class="form_input">
                                     <select name="maximumnumber[1]" class="browser-default form_select" >
@@ -192,7 +192,11 @@
 .textCen {
     text-align: center;
 }
-
+.textStart{text-align: start;}
+.slotMargin{
+	    margin-right: 0%;
+    margin-left: 0%
+}
 	.slotRowMargin{
 		 margin-left:0;
 			margin-right:0;
@@ -225,6 +229,28 @@
     margin-left: 5px;
     margin-right: 5px;
 }
+.pRes{
+	   
+     
+				
+}
+@media screen and (max-width: 343px) {
+   .pRes {
+    font-size: 11px;
+    font-weight: bold; 
+		
+		
+		}
+}
+
+@media screen and (min-width: 700px) {
+  .slotMargin {
+     margin-right: 4%;
+    margin-left: 4%
+  }
+
+
+
 
 </style>
 @stop
@@ -239,8 +265,9 @@
 
 //   ============================================= Code commented for adding new slot on click function =============================================
 
+/*
 
-// $("input[type=number]").bind('keyup input', function(){
+// $("input[type=number]").bind('keyup input', function(){ 
 //    // alert("fired");
 //    console.log("This value",this.value);
 //     if(this.value>20 || this.value <1){
@@ -314,23 +341,23 @@
 //     $('#slotsCounter').val(this.value);
 //     }
 
-// });
+ // });  */
 
-//   ============================================= Code commented for adding new slot on click function =============================================
+/* //   ============================================= Code commented for adding new slot on click function =============================================
 
-// ============================================= Added new button start =============================================
+// ============================================= Added new button start ============================================= */
+
+
+
 
 var i = 2;
 $(".addSlot").bind('click', function(){
- 
-   
-
     var timeValue = $('.checkstatus').val();
     var timeEndValue = $('.checkstatus1').val();
     var timeDateValue = $('.checkstatusDate').val();
     var checkstatusjq = $('.checkstatusjq').last().val();
     var array = [timeValue,timeEndValue,timeDateValue];
-    console.log(array);
+    // console.log(array);
 
 if($.inArray(checkstatusjq, array)){
     if(($('.ui-timepicker-viewport li a').text()) == timeValue ){
@@ -343,9 +370,10 @@ if($.inArray(checkstatusjq, array)){
 
     if(i <= 20){
         i=i;
-            var slot  = '<div class="slot s'+i+' notbrak m_rb20 borderline">';
 
-                slot  += '<div class="mb10  dynamicTextStyle font-weight-bold">Interview Slot '+i+' ';
+								
+            var slot  = '<div class="slot s'+i+' col-md-5 slotMargin  notbrak m_rb20 borderline">';
+          slot  += '<div class="mb10  dynamicTextStyle font-weight-bold">Interview Slot '+i+' ';
                 slot  += '<i id = "deleteSlot" class="fas fa-trash deleteSlot'+i+' fl_right">';
 				slot  += '</i>'; 
 				                                 
@@ -362,26 +390,31 @@ if($.inArray(checkstatusjq, array)){
 				slot  += '</div>';
 				slot  += '</div>';
 
+
              slot  += '<div class="mb10  dynamicTextStyle font-weight-bold">Interview Slot '+i+' ';
-               slot  += '<i id ="deleteSlot" class="fas fa-trash deleteSlot'+i+' fl_right">';
+               slot  += '<i class="fas fa-trash deleteSlot deleteSlot_'+i+' fl_right">';
                 slot  += '</i>';  
-																                                 
-																slot  += '</div>';		
+																slot  += '</div>';					
 																slot  += '<div class="time mt-2">';
 																
-																slot  += '<div style="display:flex;" class="form-group  w-100">';
-																slot  += '	<p class="mr-1">		 Time </p>';
-																slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown  checkstatusjq" autocomplete="off" name="slot['+i+'][start]"  required /></div>';
+													
+																slot  += '<div class="row  slotRowMargin">';
+												  		slot  += '	<div class="col-2 slotColPadding slotFontSize mt-1 textCen">  <p class="pRes">Time</p></div> ';
+															
+																slot  += '<div class="col-4  slotColPadding"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown   autocomplete="off" name="slot['+i+'][start]" twelvehour="true" required /></div>';
 																
-																slot  += '	<p style="margin:5px">		 To </p>';
+																slot  +='	<div class="col-2 slotColPadding slotFontSize mt-1 textCen">  <p class="pRes">To</p></div> ';
 																
-																slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot['+i+'][end]"  required /></div>';
+																slot  += '<div class="col-4 slotColPadding"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot['+i+'][end]" twelvehour="true" required /></div>';
 																slot  += '</div>';
+
+
+
 																slot  += '</div>';
 
 																
                 slot  += '<div class="date topMargin mt-3 w100 d-flex">';
-                slot  += '<span class="notbrak mr-1">Date</span>';
+                slot  += '<span class="notbrak mr-1 pRes pt-1">Date</span>';
                 slot  += '<input type="date" name="date['+i+']" class="form-control form-control-sm  notbrak checkstatusDate" autocomplete="off" size="33" required />';
                 slot  += '</div>';
                 slot  += '<div class="m_no_i mt-3">';
@@ -414,14 +447,14 @@ if($.inArray(checkstatusjq, array)){
                             slot  += '  </div>';
                 slot  += '</div>';
                 slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
-				
+									 i++;
 						  $('.slots').append(slot);
         $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
         $('input.timepicker').timepicker({});
         $('#slotsCounter').val(this.value);
         $('input, select').styler();
-     i++;
-    }
+   
+     }
 
     else  {
         return false;
@@ -435,7 +468,7 @@ if($.inArray(checkstatusjq, array)){
 //     $( ".checkStatusError" ).show().delay(4000).fadeOut('slow');
 //     console.log(timeValue);
 // }
-
+console.log(i);
 $('i').click(function(){
     $(this).closest('.slot').remove();
 });
@@ -450,8 +483,7 @@ $('i').click(function(){
 
 // ============================================= Deleting Slot FUnction =============================================
 
-$('.deleteSlot').click(function(){
-
+$('.slots').on('click','.deleteSlot', function(){
 
     $(this).closest('.slot').remove();
 

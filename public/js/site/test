@@ -1,0 +1,91 @@
+     <div class="slot form_field">
+                <div class="form_input w100">
+                    <div class="slots ">
+                        <div class="slot s1 notbrak  topMargin borderline">
+
+                            <div class="mb10 font-weight-bold">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot fl_right tk"></i></span></div>
+                            <div class="time mt-2">
+
+
+
+		<div class="row  slotRowMargin">
+												<div class="col-2 slotColPadding slotFontSize mt-1 textCen">
+												
+																	<p>
+           									Time
+       													 </p>
+													</div>
+  										<div  class="col-4  slotColPadding"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot[1][start]" twelvehour="true"  required /></div>
+ 											 <div  class="col-2 slotColPadding mt-1 slotFontSize textCen"> 
+																		<p>
+          											 To
+       								 </p>
+														</div>
+													<div  class="col-4 slotColPadding"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown  " autocomplete="off" name="slot[1][end]" twelvehour="true" required />
+    					  </div>
+											</div>
+
+                            
+                            <div class="date mt-3 topMargin w100 d-flex">
+                                <span class="notbrak mr-1">Date</span>
+                                <input  type="date"  name="date[1]" style="margin-left:2px"  class=" form-control form-control-sm  notbrak checkstatusDate"  autocomplete="off"  required />
+																										</div>																			
+                              <div class="mt-3 m_no_i ">
+                                <label class="w80 notbrak my10" style="margin-right: 5px;">Maximum number of interviewees:</label>
+                                <div style="" class="form_input">
+                                    <select name="maximumnumber[1]" class="browser-default form_select" >
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                        <option value="13">13</option>
+                                        <option value="14">14</option>
+                                        <option value="15">15</option>
+                                        <option value="16">16</option>
+                                        <option value="17">17</option>
+                                        <option value="18">18</option>
+                                        <option value="19">19</option>
+                                        <option value="20">20</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>
+
+                    <input type="hidden" name="slotsCounter" id="slotsCounter" value="1">
+                    <input type="hidden" name="slotsCounter2" id="slotsCounter2" value="1">
+                </div>
+            </div>
+
+            <div class="form_field">
+                <span class="form_label"></span>
+                <div class="form_input">
+                    <div class="general_error error to_hide">&nbsp;</div>
+                </div>
+            </div>
+
+            <div class="interviewSlot">
+                <button class="btn btn-primary btn-sm addSlot"> Add Interview slot</button>
+            </div>
+
+            <div class="fomr_btn act_field center text-center">
+                {{-- <span class="form_label"></span> --}}
+                {{-- <input type="type" value="academic" /> --}}
+                <button class="btn mt-4 btn-cyan btn-sm  saveNewBooking" >Save</button>
+            </div>
+
+        </form>
+        </div>

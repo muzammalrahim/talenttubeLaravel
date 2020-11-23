@@ -10,37 +10,39 @@
 
         <form method="POST" name="login_booking_form" class="login_booking_form newJob job_validation">
             @csrf
-            <div style="" class="job_title form_field">
-                <span class="form_label">Booking ID :</span>
-                <div class="form_input">
-                    <input type="text" value="" name="bookingid" class="" required>
-                    <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
+
+
+				
+
+																<div class="form-group row">
+                    <label class="col-sm-2 col-form-label ">Booking ID</label>
+                    <div class="col-sm-10">
+                      <input type="text" name="bookingid" class="form-control" value=""  >
+                      <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
+                    </div>
                 </div>
 
+            <div class="job_title textCen marginB form_field w20">
+                <span class="form_label  ">Or</span>
             </div>
 
-            <div class="job_title form_field w20">
-                <span class="form_label textCenter2 ">Or</span>
-            </div>
+
+												<div class="form-group row job_title form_field">
+														<label class="col-sm-2 col-form-label">Email </label>
+														<div class="col-sm-10">
+																	<input type="email" name="email" class="form-control" value="" required>
+																	<div id="email_error" class="error field_error to_hide">&nbsp;</div>
+														</div>
+												</div>
 
 
-
-            <div class="job_title form_field">
-                <span class="form_label">Email </span>
-                <div class="form_input">
-                    <input type="email" value="" name="email" class="w20" required>
-                    <div id="email_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
-            <div class="job_title form_field">
-                <span class="form_label">Password </span>
-                <div class="form_input">
-                    <input type="password" value="" name="password" class="w20" required>
-                    <div id="password_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
+<div class="form-group row">
+														<label class="col-sm-2 col-form-label">Password  </label>
+														<div class="col-sm-10">
+																	<input type="password" name="password" class="form-control" value="" required>
+																	<div id="password_error" class="error field_error to_hide">&nbsp;</div>
+														</div>
+												</div>
 
         <div class="form_field">
             <span class="form_label"></span>
@@ -50,10 +52,10 @@
         </div>
 
 
-            <div class="fomr_btn act_field">
+            <div class="fomr_btn act_field text-center">
                 <span class="form_label"></span>
                 {{-- <input type="type" value="academic" /> --}}
-                <button class="btn btn-cyan btn-sm  ml-5 loginEditInterview">Login</button>
+                <button class="btn btn-cyan btn-sm loginEditInterview">Login</button>
             </div>
 
         </form>
@@ -81,6 +83,10 @@ html, body {
   height: 100%;
  background: #f3f5f9;
 }
+.marginB{
+	 
+		 margin-bottom:3%;
+}
 .notbrak{
     display: inline-block;
 }
@@ -97,7 +103,9 @@ html, body {
    margin-left: 40%;
    padding-bottom: 10px !important;
 }
-
+ .textCen{
+		 text-align: center;
+	}
 .dynamicTextStyle{
     margin-left: 5px;
     margin-right: 5px;

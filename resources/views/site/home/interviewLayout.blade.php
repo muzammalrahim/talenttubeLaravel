@@ -8,6 +8,13 @@
 		<h4 class="font-weight-bold text-white">Interview Concierge Bookings</h4>
 	</div> 
 
+	<div class="row">
+		<div class="col-md-2">  </div>
+	</div>
+	{{-- @dump($data['ab']); --}}
+	
+	<!-- @dump( $data ); -->
+
 	{{-- @dump( $data['Interviews_booking']); --}}
     
     <div class="successMsgDeleteBooking alert alert-success d-none" role="alert">

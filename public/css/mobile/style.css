@@ -92,7 +92,9 @@ i#logoOverImg{
 /*================================= Job Header =================================*/
 
 .card-header.jobAppHeader{
-	background: #d5dce6;
+	/* background: #d5dce6; */
+background: 	#254c8efa;
+color: white;
 }
 .jobAppH6{
 	color: #254c8e;
@@ -101,6 +103,7 @@ i#logoOverImg{
     font-size: 20px;
     text-align: center;
 }
+.boxSize{box-sizing: content-box;}
 
  .job_anchors{
 	

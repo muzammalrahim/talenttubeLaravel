@@ -1,5 +1,5 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster')
+@extends('mobile.user.usermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
@@ -7,30 +7,68 @@
 @stop
 
 @section('content')
-<div class="">
-    <div class="heading icon_head_browse_matches">Select Job Seekers to send them notifications</div>
+<div class="card">
 
+<div class="card-header jobAppHeader text-center icon_head_browse_matches">Select Job Seekers to send them notifications</div>
+
+<div class="card-body">
+	<div class="">
+    
+				<div >
+    <a class="btn btn-xs btn-info w5 text-left  btn-size" href="{{route('Minterviewconcierge.created')}}"><i  style=""class="far fa-arrow-alt-circle-left"></i>  Go Back</a>
+</div>
     <hr class="new">
       {{-- @dump($interview); --}}
     @php
     session()->put('bookingid',$interview->id);
     @endphp
-    <a class="button w10 small turquoise" href="{{route("interviewconcierge.created")}}">Go Back</a>
 
-    <table class="table table-bordered cbxDataTable" id="dataTable">
-        <thead>
-            <tr style="text-align: center" >
-                <th><input name="select_all" value="0" id="cbx" type="checkbox" /></th>
-                <th>Surname</th>
-                <th>city</th>
-                <th>email</th>
-                <th>phone</th>
-                <th>profile</th>
+<div class="table-responsive">
+ 
+				<table  class="tableResponsive table table-bordered cbxDataTable" id="dataTable" >
+         <thead>
+            <tr>   
+                <th  scope="col"><input name="select_all" value="0" id="cbx" type="checkbox" /></th>
+                <th  scope="col">Surname</th>
+                <th  scope="col">city</th>
+                <th  scope="col">email</th>
+                <th scope="col">phone</th>
+                <th scope="col">profile</th>
             </tr>
         </thead>
-      </table>
 
-      <butto class="button w20 small colorSendButton sendNotification turquoise">Send notifications</butto>
+<tbody>
+      <tr>
+        <th >1</th>
+        <td>Lorem ipsum dolor</td>
+        <td>Lorem ipsum dolor</td>
+        <td>Lorem ipsum dolor</td>
+								<td>Lorem ipsum dolor</td>
+        <td>Lorem ipsum dolor</td>
+      </tr>
+      <tr>
+        <th >2</th>
+         <td>Lorem ipsum dolor</td>
+        <td>Lorem ipsum dolor</td>
+        <td>Lorem ipsum dolor</td>
+								<td>Lorem ipsum dolor</td>
+        <td>Lorem ipsum dolor</td>
+      </tr>
+      <tr>
+        <th >3</th>
+        <td>Lorem ipsum dolor</td>
+        <td>Lorem ipsum dolor</td>
+        <td>Lorem ipsum dolor</td>
+								<td>Lorem ipsum dolor</td>
+        <td>Lorem ipsum dolor</td>
+      </tr>
+    </tbody>
+    <!--Table body-->
+
+
+      </table>
+</div>
+      <button class="button w20 small colorSendButton sendNotification turquoise">Send notifications</button>
 </div>
 
 <div class="form_field">
@@ -49,6 +87,9 @@
     </form>
 </div>
 
+</div>
+</div>
+
 @stop
 
 @section('custom_footer_css')
@@ -61,7 +102,23 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 
 <style>
-
+div#dataTable_length {
+    float: left;
+				padding-top: 2.4%;
+				 font-size: 2vw;
+}
+div#dataTable_filter {
+   
+   font-size: 2vw;
+				float:right;
+				margin-right: 1%;
+}
+.btn.btn-xs {
+    padding: .15rem 0.3rem;
+}
+.btn-size{
+		font-size:1.9vw
+}
 .d-none{
     display: none;
 }
@@ -128,6 +185,13 @@ text-align: center;
   color: White;
 }
 
+@media only screen and (max-width: 500px) {
+.tableResponsive{
+    width: 495px !important;
+    margin: 0 auto !important;
+
+}
+}
 </style>
 @stop
 
@@ -233,6 +297,30 @@ var table = jQuery('#dataTable').DataTable({
          }
       }],
     });
+
+
+
+
+jQuery(function(){
+function rescaletable(){
+var width = jQuery('.table-responsive').width();
+var scale;
+if (width < 500) 
+{
+scale = width / 500;
+} else{
+							scale = 1.0;
+					}
+jQuery('.tableResponsive').css('transform', 'scale(' + scale + ')');
+jQuery('.tableResponsive').css('-webkit-transform', 'scale(' + scale + ')');
+jQuery('.tableResponsive').css('transform-origin', '0 0');
+jQuery('.tableResponsive').css('-webkit-transform-origin', '0 0');
+}
+rescaletable();
+jQuery( window ).resize(function() { rescaletable(); });
+
+});
+
 
 </script>
 @stop

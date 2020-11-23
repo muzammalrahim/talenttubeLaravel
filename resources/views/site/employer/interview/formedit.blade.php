@@ -104,6 +104,7 @@
                             </div>
                             <div class="time">
                                 <div class="notbrak">Time</div>
+                                
                                 <div class="notbrak"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" value="slot[{{$key+1}}]" required /></div>
                                 <div class="notbrak">To</div>
                                 <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][end]" size="8" required /></div>

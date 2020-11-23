@@ -3,16 +3,22 @@
 
 @section('content')
 <div class="">
-    <div class="heading icon_head_browse_matches">Good news, your booking is now created, booking ID {{$interview->uniquedigits}}. You can now Select Job Seekers from your liked list to invite to interview, manually enter own Job Seeker details below to receive notification about the interviews, or send the below link directly to anyone you'd like interview</div>
+    <p class="font_s">Good news, your booking is now created, booking ID {{$interview->uniquedigits}}. You can now Select Job Seekers from your liked list to invite to interview, manually enter own Job Seeker details below to receive notification about the interviews, or send the below link directly to anyone you'd like interview</p>
     <hr class="new">
-    <div class="">
-        <a  class="button w50" href="{{route('interviewconcierge.getlikedlistjobseekers')}}">Click here to invite job Seekers from your liked list</a>
-        <a  class="button w50"  href="{{route('interviewconcierge.manualjobseekers')}}">Click here to manually enter Job Seeker contact details</a>
-        <a  class="button w50"  href="{{route('interviewconcierge.url')}}">Click here to access the unique URL to send to Job Seekers</a>
+    <div>
+        <div> 
+            <a  class="w50 Afont_s" href="{{route('Minterviewconcierge.getlikedlistjobseekers')}}">Click here to invite job Seekers from your liked list</a>
+        </div>
+        <div> 
+          <a   class="w50 Afont_s"  href="{{route('Minterviewconcierge.manualjobseekers')}}">Click here to manually enter Job Seeker contact details</a>
+        </div>
+        <div>
+          <a  class="w50 Afont_s"  href="{{route('Minterviewconcierge.url')}}">Click here to access the unique URL to send to Job Seekers</a>
+        </div>
         @php
          session()->put('bookingid',$interview->id);
         @endphp
-        <a  class="button w50"  href="{{route('interviewconcierge.formedit')}}">Click here to edit Booking ID</a>
+        <a  class="w50 Afont_s"  href="{{route('Minterviewconcierge.formedit')}}">Click here to edit Booking ID</a>
     </div>
 </div>
 
@@ -22,6 +28,10 @@
 
 
 <style>
+a:hover {
+  text-decoration: underline;
+		background-color: yellow;
+}
 .notbrak{
     display: inline-block;
 }
@@ -73,7 +83,14 @@ hr.new{
   background-color: rgb(52, 49, 238);
   color: White;
 }
+.font_s{
+	font-size:14px;
+}
 
+.Afont_s{
+	font-size:14px;
+	text-decoration:underline;
+}
 
 </style>
 @stop

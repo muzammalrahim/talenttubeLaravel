@@ -1,5 +1,5 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster')
+@extends('mobile.user.usermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
@@ -15,8 +15,7 @@
     @php
     session()->put('bookingid',$interview->id);
     @endphp
-    <a class="button small turquoise" href="{{route("interviewconcierge.created")}}">Go Back</a>
-
+    <a class="button w10 small turquoise" href="{{route('interviewconcierge.created')}}">Go Back</a>
     <table class="table table-bordered cbxDataTable" id="dataTable">
         <thead>
             <tr style="text-align: center" >

@@ -359,7 +359,7 @@ class InterviewController extends Controller
         // mobile/employer/interview/edit
     }
 
-    public function bookingurl(){
+    public function Mbookingurl(){
         // dd(URL::full());
         $user = Auth::user();
         // $interview = Interview::where('uniquedigits',"12340")->first();
@@ -381,11 +381,11 @@ class InterviewController extends Controller
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.url', $data);
-        // site/employer/myjobs
+        // site/employer/interview/url
     }
 
 
-    public function manualjobseekers(){
+    public function Mmanualjobseekers(){
         // dd(URL::full());
         $user = Auth::user();
         // $interview = Interview::where('uniquedigits',"12340")->first();
@@ -406,8 +406,8 @@ class InterviewController extends Controller
         $data['interview'] = $interview;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
-        return view('site.employer.interview.manualaddjobseekers', $data);
-        // site/employer/interview/manualaddjobseekers
+        return view('mobile.employer.interview.manualaddjobseekers', $data);
+        // mobile/employer/interview/manualaddjobseekers
     }
 
     public function Mcreated(){
@@ -435,7 +435,7 @@ class InterviewController extends Controller
     }
 
 
-    public function getlikedjobseekers(){
+    public function Mgetlikedjobseekers(){
         // dd(URL::full());
         $user = Auth::user();
         // $interview = Interview::where('uniquedigits',"12340")->first();
@@ -462,9 +462,9 @@ class InterviewController extends Controller
         $data['interview'] = $interview;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
-        return view('site.employer.interview.likedlistjobseekers', $data);
+        return view('mobile.employer.interview.likedlistjobseekers', $data);
         
-        // site/employer/interview/likedlistjobseekers
+        // mobile/employer/interview/likedlistjobseekers
     }
 
     public function getlikedlistjobseekersdatatable(Request $request){
