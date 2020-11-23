@@ -7,6 +7,9 @@
     <div class="card-header reponsive_header jobAppHeader icon_head_browse_matches head_concierge_botmline">Interview Concierge - Editing Booking Schedule</div>
     <div style="background: #dddfe3;" class="card-body add_new_job">
 
+
+
+
         <form method="POST" name="new_job_form" class="new_booking_form newJob job_validation">
             @csrf
             <div class="job_title form_field">
@@ -75,16 +78,17 @@
                 <label class="form_label slotFontSize">Interview Slots:</label>
                
 															 <div class="form_input w100">
-                    <div class="slots">
+                    <div class="slots text-left">
                         @php
                         $slots = $interview->slots;
                         @endphp
                         @foreach ($slots as $key => $slot)
                       
-                        <div class=" slot s{{$key+1}} borderline m_rb20">
+                        <div class=" slot s{{$key+1}}  col-md-5 borderline m_rb20">
                             <div class="textCenter2 slotFontSize">Interview Slot <span class="test">{{$key+1}}</span> 
                               <i class="fas fa-trash fl_right deleteSlot"></i>
                             </div>
+
 
 						<div class="row  slotRowMargin">
 												<div class="col-2 slotColPadding slotFontSize mt-1">
@@ -95,6 +99,8 @@
 													</div>
   										<div  class="col-4  slotColPadding"><input class="form-control form-control-sm timepicker timepicker-without-dropdown slotFontSize" type="text" value="{{$slot->starttime}}"  name="slot[{{$key+1}}][start]"  twelvehour="true" value="slot[{{$key+1}}]" required /></div>
  											 <div  class="col-2 slotColPadding mt-1 slotFontSize textCen"> 
+
+											
 																		<p>
           											 To
        								 </p>
@@ -121,15 +127,14 @@
 
 																			<div class="col-9 slotColPadding slotFontSize mt-1">
 												
-																							<p>
-           														Maximum number of interview:
-       													 </p>
-																							</div>
+																							<p>	Maximum number of interview:</p>
+           															 
+																			</div>
 
-  																			<div class="col-3 slotColPadding mt-1"> {{ Form::select('salary', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'maximumnumber['.($key+1).']', 'class' => '']) }}
+  																			<div class="col-3 slotColPadding mt-1"> {{ Form::select('salary', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'maximumnumber['.($key+1).']', 'class' => 'sc']) }}
 																					</div>
 																					
-            
+       
 																			</div>
 
 
@@ -168,7 +173,6 @@
 
 
 
-
 @stop
 
 @section('custom_footer_css')
@@ -181,6 +185,11 @@
 
 <style>
 	
+	.scrollable-menu {
+    height: auto;
+    max-height: 200px;
+    overflow-x: hidden;
+}
 	.textCen{
 		text-align:center;
 	}
@@ -197,11 +206,11 @@
 			padding-left:0;
 }
 .slotFontSize {
-    font-size: 3vw;
+    font-size: 2.5vw;
 }
 	.reponsive_header{
 		
-    font-size: 4vw;
+    font-size: 3vw;
 				text-align: center;
 				padding-bottom: 5%;
 
@@ -254,7 +263,21 @@
 }
 .interviewSlot:hover{background: #142d69;color: white;}
 
-.w_100{  width:100%}
+.sc{ 
+	
+ height: auto;
+    max-height: 60px;
+   
+			    position: relative;
+    list-style: none;
+    overflow: hidden auto!important;;
+			}
+
+.w_100{ 
+	
+	 width:100%
+		}
+
 
 </style>
 @stop
@@ -280,10 +303,10 @@ var i = Number(vals)+1;
 $(".addSlot").bind('click', function(){
     if(i <= 20){
         i=i;
-            var slot ='<div class="w_100 slot s'+i+' notbrak borderline m_rb20 addNewInterviewSlot">';
+            var slot ='<div class="slot s'+i+' col-md-5 notbrak borderline m_rb20 w_100 addNewInterviewSlot">';
 
                 slot  += '<div class="textCenter2 slotFontSize">Interview Slot '+i+' ';
-                slot  += '<i  class="fas fa-trash fl_right deleteSlot">'
+                slot  += '<i  class="fas fa-trash fl_right deleteSlot deleteSlot_">'
                 slot  += '</i>'
 																slot  += '</div>';
 																
@@ -317,7 +340,7 @@ $(".addSlot").bind('click', function(){
 																	
 
                     slot  += ' <div class="col-3 slotColPadding mt-1" >';
-                        slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
+                        slot  += '                  <select name="maximumnumber['+i+']" class="form_select sc" >';
                             slot  += '                      <option value="1">1</option>';
                             slot  += '                       <option value="2">2</option>';
                             slot  += '                       <option value="3">3</option>';
@@ -355,7 +378,7 @@ $(".addSlot").bind('click', function(){
                 slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
 
 								
-						  $('.slots').append(slot);
+        $('.slots').append(slot);
         $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
         $('input.timepicker').timepicker({});
         $('#slotsCounter').val(this.value);
@@ -383,7 +406,7 @@ $('i').click(function(){
 
 // ============================================= Delete Slot JS =============================================
 
-$('i').click(function(){
+$('.slots').on('click','.deleteSlot', function(){
 
     $(this).closest('.slot').remove();
 });
@@ -392,13 +415,14 @@ $('i').click(function(){
 // ============================================= Delete Slot JS end here =============================================
 
 $(document).ready(function(){
-    // $('input.timepicker').timepicker({});
+   $('input.timepicker').timepicker({});
     // $('input, select').styler();
+
 
     $('.updateNewBooking').on('click',function() {
         event.preventDefault();
-        var formData = $('.new_booking_form').serializeArray();
-        // $('.updateNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+								var formData = $('.new_booking_form').serializeArray();
+ // $('.updateNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
         console.log(' formData ', formData);
         $('.general_error').html('');
         $.ajax({

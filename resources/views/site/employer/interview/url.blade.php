@@ -1,5 +1,5 @@
-{{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster')
+
+@extends('mobile.user.usermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
@@ -7,20 +7,18 @@
 @stop
 
 @section('content')
-<div class="">
-    <div class="heading icon_head_browse_matches">Click on the link to copy it to your clipboard</div>
-    <hr class="new">
-    <div class="">
+<div class="card mb-3 shadow mb-3 bg-white rounded job_row jobApp_">
+  <div class="card-header jobAppHeader p-2 jobInfoFont text-center">
+    <h5>Send url to job seeker</h5>
+  </div>
 
-    <a  class="button w60 copy_text" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
+  <div class="card-body">
+    <div class="heading icon_head_browse_matches mb-2">Click on the link to copy it to your clipboard</div>
+    <div class="text-underline">
+    <a  class="w60 copy_text" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
     {{-- <a  class="button w50" href="{{$interview->url}}">{{$interview->url}}</a> --}}
-
-
     </div>
-
-
-
-
+  </div>
 
 </div>
 
@@ -38,60 +36,12 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 
 <style>
-.notbrak{
-    display: inline-block;
+.text-underline{
+  text-decoration: underline;
 }
-
-.leftMargin{
-    margin-left: 10px;
+.heading.icon_head_browse_matches {
+    font-size: 14px;
 }
-
-.topMargin{
-    margin-top: 10px;
-}
-
-.textCenter{
-   margin-left: 40%;
-   padding-bottom: 10px !important;
-}
-
-.dynamicTextStyle{
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.heading{
-
-    font-size: 1.4em !important;
-    margin-bottom: 10px;
-    line-height: 26pt;
-}
-
-hr.new{
-    border-top: 1px dotted #8c8b8b;
-	border-bottom: 1px dotted #fff;
-
-}
-
-
-
-.button {
-  background-color: rgb(31, 120, 236);
-  border-radius: 10px;
-  color: white;
-  padding: .5em;
-  text-decoration: none;
-  margin-top: 20px !important;
-  margin-bottom: 20px !important;
-  display:block
-}
-
-.button:focus,
-.button:hover {
-  background-color: rgb(52, 49, 238);
-  color: White;
-}
-
 
 </style>
 @stop

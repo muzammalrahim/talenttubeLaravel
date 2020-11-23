@@ -94,7 +94,7 @@
 
                      
                        
-                        <div class="slot s1 notbrak leftMargin topMargin">
+                        <div class="slot s1 notbrak leftMargin pSlot topMargin slotBorder ">
 
                             <div class="mb10">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot fl_right tk"></i></span></div>
 
@@ -188,11 +188,9 @@
 }
 
 .leftMargin{
-    margin-left: 10px;
+    margin-left: 7px;
 }
-.leftMargin2{
-    margin-left: 3%;
-}
+
 
 .topMargin{
     margin-top: 10px;
@@ -207,6 +205,25 @@
     margin-left: 5px;
     margin-right: 5px;
 }
+
+ .pSlot{
+					padding: 2% 1% 4% 15px;
+	}
+
+
+   .padding{
+									padding: 2% 1% 4%;
+			}
+
+  .slotBorder{  
+    border: 1px solid;
+    
+				}
+
+				.marginR{
+					margin-right:5px;
+				}
+
 
 </style>
 @stop
@@ -336,7 +353,7 @@ if($.inArray(checkstatusjq, array)){
 
     if(i <= 20){
         i=i;
-            var slot  = '<div class="slot s'+i+' notbrak m_rb20">';
+            var slot  = '<div class="slot s'+i+' notbrak  leftMargin topMargin padding slotBorder">';
                 slot  += '<div class="mb10 dynamicTextStyle">Interview Slot '+i+' ';
                 slot  += '<i id = "deleteSlot" class="fas fa-trash deleteSlot'+i+' fl_right">';
                 slot  += '</i>';                                  
@@ -381,12 +398,13 @@ if($.inArray(checkstatusjq, array)){
                             slot  += '  </div>';
                 slot  += '</div>';
                 slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
+																     i++;
         $('.slots').append(slot);
         $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
         $('input.timepicker').timepicker({});
         $('#slotsCounter').val(this.value);
         $('input, select').styler();
-     i++;
+
 
     }
 
@@ -416,10 +434,10 @@ $('i').click(function(){
 
 // ============================================= Deleting Slot FUnction =============================================
 
-// $('.deleteSlot').click(function(){
+ $('.deleteSlot').click(function(){
 
 
-//     $(this).closest('.slot').remove();
+    $(this).closest('.slot').remove();
 
 //    // var parentSlot =  $('.slot').parent();
 //    // var childSlot = parentSlot.children();
@@ -427,7 +445,7 @@ $('i').click(function(){
 //    // var childSlot =  parentSlot.children();
 //    // $(this).remove(childSlot);
 //    // console.log(childSlot);
-// });
+});
 
 // ============================================= Deleting Slot FUnction end here =============================================
 

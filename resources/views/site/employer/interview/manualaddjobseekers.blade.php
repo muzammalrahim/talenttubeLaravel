@@ -12,7 +12,8 @@
     @php
     session()->put('bookingid',$interview->id);
     @endphp
-    <a class="button w10 small turquoise" href="{{route("interviewconcierge.created")}}">Go Back</a>
+    <a class="button btn btn-info btn-rounded" href="{{route('interviewconcierge.created')}}">Go Back</a>
+			
     <div class="add_new_job">
 
         <form method="POST" name="login_booking_form1" class="login_booking_form1 newJob job_validation">

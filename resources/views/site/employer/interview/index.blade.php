@@ -14,8 +14,8 @@
     <div class="head icon_head_browse_matches">Welcome to Interview Concierge</div>
     <div class="add_new_job">
         <div class="job_row_heading jobs_filter"></div>
-        <a class="w50" href="{{route('interviewconcierge.new')}}">Click here to create a new Booking Schedule</a> <br>
-        <a class="w50" href="{{route('interviewconcierge.edit')}}">Click here to edit an existing Booking Schedule</a>
+        <a  class="w50 " href="{{route('interviewconcierge.new')}}">Click here to create a new Booking Schedule</a> <br>
+        <a  class="w50" href="{{route('interviewconcierge.edit')}}">Click here to edit an existing Booking Schedule</a>
     </div>
 
     <h4 class="text-center py-2 font-weight-normal"> My Booked Interviews</h4>

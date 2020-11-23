@@ -13,7 +13,7 @@
 	</div>
 	{{-- @dump($data['ab']); --}}
 	
-	@dump( $data );
+	<!-- @dump( $data ); -->
 
 	<div class="goHome text-center pb-3"> 
 		<a href="{{route('homepage')}}"> Click here to go home page</a>

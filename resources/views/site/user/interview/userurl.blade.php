@@ -163,7 +163,7 @@
 @section('custom_js')
 
 <script type="text/javascript">
-$('.selectTimeUrl').click(function(){
+jQuery('.selectTimeUrl').click(function(){
 	var timeStart = $(this).parents('.slot').find('.timepicker').val();
 	var timeEnd = $(this).parents('.slot').find('.timepicker1').val();
 	var datepicker = $(this).parents('.slot').find('.datepicker').val();
