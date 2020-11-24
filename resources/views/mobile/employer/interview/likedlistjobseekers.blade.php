@@ -36,7 +36,7 @@
                 <th scope="col">profile</th>
             </tr>
         </thead>
-
+<!-- 
 <tbody>
       <tr>
         <th >1</th>
@@ -63,7 +63,7 @@
         <td>Lorem ipsum dolor</td>
       </tr>
     </tbody>
-    <!--Table body-->
+    Table body -->
 
 
       </table>
@@ -293,7 +293,7 @@ var table = jQuery('#dataTable').DataTable({
          'orderable':false,
          'className': 'dt-body-center',
          'render': function (data, type, full, meta){
-             return '<input type="checkbox" name="cbx[]" value="'+ $('<div/>').text(data).html() + '">';
+          return '<input type="checkbox" name="cbx[]" value="'+ $('<div/>').text(data).html() + '">';
          }
       }],
     });

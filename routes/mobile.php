@@ -24,7 +24,7 @@ Route::post('join', 'Mobile\MobileController@join')->name('mJoin');
 Route::get('join', function () { return redirect('/m'); });
 Route::group(array('middleware' => ['auth']), function(){
 Route::get('profile', function () { return redirect('m/user/'.Auth::user()->username); })->name('mProfile');
-Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');
+Route::get('user/{username}', 'Mobile\MobileUserController@index')->name('mUsername');
 // User
 Route::get('step2', 'Mobile\MobileUserController@step2User')->name('mStep2User');
 Route::post('step2', 'Mobile\MobileUserController@Step2');

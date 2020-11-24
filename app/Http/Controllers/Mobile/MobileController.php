@@ -34,7 +34,9 @@ class MobileController extends Controller {
         $data['title'] = 'Home Page';
         $data['content_header'] = 'Content Header';
         $data['content'] = 'this is page content';
-        return view('mobile.home.home', $data);
+								return view('mobile.home.home', $data);
+								
+								// mobile/home/home
     }
 
  		

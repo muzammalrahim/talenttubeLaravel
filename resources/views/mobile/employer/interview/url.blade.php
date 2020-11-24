@@ -7,20 +7,13 @@
 @stop
 
 @section('content')
-<div class="">
-    <div class="heading icon_head_browse_matches">Click on the link to copy it to your clipboard</div>
-    <hr class="new">
-    <div class="">
-
-    <a  class="button w60 copy_text" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
-    {{-- <a  class="button w50" href="{{$interview->url}}">{{$interview->url}}</a> --}}
-
-
-    </div>
-
-
-
-
+<div class="card">
+    <div class="card-header responsive_header  jobAppHeader icon_head_browse_matches head_concierge_botmline font-weight-bold pb-3">Click on the link to copy it to your clipboard</div>
+      
+      <div class="card-body ">
+          <a  class="mt-2 w60 copy_text" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
+          {{-- <a  class="button w50" href="{{$interview->url}}">{{$interview->url}}</a> --}}
+      </div>
 
 </div>
 

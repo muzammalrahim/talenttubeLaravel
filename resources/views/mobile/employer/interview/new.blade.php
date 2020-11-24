@@ -373,24 +373,8 @@ if($.inArray(checkstatusjq, array)){
 
 								
             var slot  = '<div class="slot s'+i+' col-md-5 slotMargin  notbrak m_rb20 borderline">';
-          slot  += '<div class="mb10  dynamicTextStyle font-weight-bold">Interview Slot '+i+' ';
-                slot  += '<i id = "deleteSlot" class="fas fa-trash deleteSlot'+i+' fl_right">';
-				slot  += '</i>'; 
-				                                 
-				slot  += '</div>';		
-				slot  += '<div class="time mt-2">';
+         	
 				
-				slot  += '<div style="display:flex;" class="form-group  w-100">';
-				slot  += '	<p class="mr-1">		 Time </p>';
-				slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown  checkstatusjq" autocomplete="off" name="slot['+i+'][start]"  required /></div>';
-				
-				slot  += '	<p style="margin:5px">		 To </p>';
-				
-				slot  += '<div class="notbrak"><input type="text" class="form-control form-control-sm timepicker timepicker-without-dropdown " autocomplete="off" name="slot['+i+'][end]"  required /></div>';
-				slot  += '</div>';
-				slot  += '</div>';
-
-
              slot  += '<div class="mb10  dynamicTextStyle font-weight-bold">Interview Slot '+i+' ';
                slot  += '<i class="fas fa-trash deleteSlot deleteSlot_'+i+' fl_right">';
                 slot  += '</i>';  
@@ -413,9 +397,9 @@ if($.inArray(checkstatusjq, array)){
 																slot  += '</div>';
 
 																
-                slot  += '<div class="date topMargin mt-3 w100 d-flex">';
-                slot  += '<span class="notbrak mr-1 pRes pt-1">Date</span>';
-                slot  += '<input type="date" name="date['+i+']" class="form-control form-control-sm  notbrak checkstatusDate" autocomplete="off" size="33" required />';
+                slot  += '<div class="row date topMargin mt-3 w100 d-flex">';
+                slot  += '<span class="col-2 pr-0 notbrak ml-2 pRes pt-1">Date</span>';
+                slot  += '<input type="date" name="date['+i+']" class="m0 col-9 form-control form-control-sm  notbrak checkstatusDate" autocomplete="off" size="33" required />';
                 slot  += '</div>';
                 slot  += '<div class="m_no_i mt-3">';
                     slot  += '<label class="w80 notbrak my10" style="margin-left: 5px;">Maximum number of interviewees:</label>';

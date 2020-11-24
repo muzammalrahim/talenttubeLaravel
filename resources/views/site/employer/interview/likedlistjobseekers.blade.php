@@ -1,5 +1,5 @@
-{{-- @extends('site.user.usertemplate') --}}
-@extends('mobile.user.usermaster')
+@extends('site.user.usermaster')
+{{-- @extends('mobile.user.usertemplate') --}}
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">

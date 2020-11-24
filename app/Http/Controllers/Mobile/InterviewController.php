@@ -380,8 +380,8 @@ class InterviewController extends Controller
         $data['interview'] = $interview;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
-        return view('site.employer.interview.url', $data);
-        // site/employer/interview/url
+        return view('mobile.employer.interview.url', $data);
+        // mobile/employer/interview/url
     }
 
 
