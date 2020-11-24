@@ -1,5 +1,5 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('mobile.user.usermaster')
+@extends('site.employer.employermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
@@ -11,7 +11,7 @@
     <div class="heading icon_head_browse_matches">Select Job Seekers to send them notifications</div>
 
     <hr class="new">
-      {{-- @dump($interview); --}}
+      {{-- @dump($title); --}}
     @php
     session()->put('bookingid',$interview->id);
     @endphp

@@ -97,15 +97,12 @@
                         <div class="slot s1 notbrak leftMargin pSlot topMargin slotBorder ">
 
                             <div class="mb10">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot fl_right tk"></i></span></div>
-
-                      
-
-                            <div class="time">
+                                <div class="time">
                                 <div class="notbrak">Time</div>
                                 <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot[1][start]" size="8" required /></div>
                                 <div class="notbrak">To</div>
                                 <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus1" autocomplete="off" name="slot[1][end]" size="8" required /></div>
-                            </div>
+                                </div>
                             <div class="date topMargin">
                                 <span class="notbrak">Date</span>
                                 <input type="text" name="date[1]" class="datepicker notbrak checkstatusDate"  autocomplete="off" size="8" required />
@@ -139,14 +136,12 @@
 
                             </div>
                         </div>
-
-
                     </div>
 
                     <div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>
 
-                    <input type="hidden" name="slotsCounter" id="slotsCounter" value="1">
-                    <input type="hidden" name="slotsCounter2" id="slotsCounter2" value="1">
+                    {{-- <input type="hidden" name="slotsCounter" id="slotsCounter" value="1"> --}}
+                    {{-- <input type="hidden" name="interview_id" id="" value="{{$interview->id}}"> --}}
                 </div>
             </div>
 

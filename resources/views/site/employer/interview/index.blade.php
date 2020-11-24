@@ -6,6 +6,8 @@
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 
+
+
 @stop
 
 @section('content')
@@ -21,37 +23,6 @@
     <h4 class="text-center py-2 font-weight-normal"> My Booked Interviews</h4>
 
     {{-- @dump($interview) --}}
-
-    
-      {{-- <h5 class="text-center"> {{ $int->title}}</h5> --}}
-
-{{--       <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
-          <thead>
-            <tr>
-              <th class="th-sm">Title </th>
-              <th class="th-sm">Position</th>
-              <th class="th-sm">Company</th>
-              <th class="th-sm">Mangers</th>
-              <th class="th-sm">Edit</th>
-           
-            </tr>
-          </thead>
-
-          @foreach ($interview as $int)
-          <tbody>
-            
-            <tr>
-              <td>{{$int->title}}</td>
-              <td>{{$int->companyname}}</td>
-              <td>{{$int->positionname}}</td>
-              <td>{{$int->additionalmanagers}}</td>
-              <td><a href="{{route('interviewconcierge.edit')}}"> <i class="fas fa-edit text-primary"></i></a></td>
-        
-            </tr>
-          </tbody>
-           @endforeach
-        </table> --}}
-
 
       <div class="row font-weight-bold p-2">
         {{-- <div class="col-md-2">Sr#</div> --}}
@@ -84,6 +55,14 @@
 
 <div class="cl"></div>
 </div>
+
+
+{{-- <a   class = "interviewConciergeRoute" >
+    <div class="interviewConcierge">Interview Concierge</div>
+</a> --}}
+
+
+{{-- @include('site.home.deleteSlotPop') --}}
 
 @stop
 
@@ -133,6 +112,7 @@ tbody {
  border:1px solid black;
   /*border-radius: 5px;*/
 }
+
 </style>
 
 @stop
@@ -145,7 +125,10 @@ tbody {
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
 
+
+
 <script type="text/javascript">
+
 
 </script>
 @stop

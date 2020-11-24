@@ -726,7 +726,7 @@ class HomeController extends Controller {
 
 
 
-            }
+            } 
         }
     }
 
@@ -738,20 +738,21 @@ class HomeController extends Controller {
     }
 
     public function userUniqueurl(Request $request){
-
          
         if (!empty( $request->url )){
             $interview = Interview::where('url',$request->url)->first();
             // dump( $interview->toArray() );
             // dump( $interview->slots->toArray() );
         }
-      
-
        // $data['user'] = $user;
        $data['interview'] = $interview;
        $data['title'] = 'My Jobs';
        $data['classes_body'] = 'myJob';
-       return view('site.user.interview.userurl', $data);  // site/user/interview/userurl
+       if ($this->agent->isMobile()) {
+            return view('mobile.user.interview.userurl', $data);  // site/user/interview/userurl
+        } else {
+         return view('site.user.interview.userurl', $data);  // site/user/interview/userurl   
+        }
        
    }
    
@@ -795,9 +796,18 @@ class HomeController extends Controller {
     }
 
     public function interViewSlotCreated(Request $request){
-        
+
         $data['classes_body'] = 'interViewCreated';
+
+         if ($this->agent->isMobile()) {
+
+        return view('mobile.home.interviewCreated' , $data);
+
+        }else{
         return view('site.home.interviewCreated' , $data);
+
+
+        }
     }
 
     
@@ -903,6 +913,23 @@ class HomeController extends Controller {
              
     }
 
+    public function deleteSlot(Request $request){
+
+            // dd($request->id);
+            $intSlotID = (int) $request->id;
+            
+            // dd( $intSlotID);
+            Slot::where('id',$intSlotID)->delete();
+
+            Interviews_booking::where('slot_id',$intSlotID)->delete();
+
+            return response()->json([
+            'status' => 1,
+            'message' => 'Interview Bookings Deleted Succesfully'
+        ]);
+
+             
+    }
 
 
 }

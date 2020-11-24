@@ -298,3 +298,6 @@ body.register.step2>div.jquery-modal.blocker.current>div#jobApplyModal {
     cursor: pointer;
 }
 .interviewConciergeRoute {color: white; text-decoration: none;}
+..pointer{
+  cursor: pointer;
+}
