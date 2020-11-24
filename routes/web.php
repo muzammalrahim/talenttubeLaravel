@@ -32,6 +32,7 @@ Route::get('/interviewCon',    'Site\HomeController@interviewConLayout')->name('
 Route::get('/noBookingMade',    'Site\HomeController@noBookingMade')->name('noBookingMade');
 
 Route::post('ajax/booking/deleteBooking',    'Site\HomeController@deleteBooking')->name('deleteBooking');
+Route::post('ajax/booking/deleteSlot',    'Site\HomeController@deleteSlot')->name('deleteSlot');
 Route::post('ajax/booking/sendEmailEmployer',    'Site\HomeController@sendEmailEmployer')->name('sendEmailEmployer');
 
 

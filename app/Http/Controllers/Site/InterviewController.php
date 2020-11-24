@@ -41,7 +41,7 @@ class InterviewController extends Controller
     public function index(){
         $user = Auth::user();
         // dd($user->id);
-        $interview = Interview::where('emp_id',$user->id)->get();
+        $interview = Interview::where('emp_id',$user->id)->orderBy('created_at', 'DESC')->get();
         $data['interview'] = $interview;
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
@@ -65,7 +65,9 @@ class InterviewController extends Controller
         $user = Auth::user();
         $data['user'] = $user;
         $data = $request->all();
-       //  dd($data);
+        
+        // dd($data);
+
         $rules = array(
             "title" => "required|string|max:255",
             "instruction" => "required|string",
@@ -122,6 +124,7 @@ class InterviewController extends Controller
        // dd($data['slot']);
         foreach ($data['slot'] as $key => $value) {
             $slot = new Slot;
+            // dd($slot);
             $slot->date = $data['date'][$key];
             $slot->maximumnumberofinterviewees = $data['maximumnumber'][$key];
             $slot->starttime =$value['start'];
@@ -463,7 +466,7 @@ class InterviewController extends Controller
 
         $data['user'] = $user;
         $data['interview'] = $interview;
-        $data['title'] = 'My Jobs';
+        $data['title'] = 'Interview Concierge';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.likedlistjobseekers', $data);
         
@@ -473,6 +476,8 @@ class InterviewController extends Controller
     public function getlikedlistjobseekersdatatable(Request $request){
         $records = array();
         $user = Auth::user();
+        // dd($user->id);
+
          // dd($request->toArray());
         // $records = User::select(['id', 'surname', 'city','email','phone','verified','created_at'])
         $records = DB::table('users')

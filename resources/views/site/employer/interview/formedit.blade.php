@@ -75,6 +75,7 @@
             </div>
 
             <input type="hidden" name="interviewURL" value="{{$interview->url}}">
+            {{-- <input type="hidden" name="interviewID" value="{{$interview->id}}"> --}}
 
 
          {{--    <div class="job_title form_field">
@@ -100,8 +101,10 @@
 
                         <div class="slot s{{$key+1}} notbrak m_rb20">
                             <div class="textCenter2">Interview Slot <span class="test">{{$key+1}}</span> 
-                                <i class="fas fa-trash fl_right deleteSlot"></i>
+                                <i class="fas fa-trash fl_right deleteSlotClck pointer"></i>
                             </div>
+
+                            <input type="hidden" class="SlotIDInputHidden" name="slotID" value="{{$slot->id}}">
                             <div class="time">
                                 <div class="notbrak">Time</div>
                                 
@@ -149,7 +152,7 @@
 </div>
 
 
-
+@include('site.home.deleteSlotPop')
 
 @stop
 
@@ -208,6 +211,9 @@
 }
 .interviewSlot:hover{background: #142d69;color: white;}
 
+.interviewConcierge {
+    background: #254c8e !important;
+}
 </style>
 @stop
 
@@ -373,24 +379,35 @@ else {
 
 // ============================================= Delete Slot JS =============================================
 
-$('i').click(function(){
+
+//  Commenting for opening popup on click
+
+$('.deleteSlot').click(function(){
     $(this).closest('.slot').remove();
 });
 
+//  Commenting for opening popup on click
+
+
+
 // ============================================= Delete Slot JS =============================================
 
-
-
 });
+
 
 // ============================================= Add new slot buttton end here =============================================
 
 // ============================================= Delete Slot JS =============================================
 
-$('i').click(function(){
+//  Commenting for opening popup on click
 
-    $(this).closest('.slot').remove();
-});
+
+// $('i').click(function(){
+
+//     $(this).closest('.slot').remove();
+// });
+
+//  Commenting for opening popup on click
 
 // ============================================= Delete Slot JS end here =============================================
 
@@ -444,6 +461,68 @@ $(document).ready(function(){
     });
 
 });
+
+// ================================= Delete Slot Popup Open onClick =================================
+
+if( $('#deleteSlotModal').length ){
+    var $deleteSlot = $('#deleteSlotModal').modalPopup({shClass: ''});
+    $('.deleteSlotClck').click(function(){
+        console.log(' open ');
+        $deleteSlot.open();
+        var deleteSlot2 = $(this).closest('.slot').find('.SlotIDInputHidden').val();
+        var slotIDPopup = $('.slotIDPopUp').val(deleteSlot2);
+        console.log(slotIDPopup);
+        return false;
+    });
+ }
+
+    $('#deleteSlot_confirm').click(function(){
+
+        var slotID = $('.slotIDPopUp').val();
+
+    
+        // $(this).closest('.slot').remove();
+
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+
+            $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/booking/deleteSlot',
+            data:{id: slotID},
+            success: function(data){
+                console.log(' data ', data);
+
+                if( data.status == 1 ){
+
+                $('#deleteSlotModal').close();
+
+                    // $(this).parent('body').find('.slot').remove();
+                    // $('.deletingSpinner').addClass('d-none');
+                    // $(".slot.form_field").load(".slot.form_field");
+
+                    // $('.successMsgDeleteBooking').removeClass('d-none');
+                    // setTimeout(function() {
+                    //    // $('.successMsgDeleteBooking') .addClass('d-none');
+                    //    location.reload();
+                    // }, 3000);
+
+                }else{
+                   
+                }
+
+            }
+        });
+
+    });
+
+// ================================= Delete Slot Pop up close onClick =================================
+
+    $('.close_hover').click(function() {
+        $('#deleteSlotModal').close();
+
+    });
+
+// ================================= Delete Slot Popup Open onClick =================================
 
 </script>
 @stop

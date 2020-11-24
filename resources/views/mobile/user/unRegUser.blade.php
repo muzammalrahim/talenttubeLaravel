@@ -27,8 +27,8 @@
 </head>
 <body class="hidden-sn grey-skin @yield('classes_body')" @yield('body_data')  >
 
- @include('mobile.header.header')
- @include('mobile.modals.jobsModal')
+ {{-- @include('mobile.header.header') --}}
+ {{-- @include('mobile.modals.jobsModal') --}}
 
   <!--Main Layout-->
   <main class="p-0">
