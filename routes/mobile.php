@@ -38,7 +38,6 @@ Route::post('ajax/uploadUserGallery', 'Mobile\MobileUserController@uploadUserGal
 
 // ======================================== JOb Seeker's Profile ========================================
 
-
 Route::get('mJobApplications', 'Mobile\MobileUserController@mJobApplications')->name('mJobApplications');
 Route::get('Mjobs', 'Mobile\MobileUserController@Mjobs')->name('Mjobs');
 Route::post('MjobsFilter', 'Mobile\MobileUserController@jobsFilter')->name('MjobsFilter');
@@ -134,26 +133,21 @@ Route::post('ajax/setGalleryPrivateAccess/{id}', 'Mobile\MobileUserController@se
 
 // ==================================== Interview concierge ====================================
 Route::get('Minterviewconcierge',       'Mobile\InterviewController@Mindex')->name('Minterviewconcierge');
-
 Route::get('Minterviewconcierge/created',       'Mobile\InterviewController@Mcreated')->name('Minterviewconcierge.created');
-
 Route::get('Minterviewconcierge/new',       'Mobile\InterviewController@Mnew')->name('Minterviewconcierge.new');
 Route::get('Minterviewconcierge/edit',       'Mobile\InterviewController@Medit')->name('Minterviewconcierge.edit');
 Route::post('ajax/booking/firstlogin',    'Mobile\InterviewController@MeditInterviewLogin')->name('MeditInterviewlogin');
-
-
 Route::post('ajax/booking/update',    'Mobile\InterviewController@MupdateInterviewBooking')->name('MupdateInterview');
-
-
 Route::get('Minterviewconcierge/getlikedlistjobseekers','Mobile\InterviewController@Mgetlikedjobseekers')->name('Minterviewconcierge.getlikedlistjobseekers');
-
-
+Route::get('interviewconcierge/Mgetlikedlistjobseekersdatatable','Mobile\InterviewController@Mgetlikedlistjobseekersdatatable')->name('Minterviewconcierge.getlikedlistjobseekersdatatable');
 Route::get('Minterviewconcierge/manualjobseekers','Mobile\InterviewController@Mmanualjobseekers')->name('Minterviewconcierge.manualjobseekers');
-
-Route::get('Minterviewconcierge/url','Mobile\InterviewController@Mbookingurl')->name('Minterviewconcierge.url');
-
+Route::get('Minterviewconcierge/created/url','Mobile\InterviewController@Mbookingurl')->name('Minterviewconcierge.url');
 Route::get('Minterviewconcierge/formedit','Mobile\InterviewController@Meditbookingform')->name('Minterviewconcierge.formedit');
 
+// Send notification
+
+Route::post('ajax/booking/Mmanualsendnotification',    'Mobile\InterviewController@Mmanualsendnotification')->name('Mmanualsendnotification');
+Route::post('ajax/booking/Msendnotification',    'Mobile\InterviewController@Msendnotification')->name('MsendnotificationInterview');
 
 });
 
@@ -198,10 +192,11 @@ Route::post('employer/step2',      'Site\EmployerController@Step2');
 
 Route::post('MinterviewConLogin',    'Mobile\MobileHomeController@MinterviewConLogin')->name('MinterviewConLogin');
 Route::get('/MinterviewCon',    'Mobile\MobileHomeController@MinterviewConLayout')->name('MinterviewCon');
-
-
-
 Route::get('/MnoBookingMade',    'Mobile\MobileHomeController@MnoBookingMade')->name('MnoBookingMade');
+Route::post('ajax/booking/MdeleteBooking',    'Mobile\MobileHomeController@MdeleteBooking')->name('MdeleteBooking');
+Route::post('ajax/booking/MsendEmailEmployer',    'Mobile\MobileHomeController@MsendEmailEmployer')->name('MsendEmailEmployer');
+Route::post('ajax/MrescheduleSlot',    'Mobile\MobileHomeController@MrescheduleSlot')->name('MrescheduleSlot');
+
 
 
 });

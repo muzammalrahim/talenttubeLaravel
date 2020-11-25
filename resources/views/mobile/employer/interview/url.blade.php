@@ -7,25 +7,17 @@
 @stop
 
 @section('content')
-<div class="">
-    <div class="heading icon_head_browse_matches">Click on the link to copy it to your clipboard</div>
-    <hr class="new">
-    <div class="">
+<div class="card">
+    <div class="card-header jobAppHeader p-2 jobInfoFont text-center">Click on the link to copy it to your clipboard</div>
 
-    <a  class="button w60 copy_text" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
-    {{-- <a  class="button w50" href="{{$interview->url}}">{{$interview->url}}</a> --}}
-
-
+    <div class="card-body p-1">
+      <a class="copy_text font-14" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
     </div>
 
-
-
+    <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary backToCreated">Back</a>
 
 
 </div>
-
-
-
 
 @stop
 
@@ -38,60 +30,6 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 
 <style>
-.notbrak{
-    display: inline-block;
-}
-
-.leftMargin{
-    margin-left: 10px;
-}
-
-.topMargin{
-    margin-top: 10px;
-}
-
-.textCenter{
-   margin-left: 40%;
-   padding-bottom: 10px !important;
-}
-
-.dynamicTextStyle{
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.heading{
-
-    font-size: 1.4em !important;
-    margin-bottom: 10px;
-    line-height: 26pt;
-}
-
-hr.new{
-    border-top: 1px dotted #8c8b8b;
-	border-bottom: 1px dotted #fff;
-
-}
-
-
-
-.button {
-  background-color: rgb(31, 120, 236);
-  border-radius: 10px;
-  color: white;
-  padding: .5em;
-  text-decoration: none;
-  margin-top: 20px !important;
-  margin-bottom: 20px !important;
-  display:block
-}
-
-.button:focus,
-.button:hover {
-  background-color: rgb(52, 49, 238);
-  color: White;
-}
-
 
 </style>
 @stop

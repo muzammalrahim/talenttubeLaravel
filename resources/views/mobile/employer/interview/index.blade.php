@@ -2,48 +2,44 @@
 @extends('mobile.user.usermaster')
 
 @section('content')
-<div class="card newJobCont "> 
-
-    <div class="card-header responsive_header  jobAppHeader icon_head_browse_matches head_concierge_botmline font-weight-bold pb-3">Welcome to Mobile Interview Concierge</div> 
-   
-			<div class="card-body c_bg">
-			
-			 <div class="add_new_job">
-							<div class="job_row_heading jobs_filter"></div>
-       <div class = "IncConNew mb-2"> 
-									<a class="w50 job_anchorsTags" href="{{route('Minterviewconcierge.new')}}">Click here to create a new Booking Schedule</a> 
-							</div>
-						<div class = "intConEdit mb-2">  
-								<a class="intConEditRoute" href="{{route('Minterviewconcierge.edit')}}">Click here to edit an existing Booking Schedule</a>
-					</div>
-    </div>
-
-				<h4 class="h6 jobAppH6 mt-2"> My Booked Interviews</h4>
-
-   		<table class="table">
- 		 	<thead class="">
-          <tr >
-            <th scope="col" class="font-weight-bold">Company</th>
-            <th scope="col" class="font-weight-bold">Position</th>
-            <th scope="col" class="font-weight-bold">Action</th>
-          </tr>
-        </thead>
-								
-								<tbody>
-
-           @foreach ($interview as $int) 
-          <tr >
-           <td class="pl-3">{{$int->companyname}}</td>
-            <td class="pl-3">{{$int->positionname}}</td>
-            <td> <a href="{{route('Minterviewconcierge.edit')}}"> <i class="fas fa-edit pl-3"></i> </td>
-          </tr>
-
-          @endforeach
-
-        </tbody>
+<div class="card newJobCont ">
+   <div class="card-header responsive_header  jobAppHeader icon_head_browse_matches head_concierge_botmline font-weight-bold pb-3">Welcome to Mobile Interview Concierge</div>
+   <div class="card-body c_bg">
+      <div class="add_new_job">
+         <div class="job_row_heading jobs_filter"></div>
+         <div class = "IncConNew mb-2"> 
+            <a class="w50 font-14" href="{{route('Minterviewconcierge.new')}}">Click here to create a new Booking Schedule</a> 
+         </div>
+         <div class = "intConEdit mb-3">  
+            <a class="intConEditRoute font-14" href="{{route('Minterviewconcierge.edit')}}">Click here to edit an existing Booking Schedule</a>
+         </div>
+      </div>
+      <h6 class="bookedInterview mb-o"> My Booked Interviews</h6>
+      <table class="table">
+         <thead class="">
+            <tr >
+               <th scope="col" class="font-weight-bold">Company</th>
+               <th scope="col" class="font-weight-bold">Booking ID</th>
+               <th scope="col" class="font-weight-bold">Position</th>
+               {{-- 
+               <th scope="col" class="font-weight-bold">Action</th>
+               --}}
+            </tr>
+         </thead>
+         <tbody>
+            @foreach ($interview as $int) 
+            <tr >
+               <td class="pl-3">{{$int->companyname}}</td>
+               <td class="pl-3">{{$int->uniquedigits}}</td>
+               <td class="pl-3">{{$int->positionname}}</td>
+               {{-- 
+               <td> <a href="{{route('Minterviewconcierge.edit')}}"> <i class="fas fa-edit pl-3"></i> </td>
+               --}}
+            </tr>
+            @endforeach
+         </tbody>
       </table>
-
-    </div>
+   </div>
 </div>
 
 @stop
@@ -55,16 +51,9 @@ html, body {
   height: 100%;
   margin: 0;
 }
-
-
-
 .full-height {
   height: 100%;
  background: #f3f5f9;
-}
-.job_anchorsTags {
-    
-    font: 16px Tahoma, Arial, Verdana, sans-serif;
 }
 </style>
 

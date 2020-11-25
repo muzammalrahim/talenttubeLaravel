@@ -28,12 +28,12 @@ use App\Slot;
 
 class MobileHomeController extends Controller {
 
-		public $agent;
+	public $agent;
 
-		public function __construct()
-		{
-			$this->agent = new Agent();
-		}
+	public function __construct()
+	{
+		$this->agent = new Agent();
+	}
 
     public function create() { }
     public function store(Request $request){ }
@@ -114,7 +114,40 @@ class MobileHomeController extends Controller {
         }
     }
 
+    public function MdeleteBooking(Request $request){
 
+        $intBookId = (int) $request->id;
+        // dd( $intBookId);
+        Interviews_booking::where('id',$intBookId)->delete();
+        return response()->json([
+        'status' => 1,
+        'message' => 'Booking Deleted Succesfully'
+    ]);
 
+             
+    }
+
+    public function MsendEmailEmployer(Request $request){
+
+    $intBookId = $request->id;
+    // dd( $intBookId);
+    $slots = Slot::where('interview_id',$intBookId)->get();
+    $data['slots'] = $slots;
+    $data['classes_body'] = 'interview';
+    return view('mobile.home.preferred' , $data);
+    }
+
+    public function MrescheduleSlot(Request $request){
+
+    // $intBookId = $request->id;
+    // dd( $intBookId);
+    $slot = new Slot();
+    $slot->id = $request->id;
+    $slot->save();
+    return response()->json([
+        'status' => 1,
+        'data' => 'Slot Updated Successsfully'
+        ]);
+    }
 
 }
