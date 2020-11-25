@@ -8,88 +8,45 @@
 
 @section('content')
 <div class="card">
+  <h6 class="card-header h6">Select Job Seekers to send them notifications</h6>
+    <div class="card-body p-2 cardBody">
+        {{-- @dump($title); --}}
+        @php
+        session()->put('bookingid',$interview->id);
+        @endphp
+        <a class="btn btn-sm btn-primary small turquoise" href="{{route('interviewconcierge.created')}}">Go Back</a>
 
-<div class="card-header jobAppHeader text-center icon_head_browse_matches">Select Job Seekers to send them notifications</div>
-
-<div class="card-body">
-	<div class="">
-    
-				<div >
-    <a class="btn btn-xs btn-info w5 text-left  btn-size" href="{{route('Minterviewconcierge.created')}}"><i  style=""class="far fa-arrow-alt-circle-left"></i>  Go Back</a>
-</div>
-    <hr class="new">
-      {{-- @dump($interview); --}}
-    @php
-    session()->put('bookingid',$interview->id);
-    @endphp
-
-<div class="table-responsive">
- 
-				<table  class="tableResponsive table table-bordered cbxDataTable" id="dataTable" >
-         <thead>
-            <tr>   
-                <th  scope="col"><input name="select_all" value="0" id="cbx" type="checkbox" /></th>
-                <th  scope="col">Surname</th>
-                <th  scope="col">city</th>
-                <th  scope="col">email</th>
-                <th scope="col">phone</th>
-                <th scope="col">profile</th>
-            </tr>
-        </thead>
-
-<tbody>
-      <tr>
-        <th >1</th>
-        <td>Lorem ipsum dolor</td>
-        <td>Lorem ipsum dolor</td>
-        <td>Lorem ipsum dolor</td>
-								<td>Lorem ipsum dolor</td>
-        <td>Lorem ipsum dolor</td>
-      </tr>
-      <tr>
-        <th >2</th>
-         <td>Lorem ipsum dolor</td>
-        <td>Lorem ipsum dolor</td>
-        <td>Lorem ipsum dolor</td>
-								<td>Lorem ipsum dolor</td>
-        <td>Lorem ipsum dolor</td>
-      </tr>
-      <tr>
-        <th >3</th>
-        <td>Lorem ipsum dolor</td>
-        <td>Lorem ipsum dolor</td>
-        <td>Lorem ipsum dolor</td>
-								<td>Lorem ipsum dolor</td>
-        <td>Lorem ipsum dolor</td>
-      </tr>
-    </tbody>
-    <!--Table body-->
-
-
-      </table>
-</div>
-      <button class="button w20 small colorSendButton sendNotification turquoise">Send notifications</button>
-</div>
-
-<div class="form_field">
-    <span class="form_label"></span>
-    <div class="form_input">
-        <div class="general_error error to_hide">&nbsp;</div>
+        <div class="table-responsive">
+          <table class="tableResponsive table table-bordered cbxDataTable " id="dataTable">
+              <thead>
+                  <tr style="text-align: center" >
+                      <th scope="col"><input name="select_all" value="0" id="cbx" type="checkbox" /></th>
+                      <th scope="col">Surname</th>
+                      <th>city</th>
+                      <th scope="col">email</th>
+                      <th>phone</th>
+                      <th>profile</th>    
+                  </tr>
+              </thead>
+            </table>
+        </div>
+        <button class="btn btn-sm btn-primary colorSendButton sendNotification turquoise">Send notifications</button>
+        <div class="form_field">
+            <span class="form_label"></span>
+            <div class="form_input">
+                <div class="general_error error to_hide">&nbsp;</div>
+            </div>
+        </div>
+        <div class="d-none">
+            <form method="POST" class="notificationForm" action="{{route('bulk.BulkGenerateCVPDF')}}">
+              @csrf
+              <div class="cbx_list">
+              </div>
+              <input type="hidden" name="url" id="url" value="{{$interview->url}}">
+            </form>
+        </div>
     </div>
 </div>
-<div class="d-none">
-    <form method="POST" class="notificationForm" action="{{route('bulk.BulkGenerateCVPDF')}}">
-      @csrf
-      <div class="cbx_list">
-      </div>
-
-      {{-- <input type="hidden" name="url" id="url" value="{{$interview->url}}"> --}}
-    </form>
-</div>
-
-</div>
-</div>
-
 @stop
 
 @section('custom_footer_css')
@@ -102,87 +59,13 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 
 <style>
-div#dataTable_length {
-    float: left;
-				padding-top: 2.4%;
-				 font-size: 2vw;
+h6.card-header.h6{
+  font-size: 15px !important;
 }
-div#dataTable_filter {
-   
-   font-size: 2vw;
-				float:right;
-				margin-right: 1%;
-}
-.btn.btn-xs {
-    padding: .15rem 0.3rem;
-}
-.btn-size{
-		font-size:1.9vw
-}
-.d-none{
-    display: none;
-}
-
-.notbrak{
-    display: inline-block;
-}
-
-.leftMargin{
-    margin-left: 10px;
-}
-
-.topMargin{
-    margin-top: 10px;
-}
-
-.textCenter{
-   margin-left: 40%;
-   padding-bottom: 10px !important;
-}
-
-.dynamicTextStyle{
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-.heading{
-
-    font-size: 1.4em !important;
-    margin-bottom: 10px;
-    line-height: 26pt;
-}
-
-hr.new{
-    border-top: 1px dotted #8c8b8b;
-	border-bottom: 1px dotted #fff;
-
-}
-
-.textCenterButton {
-
-text-align: center;
-}
-
-.button {
-  background-color: rgb(31, 120, 236);
-  border-radius: 5px;
-  color: white;
-  padding: .5em;
-  text-decoration: none;
-  margin-top: 20px !important;
-  margin-bottom: 20px !important;
-  display:block
-}
-
-
-.colorSendButton{
-    background-color: rgb(102, 123, 150);
-}
-
-.button:focus,
-.button:hover {
-  background-color: rgb(52, 49, 238);
-  color: White;
+[type="checkbox"]:not(:checked), [type="checkbox"]:checked {
+    position: absolute;
+    pointer-events: auto;
+    opacity: 1;
 }
 
 @media only screen and (max-width: 500px) {
@@ -192,6 +75,7 @@ text-align: center;
 
 }
 }
+
 </style>
 @stop
 
@@ -241,12 +125,12 @@ $('.notificationForm .cbx_list').html(cbx_hidden);
 
 var formData = $('.notificationForm').serializeArray();
 
-$('.sendNotification').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+// $('.sendNotification').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
 $('.general_error').html('');
 
 $.ajax({
         type: 'POST',
-        url: base_url+'/ajax/booking/sendnotification',
+        url: base_url+'/m/ajax/booking/Msendnotification',
         data: formData,
         success: function(data){
             console.log(' data ', data);
@@ -272,7 +156,7 @@ var table = jQuery('#dataTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
-          url: '{!! route('interviewconcierge.getlikedlistjobseekersdatatable') !!}',
+          url: '{!! route('Minterviewconcierge.getlikedlistjobseekersdatatable') !!}',
           data: function (d) {
                 d.status = $('.filter_status').val()
             }
@@ -300,17 +184,16 @@ var table = jQuery('#dataTable').DataTable({
 
 
 
-
 jQuery(function(){
 function rescaletable(){
 var width = jQuery('.table-responsive').width();
 var scale;
-if (width < 500) 
+if (width < 620) 
 {
-scale = width / 500;
+scale = width / 620;
 } else{
-							scale = 1.0;
-					}
+                            scale = 1.0;
+                    }
 jQuery('.tableResponsive').css('transform', 'scale(' + scale + ')');
 jQuery('.tableResponsive').css('-webkit-transform', 'scale(' + scale + ')');
 jQuery('.tableResponsive').css('transform-origin', '0 0');
@@ -320,6 +203,8 @@ rescaletable();
 jQuery( window ).resize(function() { rescaletable(); });
 
 });
+
+
 
 
 </script>

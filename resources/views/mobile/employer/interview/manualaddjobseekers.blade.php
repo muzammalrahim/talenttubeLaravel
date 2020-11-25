@@ -11,177 +11,122 @@
 @section('content')
      
 <div class="card newJobCont">
-    <div class="card-header jobAppHeader text-center head icon_head_browse_matches">Manual Invitation</div>
-    @php
-    session()->put('bookingid',$interview->id);
-    @endphp
-
-
-				<div class="card-body">
-				<a class="btn btn-sm btn-info  text-left " href="{{route('Minterviewconcierge.created')}}"><i  style="font-size:12px"class="far fa-arrow-alt-circle-left"></i>  Go Back</a>
-    
-    <div class="add_new_job borderline">
-
-        <form method="POST" name="login_booking_form1" class="login_booking_form1 newJob job_validation">
-            @csrf
-
-												 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label ">Name </label>
-                    <div class="col-sm-10">
-                      <input type="text" name="name" class="form-control form-control-sm" value="" required >
-                      <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
-                    </div>
-                </div>
-
-
-            
-
-
-            <div class="form-group row">
-                  <label class="col-sm-2 col-form-label ">Mobile </label>
-                <div class="col-sm-10">
-                    <input type="text" value="" name="mobile" class="form-control form-control-sm" required>
-                    <div id="password_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
-
-            <div class="form-group row">
-												   <label class="col-sm-2 col-form-label ">Email  </label>
-                <div class="col-sm-10">
-                    <input type="email" value="" name="email" class="form-control form-control-sm" required>
-                    <div id="email_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
-        <input type="hidden" value="{{$interview->url}}" name="url" class="form-control form-control-sm" required>
-
-        <div class="form_field">
-            <span class="form_label"></span>
-            <div class="form_input">
-                <div class="general_error1 error to_hide">&nbsp;</div>
-            </div>
-        </div>
-
-            <div class="fomr_btn act_field text-center">
-                <button class="btn btn-sm leftMargin turquoise loginEditInterview1">Send Notification</button>
-            </div>
-
-        </form>
-        </div>
-
-
-        <div class="add_new_job  borderline">
-
-            <form method="POST" name="login_booking_form2" class="login_booking_form2 newJob job_validation ">
-                @csrf
-
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label ">Name </label>
-                    <div class="col-sm-10">
-                      <input type="text" name="name" class="form-control form-control-sm" value="" required >
-                      <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
-                    </div>
-                </div>
-
-
-            
-
-
-            <div class="form-group row">
-                  <label class="col-sm-2 col-form-label ">Mobile </label>
-                <div class="col-sm-10">
-                    <input type="text" value="" name="mobile" class="form-control form-control-sm" required>
-                    <div id="password_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
-
-            <div class="form-group row">
-												   <label class="col-sm-2 col-form-label ">Email  </label>
-                <div class="col-sm-10">
-                    <input type="email" value="" name="email" class="form-control form-control-sm" required>
-                    <div id="email_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
-
-
-            <div class="form_field">
-                <span class="form_label"></span>
-                <div class="form_input">
-                    <div class="genera2_error error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
-
-
-                <div class="fomr_btn act_field text-center">
-
-                    {{-- <input type="type" value="academic" /> --}}
-                <button class="btn btn-sm leftMargin turquoise loginEditInterview2">Sed Notification</button>
-                </div>
-
-            </form>
-            </div>
-
-            <div class="add_new_job  borderline">
-
-                <form method="POST" name="login_booking_form3" class="login_booking_form3 newJob job_validation ">
-                    @csrf
-
-
-                    
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label ">Name </label>
-                    <div class="col-sm-10">
-                      <input type="text" name="name" class="form-control form-control-sm" value="" required >
-                      <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
-                    </div>
-                </div>
-
-
-            
-
-
-            <div class="form-group row">
-                  <label class="col-sm-2 col-form-label ">Mobile </label>
-                <div class="col-sm-10">
-                    <input type="text" value="" name="mobile" class="form-control form-control-sm" required>
-                    <div id="password_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
-
-            <div class="form-group row">
-												   <label class="col-sm-2 col-form-label ">Email  </label>
-                <div class="col-sm-10">
-                    <input type="email" value="" name="email" class="form-control form-control-sm" required>
-                    <div id="email_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
-
-                <div class="form_field">
-                    <span class="form_label"></span>
-                    <div class="form_input">
-                        <div class="general_error error to_hide">&nbsp;</div>
-                    </div>
-                </div>
-
-                    <div class="fomr_btn act_field text-center">
-
-                        {{-- <input type="type" value="academic" /> --}}
-                        <button class="btn btn-sm leftMargin turquoise loginEditInterview3">Send Notification</button>
-                    </div>
-
-                </form>
-                </div>
-
+<div class="card-header jobAppHeader text-center head icon_head_browse_matches">Manual Invitation</div>
+@php
+session()->put('bookingid',$interview->id);
+@endphp
+<div class="card-body">
+<a class="btn btn-sm btn-info  text-left " href="{{route('Minterviewconcierge.created')}}"><i  style="font-size:12px"class="far fa-arrow-alt-circle-left"></i>  Go Back</a>
+<div class="add_new_job borderline">
+   <form method="POST" name="login_booking_form1" class="login_booking_form1 newJob job_validation">
+      @csrf
+      <div class="form-group row">
+         <label class="col-sm-2 col-form-label ">Name </label>
+         <div class="col-sm-10">
+            <input type="text" name="name" class="form-control form-control-sm" value="" required >
+            <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="form-group row">
+         <label class="col-sm-2 col-form-label ">Mobile </label>
+         <div class="col-sm-10">
+            <input type="text" value="" name="mobile" class="form-control form-control-sm" required>
+            <div id="password_error" class="error field_error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="form-group row">
+         <label class="col-sm-2 col-form-label ">Email  </label>
+         <div class="col-sm-10">
+            <input type="email" value="" name="email" class="form-control form-control-sm" required>
+            <div id="email_error" class="error field_error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <input type="hidden" value="{{$interview->url}}" name="url" class="form-control form-control-sm" required>
+      <div class="form_field">
+         <span class="form_label"></span>
+         <div class="form_input">
+            <div class="general_error1 error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="fomr_btn act_field text-center">
+         <button class="btn btn-sm leftMargin turquoise loginEditInterview1">Send Notification</button>
+      </div>
+   </form>
+</div>
+<div class="add_new_job  borderline">
+   <form method="POST" name="login_booking_form2" class="login_booking_form2 newJob job_validation ">
+      @csrf
+      <div class="form-group row">
+         <label class="col-sm-2 col-form-label ">Name </label>
+         <div class="col-sm-10">
+            <input type="text" name="name" class="form-control form-control-sm" value="" required >
+            <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="form-group row">
+         <label class="col-sm-2 col-form-label ">Mobile </label>
+         <div class="col-sm-10">
+            <input type="text" value="" name="mobile" class="form-control form-control-sm" required>
+            <div id="password_error" class="error field_error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="form-group row">
+         <label class="col-sm-2 col-form-label ">Email  </label>
+         <div class="col-sm-10">
+            <input type="email" value="" name="email" class="form-control form-control-sm" required>
+            <div id="email_error" class="error field_error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="form_field">
+         <span class="form_label"></span>
+         <div class="form_input">
+            <div class="genera2_error error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="fomr_btn act_field text-center">
+         {{-- <input type="type" value="academic" /> --}}
+         <button class="btn btn-sm leftMargin turquoise loginEditInterview2">Sed Notification</button>
+      </div>
+   </form>
+</div>
+<div class="add_new_job  borderline">
+   <form method="POST" name="login_booking_form3" class="login_booking_form3 newJob job_validation ">
+      @csrf
+      <div class="form-group row">
+         <label class="col-sm-2 col-form-label ">Name </label>
+         <div class="col-sm-10">
+            <input type="text" name="name" class="form-control form-control-sm" value="" required >
+            <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="form-group row">
+         <label class="col-sm-2 col-form-label ">Mobile </label>
+         <div class="col-sm-10">
+            <input type="text" value="" name="mobile" class="form-control form-control-sm" required>
+            <div id="password_error" class="error field_error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="form-group row">
+         <label class="col-sm-2 col-form-label ">Email  </label>
+         <div class="col-sm-10">
+            <input type="email" value="" name="email" class="form-control form-control-sm" required>
+            <div id="email_error" class="error field_error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="form_field">
+         <span class="form_label"></span>
+         <div class="form_input">
+            <div class="general_error error to_hide">&nbsp;</div>
+         </div>
+      </div>
+      <div class="fomr_btn act_field text-center">
+         {{-- <input type="type" value="academic" /> --}}
+         <button class="btn btn-sm leftMargin turquoise loginEditInterview3">Send Notification</button>
+      </div>
+   </form>
+</div>
 <div>
-
-    <div class="cl"></div>
+<div class="cl"></div>
 </div>
 
 
@@ -263,12 +208,12 @@ $('.loginEditInterview1').on('click',function() {
 
 event.preventDefault();
 var formData = $('.login_booking_form1').serializeArray();
-$('.loginEditInterview1').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+// $('.loginEditInterview1').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
 console.log(' formData ', formData);
 $('.general_error1').html('');
 $.ajax({
     type: 'POST',
-    url: base_url+'/ajax/booking/manualsendnotification',
+    url: base_url+'/m/ajax/booking/Mmanualsendnotification',
     data: formData,
     success: function(data){
         console.log(' data ', data);
@@ -290,12 +235,12 @@ $('.loginEditInterview2').on('click',function() {
 
 event.preventDefault();
 var formData = $('.login_booking_form1').serializeArray();
-$('.loginEditInterview2').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+// $('.loginEditInterview2').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
 console.log(' formData ', formData);
 $('.general_error2').html('');
 $.ajax({
     type: 'POST',
-    url: base_url+'/ajax/booking/manualsendnotification',
+    url: base_url+'/m/ajax/booking/Mmanualsendnotification',
     data: formData,
     success: function(data){
         console.log(' data ', data);
@@ -319,12 +264,12 @@ $('.loginEditInterview3').on('click',function() {
 
 event.preventDefault();
 var formData = $('.login_booking_form1').serializeArray();
-$('.loginEditInterview3').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+// $('.loginEditInterview3').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
 console.log(' formData ', formData);
 $('.general_error3').html('');
 $.ajax({
     type: 'POST',
-    url: base_url+'/ajax/booking/manualsendnotification',
+    url: base_url+'/m/ajax/booking/Mmanualsendnotification',
     data: formData,
     success: function(data){
         console.log(' data ', data);

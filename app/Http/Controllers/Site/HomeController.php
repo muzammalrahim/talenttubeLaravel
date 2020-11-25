@@ -866,7 +866,8 @@ class HomeController extends Controller {
                 return redirect(route('noBookingMade'));
             }else{
                     $data['Interviews_booking'] = $Interviews_booking;
-                    return view('site.home.interviewLayout')->with('data', $data);    
+                    return view('site.home.interviewLayout')->with('data', $data);  
+                    // site/home/interviewLayout  
             }
             
         }

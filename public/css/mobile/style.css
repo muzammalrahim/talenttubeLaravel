@@ -335,3 +335,12 @@ button.btn.small {
 .goHomeLink{
   text-decoration: underline;
 }
+.font-14{
+    font-size: 14px;
+}
+.bookedInterview {
+    color: #254c8e;
+    /* font-weight: 700; */
+    font-size: 16px;
+    text-align: center;
+}

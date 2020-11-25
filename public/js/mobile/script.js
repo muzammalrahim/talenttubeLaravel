@@ -428,18 +428,17 @@ $('#MintConform_login').click(function ($event) {
                     } else {
                         $('.errorInemail').hide();
                     }
-                    // ==================== email validation end here ====================
-
-                            
+                    // ==================== email validation end here ====================               
                 }
             }
-
-
-                
 
             }
 
         });
+
+
 }); 
 
 // ================================= interview Log in end here =================================
+
+

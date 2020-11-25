@@ -41,7 +41,7 @@ class InterviewController extends Controller
     public function Mindex(){
         $user = Auth::user();
         // dd($user->id);
-        $interview = Interview::where('emp_id',$user->id)->get();
+        $interview = Interview::where('emp_id',$user->id)->orderBy('created_at', 'DESC')->get();
         $data['interview'] = $interview;
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
@@ -151,8 +151,8 @@ class InterviewController extends Controller
             "instruction" => "required|string",
             "companyname"  => "required|string",
             "positionname" => "required|string",
-            "employeremail"  => 'required|email',
-            "employerpassword" => "required|string",
+            // "employeremail"  => 'required|email',
+            // "employerpassword" => "required|string",
         );
 
         $validator = Validator::make( $data , $rules);
@@ -192,8 +192,8 @@ class InterviewController extends Controller
         $interview->title = $data['title'];
         $interview->companyname = $data['companyname'];
         $interview->positionname = $data['positionname'];
-        $interview->employeremail = $data['employeremail'];
-        $interview->employerpassword = $data['employerpassword'];
+        // $interview->employeremail = $data['employeremail'];
+        // $interview->employerpassword = $data['employerpassword'];
         $interview->instruction = $data['instruction'];
         $interview->additionalmanagers = $data['additionalmanagers'];
         // $interview->numberofslots = $data['numberofslots'];
@@ -364,7 +364,7 @@ class InterviewController extends Controller
         $user = Auth::user();
         // $interview = Interview::where('uniquedigits',"12340")->first();
         $bookingid = session('bookingid');
-        session()->forget('bookingid');
+        // session()->forget('bookingid');
 
         if(!empty($bookingid)){
 
@@ -380,8 +380,8 @@ class InterviewController extends Controller
         $data['interview'] = $interview;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
-        return view('site.employer.interview.url', $data);
-        // site/employer/interview/url
+        return view('mobile.employer.interview.url', $data);
+        // mobile/employer/interview/url
     }
 
 
@@ -467,7 +467,7 @@ class InterviewController extends Controller
         // mobile/employer/interview/likedlistjobseekers
     }
 
-    public function getlikedlistjobseekersdatatable(Request $request){
+    public function Mgetlikedlistjobseekersdatatable(Request $request){
         $records = array();
         $user = Auth::user();
          // dd($request->toArray());
@@ -495,7 +495,7 @@ class InterviewController extends Controller
         ->toJson();
       }
 
-      public function sendnotification(Request $request){
+      public function Msendnotification(Request $request){
 
         if(!empty($request->cbx)){
                     $users = User::whereIn('id',$request->cbx)->get();
@@ -523,19 +523,17 @@ class InterviewController extends Controller
         }
     }
 
-    public function manualsendnotification(Request $request){
+    public function Mmanualsendnotification(Request $request){
 
         // $details = ['email' => $user->email];
         // SendBulkEmailJob::dispatch($details);
         // $when = now()->addSeconds(2);
         Mail::to($request->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($request->name,$request->url));
-
         return response()->json([
         'status' => 1,
         ]);
 
     }
-
 
     public function Muserurl(Request $request){
          // dd($request->url);
