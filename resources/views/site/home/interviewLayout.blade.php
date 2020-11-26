@@ -8,18 +8,31 @@
 		<h4 class="font-weight-bold text-white">Interview Concierge Bookings</h4>
 	</div> 
 
+    <div class="row ml-2">
+        <div class="successMsgDeleteBooking alert alert-success d-none" role="alert">
+            Your interview booking has been cancelled successfully.
+        </div>
+    </div> 
+
+    <div class="row ml-2">
+        <div class="successMsgUpdatingBooking alert alert-success d-none" role="alert">
+            Your interview booking has been rescheduled successfully.
+        </div>
+    </div> 
+    <div class="row d-none" id="overlay">   
+        <div class="spinner-border text-primary overlayLoader" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
 	<div class="row">
 		<div class="col-md-2">  </div>
 	</div>
 	{{-- @dump($data['ab']); --}}
 	
-	<!-- @dump( $data ); -->
+	<!-- ( $data ); -->
 
 	{{-- @dump( $data['Interviews_booking']); --}}
-    
-    <div class="successMsgDeleteBooking alert alert-success d-none" role="alert">
-      Your interview booking has been cancelled successfully.
-    </div>
     
     <div class="interviewBookings">
         @foreach ($data['Interviews_booking'] as $int_booking )
@@ -83,20 +96,25 @@
                 <div class="row mb-2">
                     <div class="col-md-5"><a class="deleteInterview btn btn-danger" data-toggle="modal" data-target="#bookingDeletingModal"> Click here to cancel your interview</a>
                     </div>
-                    <div class="col-md-1">
+                    {{-- <div class="col-md-1">
                         <div class="deletingSpinner spinner-border text-primary d-none" role="status">
-                          {{-- <span class="sr-only">Loading...</span> --}}
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
+                 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                       <a class="emailSendButton btn btn-primary" data-toggle="modal" data-target="#emailSendingModal"> Click here to send an email to the interviewer with your preferred time</a>
                     </div>
+                  {{--   <div class="col-md-1">
+                        <div class="deletingSpinner spinner-border text-primary d-none" role="status">
+                        </div>
+                    </div> --}}
                 </div>
 
                 <input type="hidden" class="intBookingHidden" name="" value="{{$int_booking->id}}">
-                <input type="hidden" class="intIDHidden" name="" value="{{$int_booking->interview->id}}">
+                <input type="hidden" class="intConHidden" name="" value="{{$int_booking->interview->id}}">
+                <input type="hidden" class="intSlotHidden" name="" value="{{$int_booking->slot->id}}">
 
             </div>
 
@@ -156,7 +174,15 @@
       </div>
       <div class="modal-body p-0">
         {{-- <input type="text" name="" class="intConInModal"> --}}
+        <div class="text-center preferredSlotLoader d-none">
+            <div class="spinner-border text-primary" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+
         <div class="ajaxDataOfSlots"></div>
+        <input type="hidden" name="" class="bookingIdINModal">
+
       </div>
       <div class="modal-footer text-center d-block">
         {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
@@ -196,7 +222,7 @@ $(document).ready(function(){
     });
         $('.confirmDeleteBooking').click(function(){
             var intConConfID = $('.intBookingInModal').val();
-            $('.deletingSpinner').removeClass('d-none');
+            $('#overlay').removeClass('d-none');
             $.ajaxSetup({
             headers: {
              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -211,7 +237,7 @@ $(document).ready(function(){
             console.log(' data ', data);
             // $('.sendNotification').html('Save').prop('disabled',false);
             if( data.status == 1 ){
-                $('.deletingSpinner').addClass('d-none');
+                $('#overlay').addClass('d-none');
                 $('.successMsgDeleteBooking').removeClass('d-none');
                 setTimeout(function() {
                    $('.successMsgDeleteBooking') .addClass('d-none');
@@ -230,16 +256,21 @@ $(document).ready(function(){
         // Sending email to employer
 
     $('.emailSendButton').click(function(){
-        console.log('Deleting Interview Booking');
-        var intConID = $(this).parents('.interviewBooking').find('.intIDHidden').val();
-        console.log(intConID);
+        console.log('Email Send Booking');
+        $('.preferredSlotLoader').removeClass('d-none');
+        var intBookingID = $(this).parents('.interviewBooking').find('.intBookingHidden').val();
+        var intConID = $(this).parents('.interviewBooking').find('.intConHidden').val();
+        var bookingIDinModal = $('.bookingIdINModal').val(intBookingID);
+
+        console.log(intBookingID);
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/booking/sendEmailEmployer',
-            data:{id: intConID},
+            data:{booking_id: intBookingID,intConID:intConID},
             success: function(data){
-                console.log(' data ', data);
+                // console.log(' data ', data);
+                $('.preferredSlotLoader').addClass('d-none');
                 $('.ajaxDataOfSlots').html(data);
         
             }
@@ -270,6 +301,26 @@ $(document).ready(function(){
 .modal-header{
     background: #254c8e;
     color: white;
+}
+#overlay{
+  position: fixed;
+  /*display: none;*/
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0,0,0,0.5);
+  z-index: 2;
+  cursor: pointer;
+}
+
+
+.overlayLoader{
+    position: absolute;
+    top: 50%;
+    left: 50%;
 }
 </style>
 

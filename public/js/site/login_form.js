@@ -175,7 +175,8 @@ if( $('#intConc_sign_in').length ){
 
 $('#intConform_login').click(function ($event) {
 
-    $event.preventDefault();
+        // $('.intConSigninButton').text('Signing in')
+        $event.preventDefault();
         event.preventDefault();
         var formData = $('.intCon_login').serializeArray();
         console.log(' formData ', formData);
@@ -187,15 +188,18 @@ $('#intConform_login').click(function ($event) {
 
             if (response == "") {
                 $('.errorInBooking').text('This "Email" and "Mobile" is not registered with any booking.');
+                // $('.intConSigninButton').text('Signing in Error');
+
             }else{
+
+                $('.intConSigninButton').text('Sign in Successfully');
+                $('.intConSigninButton').css("background","rgba(0,0,0,.4)");
                 console.log(' data >>>> ', response);
                     
                 if( response.status) {
                     location.href = response.redirect;
                 }else{                    
-                    // that.hideMainEditor();
                    var errorIntCon = response['message'];
-                   // console.log(errorIntCon);
                    // var nameError = errorIntCon['name'];
                    var mobileError = errorIntCon['mobile'];
                    var emailError = errorIntCon['email'];
@@ -239,9 +243,6 @@ $('#intConform_login').click(function ($event) {
                             
                 }
             }
-
-
-                
 
             }
 

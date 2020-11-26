@@ -24,4 +24,16 @@ class Interviews_booking extends Model
         return $this->belongsTo('App\Interview', 'interview_id');
     }
     
+
+
+    function isMybooking($email,$mobile){
+        dump( ' isMybooking ' );
+        dump( $this->toArray() );
+        dump( $email );
+        dump( $mobile );
+
+      
+
+    }
+
 }

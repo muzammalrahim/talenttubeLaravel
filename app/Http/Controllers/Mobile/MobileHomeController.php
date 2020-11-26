@@ -129,25 +129,41 @@ class MobileHomeController extends Controller {
 
     public function MsendEmailEmployer(Request $request){
 
-    $intBookId = $request->id;
-    // dd( $intBookId);
-    $slots = Slot::where('interview_id',$intBookId)->get();
-    $data['slots'] = $slots;
-    $data['classes_body'] = 'interview';
-    return view('mobile.home.preferred' , $data);
+        $intBookId = $request->bookingID;
+        $interviewID = $request->interviewID;
+        // dd( $intBookId);
+        
+        // $slots = Slot::where('interview_id',$intBookId)->get();
+        $Interviews_booking = Interviews_booking::where('id', $intBookId)->first(); 
+
+        // dd( $request->session()  );
+        
+
+        // dump( $Interviews_booking->isMybooking($request->session()->pull('int_conc_email'), $request->session()->pull('int_conc_mobile')) ); 
+        // dd( $Interviews_booking->toArray() ); 
+        // validation 
+        // if this booking is again this user then only allowed him 
+
+        $slots = Slot::where('interview_id',$interviewID)->get();
+        $data['slots'] = $slots;
+        $data['classes_body'] = 'interview';
+        return view('mobile.home.preferred' , $data); // mobile/home/preferred
     }
+
 
     public function MrescheduleSlot(Request $request){
 
-    // $intBookId = $request->id;
-    // dd( $intBookId);
-    $slot = new Slot();
-    $slot->id = $request->id;
-    $slot->save();
-    return response()->json([
-        'status' => 1,
-        'data' => 'Slot Updated Successsfully'
-        ]);
-    }
+        $data = $request->all();
+        // dd($data);
+        $interviewBooking = Interviews_booking::where('id',$data['booking_id'])->first();
+        // dd($interviewBooking); 
+        
+        $interviewBooking->slot_id = $data['slot_id'];
+        $interviewBooking->save();
+        return response()->json([
+            'status' => 1,
+            'data' => 'Slot Updated Successsfully'
+            ]);
+        }
 
 }
