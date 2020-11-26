@@ -34,6 +34,8 @@ Route::get('/noBookingMade',    'Site\HomeController@noBookingMade')->name('noBo
 Route::post('ajax/booking/deleteBooking',    'Site\HomeController@deleteBooking')->name('deleteBooking');
 Route::post('ajax/booking/deleteSlot',    'Site\HomeController@deleteSlot')->name('deleteSlot');
 Route::post('ajax/booking/sendEmailEmployer',    'Site\HomeController@sendEmailEmployer')->name('sendEmailEmployer');
+Route::post('ajax/rescheduleSlot',    'Site\HomeController@rescheduleSlot')->name('rescheduleSlot');
+
 
 
 

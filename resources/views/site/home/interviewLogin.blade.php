@@ -29,7 +29,7 @@
                     
                 </div>
 
-                <button id="intConform_login" type="submit" class="btn pink">Sign in</button>
+                <button id="intConform_login" type="submit" class="btn pink intConSigninButton">Sign in</button>
                 
             </form>
             

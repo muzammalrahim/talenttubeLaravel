@@ -208,7 +208,7 @@
 
       <!--Footer-->
       <div class="modal-footer justify-content-center">
-        <a type="button" id="MintConform_login" class="btn btn-primary waves-effect waves-light interviewConciergeRoute">Sign in<i class="fa fa-paper-plane ml-1"></i></a>
+        <a type="button" id="MintConform_login" class="btn btn-primary waves-effect waves-light interviewConciergeRoute tohideFormOnClick">Sign in<i class="fa fa-paper-plane ml-1"></i></a>
         <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a>
       </div>
     </div>

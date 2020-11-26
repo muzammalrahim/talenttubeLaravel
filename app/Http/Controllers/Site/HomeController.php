@@ -818,7 +818,7 @@ class HomeController extends Controller {
         // session()->forget('int_conc_email');
         // session()->forget('int_conc_mobile');
 
-    $data = $request->all();
+        $data = $request->all();
         $rules = array(
             "mobile"    => "required|string|max:10|min:10",
             'email'     => "bail|required|email",
@@ -903,7 +903,7 @@ class HomeController extends Controller {
 
         public function sendEmailEmployer(Request $request){
 
-            $intBookId = $request->id;
+            $intBookId = $request->intConID;
             // dd( $intBookId);
             $slots = Slot::where('interview_id',$intBookId)->get();
             $data['slots'] = $slots;
@@ -931,6 +931,21 @@ class HomeController extends Controller {
 
              
     }
+
+    public function rescheduleSlot(Request $request){
+
+        $data = $request->all();
+        // dd($data);
+        $interviewBooking = Interviews_booking::where('id',$data['booking_id'])->first();
+        // dd($interviewBooking); 
+        
+        $interviewBooking->slot_id = $data['slot_id'];
+        $interviewBooking->save();
+        return response()->json([
+            'status' => 1,
+            'data' => 'Slot Updated Successsfully'
+            ]);
+        }
 
 
 }
