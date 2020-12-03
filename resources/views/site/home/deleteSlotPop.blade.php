@@ -16,6 +16,9 @@
                 <p> All the interview bookings with this slot will be deleted.<br> Are you sure you wish to continue? </p> 
 
                 <input type="hidden" name="" class="slotIDPopUp">
+                <input type="hidden" name="" class="comnameInPopUp">
+                <input type="hidden" name="" class="useremailInPopup">
+                <input type="hidden" name="" class="posNamePopup">
 
               <div class="center deleteSlotDiv">  <button id="deleteSlot_confirm" type="submit" class="btn pink">Yes</button>
               </div>

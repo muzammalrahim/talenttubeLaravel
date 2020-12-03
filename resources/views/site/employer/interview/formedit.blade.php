@@ -74,6 +74,14 @@
                 </div>
             </div>
 
+            {{-- <div class="job_title form_field">
+                <span class="form_label">Booking ID :</span>
+                <div class="form_input">
+                    <input type="text" value="{{$interview->uniquedigits}}" name="uniquedigits" class="w100" >
+                    <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
+                </div>
+            </div> --}}
+
             <input type="hidden" name="interviewURL" value="{{$interview->url}}">
             {{-- <input type="hidden" name="interviewID" value="{{$interview->id}}"> --}}
 
@@ -95,40 +103,70 @@
                     <div class="slots">
                         @php
                         $slots = $interview->slots;
+
                         @endphp
                         @foreach ($slots as $key => $slot)
                         
 
-                        <div class="slot s{{$key+1}} notbrak m_rb20">
+                        <div class="slot s{{$key+1}} m_rb20">
                             <div class="textCenter2">Interview Slot <span class="test">{{$key+1}}</span> 
                                 <i class="fas fa-trash fl_right deleteSlotClck pointer"></i>
                             </div>
 
                             <input type="hidden" class="SlotIDInputHidden" name="slotID" value="{{$slot->id}}">
-                            <div class="time">
+                            <input type="hidden" class="companynameInSlot" id="" value="{{$interview->companyname}}">
+                            <input type="hidden" class="positionnameInSlot" id="" value="{{$interview->positionname}}">
+                            
+
+                            <div class="time notbrak">
                                 <div class="notbrak">Time</div>
                                 
+                                <input type="hidden" name="slot[{{$key+1}}][id]" value="{{$slot->id}}" />
+
                                 <div class="notbrak"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" value="slot[{{$key+1}}]" required /></div>
                                 <div class="notbrak">To</div>
                                 <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][end]" size="8" required /></div>
+
                             </div>
-                            <div class="date topMargin">
+                            <div class="date topMargin notbrak">
                                 <span class="notbrak">Date</span>
-                                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
-                            </div>
-                            <div >
-                                <label class="form_label notbrak" style="margin-right: 5px;">Maximum number of interviewees:</label>
+                                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}"   name="slot[{{$key+1}}][date]" class="datepicker notbrak" size="8" required />
+                            </div> 
+                            <div class="notbrak">
+                                <label class="form_label notbrak float_none" style="margin-right: 5px;vertical-align: middle;">Maximum number of interviewees:</label>
                                 <div class="form_input formedit_C2">
-                                    {{ Form::select('salary', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'maximumnumber['.($key+1).']', 'class' => '']) }}
+                                    {{ Form::select('maximumnumberofinterviewees', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'slot['.($key+1).'][maxNumberofInterviewees]', 'class' => 'selectedInput']) }}
                                 </div>
                             </div>
-                        </div>	
 
+                            {{--  For sending email to js after updating slot --}}
+                                @foreach ($slot->bookings3 as $book)
+                                    <input type="hidden" class ="useremails" name="slot[{{$key+1}}][jsEmail]" value="{{$book->email}}">
+                                @endforeach
+                             {{-- For sending email to js after updating slot end here --}}
+                            
+                            <div class="slot_booking">
+                                <p class="slotbooking">Slots Bookings </p>
+                                    <div class="slot_booking_list">
+                                        @foreach ($slot->bookings3 as $bookings)
+                                            <div class="slotBookinIndex">
+                                                <h3 class="bold">Booking:{{ $loop->index+1 }}</h3> 
+                                                <p class="mx10"><span class="bold"> Name: </span>{{$bookings->name}}</p>
+                                                <p class="mx10"><span class="bold"> Email: </span>{{$bookings->email}}</p>
+                                                <p class="mx10"><span class="bold"> Mobile: </span>{{$bookings->mobile}}</p>
+                                            </div>
+                                        @endforeach
+                                        {{-- @dump($slot->bookings3) --}}
+                                    </div>
+                            </div>
+                        </div>	
 
                         @endforeach
                     </div>
                     {{-- <input type="hidden" name="slotsCounter" id="slotsCounter" value="{{$interview->numberofslots}}"> --}}
                     <input type="hidden" name="interview_id" id="" value="{{$interview->id}}">
+                    <input type="hidden" name="positionnameInSlot" id="" value="{{$interview->positionname}}">
+                    <input type="hidden" name="companynameInSlot" id="" value="{{$interview->companyname}}">
                 </div>
             </div>
 
@@ -213,6 +251,20 @@
 
 .interviewConcierge {
     background: #254c8e !important;
+}
+
+
+.slot.m_rb20 {
+    display: block;
+    padding: 10px;
+    border: 1px solid #ced1da;
+    border-radius: 3px;
+    clear: both;
+    margin: 0px;
+}
+
+.selectInput>.jq-selectbox>.jq-selectbox__dropdown>ul , .selectedInput>.jq-selectbox__dropdown>ul {
+    height: 200px;
 }
 </style>
 @stop
@@ -321,21 +373,21 @@ $(".addSlot").bind('click', function(){
                 slot  += '<i class="fas fa-trash fl_right deleteSlot">'
                 slot  += '</i>'
                 slot  +=  '</div>';
-                slot  += '<div class="time">';
+                slot  += '<div class="time notbrak">';
                 slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][start]" size="8" required /></div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][start1]" size="8" required /></div>';
                 slot  += '<div class="notbrak dynamicTextStyle">To</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end]" size="8" required /></div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end1]" size="8" required /></div>';
                 slot  += '</div>';
-                slot  += '<div class="date topMargin">';
+                slot  += '<div class="date topMargin notbrak">';
                 slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
-                slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" autocomplete="off" size="8" required />';
+                slot  += '<input type="text" name="slot['+i+'][date1]" class="datepicker notbrak" autocomplete="off" size="8" required />';
                 slot  += '</div>';
 
-                slot  += '<div>';
+                slot  += '<div class="notbrak" style="vertical-align:bottom;">';
                     slot  += '<label class="form_label notbrak" style="margin-left: 5px;">Maximum number of interviewees:</label>';
 
-                    slot  += '               <div class="form_input formedit_C2">';
+                    slot  += '               <div class="form_input formedit_C2 selectInput">';
                         slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
                             slot  += '                      <option value="1">1</option>';
                             slot  += '                       <option value="2">2</option>';
@@ -432,6 +484,7 @@ $(document).ready(function(){
                     // that.hideMainEditor();
                     window.location.replace(data.route);
                 }else{
+
                     $('.general_error').html('<p>Error Creating new Booking</p>').removeClass('to_hide').addClass('to_show');
                     if(data.validator != undefined){
                         const keys = Object.keys(data.validator);
@@ -470,8 +523,16 @@ if( $('#deleteSlotModal').length ){
         console.log(' open ');
         $deleteSlot.open();
         var deleteSlot2 = $(this).closest('.slot').find('.SlotIDInputHidden').val();
+        var companyName = $(this).closest('.slot').find('.companynameInSlot').val();
+        var useremail = $(this).closest('.slot').find('.useremails').val();
+        var psnameinSlot = $(this).closest('.slot').find('.positionnameInSlot').val();
+        console.log(psnameinSlot);
         var slotIDPopup = $('.slotIDPopUp').val(deleteSlot2);
-        console.log(slotIDPopup);
+        var comnamePopUp = $('.comnameInPopUp').val(companyName);
+        var uEmail = $('.useremailInPopup').val(useremail);
+        var psname = $('.posNamePopup').val(psnameinSlot);
+        console.log(uEmail);return;
+
         return false;
     });
  }
@@ -479,16 +540,15 @@ if( $('#deleteSlotModal').length ){
     $('#deleteSlot_confirm').click(function(){
 
         var slotID = $('.slotIDPopUp').val();
-
-    
-        // $(this).closest('.slot').remove();
-
+        var companyName = $('.comnameInPopUp').val();
+        var usEmail = $('.useremailInPopup').val();
+        var positionamae = $('.posNamePopup').val();
+        // console.log(companyName);
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-
             $.ajax({
             type: 'POST',
             url: base_url+'/ajax/booking/deleteSlot',
-            data:{id: slotID},
+            data:{id: slotID,company:companyName,useremail:usEmail,position:positionamae},
             success: function(data){
                 console.log(' data ', data);
 
@@ -499,7 +559,7 @@ if( $('#deleteSlotModal').length ){
                     // $(this).parent('body').find('.slot').remove();
                     // $('.deletingSpinner').addClass('d-none');
                     // $(".slot.form_field").load(".slot.form_field");
-
+                    location.reload();
                     // $('.successMsgDeleteBooking').removeClass('d-none');
                     // setTimeout(function() {
                     //    // $('.successMsgDeleteBooking') .addClass('d-none');
