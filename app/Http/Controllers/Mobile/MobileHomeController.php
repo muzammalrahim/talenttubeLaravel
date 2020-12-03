@@ -24,6 +24,7 @@ use Redirect;
 use App\Interview;
 use App\Interviews_booking;
 use App\Slot;
+use App\Mail\deleteSlotToUserEmail;
 
 
 class MobileHomeController extends Controller {
@@ -165,5 +166,25 @@ class MobileHomeController extends Controller {
             'data' => 'Slot Updated Successsfully'
             ]);
         }
+
+    public function MdeleteSlot(Request $request){
+    // $data = $request->all();
+    // dd($data);
+    // dd($request->position);
+    $company = $request->company;
+    $email = $request->useremail;
+    $position = $request->position;
+    $intSlotID = (int) $request->id;
+    // dd( $intSlotID);
+    Mail::to($email)->send(new deleteSlotToUserEmail($company,$position));
+    Slot::where('id',$intSlotID)->delete();
+    Interviews_booking::where('slot_id',$intSlotID)->delete();
+    return response()->json([
+    'status' => 1,
+    'message' => 'Interview Bookings Deleted Succesfully'
+        ]);
+
+             
+    }
 
 }

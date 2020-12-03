@@ -26,11 +26,12 @@
 
       <div class="row font-weight-bold p-2">
         {{-- <div class="col-md-2">Sr#</div> --}}
-        <div class="col-md-2">Company</div>
-        <div class="col-md-2">Booking ID</div>
-        <div class="col-md-3">Position</div>
-        <div class="col-md-3">Mangers</div>
-        <div class="col-md-2">Action</div>
+        <div class="col-md-2 center">Company</div>
+        <div class="col-md-2 center">Booking ID</div>
+        <div class="col-md-2 center">Position</div>
+        <div class="col-md-2 center">Mangers</div>
+        <div class="col-md-2 center">Bookings</div>
+        <div class="col-md-2 center">Action</div>
       </div> 
       
    @foreach ($interview as $int)
@@ -41,11 +42,12 @@
         @endfor --}}
         
         {{-- <div class="col-md-2">{{$x}}</div> --}}
-        <div class="col-md-2">{{$int->companyname}}</div>
-        <div class="col-md-2">{{$int->uniquedigits}}</div>
-        <div class="col-md-3">{{$int->positionname}}</div>
-        <div class="col-md-3">{{$int->additionalmanagers}}</div>
-        <div class="col-md-2"><a href="{{route('interviewconcierge.edit')}}"> <i class="fas fa-edit text-primary"></i></a></div>
+        <div class="col-md-2 center">{{$int->companyname}}</div>
+        <div class="col-md-2 center">{{$int->uniquedigits}}</div>
+        <div class="col-md-2 center">{{$int->positionname}}</div>
+        <div class="col-md-2 center">{{$int->additionalmanagers}}</div>
+        <div class="col-md-2 center"> {{($int->interviewBookings)?($int->interviewBookings->aggregate):0}} </div>
+        <div class="col-md-2 center"><a href="{{route('interviewconciergeEdit',['id' => $int->id])}}"> <i class="fas fa-edit text-primary"></i></a></div>
       </div> 
       
      

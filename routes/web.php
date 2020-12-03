@@ -27,6 +27,7 @@ Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->na
 // ================================================ Save interview from unique url ================================================ 
 Route::post('ajax/booking/saveSlot',    'Site\HomeController@saveSlot')->name('saveSlot');
 Route::get('/interViewSlotCreated',    'Site\HomeController@interViewSlotCreated')->name('interViewSlotCreated');
+Route::get('/alreadyBookedSlot',    'Site\HomeController@alreadyBookedSlot')->name('alreadyBookedSlot');
 Route::post('interviewConLogin',    'Site\HomeController@interviewConLogin')->name('interviewConLogin');
 Route::get('/interviewCon',    'Site\HomeController@interviewConLayout')->name('interviewCon');
 Route::get('/noBookingMade',    'Site\HomeController@noBookingMade')->name('noBookingMade');
@@ -384,11 +385,16 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 
 
     Route::get('interviewconcierge/edit',       'Site\InterviewController@edit')->name('interviewconcierge.edit');
+    Route::get('interviewconcierge/edit/{id}',       'Site\InterviewController@editOneBooking')->name('interviewconciergeEdit');
+
     Route::get('interviewconcierge/created',       'Site\InterviewController@created')->name('interviewconcierge.created');
     Route::get('interviewconcierge/created/url',       'Site\InterviewController@bookingurl')->name('interviewconcierge.url');
 
     Route::get('interviewconcierge/manualjobseekers',       'Site\InterviewController@manualjobseekers')->name('interviewconcierge.manualjobseekers');
     Route::get('interviewconcierge/formedit','Site\InterviewController@editbookingform')->name('interviewconcierge.formedit');
+
+    Route::get('interviewconcierge/unidigitEdit','Site\InterviewController@unidigitEdit')->name('unidigitEdit');
+
     Route::get('interviewconcierge/getlikedlistjobseekers','Site\InterviewController@getlikedjobseekers')->name('interviewconcierge.getlikedlistjobseekers');
 
     Route::get('interviewconcierge/getlikedlistjobseekersdatatable','Site\InterviewController@getlikedlistjobseekersdatatable')->name('interviewconcierge.getlikedlistjobseekersdatatable');
@@ -400,6 +406,8 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/booking/manualsendnotification',    'Site\InterviewController@manualsendnotification')->name('manualsendnotification');
     Route::get('interviewconcierge/user',       'Site\InterviewController@userindex')->name('interviewconcierg.user');
     Route::post('ajax/userbooking/login',    'Site\InterviewController@userbookinglogin')->name('userbooking.login');
+
+    Route::post('ajax/update/unidigitEditUpdate','Site\InterviewController@unidigitEditUpdate')->name('unidigitEditUpdate');
 
 
 

@@ -7,16 +7,17 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class NotiEmailForQueuing extends Mailable
+class deleteSlotToUserEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $name;
-    public $url;
-    public function __construct($name, $url)
+    public $company;
+    public $position;
+
+    public function __construct($company,$position)
     {
-        $this->name = $name;
-        $this->url = $url;
+        $this->company = $company;
+        $this->position = $position;
     }
 
     /**
@@ -28,7 +29,7 @@ class NotiEmailForQueuing extends Mailable
     {
         // return $this->view('view.name');
         return $this->from('creativedev33@gmail.com')
-            ->subject($this->name)
-            ->view('emails.user.notificationEmail'); // emails/user/notificationEmail
+            ->subject('Booking update')
+            ->view('emails.user.deleteSlotToUserEmail'); // emails/user/bookingNotification
     }
 }

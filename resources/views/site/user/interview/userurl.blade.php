@@ -86,10 +86,11 @@
     	@csrf
 
 	    <div class="selectedTimeSlot d-none my-4">
-
-	    	<input type="hidden" name="interviewId" value="{{$interview->id}}" class="interviewIDinInputType">
-	        	<input type="hidden" name="slotId" value="" class="slotIDinInputType">
-
+	    		<input type="hidden" name="interviewId" value="{{$interview->id}}" class="interviewIDinInputType">
+        		<input type="hidden" name="slotId" value="" class="slotIDinInputType">
+	        	<input type="hidden" name="employerEmail" value="{{$interview->employerData->email}}">	
+	        	<input type="hidden" name="manager" value="{{$interview->additionalmanagers}}">
+	        	<input type="hidden" name="position" value="{{$interview->positionname}}">
 	    	<div class="row">
 		    	<div class="slot notbrak col-md-6">
 		            <div class="font-weight-bold"><span class="test"> Thank you for selecting the below interview time.</span> 
@@ -155,6 +156,13 @@
 
 	    </div>
     </form>
+
+    <div class="row">
+    	<div class="col-md-6 alreadyBookedInerview">
+    		<p class="bookedText"></p>
+    	</div> 
+    </div>
+
     
 </div>
 
@@ -218,14 +226,17 @@ $(document).ready(function(){
             url:  '{{route('saveSlot')}}',
             data: formData,
             success: function(response){
-                console.log(' data ', response);
+                // console.log(' data ', response);
                 if( response.status == 0 ) {
                     // that.hideMainEditor();
+
                    var errorIntCon = response['message'];
                    // console.log(errorIntCon);
                    var nameError = errorIntCon['name'];
+
                    var mobileError = errorIntCon['mobile'];
                    var emailError = errorIntCon['email'];
+                   // console.log(' data ' + response);
                    // console.log(errorInNameCon);
 
                    // ==================== name validation ====================
@@ -262,11 +273,19 @@ $(document).ready(function(){
                    		$('.errorInemail').hide();
                    	}
                     // ==================== email validation end here ====================
+
+
 	                }
 
-                else{
 
+                else if(response.status == 2){
+						var alreadBooked = response.error;                	 
+						// console.log(alreadBooked);
+						$('.bookedText').text(alreadBooked);
+                }
+                else{
                 	location.href = base_url + '/interViewSlotCreated';
+
                 }
 
             }
@@ -297,6 +316,12 @@ $(document).ready(function(){
 		text-decoration: underline;
 	    color: black;
     	cursor: pointer;
+	}
+	.alreadyBookedInerview{
+	text-align: center;
+    position: relative;
+    bottom: 100px;
+    color: red;
 	}
 </style>
 

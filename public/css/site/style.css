@@ -4510,3 +4510,17 @@ label.form_label.notbrak {
     cursor: pointer;
 }
 .interviewSlot:hover{background: #142d69;color: white;}
+
+/* Edit Interview Booking */
+
+p.slotbooking {
+    text-align: center;
+    margin: 20px;
+    font-weight: 700;
+    font-size: 18px;
+}
+.slotBookinIndex {
+    display: inline-flex;
+}
+
+/* Edit Interview Booking */
