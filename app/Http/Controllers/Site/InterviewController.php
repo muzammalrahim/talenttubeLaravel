@@ -28,8 +28,6 @@ use Illuminate\Support\Facades\Redirect;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotiEmailForQueuing;
-use App\Mail\updateSlotToUserEmail;
-
 class InterviewController extends Controller
 {
 
@@ -148,12 +146,17 @@ class InterviewController extends Controller
 
     }
     public function updateInterviewBooking(Request $request){
-        
         $data = $request->all();
-        // dd( $data);
+        // dd($data);
         $interURL = $data['interviewURL'];
+        // dd($interURL);
         $rules = array(
-            "title" => "required|string|max:255","instruction" => "required|string","companyname"  => "required|string","positionname" => "required|string",
+            "title" => "required|string|max:255",
+            "instruction" => "required|string",
+            "companyname"  => "required|string",
+            "positionname" => "required|string",
+            // "employeremail"  => 'required|email',
+            // "employerpassword" => "required|string",
         );
 
         $validator = Validator::make( $data , $rules);
@@ -164,13 +167,14 @@ class InterviewController extends Controller
             ]);
         }else{
 
-            // if(in_array(null, $data['date'], true))
-            // {
-            //     return response()->json([
-            //         'status' => 0,
-            //         'error' =>  "please, complete the schedule slot(s)"
-            //     ]);
-            // }
+            //second validation | schedule slots
+            if(in_array(null, $data['date'], true))
+            {
+                return response()->json([
+                    'status' => 0,
+                    'error' =>  "please, complete the schedule slot(s)"
+                ]);
+            }
 
             foreach($data['slot'] as $key =>$value){
 
@@ -183,83 +187,43 @@ class InterviewController extends Controller
                 }
             }
 
+        // dd($data['slot']);
+        // dd(' all valiation correct ');
+        // $slots = array();
+        //array_push($slots, $data['slot']);
+
         $interview = Interview::where('id',$data['interview_id'])->first();
         $interview->title = $data['title'];
         $interview->companyname = $data['companyname'];
         $interview->positionname = $data['positionname'];
+        // $interview->employeremail = $data['employeremail'];
+        // $interview->employerpassword = $data['employerpassword'];
         $interview->instruction = $data['instruction'];
         $interview->additionalmanagers = $data['additionalmanagers'];
         // $interview->numberofslots = $data['numberofslots'];
+
+
         // $interview->uniquedigits = rand(10000,99999);
         // $interview->url = generateRandomString();
+
         $request->session()->put('bookingid',$interview->id);
 
         $interview->save();
        // dd($data['slot']);
 
-        // $interview->slots()->delete();
-        foreach ($data['slot'] as $key => $single_slot) {
-
-            // dd($single_slot);
-
-            if( isset($single_slot['id'])){
-                // echo " update  ".$single_slot['id']; 
-                // dd($single_slot['jsEmail']);
-                $slot = Slot::where('id',$single_slot['id'])->first();
-                // dd($data['companyname']);
-                $slot->date = $single_slot['date'];
-                $slot->starttime = $single_slot['start'];
-                $slot->endtime = $single_slot['end'];
-                $slot->interview_id = $data['interview_id'];
-                
-                $slot->maximumnumberofinterviewees = $single_slot['maxNumberofInterviewees'];
-                $slot->numberofintervieweesbooked =0;
-                $slot->is_housefull = false;
-
-                $interviewID = $data['interview_id'];
-                $positionNameInSlot = $data['positionnameInSlot'];
-                $companyNameInSlot = $data['companyname'];
-                // dd($companyNameInSlot);
-                $newStartTime = $single_slot['start'];
-                $newEndTime = $single_slot['end'];
-                $newdate = $single_slot['date'];
-                
-                $userEmail = isset($single_slot['jsEmail'])?($single_slot['jsEmail']):(null);
-
-                // dd($single_slot['jsEmail']);
-                if($userEmail){
-                     Mail::to($single_slot['jsEmail'])->send(new updateSlotToUserEmail($interviewID,$positionNameInSlot,$companyNameInSlot,$newStartTime,$newEndTime,$newdate));
-                }
-
-                $slot->save();
-
-            }else{
-                
-                // dd($single_slot['maxNumberofInterviewees1']);
-                // echo " create new ";
-                $slot = new Slot();
-                $slot->starttime = $single_slot['start1'];
-                $slot->endtime = $single_slot['end1'];
-                $slot->date = $single_slot['date1'];
-                $slot->interview_id = $data['interview_id'];
-                $slot->maximumnumberofinterviewees = $single_slot['maxNumberofInterviewees1'];
-
-                $slot->numberofintervieweesbooked =0;
-                $slot->is_housefull = false;
-
-
-                $slot->save();
-            }
-           
+        $interview->slots()->delete();
+        foreach ($data['slot'] as $key => $value) {
+            // dd($data['interview_id']);
+            $slot = new Slot;
+            $slot->date = $data['date'][$key];
+            $slot->maximumnumberofinterviewees = $data['maximumnumber'][$key];
+            $slot->starttime =$value['start'];
+            $slot->endtime = $value['end'];
+            $slot->interview_id = $data['interview_id'];
+            $slot->numberofintervieweesbooked =0;
+            $slot->is_housefull = false;
+            $interview->slots()->save($slot);
         }
-
-// dd( 'done ' );
-        // foreach ($data['slot'] as $key => $newSlot) {
-        //     dump($newSlot['start1']);
-        // }
-
-
-        // dd(' working ');
 
        // dd($interview);
         $interview->save();
@@ -271,8 +235,6 @@ class InterviewController extends Controller
         }
 
     }
-
-
 
     public function editInterviewLogin(Request $request){
 
@@ -374,7 +336,7 @@ class InterviewController extends Controller
         $user = Auth::user();
 
         $bookingid = session('bookingid');
-        // session()->forget('bookingid');
+        session()->forget('bookingid');
 
         if(!empty($bookingid)){
 
@@ -391,51 +353,6 @@ class InterviewController extends Controller
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.formedit', $data);
-        // site/employer/interview/formedit
-    }
-
-        public function unidigitEdit(){
-        $user = Auth::user();
-
-        $bookingid = session('bookingid');
-        // session()->forget('bookingid');
-
-        if(!empty($bookingid)){
-
-            $interview = Interview::where('id',$bookingid)->first();
-
-        }
-        else {
-
-            return Redirect::route('interviewconcierge');
-        }
-
-        $data['user'] = $user;
-        $data['interview'] = $interview;
-        $data['title'] = 'My Jobs';
-        $data['classes_body'] = 'myJob';
-        return view('site.employer.interview.unidigitEdit', $data);
-        // site/employer/interview/unidigitEdit
-    }
-
-    
-    public function editOneBooking($id){
-        
-        $user = Auth::user();
-        $interview = Interview::where('id',$id)->first();
-        
-        if ( $interview && $interview->emp_id ==  $user->id ){
-            $data['user'] = $user;
-            $data['interview'] = $interview;
-            $data['title'] = 'My Jobs';
-            $data['classes_body'] = 'myJob';
-            return view('site.employer.interview.formedit', $data);
-        }else{
-
-            return Redirect::route('homepage');
-            // return view('site.employer.interview.formedit', $data);
-        }
-
         // site/employer/interview/formedit
     }
 
@@ -696,34 +613,6 @@ class InterviewController extends Controller
     //     return view('site.employer.interview.indexuser', $data);
     // }
 
-
-    public function unidigitEditUpdate(Request $request){
-        $data = $request->all();
-        // dd($data);
-        // dd($interURL);
-        $rules = array(
-            "uniquedigits" => "required|string|unique:interviews",
-        );
-
-        $validator = Validator::make( $data , $rules);
-        if ($validator->fails()){
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $validator->getMessageBag()->toArray()
-            ]);
-        }else{
-            $interview = Interview::where('id',$data['intervieww_id'])->first();
-            
-              // dd($data['uniquedigits']);
-// 
-            $interview->uniquedigits = $data['uniquedigits'];
-            $interview->save();
-            return response()->json([
-                'status' => 1,
-                'message' => 'Booking ID has been updated succesfully',
-            ]);
-        }
-    }
 
 
     

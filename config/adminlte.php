@@ -254,6 +254,14 @@ return [
             'label_color' => 'success',
         ],
 
+        [   'header'      => 'Interviews'],
+        [
+            'text'        => 'Application Concierge',
+            'url'         => 'admin/application_concierge/list',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
         // [
         //     'text'        => 'Search by Jobs',
         //     'url'         => 'admin/searchByJobs',

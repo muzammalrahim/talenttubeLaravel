@@ -3,27 +3,9 @@
 
 @section('content')
 
-
 <div class="card font-14">
 
-    <h6 class="card-header h6">Interview Concierge Bookings</h6>
-
-     <div class="row ml-2">
-        <div class="successMsgDeleteBooking alert alert-success d-none" role="alert">
-            Your interview booking has been cancelled successfully.
-        </div>
-    </div> 
-
-    <div class="row ml-2">
-        <div class="successMsgUpdatingBooking alert alert-success d-none" role="alert">
-            Your interview booking has been rescheduled successfully.
-        </div>
-    </div> 
-    <div class="row d-none" id="overlay">   
-        <div class="spinner-border text-primary overlayLoader" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
+        <h6 class="card-header h6">Interview Concierge Bookings</h6>
 
 
     <div class="card-body p-0 cardBody">
@@ -32,12 +14,16 @@
         </div>
 
         {{-- @dump( $data['Interviews_booking']); --}}
-
+        
+        <div class="successMsgDeleteBooking alert alert-success d-none" role="alert">
+          Your interview booking has been cancelled successfully.
+        </div>
+        
         <div class="interviewBookings">
             @foreach ($data['Interviews_booking'] as $int_booking )
                 <div class="interviewBooking p-2 mb-2">
                     {{-- @dump($int_booking->slot->starttime); --}}
-                   
+
                     <div class="row">
                         <div class="col-12">
                              <p class="p-0 m-0"> You have applied for the position of : <b>{{$int_booking->interview->positionname}}</b></p>
@@ -98,29 +84,19 @@
                     <div class="row mb-2">
                         <div class="col-10"><a class="deleteInterview btn btn-danger" data-toggle="modal" data-target="#bookingDeletingModal"> Click here to cancel your interview</a>
                         </div>
-                        {{-- <div class="col-2">
+                        <div class="col-2">
                             <div class="deletingSpinner spinner-border text-primary d-none" role="status">
                             </div>
-                        </div> --}}
-                    </div>
-                    {{-- <div class="row ml-2">
-                        <div class="successMsgDeleteBooking alert alert-success d-none" role="alert">
-                          Your interview booking has been cancelled successfully.
                         </div>
-                    </div> --}}  
+                    </div>
                     <div class="row">
                         <div class="col-12">
                           <a class="emailSendButton btn btn-primary" data-toggle="modal" data-target="#emailSendingModal"> Click here to send an email to the interviewer with your preferred time</a>
                         </div>
                     </div>
-                    {{-- <div class="row ml-2">
-                        <div class="successMsgUpdatingBooking alert alert-success d-none" role="alert">
-                          Your interview booking has been cancelled successfully.
-                        </div>
-                    </div> --}} 
 
                     <input type="hidden" class="intBookingHidden" name="" value="{{$int_booking->id}}">
-                    <input type="hidden" name="interviewid" class="interviewIDHidden" value="{{$int_booking->interview->id}}">
+                    <input type="hidden" class="intIDHidden" name="" value="{{$int_booking->interview->id}}">
 
                 </div>
             @endforeach
@@ -145,7 +121,6 @@
         </button>
       </div>
       <div class="modal-body text-center">
-        <input type="hidden" name="" class="bookingIdINModal">
         <input type="hidden" name="" class="intBookingInModal">
         <p>Are you sure you wish to continue ?</p>
         <h1><i class="far fa-question-circle"></i></h1>
@@ -175,7 +150,7 @@
         </button>
       </div>
       <div class="modal-body p-0">
-        <input type="hidden" name="" class="bookingIdINModal">
+        {{-- <input type="text" name="" class="intConInModal"> --}}
         <div class="ajaxDataOfSlots"></div>
       </div>
       <div class="modal-footer text-center d-block">
@@ -214,9 +189,8 @@ $(document).ready(function(){
 
     });
         $('.confirmDeleteBooking').click(function(){
-        $('#overlay').removeClass('d-none');
-        var intConConfID = $('.intBookingInModal').val();
-        $('.deletingSpinner').removeClass('d-none');
+            var intConConfID = $('.intBookingInModal').val();
+            $('.deletingSpinner').removeClass('d-none');
             $.ajaxSetup({
             headers: {
              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -232,8 +206,6 @@ $(document).ready(function(){
             // $('.sendNotification').html('Save').prop('disabled',false);
             if( data.status == 1 ){
                 $('.deletingSpinner').addClass('d-none');
-                $('#overlay').addClass('d-none');
-
                 $('.successMsgDeleteBooking').removeClass('d-none');
                 setTimeout(function() {
                    $('.successMsgDeleteBooking') .addClass('d-none');
@@ -246,7 +218,7 @@ $(document).ready(function(){
 
         }
     });
-
+        
     
     });
 
@@ -255,17 +227,13 @@ $(document).ready(function(){
     $('.emailSendButton').click(function(){
         console.log('Email Send Button');
 
-        var bookingID = $(this).parents('.interviewBooking').find('.intBookingHidden').val();
-        var bookingIDinModal = $('.bookingIdINModal').val(bookingID);
-        // console.log(bookingIDinModal);
-        var interviewID = $(this).parents('.interviewBooking').find('.interviewIDHidden').val();
-
-        console.log(' bookingID ' + bookingID + '  interviewID = '+interviewID  );
+        var intConID = $(this).parents('.interviewBooking').find('.intIDHidden').val();
+        console.log(intConID);
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
             url: base_url+'/m/ajax/booking/MsendEmailEmployer',
-            data:{bookingID: bookingID, interviewID: interviewID},
+            data:{id: intConID},
             success: function(data){
                 // console.log(' data ', data);
                 $('.ajaxDataOfSlots').html(data);
@@ -296,27 +264,6 @@ $(document).ready(function(){
     color: white;
 }
 .slotData:nth-child(odd) { background-color:#e0e0e0}
-
-#overlay{
-  position: fixed;
-  /*display: none;*/
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0,0,0,0.5);
-  z-index: 2;
-  cursor: pointer;
-}
-
-
-.overlayLoader{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-}
 
 </style>
 

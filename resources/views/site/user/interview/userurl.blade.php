@@ -86,11 +86,10 @@
     	@csrf
 
 	    <div class="selectedTimeSlot d-none my-4">
-	    		<input type="hidden" name="interviewId" value="{{$interview->id}}" class="interviewIDinInputType">
-        		<input type="hidden" name="slotId" value="" class="slotIDinInputType">
-	        	<input type="hidden" name="employerEmail" value="{{$interview->employerData->email}}">	
-	        	<input type="hidden" name="manager" value="{{$interview->additionalmanagers}}">
-	        	<input type="hidden" name="position" value="{{$interview->positionname}}">
+
+	    	<input type="hidden" name="interviewId" value="{{$interview->id}}" class="interviewIDinInputType">
+	        	<input type="hidden" name="slotId" value="" class="slotIDinInputType">
+
 	    	<div class="row">
 		    	<div class="slot notbrak col-md-6">
 		            <div class="font-weight-bold"><span class="test"> Thank you for selecting the below interview time.</span> 
@@ -146,32 +145,16 @@
 
 		    		<p class="errorInEmail p-0 m-0 text-danger hide"> </p>	
 
-		    		<div class="row">
-		    			<div class="col-md-2"></div>	
-		    			<div class="col-md-3">	
-				            <div class="text-center my-3">
-				                <button class="btn-sm btn btn-success saveSlot"> Continue</button>
-				            </div>
-			            </div>
-			            <div class="col-md-2">
-			            	<div class="spinner-border text-primary my-3 d-none saveSlotSpinner" role="status">
-								<span class="sr-only">Loading...</span>
-							</div>
-			            </div>
-		          	</div>
+		            <div class="text-center my-3">
+		                <button class="btn-sm btn btn-success saveSlot"> Continue</button>
+		            </div>
+		          
 		        </div>
 
 	        </div>
 
 	    </div>
     </form>
-
-    <div class="row">
-    	<div class="col-md-6 alreadyBookedInerview">
-    		<p class="bookedText"></p>
-    	</div> 
-    </div>
-
     
 </div>
 
@@ -230,27 +213,19 @@ $(document).ready(function(){
         var formData = $('.new_slot_form').serializeArray();
         // console.log('hi how are you');
         // console.log(' formData ', formData);
-        $('.saveSlotSpinner').removeClass('d-none');
-        
-        setTimeout(function() { $(".saveSlotSpinner").addClass('d-none'); }, 2000);
-
-        // return;
         $.ajax({
             type: 'POST',
             url:  '{{route('saveSlot')}}',
             data: formData,
             success: function(response){
-                // console.log(' data ', response);
+                console.log(' data ', response);
                 if( response.status == 0 ) {
                     // that.hideMainEditor();
-
                    var errorIntCon = response['message'];
                    // console.log(errorIntCon);
                    var nameError = errorIntCon['name'];
-
                    var mobileError = errorIntCon['mobile'];
                    var emailError = errorIntCon['email'];
-                   // console.log(' data ' + response);
                    // console.log(errorInNameCon);
 
                    // ==================== name validation ====================
@@ -287,19 +262,11 @@ $(document).ready(function(){
                    		$('.errorInemail').hide();
                    	}
                     // ==================== email validation end here ====================
-
-
 	                }
 
-
-                else if(response.status == 2){
-						var alreadBooked = response.error;                	 
-						// console.log(alreadBooked);
-						$('.bookedText').text(alreadBooked);
-                }
                 else{
-                	location.href = base_url + '/interViewSlotCreated';
 
+                	location.href = base_url + '/interViewSlotCreated';
                 }
 
             }
@@ -330,12 +297,6 @@ $(document).ready(function(){
 		text-decoration: underline;
 	    color: black;
     	cursor: pointer;
-	}
-	.alreadyBookedInerview{
-	text-align: center;
-    position: relative;
-    bottom: 100px;
-    color: red;
 	}
 </style>
 

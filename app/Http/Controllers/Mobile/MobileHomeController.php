@@ -24,7 +24,6 @@ use Redirect;
 use App\Interview;
 use App\Interviews_booking;
 use App\Slot;
-use App\Mail\deleteSlotToUserEmail;
 
 
 class MobileHomeController extends Controller {
@@ -130,64 +129,25 @@ class MobileHomeController extends Controller {
 
     public function MsendEmailEmployer(Request $request){
 
-        $intBookId = $request->bookingID;
-        $interviewID = $request->interviewID;
-        // dd( $intBookId);
-        
-        // $slots = Slot::where('interview_id',$intBookId)->get();
-        $Interviews_booking = Interviews_booking::where('id', $intBookId)->first(); 
-
-        // dd( $request->session()  );
-        
-
-        // dump( $Interviews_booking->isMybooking($request->session()->pull('int_conc_email'), $request->session()->pull('int_conc_mobile')) ); 
-        // dd( $Interviews_booking->toArray() ); 
-        // validation 
-        // if this booking is again this user then only allowed him 
-
-        $slots = Slot::where('interview_id',$interviewID)->get();
-        $data['slots'] = $slots;
-        $data['classes_body'] = 'interview';
-        return view('mobile.home.preferred' , $data); // mobile/home/preferred
+    $intBookId = $request->id;
+    // dd( $intBookId);
+    $slots = Slot::where('interview_id',$intBookId)->get();
+    $data['slots'] = $slots;
+    $data['classes_body'] = 'interview';
+    return view('mobile.home.preferred' , $data);
     }
-
 
     public function MrescheduleSlot(Request $request){
 
-        $data = $request->all();
-        // dd($data);
-        $interviewBooking = Interviews_booking::where('id',$data['booking_id'])->first();
-        // dd($interviewBooking); 
-        
-        $interviewBooking->slot_id = $data['slot_id'];
-        $interviewBooking->save();
-        return response()->json([
-            'status' => 1,
-            'data' => 'Slot Updated Successsfully'
-            ]);
-        }
-
-    public function MdeleteSlot(Request $request){
-    // $data = $request->all();
-    // dd($data);
-    // dd($request->position);
-    $company = $request->company;
-    $email = $request->useremail;
-    $position = $request->position;
-    $intSlotID = (int) $request->id;
-    // dd( $intSlotID);
-    if(!empty($email)){
-        
-        Mail::to($email)->send(new deleteSlotToUserEmail($company,$position));
-    }
-    Slot::where('id',$intSlotID)->delete();
-    Interviews_booking::where('slot_id',$intSlotID)->delete();
+    // $intBookId = $request->id;
+    // dd( $intBookId);
+    $slot = new Slot();
+    $slot->id = $request->id;
+    $slot->save();
     return response()->json([
-    'status' => 1,
-    'message' => 'Interview Bookings Deleted Succesfully'
+        'status' => 1,
+        'data' => 'Slot Updated Successsfully'
         ]);
-
-             
     }
 
 }

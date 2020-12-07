@@ -22,8 +22,6 @@
       <!-- Your custom styles (optional) -->
       <link rel="stylesheet" href="{{ asset('css/mobile/style.css') }}">
 
-      <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-
       @yield('custom_css')
 
 </head>

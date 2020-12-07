@@ -23,7 +23,7 @@
           @php
            session()->put('bookingid',$interview->id);
           @endphp
-          <a  class="w50 Afont_s"  href="{{route('MunidigitEdit')}}">Click here to edit Booking ID Number</a>
+          <a  class="w50 Afont_s"  href="{{route('Minterviewconcierge.formedit')}}">Click here to edit Booking ID</a>
 
     </div>
 </div>

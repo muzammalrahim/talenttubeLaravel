@@ -587,7 +587,6 @@ class EmployerController extends Controller {
         $jobSeekers             = $jobSeekersObj->getJobSeekers($request, $user);
         $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 
-        // dd($likeUsers);
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = null; // $jobSeekers;
 

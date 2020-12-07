@@ -382,8 +382,6 @@ $( document ).ajaxComplete(function() {
 $('#MintConform_login').click(function ($event) {
     $event.preventDefault();
         event.preventDefault();
-        $('.mProcessing').removeClass('d-none');
-
         var formData = $('.MintCon_login').serializeArray();
         console.log(' formData ', formData);
         $.ajax({
@@ -394,12 +392,7 @@ $('#MintConform_login').click(function ($event) {
 
             if (response == "") {
                 $('.errorInBooking').text('This "Email" and "Mobile" is not registered with any booking.');
-                $('.mProcessing').addClass('d-none');
             }else{
-                $('.mProcessing').addClass('d-none');
-                
-                $('.tohideFormOnClick').text('Sign in Successfully');
-                $('.tohideFormOnClick').css("background","rgba(0,0,0,.4)");
                 console.log(' data >>>> ', response);
                     
                 if( response.status) {
