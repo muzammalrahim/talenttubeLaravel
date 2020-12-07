@@ -57,34 +57,31 @@
 
       {{-- Table --}}
 <div class="table-responsive">
-      <table class="table table-striped tableResponsive">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">ID</th>
-      <th scope="col">Company</th>
-      <th scope="col">Position</th>
-      <th scope="col">Bookings</th>
-      <th scope="col">Action</th>
-    </tr>
-  </thead>
-  <tbody>
+  <table class="table table-striped tableResponsive">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">ID</th>
+        <th scope="col">Company</th>
+        <th scope="col">Position</th>
+        <th scope="col">Bookings</th>
+        <th scope="col">Action</th>
+      </tr>
+    </thead>
+    <tbody>
       @foreach($interview as $int)
-    <tr>
-
-        {{-- <th scope="row">1</th> --}}
-        <td> {{ $loop->index+1 }} </td>
-        <td>{{$int->uniquedigits}}</td>
-        <td>{{$int->companyname}}</td>
-        <td>{{$int->positionname}}</td>
-        <td class="text-center">{{($int->interviewBookings)?($int->interviewBookings->aggregate):0}}</td>
-        <td><a href="{{route('MinterviewconciergeEdit',['id' => $int->id])}}"> <i class="fas fa-edit pl-3"></i></a></td>
-
-    </tr>
-
+        <tr>
+            {{-- <th scope="row">1</th> --}}
+            <td> {{ $loop->index+1 }} </td>
+            <td>{{$int->uniquedigits}}</td>
+            <td>{{$int->companyname}}</td>
+            <td>{{$int->positionname}}</td>
+            <td class="text-center">{{($int->interviewBookings)?($int->interviewBookings->aggregate):0}}</td>
+            <td><a href="{{route('MinterviewconciergeEdit',['id' => $int->id])}}"> <i class="fas fa-edit pl-3"></i></a></td>
+        </tr>
       @endforeach
-  </tbody>
-</table>
+    </tbody>
+  </table>
 </div>
 
 {{-- Table end here --}}
@@ -131,8 +128,8 @@ html, body {
     {
     scale = width / 500;
     } else{
-                                scale = 1.0;
-                        }
+              scale = 1.0;
+          }
     jQuery('.tableResponsive').css('transform', 'scale(' + scale + ')');
     jQuery('.tableResponsive').css('-webkit-transform', 'scale(' + scale + ')');
     jQuery('.tableResponsive').css('transform-origin', '0 0');

@@ -146,10 +146,19 @@
 
 		    		<p class="errorInEmail p-0 m-0 text-danger hide"> </p>	
 
-		            <div class="text-center my-3">
-		                <button class="btn-sm btn btn-success saveSlot"> Continue</button>
-		            </div>
-		          
+		    		<div class="row">
+		    			<div class="col-md-2"></div>	
+		    			<div class="col-md-3">	
+				            <div class="text-center my-3">
+				                <button class="btn-sm btn btn-success saveSlot"> Continue</button>
+				            </div>
+			            </div>
+			            <div class="col-md-2">
+			            	<div class="spinner-border text-primary my-3 d-none saveSlotSpinner" role="status">
+								<span class="sr-only">Loading...</span>
+							</div>
+			            </div>
+		          	</div>
 		        </div>
 
 	        </div>
@@ -221,6 +230,11 @@ $(document).ready(function(){
         var formData = $('.new_slot_form').serializeArray();
         // console.log('hi how are you');
         // console.log(' formData ', formData);
+        $('.saveSlotSpinner').removeClass('d-none');
+        
+        setTimeout(function() { $(".saveSlotSpinner").addClass('d-none'); }, 2000);
+
+        // return;
         $.ajax({
             type: 'POST',
             url:  '{{route('saveSlot')}}',

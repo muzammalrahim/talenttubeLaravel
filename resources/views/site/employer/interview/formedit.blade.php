@@ -56,6 +56,7 @@
                 </div>
             </div> --}}
 
+
             <div class="job_description form_field" required>
                 <span class="form_label">Interview Instruction: </span>
                 <div class="form_input">
@@ -140,12 +141,22 @@
                             </div>
 
                             {{--  For sending email to js after updating slot --}}
+
+
                                 @foreach ($slot->bookings3 as $book)
+                                    {{-- @dump($book->email) --}}
                                     <input type="hidden" class ="useremails" name="slot[{{$key+1}}][jsEmail]" value="{{$book->email}}">
                                 @endforeach
-                             {{-- For sending email to js after updating slot end here --}}
-                            
-                            <div class="slot_booking">
+
+
+                            {{-- For sending email to js after updating slot end here --}}
+                            @php
+                                $bookingss = ($slot->bookings3)->toArray();
+                            @endphp
+
+                            {{-- @dump($bookingss); --}}
+                            @if (!empty($bookingss))
+                                <div class="slot_booking">
                                 <p class="slotbooking">Slots Bookings </p>
                                     <div class="slot_booking_list">
                                         @foreach ($slot->bookings3 as $bookings)
@@ -159,6 +170,11 @@
                                         {{-- @dump($slot->bookings3) --}}
                                     </div>
                             </div>
+                            @else
+                                <p class="slotbooking">This slot has not any booking.</p>
+
+                            @endif
+                            
                         </div>	
 
                         @endforeach
@@ -388,7 +404,7 @@ $(".addSlot").bind('click', function(){
                     slot  += '<label class="form_label notbrak" style="margin-left: 5px;">Maximum number of interviewees:</label>';
 
                     slot  += '               <div class="form_input formedit_C2 selectInput">';
-                        slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
+                        slot  += '                  <select name="slot['+i+'][maxNumberofInterviewees1]" class="form_select" >';
                             slot  += '                      <option value="1">1</option>';
                             slot  += '                       <option value="2">2</option>';
                             slot  += '                       <option value="3">3</option>';
@@ -556,15 +572,7 @@ if( $('#deleteSlotModal').length ){
 
                 $('#deleteSlotModal').close();
 
-                    // $(this).parent('body').find('.slot').remove();
-                    // $('.deletingSpinner').addClass('d-none');
-                    // $(".slot.form_field").load(".slot.form_field");
                     location.reload();
-                    // $('.successMsgDeleteBooking').removeClass('d-none');
-                    // setTimeout(function() {
-                    //    // $('.successMsgDeleteBooking') .addClass('d-none');
-                    //    location.reload();
-                    // }, 3000);
 
                 }else{
                    

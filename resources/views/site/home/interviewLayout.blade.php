@@ -104,7 +104,7 @@
                  
                 <div class="row">
                     <div class="col-md-5">
-                      <a class="emailSendButton btn btn-primary" data-toggle="modal" data-target="#emailSendingModal"> Click here to send an email to the interviewer with your preferred time</a>
+                      <a class="emailSendButton btn btn-primary" data-toggle="modal" data-target="#emailSendingModal"> Click here to reschedule you time slot</a>
                     </div>
                   {{--   <div class="col-md-1">
                         <div class="deletingSpinner spinner-border text-primary d-none" role="status">

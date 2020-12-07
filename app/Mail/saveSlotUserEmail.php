@@ -28,7 +28,7 @@ class saveSlotUserEmail extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->from('creativedev33@gmail.com')
+        return $this->from('creativedev22@gmail.com')
             ->subject($this->name)
             ->view('emails.user.bookingNotification'); // emails/user/bookingNotification
     }

@@ -208,10 +208,11 @@ class InterviewController extends Controller
                 $slot = Slot::where('id',$single_slot['id'])->first();
                 // dd($data['companyname']);
                 $slot->date = $single_slot['date'];
-                $slot->maximumnumberofinterviewees = $single_slot['maxNumberofInterviewees'];
                 $slot->starttime = $single_slot['start'];
                 $slot->endtime = $single_slot['end'];
                 $slot->interview_id = $data['interview_id'];
+                
+                $slot->maximumnumberofinterviewees = $single_slot['maxNumberofInterviewees'];
                 $slot->numberofintervieweesbooked =0;
                 $slot->is_housefull = false;
 
@@ -234,16 +235,17 @@ class InterviewController extends Controller
 
             }else{
                 
-                // dump($single_slot['start1']);
+                // dd($single_slot['maxNumberofInterviewees1']);
                 // echo " create new ";
                 $slot = new Slot();
                 $slot->starttime = $single_slot['start1'];
                 $slot->endtime = $single_slot['end1'];
                 $slot->date = $single_slot['date1'];
                 $slot->interview_id = $data['interview_id'];
+                $slot->maximumnumberofinterviewees = $single_slot['maxNumberofInterviewees1'];
+
                 $slot->numberofintervieweesbooked =0;
                 $slot->is_housefull = false;
-                $slot->maximumnumberofinterviewees = 20;
 
 
                 $slot->save();
@@ -372,7 +374,7 @@ class InterviewController extends Controller
         $user = Auth::user();
 
         $bookingid = session('bookingid');
-        session()->forget('bookingid');
+        // session()->forget('bookingid');
 
         if(!empty($bookingid)){
 

@@ -976,7 +976,11 @@ class HomeController extends Controller {
             $position = $request->position;
             $intSlotID = (int) $request->id;
             // dd( $intSlotID);
-            Mail::to($email)->send(new deleteSlotToUserEmail($company,$position));
+            if(!empty($email))
+            {
+                Mail::to($email)->send(new deleteSlotToUserEmail($company,$position));
+
+            }
             Slot::where('id',$intSlotID)->delete();
             Interviews_booking::where('slot_id',$intSlotID)->delete();
             return response()->json([
