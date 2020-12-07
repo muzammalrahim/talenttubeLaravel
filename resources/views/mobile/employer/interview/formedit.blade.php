@@ -143,21 +143,32 @@
                              @foreach ($slot->bookings3 as $book)
                                     <input type="hidden" class ="useremails" name="slot[{{$key+1}}][jsEmail]" value="{{$book->email}}">
                             @endforeach
+
+                            @php
+                                $bookingss = ($slot->bookings3)->toArray();
+                            @endphp
                             
-                            <div class="slot_booking mt-3">
-                                <p class="slotbooking text-center font-weight-bold">Slots Bookings </p>
-                                    <div class="slot_booking_list">
-                                        @foreach ($slot->bookings3 as $bookings)
-                                            <div class="slotBookinIndex">
-                                                <h6 class="font-weight-bold">Booking:{{ $loop->index+1 }}</h6> 
-                                                <p class="m-0"><span> Name: </span>{{$bookings->name}}</p>
-                                                <p class="m-0"><span> Email: </span>{{$bookings->email}}</p>
-                                                <p class="m-0"><span> Mobile: </span>{{$bookings->mobile}}</p>
-                                            </div>
-                                        @endforeach
-                                        {{-- @dump($slot->bookings3) --}}
-                                    </div>
-                            </div>
+                            @if (!empty($bookingss))
+                            
+                                <div class="slot_booking mt-3">
+                                    <p class="slotbooking text-center font-weight-bold">Slots Bookings </p>
+                                        <div class="slot_booking_list">
+                                            @foreach ($slot->bookings3 as $bookings)
+                                                <div class="slotBookinIndex">
+                                                    <h6 class="font-weight-bold">Booking:{{ $loop->index+1 }}</h6> 
+                                                    <p class="m-0"><span> Name: </span>{{$bookings->name}}</p>
+                                                    <p class="m-0"><span> Email: </span>{{$bookings->email}}</p>
+                                                    <p class="m-0"><span> Mobile: </span>{{$bookings->mobile}}</p>
+                                                </div>
+                                            @endforeach
+                                            {{-- @dump($slot->bookings3) --}}
+                                        </div>
+                                </div>
+                            @else
+                                <p class="slotbooking text-center font-weight-bold">This slot has not any booking.</p>
+
+                            @endif
+
                         </div>  
 
                         @endforeach
@@ -281,7 +292,7 @@ $(".addSlot").bind('click', function(){
                     slot  += '<label class="form_label notbrak col-7">Maximum number of interviewees:</label>';
 
                     slot  += '               <div class="form_input formedit_C2 col-5">';
-                        slot  += '                  <select name="maximumnumber['+i+']" class="form-control" >';
+                        slot  += '                  <select name="slot['+i+'][maxNumberofInterviewees1]" class="form-control" >';
                             slot  += '                      <option value="1">1</option>';
                             slot  += '                       <option value="2">2</option>';
                             slot  += '                       <option value="3">3</option>';
@@ -398,7 +409,7 @@ $(document).ready(function(){
 });
 // ========================================for Add date =============================================
 
-// ================================= Delete Slo Pop =====================================
+// ================================= Delete Slot Pop =====================================
 
 
 $('.deleteSlotClck').click(function(){

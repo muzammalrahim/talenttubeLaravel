@@ -96,7 +96,7 @@
             <div class="form_field">
                 <span class="form_label"></span>
                 <div class="form_input">
-                    <div class="genera2_error error to_hide">&nbsp;</div>
+                    <div class="general_error2 error to_hide">&nbsp;</div>
                 </div>
             </div>
 
@@ -144,7 +144,7 @@
                 <div class="form_field">
                     <span class="form_label"></span>
                     <div class="form_input">
-                        <div class="general_error error to_hide">&nbsp;</div>
+                        <div class="general_error3 error to_hide">&nbsp;</div>
                     </div>
                 </div>
 
@@ -257,7 +257,7 @@ $.ajax({
 $('.loginEditInterview2').on('click',function() {
 
 event.preventDefault();
-var formData = $('.login_booking_form1').serializeArray();
+var formData = $('.login_booking_form2').serializeArray();
 $('.loginEditInterview2').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
 console.log(' formData ', formData);
 $('.general_error2').html('');

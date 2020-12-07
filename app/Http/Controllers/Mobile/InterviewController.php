@@ -150,7 +150,7 @@ $user = Auth::user();
     public function MupdateInterviewBooking(Request $request){
 
         $data = $request->all();
-        // dd( $data ['companyname']);
+        // dd( $data );
         // $interURL = $data['interviewURL'];
         $rules = array(
             "title" => "required|string|max:255","instruction" => "required|string","companyname"  => "required|string","positionname" => "required|string",
@@ -235,16 +235,17 @@ $user = Auth::user();
 
             }else{
                 
-                // dump($single_slot['start1']);
+                // dd($single_slot['maxNumberofInterviewees1']);
                 // echo " create new ";
                 $slot = new Slot();
+                $slot->date = $single_slot['date1'];
                 $slot->starttime = $single_slot['start1'];
                 $slot->endtime = $single_slot['end1'];
-                $slot->date = $single_slot['date1'];
                 $slot->interview_id = $data['interview_id'];
+                $slot->maximumnumberofinterviewees = $single_slot['maxNumberofInterviewees1'];
+
                 $slot->numberofintervieweesbooked =0;
                 $slot->is_housefull = false;
-                $slot->maximumnumberofinterviewees = 20;
                 $slot->save();
             }
            

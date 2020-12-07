@@ -27,7 +27,7 @@ class NotiEmailForQueuing extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->from('creativedev33@gmail.com')
+        return $this->from('creativedev22@gmail.com')
             ->subject($this->name)
             ->view('emails.user.notificationEmail'); // emails/user/notificationEmail
     }

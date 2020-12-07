@@ -49,7 +49,7 @@ session()->put('bookingid',$interview->id);
          </div>
       </div>
       <div class="fomr_btn act_field text-center">
-         <button class="btn btn-sm leftMargin turquoise loginEditInterview1">Send Notification</button>
+         <button class="btn btn-sm btn-primary leftMargin turquoise loginEditInterview1">Send Notification</button>
       </div>
    </form>
 </div>
@@ -80,12 +80,12 @@ session()->put('bookingid',$interview->id);
       <div class="form_field">
          <span class="form_label"></span>
          <div class="form_input">
-            <div class="genera2_error error to_hide">&nbsp;</div>
+            <div class="general_error2 error to_hide">&nbsp;</div>
          </div>
       </div>
       <div class="fomr_btn act_field text-center">
          {{-- <input type="type" value="academic" /> --}}
-         <button class="btn btn-sm leftMargin turquoise loginEditInterview2">Sed Notification</button>
+         <button class="btn btn-sm btn-primary leftMargin turquoise loginEditInterview2">Sed Notification</button>
       </div>
    </form>
 </div>
@@ -116,12 +116,12 @@ session()->put('bookingid',$interview->id);
       <div class="form_field">
          <span class="form_label"></span>
          <div class="form_input">
-            <div class="general_error error to_hide">&nbsp;</div>
+            <div class="general_error3 error to_hide">&nbsp;</div>
          </div>
       </div>
       <div class="fomr_btn act_field text-center">
          {{-- <input type="type" value="academic" /> --}}
-         <button class="btn btn-sm leftMargin turquoise loginEditInterview3">Send Notification</button>
+         <button class="btn btn-sm btn-primary leftMargin turquoise loginEditInterview3">Send Notification</button>
       </div>
    </form>
 </div>
