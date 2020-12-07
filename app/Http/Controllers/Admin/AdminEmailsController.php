@@ -438,7 +438,7 @@ class AdminEmailsController extends Controller {
 
     public function generatePDFApplicant(Request $request) {
         if(!empty($request->cbx)){
-            // dd($request->cbx);
+            // dump($request->test);
             // $str_arr = explode (",", $request->cbx);
             $userIDs = array();
             foreach($request->cbx as $userID){

@@ -7,9 +7,12 @@
          @if (Auth::check())
             @if (isEmployer())
               <a  class="btn_sign" href="{{route('employerProfile')}}">Dashboard</a>
+            @elseif(isAdmin())
+              <a  class="btn_sign" href="{{route('adminDashboard')}}">Dashboard</a>
             @else
               <a  class="btn_sign" href="{{route('profile')}}">Dashboard</a>
             @endif
+
         @else
             <span class="link">Have an account?</span>
             <a id="pp_sign_in_open" class="btn_sign">Sign in</a>
@@ -26,6 +29,7 @@
 <a   class = "interviewConciergeRoute" >
     <div class="interviewConcierge">Interview Concierge</div>
 </a>
+
 
 <!-- /header_top  -->
 

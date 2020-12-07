@@ -237,10 +237,6 @@ function nextTabQuestion(jobPopId) {
 
         $('#jobslist-tab').removeClass("active");
         $('#question-tab').addClass('active');
-
-
-
-
         $.ajax({
         type: 'GET',
             url: base_url+'/admin/ajax/jobApplyInfoa/'+ jobPopId,
