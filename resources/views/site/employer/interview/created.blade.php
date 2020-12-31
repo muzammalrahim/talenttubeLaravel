@@ -18,7 +18,7 @@
         @php
          session()->put('bookingid',$interview->id);
         @endphp
-        <a  class="button w50"  href="{{route('unidigitEdit')}}">Click here to edit Booking ID Number</a>
+        <a  class="button w50"  href="{{route('unidigitEditUrl')}}">Click here to edit Booking ID Number</a>
     </div>
 
 </div>

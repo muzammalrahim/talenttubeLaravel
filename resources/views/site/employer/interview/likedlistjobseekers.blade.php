@@ -45,6 +45,9 @@
       </div>
 
       <input type="hidden" name="url" id="url" value="{{$interview->url}}">
+
+      <input type="hidden" value="{{$interview->positionname}}" name="positionname" class="w20" required>
+      <input type="hidden" value="{{$interview->employerData->name}}" name="employerName" class="w20" required>
     </form>
 </div>
 

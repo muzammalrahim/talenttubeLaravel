@@ -13,10 +13,14 @@ class NotiEmailForQueuing extends Mailable
 
     public $name;
     public $url;
-    public function __construct($name, $url)
+    public $employerName;
+    public $positionname;
+    public function __construct($name, $url, $employerName,$positionname)
     {
         $this->name = $name;
         $this->url = $url;
+        $this->positionname = $positionname;
+        $this->employerName = $employerName;
     }
 
     /**

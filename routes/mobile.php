@@ -19,50 +19,50 @@ use Illuminate\Support\Facades\Auth;
 // Front End  with Authentication
 Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
-Route::get('/', 'Mobile\MobileController@index')->name('mHomepage');
-Route::post('join', 'Mobile\MobileController@join')->name('mJoin');
-Route::get('join', function () { return redirect('/m'); });
-Route::group(array('middleware' => ['auth']), function(){
-Route::get('profile', function () { return redirect('m/user/'.Auth::user()->username); })->name('mProfile');
-Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');
-// User
-Route::get('step2', 'Mobile\MobileUserController@step2User')->name('mStep2User');
-Route::post('step2', 'Mobile\MobileUserController@Step2');
+	Route::get('/', 'Mobile\MobileController@index')->name('mHomepage');
+	Route::post('join', 'Mobile\MobileController@join')->name('mJoin');
+	Route::get('join', function () { return redirect('/m'); });
+	Route::group(array('middleware' => ['auth']), function(){
+	Route::get('profile', function () { return redirect('m/user/'.Auth::user()->username); })->name('mProfile');
+	Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');
+	// User
+	Route::get('step2', 'Mobile\MobileUserController@step2User')->name('mStep2User');
+	Route::post('step2', 'Mobile\MobileUserController@Step2');
 
-// video user/employer
-Route::post('ajax/uploadVideo', 'Mobile\MobileUserController@uploadVideo')->name('mUploadVideo');
-Route::post('ajax/uploadUserGallery', 'Mobile\MobileUserController@uploadUserGallery');
+	// video user/employer
+	Route::post('ajax/uploadVideo', 'Mobile\MobileUserController@uploadVideo')->name('mUploadVideo');
+	Route::post('ajax/uploadUserGallery', 'Mobile\MobileUserController@uploadUserGallery');
 
 
 // ========================================== Added by Hassan ==========================================
 
 // ======================================== JOb Seeker's Profile ========================================
 
-Route::get('mJobApplications', 'Mobile\MobileUserController@mJobApplications')->name('mJobApplications');
-Route::get('Mjobs', 'Mobile\MobileUserController@Mjobs')->name('Mjobs');
-Route::post('MjobsFilter', 'Mobile\MobileUserController@jobsFilter')->name('MjobsFilter');
-Route::get('Memployers','Mobile\MobileUserController@Memployers')->name('Memployers');
-Route::post('Memployers','Mobile\MobileUserController@Memployerspost')->name('Memployers');
-Route::get('Memployers/{id}', 'Mobile\MobileUserController@MemployerInfo')->name('MemployerInfo');
+	Route::get('mJobApplications', 'Mobile\MobileUserController@mJobApplications')->name('mJobApplications');
+	Route::get('Mjobs', 'Mobile\MobileUserController@Mjobs')->name('Mjobs');
+	Route::post('MjobsFilter', 'Mobile\MobileUserController@jobsFilter')->name('MjobsFilter');
+	Route::get('Memployers','Mobile\MobileUserController@Memployers')->name('Memployers');
+	Route::post('Memployers','Mobile\MobileUserController@Memployerspost')->name('Memployers');
+	Route::get('Memployers/{id}', 'Mobile\MobileUserController@MemployerInfo')->name('MemployerInfo');
 
-// ======================================== Employer's Profile ========================================
+	// ======================================== Employer's Profile ========================================
 
-Route::get('MjobSeekers',        'Mobile\MobileUserController@MjobSeekers')->name('MjobSeekers');
-Route::post('MjobSeekersFilter', 'Mobile\MobileUserController@jobSeekersFilter')->name('MjobSeekersFilter');
-Route::get('Memployer/jobs',    'Mobile\MobileUserController@MemployerJobs')->name('MemployerJobs');
-Route::get('employer/Mjob/new',    'Mobile\MobileUserController@MnewJob')->name('MnewJob');
-Route::post('ajax/job/mnew',    'Mobile\MobileUserController@addNewJob')->name('addMNewJob');
-Route::get('Mblock',         'Mobile\MobileUserController@MblockList')->name('MblockList');
-Route::get('Mlike',         'Mobile\MobileUserController@MlikeList')->name('MlikeList');
-Route::get('Mmutual-likes',         'Mobile\MobileUserController@MmutualLikes')->name('MmutualLikes');
-Route::get('MupdateUserPersonalSetting', 'Mobile\MobileUserController@MupdateUserPersonalSetting')->name('MupdateUserPersonalSetting');
-Route::get('Mcredit',       'Mobile\MobileUserController@Mcredit')->name('Mcredit');
-Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
-Route::get('Mjobsedit/{id}', 'Mobile\MobileUserController@MemployerJobsedit')->name('Mjobedit');
-Route::get('MjobSeekers/{id}', 'Mobile\MobileUserController@MjobSeekersInfo')->name('MjobSeekersInfo');
+	Route::get('MjobSeekers',        'Mobile\MobileUserController@MjobSeekers')->name('MjobSeekers');
+	Route::post('MjobSeekersFilter', 'Mobile\MobileUserController@jobSeekersFilter')->name('MjobSeekersFilter');
+	Route::get('Memployer/jobs',    'Mobile\MobileUserController@MemployerJobs')->name('MemployerJobs');
+	Route::get('employer/Mjob/new',    'Mobile\MobileUserController@MnewJob')->name('MnewJob');
+	Route::post('ajax/job/mnew',    'Mobile\MobileUserController@addNewJob')->name('addMNewJob');
+	Route::get('Mblock',         'Mobile\MobileUserController@MblockList')->name('MblockList');
+	Route::get('Mlike',         'Mobile\MobileUserController@MlikeList')->name('MlikeList');
+	Route::get('Mmutual-likes',         'Mobile\MobileUserController@MmutualLikes')->name('MmutualLikes');
+	Route::get('MupdateUserPersonalSetting', 'Mobile\MobileUserController@MupdateUserPersonalSetting')->name('MupdateUserPersonalSetting');
+	Route::get('Mcredit',       'Mobile\MobileUserController@Mcredit')->name('Mcredit');
+	Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
+	Route::get('Mjobsedit/{id}', 'Mobile\MobileUserController@MemployerJobsedit')->name('Mjobedit');
+	Route::get('MjobSeekers/{id}', 'Mobile\MobileUserController@MjobSeekersInfo')->name('MjobSeekersInfo');
 
-Route::get('Memployer/job/{id}/applications', 'Mobile\MobileUserController@MempJobApplications')->name('MempJobApplications');
-Route::get('ajax/purchaseUserInfo/', 'Mobile\MobileUserController@purchaseUserInfo')->name('purchaseUserInfo');
+	Route::get('Memployer/job/{id}/applications', 'Mobile\MobileUserController@MempJobApplications')->name('MempJobApplications');
+	Route::get('ajax/purchaseUserInfo/', 'Mobile\MobileUserController@purchaseUserInfo')->name('purchaseUserInfo');
 
 
     Route::get('MjobSeekerInfo/{id}', 'Mobile\MobileUserController@MjobSeekerInfo')->name('MjobSeekerInfo');
@@ -70,98 +70,105 @@ Route::get('ajax/purchaseUserInfo/', 'Mobile\MobileUserController@purchaseUserIn
 // ============================================ Jobs ============================================
 // Job ApplyInfo Modal
 
-Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfo')->name('MjobApplyInfo');
+	Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfo')->name('MjobApplyInfo');
 
-Route::post('ajax/updateNewJobIndustryExperience', 'Mobile\MobileUserController@updateNewJobIndustryExperience')->name('updateNewJobIndustryExperience');
-// Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfoAjax')->name('MjobApplyInfoAjax');
+	Route::post('ajax/updateNewJobIndustryExperience', 'Mobile\MobileUserController@updateNewJobIndustryExperience')->name('updateNewJobIndustryExperience');
+	// Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfoAjax')->name('MjobApplyInfoAjax');
 
-// Job Application Submission
-// Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
+	// Job Application Submission
+	// Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
 
-// ================================================= Job Seeker =================================================
-Route::post('ajax/MupdateInterested_in', 'Mobile\MobileUserController@MupdateInterested_in')->name('MupdateInterested_in');
-Route::post('ajax/Mabout_me', 'Mobile\MobileUserController@Mabout_me')->name('Mabout_me');
-Route::post('ajax/MupdateQualification', 'Mobile\MobileUserController@MupdateQualification')->name('MupdateQualification');
-Route::post('ajax/MupdateIndustryExperience', 'Mobile\MobileUserController@MupdateIndustryExperience')->name('MupdateIndustryExperience');
-Route::post('ajax/MupdateQuestions', 'Mobile\MobileUserController@MupdateQuestions');
+	// ================================================= Job Seeker =================================================
+	Route::post('ajax/MupdateInterested_in', 'Mobile\MobileUserController@MupdateInterested_in')->name('MupdateInterested_in');
+	Route::post('ajax/Mabout_me', 'Mobile\MobileUserController@Mabout_me')->name('Mabout_me');
+	Route::post('ajax/MupdateQualification', 'Mobile\MobileUserController@MupdateQualification')->name('MupdateQualification');
+	Route::post('ajax/MupdateIndustryExperience', 'Mobile\MobileUserController@MupdateIndustryExperience')->name('MupdateIndustryExperience');
+	Route::post('ajax/MupdateQuestions', 'Mobile\MobileUserController@MupdateQuestions');
 
-//================================================= Ajax for liking/Blocking employer =================================================
+	//================================================= Ajax for liking/Blocking employer =================================================
 
-Route::post('ajax/MlikeEmployer/{id}', 'Mobile\MobileUserController@MlikeEmployer')->name('MlikeEmployer');
-Route::post('ajax/MunLikeUser/{id}', 'Mobile\MobileUserController@MunLikeUser')->name('MunLikeUser/{id}');
-Route::post('ajax/MblockEmployer/{id}', 'Mobile\MobileUserController@MblockEmployer')->name('MblockEmployer');
-Route::post('ajax/MunBlockUser/{id}', 'Mobile\MobileUserController@MunBlockUser')->name('MunBlockUser');
+	Route::post('ajax/MlikeEmployer/{id}', 'Mobile\MobileUserController@MlikeEmployer')->name('MlikeEmployer');
+	Route::post('ajax/MunLikeUser/{id}', 'Mobile\MobileUserController@MunLikeUser')->name('MunLikeUser/{id}');
+	Route::post('ajax/MblockEmployer/{id}', 'Mobile\MobileUserController@MblockEmployer')->name('MblockEmployer');
+	Route::post('ajax/MunBlockUser/{id}', 'Mobile\MobileUserController@MunBlockUser')->name('MunBlockUser');
 
-// ================================================= Employer =================================================
+	// ================================================= Employer =================================================
 
-Route::post('ajax/MupdateInterested_inEmp', 'Mobile\MobileEmployerController@MupdateInterested_inEmp')->name('MupdateInterested_inEmp');
-Route::post('ajax/Mabout_meEmp', 'Mobile\MobileEmployerController@Mabout_meEmp')->name('Mabout_meEmp');
-Route::post('ajax/MupdateQuestionsEmp', 'Mobile\MobileEmployerController@MupdateQuestionsEmp');
+	Route::post('ajax/MupdateInterested_inEmp', 'Mobile\MobileEmployerController@MupdateInterested_inEmp')->name('MupdateInterested_inEmp');
+	Route::post('ajax/Mabout_meEmp', 'Mobile\MobileEmployerController@Mabout_meEmp')->name('Mabout_meEmp');
+	Route::post('ajax/MupdateQuestionsEmp', 'Mobile\MobileEmployerController@MupdateQuestionsEmp');
 
-//================================================= Ajax for liking/Blocking JS =================================================
+	//================================================= Ajax for liking/Blocking JS =================================================
 
-Route::post('ajax/MlikeJS/{id}', 'Mobile\MobileEmployerController@MlikeJS')->name('MlikeJS');
-Route::post('ajax/MunLikeJS/{id}', 'Mobile\MobileEmployerController@MunLikeJS')->name('MunLikeJS/{id}');
-Route::post('ajax/MblockJS/{id}', 'Mobile\MobileEmployerController@MblockJS')->name('MblockJS');
+	Route::post('ajax/MlikeJS/{id}', 'Mobile\MobileEmployerController@MlikeJS')->name('MlikeJS');
+	Route::post('ajax/MunLikeJS/{id}', 'Mobile\MobileEmployerController@MunLikeJS')->name('MunLikeJS/{id}');
+	Route::post('ajax/MblockJS/{id}', 'Mobile\MobileEmployerController@MblockJS')->name('MblockJS');
 
-// =========================================== Update Job Seeker Personal Setting ==============================================
+	// =========================================== Update Job Seeker Personal Setting ==============================================
 
-Route::post('ajax/MupdateEmail', 'Mobile\MobileUserController@MupdateEmail');
-Route::post('ajax/MupdatePhone', 'Mobile\MobileUserController@MupdatePhone');
-Route::post('ajax/MupdatePassword', 'Mobile\MobileUserController@MupdatePassword');
-Route::post('ajax/Mdeleteuser', 'Mobile\MobileUserController@Mdeleteuser');
-Route::post('ajax/mjob/{id}',    'Mobile\MobileUserController@updateJob')->name('memjobedit');
+	Route::post('ajax/MupdateEmail', 'Mobile\MobileUserController@MupdateEmail');
+	Route::post('ajax/MupdatePhone', 'Mobile\MobileUserController@MupdatePhone');
+	Route::post('ajax/MupdatePassword', 'Mobile\MobileUserController@MupdatePassword');
+	Route::post('ajax/Mdeleteuser', 'Mobile\MobileUserController@Mdeleteuser');
+	Route::post('ajax/mjob/{id}',    'Mobile\MobileUserController@updateJob')->name('memjobedit');
 
-// ======================================= For Updating User Setting =======================================
+	// ======================================= For Updating User Setting =======================================
 
-Route::get('step2', 'Mobile\MobileUserController@step2User')->name('mStep2User');
-Route::get('profile', function () { return redirect('m/user/'.Auth::user()->username); })->name('mProfile');
-Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');
-Route::get('jobs', 'Site\SiteUserController@jobs')->name('mJobs');
-Route::get('jobSeekers',        'Site\EmployerController@jobSeekers')->name('mJobSeekers');
+	Route::get('step2', 'Mobile\MobileUserController@step2User')->name('mStep2User');
+	Route::get('profile', function () { return redirect('m/user/'.Auth::user()->username); })->name('mProfile');
+	Route::get('user/{username}', 'Site\SiteUserController@index')->name('mUsername');
+	Route::get('jobs', 'Site\SiteUserController@jobs')->name('mJobs');
+	Route::get('jobSeekers',        'Site\EmployerController@jobSeekers')->name('mJobSeekers');
 
-// ==================================== Delete Job from employer =====================================
+	// ==================================== Delete Job from employer =====================================
 
-Route::post('ajax/MdeleteJob/{id}', 'Mobile\MobileUserController@MdeleteJob')->name('MdeleteJob');
+	Route::post('ajax/MdeleteJob/{id}', 'Mobile\MobileUserController@MdeleteJob')->name('MdeleteJob');
 
-// Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
+	// Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
 
-Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
-Route::post('ajax/MdeleteJobApplication/{id}', 'Mobile\MobileUserController@MdeleteJobApplication')->name('MdeleteJobApplication');
-Route::post('ajax/MchangeJobApplicationStatus', 'Mobile\MobileUserController@MchangeJobApplicationStatus')->name('MchangeJobApplicationStatus');
-Route::post('ajax/jobAppFilter', 'Mobile\MobileUserController@MempJobApplicationsFilter')->name('mjobAppFilter');
-Route::post('ajax/deleteGallery/{id}', 'Mobile\MobileUserController@deleteGallery');
-Route::post('ajax/setImageAsProfile/{id}', 'Mobile\MobileUserController@setImageAsProfile');
-Route::post('ajax/setGalleryPrivateAccess/{id}', 'Mobile\MobileUserController@setGalleryPrivateAccess');
+	Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
+	Route::post('ajax/MdeleteJobApplication/{id}', 'Mobile\MobileUserController@MdeleteJobApplication')->name('MdeleteJobApplication');
+	Route::post('ajax/MchangeJobApplicationStatus', 'Mobile\MobileUserController@MchangeJobApplicationStatus')->name('MchangeJobApplicationStatus');
+	Route::post('ajax/jobAppFilter', 'Mobile\MobileUserController@MempJobApplicationsFilter')->name('mjobAppFilter');
+	Route::post('ajax/deleteGallery/{id}', 'Mobile\MobileUserController@deleteGallery');
+	Route::post('ajax/setImageAsProfile/{id}', 'Mobile\MobileUserController@setImageAsProfile');
+	Route::post('ajax/setGalleryPrivateAccess/{id}', 'Mobile\MobileUserController@setGalleryPrivateAccess');
 
-// ==================================== Interview concierge ====================================
-Route::get('Minterviewconcierge',       'Mobile\InterviewController@Mindex')->name('Minterviewconcierge');
-Route::post('ajax/booking/new',    'Mobile\InterviewController@MnewInterviewBooking')->name('MaddNewInterview');
+	// ==================================== Interview concierge ====================================
+	Route::get('Minterviewconcierge',       'Mobile\InterviewController@Mindex')->name('Minterviewconcierge');
+	Route::post('ajax/booking/new',    'Mobile\InterviewController@MnewInterviewBooking')->name('MaddNewInterview');
 
-Route::get('Minterviewconcierge/created',       'Mobile\InterviewController@Mcreated')->name('Minterviewconcierge.created');
-Route::get('Minterviewconcierge/new',       'Mobile\InterviewController@Mnew')->name('Minterviewconcierge.new');
-Route::get('Minterviewconcierge/edit',       'Mobile\InterviewController@Medit')->name('Minterviewconcierge.edit');
+	Route::get('Minterviewconcierge/created',       'Mobile\InterviewController@Mcreated')->name('Minterviewconcierge.created');
+	Route::get('Minterviewconcierge/new',       'Mobile\InterviewController@Mnew')->name('Minterviewconcierge.new');
+	Route::get('Minterviewconcierge/edit',       'Mobile\InterviewController@Medit')->name('Minterviewconcierge.edit');
 
-Route::get('Minterviewconcierge/edit/{id}',       'Mobile\InterviewController@MeditOneBooking')->name('MinterviewconciergeEdit');
+	Route::get('Minterviewconcierge/edit/{id}',       'Mobile\InterviewController@MeditOneBooking')->name('MinterviewconciergeEdit');
 
-Route::post('ajax/booking/firstlogin',    'Mobile\InterviewController@MeditInterviewLogin')->name('MeditInterviewlogin');
-Route::post('ajax/booking/update',    'Mobile\InterviewController@MupdateInterviewBooking')->name('MupdateInterview');
-Route::get('Minterviewconcierge/getlikedlistjobseekers','Mobile\InterviewController@Mgetlikedjobseekers')->name('Minterviewconcierge.getlikedlistjobseekers');
-Route::get('interviewconcierge/Mgetlikedlistjobseekersdatatable','Mobile\InterviewController@Mgetlikedlistjobseekersdatatable')->name('Minterviewconcierge.getlikedlistjobseekersdatatable');
-Route::get('Minterviewconcierge/manualjobseekers','Mobile\InterviewController@Mmanualjobseekers')->name('Minterviewconcierge.manualjobseekers');
-Route::get('Minterviewconcierge/created/url','Mobile\InterviewController@Mbookingurl')->name('Minterviewconcierge.url');
-Route::get('Minterviewconcierge/formedit','Mobile\InterviewController@Meditbookingform')->name('Minterviewconcierge.formedit');
+	Route::post('ajax/booking/firstlogin',    'Mobile\InterviewController@MeditInterviewLogin')->name('MeditInterviewlogin');
+	Route::post('ajax/booking/update',    'Mobile\InterviewController@MupdateInterviewBooking')->name('MupdateInterview');
+	Route::get('Minterviewconcierge/getlikedlistjobseekers','Mobile\InterviewController@Mgetlikedjobseekers')->name('Minterviewconcierge.getlikedlistjobseekers');
+	Route::get('interviewconcierge/Mgetlikedlistjobseekersdatatable','Mobile\InterviewController@Mgetlikedlistjobseekersdatatable')->name('Minterviewconcierge.getlikedlistjobseekersdatatable');
+	Route::get('Minterviewconcierge/manualjobseekers','Mobile\InterviewController@Mmanualjobseekers')->name('Minterviewconcierge.manualjobseekers');
+	Route::get('Minterviewconcierge/created/url','Mobile\InterviewController@Mbookingurl')->name('Minterviewconcierge.url');
+	Route::get('Minterviewconcierge/formedit','Mobile\InterviewController@Meditbookingform')->name('Minterviewconcierge.formedit');
 
-Route::get('Minterviewconcierge/MunidigitEdit','Mobile\InterviewController@MunidigitEdit')->name('MunidigitEdit');
+	Route::get('Minterviewconcierge/created/MunidigitEdit','Mobile\InterviewController@MunidigitEdit')->name('MunidigitEditUrl');
 
- Route::post('ajax/update/MunidigitEditUpdate','Mobile\InterviewController@MunidigitEditUpdate')->name('MunidigitEditUpdate');
+ 	Route::post('ajax/update/MunidigitEditUpdate','Mobile\InterviewController@MunidigitEditUpdate')->name('MunidigitEditUpdate');
 
-// Send notification
+    // =============================================== Cross Reference ===============================================
 
-Route::post('ajax/booking/Mmanualsendnotification',    'Mobile\InterviewController@Mmanualsendnotification')->name('Mmanualsendnotification');
-Route::post('ajax/booking/Msendnotification',    'Mobile\InterviewController@Msendnotification')->name('MsendnotificationInterview');
+    Route::get('Mcrossreference.user','Mobile\MobileReferenceController@McrossreferenceIndex')->name('Mcrossreference.user');
+    Route::post('ajax/crossReference/MsendEmailReferee','Mobile\MobileReferenceController@MsendEmailReferee')->name('MsendEmailReferee');
 
-Route::post('ajax/booking/MdeleteSlot',    'Mobile\MobileHomeController@MdeleteSlot')->name('MdeleteSlot');
+    // =============================================== Cross Reference =============================================== 
+
+	// Send notification
+
+	Route::post('ajax/booking/Mmanualsendnotification',    'Mobile\InterviewController@Mmanualsendnotification')->name('Mmanualsendnotification');
+	Route::post('ajax/booking/Msendnotification',    'Mobile\InterviewController@Msendnotification')->name('MsendnotificationInterview');
+
+	Route::post('ajax/booking/MdeleteSlot',    'Mobile\MobileHomeController@MdeleteSlot')->name('MdeleteSlot');
 
 });
 

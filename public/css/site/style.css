@@ -4524,3 +4524,15 @@ p.slotbooking {
 }
 
 /* Edit Interview Booking */
+.backToCreated {
+    background: #254c8e;
+    color: white;
+    width: fit-content;
+    padding: 5px 20px 5px 20px;
+    border-radius: 3px;
+    font-size: 16px;
+    opacity: 0.7;
+}
+.backToCreated:hover{
+  opacity: 1.0;
+}

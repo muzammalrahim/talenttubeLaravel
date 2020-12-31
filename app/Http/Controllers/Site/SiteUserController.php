@@ -59,11 +59,10 @@ class SiteUserController extends Controller
 
             $tags = Tags::orderBy('usage', 'DESC')->limit(30)->get();
             $tagCategories = TagCategory::get();
-
-
             $userTags = $user->tags;
             // dd( $tags );
             $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
+            $data['employer'] = User::where('type','employer')->get();
             $data['user'] =  $user;
             $data['user_gallery'] = $user_gallery;
             $data['geo_country'] = get_Geo_Country();
@@ -81,7 +80,7 @@ class SiteUserController extends Controller
             $data['userTags'] = $userTags;
             $data['tags'] = $tags;
             $data['tagCategories'] = $tagCategories;
-												//dd($tagCategories);
+            //dd($tagCategories);
             // Getting Salaries
             $data['salaryRange'] = getSalariesRange();
             $data['qualificationList'] = getQualificationsList();
@@ -90,9 +89,7 @@ class SiteUserController extends Controller
             $data['userquestion'] = getUserRegisterQuestions();
             $data['empquestion'] = getEmpRegisterQuestions();
             if(isMobile()){
-
                 if(isEmployer()){
-
                   if(isRequestAjax($request)){
                     // return view('mobile.user.profile.profile', $data);
                 }else{
@@ -101,14 +98,8 @@ class SiteUserController extends Controller
 
                 }else{
                     return view('mobile.user.profile.profile', $data);  //   mobile/user/profile/profile
-
                 }
-
-
-
-
             }
-
             else{
                 return view('site.user.profile.profile', $data);
                 // site/user/profile/profile

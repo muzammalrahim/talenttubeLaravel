@@ -20,6 +20,9 @@
             <li id="tabs-5_switch" class="switch_tab ">
                 <a href="#tabs-5" title=""><span>jobs</span></a>
             </li>
+            <li id="tabs-6_switch" class="switch_tab ">
+                <a href="#tabs-6" title=""><span>Reference</span></a>
+            </li>
 
         </ul>
     </div>
@@ -363,6 +366,14 @@
      </div>
 
 <!-- =========================================== Tab Jobs ========================================== -->
+<!-- =========================================== Tab Reference ========================================== -->
+
+<a id="tabs-6" class="tab_link tab_a"></a>
+  <div class="tab_reference tab_cont" style="padding:0px;">
+    @include('site.user.profile.crossReference')   {{-- site/user/profile/crossReference --}}
+  </div>
+
+<!-- =========================================== Tab Reference ========================================== -->
 
     </div>
 </div>

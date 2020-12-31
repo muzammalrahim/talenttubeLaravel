@@ -124,14 +124,14 @@
                                 
                                 <input type="hidden" name="slot[{{$key+1}}][id]" value="{{$slot->id}}" />
 
-                                <div class="notbrak"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" value="slot[{{$key+1}}]" required /></div>
+                                <div class="notbrak"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center pointer" name="slot[{{$key+1}}][start]" size="8" value="slot[{{$key+1}}]" required readonly /></div>
                                 <div class="notbrak">To</div>
-                                <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][end]" size="8" required /></div>
+                                <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker-without-dropdown text-center pointer" name="slot[{{$key+1}}][end]" size="8" required readonly /></div>
 
                             </div>
                             <div class="date topMargin notbrak">
                                 <span class="notbrak">Date</span>
-                                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}"   name="slot[{{$key+1}}][date]" class="datepicker notbrak" size="8" required />
+                                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}"   name="slot[{{$key+1}}][date]" class="datepicker notbrak pointer" size="8" required readonly />
                             </div> 
                             <div class="notbrak">
                                 <label class="form_label notbrak float_none" style="margin-right: 5px;vertical-align: middle;">Maximum number of interviewees:</label>
@@ -171,7 +171,7 @@
                                     </div>
                             </div>
                             @else
-                                <p class="slotbooking">This slot has not any booking.</p>
+                                <p class="slotbooking">This slot is still available.</p>
 
                             @endif
                             
@@ -206,7 +206,7 @@
 </div>
 
 
-@include('site.home.deleteSlotPop')
+@include('site.home.deleteSlotPop')   {{-- site/home/deleteSlotPop --}}
 
 @stop
 
@@ -296,6 +296,11 @@
 
 <script type="text/javascript">
 
+jQuery('.datepicker').datepicker({
+      // minDate: +1, // this will disable today date and previous date
+      minDate: 0, 
+     
+});
 //   ============================================= Code commented for adding new slot on click function =============================================
 
 // $("input[type=number]").bind('keyup input', function(){
@@ -391,13 +396,13 @@ $(".addSlot").bind('click', function(){
                 slot  +=  '</div>';
                 slot  += '<div class="time notbrak">';
                 slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][start1]" size="8" required /></div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center pointer" autocomplete="off" readonly name="slot['+i+'][start1]" size="8" required /></div>';
                 slot  += '<div class="notbrak dynamicTextStyle">To</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end1]" size="8" required /></div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center pointer" autocomplete="off" readonly name="slot['+i+'][end1]" size="8" required /></div>';
                 slot  += '</div>';
                 slot  += '<div class="date topMargin notbrak">';
                 slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
-                slot  += '<input type="text" name="slot['+i+'][date1]" class="datepicker notbrak" autocomplete="off" size="8" required />';
+                slot  += '<input type="text" name="slot['+i+'][date1]" class="datepicker notbrak pointer" autocomplete="off" readonly size="8" required />';
                 slot  += '</div>';
 
                 slot  += '<div class="notbrak" style="vertical-align:bottom;">';
@@ -433,7 +438,7 @@ $(".addSlot").bind('click', function(){
                 slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
 
         $('.slots').append(slot);
-        $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+        $(".datepicker").datepicker({ dateFormat: "yy-mm-dd", minDate: 0, });
         $('input.timepicker').timepicker({});
         $('#slotsCounter').val(this.value);
         $('input, select').styler();
@@ -448,13 +453,9 @@ else {
 // ============================================= Delete Slot JS =============================================
 
 
-//  Commenting for opening popup on click
-
 $('.deleteSlot').click(function(){
     $(this).closest('.slot').remove();
 });
-
-//  Commenting for opening popup on click
 
 
 

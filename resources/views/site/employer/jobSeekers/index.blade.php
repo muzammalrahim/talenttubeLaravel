@@ -187,15 +187,14 @@ $('input[name="filter_by_questions"]').change(function() {
      // $('input, select').styler({ selectSearch: true, });
 });
 
-
-
-
-
-
-
-
-
-
+//====================================================================================================================================//
+// Enable/Disabled Filtering by Resume.
+//====================================================================================================================================//
+$('input[name="filter_by_resume"]').change(function() {
+    console.log(' filter_by_resume ');
+    (this.checked)?(jQuery('.filter_resume_cont').removeClass('hide_it')):(jQuery('.filter_resume_cont').addClass('hide_it'));
+     // $('input, select').styler({ selectSearch: true, });
+});
 
     //====================================================================================================================================//
     // Google map location script

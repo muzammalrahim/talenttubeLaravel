@@ -1,9 +1,5 @@
 
 
-
-
-
-
     {{-- @dump($user->qualificationType);  --}}
 
 

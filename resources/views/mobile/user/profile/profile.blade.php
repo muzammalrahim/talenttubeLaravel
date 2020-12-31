@@ -33,7 +33,7 @@
 
             <div class="avatarimg">
             <img src="{{$profile_image}}"
-                alt="avatar mx-auto white" class="rounded-circle img-fluid">
+                alt="avatar mx-auto white" class="rounded-circle img-fluid" style="height: 110px">
             </div>
         </div>
 
@@ -53,48 +53,40 @@
 		{{-- <div id="over" style="/*position:absolute; */width:auto; height:150px"> --}}
         {{-- @dump($profile_image) --}}
 
-
-
-
-
-            {{-- <div class="personalInfoDiv"> --}}
-        		<div class="personalInfo mt-2"> <h6 class="m-0 font-weight-bold">{{$user->name}} {{$user->surname}}</h6></div>
-        		<div class="personalInfo"> <b>Email:</b>     <span class="m-0">{{$user->email}}</span></div>
-        		<div class="personalInfo"> <b>Phone:</b>     <span class="m-0">{{$user->phone}}</span></div>
-        		<div class="personalInfo"> <b>Location: </b> <span class="m-0 mb-1">{{userLocation($user)}}</span></div>
-            {{-- </div> --}}
+    {{-- <div class="personalInfoDiv"> --}}
+		<div class="personalInfo mt-2"> <h6 class="m-0 font-weight-bold">{{$user->name}} {{$user->surname}}</h6></div>
+		<div class="personalInfo"> <b>Email:</b>     <span class="m-0">{{$user->email}}</span></div>
+		<div class="personalInfo"> <b>Phone:</b>     <span class="m-0">{{$user->phone}}</span></div>
+		<div class="personalInfo"> <b>Location: </b> <span class="m-0 mb-1">{{userLocation($user)}}</span></div>
+    {{-- </div> --}}
 
 		<div class="aboutMeSection"><b>Interested In: </b>
-            <div class="spinner-border spinner-border-sm text-primary IntsdInLoader ml-2" role="status" style="display:none;"></div>
-            <i class="fas fa-edit float-right intInSecButton"></i> <p class="interestedInSec">{{$user->interested_in}}</p>
-        </div>
+      <div class="spinner-border spinner-border-sm text-primary IntsdInLoader ml-2" role="status" style="display:none;"></div>
+      <i class="fas fa-edit float-right intInSecButton"></i> <p class="interestedInSec">{{$user->interested_in}}</p>
+    </div>
 
 		<div class="col-md-12 text-center my-2">
-                              <a class="btn btn-sm btn-success saveInterestedInButton d-none">Save</a>
-        </div>
+      <a class="btn btn-sm btn-success saveInterestedInButton d-none">Save</a>
+    </div>
 
-        <div class="alert alert-success interestedInAlert" role="alert" style="display:none;">
-          <strong>Success!</strong> Interested In have been updated successfully!
-        </div>
+    <div class="alert alert-success interestedInAlert" role="alert" style="display:none;">
+      <strong>Success!</strong> Interested In have been updated successfully!
+    </div>
 
         {{-- Interested In --}}
 
 		<div class="aboutMeSection"><b>About Me: </b>
-            <div class="spinner-border spinner-border-sm text-primary AboutMeLoader ml-2" role="status" style="display:none;"></div>
-            <i class="fas fa-edit float-right aboutMeSecButton"></i> <p class="aboutMeSec">{{$user->about_me}}</p>
-        </div>
-
-        <div class="col-md-12 text-center my-2">
-            <a class="btn btn-sm btn-success saveAboutMeButton d-none">Save</a>
-        </div>
-
-        <div class="alert alert-success AboutMeAlert" role="alert" style="display:none;">
-          <strong>Success!</strong> About Me have been updated successfully!
-        </div>
-
-		    <div class="cardContent"></div>
-		    <div class="cardEdit" style="display: none;"></div>
-		{{-- @dump($user); --}}
+      <div class="spinner-border spinner-border-sm text-primary AboutMeLoader ml-2" role="status" style="display:none;"></div>
+      <i class="fas fa-edit float-right aboutMeSecButton"></i> <p class="aboutMeSec">{{$user->about_me}}</p>
+    </div>
+    <div class="col-md-12 text-center my-2">
+        <a class="btn btn-sm btn-success saveAboutMeButton d-none">Save</a>
+    </div>
+    <div class="alert alert-success AboutMeAlert" role="alert" style="display:none;">
+      <strong>Success!</strong> About Me have been updated successfully!
+    </div>
+    <div class="cardContent"></div>
+    <div class="cardEdit" style="display: none;"></div>
 
 	  </div>
   </div>
@@ -200,6 +192,10 @@
   <li class="nav-item">
     <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
       aria-selected="false">Questions</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="reference-tab-just" data-toggle="tab" href="#reference-just" role="tab" aria-controls="reference-just"
+      aria-selected="false">Reference</a>
   </li>
 
 {{--   <li class="nav-item">
@@ -356,6 +352,9 @@
   {{-- ============================================================= Album Tab Ends here ============================================================= --}}
 
 
+  {{-- ============================================================= Questions Tab Start here ============================================================= --}}
+
+
     <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
 
 
@@ -388,6 +387,30 @@
 
 
     </div>
+
+  {{-- ============================================================= Questions Tab End here ============================================================= --}}
+
+  {{-- ============================================================= Reference Tab Start here ============================================================= --}}
+
+
+    <div class="tab-pane fade" id="reference-just" role="tabpanel" aria-labelledby="reference-tab-just">
+
+
+
+        <div class="mb-3 bg-white rounded text-dark">
+
+          @include('mobile.layout.parts.jsAddReference')  {{--  mobile/layout/parts/jsAddReference    --}}
+
+          
+
+            {{-- <h1>Hi How Are YOu Man</h1> --}}
+
+        </div>
+
+    </div>
+
+  {{-- ============================================================= Reference Tab End here ============================================================= --}}
+
 
 {{--   <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">
     <p class="text-dark">Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney's organic lomo retro

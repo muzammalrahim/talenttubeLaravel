@@ -587,7 +587,7 @@ $user = Auth::user();
                         // $details = ['email' => $user->email];
                         // SendBulkEmailJob::dispatch($details);
                         // $when = now()->addSeconds(2);
-                        Mail::to($user->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($user->surname,$request->url));
+                        Mail::to($user->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($user->surname,$request->url,$request->employerName,$request->positionname));
                     }
                     }
 
@@ -607,11 +607,11 @@ $user = Auth::user();
     }
 
     public function Mmanualsendnotification(Request $request){
-
+        // dd($request->employerName);
         // $details = ['email' => $user->email];
         // SendBulkEmailJob::dispatch($details);
         // $when = now()->addSeconds(2);
-        Mail::to($request->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($request->name,$request->url));
+        Mail::to($request->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($request->name,$request->url,$request->employerName,$request->positionname));
         return response()->json([
         'status' => 1,
         ]);

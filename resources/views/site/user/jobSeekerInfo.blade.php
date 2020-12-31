@@ -143,6 +143,10 @@
                 <a href="#tabs-3" title=""><span>Questions</span></a>
             </li>
 
+            <li id="tabs-4_switch" class="switch_tab">
+                <a href="#tabs-4" title=""><span>Reference</span></a>
+            </li>
+
            {{--  <li id="tabs-3_switch" class="switch_tab">
                 <a href="#tabs-3" title=""><span>Questions</span></a>
             </li> --}}
@@ -335,6 +339,36 @@
 {{-- Added By Hassan --}}
 <!--Tab Questions end here -->
 
+    <!-- =============================================== Tab Reference =============================================== -->
+    
+    <a id="tabs-4" class="tab_link tab_a"></a>
+    <div class="tab_reference tab_cont">
+        @if ($crossreference->count()>0)
+            {{-- expr --}}
+        
+        @foreach ($crossreference as $ref)
+        <div class="referees">
+            <p><span class="bold">Reference Type:</span><span style="margin-left: 10px;">{{$ref->refType}}</span></p>
+            <p><span class="bold">Referee Status:</span><span style="margin-left: 10px;">{{$ref->refStatus}}</span></p>
+            <p><span class="bold">Organization Worked Together:</span><span style="margin-left: 10px;">{{$ref->refereeOrganization}}</span></p>
+            <p><span class="bold">Title at Organization:</span><span style="margin-left: 10px;">{{$ref->refereeOrganizationTitle}}</span></p>
+        </div>
+        @endforeach
+        @else
+        <p class="mt20 ml20">
+            <span class="bold"> {{$jobSeeker->name}}  </span> has not added any reference yet.
+        </p>
+        @endif
+       <div class="mt20">
+            <a href="{{ route('referencesForAll', ['id' => $js->id, 'name'=>$js->name]) }}" target="_blank" class="seeCompletedReference"> View completed reference check feedback here</a> 
+            <button class="btn turquoise cop_text"> Click here to copy the link</button>
+        </div>
+    </div>
+
+    <!-- =============================================== Tab Reference =============================================== -->
+
+    {{-- Added By Hassan --}}
+
 
     </div>
 
@@ -373,6 +407,38 @@
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
 
+<style type="text/css">
+    /*.seeCompletedReference{text-decoration: underline;}*/
+
+  a.seeCompletedReference {
+  color: black;
+  text-transform: uppercase;
+  text-decoration: none;
+  letter-spacing: 0.15em;
+  
+  display: inline-block;
+  padding: 15px 20px;
+  position: relative;
+}
+a.seeCompletedReference:after {    
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  position: absolute;
+  background: black;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+a.seeCompletedReference:hover:after { 
+  width: 100%; 
+  left: 0; 
+}
+
+
+</style>
 @stop
 
 @section('custom_js')
@@ -448,6 +514,20 @@ $(document).on('click','.jsLikeUserBtn',function(){
         }
     });
 });
+
+$('.cop_text').click(function (e) {
+   e.preventDefault();
+   var copyText = $('.seeCompletedReference').attr('href');
+
+   document.addEventListener('copy', function(e) {
+      e.clipboardData.setData('text/plain', copyText);
+      e.preventDefault();
+   }, true);
+
+   document.execCommand('copy');
+   console.log('Link Copied : ', copyText);
+   alert('Link Copied: ' + copyText);
+ });
 
 
 });

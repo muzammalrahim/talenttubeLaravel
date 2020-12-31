@@ -21,7 +21,9 @@
             <input type="hidden" name="intervieww_id" value="{{$interview->id}}">
             <p class="errorBookinId hide_it2"></p>
             <p class="bookedSuccessfully"></p>
-            <div class="fomr_btn act_field center">
+
+            <a href="{{ url()->previous() }}" class="btn btn-sm btn-primary">Back</a>
+            <div class="fomr_btn act_field text-center">
                 <button class="btn btn-sm btn-primary updateNewBooking ">Update</button>
             </div>
         </form>

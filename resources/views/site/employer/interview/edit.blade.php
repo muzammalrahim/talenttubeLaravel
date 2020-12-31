@@ -22,7 +22,7 @@
             </div>
 
 
-            <div class="job_title form_field w20">
+            {{-- <div class="job_title form_field w20">
                 <span class="form_label textCenter">Or</span>
             </div>
 
@@ -50,7 +50,7 @@
             <div class="form_input">
                 <div class="general_error error to_hide">&nbsp;</div>
             </div>
-        </div>
+        </div> --}}
 
 
 

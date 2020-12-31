@@ -71,7 +71,7 @@
                 <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
                 <div class="searchField_action">
                     <div class="searchFieldLabel dinline_block"></div>
-                            <button class="btn small OrangeBtn saveNewLocation">Save</button>
+                    <button class="btn small OrangeBtn saveNewLocation">Save</button>
                 </div>
             </div>
             <div class="job">
@@ -95,7 +95,7 @@
 
 {{-- @dump($salaryRange) --}}
 
-{{-- New Salary Range --}}
+                {{-- ========================================= New Salary Range ========================================= --}}
 
                 <div class="job">
                 <span>Expecting Salary:</span>
@@ -105,7 +105,7 @@
                 <i class="fas fa-edit salaryRangeEdit" onclick="UProfile.enableSalaryRangeEdit()"></i>
                 </div>
 
-{{-- New Salary Range End Here --}}
+                {{-- ========================================= New Salary Range End Here ========================================= --}}
 
         </div>
         <div class="cl"></div>
@@ -763,9 +763,7 @@ geocode(data);
         $('.removeQualification').removeClass('hide_it2');
         $('.addQualification').removeClass('hide_it2');
         $('.qualificationSaveButton').removeClass('hide_it2');
-
         console.log('Testing Qualification');
-
 
   });
 

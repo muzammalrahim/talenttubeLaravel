@@ -26,6 +26,8 @@ use App\JobsAnswers;
 use App\JobsQuestions;
 use App\LikeUser;
 use App\fbremacc;
+use App\crossreference;
+
 
 // use App\Hash;
 use Illuminate\Support\Facades\Hash;
@@ -1819,6 +1821,8 @@ class MobileUserController extends Controller
     // Get // layout for Employer Detail.
     //====================================================================================================================================//
     public function MjobSeekersInfo($jobSeekerId){
+
+    	// dd($jobSeekerId);
        //  $user = Auth::user();
        //  // dump($jobseekerId);
 
@@ -1885,7 +1889,9 @@ class MobileUserController extends Controller
         $data['galleries']        = $galleries;
         $data['videos']          = $videos;
         $data['qualificationList'] = getQualificationsList();
-
+        // dd($data['qualificationList'] );
+        $data['crossreference'] = crossreference::where('jobseekerId', $jobSeekerId)->where('refStatus','Reference Completed')->get();
+        
 
         return view('mobile.employer.jobSeekers.jobseekersInfo', $data);
 
@@ -2703,12 +2709,8 @@ class MobileUserController extends Controller
         $user = Auth::user();
         // if not employer then do not allowed him.
         // if (!isEmployer($user)){ return redirect(route('jobSeekers')); }
-
         $data['user'] = $user;
-
-
         $jobSeeker = User::JobSeeker()->where('id',$jobSeekerId)->first();
-
         $isallowed = False;
         foreach($user->users as $us){
             if($us->id == $jobSeeker->id){
@@ -2738,9 +2740,10 @@ class MobileUserController extends Controller
         $data['galleries']        = $galleries;
         $data['videos']          = $videos;
         $data['qualificationList'] = getQualificationsList();
+       
 
 
-        return view('mobile.employer.jobSeekers.jobseekersInfo', $data);      //  site/user/jobSeekerInfo
+        return view('mobile.employer.jobSeekers.jobseekersInfo', $data);      //  mobile/employer/jobSeekers/jobseekersInfo
 
     }
 

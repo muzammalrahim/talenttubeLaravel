@@ -153,6 +153,12 @@ $js = $jobSeeker;
     <a class="nav-link" id="contact-tab-md" data-toggle="tab" href="#contact-md" role="tab" aria-controls="contact-md"
       aria-selected="false">Questions</a>
   </li>
+
+  <li class="nav-item">
+    <a class="nav-link" id="reference-tab-md" data-toggle="tab" href="#reference-md" role="tab" aria-controls="contact-md"
+      aria-selected="false">Reference</a>
+  </li>
+
 </ul>
 <div class="tab-content card pt-5 mb-3" id="myTabContentMD">
 
@@ -380,6 +386,38 @@ $js = $jobSeeker;
                   @endif
             </div>
   </div>
+
+  {{-- Reference Tab --}}
+
+   <div class="tab-pane fade" id="reference-md" role="tabpanel" aria-labelledby="reference-tab-md">
+
+    {{-- <div class="tab_reference tab_cont"> --}}
+
+      @if ($crossreference->count() >0)
+
+        @foreach ($crossreference as $ref)
+        <div class="referees text-dark p-2">
+            <p class="m-0 p-0"><span class="font-weight-bold">Reference Type:</span><span style="margin-left: 10px;">{{$ref->refType}}</span></p>
+            <p class="m-0 p-0"><span class="font-weight-bold">Referee Status:</span><span style="margin-left: 10px;">{{$ref->refStatus}}</span></p>
+            <p class="m-0 p-0"><span class="font-weight-bold">Organization Worked Together:</span><span style="margin-left: 10px;">{{$ref->refereeOrganization}}</span></p>
+            <p class="m-0 p-0"><span class="font-weight-bold">Title at Organization:</span><span style="margin-left: 10px;">{{$ref->refereeOrganizationTitle}}</span></p>
+        </div>
+            {{-- expr --}}
+        @endforeach
+        @else
+            <p class="text-dark"><span class="font-weight-bold"> {{$jobSeeker->name}} </span> has not added any reference yet.</p>
+        @endif
+       {{-- @dump($crossreference) --}}
+       <div class="mt-4 ml-2 text-dark">
+                <a href="{{ route('referencesForAll', ['id' => $js->id, 'name' => $js->name]) }}" target="_blank" class="seeCompletedReference"> View completed reference check feedback here</a>
+        </div>
+
+        <button class="btn btn-sm btn-primary turquoise cop_text"> Click here to copy the link</button>
+
+    {{-- </div> --}}
+  </div>
+
+  {{-- Reference Tab end here --}}
 </div>
 
 @stop
@@ -388,6 +426,10 @@ $js = $jobSeeker;
 <link rel="stylesheet" href="{{ asset('css/site/plyr.css') }}">
 <script type="text/javascript" src="{{ asset('js/mobile/userProfile.js') }}"></script>
 <style type="text/css">
+
+.referees:nth-child(even) {
+  background: #e9ecef;
+}
 
 p{
   font-size: 12px;
@@ -423,6 +465,7 @@ div#home-just {
     height: 119px;
     width: 120px;
 }
+.seeCompletedReference{text-decoration: underline;font-size: 12px}
 
 </style>
 
@@ -493,5 +536,22 @@ document.addEventListener('DOMContentLoaded',function(){
 						useOrientationApi: false
 				});
 			});
+
+
+$('.cop_text').click(function (e) {
+   e.preventDefault();
+   var copyText = $('.seeCompletedReference').attr('href');
+
+   document.addEventListener('copy', function(e) {
+      e.clipboardData.setData('text/plain', copyText);
+      e.preventDefault();
+   }, true);
+
+   document.execCommand('copy');
+   console.log('Link Copied : ', copyText);
+   alert('Link Copied: ' + copyText);
+ });
+
+
 </script>
 @stop

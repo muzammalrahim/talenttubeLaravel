@@ -33,6 +33,7 @@ class UserController extends Controller
         return view('admin.user.list', $data);
     }
 
+
     public function pendingUsers() {
         $data['title'] = 'Job Seekers';
         $data['content_header'] = 'Job Seekers';
@@ -1000,4 +1001,75 @@ class UserController extends Controller
     }
 
     // end here
+    public function controJSlndex() {
+        $data['title'] = 'Job Seekers';
+        $data['content_header'] = 'Control Job Seekers';
+        $data['filter_status'] = '';
+        return view('admin.controlsJS.list', $data);
+    }
+
+    // ========================================= Control Job Seeker Data Table Start =========================================
+
+    public function CJSgetDatatable(Request $request){
+      $records = array();
+
+       // dd($request->toArray());
+      $records = User::select(['id', 'surname', 'city','email','phone','verified','created_at'])
+        ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
+        ->orderBy('created_at', 'desc');
+
+      return datatables($records)
+      ->addColumn('action', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<button type="button" value = "'.$records->id.'" class="btn btn-primary btn-sm"style = "margin-right:2px;"><i class="fas fa-copy"></i></button>';
+
+            // $rhtml = '<a href="'.route('users.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px;"><i class="far fa-edit"></i></button></a>';
+
+            return $rhtml;
+        }})
+
+      ->toJson();
+    }
+
+    // ========================================= Control Job Seeker Data Table End =========================================
+    // ========================================= Control Employer Start =========================================
+
+     public function controlEmpIndex() {
+        $data['title'] = 'Employers';
+        $data['content_header'] = 'Control Employer';
+        $data['filter_status'] = null;
+        return view('admin.controlsEmp.list', $data);
+        // admin/controlsEmp/list
+    }
+
+    // ========================================= Control Employer End  =========================================
+
+    // ========================================= Control Employer Data Table Start =========================================
+
+    public function cEmpDatatable(Request $request){
+      $records = array();
+      $records = User::select(['id', 'name', 'email', 'created_at','verified'])
+        ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
+        ->orderBy('created_at', 'desc');
+      return datatables($records)
+      ->addColumn('action', function ($records) {
+        if (isAdmin()){
+
+            $rhtml = '<button type="button" value = "'.$records->id.'" class="btn btn-primary btn-sm"style = "margin-right:2px"><i class="fas fa-copy"></i></button>';
+
+            // $rhtml = '<a href="'.route('employers.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px"><i class="far fa-edit"></i></button></a>';
+
+
+            return $rhtml;
+        }
+      })
+      
+      // ->rawColumns(['profile','action'])
+      ->toJson();
+
+    }
+
+    // ========================================= Control Employer Data Table Start =========================================
+
+
 }

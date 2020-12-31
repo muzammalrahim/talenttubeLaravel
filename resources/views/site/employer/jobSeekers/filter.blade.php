@@ -158,6 +158,22 @@
 
     </div>
 
+    {{-- ============================================ Filter by Resume ============================================ --}}
+
+   {{--  <div class="searchField_questions mb10">
+      <div class="searchFieldLabel dinline_block">Filter by Resume: </div>
+      <div class="toggleSwitchButton">
+            <label class="switch"><input type="checkbox" name="filter_by_resume"></label>
+      </div>
+
+      <div class="filter_resume_cont hide_it">
+            <p>Hi how are you man</p>
+      </div>
+
+    </div> --}}
+
+    {{-- ============================================ Filter by Resume ============================================ --}}
+
 
      <div class="searchField_keyword dblock mb10">
         <div class="searchFieldLabel dinline_block">Keyword: </div>

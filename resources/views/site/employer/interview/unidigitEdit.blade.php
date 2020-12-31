@@ -25,12 +25,15 @@
             <input type="hidden" name="intervieww_id" value="{{$interview->id}}">
             <p class="errorBookinId hide_it2"></p>
             <p class="bookedSuccessfully"></p>
+
+            <a href="{{ url()->previous() }}" class="btn btn-default backToCreated">Back</a>
+
+
             <div class="fomr_btn act_field center">
                 <button class="btn small turquoise updateNewBooking ">Update</button>
             </div>
         </form>
         </div>
-
     <div class="cl"></div>
 </div>
 

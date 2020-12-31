@@ -21,6 +21,7 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
+use App\crossreference;
 
 
 class JobSeekerController extends Controller {
@@ -209,9 +210,8 @@ class JobSeekerController extends Controller {
         $data['isallowed'] = $isallowed;
         $data['galleries']        = $galleries;
         $data['videos']          = $videos;
+        $data['crossreference'] = crossreference::where('jobseekerId', $jobSeekerId)->where('refStatus','Reference Completed')->get();
         $data['qualificationList'] = getQualificationsList();
-
-
         return view('site.user.jobSeekerInfo', $data);      //  site/user/jobSeekerInfo
 
     }
