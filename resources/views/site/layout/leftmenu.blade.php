@@ -26,6 +26,8 @@
 
                 <li><a href="{{route('interviewconcierg.user')}}" class="column_narrow_search_results {{(request()->is('interviewconcierg.user'))?'active':''}}"><span class="icon"></span>Interview Concierge</a></li>
 
+                <li><a href="{{route('crossreference.user')}}" class="column_narrow_search_results {{(request()->is('crossreference.user'))?'active':''}}"><span class="icon"></span>Cross Reference</a></li>
+
                 <li><a href="{{route('jobs')}}" class="column_narrow_search_results {{(request()->is('jobs'))?'active':''}}"><span class="icon"></span>Browse jobs</a></li>
                 <li><a href="{{route('employers')}}" class="column_narrow_search_results {{(request()->is('employers'))?'active':''}}"><span class="icon"></span>Employers</a></li>
 

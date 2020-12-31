@@ -1,5 +1,5 @@
 
-@extends('mobile.user.usermaster')
+@extends('site.employer.employermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
@@ -7,25 +7,19 @@
 @stop
 
 @section('content')
-<div class="card mb-3 shadow mb-3 bg-white rounded job_row jobApp_">
-  <div class="card-header jobAppHeader p-2 jobInfoFont text-center">
-    <h5>Send url to job seeker</h5>
-  </div>
+<div class=" ">
+  <div class="head icon_head_browse_matches">Send url to job seeker</div>
 
-  <div class="card-body">
-    <div class="heading icon_head_browse_matches mb-2">Click on the link to copy it to your clipboard</div>
-    <div class="text-underline">
-    <a  class="w60 copy_text" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
-    {{-- <a  class="button w50" href="{{$interview->url}}">{{$interview->url}}</a> --}}
+<div class="">
+    <div class=""style="margin-top: 15px"> <h3> Click on the link to copy it to your clipboard </h3></div>
+    <div class="link">
+        <a  class="w60 copy_text button" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
+          {{-- <a  class="button w50" href="{{$interview->url}}">{{$interview->url}}</a> --}}
     </div>
 
-    <a href="{{ url()->previous() }}" class="btn btn-default backToCreated">Back</a>
-    
 </div>
 
-
-
-
+    <a href="{{ url()->previous() }}" class="btn btn-default backToCreated">Back</a>
 @stop
 
 @section('custom_footer_css')
@@ -61,18 +55,8 @@
   background-color: rgb(52, 49, 238);
   color: White;
 }
-
-.backToCreated {
-    background: blue;
-    color: white;
-    width: fit-content;
-    padding: 5px 20px 5px 20px;
-    border-radius: 3px;
-    font-size: 16px;
-    opacity: 0.7;
-}
-.backToCreated:hover{
-  opacity: 1.0;
+.link{
+  margin-bottom: 20px;
 }
 </style>
 @stop

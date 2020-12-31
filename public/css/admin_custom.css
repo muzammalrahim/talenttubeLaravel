@@ -382,3 +382,20 @@ select#filter_job {
   display: block;
   width: 100px;
 }
+
+/* Interview Concierge */
+
+.notbrak{display: inline-block;}
+.leftMargin{margin-left: 10px;}
+.leftMargin2{margin-left: 10%;}
+.rightMargin{margin-right : 10px;}
+.topMargin{margin-top: 10px;}
+.textCenter{margin-left: 40%;padding-bottom: 10px !important;}
+.textCenter2{padding-bottom: 10px !important;font-weight: 600;}
+.dynamicTextStyle{margin-left: 5px;margin-right: 5px;}
+.interviewConcierge {background: #254c8e !important;}
+.slot.m_rb20 {display: block;padding: 10px;border: 1px solid #ced1da;border-radius: 3px;clear: both;margin: 0px;}
+/*.selectInput>.jq-selectbox>.jq-selectbox__dropdown>ul , .selectedInput>.jq-selectbox__dropdown>ul {height: 200px;}*/
+.pointer{ cursor: pointer; }
+p.slotbooking {text-align: center;margin: 20px;font-weight: 700;font-size: 20px;}
+.font-20{font-size: 20px}

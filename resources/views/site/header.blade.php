@@ -7,6 +7,9 @@
          @if (Auth::check())
             @if (isEmployer())
               <a  class="btn_sign" href="{{route('employerProfile')}}">Dashboard</a>
+            @elseif(isAdmin())
+              <a  class="btn_sign" href="{{route('adminDashboard')}}">Dashboard</a>
+
             @else
               <a  class="btn_sign" href="{{route('profile')}}">Dashboard</a>
             @endif

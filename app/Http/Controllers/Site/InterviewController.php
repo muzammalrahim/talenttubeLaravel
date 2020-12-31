@@ -592,10 +592,11 @@ class InterviewController extends Controller
                     $users = User::whereIn('id',$request->cbx)->get();
                     if(!empty($users)){
                     foreach ($users as $user) {
+                        // dd($request->employerName);
                         // $details = ['email' => $user->email];
                         // SendBulkEmailJob::dispatch($details);
                         // $when = now()->addSeconds(2);
-                        Mail::to($user->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($user->surname,$request->url));
+                        Mail::to($user->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($user->surname,$request->url,$request->positionname,$request->employerName));
                     }
                     }
 
@@ -615,11 +616,13 @@ class InterviewController extends Controller
     }
 
     public function manualsendnotification(Request $request){
-
+        // $data = $request->toArray();
+        // dd($request->positionname);
+        // dd($request->employerName);
         // $details = ['email' => $user->email];
         // SendBulkEmailJob::dispatch($details);
         // $when = now()->addSeconds(2);
-        Mail::to($request->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($request->name,$request->url));
+        Mail::to($request->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($request->name,$request->url,$request->employerName,$request->positionname));
 
         return response()->json([
         'status' => 1,

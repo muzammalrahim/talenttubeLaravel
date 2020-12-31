@@ -254,6 +254,53 @@ return [
             'label_color' => 'success',
         ],
 
+        [   'header'      => 'Cross References'],
+        [
+            'text'        => 'Cross References List',
+            'url'         => 'admin/reference/list',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'Completed References List',
+            'url'         => 'admin/reference/completed/list',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
+
+        [   'header'      => 'Controls'],
+
+        [
+            'text'        => 'Control Employer',
+            'url'         => 'admin/controlEmp/list',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+        [
+            'text'        => 'Control Job Seeker',
+            'url'         => 'admin/controlJS/list',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
+
+        // [   'header'      => 'Interviews'],
+
+        // [
+        //     'text'        => 'Interview Concierge',
+        //     'url'         => 'admin/interviewConcierge/list',
+        //     'icon'        => 'far fa-fw fa-file',
+        //     'label_color' => 'success',
+        // ],
+
+        // [
+        //     'text'        => 'Interview Bookings',
+        //     'url'         => 'admin/interviewBookings/list',
+        //     'icon'        => 'far fa-fw fa-file',
+        //     'label_color' => 'success',
+        // ],
+
         // [
         //     'text'        => 'Search by Jobs',
         //     'url'         => 'admin/searchByJobs',

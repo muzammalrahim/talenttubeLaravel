@@ -31,6 +31,7 @@
 .mb10{ margin-bottom: 10px !important; }
 .mb20{ margin-bottom: 20px !important; }
 .mt20{ margin-top: 20px !important; }
+.ml20{ margin-left: 20px !important; }
 .my10{margin: 10px 0px 10px 0px}
 .p0{ padding: 0px !important; }
 .p10{ padding: 10px !important;  }
@@ -301,3 +302,20 @@ body.register.step2>div.jquery-modal.blocker.current>div#jobApplyModal {
 ..pointer{
   cursor: pointer;
 }
+
+/* ============================================= Cross Reference ============================================= */
+
+.referees {
+    display: inline-block;
+    margin-right: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    width: 46%;
+    margin-bottom: 10px;
+}
+
+.declineButton:hover{
+  color: white !important;  
+}
+.arrowRight{position: relative;bottom: 1px;font-size: 10px}
+/* ============================================= Cross Reference ============================================= */

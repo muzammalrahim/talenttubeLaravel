@@ -35,7 +35,7 @@
 
             <div class="avatarimg">
             <img src="{{$profile_image}}"
-                alt="avatar mx-auto white" class="rounded-circle img-fluid">
+                alt="avatar mx-auto white" class="rounded-circle img-fluid" style="height: 110px">
             </div>
         </div>
 
@@ -51,17 +51,6 @@
 <!--Section: Testimonials v.1-->
 
 {{-- ==================================================== For image ==================================================== --}}
-{{--
-    <div id="over" style="width:auto; height:150px">
-
-       <img src="https://p16-tiktokcdn-com.akamaized.net/aweme/720x720/tiktok-obj/1646491669975042.jpeg">
-      <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
-            <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
-
-        </a>
-
-    </div> --}}
-
 
     <div class="personalInfo">{{$user->name}} {{$user->surname}}</div>
     <div class="personalInfo"><b>Email:</b> {{$user->email}}</div>

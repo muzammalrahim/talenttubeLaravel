@@ -13,19 +13,25 @@ use App\Mail\TestEmail;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+
 Route::get('testEmail', function () {
 
 
     $data = ['message' => 'This is a test!'];
 
-    Mail::to('aliasgharatwork@gmail.com')->send(new TestEmail($data));
+    dd(Mail::to('hassaansaeed1@gmail.com')->send(new TestEmail($data)));
 });
+
+// Route::get('testEmail1','Site\ReferenceController@testEmail1')->name('testEmail1');
+
 
 Route::get('userinterviewconcierge/url', 'Site\HomeController@userUniqueurl')->name('userinterviewconcierge.url');
 Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->name('publicuservideo');
 
 // ================================================ Save interview from unique url ================================================ 
-Route::post('ajax/booking/saveSlot',    'Site\HomeController@saveSlot')->name('saveSlot');
+Route::post('ajax/booking/saveInterviewSlot',    'Site\HomeController@saveInterviewSlot')->name('saveSlot');
 Route::get('/interViewSlotCreated',    'Site\HomeController@interViewSlotCreated')->name('interViewSlotCreated');
 Route::get('/alreadyBookedSlot',    'Site\HomeController@alreadyBookedSlot')->name('alreadyBookedSlot');
 Route::post('interviewConLogin',    'Site\HomeController@interviewConLogin')->name('interviewConLogin');
@@ -37,6 +43,19 @@ Route::post('ajax/booking/deleteSlot',    'Site\HomeController@deleteSlot')->nam
 Route::post('ajax/booking/sendEmailEmployer',    'Site\HomeController@sendEmailEmployer')->name('sendEmailEmployer');
 Route::post('ajax/rescheduleSlot',    'Site\HomeController@rescheduleSlot')->name('rescheduleSlot');
 
+// =========================================== Cross Reference for unauthenticated ===========================================
+Route::get('crosssreference/url', 'Site\ReferenceController@crosssreference')->name('crosssreference');
+
+Route::post('ajax/booking/sendReferenceW', 'Site\ReferenceController@sendReferenceW')->name('sendReferenceW');
+Route::post('ajax/booking/sendReferenceP', 'Site\ReferenceController@sendReferenceP')->name('sendReferenceP');
+Route::post('ajax/booking/sendReferenceE', 'Site\ReferenceController@sendReferenceE')->name('sendReferenceE');
+
+Route::post('ajax/crossreference/declineReference/{id}','Site\ReferenceController@declineReference')->name('declineReference');
+Route::get('reference/completed','Site\ReferenceController@referenceCompleted')->name('reference.completed');
+Route::get('reference/declined','Site\ReferenceController@referenceDeclined')->name('reference.declined');
+Route::get('completed/reference/{id}/{name}','Site\ReferenceController@completedReferenceAll')->name('referencesForAll');
+
+// =========================================== Cross Reference for unauthenticated ===========================================
 
 
 
@@ -208,6 +227,40 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('ajax/massStatusChange', 'Admin\AdminJobsController@massStatusChange')->name('massStatusChange');
 
     Route::post('ajax/deleteGallery/{id}/{userID}', 'Admin\UserController@deleteGallery');
+    
+    // ====================================== Interview Concierge ======================================
+    // Route::get('interviewConcierge/list', 'Admin\AdminInterviewController@interviewsList')->name('interviewConcierge.list');
+    // Route::get('interviews/getList', 'Admin\AdminInterviewController@getInterviewsListDatatable')->name('interviews.dataTable');
+    // Route::get('interviews/edit/{id}', 'Admin\AdminInterviewController@interviewEdit')->name('interview.edit');
+    // Route::patch('interviews/update/{id}', 'Admin\AdminInterviewController@updateInterview')->name('interview.update');
+    // Route::post('ajax/booking/adminDeleteSlot','Admin\AdminInterviewController@adminDeleteSlot')->name('adminDeleteSlot');
+    // Route::post('ajax/adminInterviews/delete/{id}', 'Admin\AdminInterviewController@interviewDelete')->name('interviewDelete');
+
+    // Route::get('interview/create', 'Admin\AdminInterviewController@createInterview')->name('interview.create');
+    // Route::post('interview/store', 'Admin\AdminInterviewController@storeNewInterview')->name('interview.store');
+
+    // ====================================== Interview Concierge End Here ======================================
+
+    // ====================================== AdminCrossReference ======================================
+
+    Route::get('reference/list', 'Admin\AdminReferenceController@referenceList')->name('reference.list');
+    Route::get('reference/completed/list', 'Admin\AdminReferenceController@completedReferenceList')->name('reference.list');
+    Route::get('reference/getList', 'Admin\AdminReferenceController@getReferenceDatatable')->name('reference.dataTable');
+    Route::get('compReference/getList', 'Admin\AdminReferenceController@getCompReferenceDatatable')->name('completedReference.dataTable');
+    Route::get('reference/create', 'Admin\AdminReferenceController@createInterview')->name('reference.create');
+    Route::get('reference/edit/{id}', 'Admin\AdminReferenceController@referenceEdit')->name('reference.edit');
+
+    // ====================================== Cross Reference End Here ======================================
+
+    // ====================================== ControlJs Start ======================================
+
+    Route::get('controlJS/list', 'Admin\UserController@controJSlndex')->name('controlJS.list');
+    Route::get('controlsJS/getList', 'Admin\UserController@CJSgetDatatable')->name('CJS.dataTable');
+    Route::get('controlEmp/list', 'Admin\UserController@controlEmpIndex')->name('controlEmp.list');
+    Route::get('controlEmp/getList', 'Admin\UserController@cEmpDatatable')->name('Cemp.dataTable');
+    
+    // ====================================== ControlJs Start ======================================
+
 
 });
 
@@ -259,6 +312,8 @@ Route::get('media/private/{userid}/{any}', [
 
 Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 
+
+//  jobSeekerProfile 
 
     Route::get('profile', function () { return redirect('user/'.Auth::user()->username); })->name('profile');
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
@@ -393,7 +448,7 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('interviewconcierge/manualjobseekers',       'Site\InterviewController@manualjobseekers')->name('interviewconcierge.manualjobseekers');
     Route::get('interviewconcierge/formedit','Site\InterviewController@editbookingform')->name('interviewconcierge.formedit');
 
-    Route::get('interviewconcierge/unidigitEdit','Site\InterviewController@unidigitEdit')->name('unidigitEdit');
+    Route::get('interviewconcierge/created/unidigitEdit','Site\InterviewController@unidigitEdit')->name('unidigitEditUrl');
 
     Route::get('interviewconcierge/getlikedlistjobseekers','Site\InterviewController@getlikedjobseekers')->name('interviewconcierge.getlikedlistjobseekers');
 
@@ -409,7 +464,15 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 
     Route::post('ajax/update/unidigitEditUpdate','Site\InterviewController@unidigitEditUpdate')->name('unidigitEditUpdate');
 
+    // =============================================== Cross Reference ===============================================
 
+    Route::get('crossreference.user','Site\ReferenceController@crossreferenceIndex')->name('crossreference.user');
+    Route::post('ajax/crossReference/sendEmailReferee','Site\ReferenceController@sendEmailReferee')->name('sendEmailReferee');
+
+    // =============================================== Cross Reference =============================================== 
+
+
+    
 
 });
 

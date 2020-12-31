@@ -91,6 +91,9 @@
 	        	<input type="hidden" name="employerEmail" value="{{$interview->employerData->email}}">	
 	        	<input type="hidden" name="manager" value="{{$interview->additionalmanagers}}">
 	        	<input type="hidden" name="position" value="{{$interview->positionname}}">
+	        	<input type="hidden" name="bookingTitle" value="{{$interview->title}}">
+	        	<input type="hidden" name="companyname" value="{{$interview->companyname}}">
+	        	<input type="hidden" name="instruction" value="{{$interview->instruction}}">
 	    	<div class="row">
 		    	<div class="slot notbrak col-md-6">
 		            <div class="font-weight-bold"><span class="test"> Thank you for selecting the below interview time.</span> 
@@ -168,7 +171,13 @@
 
     <div class="row">
     	<div class="col-md-6 alreadyBookedInerview">
-    		<p class="bookedText"></p>
+    		<p class="bookedText d-none"></p>
+    	</div> 
+    </div>
+
+    <div class="row">
+    	<div class="col-md-6 alreadyBookedInerview d-none">
+    		<p class="bookedSuccessfully"> Slot has booked sucessfully</p>
     	</div> 
     </div>
 
@@ -228,13 +237,9 @@ $(document).ready(function(){
     $('.saveSlot').on('click',function() {
         event.preventDefault();
         var formData = $('.new_slot_form').serializeArray();
-        // console.log('hi how are you');
-        // console.log(' formData ', formData);
+        console.log('hi slot cleated');
+        console.log(' formData ', formData);
         $('.saveSlotSpinner').removeClass('d-none');
-        
-        setTimeout(function() { $(".saveSlotSpinner").addClass('d-none'); }, 2000);
-
-        // return;
         $.ajax({
             type: 'POST',
             url:  '{{route('saveSlot')}}',
@@ -243,6 +248,7 @@ $(document).ready(function(){
                 // console.log(' data ', response);
                 if( response.status == 0 ) {
                     // that.hideMainEditor();
+                	$('.saveSlotSpinner').addClass('d-none');
 
                    var errorIntCon = response['message'];
                    // console.log(errorIntCon);
@@ -258,7 +264,7 @@ $(document).ready(function(){
 		               	var nameError2 = nameError.toString();
 		                $('.errorInName').text(nameError2);
 		                $('.errorInName').show();
-		                // console.log(nameError);
+		                console.log(nameError);
 
                    	} else {
                    		$('.errorInName').hide();
@@ -286,20 +292,26 @@ $(document).ready(function(){
                    	} else {
                    		$('.errorInemail').hide();
                    	}
+
                     // ==================== email validation end here ====================
 
-
 	                }
-
-
-                else if(response.status == 2){
-						var alreadBooked = response.error;                	 
-						// console.log(alreadBooked);
-						$('.bookedText').text(alreadBooked);
+	                
+                else if(response.status == 1){
+                	$('.alreadyBookedInerview').removeClass('d-none');
+                	$('.saveSlotSpinner').addClass('d-none');
+                	setTimeout(function() {
+                		location.href = base_url + '/interViewSlotCreated';
+                	}, 4000);
                 }
                 else{
-                	location.href = base_url + '/interViewSlotCreated';
-
+                	var alreadBooked = response.error;
+                	// console.log(alreadBooked);
+                	$('.bookedText').text(alreadBooked).removeClass('d-none');
+                	setTimeout(function() {
+                		$('.bookedText').addClass('d-none');
+                	}, 4000);
+                	$('.saveSlotSpinner').addClass('d-none');
                 }
 
             }

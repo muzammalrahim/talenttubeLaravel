@@ -9,17 +9,14 @@ use Illuminate\Support\Facades\Auth;
 // use App\Jobs;
 use App\User;
 use App\BulkEmail;
-
 use App\Jobs\SendBulkEmailJob;
 use App\Mail\BulkEmailForQueuing;
 use Illuminate\Support\Facades\Mail;
 use App\Attachment;
 // use Yajra\Datatables\Datatables;
 // use Illuminate\Support\Facades\Hash;
-
 use App\Exports\JobSeekerExport;
 use Maatwebsite\Excel\Facades\Excel;
-
 use App\JobsApplication;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
@@ -32,7 +29,7 @@ class AdminEmailsController extends Controller {
 
 
     //===============================================================================================================//
-    // .
+    // . 
     //===============================================================================================================//
     public function list() {
         // if (Auth::check()) {
@@ -200,26 +197,16 @@ class AdminEmailsController extends Controller {
     public function DeleteEmail(Request $request) {
         // dd( $request->toArray() );
         if(!empty($request->id)){
-
-
-
-
-
         $res=BulkEmail::where('id',$request->id)->delete();
-
         return response()->json([
             'status' => 1,
             'message' => 'Bulk Email Succesfully Deleted',
           ]);
-
-
         }
      }
 
-
-
     //===============================================================================================================//
-    // .
+    // Generate CSV
     //===============================================================================================================//
     public function GenerateCVS(Request $request) {
       // dd($request->toArray());
@@ -230,238 +217,208 @@ class AdminEmailsController extends Controller {
     }
 
 
-
-
-
+    //===============================================================================================================//
+    // Buk Genetae PDF
+    //===============================================================================================================//
+    
     public function BulkGenerateCVPDF(Request $request) {
-        if(!empty($request->cbx)){
-
-             $data['title'] = 'Generate PDF';
-             $users = User::whereIn('id', $request->cbx)->get();
-             $data['users'] = $users;
-             $userAttachment = null;
-             $pdf = new PDFMerger();
-             $isFileAdded = False;
-
-
-            foreach($users as $user){
-                $userAttachment = Attachment::where('user_id', $user->id)->first();
-                if(!empty($userAttachment)){
-                if($userAttachment->type=="pdf"){
-
-                    if(PHP_OS=="WINNT"){
-                    $str = str_replace('/', '\\', $userAttachment->file);
-                    chdir('..');
-                    $cwd = getcwd();
-
-                    if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
-                        $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$str, 'all');
-                        $isFileAdded = True;
-                    }
-
-                    chdir('public');
-                    }
-                    else if(PHP_OS=="Linux"){
-                        $str =  $userAttachment->file;
-                        chdir('..');
-                        $cwd = getcwd();
-                        if(file_exists($cwd.'/storage/images/user/'.$str)){
-                            $pdf->addPDF($cwd.'/storage/images/user/'.$str, 'all');
-                            $isFileAdded = True;
-                        }
-                        chdir('public');
-                    }
+      if(!empty($request->cbx)){
+        $data['title'] = 'Generate PDF';
+        $users = User::whereIn('id', $request->cbx)->get();
+        $data['users'] = $users;
+        $userAttachment = null;
+        $pdf = new PDFMerger();
+        $isFileAdded = False;
+        foreach($users as $user){
+          $userAttachment = Attachment::where('user_id', $user->id)->first();
+          if(!empty($userAttachment)){
+            if($userAttachment->type=="pdf"){
+              if(PHP_OS=="WINNT"){
+                $str = str_replace('/', '\\', $userAttachment->file);
+                chdir('..');
+                $cwd = getcwd();
+                if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
+                  $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$str, 'all');
+                  $isFileAdded = True;
                 }
-
-                else if($userAttachment->type=="doc" || $userAttachment->type=="docx" ){
-                    if(PHP_OS=="WINNT"){
-                    $str = str_replace('/', '\\', $userAttachment->file);
-                    $copystr = str_replace(".docx",".pdf",$userAttachment->name);
-                    $copystr = str_replace(".doc",".pdf",$copystr);
-                    chdir('..');
-                    $cwd = getcwd();
-
-                    if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
-                        $converter = new OfficeConverter($cwd.'\\storage\\images\\user\\'.$str);
-                        $converter->convertTo($copystr);
-                        $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$userAttachment->user_id.'\\private\\'.$copystr, 'all');
-                        $isFileAdded = True;
-                    }
-
-
-                    chdir('public');
-                    }
-
-                    else if(PHP_OS=="Linux"){
-                        $str = $userAttachment->file;
-                        $copystr = str_replace(".docx",".pdf",$userAttachment->name);
-                        $copystr = str_replace(".doc",".pdf",$copystr);
-                        chdir('..');
-                        $cwd = getcwd();
-
-                        if(file_exists($cwd.'/storage/images/user/'.$str)){
-                            $converter = new OfficeConverter($cwd.'/storage/images/user/'.$str);
-                            $converter->convertTo($copystr);
-                            $pdf->addPDF($cwd.'/storage/images/user/'.$userAttachment->user_id.'/private/'.$copystr, 'all');
-                            $isFileAdded = True;
-                        }
-                        chdir('public');
-                    }
+                chdir('public');
+              }
+              else if(PHP_OS=="Linux"){
+                $str =  $userAttachment->file;
+                chdir('..');
+                $cwd = getcwd();
+                if(file_exists($cwd.'/storage/images/user/'.$str)){
+                  $pdf->addPDF($cwd.'/storage/images/user/'.$str, 'all');
+                  $isFileAdded = True;
                 }
+                chdir('public');
+              }
             }
-        }
-        }
-        if($isFileAdded)
-        $pdf->merge('download', "bundledCVs.pdf");
-        else
-        return redirect()->back();
-
-        }
-
-
-      public function BulkGenerateCVPDFApplicant(Request $request) {
-        if(!empty($request->cbx)){
-
-            $userIDs = array();
-
-            foreach($request->cbx as $userID){
-            $jobApp = JobsApplication::where('id',$userID)->first();
-            $userIDs[] = $jobApp->user_id;
-            }
-
-
-             $data['title'] = 'Generate PDF';
-             $users = User::whereIn('id', $userIDs)->get();
-             $data['users'] = $users;
-             $userAttachment = null;
-             $pdf = new PDFMerger();
-             $isFileAdded = False;
-
-             foreach($users as $user){
-                $userAttachment = Attachment::where('user_id', $user->id)->first();
-                if(!empty($userAttachment)){
-                if($userAttachment->type=="pdf"){
-
-                    if(PHP_OS=="WINNT"){
-                    $str = str_replace('/', '\\', $userAttachment->file);
-                    chdir('..');
-                    $cwd = getcwd();
-                    if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
-                        $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$str, 'all');
-                        $isFileAdded = True;
-                    }
-                    chdir('public');
-                    }
-                    else if(PHP_OS=="Linux"){
-                        $str =  $userAttachment->file;
-                        chdir('..');
-                        $cwd = getcwd();
-                        if(file_exists($cwd.'/storage/images/user/'.$str)){
-                            $pdf->addPDF($cwd.'/storage/images/user/'.$str, 'all');
-                            $isFileAdded = True;
-                        }
-                        chdir('public');
-                    }
+            else if($userAttachment->type=="doc" || $userAttachment->type=="docx" ){
+              if(PHP_OS=="WINNT"){
+                $str = str_replace('/', '\\', $userAttachment->file);
+                $copystr = str_replace(".docx",".pdf",$userAttachment->name);
+                $copystr = str_replace(".doc",".pdf",$copystr);
+                chdir('..');
+                $cwd = getcwd();
+                if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
+                  $converter = new OfficeConverter($cwd.'\\storage\\images\\user\\'.$str);
+                  $converter->convertTo($copystr);
+                  $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$userAttachment->user_id.'\\private\\'.$copystr, 'all');
+                  $isFileAdded = True;
                 }
-
-                else if($userAttachment->type=="doc" || $userAttachment->type=="docx" ){
-                    if(PHP_OS=="WINNT"){
-                    $str = str_replace('/', '\\', $userAttachment->file);
-
-                    $copystr = str_replace(".docx",".pdf",$userAttachment->name);
-                    $copystr = str_replace(".doc",".pdf",$copystr);
-
-                    chdir('..');
-                    $cwd = getcwd();
-                    if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
-                        $converter = new OfficeConverter($cwd.'\\storage\\images\\user\\'.$str);
-                        $converter->convertTo($copystr);
-                        $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$userAttachment->user_id.'\\private\\'.$copystr, 'all');
-                        $isFileAdded = True;
-                    }
-
-                    chdir('public');
-                    }
-
-                    else if(PHP_OS=="Linux"){
-                        $str = $userAttachment->file;
-
-                        $copystr = str_replace(".docx",".pdf",$userAttachment->name);
-                        $copystr = str_replace(".doc",".pdf",$copystr);
-
-                        chdir('..');
-                        $cwd = getcwd();
-
-                        if(file_exists($cwd.'/storage/images/user/'.$str)){
-                            $converter = new OfficeConverter($cwd.'/storage/images/user/'.$str);
-                            $converter->convertTo($copystr);
-                            $pdf->addPDF($cwd.'/storage/images/user/'.$userAttachment->user_id.'/private/'.$copystr, 'all');
-                            $isFileAdded = True;
-                        }
-
-                        chdir('public');
-                    }
+                chdir('public');
+              }
+              else if(PHP_OS=="Linux"){
+                $str = $userAttachment->file;
+                $copystr = str_replace(".docx",".pdf",$userAttachment->name);
+                $copystr = str_replace(".doc",".pdf",$copystr);
+                chdir('..');
+                $cwd = getcwd();
+                if(file_exists($cwd.'/storage/images/user/'.$str)){
+                  $converter = new OfficeConverter($cwd.'/storage/images/user/'.$str);
+                  $converter->convertTo($copystr);
+                  $pdf->addPDF($cwd.'/storage/images/user/'.$userAttachment->user_id.'/private/'.$copystr, 'all');
+                  $isFileAdded = True;
                 }
+                chdir('public');
+              }
             }
-        }
-
-        if($isFileAdded)
-        $pdf->merge('download', "bundledCVs.pdf");
-        else
-        return redirect()->back();
-
+          }
         }
       }
+      if($isFileAdded)
+        $pdf->merge('download', "bundledCVs.pdf");
+      else
+        return redirect()->back();
+    }
 
     //===============================================================================================================//
-    // .
+    // Buk Genetae PDF Applicants
     //===============================================================================================================//
-    public function GeneratePDF(Request $request) {
+    
+    public function BulkGenerateCVPDFApplicant(Request $request) {
       if(!empty($request->cbx)){
-
-           $data['title'] = 'Generate PDF';
-           $users = User::whereIn('id', $request->cbx)->get();
-           $data['users'] = $users;
-
-           if($request->test){
-            return view('admin.pdf.bulkJobSeeker', $data);
-           }else{
-            $pdf = PDF::loadView('admin.pdf.bulkJobSeeker', $data);
-            $pdf->setPaper('A4');
-
-            return $pdf->download('JobSeekers.pdf');
-            // admin/pdf/bulkJobSeeker
-           }
-
+        $userIDs = array();
+        foreach($request->cbx as $userID){
+          $jobApp = JobsApplication::where('id',$userID)->first();
+          $userIDs[] = $jobApp->user_id;
+        }
+        $data['title'] = 'Generate PDF';
+        $users = User::whereIn('id', $userIDs)->get();
+        $data['users'] = $users;
+        $userAttachment = null;
+        $pdf = new PDFMerger();
+        $isFileAdded = False;
+        foreach($users as $user){
+          $userAttachment = Attachment::where('user_id', $user->id)->first();
+          if(!empty($userAttachment)){
+            if($userAttachment->type=="pdf"){
+              if(PHP_OS=="WINNT"){
+                $str = str_replace('/', '\\', $userAttachment->file);
+                chdir('..');
+                $cwd = getcwd();
+                if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
+                  $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$str, 'all');
+                  $isFileAdded = True;
+                }
+                chdir('public');
+              }
+              else if(PHP_OS=="Linux"){
+                $str =  $userAttachment->file;
+                chdir('..');
+                $cwd = getcwd();
+                if(file_exists($cwd.'/storage/images/user/'.$str)){
+                  $pdf->addPDF($cwd.'/storage/images/user/'.$str, 'all');
+                  $isFileAdded = True;
+                }
+                chdir('public');
+              }
+            }
+            else if($userAttachment->type=="doc" || $userAttachment->type=="docx" ){
+              if(PHP_OS=="WINNT"){
+                $str = str_replace('/', '\\', $userAttachment->file);
+                $copystr = str_replace(".docx",".pdf",$userAttachment->name);
+                $copystr = str_replace(".doc",".pdf",$copystr);
+                chdir('..');
+                $cwd = getcwd();
+                if(file_exists($cwd.'\\storage\\images\\user\\'.$str)){
+                  $converter = new OfficeConverter($cwd.'\\storage\\images\\user\\'.$str);
+                  $converter->convertTo($copystr);
+                  $pdf->addPDF($cwd.'\\storage\\images\\user\\'.$userAttachment->user_id.'\\private\\'.$copystr, 'all');
+                  $isFileAdded = True;
+                }
+                chdir('public');
+              }
+              else if(PHP_OS=="Linux"){
+                $str = $userAttachment->file;
+                $copystr = str_replace(".docx",".pdf",$userAttachment->name);
+                $copystr = str_replace(".doc",".pdf",$copystr);
+                chdir('..');
+                $cwd = getcwd();
+                if(file_exists($cwd.'/storage/images/user/'.$str)){
+                  $converter = new OfficeConverter($cwd.'/storage/images/user/'.$str);
+                  $converter->convertTo($copystr);
+                  $pdf->addPDF($cwd.'/storage/images/user/'.$userAttachment->user_id.'/private/'.$copystr, 'all');
+                  $isFileAdded = True;
+                }
+                chdir('public');
+              }
+            }
+          }
+        }
+        if($isFileAdded)
+          $pdf->merge('download', "bundledCVs.pdf");
+        else
+          return redirect()->back();
       }
     }
 
-    public function generatePDFApplicant(Request $request) {
-        if(!empty($request->cbx)){
-            // dd($request->cbx);
-            // $str_arr = explode (",", $request->cbx);
-            $userIDs = array();
-            foreach($request->cbx as $userID){
-                $jobApp = JobsApplication::where('id',$userID)->first();
-                $userIDs[] = $jobApp->user_id;
-            }
-
-             $data['title'] = 'Generate PDF';
-             $users = User::whereIn('id', $userIDs)->get();
-             $data['users'] = $users;
-
-             if($request->test){
-              return view('admin.pdf.bulkJobSeeker', $data);
-             }else{
-              $pdf = PDF::loadView('admin.pdf.bulkJobSeeker', $data);
-              $pdf->setPaper('A4');
-
-              return $pdf->download('JobSeekers.pdf');
-              // admin/pdf/bulkJobSeeker
-             }
-
+    //===============================================================================================================//
+    // Generate PDF
+    //===============================================================================================================//
+    
+    public function GeneratePDF(Request $request){
+      if(!empty($request->cbx)){
+        $data['title'] = 'Generate PDF';
+        $users = User::whereIn('id', $request->cbx)->get();
+        $data['users'] = $users;
+        if($request->test){
+          return view('admin.pdf.bulkJobSeeker', $data);
+        }else{
+          $pdf = PDF::loadView('admin.pdf.bulkJobSeeker', $data);
+          $pdf->setPaper('A4');
+          return $pdf->download('JobSeekers.pdf'); 
+          // admin/pdf/bulkJobSeeker
         }
       }
+    }
 
 
+    //===============================================================================================================//
+    // Generate PDF Applicant
+    //===============================================================================================================//
+    
+    public function generatePDFApplicant(Request $request) {
+      if(!empty($request->cbx)){
+      // dd($request->cbx);
+      // $str_arr = explode (",", $request->cbx);
+        $userIDs = array();
+        foreach($request->cbx as $userID){
+          $jobApp = JobsApplication::where('id',$userID)->first();
+          $userIDs[] = $jobApp->user_id;
+        }
+        $data['title'] = 'Generate PDF';
+        $users = User::whereIn('id', $userIDs)->get();
+        $data['users'] = $users;
+        if($request->test){
+          return view('admin.pdf.bulkJobSeeker', $data);
+        }else{
+          $pdf = PDF::loadView('admin.pdf.bulkJobSeeker', $data);
+          $pdf->setPaper('A4');
+          return $pdf->download('JobSeekers.pdf');
+          // admin/pdf/bulkJobSeeker
+        }
+      }
+    }
 }

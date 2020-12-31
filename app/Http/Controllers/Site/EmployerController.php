@@ -713,7 +713,7 @@ class EmployerController extends Controller {
 
         // DB::enableQueryLog();
         // print_r( $query->toSql() );exit;
-        $jobSeekers =  $query->paginate(2);
+        $jobSeekers =  $query->paginate(10);
         // $jobSeekers =  $query->get();
 
 

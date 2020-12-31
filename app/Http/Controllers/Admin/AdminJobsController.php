@@ -65,7 +65,7 @@ class AdminJobsController extends Controller
 
         // dd($data);
 
-       return view('admin.jobs.list', $data);
+       return view('admin.jobs.list', $data);  // admin/jobs/list
     }
 
 

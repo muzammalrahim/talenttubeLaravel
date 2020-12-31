@@ -165,7 +165,7 @@
                                         </div>
                                 </div>
                             @else
-                                <p class="slotbooking text-center font-weight-bold">This slot has not any booking.</p>
+                                <p class="slotbooking text-center font-weight-bold">This slot is still available.</p>
 
                             @endif
 

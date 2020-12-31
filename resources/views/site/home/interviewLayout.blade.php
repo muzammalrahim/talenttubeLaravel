@@ -6,24 +6,25 @@
 <div class="container p-0">
 	<div class="header_Con text-center">
 		<h4 class="font-weight-bold text-white">Interview Concierge Bookings</h4>
-	</div> 
+	</div>
 
-    <div class="row ml-2">
-        <div class="successMsgDeleteBooking alert alert-success d-none" role="alert">
-            Your interview booking has been cancelled successfully.
-        </div>
-    </div> 
-
-    <div class="row ml-2">
-        <div class="successMsgUpdatingBooking alert alert-success d-none" role="alert">
-            Your interview booking has been rescheduled successfully.
-        </div>
-    </div> 
-    <div class="row d-none" id="overlay">   
-        <div class="spinner-border text-primary overlayLoader" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
+  {{-- <div class="row ml-2">
+    <div class="successMsgDeleteBooking alert alert-success d-none" role="alert">
+    Your interview booking has been cancelled successfully.
     </div>
+  </div> --}}
+
+  <div class="row ml-2">
+    <div class="successMsgUpdatingBooking alert alert-success d-none" role="alert">
+    Your interview booking has been rescheduled successfully. 
+    </div>
+  </div>
+
+  <div class="row d-none" id="overlay">
+    <div class="spinner-border text-primary overlayLoader" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
 
 	<div class="row">
 		<div class="col-md-2">  </div>
@@ -96,31 +97,25 @@
                 <div class="row mb-2">
                     <div class="col-md-5"><a class="deleteInterview btn btn-danger" data-toggle="modal" data-target="#bookingDeletingModal"> Click here to cancel your interview</a>
                     </div>
-                    {{-- <div class="col-md-1">
-                        <div class="deletingSpinner spinner-border text-primary d-none" role="status">
-                        </div>
-                    </div> --}}
                 </div>
                  
                 <div class="row">
                     <div class="col-md-5">
                       <a class="emailSendButton btn btn-primary" data-toggle="modal" data-target="#emailSendingModal"> Click here to reschedule you time slot</a>
                     </div>
-                  {{--   <div class="col-md-1">
-                        <div class="deletingSpinner spinner-border text-primary d-none" role="status">
-                        </div>
-                    </div> --}}
                 </div>
+
+               {{--  <div class="row ml-2">
+                  <div class="successMsgDeleteBooking alert alert-success d-none" role="alert">
+                  Your interview booking has been cancelled successfully.
+                  </div>
+                </div> --}}
 
                 <input type="hidden" class="intBookingHidden" name="" value="{{$int_booking->id}}">
                 <input type="hidden" class="intConHidden" name="" value="{{$int_booking->interview->id}}">
                 <input type="hidden" class="intSlotHidden" name="" value="{{$int_booking->slot->id}}">
 
             </div>
-
-            {{-- <hr class="new1"> --}}
-
-
             
         @endforeach
     </div>
@@ -200,6 +195,35 @@
 
 {{-- =================================================== Sending email Modal End Here ===================================================--}}
 
+{{-- =================================================== Booking Deleted Success Modal ===================================================--}}
+
+
+<div class="modal fade" id="bookingDeletedModal" tabindex="-1" role="dialog" aria-labelledby="sendemail" aria-hidden="true" data-backdrop = "static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sendemail">Interview Booking Deleted</h5>
+        <button type="button" class="close text-white bookingDeletedClodeModal" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="text-center my-4">
+            Your interview booking has been cancelled successfully.
+        </div>
+        <div class="ajaxDataOfSlots"></div>
+      </div>
+      <div class="modal-footer text-center d-block">
+        <button type="button" class="btn btn-sm btn-success  text-white bookingDeletedClodeModal" data-dismiss="modal" aria-label="Close"> ok </button>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{{-- =================================================== Booking Deleted Success Modal End ===================================================--}}
+
 
 </div>
 
@@ -212,6 +236,8 @@
     
 $(document).ready(function(){
 
+  {{-- =================================================== Delete Interview Booking Start Here ===================================================--}}
+
     $('.deleteInterview').click(function(){
         console.log('Deleting Interview Booking');
         var intBookingID = $(this).parents('.interviewBooking').find('.intBookingHidden').val();
@@ -220,38 +246,41 @@ $(document).ready(function(){
         console.log(intBookingInModal);
 
     });
-        $('.confirmDeleteBooking').click(function(){
-            var intConConfID = $('.intBookingInModal').val();
-            $('#overlay').removeClass('d-none');
-            $.ajaxSetup({
-            headers: {
-             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-           }
-        });
 
-        $.ajax({
+    $('.confirmDeleteBooking').click(function(){
+      var intConConfID = $('.intBookingInModal').val();
+      $('#overlay').removeClass('d-none');
+      $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+
+      $.ajax({
         type: 'POST',
         url: base_url+'/ajax/booking/deleteBooking',
         data:{id: intConConfID},
         success: function(data){
-            console.log(' data ', data);
-            // $('.sendNotification').html('Save').prop('disabled',false);
-            if( data.status == 1 ){
-                $('#overlay').addClass('d-none');
-                $('.successMsgDeleteBooking').removeClass('d-none');
-                setTimeout(function() {
-                   $('.successMsgDeleteBooking') .addClass('d-none');
-                   location.reload();
-                }, 3000);
+          console.log(' data ', data);
+          if( data.status == 1 ){
+            $('#overlay').addClass('d-none');
+            $('#bookingDeletedModal').modal('show');
 
-            }else{
-               
-            }
+            $('.successMsgDeleteBooking').removeClass('d-none');
+            // setTimeout(function() {
+            //   $('.successMsgDeleteBooking') .addClass('d-none');
+            //   location.reload();
+            // }, 3000);
+          }else{
+            $('#overlay').addClass('d-none');
 
+          }
         }
+      });
     });
-    
+
+    $('.bookingDeletedClodeModal').click(function(){
+      location.reload();
     });
+
+    {{-- =================================================== Delete Interview Booking End Here ===================================================--}}
+
 
         // Sending email to employer
 

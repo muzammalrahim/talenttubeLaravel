@@ -16,10 +16,11 @@
                   <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
                </div>
             </div>
-            <div class="job_title textCen marginB form_field w20">
+            {{-- <div class="job_title textCen marginB form_field w20">
                <span class="form_label  ">Or</span>
-            </div>
-            <div class="form-group row job_title form_field">
+            </div> --}}
+           
+            {{-- <div class="form-group row job_title form_field">
                <label class="col-sm-2 col-form-label">Email </label>
                <div class="col-sm-10">
                   <input type="email" name="email" class="form-control" value="" required>
@@ -32,7 +33,7 @@
                   <input type="password" name="password" class="form-control" value="" required>
                   <div id="password_error" class="error field_error to_hide">&nbsp;</div>
                </div>
-            </div>
+            </div> --}}
             <div class="form_field">
                <span class="form_label"></span>
                <div class="form_input">
