@@ -76,12 +76,6 @@
         		$('.successMsgUpdatingBooking').addClass('d-none');
                 location.reload();
                 }, 3000);
-                // $('.deletingSpinner').addClass('d-none');
-                // $('.successMsgDeleteBooking').removeClass('d-none');
-                // setTimeout(function() {
-                   // $('.successMsgDeleteBooking') .addClass('d-none');
-                   // location.reload();
-                // }, 3000);
 
             }else{
                

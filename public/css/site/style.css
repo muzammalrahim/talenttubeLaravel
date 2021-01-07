@@ -4536,3 +4536,5 @@ p.slotbooking {
 .backToCreated:hover{
   opacity: 1.0;
 }
+
+.spanSyle{ height: 54px !important; padding-top: 16px !important;text-align: center;   }

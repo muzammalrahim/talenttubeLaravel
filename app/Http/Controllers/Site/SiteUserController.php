@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Site;
 
+use Spatie\PdfToText\Pdf;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -26,8 +28,13 @@ use App\JobsAnswers;
 use App\JobsQuestions;
 use App\LikeUser;
 use App\fbremacc;
+use App\CvData;
+
+// use smalot\pdfparser\src\Smalot\PdfParser;
 
 use Session;
+
+
 
 use Illuminate\Support\Facades\Hash;
 
@@ -36,7 +43,7 @@ class SiteUserController extends Controller
 
     public function __construct()
     {
-								$this->middleware('auth');
+        $this->middleware('auth');
     }
 
     public function index(Request $request) {
@@ -56,7 +63,6 @@ class SiteUserController extends Controller
             $attachments = Attachment::where('user_id', $user->id)->get();
             $activities = UserActivity::where('user_id', $user->id)->get();
             $videos = Video::where('user_id', $user->id)->get();
-
             $tags = Tags::orderBy('usage', 'DESC')->limit(30)->get();
             $tagCategories = TagCategory::get();
             $userTags = $user->tags;
@@ -101,8 +107,7 @@ class SiteUserController extends Controller
                 }
             }
             else{
-                return view('site.user.profile.profile', $data);
-                // site/user/profile/profile
+                return view('site.user.profile.profile', $data);        // site/user/profile/profile
             }
         } else {
             return view('site.404');
@@ -689,8 +694,7 @@ class SiteUserController extends Controller
 
 
     public function updateQuestions(Request $request){
-
-        // dump($request->questions);
+    // dump($request->questions);
         $user = Auth::user();
         $user->questions = json_encode($request->questions);
         // dd($user->questions);
@@ -705,10 +709,6 @@ class SiteUserController extends Controller
             $EmpQuestionsHtml = $EmpQuestionsView->render();
             // dd($user);
             // $user->questions = $request->questions;
-
-
-
-
             return response()->json([
                     'status' => 1,
                     'data' => $EmpQuestionsHtml
@@ -1275,7 +1275,6 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     public function userUploadResume(Request $request)
     {
-
         $rules = array('resume.*' => 'required|file|mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:204800');
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -1285,12 +1284,11 @@ class SiteUserController extends Controller
             ]);
         } else {
             $user = Auth::user();
-												$resume = $request->file('resume');
-												// $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
-												$fileName = $resume->getClientOriginalName();
+            $resume = $request->file('resume');
+            // $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
+            $fileName = $resume->getClientOriginalName();
             $storeStatus = Storage::disk('user')->put($user->id . '/private/' . $fileName, file_get_contents($resume), 'public');
             if ($storeStatus) {
-
                 $attachment = new Attachment();
                 $attachment->user_id =   $user->id;
                 $attachment->status = 1;
@@ -1298,17 +1296,59 @@ class SiteUserController extends Controller
                 $attachment->type = $resume->getClientOriginalExtension();
                 $attachment->file = $user->id . '/private/' . $fileName;
                 $attachment->save();
+
+                $text = Pdf::getText('/var/www/laravel/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
+
+                // ->setPdf('cv.pdf')
+                // ->text();
+
+                $cvdata = new CvData();
+                $cvdata->jobseekerId = $user->id;
+                $cvdata->jsname = $user->name;
+                $cvdata->cvData = $text;
+                $cvdata->save();
+                // dd($text);
+
+
+
+
+           
+
+
+                // //  ================================= For Reading file =================================
+                
+                // $content = File::get('/var/www/laravel/storage/images/user/'. $user->id . '/private/' . $attachment->name);
+                // // dd($content);
+                // require_once('/Smalot/PdfParser/Parser.php');
+                
+                // require_once '/var/www/laravel/vendor/autoload.php';
+
+
+                // $parser = new vendor\smalot\pdfparser\src\Smalot\PdfParser;
+
+
+                // $pdf    = $parser->parseFile('/var/www/laravel/storage/images/user/' . $user->id . '/private/' . $attachment->name);
+                // $text = $pdf->getText();
+                // dd( $text);
+
+
+
+                // $content = File::get('/var/www/laravel/storage/images/user/' . $user->id . '/private/' . $attachment->name);
+                // dd($content);
+
+
+                // //  ================================= For Reading file =================================
+
+
                 $user->step2 = 8;
                 $user->save();
 
                 $userAttachments = Attachment::where('user_id', $user->id)->get();
-
                 $output = array(
                     'status' => '1',
                     'message' => 'Resume successfully uploaded',
                     'file' => asset('images/user/' . $user->id . '/private/' . $fileName),
                     'attachments' => $attachment,
-
                 );
                 return response()->json($output);
             } else {

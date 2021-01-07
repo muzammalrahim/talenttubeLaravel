@@ -43,15 +43,20 @@ class InterviewController extends Controller
     public function Mindex(){
         $user = Auth::user();
         // dd($user->id);
-        $interview = Interview::where('emp_id',$user->id)->orderBy('created_at', 'DESC')->get();
-        $data['interview'] = $interview;
-        $data['user'] = $user;
-        $data['title'] = 'My Jobs';
-        $data['classes_body'] = 'myJob';
-        // $interview = Interview::all()->toArray();
-
-        return view('mobile.employer.interview.index', $data);
-        // mobile/employer/interview/index
+        if (isEmployer()) {
+            $interview = Interview::where('emp_id',$user->id)->orderBy('created_at', 'DESC')->get();
+            $data['interview'] = $interview;
+            $data['user'] = $user;
+            $data['title'] = 'My Jobs';
+            $data['classes_body'] = 'myJob';
+            // $interview = Interview::all()->toArray();
+            return view('mobile.employer.interview.index', $data);
+            // mobile/employer/interview/index
+        }
+        else{
+            return redirect('/m/profile');
+        }
+        
     }
 
     public function Mnew(){

@@ -1,7 +1,7 @@
 
 <div class="container p-0">
 	<div class="workreference">
-		   <h6 class="font-weight-bold text-center my-4"> Verification Detail </h6>
+		   <h6 class="font-weight-bold text-center my-4"> Verification Details </h6>
 			    <div class="form-group">
 			      <label for="inputEmail4">What is your full name</label>
 			      <span type="text" class="form-control" id="inputEmail4" name="refereeName">{{$reference->refereeName}}</span>
@@ -18,7 +18,7 @@
 			    </div>
 			  
 			  <div class="form-group">
-			    <label for="inputOrganization">What is the name of organization you and jobseeker worked for ?</label>
+			    <label for="inputOrganization">What is the name of organization you and candidate worked for ?</label>
 			    <span type="text" class="form-control" id="inputOrganization" name="refereeOrganization">{{$reference->refereeOrganization}}</span>
 			  </div>
 
@@ -45,29 +45,31 @@
 			    <label for="inputLeaving">Is the candidate still working at this organisation? If not, what was their reason for leaving? </label>
 			    <span type="text" class="form-control" id="inputLeaving" name="refereeLeaving">{{$reference->refereeLeaving}}</span>
 			  </div>
+
 			<h6 class="font-weight-bold text-center my-4"> Work Related Questions </h6>
+			
 			<div class="form-group">
 			    <label for="inputPerExpectation">Did the candidate meet their performance expectations in the role?</label>
 			    <span class="form-control" id="inputPerExpectation" name="refereePerformance">{{$reference->refereePerformance}}</span>
-			    <span type="text" class="form-control" id="dd1" name="ddText1" placeholder="Please provide futhur detail here">{{$reference->ddText1}}</span>
+			    <textarea type="text" class="form-control" id="dd1" name="ddText1" placeholder="Please provide futhur detail here">{{$reference->ddText1}}</textarea>
 			 </div>
 			 <div class="form-group">
 			    <label for="inputRequirement">Was the candidate on time & punctual? Did they provide adequate notice & acceptable reasons for any leave requirements?</label>
 
 			    <span class="form-control" id="inputRequirement" name="refereeRequirements">{{$reference->refereeRequirements}}</span>
-			    <span type="text" class="form-control" id="dd2" name="ddText2" placeholder="Please provide futhur detail here">{{$reference->ddText2}}</span>
+			    <textarea type="text" class="form-control" id="dd2" name="ddText2" placeholder="Please provide futhur detail here">{{$reference->ddText2}}</textarea>
 			 </div>
 			 <div class="form-group">
 			    <label for="inputBehaviour">Did the candidate display good values and behaviours at work?</label>
 
 			    <span class="form-control" id="inputBehaviour" name="refereeBehaviours">{{$reference->refereeBehaviours}}</span>
-			    <span type="text" class="form-control" id="dd3" name="ddText3" placeholder="Please provide futhur detail here">{{$reference->ddText3}}</span>
+			    <textarea type="text" class="form-control" id="dd3" name="ddText3" placeholder="Please provide futhur detail here">{{$reference->ddText3}}</textarea>
 			 </div>
 			 <div class="form-group">
 			    <label for="inputTeamPlayer">In terms of working in a group, was the candidate a team player and able to work well with others?</label>
 
 			    <span class="form-control" id="inputTeamPlayer" name="refereeTeamplayer">{{$reference->refereeTeamplayer}}</span>
-			    <span type="text" class="form-control" id="dd4" name="ddText4" placeholder="Please provide futhur detail here">{{$reference->ddText4}}</span>
+			    <textarea type="text" class="form-control" id="dd4" name="ddText4" placeholder="Please provide futhur detail here">{{$reference->ddText4}}</textarea>
 			 </div>
 			<h5 class="font-weight-bold text-center my-4">Final Questions</h5>
 

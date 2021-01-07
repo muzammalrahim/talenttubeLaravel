@@ -45,7 +45,7 @@ class JobSeekerController extends Controller {
 
         $data['likeUsers'] = $likeUsers;
        // $data['employers'] = $jobSeekers;
-        return view('site.user.employers', $data);
+        return view('site.user.employers', $data);   // site/user/employers
 		}
 
     public function employerspost(Request $request){

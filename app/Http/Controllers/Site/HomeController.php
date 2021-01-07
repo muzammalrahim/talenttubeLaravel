@@ -42,7 +42,7 @@ class HomeController extends Controller {
         $data['title'] = 'Home Page';
         $data['content_header'] = 'Content Header';
         $data['content'] = 'this is page content';
-        $view_name = 'site.home.home';
+        $view_name = 'site.home.home';   // site/home/home
         return view($view_name, $data);
     }
 
@@ -969,10 +969,7 @@ class HomeController extends Controller {
 
     public function deleteBooking(Request $request){
         $email = $request->session()->pull('emailInLayout');
-        // dd($email);
         $intBookId = (int) $request->id;
-        // before delteing check if user has session login 
-        // check if this booking belongs to this current logeed in user. 
         $interviewBooking = Interviews_booking::where('id',$intBookId)->first();
         if($interviewBooking && $interviewBooking->email == $email)
         {
@@ -994,11 +991,13 @@ class HomeController extends Controller {
 
 
     public function sendEmailEmployer(Request $request){
+
         $intBookId = $request->intConID;
         $email = $request->session()->pull('emailInLayout');
-        $slots = Slot::where('interview_id',$intBookId)->where('email', $email)->get();
+        $slots = Slot::where('interview_id',$intBookId)->get();
         $data['slots'] = $slots;
         $data['classes_body'] = 'interview';
+        $request->session()->put('emailInModal', $email);
         return view('site.home.preferred' , $data);
     }
 
@@ -1014,10 +1013,8 @@ class HomeController extends Controller {
         $position = $request->position;
         $intSlotID = (int) $request->id;
         // dd( $intSlotID);
-        if(!empty($email))
-        {
+        if(!empty($email)) { 
             Mail::to($email)->send(new deleteSlotToUserEmail($company,$position));
-
         }
         Slot::where('id',$intSlotID)->delete();
         Interviews_booking::where('slot_id',$intSlotID)->delete();
@@ -1030,11 +1027,15 @@ class HomeController extends Controller {
     // ============================================== Rescedule Slot start here ==============================================
 
     public function rescheduleSlot(Request $request){
+        $email = $request->session()->pull('emailInModal');
         $data = $request->all();
-        $email = $request->session()->pull('emailInLayout');
+        // dd($data['slot_id']);
         // dd($email);
         $interviewBooking = Interviews_booking::where('id',$data['booking_id'])->where('email', $email)->first();
-        dd($interviewBooking);
+        // $slot = Slot::where('id', $data['slot_id'])->first();
+        // dd($slot);
+        
+        // dd($interviewBooking->slot->id);
         $interviewBooking->slot_id = $data['slot_id'];
         $interviewBooking->save();
         return response()->json([
@@ -1042,6 +1043,31 @@ class HomeController extends Controller {
             'data' => 'Slot Updated Successsfully'
             ]);
         }
+
+    //====================================================================================================================================//
+    // Generate PDF.
+    //====================================================================================================================================//
+
+    public function generateDocx()
+    {   
+        // dd('hi How are you');
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $section = $phpWord->addSection();
+        $description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
+        $section->addImage("http://itsolutionstuff.com/frontTheme/images/logo.png");
+        $section->addText($description);
+        $objWriter = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        try {
+            $objWriter->save(storage_path('helloWorld.docx'));
+        } catch (Exception $e) {
+        }
+        return response()->download(storage_path('helloWorld.docx'));
+    }
     
 
 

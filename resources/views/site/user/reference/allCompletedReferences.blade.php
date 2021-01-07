@@ -9,7 +9,7 @@
 @section('content')
 <div class="card">
     <div class="card-header text-center headerBG font-weight-bold"><h5>Completed References</h5></div>
-    <div class="card-body bodyBG">
+    <div class="card-body bodyBG p-0">
       @if ($crossreference->count()>0)
         @foreach ($crossreference as $reference)
         <div class="referees1 p-3">
@@ -18,7 +18,7 @@
             <h5 class="bold col-md-10"> {{ $reference->refType }}</h5>
           </div>
           <h5 class="font-weight-bold text-center mb-4">Job Seeker's Detail</h5>
-          <div class="form-group row">
+          <div class="form-group row mr-2">
             <label for="inputEmail4" class="col-md-1">Name:</label>
             <span type="text" class="form-control col-md-3" id="inputEmail4">{{$reference->jsdata->name}}</span>
             <label for="inputPhone" class="col-md-1">Phone:</label>

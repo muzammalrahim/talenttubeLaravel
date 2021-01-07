@@ -33,7 +33,7 @@
 	    <form method="POST" name="newRerenceForm" class="newRerenceForm newJob job_validation">
 	    	@csrf
 
-		   <h5 class="font-weight-bold text-center"> Verification Detail </h5>
+		   <h5 class="font-weight-bold text-center"> Verification Details </h5>
 		   		<input type="hidden" name="refID" value="{{$crossreference->id}}">
 		   		<input type="hidden" name="refTypeHidden" value="{{$crossreference->refType}}">
 		   		<input type="hidden" name="refStatusHidden" value="{{$crossreference->refStatus}}">
@@ -59,7 +59,7 @@
 			    </div>
 			  
 			  <div class="form-group">
-			    <label for="inputKnowing">How do you know the candidate ?</label>
+			    <label for="inputKnowing">How do you know the candidate ? Was there a particular institution, event or association you where involved with the candidate? Examples include charity, sporting club, religious or community organisation etc</label>
 			    <input type="text" class="form-control" id="inputKnowing" name="refereeKnowing">
 			  </div>
 			  <div class="form-group">
@@ -67,10 +67,10 @@
 			    <input type="text" class="form-control" id="inputMeet" name="refereeMeet">
 			  </div>
 
-			  <div class="form-group">
-			    <label for="inputParticularIns">Was there a particular institution, event or association you where involved with the candidate? Examples include charity, sporting club, religious or community organisation etc</label>
+			  {{-- <div class="form-group">
+			    <label for="inputParticularIns"></label>
 			    <input type="text" class="form-control" id="inputParticularIns" name="refereeParticularIns">
-			  </div>
+			  </div> --}}
 			  
 			
 			<h5 class="font-weight-bold text-center">Values & Skill Related Questions</h5>
@@ -117,7 +117,7 @@
 			 </div>
 
 			 <div class="form-group">
-			    <label for="inputMotivation">Does the candidate exhibit a good personal drive and motivation? </label>
+			    <label for="inputMotivation">Does the candidate display good personal drive and motivation? </label>
 
 			    <select class="form-control" id="inputMotivation" name="refereeMotivation">
 			    	<option>Unsatisfactory </option>

@@ -10,10 +10,10 @@
 
 		<div class="center1" style="margin-left: 10%;">
 			<p class="m-0 p-0"> You will be asked to: </p>
-			<p class="m-0 p-0"> -> Confirm your detail</p>
-			<p class="m-0 p-0"> -> Agree to TalenTube's privacy policy </p>
-			<p class="m-0 p-0"> -> Verify {{$crossreference->userName}}'s information </p>
-			<p class="m-0 p-0"> -> Answer a questionnaire about {{$crossreference->userName}}</p>
+			<p class="m-0 p-0"><i class="fas fa-arrow-right arrowRight"></i>  Confirm your detail</p>
+			<p class="m-0 p-0"><i class="fas fa-arrow-right arrowRight"></i>  Agree to TalenTube's privacy policy </p>
+			<p class="m-0 p-0"><i class="fas fa-arrow-right arrowRight"></i>  Verify {{$crossreference->userName}}'s information </p>
+			<p class="m-0 p-0"><i class="fas fa-arrow-right arrowRight"></i>  Answer a questionnaire about {{$crossreference->userName}}</p>
 
 			<div class="row">
 				<button class="col-md-2 btn btn-outline-danger declineButton border border-danger text-danger" name="refID" value="{{$crossreference->id}}"> Decline</button>
@@ -116,7 +116,7 @@
 			 </div>
 
 			 <div class="form-group">
-			    <label for="inputMotivation">Does the candidate exhibit a good personal drive and motivation? </label>
+			    <label for="inputMotivation">Does the candidate display good personal drive and motivation? </label>
 
 			    <select class="form-control" id="inputMotivation" name="refereeMotivation">
 			    	<option>Unsatisfactory </option>

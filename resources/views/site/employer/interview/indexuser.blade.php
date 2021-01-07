@@ -10,7 +10,7 @@
 <div class="newJobCont">
     <div class="head icon_head_browse_matches">Welcome to Interview Concierge</div>
 
-    {{-- @dump($interview); --}}
+    {{-- @dump($Interviews_booking) --}}
     <div class="add_new_job">
 
         <form method="POST" name="login_booking_form" class="login_booking_form newJob job_validation">

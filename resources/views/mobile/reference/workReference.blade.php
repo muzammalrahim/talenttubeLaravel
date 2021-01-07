@@ -38,7 +38,7 @@
 	    <form method="POST" name="newRerenceForm" class="newRerenceForm newJob job_validation">
 	    	@csrf
 
-		   <h5 class="font-weight-bold text-center"> Verification Detail </h5>
+		   <h5 class="font-weight-bold text-center"> Verification Details </h5>
 		   		<input type="hidden" name="refID" value="{{$crossreference->id}}">
 		   		<input type="hidden" name="refTypeHidden" value="{{$crossreference->refType}}">
 
@@ -61,7 +61,7 @@
 			    </div>
 			  
 			  <div class="form-group">
-			    <label for="inputOrganization">What is the name of organization you and jobseeker worked for ?</label>
+			    <label for="inputOrganization">What is the name of organization you and candidate worked for ?</label>
 			    <input type="text" class="form-control" id="inputOrganization" name="refereeOrganization">
 			  </div>
 

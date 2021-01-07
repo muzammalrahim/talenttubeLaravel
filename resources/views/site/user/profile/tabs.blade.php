@@ -238,119 +238,81 @@
     <!-- tab_photos -->
     <a id="tabs-2" class="tab_link tab_a "></a>
     <div class="tab_photos tab_cont">
-        @include('site.user.profile.album.album')
+        @include('site.user.profile.album.album')   {{-- site/user/profile/album/album --}}
     </div>
-    <!-- /tab_photos -->
 
-<!-- Tab question-->
+    <!-- ============================================================= tab_photos ============================================================= -->
+
+<!-- ============================================================= Tab question ============================================================= -->
+
 <a id="tabs-3" class="tab_link tab_a"></a>
-    <div class="tab_photos tab_cont">
 
-
-
-
-            {{-- @dump($user->questions) --}}
-
-           {{--  @php
-                $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
-            @endphp --}}
-            {{-- @dump($userQuestions) --}}
-            {{-- @if(!empty(getUserRegisterQuestions()))
-            @foreach (getUserRegisterQuestions() as $qk => $userq)
-
-
-
-                {{($userq)}} --}}
-               {{--      <b><p>
-                        @if(!empty($userQuestions[$qk]))
-                        {{$userQuestions[$qk]}}
-                        @endif
-                    </p></b> --}}
-
-{{--
-            @endforeach
-            @endif
- --}}
-            {{-- adding new  --}}
-        {{-- <div id="basic_anchor_Questions" class="title_icon_edit">Questions <i class="editQuestions fas fa-edit "></i> --}}
-        {{-- <p class="loader SaveQuestionsLoader"></p> --}}
-        {{-- </div> --}}
-    <div>
-        <div id="basic" class="title_icon_edit"style="float:left;">Questions <i class="editQuestions fas fa-edit"></i></div>
-            <p class="loader SaveQuestionsLoader"style="float: left;"></p>
-              <div class="cl"></div>
-              @php
-                        $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
-             @endphp
-                <div class="questionsOfUser">
-                     @include('site.user.profile.questionsuserpart')
-                </div>
-
-                <div class="col-md-12 text-center"style="margin-top: 15px;">
-                    <a class="btn btn-sm btn-success saveQuestionsButton hide_it2" onclick="UProfile.updateQuestions()">Save</a>
-                </div>
+<div class="tab_photos tab_cont">
+  <div>
+    <div id="basic" class="title_icon_edit"style="float:left;">Questions <i class="editQuestions fas fa-edit"></i></div>
+    <p class="loader SaveQuestionsLoader"style="float: left;"></p>
+    <div class="cl"></div>
+    @php
+          $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
+    @endphp
+    <div class="questionsOfUser">
+      @include('site.user.profile.questionsuserpart')
     </div>
+    <div class="col-md-12 text-center"style="margin-top: 15px;">
+      <a class="btn btn-sm btn-success saveQuestionsButton hide_it2" onclick="UProfile.updateQuestions()">Save</a>
+    </div>
+  </div>
 
-            <div class="alert alert-success questionsAlert" role="alert">
-             {{--  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
-              <strong>Success!</strong> Questions have been updated successfully!
-            </div>
-            {{-- adding new end here --}}
+  <div class="alert alert-success questionsAlert" role="alert">
+    {{--  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button> --}}
+    <strong>Success!</strong> Questions have been updated successfully!
+  </div>
 
 </div>
 
-<!-- Tab question-->
+<!--============================================================= Tab question end here ============================================================= -->
 
 
-<!-- =========================================== Tab Tags ========================================== -->
-
-
-
+<!-- ============================================================= Tab Tags ============================================================= -->
 
 <a id="tabs-4" class="tab_link tab_a"></a>
-   <div class="tab_photos tab_cont">
 
-          <div class="col_left">
-              <div>
-                  <div id="basic" class="title_icon_edit"style="float:left;">Tags {{-- <i class="editTags fas fa-edit "></i> --}}</div>
-                  <p class="loader SaveTagsLoader"style="float: left;"></p>
-                  <div class="cl"></div>
-            {{--       <div class="tagsOfUser">
-                    @foreach($userTags as $uTags)
-                        <div class="userTag">
-
-                          <span class="userTagLabel">{{$uTags->title}}</span>
-                          <input type="hidden" name="userTags[]" value="{{$uTags->id}}" class="UserTagsHidden">
-                        </div>
-                    @endforeach
-                  </div> --}}
-
-                    {{-- <a class="btn btn-sm btn-success saveTagsButton hide2" style="margin-top: 5px;">Save</a> --}}
-            </div>
-{{--
-            <div class="alert alert-success TagsAlert hide2" role="alert">
-              <strong>Success!</strong> Tags have been updated successfully!
-            </div> --}}
-        </div>
-
-    <div class="userTagsEditingLayout">
+<div class="tab_photos tab_cont">
+  <div class="col_left">
+    <div>
+      <div id="basic" class="title_icon_edit"style="float:left;">Tags {{-- <i class="editTags fas fa-edit "></i> --}}</div>
+      <p class="loader SaveTagsLoader"style="float: left;"></p>
+      <div class="cl"></div>
+      {{--       <div class="tagsOfUser">
+      @foreach($userTags as $uTags)
+      <div class="userTag">
+      <span class="userTagLabel">{{$uTags->title}}</span>
+      <input type="hidden" name="userTags[]" value="{{$uTags->id}}" class="UserTagsHidden">
+      </div>
+      @endforeach
+     </div> --}}
+     {{-- <a class="btn btn-sm btn-success saveTagsButton hide2" style="margin-top: 5px;">Save</a> --}}
+   </div>
+   {{-- <div class="alert alert-success TagsAlert hide2" role="alert">
+    <strong>Success!</strong> Tags have been updated successfully!
+    </div> --}}
+  </div>
+  <div class="userTagsEditingLayout">
       @include('site.layout.tagging')
-    </div>
-
-        <div class="savebuttonUsertags hide_it2">
-          {{-- <button type="button" class="btn btn-success">Done</button> --}}
-        </div>
-
+  </div>
+  <div class="savebuttonUsertags hide_it2">
+    {{-- <button type="button" class="btn btn-success">Done</button> --}}
+  </div>
 </div>
 
-<!-- =========================================== Tab Tags ========================================== -->
+<!-- ============================================================= Tab Tags end here  ============================================================= -->
 
-<!-- =========================================== Tab Jobs ========================================== -->
+<!-- ============================================================= Tab Jobs ============================================================= -->
 
 <a id="tabs-5" class="tab_link tab_a"></a>
-    <div class="tab_photos tab_cont" style="padding:0px;">
 
-        <div>
+<div class="tab_photos tab_cont" style="padding:0px;">
+  <div>
            {{-- <div id="basic" class="title_icon_edit"style="float:left;">Jobs <i class="editQuestions fas fa-edit "></i></div> --}}
 
             {{-- <p class="loader SaveQuestionsLoader"style="float: left;"></p> --}}
@@ -365,15 +327,15 @@
            </div>
      </div>
 
-<!-- =========================================== Tab Jobs ========================================== -->
-<!-- =========================================== Tab Reference ========================================== -->
+<!-- ============================================================= Tab Jobs end here ============================================================= -->
+<!-- ============================================================= Tab Reference ============================================================= -->
 
 <a id="tabs-6" class="tab_link tab_a"></a>
   <div class="tab_reference tab_cont" style="padding:0px;">
     @include('site.user.profile.crossReference')   {{-- site/user/profile/crossReference --}}
   </div>
 
-<!-- =========================================== Tab Reference ========================================== -->
+<!-- =========================================== Tab Reference end here ========================================== -->
 
     </div>
 </div>
