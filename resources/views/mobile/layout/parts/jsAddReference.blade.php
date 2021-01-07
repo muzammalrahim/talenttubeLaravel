@@ -38,7 +38,7 @@
                     <option value="0"> Select Employer</option>
 
                     @foreach ($employer as $employ)
-                            <option value=" {{$employ->id}}">{{$employ->name}}</option>
+                            <option value=" {{$employ->id}}">{{$employ->company}}</option>
                     @endforeach
                 </select>
         </div>

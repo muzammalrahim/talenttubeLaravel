@@ -59,7 +59,10 @@ Route::get('completed/reference/{id}/{name}','Site\ReferenceController@completed
 
 
 
-// =========================================== Save interview from unique url end here ============================================
+// =========================================== Resume Read Section ============================================
+
+Route::get('generate-docx','Site\HomeController@generateDocx')->name('generateDocx');
+
 
 // Route::get('userInterview',    'Site\HomeController@unregisteredUserInterview')->name('userInterview');
 

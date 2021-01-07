@@ -34,7 +34,7 @@
 	    <form method="POST" name="newRerenceForm" class="newRerenceForm newJob job_validation">
 	    	@csrf
 
-		   <h5 class="font-weight-bold text-center"> Verification Detail </h5>
+		   <h5 class="font-weight-bold text-center"> Verification Details </h5>
 		   		<input type="hidden" name="refID" value="{{$crossreference->id}}">
 		   		<input type="hidden" name="refTypeHidden" value="{{$crossreference->refType}}">
 		   		<input type="hidden" name="refStatusHidden" value="{{$crossreference->refStatus}}">
@@ -66,7 +66,7 @@
 			  </div>
 
 			  <div class="form-group">
-			    <label for="inputParticular">Was there a particular class, course or subject you taught the candidate (eg; HSC Biology Teacher, Bachelor of Business, Tafe Mechanic Apprentice teacher etc)? If not, what was your education relationship to the candidate (eg: career advisor, principle, tutor, etc) ?</label>
+			    <label for="inputParticular">What was your education relationship to the candidate (eg: career advisor, principle, maths tutor, physics professor, Tafe teacher etc)? Was there a particular class, course or subject you taught the candidate (eg; HSC Biology, Bachelor of Business, Tafe Mechanic Apprenticeship etc)?</label>
 			    <input type="text" class="form-control" id="inputParticular" name="refereeParticularClass">
 			  </div>
 			  

@@ -116,7 +116,7 @@ class ReferenceController extends Controller
             }
           }elseif ($crossreference->refType == "Personal Reference" ) {
           if(isMobile()) {
-            return view('mobile.reference.personalReference', $data);  // site/user/reference/personalReference   
+            return view('mobile.reference.personalReference', $data);  // mobile/user/reference/personalReference   
           }else{
             return view('site.user.reference.personalReference', $data);  // site/user/reference/personalReference   
           }
@@ -261,7 +261,7 @@ class ReferenceController extends Controller
        $crossreference->refereeEmail = $data['refereeEmail'];
        $crossreference->refereeKnowing = $data['refereeKnowing'];
        $crossreference->refereeMeet = $data['refereeMeet'];
-       $crossreference->refereeParticularIns = $data['refereeParticularIns'];
+       // $crossreference->refereeParticularIns = $data['refereeParticularIns'];
        $crossreference->refereeInteractions = $data['refereeInteractions'];
        $crossreference->refereePunctual = $data['refereePunctual'];
        $crossreference->refereeCommunication = $data['refereeCommunication'];
@@ -418,11 +418,18 @@ class ReferenceController extends Controller
       }
 
       public function referenceCompleted(Request $request){
+          if(isMobile()){
 
+            return view('mobile.reference.submittedReference');   // mobile/user/reference/allCompletedReferences
+
+          }
+          else{
+                return view('site.reference.referenceCompleted');   // site/reference/referenceCompleted
+
+          }
         // $referenceSession = session('referenceSession');
         // session()->forget('referenceSession');
        
-       return view('site.reference.referenceCompleted');   // site/reference/referenceCompleted
 
       }
 

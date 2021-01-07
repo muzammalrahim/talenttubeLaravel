@@ -33,7 +33,7 @@
            @if ($reference->refType == 'Work Reference')
             @include('mobile.reference.layouts.workReference')
           @elseif($reference->refType == 'Personal Reference')
-            @include('mobile.reference.layouts.personalReference')
+            @include('mobile.reference.layouts.personalReference')  {{-- mobile/reference/layouts/personalReference --}}
           @else($reference->refType == 'Educational Reference')
             @include('mobile.reference.layouts.educationalReference')
           @endif

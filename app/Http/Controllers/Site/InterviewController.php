@@ -3,6 +3,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Interview;
+use App\Interviews_booking;
 use App\Slot;
 use App\UserGallery;
 use App\Attachment;
@@ -30,6 +31,8 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\NotiEmailForQueuing;
 use App\Mail\updateSlotToUserEmail;
 
+
+
 class InterviewController extends Controller
 {
 
@@ -42,7 +45,8 @@ class InterviewController extends Controller
 
     public function index(){
         $user = Auth::user();
-        // dd($user->id);
+        if (isEmployer()) {
+             // dd($user->id);
         $interview = Interview::where('emp_id',$user->id)->orderBy('created_at', 'DESC')->get();
         $data['interview'] = $interview;
         $data['user'] = $user;
@@ -52,6 +56,11 @@ class InterviewController extends Controller
 
         return view('site.employer.interview.index', $data);
         // site/employer/interview/index
+        }
+       else{
+                return redirect('profile');       // site/user/profile/profile
+
+       }
     }
 
     public function new(){
@@ -661,13 +670,17 @@ class InterviewController extends Controller
     public function userindex(){
         $user = Auth::user();
         $data['user'] = $user;
+        // dd($user->email);
         $bookingid = session('bookingid');
         $interview = Interview::where('uniquedigits',$bookingid)->first();
-        
+
+        $Interviews_booking = Interviews_booking::where('email', $user->email)->where('mobile', $user->phone)->first();
+        // 0312456789    jobseeker1@gmail.com
         // dd($interview);            
         
         $data['title'] = 'My Jobs';
         $data['interview'] = $interview ;
+        $data['Interviews_booking'] = $Interviews_booking ;
         $data['classes_body'] = 'Interviews';
         return view('site.employer.interview.indexuser', $data);
         // site/employer/interview/indexuser

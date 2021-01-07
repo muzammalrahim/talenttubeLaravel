@@ -10,10 +10,10 @@
 
 		<div class="center1" style="margin-left: 10%;">
 			<p class="m-0 p-0"> You will be asked to: </p>
-			<p class="m-0 p-0"> -> Confirm your detail</p>
-			<p class="m-0 p-0"> -> Agree to TalenTube's privacy policy </p>
-			<p class="m-0 p-0"> -> Verify {{$crossreference->userName}}'s information </p>
-			<p class="m-0 p-0"> -> Answer a questionnaire about {{$crossreference->userName}}</p>
+			<p class="m-0 p-0"><i class="fas fa-arrow-right arrowRight"></i> Confirm your detail</p>
+			<p class="m-0 p-0"><i class="fas fa-arrow-right arrowRight"></i> Agree to TalenTube's privacy policy </p>
+			<p class="m-0 p-0"><i class="fas fa-arrow-right arrowRight"></i> Verify {{$crossreference->userName}}'s information </p>
+			<p class="m-0 p-0"><i class="fas fa-arrow-right arrowRight"></i> Answer a questionnaire about {{$crossreference->userName}}</p>
 
 			<div class="row">
 				<button class="col-md-2 btn btn-outline-danger declineButton border border-danger text-danger" name="refID" value="{{$crossreference->id}}"> Decline</button>
@@ -34,7 +34,7 @@
 	    <form method="POST" name="newRerenceForm" class="newRerenceForm newJob job_validation">
 	    	@csrf
 
-		   <h5 class="font-weight-bold text-center"> Verification Detail </h5>
+		   <h5 class="font-weight-bold text-center"> Verification Details </h5>
 		   		<input type="hidden" name="refID" value="{{$crossreference->id}}">
 		   		<input type="hidden" name="refTypeHidden" value="{{$crossreference->refType}}">
 
@@ -64,11 +64,11 @@
 			  </div>
 
 			  <div class="form-group">
-			    <label for="inputParticular">Was there a particular class, course or subject you taught the candidate (eg; HSC Biology Teacher, Bachelor of Business, Tafe Mechanic Apprentice teacher etc)? If not, what was your education relationship to the candidate (eg: career advisor, principle, tutor, etc) ?</label>
+			    <label for="inputParticular">What was your education relationship to the candidate (eg: career advisor, principle, maths tutor, physics professor, Tafe teacher etc)? Was there a particular class, course or subject you taught the candidate (eg; HSC Biology, Bachelor of Business, Tafe Mechanic Apprenticeship etc)?</label>
 			    <input type="text" class="form-control" id="inputParticular" name="refereeParticularClass">
 			  </div>
 			  
-			<h5 class="font-weight-bold text-center">Educational Related Question </h5>
+			<h5 class="font-weight-bold text-center">Educational Related Questions </h5>
 
 			<div class="form-group">
 			    <label for="inputPunctual">During your relationship with the candidate, did you find them to be generally on time and punctual to class or any appointments?</label>
