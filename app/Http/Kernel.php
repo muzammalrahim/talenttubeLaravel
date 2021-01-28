@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'devicecheck'     => \App\Http\Middleware\DeviceCheck::class,
         'mobile'     => \App\Http\Middleware\MobileOnly::class,
         'step2'     => \App\Http\Middleware\Step2::class,
+        'controlUser'     => \App\Http\Middleware\Controls::class,
     ];
 }

@@ -1,12 +1,5 @@
-    
-{{-- @extends('site.employer.sendPreferrredMaster')
 
-@section('content') --}}
-
-<div class="container1 p-0">	{{-- <div class="header text-center">
-		<h4 class="font-weight-bold">Rescedule Interview</h4>
-	</div>  --}}
-{{-- @dump($slot); --}}
+<div class="container1 p-0">	
 		@foreach ($slots as $slot)
 
 		<div class="slotData p-3">
@@ -42,14 +35,6 @@
 
 </div>
 
-{{-- 
-@stop
-
-@section('custom_js')
-
-@stop
-
-@section('custom_css') --}}
 
 <script type="text/javascript">
 	$('.rescheduleSlot').click(function(){

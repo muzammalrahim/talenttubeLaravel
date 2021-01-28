@@ -1,4 +1,11 @@
 {{-- @extends('site.user.usertemplate') --}}
+{{-- 
+@if ($controlsession->count() > 0)
+<div class="adminControl">
+        <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
+</div>
+@endif --}}
+
 @extends('site.employer.employermaster')
 
 @section('custom_css')

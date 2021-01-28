@@ -7,23 +7,14 @@ use Illuminate\Http\Request;
 use \Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
-
 use Maatwebsite\Excel\Facades\Excel;
-
 use Yajra\Datatables\Datatables;
-
-// use App\Exports\JobApplicationExport;
-// use App\Exports\JobAllApplicationExport;
-
-// use App\UserGallery;
-// use App\JobsApplication;
-// use App\JobsAnswers;
-// use App\JobsQuestions;
-
 use App\Interview;
 use App\Slot;
 use App\User;
 use App\Interviews_booking;
+use App\InterviewTemplate;
+use App\InterviewTempQuestion;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotiEmailForQueuing;
@@ -248,5 +239,222 @@ class AdminInterviewController extends Controller
           ]);
       }
     }
+
+
+    // ============================================================ interviewTemplates ============================================================
+
+    public function interviewTemplates() {
+        $data['title'] = 'Interviw';
+        $data['content_header'] = 'Interview Template';
+        $data['filter_status'] = null;
+        return view('admin.interviewTemplate.template', $data);
+        // admin/interviewTemplate/template
+    }
+
+
+    // ========================================= Admin Notes Data Table Start =========================================
+
+    public function interviewTemplateDataTable(Request $request){
+      $records = array();
+      $records = InterviewTemplate::select(['id', 'template_name', 'type', 'created_at'])
+        // ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
+        ->orderBy('created_at', 'desc');
+      return datatables($records)
+
+      ->editColumn('created_at', function ($request) {
+        return $request->created_at->format('Y-m-d'); // human readable format
+      })
+
+      ->addColumn('action', function ($records) {
+        if (isAdmin()){
+
+            $rhtml = ' <i value = "'.$records->id.'" class="fas fa-trash text-danger pointer noteId mx-2" data-toggle="modal" data-target="#deleteNoteModal" > </i>';
+
+             $rhtml .= '<a href =" ' .route('adminEditTemplateQuestion' , ['id' => $records->id]).'">
+            <i value = "'.$records->id.'" class="fas fa-edit text-danger mx-2"> </i></a>';
+
+            // $rhtml = '<a href =" ' .route('AdminDeleteNote' , ['id' => $records->id]).'">
+            // <i value = "'.$records->id.'" class="fas fa-trash text-danger"> </i></a>';
+
+            return $rhtml;
+        }
+      })
+      
+      // ->rawColumns(['profile','action'])
+      ->toJson();
+
+    }
+
+
+    // ============================================================ interviewTemplates create ============================================================
+
+     public function templateCreate(){
+        $data['record']   = FALSE;
+        $data['title']  = 'Interview Template';
+        $data['content_header'] = 'Add new Template';
+        $data['type'] = getInterviewTemplateType();
+        return view('admin.interviewTemplate.create', $data);  
+        // admin/interviewTemplate/create
+    }
+
+
+    // ============================================================ interviewTemplates create ============================================================
+
+     public function templateEdit($id){
+        // dd($id);
+        $interviewTemplate = InterviewTemplate::where('id' , $id)->first();
+        $data['record']   = $interviewTemplate;
+        $data['title']  = 'Edit Template';
+        $data['content_header'] = 'Edit Template';
+        $data['type'] = getInterviewTemplateType();
+        return view('admin.interviewTemplate.edit', $data);  
+        // admin/interviewTemplate/edit
+    }
+
+    // ============================================================ interviewTemplates create ============================================================
+
+     public function templateUpdate(Request $request,$id){
+        // dd($id);
+        $data = $request->all();
+        // dd($data);
+
+        foreach($data['question'] as $key =>$value){
+
+                if(in_array(null, $value, true))
+                {
+                    return response()->json([
+                        'status' => 0,
+                        'error' =>  "please complete question"
+                    ]);
+                }
+        }
+
+        $interviewTemplate = InterviewTemplate::where('id' , $id)->first();
+        // dd($interviewTemplate);
+        $interviewTemplate->template_name = $data['template_name'];
+        $interviewTemplate->type = $data['type'];
+        $interviewTemplate->save();
+        // return response()->json([
+        //     'message' => 'Template updated Successfully'
+        // ]);
+
+        foreach ($data['question'] as $question) {
+
+            if (isset($question['id'])) {
+                $tempQuestion = InterviewTempQuestion::where('id' , $question['id'])->get();
+                foreach ($tempQuestion as $tempQ) {
+                    $tempQ->question = $question['text'];
+                    $tempQ->save();
+                }
+            }
+
+            else{
+                
+                $tempQuestion = new InterviewTempQuestion;
+                $tempQuestion->temp_id = $id;
+                $tempQuestion->question = $data['new'];
+                $tempQuestion->save();
+            }
+        }
+
+        if (isset($data['newquestion'])) {
+            foreach ($data['newquestion'] as $newQuest) {
+            $tempQuestion = new InterviewTempQuestion;
+            $tempQuestion->temp_id = $id;
+            $tempQuestion->question = $newQuest['new'];
+            $tempQuestion->save();
+            }
+
+        }
+
+        return redirect(route('interviewTemplates'))->withSuccess( __('admin.record_aupdated_successfully'));
+ 
+    }
+
+
+    // ============================================================ interviewTemplates Store ============================================================
+
+
+    public function storeTemplate(Request $request){
+        // dd( $request->toArray() );
+
+        Auth::user();
+        // dd($user->id);
+        // $data['user'] = $user;
+        $data = $request->all();
+        // dd($data);
+         $this->validate($request, [
+            'template_name' => 'required|max:255',
+            'question' => 'required|max:255',
+        ]);
+        // dd($data['question']);
+        if(in_array(null, $data['question'], true))
+            {
+                return response()->json([
+                    'status' => 0,
+                    'error' =>  "please add all questions"
+                ]);
+            }
+        else{
+
+            $temp = new InterviewTemplate();
+            $temp->template_name = $data['template_name'];
+            $temp->type = $data['type'];
+            $temp->save();
+            foreach ($data['question'] as $question) {
+                $tempQuestion = new InterviewTempQuestion;
+                $tempQuestion->question =  $question; 
+                $tempQuestion->temp_id =  $temp->id;
+                $temp->tempQuestions()->save($tempQuestion);
+
+            }
+            // $temp->questions = json_encode($request->questions);
+            if( $temp->save() ){
+                return redirect(route('interviewTemplates'))->withSuccess( __('admin.record_added_successfully'));
+            }
+        }
+    }
+
+    // ============================================================ interviewTemplates Delete ============================================================
+
+     public function AdminDeleteTemplate(Request $request){
+        $id = $request->id;
+        $interviewTemplate = InterviewTemplate::find($id);
+        $interQuestion = InterviewTempQuestion::where('temp_id', $id)->get();
+        if (!empty($interQuestion)) {
+          foreach ($interQuestion as $Question) {
+            if (isAdmin()) {
+                $Question->delete();
+            }
+            }
+        }
+        // dd('hi how are you');
+        if(!empty($interviewTemplate)){
+            if (isAdmin()) {
+                $interviewTemplate->delete();
+                return response()->json([
+                'status' => 1,
+                'message' => 'Template Succesfully Deleted',
+                ]);
+            }
+            
+        }
+    }
+
+
+    // ============================================================ interviewTemplates create ============================================================
+
+     public function templateQuestionDelete(Request $request){
+        // dd($request->id);
+        $question = InterviewTempQuestion::where('id' , $request->id)->where('temp_id' , $request->temp_id)->first();
+        // dd($question);
+        $question->delete();
+        return response()->json([
+            'status' => 1,
+            'message'=> 'Question Deleted Successfully'
+        ]); 
+        // admin/interviewTemplate/edit
+    }
+
 
 }

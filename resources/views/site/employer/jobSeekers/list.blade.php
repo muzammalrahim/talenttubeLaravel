@@ -9,7 +9,7 @@
     <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
         <div class="jobSeeker_box relative dinline_block w100">
             @include('site.layout.parts.jobSeekerProfilePhotoBox')
-            @include('site.layout.parts.jobSeekerInfoBox')
+            @include('site.layout.parts.jobSeekerInfoBox')   {{-- site/layout/parts/jobSeekerInfoBox --}}
             <div class="jobApplicAction">
              @if (in_array($js->id,$likeUsers))
                 <a class="active graybtn jbtn" data-jsid="{{$js->id}}">Liked</a>
@@ -84,7 +84,7 @@
     @endforeach
 
 
-    <div class="jobseeker_pagination cpagination">{!! $jobSeekers->render() !!}</div>
+    <div class="jobseeker_pagination cpagination mb20">{!! $jobSeekers->render() !!}</div>
 
     @endif
 

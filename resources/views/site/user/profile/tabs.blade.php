@@ -23,6 +23,10 @@
             <li id="tabs-6_switch" class="switch_tab ">
                 <a href="#tabs-6" title=""><span>Reference</span></a>
             </li>
+            
+          {{--   <li id="tabs-7_switch" class="switch_tab ">
+                <a href="#tabs-7" title=""><span>Interview Invitation</span></a>
+            </li> --}}
 
         </ul>
     </div>
@@ -298,7 +302,7 @@
     </div> --}}
   </div>
   <div class="userTagsEditingLayout">
-      @include('site.layout.tagging')
+      @include('site.layout.tagging')  {{-- site/layout/tagging --}}
   </div>
   <div class="savebuttonUsertags hide_it2">
     {{-- <button type="button" class="btn btn-success">Done</button> --}}
@@ -307,13 +311,13 @@
 
 <!-- ============================================================= Tab Tags end here  ============================================================= -->
 
-<!-- ============================================================= Tab Jobs ============================================================= -->
+  <!-- ============================================================= Tab Jobs ============================================================= -->
 
-<a id="tabs-5" class="tab_link tab_a"></a>
+  <a id="tabs-5" class="tab_link tab_a"></a>
 
-<div class="tab_photos tab_cont" style="padding:0px;">
-  <div>
-           {{-- <div id="basic" class="title_icon_edit"style="float:left;">Jobs <i class="editQuestions fas fa-edit "></i></div> --}}
+  <div class="tab_photos tab_cont" style="padding:0px;">
+    <div>
+             {{-- <div id="basic" class="title_icon_edit"style="float:left;">Jobs <i class="editQuestions fas fa-edit "></i></div> --}}
 
             {{-- <p class="loader SaveQuestionsLoader"style="float: left;"></p> --}}
 
@@ -327,15 +331,26 @@
            </div>
      </div>
 
-<!-- ============================================================= Tab Jobs end here ============================================================= -->
-<!-- ============================================================= Tab Reference ============================================================= -->
+  <!-- ============================================================= Tab Jobs end here ============================================================= -->
+  <!-- ============================================================= Tab Reference ============================================================= -->
 
-<a id="tabs-6" class="tab_link tab_a"></a>
-  <div class="tab_reference tab_cont" style="padding:0px;">
-    @include('site.user.profile.crossReference')   {{-- site/user/profile/crossReference --}}
-  </div>
+  <a id="tabs-6" class="tab_link tab_a"></a>
+    <div class="tab_reference tab_cont" style="padding:0px;">
+      @include('site.user.profile.crossReference')   {{-- site/user/profile/crossReference --}}
+    </div>
 
-<!-- =========================================== Tab Reference end here ========================================== -->
+  <!-- =========================================== Tab Reference end here ========================================== -->
+
+{{--   <a id="tabs-7" class="tab_link tab_a"></a>
+    <div class="tab_interviewInvitation tab_cont pt20" style="padding:0px;">
+      @include('site.user.profile.interviewInvitation')   
+    </div>
+ --}}
+
+  <!-- =========================================== Tab Reference end here ========================================== -->
+
+
+
 
     </div>
 </div>

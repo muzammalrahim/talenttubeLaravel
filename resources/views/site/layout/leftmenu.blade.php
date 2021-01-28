@@ -1,6 +1,10 @@
 <div id="colfix_l_bl" class="col left to_show move">
     <div class="bl_logo">
-        <a href="{{route('homepage')}}" class="logo"><img src="{{asset('/images/site/logo_inner.png')}}" style="max-width:183px; max-height: 60px;" alt="" /></a>
+        {{-- <a href="{{route('homepage')}}" class="logo"><img src="{{asset('/images/site/logo_inner.png')}}" style="max-width:183px; max-height: 60px;" alt="" /></a> --}}
+
+        
+        <a href="{{route('homepage')}}" class="logo"><img src="https://talenttube.tv/wp-content/themes/talenttube/images/talenttube.png" style="max-width:183px; max-height: 60px;" alt="" /></a>
+
     </div>
     <div id="colfix_l" class="cont col_fix">
         <ul class="nav leftmenu">
@@ -26,7 +30,14 @@
 
                 <li><a href="{{route('interviewconcierg.user')}}" class="column_narrow_search_results {{(request()->is('interviewconcierg.user'))?'active':''}}"><span class="icon"></span>Interview Concierge</a></li>
 
+                <li><a href="{{route('intetviewInvitation')}}" class="column_narrow_search_results {{(request()->is('intetviewInvitation'))?'active':''}}"><span class="icon"></span>Interview Invitations</a></li>
+
+
+
                 <li><a href="{{route('crossreference.user')}}" class="column_narrow_search_results {{(request()->is('crossreference.user'))?'active':''}}"><span class="icon"></span>Cross Reference</a></li>
+
+
+               {{--  <li><a href="{{route('intetviewInvitation')}}" class="column_narrow_search_results {{(request()->is('intetviewInvitation'))?'active':''}}"><span class="icon"></span>Interview Invitations</a></li> --}}
 
                 <li><a href="{{route('jobs')}}" class="column_narrow_search_results {{(request()->is('jobs'))?'active':''}}"><span class="icon"></span>Browse jobs</a></li>
                 <li><a href="{{route('employers')}}" class="column_narrow_search_results {{(request()->is('employers'))?'active':''}}"><span class="icon"></span>Employers</a></li>

@@ -228,21 +228,6 @@ $(document).ready(function() {
 });
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     console.log(' new job doc ready ');
     // trigger date picker.
     $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
@@ -404,8 +389,7 @@ $('input[name="filter_location_status"]').change(function() {
   //====================================================================================================================================//
   // Google map location script
   //====================================================================================================================================//
-  		var map;
-
+  	var map;
     var input = document.getElementById('location_search');
     var autocomplete = new google.maps.places.Autocomplete(input);
     var geocoder = new google.maps.Geocoder();

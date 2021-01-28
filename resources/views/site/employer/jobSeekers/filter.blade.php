@@ -160,25 +160,54 @@
 
     {{-- ============================================ Filter by Resume ============================================ --}}
 
-   {{--  <div class="searchField_questions mb10">
-      <div class="searchFieldLabel dinline_block">Filter by Resume: </div>
-      <div class="toggleSwitchButton">
+    <div class="searchField_resume dwebkitbox mb10">
+        <div class="searchFieldLabel dinline_block">Filter by Resume: </div>
+        <div class="toggleSwitchButton">
             <label class="switch"><input type="checkbox" name="filter_by_resume"></label>
-      </div>
+        </div>
 
-      <div class="filter_resume_cont hide_it">
-            <p>Hi how are you man</p>
-      </div>
+        <div class="filter_resume_cont hide_it">
+            <input type="text" name="filter_by_resume_value" class="filter_by_resume_value">
+        </div>
 
-    </div> --}}
+    </div>
 
-    {{-- ============================================ Filter by Resume ============================================ --}}
+
+
+    {{-- ============================================ Filter by Keywords ============================================ --}}
 
 
      <div class="searchField_keyword dblock mb10">
-        <div class="searchFieldLabel dinline_block">Keyword: </div>
+        <div class="searchFieldLabel dinline_block">Filter by Keyword: </div>
         <input type="text" name="filter_keyword">
     </div>
+
+     {{-- ============================================ Filter by Tags ============================================ --}}
+
+
+    <div class="searchField_tags mb10">
+        <div class="searchFieldLabel dinline_block">Filter by Tags: </div>
+        <div class="toggleSwitchButton dinline_block"><label class="switch"><input type="checkbox" name="filter_tags_status" class="filter_tags_status"></label></div>
+        {{-- industry selection --}}
+        <div class="filter_tagList hide_it">
+            
+            {{-- @if(!empty($industries)) --}}
+            <div class="filter_tags_list">
+                <ul class="tags_ul item_ul dot_list">
+                    @foreach ($tags as $tag => $tagVal)
+                        <li class="" data-id="{{$tagVal->id}}" data-type="filter_tags[]"><span>{{$tagVal->title}}</span></li>
+                    @endforeach
+                </ul>
+            </div>
+            {{-- @endif --}}
+        </div>
+        {{-- industry selection --}}
+    </div>
+
+
+
+
+
 
     <div class="searchField_action">
         <div class="searchFieldLabel dinline_block"></div>

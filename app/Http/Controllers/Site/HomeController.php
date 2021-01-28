@@ -27,6 +27,7 @@ use App\Slot;
 use App\Mail\saveSlotUserEmail;
 use App\Mail\deleteSlotToUserEmail;
 use App\Mail\confirmSlotMailToJobSeeker;
+use App\History;
 
 
 class HomeController extends Controller {
@@ -307,6 +308,12 @@ class HomeController extends Controller {
 												$user->verified = 1;
 
             if( $user->save() ){
+
+                $history = new History;
+                $history->user_id = $user->id;
+                $history->type = "account created";
+                $history->save();
+
                 $user->roles()->attach([config('app.user_role')]);
                 $success_message = '<div class="slogan">'.__('site.Register_Success').'</div>';
                 // $success_message .= '<div class="slogan">'.__('site.Verify_Email').'</div>';

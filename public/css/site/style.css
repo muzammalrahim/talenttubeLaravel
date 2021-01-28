@@ -2710,6 +2710,7 @@ background-color: #edeac4;  }
 .stick_bottom {
   position: fixed;
   bottom:0;
+  top: 0px;
 }
 
 .some_link_add_photo { display: inline-block; margin: 0 0 18px; overflow: hidden; position:relative;}
@@ -4538,3 +4539,15 @@ p.slotbooking {
 }
 
 .spanSyle{ height: 54px !important; padding-top: 16px !important;text-align: center;   }
+
+/* ============================================== Admin Control ==================================== */
+
+
+.adminControl{ background: black; color: red; text-align: center; padding: 5px 0px 0px 0px; width: 1166px; margin: 0 auto;}
+.adminLogin{color: red; cursor: pointer;text-decoration: underline}
+
+/* ================================================ Jobseeker Info Page tabs ================================================ */
+.pt30px{ padding-top: 30px; }
+
+.templateSelect + .jq-selectbox__select {height: auto;}
+.templateSelect .jq-selectbox__dropdown {position: inherit !important;top: 0 !important;}

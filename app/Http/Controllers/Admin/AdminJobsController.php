@@ -517,6 +517,7 @@ class AdminJobsController extends Controller
         $data['user_id']  = User::where('type','employer')->pluck('name','id')->toArray();
 
         return view('admin.jobs.create', $data);
+        // admin/jobs/create
     }
 
     // from user controller

@@ -133,7 +133,7 @@ jQuery('.datepicker').datepicker({
 
 var vals = $('.test').last().text();
 var i = Number(vals)+1;
-$(".addSlot").bind('click', function(){
+$(".addSlot").bind('click', function(){ 
     if(i <= 20){
         i=i;
             var slot  = '<div class="slot s'+i+' notbrak m_rb20 addNewInterviewSlot">';

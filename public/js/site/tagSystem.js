@@ -246,23 +246,6 @@
                         jQuery('.newTagInput input').val(''); 
                     }, 1000);
                 }else{
-                   //  jQuery('.addNewTagModalBox').removeClass('loading');
-                   //   if(resp.validator != undefined){
-                   //      const keys = Object.keys(resp.validator);
-                   //      for (const key of keys) {
-                   //          if($('#'+key+'_error').length > 0){
-                   //              $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(resp.validator[key][0]);
-                   //          }
-                   //      }
-                   //  }
-
-                   // if(resp.error != undefined){
-                   //   $('.addNewTagModalBox .apiMessage').show().text(resp.error);
-                   //    setTimeout(function() {
-                   //      jQuery('.addNewTagModal .apiMessage').html('').hide();
-                   //  }, 3000);
-
-                   // }
 
                 }
             }

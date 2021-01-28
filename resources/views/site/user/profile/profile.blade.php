@@ -1,4 +1,12 @@
 {{-- @extends('site.user.usertemplate') --}}
+
+{{-- 
+@if ($controlsession->count() > 0)
+<div class="adminControl">
+        <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
+</div>
+@endif
+ --}}
 @extends('site.user.usermaster')
 
 @section('content')
@@ -9,6 +17,8 @@
         {{-- @dump($profileImage['imagepath']) --}}
         {{-- @dump( $user_profile->image ) --}}
         {{-- @dump($profile_image) --}}
+
+        {{-- @dump($controlsession) --}}
 
         <div class="bl_pic">
             <div class="pic">

@@ -11,6 +11,7 @@ use App\BlockUser;
 use App\UserActivity;
 use App\Video;
 use App\Jobs;
+use App\fbremacc;
 use App\LikeUser;
 use App\JobsApplication;
 use Illuminate\Support\Facades\Auth;
@@ -31,6 +32,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\NotiEmailForQueuing;
 use App\Mail\updateSlotToUserEmail;
 
+use App\ControlSession;
+use App\UserInterview;
+use App\UserInterviewAnswers;
 
 
 class InterviewController extends Controller
@@ -52,6 +56,9 @@ class InterviewController extends Controller
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
+
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         // $interview = Interview::all()->toArray();
 
         return view('site.employer.interview.index', $data);
@@ -66,6 +73,8 @@ class InterviewController extends Controller
     public function new(){
         $user = Auth::user();
         $data['user'] = $user;
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.new', $data);
@@ -397,6 +406,8 @@ class InterviewController extends Controller
 
         $data['user'] = $user;
         $data['interview'] = $interview;
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.formedit', $data);
@@ -418,7 +429,8 @@ class InterviewController extends Controller
 
             return Redirect::route('interviewconcierge');
         }
-
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['user'] = $user;
         $data['interview'] = $interview;
         $data['title'] = 'My Jobs';
@@ -432,6 +444,8 @@ class InterviewController extends Controller
         
         $user = Auth::user();
         $interview = Interview::where('id',$id)->first();
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         
         if ( $interview && $interview->emp_id ==  $user->id ){
             $data['user'] = $user;
@@ -451,6 +465,8 @@ class InterviewController extends Controller
     public function edit(Request $request){
         $user = Auth::user();
         $data['user'] = $user;
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.edit', $data);
@@ -473,7 +489,8 @@ class InterviewController extends Controller
 
             return Redirect::route('interviewconcierge');
         }
-
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['user'] = $user;
         $data['interview'] = $interview;
         $data['title'] = 'My Jobs';
@@ -499,7 +516,8 @@ class InterviewController extends Controller
 
             return Redirect::route('interviewconcierge');
         }
-
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['user'] = $user;
         $data['interview'] = $interview;
         $data['title'] = 'My Jobs';
@@ -526,6 +544,8 @@ class InterviewController extends Controller
 
         $data['user'] = $user;
         $data['interview'] = $interview;
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
         return view('site.employer.interview.created', $data);
@@ -555,7 +575,8 @@ class InterviewController extends Controller
 
         //     return Redirect::route('interviewconcierge');
         // }
-
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['user'] = $user;
         $data['interview'] = $interview;
         $data['title'] = 'Interview Concierge';
@@ -671,20 +692,29 @@ class InterviewController extends Controller
         $user = Auth::user();
         $data['user'] = $user;
         // dd($user->email);
-        $bookingid = session('bookingid');
-        $interview = Interview::where('uniquedigits',$bookingid)->first();
+        // $bookingid = session('bookingid');
+        // $interview = Interview::where('uniquedigits',$bookingid)->first();
 
-        $Interviews_booking = Interviews_booking::where('email', $user->email)->where('mobile', $user->phone)->first();
+        // $Interviews_booking = Interviews_booking::(['slot','interview'])->where('email', $user->email)->get();
+        $Interviews_booking = Interviews_booking::with(['slot','interview'])->where('email',  $user->email)->get();
+
         // 0312456789    jobseeker1@gmail.com
         // dd($interview);            
-        
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+
         $data['title'] = 'My Jobs';
-        $data['interview'] = $interview ;
+        // $data['interview'] = $interview ;
         $data['Interviews_booking'] = $Interviews_booking ;
         $data['classes_body'] = 'Interviews';
-        return view('site.employer.interview.indexuser', $data);
-        // site/employer/interview/indexuser
+        return view('site.user.interview.indexuser', $data);
+        // site/user/interview/indexuser
     }
+
+
+    
+
+
 
     public function userbookinglogin(Request $request){
 
@@ -740,6 +770,74 @@ class InterviewController extends Controller
             ]);
         }
     }
+
+
+    // ============================================= Interview Initation =============================================
+
+    public function interviewInvitataion(){
+        $user = Auth::user();
+        $data['user'] = $user;
+        // dd($user->id);
+        $Interviews_booking = UserInterview::where('user_id',  $user->id)->get();
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+        $data['title'] = 'My Jobs';
+        $data['Interviews_booking'] = $Interviews_booking ;
+        $data['classes_body'] = 'Interviews';
+        return view('site.user.interview.interviewInvitaion', $data);
+        // site/user/interview/interviewInvitaion
+    }
+
+    public function confirmInterInvitation(Request $request){
+
+        $user = Auth::user();
+        $data = $request->all();
+        // ================================================== Validation for answering the questions ==================================================
+        if(in_array(null, $data['answer'], true))
+        {
+            return response()->json([
+                'status' => 0,
+                'error' =>  "Please answer all questions"
+            ]);
+        }
+        else
+        {
+            $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('user_id' , $user->id)->where('temp_id' ,$data['temp_id'])->first();
+            if ($UserInterview) {
+                if ($UserInterview->status == 'pending') {
+                    $UserInterview->status =  'Interview Confirmed';
+                    $UserInterview->save();
+
+                    foreach ($data['answer'] as $key => $value) {
+                        $answers = new UserInterviewAnswers;
+                        $answers->user_id = $user->id;
+                        $answers->userInterview_id  = $data['userInterviewId'];
+                        $answers->question_id = $key;
+                        $answers->answer = $value;
+                        $answers->save();
+                    }
+                    return response()->json([
+                        'error' => 'User Interview added successfully'
+                    ]);
+                }
+
+                else{
+                    return response()->json([
+                        'error' => 'You have already booked interview'
+                    ]);
+                }
+
+            }
+            else{
+                dd("nothing here for u");
+            }
+        }    
+        
+
+    }
+
+
+
 
 
     

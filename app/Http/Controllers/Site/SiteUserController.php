@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Site;
 
-use Spatie\PdfToText\Pdf;
+// use PhpOffice\PhpWord\PhpWord;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -29,6 +29,19 @@ use App\JobsQuestions;
 use App\LikeUser;
 use App\fbremacc;
 use App\CvData;
+use App\Interviews_booking;
+use App\ControlSession;
+use App\Notes;
+use App\History;
+
+use Jenssegers\Agent\Agent;
+
+
+use PDFMerger;
+use Spatie\PdfToText\Pdf;
+use KeywordExtractor\KeywordExtractor;
+use PhpOffice\PhpWord\IOFactory;
+use NcJoes\OfficeConverter\OfficeConverter;
 
 // use smalot\pdfparser\src\Smalot\PdfParser;
 
@@ -44,9 +57,14 @@ class SiteUserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        // $this->middleware('controlUser');
     }
 
     public function index(Request $request) {
+
+        // $session11 = session()->get('adminControls');
+        // dd($session11);
+
         $user = Auth::user();
         if ($request->username ===  $user->username) {
             $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
@@ -66,6 +84,7 @@ class SiteUserController extends Controller
             $tags = Tags::orderBy('usage', 'DESC')->limit(30)->get();
             $tagCategories = TagCategory::get();
             $userTags = $user->tags;
+            // dd($userTags);
             // dd( $tags );
             $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
             $data['employer'] = User::where('type','employer')->get();
@@ -94,6 +113,11 @@ class SiteUserController extends Controller
             $data['industriesList'] = getIndustries();
             $data['userquestion'] = getUserRegisterQuestions();
             $data['empquestion'] = getEmpRegisterQuestions();
+
+            
+            $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+            $data['controlsession'] = $controlsession;
+
             if(isMobile()){
                 if(isEmployer()){
                   if(isRequestAjax($request)){
@@ -611,6 +635,13 @@ class SiteUserController extends Controller
             $user = Auth::user();
             $user->recentJob = $request->recentjob;
             $user->save();
+
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->recentJob = $user->recentJob; 
+            $history->type = 'Recent job'; 
+            $history->save();
+
             return response()->json([
                     'status' => 1,
                     'data' => $user->recentJob
@@ -630,6 +661,12 @@ class SiteUserController extends Controller
             $user = Auth::user();
             $user->salaryRange = $request->salaryRange;
             $user->save();
+            // dd($request->salaryRange);
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->new_salary = $user->salaryRange; 
+            $history->type = 'Salary'; 
+            $history->save();
             return response()->json([
                     'status' => 1,
                     'data' => $user->salaryRange
@@ -657,6 +694,12 @@ class SiteUserController extends Controller
             $user->qualification = $request->qualification;
             $user->qualificationRelation()->sync($requestData['qualification']);
             $user->save();
+
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->type = 'Qualification Updated'; 
+            $history->save();
+
             $data['user'] = User::find($user->id);
             $QualificationView =  view('site.layout.parts.jobSeekerQualificationList', $data);
 
@@ -738,6 +781,12 @@ class SiteUserController extends Controller
                 // $array = array_unique (array_merge ($user->industry_experience, $request->industry_experience));
                 $user->industry_experience = array_unique($request->industry_experience);
                 $user->save();
+
+                $history = new History;
+                $history->user_id = $user->id; 
+                $history->type = 'Industry Experience Updated'; 
+                $history->save();
+
                 $data['user'] = User::find($user->id);
                 $IndustryView = view('site.layout.parts.jobSeekerIndustryList', $data);
                 $IndustryHtml = $IndustryView->render();
@@ -833,7 +882,6 @@ class SiteUserController extends Controller
         // dd($request->new_password);
         // dd($user->password);
 
-
         $rules = array('current_password' => 'required|min:6|max:255', 'new_password' => 'required|min:6|max:255');
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -866,9 +914,6 @@ class SiteUserController extends Controller
     public function updatePhone(Request $request){
         $user = Auth::user();
         // dd( $user->id);
-
-
-
         $rules = array('phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:10');
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -935,6 +980,12 @@ class SiteUserController extends Controller
                 $user = Auth::user();
                 $user->about_me = Str::limit(preg_replace("/[^A-Za-z0-9 ]/", '', $request->about_me), 500);
                 $user->save();
+
+                $history = new History;
+                $history->user_id = $user->id; 
+                $history->type = 'About Me Updated'; 
+                $history->save();
+
                 return response()->json([
                     'status' => 1,
                     'data' => $user->about_me
@@ -952,6 +1003,12 @@ class SiteUserController extends Controller
                 $user = Auth::user();
                 $user->interested_in =  Str::limit(preg_replace("/[^A-Za-z0-9 ]/", '',  $request->interested_in), 500);
                 $user->save();
+
+                $history = new History;
+                $history->user_id = $user->id; 
+                $history->type = 'Interested in Updated'; 
+                $history->save();
+
                 return response()->json([
                     'status' => 1,
                     'data' => $user->interested_in
@@ -1046,6 +1103,8 @@ class SiteUserController extends Controller
             $user = Auth::user();
             $data['classes_body'] = 'profile';
             $data['user'] = $user;
+            $controlsession = fbremacc::where('user_id', $user->id)->where('admin_id', '1')->get();
+            $data['controlsession'] = $controlsession;
             $view = view('site.user.profile.updateUserPersonalSetting', $data); //  site/user/profile/updateUserPersonalSetting
             $html = $view->render();
             return $view;
@@ -1087,6 +1146,12 @@ class SiteUserController extends Controller
         $userGallery->image = $fileName;
         $userGallery->status = 1;
         $userGallery->save();
+
+        $history = new History;
+        $history->user_id = $user->id; 
+        $history->userGallery = $userGallery->image; 
+        $history->type = 'User_Gallery'; 
+        $history->save();
 
         $html  = '<div id="'.$userGallery->id.'" class="item profile_photo_frame gallery_'.$userGallery->id.'">';
 
@@ -1275,7 +1340,7 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     public function userUploadResume(Request $request)
     {
-        $rules = array('resume.*' => 'required|file|mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:204800');
+        $rules = array('resume' => 'required|file|mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:204800');
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json([
@@ -1285,6 +1350,8 @@ class SiteUserController extends Controller
         } else {
             $user = Auth::user();
             $resume = $request->file('resume');
+        $pdf = new PDFMerger();
+
             // $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
             $fileName = $resume->getClientOriginalName();
             $storeStatus = Storage::disk('user')->put($user->id . '/private/' . $fileName, file_get_contents($resume), 'public');
@@ -1297,48 +1364,62 @@ class SiteUserController extends Controller
                 $attachment->file = $user->id . '/private/' . $fileName;
                 $attachment->save();
 
-                $text = Pdf::getText('/var/www/laravel/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
-
-                // ->setPdf('cv.pdf')
-                // ->text();
-
-                $cvdata = new CvData();
-                $cvdata->jobseekerId = $user->id;
-                $cvdata->jsname = $user->name;
-                $cvdata->cvData = $text;
-                $cvdata->save();
-                // dd($text);
-
-
-
-
-           
-
-
-                // //  ================================= For Reading file =================================
-                
-                // $content = File::get('/var/www/laravel/storage/images/user/'. $user->id . '/private/' . $attachment->name);
-                // // dd($content);
-                // require_once('/Smalot/PdfParser/Parser.php');
-                
-                // require_once '/var/www/laravel/vendor/autoload.php';
-
-
-                // $parser = new vendor\smalot\pdfparser\src\Smalot\PdfParser;
-
-
-                // $pdf    = $parser->parseFile('/var/www/laravel/storage/images/user/' . $user->id . '/private/' . $attachment->name);
-                // $text = $pdf->getText();
-                // dd( $text);
+                if ($attachment->type == "pdf") {
+                    $text = Pdf::getText('/var/www/laravel/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
+                    $keywordExtractor = new KeywordExtractor();
+                    $result = $keywordExtractor->run($text);
+                    $arrayObj = array();
+                    // dd($arrayObj);
+                    $varObj = '';
+                    foreach ($result as $key => $results) {
+                        $varObj = mb_convert_encoding($key, 'UTF-8', 'UTF-8');
+                        array_push($arrayObj, $varObj);
+                    }
+                    $test_var = '';
+                    foreach ($arrayObj as $array) {
+                        $test_var .= $array." ";
+                    }
+                    $cvdata = new CvData();
+                    $cvdata->user_id = $user->id;
+                    $cvdata->jsname = $user->name;
+                    $cvdata->data_text = $test_var;
+                    $cvdata->save();
+                }
 
 
 
-                // $content = File::get('/var/www/laravel/storage/images/user/' . $user->id . '/private/' . $attachment->name);
-                // dd($content);
+                elseif($attachment->type == "docx" || $attachment->type == "doc" ){
 
-
-                // //  ================================= For Reading file =================================
-
+                    $str = str_replace('/', '//', $attachment->file);
+                    $copystr = str_replace(".docx",".pdf",$attachment->name);
+                    $copystr = str_replace(".doc",".pdf",$copystr);
+                    $converter = new OfficeConverter('/var/www/laravel/storage/images/user/' .$str);
+                    $convertedFile = $converter->convertTo($copystr);
+                    $text = Pdf::getText($convertedFile);
+                    $keywordExtractor = new KeywordExtractor();
+                    $result = $keywordExtractor->run($text);
+                    $arrayObj = array();
+                    $varObj = '';
+                    foreach ($result as $key => $results) {
+                        $varObj = mb_convert_encoding($key, 'UTF-8', 'UTF-8');
+                        array_push($arrayObj, $varObj);
+                    }
+                    $test_var = '';
+                    foreach ($arrayObj as $array) {
+                        $test_var .= $array." ";
+                    }
+                    $cvdata = new CvData();
+                    $cvdata->user_id = $user->id;
+                    $cvdata->jsname = $user->name;
+                    $cvdata->data_text = $test_var;
+                    $cvdata->save();
+                }
+                else{
+                    // return response()->json([
+                    //     'status' => 0,
+                    //     'message' => 'Your resume tags could not extracted',
+                    // ]);
+                }
 
                 $user->step2 = 8;
                 $user->save();
@@ -1351,7 +1432,8 @@ class SiteUserController extends Controller
                     'attachments' => $attachment,
                 );
                 return response()->json($output);
-            } else {
+            } 
+            else {
                 $output = array(
                     'status' => '0',
                     'message' => 'Error Uploading File.'
@@ -1524,6 +1606,12 @@ class SiteUserController extends Controller
             $video->file = $user->id.'/videos/'.$fileName;
             $video->save();
 
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->userGallery = $video->title; 
+            $history->type = 'Video_upload'; 
+            $history->save();
+
             // generate video thumbs.
             $video->generateThumbs();
             $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;">';
@@ -1584,6 +1672,8 @@ class SiteUserController extends Controller
 		$user->step2 = 10;
 		$user->save();
         $data['user'] = $user;
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'jobs';
         $data['jobs'] = null; //Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
@@ -1654,6 +1744,7 @@ class SiteUserController extends Controller
     public function jobApplySubmit(Request $request){
         $user = Auth::user();
         $requestData = $request->all();
+        dd($requestData);
         $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
 
         if(isset($requestData['answer']) && !empty($requestData['answer'])){
@@ -1697,6 +1788,12 @@ class SiteUserController extends Controller
             // $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
             // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
             $newJobApplication->save();
+
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->type = 'Job Applied'; 
+            $history->job_id = $job->id; 
+            $history->save();
 
             // if jobApplication is succesfully added then add job answers.
             if( $newJobApplication->id > 0 ){
@@ -1790,7 +1887,12 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'My job applications';
         $data['classes_body'] = 'jobApplications';
+
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+
         $data['applications'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
+
         return view('site.jobs.applied', $data);        //      site/jobs/applied
     }
 
@@ -1798,8 +1900,10 @@ class SiteUserController extends Controller
     // POST // delete job application.
     //====================================================================================================================================//
     public function deleteJobApplication($jobAppId){
+        // dd($jobAppId);
         $user = Auth::user();
         $jobApplication = JobsApplication::find($jobAppId);
+        // dd($jobApplication->job_id);
         if($jobApplication == null){
             return response()->json([
                 'status' => 0,
@@ -1813,6 +1917,11 @@ class SiteUserController extends Controller
                 'error' => 'You can not removed this job application'
             ]);
         }
+        $history = new History;
+        $history->user_id = $user->id; 
+        $history->type = 'Deleted Job Application'; 
+        $history->job_id = $jobApplication->job_id; 
+        $history->save();
 
         $jobApplication->delete();
         return response()->json([
@@ -1858,6 +1967,8 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'Block Users';
         $data['classes_body'] = 'blockUsers';
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['blockUsers'] = BlockUser::with('user')->where('user_id',$user->id)->get();
         if(isEmployer()){
 
@@ -1878,6 +1989,9 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'Like Users';
         $data['classes_body'] = 'likeUsers';
+
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
 
         if(isEmployer()){
@@ -2088,14 +2202,193 @@ class SiteUserController extends Controller
     // Get // show job detail page.
     //====================================================================================================================================//
     function jobDetail(Jobs $id){
-        // dd($job);
+        // dd($id);
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Job Detail';
         $data['classes_body'] = 'jobDetail';
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['job'] = $id;
         return view('site.jobs.jobDetail', $data);
+        // site/jobs/jobDetail
 
     }
+
+    function useridforcontroling($userID , Request $request){
+        // dd($userID);
+
+        if (isAdmin()) {
+            $agent = new Agent();
+            $browser = $agent->browser();
+            $platform = $agent->platform();
+            $admin = User::where('type', 'admin')->first();
+            $controlsession = new ControlSession;
+            $controlsession->user_id = $userID;
+            $controlsession->admin_id = $admin->id;
+            $controlsession->ip_address = $request->ip();
+            $controlsession->mac_address = $browser;
+            $controlsession->save();
+            $user = User::where('id', $userID)->first();
+            Auth::login($user, TRUE);
+            // $request->session()->put('adminControls',$userID);
+            return redirect(route('profile'));
+        }
+        else{
+
+            return view('unauthorized');            
+        }
+    }
+
+    function employeridforcontroling($empId , Request $request){
+        if (isAdmin()) {
+            $agent = new Agent();
+            $browser = $agent->browser();
+            $platform = $agent->platform();
+            $admin = User::where('type', 'admin')->first();
+            $controlsession = new ControlSession;
+            $controlsession->user_id = $empId;
+            $controlsession->admin_id = $admin->id;
+            $controlsession->ip_address = $request->ip();
+            $controlsession->mac_address = $browser;
+            $controlsession->save();
+            $user = User::where('id', $empId)->first();
+            Auth::login($user, TRUE);
+            // $session->set('adminControls', $empId);
+            // $request->session()->put('adminControls',$empId);
+            return redirect(route('employerProfile'));
+
+        }
+        else{
+
+            return view('unauthorized');            
+        }
+    }
+
+    function logoutRouteForAdmin(Request $request){
+        // dd($userID);
+        $user = Auth::user();
+        $controlsession = ControlSession::where('user_id',$user->id)->where('admin_id', 1)->get();
+        foreach ($controlsession as $control) {
+            if ($control->ip_address == $request->ip()) {
+                // dd('ip is same');
+                $control->delete();                    
+                Auth::logout($user, TRUE);
+                $admin =User::where('id', 1)->where('type' , 'admin')->first();
+                Auth::login($admin, TRUE);
+                return redirect('/admin/dashboard');
+            }
+            else{
+                Auth::logout($user, TRUE);
+                return redirect('/');
+            }
+        }
+        // session()->forget('adminControls');
+        // return redirect(route('admin'));
+    }
+
+
+    // ========================================== Interview Concierge Delete Booking ==========================================
+
+    public function deleteInterviewBooking(Request $request){
+        $user = Auth::user();
+        $interviewBooking = Interviews_booking::where('id',$request->id)->where('email', $user->email)->first();
+        if($interviewBooking && $interviewBooking->email == $user->email)
+        {
+            $interviewBooking->delete();
+            return response()->json([
+            'status' => 1,
+            'message' => 'Booking Deleted Succesfully'
+            ]);
+        }
+        else{
+        return response()->json([
+            'status' => 0,
+            'message' => 'Error Deleting Booking'
+            ]);
+        }
+    }
+
+    public function saveNote(Request $request){
+        $user = Auth::user();
+        $data = $request->all();
+        // dd($data);   
+        $rules = array( "notes" => "required" );
+        $validator = Validator::make( $data , $rules);
+        if ($validator->fails()){
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        }
+
+        else{
+            
+            $notes = new Notes;
+            $notes->user_id = $user->id;
+            $notes->js_id = $data['js_id'];
+            $notes->admin_id = 1;
+            $notes->text = $data['notes'];
+            $notes->save();
+
+            $notes = Notes::where('js_id', $data['js_id'])->get();
+            // dd($notes);
+
+            $data['notes'] =  $notes;
+            // $data['user'] = User::find($user->id);
+            $noteView = view('site.user.jobseekerInfoTabs.notesText', $data);
+            $noteHtml = $noteView->render();
+
+            return response()->json([
+                'status' => 1,
+                'data' => 'Note Addedd Successfully',
+                'noteHtml' => $noteHtml
+            ]); 
+
+        }
+    }
+
+    //====================================================================================================================================//
+    // POST // delete Note .
+    //====================================================================================================================================//
+    public function deleteNote($noteId){
+        // dd($noteId);
+        $user = Auth::user();
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        if ($controlsession->count() > 0) {
+            $note = Notes::find($noteId);
+            if($note == null){
+                return response()->json([
+                    'status' => 0,
+                    'error' => 'note with id '.$noteId.' does not exist'
+                ]);
+            }
+
+            if( $note->user_id != $user->id ){
+                return response()->json([
+                    'status' => 0,
+                    'error' => 'You can not removed this note'
+                ]);
+            }
+
+            $note->delete();
+            return response()->json([
+                'status' => 1,
+                'message' => 'Note succesfully deleted'
+            ]);
+            
+        }
+        else{
+            return response()->json([
+                'status' => 0,
+                'message' => 'Error occured '
+            ]);
+        }
+    }
+
+
+
+
+   
 
 }

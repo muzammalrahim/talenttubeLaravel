@@ -11,13 +11,20 @@
 
     <div class="js_education js_field">
         <span class="js_label">Qualification:</span>
+
+        {{-- @dump($js->qualificationType) --}}
         @php
          $qualification_names =  getQualificationNames($js->qualification)
         @endphp
 
-         @if(!empty($qualification_names))
-            @foreach ($qualification_names as $qnKey => $qnValue)
-               <span class="qualification dblock">{{$qnValue}}</span>
+        @if(!empty($qualification_names))
+
+        <div class="font13"><i class="fas fa-angle-right qualifiCationBullet"></i>
+            Type:<span class="qualifTypeSpan">{{$js->qualificationType}}</span>
+        </div>
+        @foreach ($qualification_names as $qnKey => $qnValue)
+               {{-- <span class="qualification dblock">{{$js->qualificationType}}</span> --}}
+               <p class="qualification"> <i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qnValue}}</p>
             @endforeach
          @endif
     </div>

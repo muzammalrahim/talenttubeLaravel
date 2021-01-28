@@ -1,4 +1,7 @@
 {{-- @extends('site.user.usertemplate') --}}
+
+
+
 @extends('site.employer.employermaster')
 
 @section('custom_css')
@@ -9,48 +12,41 @@
 @section('content')
 <div class="newJobCont">
     <div class="head icon_head_browse_matches">Job Seekers List</div>
-
-
     <div class="add_new_job jobSeekersListingCont">
-
         <!-- =============================================================================================================================== -->
-            @include('site.employer.jobSeekers.filter')
+        @include('site.employer.jobSeekers.filter')   {{-- site/employer/jobSeekers/filter --}}
         <!-- =============================================================================================================================== -->
         @include("site.spinner")
         <!-- =============================================================================================================================== -->
-         <div class="jobSeekers_list">
+        <div class="jobSeekers_list">
             @include('site.employer.jobSeekers.list')
         </div>
         <!-- =============================================================================================================================== -->
-
     </div>
-
-<div class="cl"></div>
+    <div class="cl"></div>
 </div>
-
-
 
 <div style="display:none;">
-<div id="confirmJobSeekerBlockModal" class="modal p0 confirmJobSeekerBlockModal wauto">
-    <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-        <div class="cont">
-            <div class="title">Block Job Seeker?</div>
-            <div class="img_chat">
-                <div class="icon">
-                    <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
+    <div id="confirmJobSeekerBlockModal" class="modal p0 confirmJobSeekerBlockModal wauto">
+        <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+            <div class="cont">
+                <div class="title">Block Job Seeker?</div>
+                <div class="img_chat">
+                    <div class="icon">
+                        <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
+                    </div>
+                    <div class="msg">This action can not be undone. Are you sure you wish to continue?</div>
                 </div>
-                <div class="msg">This action can not be undone. Are you sure you wish to continue?</div>
+                <div class="double_btn">
+                    <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
+                    <button class="confirm_JobSeekerBlock_ok btn small marsh">OK</button>
+                    <input type="hidden" name="jobSeekerBlockId" id="jobSeekerBlockId" value=""/>
+                    <div class="cl"></div>
+                </div>
             </div>
-            <div class="double_btn">
-                <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
-                <button class="confirm_JobSeekerBlock_ok btn small marsh">OK</button>
-                <input type="hidden" name="jobSeekerBlockId" id="jobSeekerBlockId" value=""/>
-                <div class="cl"></div>
-            </div>
+            <div class="apiMessage"></div>
         </div>
-        <div class="apiMessage"></div>
     </div>
-</div>
 </div>
 
 
@@ -62,139 +58,170 @@
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/site/UserFilter.js') }}"></script>
 
 
 <script type="text/javascript">
-$(document).ready(function() {
+    $(document).ready(function() {
+    
+    //====================================================================================================================================//
+    // Block User Button click. Show confirm popup modal.
+    //====================================================================================================================================//
 
-
-//====================================================================================================================================//
-// Block User Button click. Show confirm popup modal.
-//====================================================================================================================================//
- $(document).on('click','.jsBlockUserBtn',function(){
-     var jobseeker_id = $(this).data('jsid');
-     console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
-     $('#jobSeekerBlockId').val(jobseeker_id);
-     $('#confirmJobSeekerBlockModal').modal({
-        fadeDuration: 200,
-        fadeDelay: 2.5,
-        escapeClose: false,
-        clickClose: false,
+    $(document).on('click','.jsBlockUserBtn',function(){
+        var jobseeker_id = $(this).data('jsid');
+        console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
+        $('#jobSeekerBlockId').val(jobseeker_id);
+        $('#confirmJobSeekerBlockModal').modal({
+            fadeDuration: 200,
+            fadeDelay: 2.5,
+            escapeClose: false,
+            clickClose: false,
+        });
     });
- });
 
-//====================================================================================================================================//
-// Block User Confirmed.
-//====================================================================================================================================//
- $(document).on('click','.confirm_JobSeekerBlock_ok',function(){
-    console.log(' confirm_JobSeekerBlock_ok ');
-    var jobseeker_id = $('#jobSeekerBlockId').val();
+    //====================================================================================================================================//
+    // Block User Confirmed.
+    //====================================================================================================================================//
 
-    $('.confirmJobSeekerBlockModal  .img_chat').html(getLoader('blockJobSeekerLoader'));
-    var btn = $(this); //
-    btn.prop('disabled',true);
-
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/ajax/blockJobSeeker/'+jobseeker_id,
-        success: function(data){
-            btn.prop('disabled',false);
-            if( data.status == 1 ){
-                $('.confirmJobSeekerBlockModal .img_chat').html(data.message);
-                $('.jobSeeker_row.js_'+jobseeker_id).remove();
-            }else{
-                $('.confirmJobSeekerBlockModal .img_chat').html(data.error);
+    $(document).on('click','.confirm_JobSeekerBlock_ok',function(){
+        console.log(' confirm_JobSeekerBlock_ok ');
+        var jobseeker_id = $('#jobSeekerBlockId').val();
+        $('.confirmJobSeekerBlockModal  .img_chat').html(getLoader('blockJobSeekerLoader'));
+        var btn = $(this); //
+        btn.prop('disabled',true);
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/blockJobSeeker/'+jobseeker_id,
+            success: function(data){
+                btn.prop('disabled',false);
+                if( data.status == 1 ){
+                    $('.confirmJobSeekerBlockModal .img_chat').html(data.message);
+                    $('.jobSeeker_row.js_'+jobseeker_id).remove();
+                }else{
+                    $('.confirmJobSeekerBlockModal .img_chat').html(data.error);
+                }
             }
+        });
+    });
+
+    //====================================================================================================================================//
+    // Liked User Button Click.
+    //====================================================================================================================================//
+    // $(document).on('click','.jsLikeUserBtn',function(){
+    //     var btn = $(this);
+    //     var jobseeker_id = $(this).data('jsid');
+    //     console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
+    //     // $(this).html(getLoader('blockJobSeekerLoader'));
+    //     $(this).html('..');
+    //     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
+    //         success: function(data){
+    //             btn.prop('disabled',false);
+    //             if( data.status == 1 ){
+    //                 btn.html('Liked');
+    //                 // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+    //             }else{
+    //                 btn.html('error');
+    //             }
+    //         }
+    //     });
+    // });
+
+    //====================================================================================================================================//
+    // Top Filter form submit load data throug ajax.
+    //====================================================================================================================================//
+
+    $('#jobSeeker_filter_form').on('submit',function(event){
+        console.log(' jobSeeker_filter_form submit ');
+        event.preventDefault();
+        $('#paginate').val('');
+        getData();
+    });
+    //====================================================================================================================================//
+    // function to send ajax call for getting data throug filter/Pagination selection
+    //====================================================================================================================================//
+
+    var getData = function(){
+        var url = '{{route('jobSeekersFilter')}}';
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
+            // console.log(' success data  ', data);
+            $('.jobSeekers_list').html(data);
+        });
+    }
+    getData();
+
+    //====================================================================================================================================//
+    // Bottom pagination load data throug ajax.
+    //====================================================================================================================================//
+
+    $(document).on('click','.jobseeker_pagination .page-item .page-link',function(e){
+        console.log(' page-link click ', $(this) );
+        e.preventDefault();
+        var page = $(this).attr('href').split('page=')[1];
+        $('#paginate').val(page);
+        getData();
+    });
+
+    //====================================================================================================================================//
+    // Enable/Disabled Filtering by google map location.
+    //====================================================================================================================================//
+
+    $('input[name="filter_location_status"]').change(function() {
+        console.log(' filter_location_status ');
+        (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
+    });
+
+    //====================================================================================================================================//
+    // Enable/Disabled Filtering by Questions.
+    //====================================================================================================================================//
+
+    $('input[name="filter_by_questions"]').change(function() {
+        console.log(' filter_by_questions ');
+        (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));
+        // $('input, select').styler({ selectSearch: true, });
+    });
+
+    //====================================================================================================================================//
+    // Enable/Disabled Filtering by Resume.
+    //====================================================================================================================================//
+
+    $('input[name="filter_by_resume"]').change(function() {
+        console.log(' filter_by_resume ');
+        if(this.checked){
+            jQuery('.filter_resume_cont').removeClass('hide_it');
+        }else{
+            jQuery('.filter_resume_cont').addClass('hide_it');
+            jQuery('.filter_by_resume_value').val("");
+        }
+
+    });
+
+    //====================================================================================================================================//
+    // Filter by Tags
+    //====================================================================================================================================//
+
+    $('input[name="filter_tags_status"]').change(function() {
+        console.log("Tags Filter" + "Hi How are you");
+        if(this.checked){
+            jQuery('.filter_tagList').removeClass('hide_it');
+            $(this).toggleClass('checked').trigger('refresh');
+        }
+        else{
+            jQuery('.filter_tagList').addClass('hide_it');
+            $(this).toggleClass('checked').trigger('refresh');
+            var degreeType = "";
+            $(this).get(0).selectedIndex = 0;
+            $(this).closest('.searchField_tags').attr('class','searchField_tags '+degreeType);
+            $('.dot_list li').removeClass('active');
+            $('.searchField_tags .dot_list_li_hidden').remove();
+
         }
     });
-});
-
-
-//====================================================================================================================================//
-// Liked User Button Click.
-//====================================================================================================================================//
-// $(document).on('click','.jsLikeUserBtn',function(){
-//     var btn = $(this);
-//     var jobseeker_id = $(this).data('jsid');
-//     console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
-//     // $(this).html(getLoader('blockJobSeekerLoader'));
-//     $(this).html('..');
-//     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-//     $.ajax({
-//         type: 'POST',
-//         url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
-//         success: function(data){
-//             btn.prop('disabled',false);
-//             if( data.status == 1 ){
-//                 btn.html('Liked');
-//                 // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-//             }else{
-//                 btn.html('error');
-//             }
-//         }
-//     });
-// });
-
-
-//====================================================================================================================================//
-// Top Filter form submit load data throug ajax.
-//====================================================================================================================================//
-$('#jobSeeker_filter_form').on('submit',function(event){
-    console.log(' jobSeeker_filter_form submit ');
-    event.preventDefault();
-    $('#paginate').val('');
-    getData();
-});
-
-// function to send ajax call for getting data throug filter/Pagination selection.
-var getData = function(){
-    var url = '{{route('jobSeekersFilter')}}';
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
-        // console.log(' success data  ', data);
-        $('.jobSeekers_list').html(data);
-    });
-}
-
-getData();
-
-// Bottom pagination load data throug ajax.
-$(document).on('click','.jobseeker_pagination .page-item .page-link',function(e){
-    console.log(' page-link click ', $(this) );
-    e.preventDefault();
-    var page = $(this).attr('href').split('page=')[1];
-    $('#paginate').val(page);
-    getData();
-});
-
-
-//====================================================================================================================================//
-// Enable/Disabled Filtering by google map location.
-//====================================================================================================================================//
-$('input[name="filter_location_status"]').change(function() {
-    console.log(' filter_location_status ');
-    (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
-
-});
-
-//====================================================================================================================================//
-// Enable/Disabled Filtering by Questions.
-//====================================================================================================================================//
-$('input[name="filter_by_questions"]').change(function() {
-    console.log(' filter_by_questions ');
-    (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));
-     // $('input, select').styler({ selectSearch: true, });
-});
-
-//====================================================================================================================================//
-// Enable/Disabled Filtering by Resume.
-//====================================================================================================================================//
-$('input[name="filter_by_resume"]').change(function() {
-    console.log(' filter_by_resume ');
-    (this.checked)?(jQuery('.filter_resume_cont').removeClass('hide_it')):(jQuery('.filter_resume_cont').addClass('hide_it'));
-     // $('input, select').styler({ selectSearch: true, });
-});
 
     //====================================================================================================================================//
     // Google map location script
@@ -460,54 +487,80 @@ $('input[name="filter_by_resume"]').change(function() {
 
 });
 
+    //====================================================================================================================================//
+    // Reset Button for filtering
+    //====================================================================================================================================//
 
+    $(".reset-btn").click(function(){
+        jQuery('input[name="filter_location_status"]').styler();
+        event.preventDefault();
+        $('#paginate').val('');
 
-
-
-$(".reset-btn").click(function(){
-/// 	$("#jobSeeker_filter_form").trigger("reset");
-    jQuery('input[name="filter_location_status"]').styler();
-
-    event.preventDefault();
-    $('#paginate').val('');
-
-    jQuery('input[name="filter_location_status"]').each(function() {
-
+        jQuery('input[name="filter_location_status"]').each(function() {
             if(this.checked){
-            $(this).toggleClass('checked').trigger('refresh');
-            this.checked = !this.checked;
-            $(this).toggleClass('checked').trigger('refresh');
-            (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
-
+                $(this).toggleClass('checked').trigger('refresh');
+                this.checked = !this.checked;
+                $(this).toggleClass('checked').trigger('refresh');
+                (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
             }
         });
 
-    jQuery('select.filter_qualification_type').each(function() {
+        jQuery('select.filter_qualification_type').each(function() {
+            var degreeType = "";
+            $(this).get(0).selectedIndex = 0;
+            $(this).closest('.searchField_qualification').attr('class','searchField_qualification '+degreeType);
+            $('.dot_list li').removeClass('active');
+            $('.searchField_qualification .dot_list_li_hidden').remove();
+        });
 
-        var degreeType = "";
-        $(this).get(0).selectedIndex = 0;
-        $(this).closest('.searchField_qualification').attr('class','searchField_qualification '+degreeType);
-        $('.dot_list li').removeClass('active');
-        $('.searchField_qualification .dot_list_li_hidden').remove();
-    });
+        $('input[name="filter_industry_status"]').each(function() {
+            if(this.checked){
+                $(this).toggleClass('checked').trigger('refresh');
+                this.checked = !this.checked;
+                $(this).toggleClass('checked').trigger('refresh');
+                (this.checked)?(jQuery('.filter_industryList').removeClass('hide_it')):(jQuery('.filter_industryList').addClass('hide_it'));
+            }
+        });
 
-    $('input[name="filter_industry_status"]').each(function() {
+    // ========================================================= Filter by resume Resume =========================================================
+
+    $('input[name="filter_by_resume"]').each(function() {
 
         if(this.checked){
+        jQuery('.filter_by_resume_value').val("");
         $(this).toggleClass('checked').trigger('refresh');
         this.checked = !this.checked;
         $(this).toggleClass('checked').trigger('refresh');
-        (this.checked)?(jQuery('.filter_industryList').removeClass('hide_it')):(jQuery('.filter_industryList').addClass('hide_it'));
+        (this.checked)?(jQuery('.filter_resume_cont').removeClass('hide_it')):(jQuery('.filter_resume_cont').addClass('hide_it'));
 
         }
 
     });
 
 
+    // ========================================================= Filter by salary =========================================================
+
     jQuery('#filter_salary').get(0).selectedIndex = 0;
     jQuery('#jobSeeker_filter_form').find('input, select').trigger('refresh');
 
+    //  ========================================================= Filter By keyword =========================================================
+
     jQuery('input[name="filter_keyword"]').val("");
+
+    //  ========================================================= Filter By tags =========================================================
+    // jQuery('.filter_tagList').addClass('hide_it');
+    // jQuery('.filter_tags_status').removeClass('checked');
+    // $(this).toggleClass('checked').trigger('refresh');
+
+    var degreeType = "";
+    $(this).get(0).selectedIndex = 0;
+    $(this).closest('.searchField_tags').attr('class','searchField_tags '+degreeType);
+    $('.dot_list li').removeClass('active');
+    $('.searchField_tags .dot_list_li_hidden').remove();
+  
+
+    //  ========================================================= Filter By Questions =========================================================
+
 
     $('input[name="filter_by_questions"]').each(function() {
 

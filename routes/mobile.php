@@ -197,6 +197,7 @@ Route::group(array('middleware' => ['auth']), function(){
 
 Route::post('ajax/userUploadResume', 'Mobile\MobileUserController@userUploadResume')->name('mUserUploadResume');
 Route::post('ajax/MUserUploadResume', 'Mobile\MobileUserController@MUserUploadResume')->name('MUserUploadResume');
+Route::get('ajax/MremoveAttachment', 'Mobile\MobileUserController@MremoveAttachment')->name('MremoveAttachment');
 
 // Tags
 Route::get('ajax/getTags/{category}/{offset?}', 'Site\SiteUserController@getTags');

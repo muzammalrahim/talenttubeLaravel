@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Site;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\fbremacc;
 use App\Interview;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Http\Request;
@@ -25,6 +26,9 @@ use App\crossreference;
 use App\Mail\declineRefereeEmail;
 use App\Mail\refSubmitConfirmation;
 // use App\testEmail12;
+use App\ControlSession;
+use App\History;
+
 
 class ReferenceController extends Controller
 {
@@ -208,10 +212,25 @@ class ReferenceController extends Controller
 
           $crossreference->refStatus = 'Reference Fraud';
        }
-       else{ 
+      else{ 
           $crossreference->refStatus = 'Reference Completed';
-        }
-       $crossreference->save();
+      }
+
+      // dd($crossreference->id);
+
+      $crossreference->save();
+
+      // dd($crossreference->jsdata->id);
+
+      if ($crossreference->refStatus == 'Reference Completed') {
+        $history = new History;
+        $history->user_id = $crossreference->jsdata->id;
+        $history->type = 'Refernce Completed'; 
+        $history->reference_id = $crossreference->id; 
+        $history->save();
+      }
+
+
        Mail::to($crossreference->jsdata->email)->send(new refSubmitConfirmation($jsname, $refname));
        return response()->json([
             'status' => 1,
@@ -283,6 +302,15 @@ class ReferenceController extends Controller
           $crossreference->refStatus = 'Reference Completed';
         }
        $crossreference->save();
+
+      if ($crossreference->refStatus == 'Reference Completed') {
+        $history = new History;
+        $history->user_id = $crossreference->jsdata->id;
+        $history->type = 'Refernce Completed'; 
+        $history->reference_id = $crossreference->id; 
+        $history->save();
+      }
+
        Mail::to($crossreference->jsdata->email)->send(new refSubmitConfirmation($jsname, $refname));
        return response()->json([
             'status' => 1,
@@ -366,6 +394,15 @@ class ReferenceController extends Controller
           $crossreference->refStatus = 'Reference Completed';
         }
        $crossreference->save();
+
+       if ($crossreference->refStatus == 'Reference Completed') {
+        $history = new History;
+        $history->user_id = $crossreference->jsdata->id;
+        $history->type = 'Refernce Completed'; 
+        $history->reference_id = $crossreference->id; 
+        $history->save();
+      }
+      
        Mail::to($crossreference->jsdata->email)->send(new refSubmitConfirmation($jsname, $refname));
 
        return response()->json([
@@ -386,7 +423,9 @@ class ReferenceController extends Controller
         // dd($user->id);
         $crossreference = crossreference::where('jobseekerId',$user->id)->get();
         
-        // dd($crossreference);            
+        // dd($crossreference); 
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;           
         
         $data['title'] = 'Cross Reference';
         $data['crossreference'] = $crossreference ;
