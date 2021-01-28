@@ -23,6 +23,7 @@ class User extends Authenticatable
 
     protected $table = 'users';
 
+    
      // added by Hassan
 
 
@@ -37,6 +38,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'password',
     ];
+
+
 
     /**
      * The attributes that should be hidden for arrays.
@@ -145,20 +148,16 @@ class User extends Authenticatable
      * replace 6371000 with 6371 for kilometer and 3956 for miles
      */
 
-
-
-
-        $query = $query->selectRaw("*,
-                     ( 6371 * acos( cos(radians('".$latitude."'))
-                     * cos( radians(location_lat))
-                     * cos( radians(location_long) - radians('".$longitude."'))
-                     + sin( radians('".$latitude."'))
-                     * sin( radians( location_lat )))
-                     ) AS distance")
-        ->having("distance", "<", $radius)
-        ->orderBy("distance",'asc');
-
-        return $query;
+    $query = $query->selectRaw("*,
+        ( 6371 * acos( cos(radians('".$latitude."'))
+        * cos( radians(location_lat))
+        * cos( radians(location_long) - radians('".$longitude."'))
+        + sin( radians('".$latitude."'))
+        * sin( radians( location_lat )))
+    ) AS distance")
+    ->having("distance", "<", $radius)
+    ->orderBy("distance",'asc');
+    return $query;
 
         // $restaurants = Restaurant::selectRaw("id, name, address, latitude, longitude, rating, zone ,
         //              ( 6371000 * acos( cos( radians(?) ) *
@@ -237,9 +236,9 @@ class User extends Authenticatable
             $data = $this->with('profileImage')->where('type','employer')->get();
         }
         return $data;
-        }
+    }
 
-	function getEmployersp( $request, $user ){
+    function getEmployersp( $request, $user ){
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
         if(!empty($block)){
             $query = $this::with('profileImage')->where('type','employer')->whereNotIn('id', $block);
@@ -309,6 +308,12 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Tags', 'user_tags','user_id','tag_id');
     }
 
+    function user_tags(){
+        // return $this->hasMany('App\UserTags','user_id');
+        return $this->belongsToMany('App\Tags', 'user_tags','user_id','tag_id');
+    }
+
+
     function qualificationRelation(){
         // return $this->hasMany('App\UserTags','user_id');
         return $this->belongsToMany('App\Qualification', 'user_qualifications','user_id','qualification_id');
@@ -325,5 +330,12 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\User');
     }
+
+
+    function cvDataTagsRelation(){
+        // return $this->belongsToMany('App\CvData', 'cv_data','user_id','jobseekerid');
+        return $this->hasMany('App\CvData', 'user_id' );
+    }
+
 
 }

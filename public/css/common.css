@@ -12,7 +12,7 @@
 .hide_it2 { display: none ; } /* Removed !important */
 .not_visible { visibility: hidden !important; opacity: 0 !important; }
 .visible_it{ visibility: visible !important;  opacity: 1 !important; }
-
+.dwebkitbox{display:-webkit-box}
 .w100{ width: 100% !important; }
 .w10{ width: 10% !important; }
 .w80{ width: 80% !important; }
@@ -30,27 +30,28 @@
 .m_rb20{ margin: 0px 20px 20px 0px ; }
 .mb10{ margin-bottom: 10px !important; }
 .mb20{ margin-bottom: 20px !important; }
+.mb40{ margin-bottom: 40px; }
+
 .mt20{ margin-top: 20px !important; }
 .ml20{ margin-left: 20px !important; }
 .my10{margin: 10px 0px 10px 0px}
 .p0{ padding: 0px !important; }
 .p10{ padding: 10px !important;  }
 .p20{ padding: 20px !important;  }
-.pb20{ padding-bottom: 20px !important;  }
+.pt20{ padding-top: 20px !important;  }
 .mx10{margin: 0px 10px 0px 10px}
 .bottom_10{ bottom: 10px !important; }
-
+.ml_10{ margin-left:10px;}
 .icon_green{ color: #8ccd01; }
 .bold{ font-weight: bold; }
 .popup { position: relative; }
 .modal.wauto{ max-width: inherit; }
-
+.pb20{ padding-bottom: 20px !important;}
 .center{ text-align: center; }
 .text_right{ text-align: right; }
 .text_capital{text-transform: capitalize; }
-
 .relative{ position: relative;}
-
+.font13{font-size: 13px}
 button.btn.pink:hover {
     background: #e7495c;
     color: #FFFFFF;
@@ -319,3 +320,10 @@ body.register.step2>div.jquery-modal.blocker.current>div#jobApplyModal {
 }
 .arrowRight{position: relative;bottom: 1px;font-size: 10px}
 /* ============================================= Cross Reference ============================================= */
+
+.custom-btn {background-color: #28a745;border-color: #28a745;color: white;cursor: pointer;display: inline-block;font-weight: 400;
+    text-align: center;white-space: nowrap;vertical-align: middle;-webkit-user-select: none;-moz-user-select: none;
+    -ms-user-select: none;user-select: none;border: 1px solid transparent;padding: .375rem .75rem;font-size: 1rem;line-height: 1.5;border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
+
+.custom-btn:hover {background-color: #218838;border-color: #1e7e34;}

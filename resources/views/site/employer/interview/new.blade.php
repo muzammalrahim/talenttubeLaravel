@@ -178,47 +178,15 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 
 <style>
-.notbrak{
-    display: inline-block;
-}
-
-.leftMargin{
-    margin-left: 7px;
-}
-
-
-.topMargin{
-    margin-top: 10px;
-}
-
-.textCenter{
-   margin-left: 40%;
-   padding-bottom: 10px !important;
-}
-
-.dynamicTextStyle{
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
- .pSlot{
-					padding: 2% 1% 4% 15px;
-	}
-
-
-   .padding{
-									padding: 2% 1% 4%;
-			}
-
-  .slotBorder{  
-    border: 1px solid;
-    
-				}
-
-				.marginR{
-					margin-right:5px;
-				}
-
+.notbrak{display: inline-block;}
+.leftMargin{margin-left: 7px;}
+.topMargin{margin-top: 10px;}
+.textCenter{margin-left: 40%;padding-bottom: 10px !important;}
+.dynamicTextStyle{margin-left: 5px;margin-right: 5px;}
+.pSlot{padding: 2% 1% 4% 15px;}
+.padding{padding: 2% 1% 4%;}
+.slotBorder{border: 1px solid;}
+.marginR{margin-right:5px;}
 
 </style>
 @stop

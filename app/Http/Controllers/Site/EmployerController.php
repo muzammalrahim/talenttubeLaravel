@@ -23,6 +23,16 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Jenssegers\Agent\Agent;
+use App\TagCategory;
+use App\Tags;
+use App\UserTags;
+use App\fbremacc;
+use App\ControlSession;
+use App\History;
+use App\InterviewTemplate;
+use App\InterviewTempQuestion;
+use App\UserInterview;
+
 
 class EmployerController extends Controller {
 
@@ -71,6 +81,11 @@ class EmployerController extends Controller {
             $data['activities'] = $activities;
             $data['videos'] = $videos;
             $data['industriesList'] = getIndustries();
+
+            $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+            $data['controlsession'] = $controlsession;
+
+            
 			$view_name = 'site.employer.profile.profile'; // site/employer/profile/profile
             return view($view_name, $data);
         }else{
@@ -311,7 +326,8 @@ class EmployerController extends Controller {
         $data['geo_state']      = get_Geo_State(default_Country_id());
         $data['geo_cities']     = get_Geo_City(default_Country_id(), default_State_id());
 
-
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['jobType']     = getJobTypes();
         $data['salaryRange'] = getSalariesRange();
         // $jobs =  Jobs::find(12);
@@ -429,6 +445,8 @@ class EmployerController extends Controller {
         $data['user'] = $user;
         $data['title'] = 'My Jobs';
         $data['classes_body'] = 'myJob';
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['jobs'] = Jobs::with('applicationCount')->where('user_id',$user->id)->orderBy('created_at', 'DESC')->get();
         return view('site.employer.myjobs', $data);
         // site/employer/myjobs
@@ -468,6 +486,8 @@ class EmployerController extends Controller {
             // $data['applications'] = $applications;
             $data['job']   = $job;
             $data['user']   = $user;
+            $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+            $data['controlsession'] = $controlsession;
             $data['title']  = 'Job Detail';
             $data['classes_body'] = 'jobdetail';
             return view('site.employer.jobApplication', $data); // site/employer/jobApplication
@@ -586,6 +606,12 @@ class EmployerController extends Controller {
         $jobSeekersObj          = new User();
         $jobSeekers             = $jobSeekersObj->getJobSeekers($request, $user);
         $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+        $data['tags'] = Tags::orderBy('title', 'ASC')->get();
+        // dd($tags);
+        // $userTags = $user->tags;
+
 
         // dd($likeUsers);
         $data['likeUsers'] = $likeUsers;
@@ -605,6 +631,8 @@ class EmployerController extends Controller {
     // Ajax // Post // filter jobseeker result data.
     //====================================================================================================================================//
     public function jobSeekersFilter(Request $request){
+        // $data =  $request->toArray();
+        // dd($data);
         $user = Auth::user();
         if (!isEmployer($user)){
             return response()->json([
@@ -615,28 +643,44 @@ class EmployerController extends Controller {
 
         $data['user']           = $user;
 
+        // $userJS = User::find(140);
+
+        // DB::enableQueryLog();
+        // // $cvDataTest = $userJS->cvDataTagsRelation()->get(); 
+
+        // dd(DB::getQueryLog());
+
+        // dd( $user->cvDataTagsRelation()->toSql()  );
+        // dd( $userJS->cvDataTagsRelation()->get() );
 
         // $jobSeekersObj          = new User();
         // $jobSeekers             = $jobSeekersObj->getJobSeekers($request, $user);
+        
+        // ================================================ Filter by Industry. ================================================
+
         $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
         $industries = $request->filter_industry;
         $qualification_type = $request->ja_filter_qualification_type;
         $qualifications = $request->ja_filter_qualification;
 
-
         $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
-        $query = User::with('profileImage')->where('type','user');
+        $query = User::with('profileImage','user_tags')->where('type','user');
+        // $tagsQuery = Tags::get();
         if(!empty($block)){
             $query = $query->whereNotIn('id', $block);
         }
 
-        // Filter by salaryRange.
+        
+
+        // ================================================ Filter by salaryRange. ================================================
+
         if (isset($request->filter_salary) && !empty($request->filter_salary)){
             $query = $query->where('salaryRange', '>=', $request->filter_salary);
         }
 
-        // Filter by google map location radius.
+        // ================================================ Filter by google map location radius.================================================
+
         if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
             if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
                 // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
@@ -658,7 +702,8 @@ class EmployerController extends Controller {
             }
         }
 
-        // Filter by Keyword filter_keyword
+        // ================================================ Filter by Keyword filter_keyword ================================================
+
         if(varExist('filter_keyword', $request)){
             $keyword = $request->filter_keyword;
             $query = $query->where(function($q) use($keyword) {
@@ -671,13 +716,14 @@ class EmployerController extends Controller {
                 });
         }
 
+        // ================================================ Filter by Questions ================================================
 
-        // Filter by Keyword filter_keyword
         if(varExist('filter_qualification_type', $request)){
             $query = $query->where('qualificationType', '=', $request->filter_qualification_type);
         }
 
-        // Filter by Question
+        // ================================================ Filter by Question ================================================
+
         if(varExist('filter_question', $request) &&varExist('filter_by_questions', $request)&& varExist('filter_question_value', $request) ){
             // SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
             $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';
@@ -685,7 +731,8 @@ class EmployerController extends Controller {
         }
 
 
-        //Filter by industry status.
+        // ================================================ Filter by industry status. ================================================
+
         if($industry_status && !empty($industries)){
             $query = $query->where(function($q) use($industries) {
                 $q->where('industry_experience','LIKE', "%{$industries[0]}%");
@@ -699,7 +746,8 @@ class EmployerController extends Controller {
         }
 
 
-        //Filter by qualification.
+        // ================================================ Filter by qualification. ================================================
+
         if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
         if(!empty($qualifications)){
             $query->whereHas('qualificationRelation', function($query2) use($qualifications) {
@@ -710,6 +758,39 @@ class EmployerController extends Controller {
             });
         }
 
+        // ================================================ Filter by Tags. ================================================
+
+        $tags = $request->filter_tags;
+        if(!empty($tags)){
+            $query->whereHas('user_tags', function($query2) use($tags) {
+                $query2->whereIn('tags.id', $tags);
+                return $query2;
+            });
+        }
+
+        // ================================================ filter by cv keyword ================================================
+
+        $resume_filter = $request->filter_by_resume_value;
+        if(!empty($resume_filter)){
+            $query->whereHas('cvDataTagsRelation', function($query3) use($resume_filter) {
+                $query3->where('cv_data.data_text','like', '%'.$resume_filter.'%');
+                return $query3;
+            });
+        }
+
+        // ================================================ Filter by Tags ================================================
+
+        // $filter_tags = $request->filter_tags;
+        // // dd($filter_tags);
+        // if(!empty($filter_tags)){
+        //     $query->whereHas('tags', function($query3) use($filter_tags) {
+        //         $abcd = $query3->where('tags.id','like', '%'.$filter_tags.'%');
+        //         dd($abcd);
+        //         return $query3;
+        //     });
+        // }
+
+                
 
         // DB::enableQueryLog();
         // print_r( $query->toSql() );exit;
@@ -717,6 +798,8 @@ class EmployerController extends Controller {
         // $jobSeekers =  $query->get();
 
 
+         // dd(DB::getQueryLog());
+         
         // dd(DB::getQueryLog());
 
         // return $data;
@@ -807,7 +890,10 @@ class EmployerController extends Controller {
 
             $data['title']  = 'Credit';
             $data['user']   =  $user;
+            $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+
             $data['classes_body'] = 'credit';
+            $data['controlsession'] = $controlsession;
             return view('site.credit.purchase', $data);
         }
     }
@@ -833,13 +919,12 @@ class EmployerController extends Controller {
         $user = Auth::user();
         if(isEmployer($user))
         {
-
             $status         =  $request->status;
             $application_id = (int) $request->application_id;
-
             if(!empty($status) && !empty($application_id)){
                 // check if job application belong to this employer job.
                 $jobsApplication = JobsApplication::find($application_id );
+                $oldjobstatus = $jobsApplication->status;
                 // dd($jobsApplication->job);
                 if($jobsApplication){
                     if(!empty($jobsApplication->job) && !empty($jobsApplication->job->user_id) && ($jobsApplication->job->user_id == $user->id)){
@@ -848,7 +933,15 @@ class EmployerController extends Controller {
                         if(isset($jobAppStatusArray[$status])){
                             $jobsApplication->status =  $status;
                             $jobsApplication->save();
-                             return response()->json([
+                            $history = new History;
+                            $history->user_id = $jobsApplication->jobseeker->id; 
+                            $history->job_status = $request->status; 
+                            $history->job_id = $jobsApplication->job->id; 
+                            $history->old_job_status = $oldjobstatus;
+                            $history->type = 'job_Status';
+                            $history->save();
+
+                            return response()->json([
                                 'status' => 1,
                                 'message' => 'Job Application Status Updated',
                             ]);
@@ -859,5 +952,62 @@ class EmployerController extends Controller {
         }
     }
 
+
+    // ========================================= Interview Template =========================================
+
+
+    public function interviewTemplate(Request $request){
+        // dd($request->templateSelect);
+        $user = Auth::user();
+        if (!isEmployer($user)){ return redirect(route('profile')); }
+        if ($request->templateSelect != 0) {
+            $interviewTemplate = InterviewTemplate::where('id',$request->templateSelect)->get();
+            $InterviewTempQuestion = InterviewTempQuestion::where('temp_id',$request->templateSelect)->get();
+            if (!empty($interviewTemplate)) {
+            // dd($interviewTemplate->id);
+            $data['interviewTemplate'] = $interviewTemplate;
+            $data['InterviewTempQuestion'] = $InterviewTempQuestion;
+            return view('site.employer.interviewTemplate.template' , $data); 
+            // site/employer/interviewTemplate/template
+            }
+        }
+        else{
+            return false;
+        }
+        
+
+    }
+
+
+    // ========================================= Conduct Interview Template =========================================
+
+
+    public function conductInterview(Request $request){
+        $data =  $request->all();
+        // dd($data);
+        $user = Auth::user();
+        if (!isEmployer($user)){ return redirect(route('profile')); }
+            $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->first();
+            if(!$UserInterviewCheck){
+                $UserInterview = new UserInterview;
+                $UserInterview->temp_id = $data['inttTempId'];
+                $UserInterview->emp_id   = $user->id;
+                $UserInterview->user_id   = $data['user_id'];
+                $UserInterview->status   = 'pending';
+                $UserInterview->save();
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'User interview Conducted Successfully'
+                ]);
+            }else{
+
+                    return response()->json([
+                    'status' => 0,
+                    'message' => 'You have already booked interview for this jobseeker Exist'
+                ]);
+            }
+    }
+
+    
 
 }

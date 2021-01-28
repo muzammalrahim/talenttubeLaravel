@@ -28,6 +28,13 @@ use App\LikeUser;
 use App\fbremacc;
 use App\crossreference;
 
+use App\CvData;
+use PDFMerger;
+use Spatie\PdfToText\Pdf;
+use KeywordExtractor\KeywordExtractor;
+use PhpOffice\PhpWord\IOFactory;
+use NcJoes\OfficeConverter\OfficeConverter;
+
 
 // use App\Hash;
 use Illuminate\Support\Facades\Hash;
@@ -1052,8 +1059,8 @@ class MobileUserController extends Controller
     // POST Ajax request submitted from profile private area.
     //====================================================================================================================================//
     public function userUploadResume(Request $request)
-    {
-        $rules = array('resume.*' => 'required|file|mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:204800');
+    {		
+    	$rules = array('resume' => 'required|file|mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:204800');
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
             return response()->json([
@@ -1063,32 +1070,90 @@ class MobileUserController extends Controller
         } else {
             $user = Auth::user();
             $resume = $request->file('resume');
-												// $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
-												$fileName = $resume->getClientOriginalName();
+        $pdf = new PDFMerger();
+
+            // $fileName = 'resume-' . time() . '.' . $resume->getClientOriginalExtension();
+            $fileName = $resume->getClientOriginalName();
             $storeStatus = Storage::disk('user')->put($user->id . '/private/' . $fileName, file_get_contents($resume), 'public');
             if ($storeStatus) {
-
                 $attachment = new Attachment();
                 $attachment->user_id =   $user->id;
                 $attachment->status = 1;
                 $attachment->name = $fileName;
                 $attachment->type = $resume->getClientOriginalExtension();
                 $attachment->file = $user->id . '/private/' . $fileName;
-																$attachment->save();
-																$user->step2 = 8;
+                $attachment->save();
+
+                if ($attachment->type == "pdf") {
+                    $text = Pdf::getText('/var/www/laravel/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
+                    $keywordExtractor = new KeywordExtractor();
+                    $result = $keywordExtractor->run($text);
+                    $arrayObj = array();
+                    // dd($arrayObj);
+                    $varObj = '';
+                    foreach ($result as $key => $results) {
+                        $varObj = mb_convert_encoding($key, 'UTF-8', 'UTF-8');
+                        array_push($arrayObj, $varObj);
+                    }
+                    $test_var = '';
+                    foreach ($arrayObj as $array) {
+                        $test_var .= $array." ";
+                    }
+                    $cvdata = new CvData();
+                    $cvdata->user_id = $user->id;
+                    $cvdata->jsname = $user->name;
+                    $cvdata->data_text = $test_var;
+                    $cvdata->save();
+                }
+
+
+
+                elseif($attachment->type == "docx" || $attachment->type == "doc" ){
+
+                    $str = str_replace('/', '//', $attachment->file);
+                    $copystr = str_replace(".docx",".pdf",$attachment->name);
+                    $copystr = str_replace(".doc",".pdf",$copystr);
+                    $converter = new OfficeConverter('/var/www/laravel/storage/images/user/' .$str);
+                    $convertedFile = $converter->convertTo($copystr);
+                    $text = Pdf::getText($convertedFile);
+                    $keywordExtractor = new KeywordExtractor();
+                    $result = $keywordExtractor->run($text);
+                    $arrayObj = array();
+                    $varObj = '';
+                    foreach ($result as $key => $results) {
+                        $varObj = mb_convert_encoding($key, 'UTF-8', 'UTF-8');
+                        array_push($arrayObj, $varObj);
+                    }
+                    $test_var = '';
+                    foreach ($arrayObj as $array) {
+                        $test_var .= $array." ";
+                    }
+                    $cvdata = new CvData();
+                    $cvdata->user_id = $user->id;
+                    $cvdata->jsname = $user->name;
+                    $cvdata->data_text = $test_var;
+                    $cvdata->save();
+                }
+                else{
+                    // return response()->json([
+                    //     'status' => 0,
+                    //     'message' => 'Your resume tags could not extracted',
+                    // ]);
+                }
+
+                $user->step2 = 8;
                 $user->save();
 
                 $userAttachments = Attachment::where('user_id', $user->id)->get();
-
                 $output = array(
                     'status' => '1',
-                    'message' => 'Resume succesfully uploaded',
+                    'message' => 'Resume successfully uploaded',
                     'file' => asset('images/user/' . $user->id . '/private/' . $fileName),
-                    'attachments' => $userAttachments,
-
+                    'attachments' => $attachment,
                 );
                 return response()->json($output);
-            } else {
+            } 
+            else {
                 $output = array(
                     'status' => '0',
                     'message' => 'Error Uploading File.'
@@ -1104,9 +1169,9 @@ class MobileUserController extends Controller
     // Upload user selected resume.
     // POST Ajax request submitted from profile private area.
     //====================================================================================================================================//
-    public function removeAttachment(Request $request)
+    public function MremoveAttachment(Request $request)
     {
-        //  dd($request->toArray());
+         // dd($request->attachment_id);
         $user = Auth::user();
         $attachment_id = $request->attachment_id;
 

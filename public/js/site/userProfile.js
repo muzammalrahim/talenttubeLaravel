@@ -1174,6 +1174,7 @@ $(document).ready(function() {
                     // data = JSON.parse(data);
                     // $('.view-resume').attr('href', '/talenttube/_files/resumeUpload/'+data['attachment']).show();
                     var attachments = data.attachments;
+                    console.log("Hassaan doing this job : " + attachments );
                     var attach_html = '';
 
 

@@ -1,35 +1,34 @@
 {{-- @extends('site.user.usertemplate') --}}
+
+
+{{-- @if ($controlsession->count() > 0)
+    <div class="adminControl">
+            <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
+    </div>
+@endif
+
+ --}}
 @extends('site.user.usermaster')
 
 @section('custom_css')
-<style>
-    .js_location {
-    font-size: 11px !important;
-    }
-    div#tabs_profile>ul.tab.customTab {
-    margin-bottom: 15px;
-    }
 
-</style>
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 @stop
 
+
+
+
 @section('content')
 
-
+{{-- @dump($UserInterview); --}}
 <div class="newJobCont">
     <div class="head icon_head_browse_matches">Job Seeker Detail</div>
-
-    {{-- @dump($employers) --}}
     <div class="add_new_job">
         <div class="job_row_heading jobs_filter">
-
             @php
                 $js = $jobSeeker;
             @endphp
-
-
             <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
                 <div class="jobSeeker_box relative dinline_block w100">
                 <div class="js_profile w_30p w_box dblock fl_left">
@@ -37,15 +36,10 @@
                         @php
                        $profile_image  = asset('images/site/icons/nophoto.jpg');
                         $profile_image_gallery    = $js->profileImage()->first();
-
-                        // dump($profile_image_gallery);
-
                         if ($profile_image_gallery) {
                             // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
-
                             $profile_image   = assetGallery2($profile_image_gallery,'small');
                             // dump($profile_image);
-
                         }
                         @endphp
                         <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}">
@@ -147,6 +141,23 @@
                 <a href="#tabs-4" title=""><span>Reference</span></a>
             </li>
 
+            {{-- <li id="tabs-5_switch" class="switch_tab">
+                <a href="#tabs-5" title=""><span>History</span></a>
+            </li>
+
+            <li id="tabs-6_switch" class="switch_tab">
+                <a href="#tabs-6" title=""><span>Notes</span></a>
+            </li> --}}
+
+            {{-- @dump($user->id); --}}
+            @if ($controlsession->count() > 0 || isAdmin())
+                @include('site.user.jobseekerInfoTabs.notesAndHistory')
+            @endif
+
+            <li id="tabs-7_switch" class="switch_tab">
+                <a href="#tabs-7" title=""><span>Interview</span></a>
+            </li>
+
            {{--  <li id="tabs-3_switch" class="switch_tab">
                 <a href="#tabs-3" title=""><span>Questions</span></a>
             </li> --}}
@@ -157,6 +168,9 @@
     <div id="tabs_content" class="tabs_content">
 
     <!-- tab_album -->
+
+    <!-- =============================================== Tab Albums =============================================== -->
+
     <a id="tabs-2" class="tab_link tab_a target"></a>
     <div class="tab_photos tab_cont">
         <div class="galleryCont">
@@ -187,46 +201,35 @@
                 <div class="title_private_photos" style="margin-bottom: 5px;">
                     Resume &amp; Contact Details
                 </div>
-
                 <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
                     <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
                     <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
                     {{-- <li> <a class="btn violet view-resume" target="_blank" style="" href="/talenttube/_files/resumeUpload/3687_Pimmys logo.pdf">View Resume</a></li> --}}
                 </ul>
-
-
             </span>
                 <br>
-
                 <div class="private_attachments">
                     @foreach ($attachments as $attachment)
-
                         {{-- {{asset('images/user/'.$attachment->file)}} --}}
-
                         <div class="attachment_{{$attachment->id}} attachment_file">
-                                <div class="attachment"><img src="{{asset('images/site/icons/cv.png')}}" /></div>
-                                <span class="attach_title">{{ $attachment->name }}</span>
-                                <div class="attach_btns">
+                            <div class="attachment"><img src="{{asset('images/site/icons/cv.png')}}" /></div>
+                            <span class="attach_title">{{ $attachment->name }}</span>
+                            <div class="attach_btns">
                                     <a class="attach_btn downloadAttachBtn" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
-                                </div>
-
+                            </div>
                         </div>
                     @endforeach
             </div>
             @else
-
             <span class="prvate-section">
                 <div class="title_private_photos" style="margin-bottom: 5px;">
                     Content Locked
                 </div>
-
                 <div class="attach_btns">
                     <a class="attach_btn downloadAttachBtn"  onclick="UProfile.confirmPurchase({{$js->id}});" style="margin-bottom: 25px;">Unlock</a>
                 </div>
             </span>
-
         @endif
-
         <div class="cl mb20"></div>
         <div class="VideoCont">
             <div class="head2">Gallery Videos</div>
@@ -234,17 +237,16 @@
                 @if ($videos->count() > 0 )
                	@foreach ($videos as $video)
                 <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-                            <a onclick="UProfile.showVideoModal('{{assetVideo($video)}}')" class="video_link" target="_blank">
-                                <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
-                                {!! generateVideoThumbs($video) !!}
-                            </a>
+                    <a onclick="UProfile.showVideoModal('{{assetVideo($video)}}')" class="video_link" target="_blank">
+                        <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
+                            {!! generateVideoThumbs($video) !!}
+                        </a>
                 </div>
                 @endforeach
                 @endif
             </div>
         </div>
         <!-- /videos -->
-
     </div>
 
     <div style="display:none;">
@@ -310,62 +312,49 @@
 
 
    <!--Tab Questions -->
+
+    <!-- =============================================== Tab Questions =============================================== -->
+
     <a id="tabs-3" class="tab_link tab_a"></a>
     <div class="tab_photos tab_cont">
-
         {{-- Added By Hassan --}}
-
-        @php
-            $userQuestions = !empty($js->questions)?(json_decode($js->questions, true)):(array());
-        @endphp
-        {{-- @dump($userQuestions) --}}
-        @if(!empty(getUserRegisterQuestions()))
-        @foreach (getUserRegisterQuestions() as $qk => $empq)
-
-            {{($empq)}}
-                <b><p>
-                    @if(!empty($userQuestions[$qk]))
-
-                     {{$userQuestions[$qk]}}
-                    @elseif(empty($userQuestions[$qk]))
-                        {{'Not Answered'}}
-                    @endif
-                </p></b>
-        @endforeach
-        @endif
+        @include('site.user.jobseekerInfoTabs.questions')
     </div>
-
-
-{{-- Added By Hassan --}}
-<!--Tab Questions end here -->
 
     <!-- =============================================== Tab Reference =============================================== -->
     
     <a id="tabs-4" class="tab_link tab_a"></a>
-    <div class="tab_reference tab_cont">
-        @if ($crossreference->count()>0)
-            {{-- expr --}}
-        
-        @foreach ($crossreference as $ref)
-        <div class="referees">
-            <p><span class="bold">Reference Type:</span><span style="margin-left: 10px;">{{$ref->refType}}</span></p>
-            <p><span class="bold">Referee Status:</span><span style="margin-left: 10px;">{{$ref->refStatus}}</span></p>
-            <p><span class="bold">Organization Worked Together:</span><span style="margin-left: 10px;">{{$ref->refereeOrganization}}</span></p>
-            <p><span class="bold">Title at Organization:</span><span style="margin-left: 10px;">{{$ref->refereeOrganizationTitle}}</span></p>
-        </div>
-        @endforeach
-        @else
-        <p class="mt20 ml20">
-            <span class="bold"> {{$jobSeeker->name}}  </span> has not added any reference yet.
-        </p>
-        @endif
-       <div class="mt20">
-            <a href="{{ route('referencesForAll', ['id' => $js->id, 'name'=>$js->name]) }}" target="_blank" class="seeCompletedReference"> View completed reference check feedback here</a> 
-            <button class="btn turquoise cop_text"> Click here to copy the link</button>
-        </div>
+    <div class="tab_reference tab_cont pt30px">
+        @include('site.user.jobseekerInfoTabs.reference')
     </div>
 
-    <!-- =============================================== Tab Reference =============================================== -->
+    @if ($controlsession->count() > 0 || isAdmin())
+
+        <!-- =============================================== Tab History =============================================== -->
+
+        <a id="tabs-5" class="tab_link tab_a"></a>
+        <div class="tab_history tab_cont pt30px">
+            @include('site.user.jobseekerInfoTabs.history')
+        </div>
+
+        <!-- =============================================== Tab Notes =============================================== -->
+
+        <a id="tabs-6" class="tab_link tab_a"></a>
+        <div class="tab_notes tab_cont pt30px">
+            @include('site.user.jobseekerInfoTabs.addNotes')
+
+        </div>
+
+    @endif
+    <!-- =============================================== Tab Interview =============================================== -->
+
+     <a id="tabs-7" class="tab_link tab_a"></a>
+    <div class="tab_interviews tab_cont pt30px">
+        @include('site.user.jobseekerInfoTabs.interviews')
+
+    </div>
+
+    <!-- =============================================== Tabs End here =============================================== -->
 
     {{-- Added By Hassan --}}
 
@@ -410,32 +399,20 @@
 <style type="text/css">
     /*.seeCompletedReference{text-decoration: underline;}*/
 
-  a.seeCompletedReference {
-  color: black;
-  text-transform: uppercase;
-  text-decoration: none;
-  letter-spacing: 0.15em;
-  
-  display: inline-block;
+a.seeCompletedReference {color: black;text-transform: uppercase;text-decoration: none;letter-spacing: 0.15em;display: inline-block;
   padding: 15px 20px;
   position: relative;
 }
 a.seeCompletedReference:after {    
-  background: none repeat scroll 0 0 transparent;
-  bottom: 0;
-  content: "";
-  display: block;
-  height: 2px;
-  left: 50%;
-  position: absolute;
-  background: black;
+  background: none repeat scroll 0 0 transparent;bottom: 0;content: "";display: block;height: 2px;left: 50%;position: absolute;background: black;
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
-a.seeCompletedReference:hover:after { 
-  width: 100%; 
-  left: 0; 
-}
+a.seeCompletedReference:hover:after { width: 100%; left: 0; }
+.js_location {font-size: 11px !important;}
+div#tabs_profile>ul.tab.customTab { margin-bottom: 15px;}
+.item_video .video_link{height: 23% !important;}
+/*.jq-selectbox.jqselect.templateSelect { position: revert  !important; }*/
 
 
 </style>
@@ -528,6 +505,18 @@ $('.cop_text').click(function (e) {
    console.log('Link Copied : ', copyText);
    alert('Link Copied: ' + copyText);
  });
+
+
+// ======================================== On Change button get interview templates ========================================
+    
+    $(document).on('click' , ".conductInterview", function(){ 
+        var abcdrf = $('.jq-selectbox__select-text').text().trim();
+        console.log(abcdrf);  
+    });
+
+    
+
+// ======================================== On Change button get interview templates ========================================
 
 
 });

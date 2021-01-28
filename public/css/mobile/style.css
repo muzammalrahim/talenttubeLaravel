@@ -322,28 +322,14 @@ button.btn.small {
     padding: 3%;
 }
 /* Interview Concierge */
-.interviewConcierge{
-    color: white;
-    font-size: 11px;
-    position: absolute;
-    top: 12px;
-    left: 11px;
-    border: 1px solid #afa1c1;
-    padding: 7px 5px 7px 5px;
-    border-radius: 3px;
-}
-.goHomeLink{
-  text-decoration: underline;
-}
-.font-14{
-    font-size: 14px;
-}
-.bookedInterview {
-    color: #254c8e;
-    /* font-weight: 700; */
-    font-size: 16px;
-    text-align: center;
-}
+.interviewConcierge{color: white;font-size: 11px;position: absolute;top: 12px;left: 11px;border: 1px solid #afa1c1;padding: 7px 5px 7px 5px;border-radius: 3px;}
+.goHomeLink{ text-decoration: underline; }
+.font-14{font-size: 14px;}
+.bookedInterview {color: #254c8e;/* font-weight: 700; */font-size: 16px;text-align: center;}
 
+/* =================================================== Resume and Contact Detail =================================================== */ 
 
-
+.attachment_file { display: inline-block;text-align: center;border: 1px solid #7d7d7d;margin: 10px;}
+.attachment {width: 100px;height: 100px;display: inline-block;/* border: 1px solid #9f9f9f; */padding: 10px;border-radius: 5px;}
+span.attach_title {color: white;display: block;/* margin: 4px; */padding: 6px 4px;background: #7d7d7d;}
+/*a.attach_btn {padding: 6px;display: inline-block;border-radius: 4px;background: rgba(109,143,255,1);color: white;font-size: 12px;margin: 2px;cursor: pointer;}*/

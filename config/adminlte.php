@@ -284,6 +284,24 @@ return [
             'label_color' => 'success',
         ],
 
+        [   'header'      => 'Notes'],
+
+        [
+            'text'        => 'Notes',
+            'url'         => 'admin/notes/list',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
+        [   'header'      => 'Template'],
+
+        [
+            'text'        => 'Interview Templates',
+            'url'         => 'admin/interview/templates',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+    
 
         // [   'header'      => 'Interviews'],
 

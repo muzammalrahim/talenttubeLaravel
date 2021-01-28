@@ -1,5 +1,12 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster')
+{{-- 
+@if ($controlsession->count() > 0)
+<div class="adminControl">
+        <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
+</div>
+@endif
+ --}}
+@extends('site.user.usermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
@@ -8,52 +15,56 @@
 
 @section('content')
 <div class="newJobCont">
-    <div class="head icon_head_browse_matches">Welcome to Interview Concierge</div>
+  <div class="head icon_head_browse_matches">Welcome to Interview Concierge</div>
+  @if ($Interviews_booking->count() > 0)
+  @foreach ($Interviews_booking   as $Int_booking)
+  <div class="job_row interviewBookingsRow_{{$Int_booking->id}}">
+    <div class="job_heading p10">
+      <h3 class=" job_title"><a>{{$Int_booking->interview->positionname}}</a></h3>
+    </div>
 
-    {{-- @dump($Interviews_booking) --}}
-    <div class="add_new_job">
+    <div class="job_info row p10 dblock">
+      <div class="timeTable">
+        <div class="j_label bold mb10">Your slot for interview is with below timetable</div>
+        <div class="IndustrySelect">
+          <p> From {{ Form::text('Start Time', $value = $Int_booking->slot->starttime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
+            To {{ Form::text('Start Time', $value = $Int_booking->slot->endtime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
+          </p>
+          <p> Date: {{ Form::text('date',Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d'), $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
+          </p>
 
-        <form method="POST" name="login_booking_form" class="login_booking_form newJob job_validation">
-            @csrf
-            <div class="job_title form_field">
-                <span class="form_label">Mobile:</span>
-                <div class="form_input">
-                    <input type="text" value="" name="bookingid" class="w20" required>
-                    <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-            </div>
+           <div class="j_button pb20"><a class="jobApplyBtn graybtn jbtn deleteInterviewButton1" data-jobid="{{$Int_booking->id}}">Click here to cancel your interview</a></div>
+          {{-- <div class="j_button pb20"><a class="jobDetailBtn graybtn jbtn" data-slotId = "{{$Int_booking->slot->id}}">Click here to reschedule you time slot</a></div> --}}
 
-            <div class="job_title form_field">
-                <span class="form_label">Email:</span>
-                <div class="form_input">
-                    <input type="email" value="" name="email" class="w20" required>
-                    <div id="email_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
-            <div class="form_field">
-                <span class="form_label"></span>
-                <div class="form_input">
-                    <div class="general_error error to_hide">&nbsp;</div>
-                </div>
-            </div>
-
-            <div class="fomr_btn act_field">
-                <span class="form_label"></span>
-                <button class="btn small turquoise loginEditInterview">Login</button>
-            </div>
-
-        </form>
         </div>
 
+      </div>
 
+      <div class="timeTable">
+        <div class="title"><div class="w_25p"> <p class="IndustrySelect bold"> Booking Title </p> </div>
+          <div class="width75p"><div class="IndustrySelect"> {{$Int_booking->interview->title}} </div> </div>
+        </div>
+        <div class="title">
+          <div class="w_25p"> <p class="IndustrySelect bold"> Company</p> </div>
+          <div class="width75p"><div class="IndustrySelect">{{$Int_booking->interview->companyname}}</div></div>
+        </div>
+        <div class="title"><div class="w_25p"> <p class="IndustrySelect bold"> Position </p></div>
+          <div class="width75p"> <div class="IndustrySelect">{{$Int_booking->interview->positionname}}</div></div>
+        </div>
+        <div class="title"><div class="w_25p"><p class="IndustrySelect bold"> Insructions </p></div>
+          <div class="width75p"><div class="IndustrySelect">{{$Int_booking->interview->instruction}}</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+@endforeach  
+@else
+<h5> You have not booked any interview yet</h5>
+@endif
 
 <div class="cl"></div>
 </div>
-
-
-
-
+@include('site.user.interview.popup')
 @stop
 
 @section('custom_footer_css')
@@ -79,6 +90,18 @@
   background-color: rgb(52, 49, 238);
   color: White;
 }
+
+.timeTable{
+  width: 33%;
+  display: table-cell;
+}
+.width75p{
+  width: 75%;
+  display: inline-block;
+}
+.bgColor{
+  background: #dddfe3;
+}
 </style>
 
 @stop
@@ -87,6 +110,8 @@
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script>
+
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}

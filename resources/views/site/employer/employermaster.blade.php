@@ -5,6 +5,15 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{csrf_token()}}">
+
+     <!-- Favicons-->
+    <link rel="icon" href="https://talenttube.tv/wp-content/themes/talenttube/favicon/apple-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" href="http://creativedev22.xyz/images/site/logo_inner.png">
+    <link rel="icon" href="http://creativedev22.xyz/images/site/logo_inner.png" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="http://creativedev22.xyz/images/site/logo_inner.png">
+    <link rel="shortcut icon" href="http://creativedev22.xyz/images/site/logo_inner.png" />
+  
+  
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
@@ -12,6 +21,10 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/>
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/style.css') }}">
+
+    
+
+
 
     @yield('meta_tags')
     @yield('custom_css')
@@ -30,7 +43,14 @@
 
 <div class="main">
  <div class="wrapper">
-     @include('site.layout.userheader')
+
+    @if ($controlsession->count() > 0)
+    <div class="adminControl">
+        <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
+    </div>
+    @endif
+    
+    @include('site.layout.userheader')
 
     <div class="content">
     <div class="cont_w">

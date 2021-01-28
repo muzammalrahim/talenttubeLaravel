@@ -131,7 +131,7 @@ Route::get('media/private/{userid}/{any}', [
 
 
     // Backend Admin with out Authentication
-    Route::get('admin', 'Admin\AdminController@index');
+    Route::get('admin', 'Admin\AdminController@index')->name('admin');
     Route::post('admin/login', 'Admin\AdminController@login');
     Route::get('logout', function(){
         Auth::logout();
@@ -261,9 +261,27 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('controlsJS/getList', 'Admin\UserController@CJSgetDatatable')->name('CJS.dataTable');
     Route::get('controlEmp/list', 'Admin\UserController@controlEmpIndex')->name('controlEmp.list');
     Route::get('controlEmp/getList', 'Admin\UserController@cEmpDatatable')->name('Cemp.dataTable');
-    
-    // ====================================== ControlJs Start ======================================
 
+    // Adminnotes
+    // ====================================== Admin Notes ======================================
+
+    Route::get('notes/list', 'Admin\UserController@adminNotes')->name('adminNotes');
+    Route::get('notes/getList', 'Admin\UserController@notesDataTable')->name('notes.dataTable');
+    Route::post('note/delete', 'Admin\UserController@adminDeleteNote')->name('AdminDeleteNote');
+    Route::post('note/edit/{id}', 'Admin\UserController@adminEditNote')->name('adminEditNote');
+
+    // ====================================== Admin Interview Templates ======================================
+
+
+    Route::get('interview/templates', 'Admin\AdminInterviewController@interviewTemplates')->name('interviewTemplates');
+    Route::get('template/create', 'Admin\AdminInterviewController@templateCreate')->name('template.create');
+    Route::post('template/create', 'Admin\AdminInterviewController@storeTemplate')->name('template.store');
+    Route::get('template/getList', 'Admin\AdminInterviewController@interviewTemplateDataTable')->name('template.dataTable');
+    Route::post('template/delete', 'Admin\AdminInterviewController@AdminDeleteTemplate')->name('AdminDeleteTemplate');
+    Route::get('template/edit/{id}', 'Admin\AdminInterviewController@templateEdit')->name('adminEditTemplateQuestion');
+    Route::post('template/update/{id}', 'Admin\AdminInterviewController@templateUpdate')->name('template.update');
+    Route::post('ajax/template/question/delete', 'Admin\AdminInterviewController@templateQuestionDelete')->name('templateQuestionDelete');
+    
 
 });
 
@@ -316,7 +334,15 @@ Route::get('media/private/{userid}/{any}', [
 Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 
 
-//  jobSeekerProfile 
+//  jobSeekerProfile  'controlUser'
+    Route::get('useridforcontroling/{id}', 'Site\SiteUserController@useridforcontroling')->name('useridforcontroling');
+    Route::get('employeridforcontroling/{id}', 'Site\SiteUserController@employeridforcontroling')->name('employeridforcontroling');
+    Route::get('logoutRouteForAdmin', 'Site\SiteUserController@logoutRouteForAdmin')->name('logoutRouteForAdmin');
+
+    // InterviewTemplateAddingAsEmployer
+    Route::post('ajax/interview/template','Site\EmployerController@interviewTemplate')->name('interviewTemplate');
+    Route::post('ajax/conduct/interview','Site\EmployerController@conductInterview')->name('conductInterview');
+
 
     Route::get('profile', function () { return redirect('user/'.Auth::user()->username); })->name('profile');
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
@@ -337,6 +363,8 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/updateSalaryRange', 'Site\SiteUserController@updateSalaryRange');
     Route::post('ajax/updateQualification', 'Site\SiteUserController@updateQualification')->name('updateQualification');
     Route::post('ajax/updateQuestions', 'Site\SiteUserController@updateQuestions');
+    Route::post('ajax/booking/deleteInterviewBooking',    'Site\SiteUserController@deleteInterviewBooking')->name('deleteInterviewBooking');
+
 
     // ========================== Update Employer Questions ===========================================
 
@@ -393,6 +421,8 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 	Route::post('step2',      'Site\SiteUserController@Step2');
 
     // Employer
+
+    // employerprofile
     Route::get('employer/profile', function () { return redirect('employer/'.Auth::user()->username); })->name('employerProfile');
     Route::get('employer/step2',       'Site\EmployerController@step2Employer')->name('step2Employer');
     Route::post('employer/step2',      'Site\EmployerController@Step2');
@@ -440,22 +470,16 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     //Interview concierge
     Route::get('interviewconcierge',       'Site\InterviewController@index')->name('interviewconcierge');
     Route::get('interviewconcierge/new',       'Site\InterviewController@new')->name('interviewconcierge.new');
-
-
     Route::get('interviewconcierge/edit',       'Site\InterviewController@edit')->name('interviewconcierge.edit');
     Route::get('interviewconcierge/edit/{id}',       'Site\InterviewController@editOneBooking')->name('interviewconciergeEdit');
-
     Route::get('interviewconcierge/created',       'Site\InterviewController@created')->name('interviewconcierge.created');
     Route::get('interviewconcierge/created/url',       'Site\InterviewController@bookingurl')->name('interviewconcierge.url');
-
     Route::get('interviewconcierge/manualjobseekers',       'Site\InterviewController@manualjobseekers')->name('interviewconcierge.manualjobseekers');
     Route::get('interviewconcierge/formedit','Site\InterviewController@editbookingform')->name('interviewconcierge.formedit');
-
     Route::get('interviewconcierge/created/unidigitEdit','Site\InterviewController@unidigitEdit')->name('unidigitEditUrl');
-
     Route::get('interviewconcierge/getlikedlistjobseekers','Site\InterviewController@getlikedjobseekers')->name('interviewconcierge.getlikedlistjobseekers');
-
     Route::get('interviewconcierge/getlikedlistjobseekersdatatable','Site\InterviewController@getlikedlistjobseekersdatatable')->name('interviewconcierge.getlikedlistjobseekersdatatable');
+
     //adding new interview booking to the system
     Route::post('ajax/booking/new',    'Site\InterviewController@newInterviewBooking')->name('addNewInterview');
     Route::post('ajax/booking/update',    'Site\InterviewController@updateInterviewBooking')->name('updateInterview');
@@ -464,8 +488,13 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/booking/manualsendnotification',    'Site\InterviewController@manualsendnotification')->name('manualsendnotification');
     Route::get('interviewconcierge/user',       'Site\InterviewController@userindex')->name('interviewconcierg.user');
     Route::post('ajax/userbooking/login',    'Site\InterviewController@userbookinglogin')->name('userbooking.login');
-
     Route::post('ajax/update/unidigitEditUpdate','Site\InterviewController@unidigitEditUpdate')->name('unidigitEditUpdate');
+
+    // JobseekerInterviewInvitation
+
+    Route::get('Intetview/Invitation',       'Site\InterviewController@interviewInvitataion')->name('intetviewInvitation');
+    Route::post('ajax/confirmInterInvitation',    'Site\InterviewController@confirmInterInvitation')->name('confirmInterInvitation');
+
 
     // =============================================== Cross Reference ===============================================
 
@@ -474,8 +503,14 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 
     // =============================================== Cross Reference =============================================== 
 
-
+    // =============================================== Save Notes as Admin ===============================================  
     
+    Route::post('ajax/saveNote','Site\SiteUserController@saveNote')->name('saveNote');
+    Route::post('ajax/deleteNote/{id}', 'Site\SiteUserController@deleteNote')->name('deleteNote');
+
+    // =============================================== Cross Reference =============================================== 
+
+
 
 });
 

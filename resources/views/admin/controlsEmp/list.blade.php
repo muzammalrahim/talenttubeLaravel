@@ -36,7 +36,7 @@
     <thead>
         <tr style = "text-align: center">
             <th>Id</th>
-            <th>Name</th>
+            <th>Company</th>
             <th>Email</th>
             {{-- <th>Profile</th> --}}
             <th>Created_at</th>
@@ -52,23 +52,10 @@
     <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
 
     <style type="text/css">
-
-        .modal.showProcessing  .modalContentEmp{
-         display: none;
-
-        }
-
-        .modal.showProcessing  .modelProcessingEmp{
-            display: block !important;
-        }
-
-        #delConfirmIdEmp{
-            color:red;
-        }
-
-        td{
-          text-align: center;
-        }
+      .modal.showProcessing  .modalContentEmp{ display: none; }
+      .modal.showProcessing  .modelProcessingEmp{ display: block !important;}
+      #delConfirmIdEmp{ color:red; }
+      td{ text-align: center; }
     </style>
 
 @stop
@@ -99,7 +86,7 @@ jQuery(function() {
         },
       columns: [
           { data: 'id', name: 'id' },
-          { data: 'name', name: 'name' },
+          { data: 'company', name: 'company' },
           { data: 'email', name: 'email' },
           // { data: 'profile', name: 'profile' },
           { data: 'created_at', name: 'created_at' },

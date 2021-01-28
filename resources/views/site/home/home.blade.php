@@ -25,7 +25,10 @@
    <!-- header_cont_bl -->
    <div class="bl">
       <div class="bl_logo">
-        <a href="{{route('homepage')}}"><img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" /></a>
+        {{-- <a href="{{route('homepage')}}"><img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" /></a> --}}
+        <a href="{{route('homepage')}}"><img id="logo_main_page" src="https://talenttube.tv/wp-content/themes/talenttube/images/talenttube.png" alt="" /></a>
+
+
       </div>
       <div class="bl_join_done">
          <div class="slogan">Join the best Talent Matcher in the world.</div>

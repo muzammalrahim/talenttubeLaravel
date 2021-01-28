@@ -14,6 +14,9 @@ use App\Video;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+
+use App\Notes;
+
 class UserController extends Controller
 {
 
@@ -1005,7 +1008,7 @@ class UserController extends Controller
         $data['title'] = 'Job Seekers';
         $data['content_header'] = 'Control Job Seekers';
         $data['filter_status'] = '';
-        return view('admin.controlsJS.list', $data);
+        return view('admin.controlsJS.list', $data);     // admin/controlsJS/list
     }
 
     // ========================================= Control Job Seeker Data Table Start =========================================
@@ -1021,7 +1024,7 @@ class UserController extends Controller
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
-            $rhtml = '<button type="button" value = "'.$records->id.'" class="btn btn-primary btn-sm"style = "margin-right:2px;"><i class="fas fa-copy"></i></button>';
+            $rhtml = '<a href =" ' .route('useridforcontroling' , ['id' => $records->id]).'"><button type="button" value = "'.$records->id.'" class="btn btn-primary btn-sm"style = "margin-right:2px;"> Control </button></a>';
 
             // $rhtml = '<a href="'.route('users.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px;"><i class="far fa-edit"></i></button></a>';
 
@@ -1041,21 +1044,23 @@ class UserController extends Controller
         return view('admin.controlsEmp.list', $data);
         // admin/controlsEmp/list
     }
+    
 
+    
     // ========================================= Control Employer End  =========================================
 
     // ========================================= Control Employer Data Table Start =========================================
 
     public function cEmpDatatable(Request $request){
       $records = array();
-      $records = User::select(['id', 'name', 'email', 'created_at','verified'])
+      $records = User::select(['id', 'company', 'email', 'created_at','verified'])
         ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
         ->orderBy('created_at', 'desc');
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
 
-            $rhtml = '<button type="button" value = "'.$records->id.'" class="btn btn-primary btn-sm"style = "margin-right:2px"><i class="fas fa-copy"></i></button>';
+            $rhtml = '<a href =" ' .route('employeridforcontroling' , ['id' => $records->id]).'"><button type="button" value = "'.$records->id.'" class="btn btn-primary btn-sm"style = "margin-right:2px"> Control</button></a>';
 
             // $rhtml = '<a href="'.route('employers.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px"><i class="far fa-edit"></i></button></a>';
 
@@ -1070,6 +1075,86 @@ class UserController extends Controller
     }
 
     // ========================================= Control Employer Data Table Start =========================================
+
+
+    // ========================================= Admin Notes Start =========================================
+
+     public function adminNotes() {
+        $data['title'] = 'Notes';
+        $data['content_header'] = 'Notes';
+        $data['filter_status'] = null;
+        return view('admin.notes.notes', $data);
+        // admin/notes/notes
+    }
+
+
+    // ========================================= Admin Notes Data Table Start =========================================
+
+    public function notesDataTable(Request $request){
+      $records = array();
+      $records = Notes::select(['id', 'user_id', 'js_id', 'text', 'created_at'])
+        // ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
+        ->orderBy('created_at', 'desc');
+      return datatables($records)
+
+      ->editColumn('created_at', function ($request) {
+        return $request->created_at->format('Y-m-d'); // human readable format
+      })
+
+      ->addColumn('action', function ($records) {
+        if (isAdmin()){
+
+            $rhtml = ' <i value = "'.$records->id.'" class="fas fa-trash text-danger pointer noteId" data-toggle="modal" data-target="#deleteNoteModal" > </i>';
+
+            //  $rhtml .= '<a href =" ' .route('adminEditNote' , ['id' => $records->id]).'">
+            // <i value = "'.$records->id.'" class="fas fa-edit text-danger"> </i></a>';
+
+            // $rhtml = '<a href =" ' .route('AdminDeleteNote' , ['id' => $records->id]).'">
+            // <i value = "'.$records->id.'" class="fas fa-trash text-danger"> </i></a>';
+
+            return $rhtml;
+        }
+      })
+      
+      // ->rawColumns(['profile','action'])
+      ->toJson();
+
+    }
+
+    // ========================================= Admin Notes Delete end =========================================
+
+    public function adminDeleteNote(Request $request){
+        $id = $request->id;
+        $note = Notes::find($id);
+        if(!empty($note)){
+            if (isAdmin()) {
+                $note->delete();
+                return response()->json([
+                'status' => 1,
+                'message' => 'Note Succesfully Deleted',
+                ]);
+            }
+            
+        }
+    }
+
+    public function adminEditNote($id){
+
+        return view('admin.user.edit', $data);
+        
+        $id = $request->id;
+        $note = Notes::find($id);
+        if(!empty($note)){
+            if (isAdmin()) {
+                $note->delete();
+                return response()->json([
+                'status' => 1,
+                'message' => 'Note Succesfully Deleted',
+                ]);
+            }
+            
+        }
+    }
 
 
 }
