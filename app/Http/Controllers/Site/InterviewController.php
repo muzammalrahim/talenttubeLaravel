@@ -757,7 +757,8 @@ class InterviewController extends Controller
                 'status' => 0,
                 'validator' =>  $validator->getMessageBag()->toArray()
             ]);
-        }else{
+        }else
+        {
             $interview = Interview::where('id',$data['intervieww_id'])->first();
             
               // dd($data['uniquedigits']);
@@ -774,11 +775,30 @@ class InterviewController extends Controller
 
     // ============================================= Interview Initation =============================================
 
+    public function intetviewInvitationEmp(){
+        $user = Auth::user();
+        $data['user'] = $user;
+        // dd($user->id);
+        if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
+        $UserInterview = UserInterview::where('emp_id',  $user->id)->orderBy('created_at' , 'desc')->get();
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+        $data['title'] = 'My Jobs';
+        $data['UserInterview'] = $UserInterview ;
+        $data['classes_body'] = 'Interviews';
+        return view('site.employer.interviewInvitation.index', $data);
+        // site/employer/interviewInvitation/index
+    }
+
+
+    // ============================================= Interview Initation Employer =============================================
+
     public function interviewInvitataion(){
         $user = Auth::user();
         $data['user'] = $user;
         // dd($user->id);
-        $Interviews_booking = UserInterview::where('user_id',  $user->id)->get();
+        if (isEmployer($user)) {return redirect(route('intetviewInvitationEmp'));}
+        $Interviews_booking = UserInterview::where('user_id',  $user->id)->orderBy('created_at' , 'desc')->get();
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         $data['controlsession'] = $controlsession;
         $data['title'] = 'My Jobs';
@@ -792,6 +812,7 @@ class InterviewController extends Controller
 
         $user = Auth::user();
         $data = $request->all();
+        // dd($data);
         // ================================================== Validation for answering the questions ==================================================
         if(in_array(null, $data['answer'], true))
         {
@@ -802,28 +823,31 @@ class InterviewController extends Controller
         }
         else
         {
-            $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('user_id' , $user->id)->where('temp_id' ,$data['temp_id'])->first();
+            $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('emp_id' , $user->id)->where('temp_id' ,$data['temp_id'])->first();
             if ($UserInterview) {
-                if ($UserInterview->status == 'pending') {
+                if ($UserInterview->status == 'Accepted') {
                     $UserInterview->status =  'Interview Confirmed';
                     $UserInterview->save();
 
                     foreach ($data['answer'] as $key => $value) {
                         $answers = new UserInterviewAnswers;
-                        $answers->user_id = $user->id;
+                        $answers->emp_id = $user->id;
                         $answers->userInterview_id  = $data['userInterviewId'];
+                        $answers->user_id  = $data['user_id'];
                         $answers->question_id = $key;
                         $answers->answer = $value;
                         $answers->save();
                     }
                     return response()->json([
-                        'error' => 'User Interview added successfully'
+                        'status' => 1,
+                        'error' => 'Reponse added successfully'
                     ]);
                 }
 
                 else{
                     return response()->json([
-                        'error' => 'You have already booked interview'
+                        'status' => 0,
+                        'error' => 'You have already added response'
                     ]);
                 }
 
@@ -832,7 +856,9 @@ class InterviewController extends Controller
                 dd("nothing here for u");
             }
         }    
-        
+
+
+       
 
     }
 

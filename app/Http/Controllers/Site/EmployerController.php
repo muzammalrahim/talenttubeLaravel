@@ -23,6 +23,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Jenssegers\Agent\Agent;
+use Illuminate\Support\Facades\Mail;
+use URL;
+use App\Mail\conductInterviewEmail;
+use App\Mail\rejectInterviewInvitationEmail;
+use App\Mail\acceptInterviewInvitationEmail;
+
+
 use App\TagCategory;
 use App\Tags;
 use App\UserTags;
@@ -32,6 +39,8 @@ use App\History;
 use App\InterviewTemplate;
 use App\InterviewTempQuestion;
 use App\UserInterview;
+
+// use App\Mail\conductInterview;
 
 
 class EmployerController extends Controller {
@@ -959,9 +968,10 @@ class EmployerController extends Controller {
     public function interviewTemplate(Request $request){
         // dd($request->templateSelect);
         $user = Auth::user();
-        if (!isEmployer($user)){ return redirect(route('profile')); }
+        if (!isEmployer($user) && (!isAdmin())){ return redirect(route('profile')); }
         if ($request->templateSelect != 0) {
             $interviewTemplate = InterviewTemplate::where('id',$request->templateSelect)->get();
+            // dd($interviewTemplate->id);
             $InterviewTempQuestion = InterviewTempQuestion::where('temp_id',$request->templateSelect)->get();
             if (!empty($interviewTemplate)) {
             // dd($interviewTemplate->id);
@@ -986,27 +996,154 @@ class EmployerController extends Controller {
         $data =  $request->all();
         // dd($data);
         $user = Auth::user();
-        if (!isEmployer($user)){ return redirect(route('profile')); }
+        $empName = $user->company;
+        if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
             $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->first();
             if(!$UserInterviewCheck){
+
                 $UserInterview = new UserInterview;
                 $UserInterview->temp_id = $data['inttTempId'];
                 $UserInterview->emp_id   = $user->id;
                 $UserInterview->user_id   = $data['user_id'];
                 $UserInterview->status   = 'pending';
+                $UserInterview->url   = generateRandomString();
                 $UserInterview->save();
+                $jsEmail = $UserInterview->js->email;
+
+                Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));
                 return response()->json([
                     'status' => 1,
-                    'message' => 'User interview Conducted Successfully'
+                    'message' => 'Interview conducted and Email sent to jobseeker successfully',
                 ]);
-            }else{
+            }
+            else{
 
                     return response()->json([
                     'status' => 0,
-                    'message' => 'You have already booked interview for this jobseeker Exist'
+                    'message' => 'You have already selected this template, please try another template'
                 ]);
             }
     }
+
+
+
+
+
+    // Interview Link to jobseeker
+
+
+     public function interviewInvitationUrl(Request $request){
+        $data =  $request->all();
+        // dd($data['url']);
+        $user = Auth::user();
+        // dd($user->id);
+        $UserInterview = UserInterview::where('url', $data['url'])->first();
+        // $UserInterview->emp_id == $user->id
+        if (!isset($UserInterview)) { return redirect(route('intetviewInvitation'));}
+        $InterviewTempQuestion = InterviewTempQuestion::where('temp_id' , $UserInterview->temp_id)->get();
+        // ($UserInterview->user_id);
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        // dd($UserInterview->temp_id);
+        $data['controlsession'] = $controlsession;
+        $data['user'] = $user;
+        $data['UserInterview'] = $UserInterview;
+        $data['InterviewTempQuestion'] = $InterviewTempQuestion;
+        $data['classes_body'] = 'Interview Template';
+
+        if (isEmployer()) {
+            
+            if  ($UserInterview->emp_id != $user->id){
+                return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser
+               
+            }
+            else{
+                return view('site.user.interviewInvitation.acceptedInterviewInvitation', $data);   // site/user/interviewInvitation/acceptedInterviewInvitation
+
+            }
+
+        }
+        else{
+
+            if  ($UserInterview->user_id != $user->id){
+                return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser
+               
+            }
+            else{
+
+                return view('site.employer.interviewInvitation.interviewInvitationUrl', $data);   // site/employer/interviewInvitation/interviewInvitationUrl
+
+            }
+
+
+        }
+
+
+
+
+    }
+
+
+    // Reject Interview
+
+    public function rejectInterviewInvitation(Request $request){
+        $user = Auth::user();
+        $data =  $request->all();
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+        $UserInterview = UserInterview::where('url', $data['url'])->where('user_id' , $user->id)->first();
+        if ($UserInterview->user_id != $user->id) {
+            return redirect()->route('profile');
+        }
+        else{
+
+            $UserInterview->status = 'Rejected';
+            $empEmail = $UserInterview->employer->email;
+            $UserInterview->save();
+            Mail::to('hassaansaeed1@gmail.com')->send(new rejectInterviewInvitationEmail($user->name, $UserInterview->employer->company));
+            return response()->json([
+                'status' => 1,
+                'message' => 'Interview Rejected Successfully'
+            ]);
+        }   
+    }
+
+    // Accept Interview
+
+     public function acceptInterviewInvitation(Request $request){
+        $user = Auth::user();
+        $data =  $request->all();
+        // dd($data);
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+        $UserInterview = UserInterview::where('url', $data['url'])->where('user_id',$user->id)->first();
+        // dd($UserInterview);
+        if ($UserInterview) {
+           if ($UserInterview->user_id != $user->id) {
+            return redirect()->route('profile');
+        }
+        else{
+
+            $UserInterview->status = 'Accepted';
+            $empEmail = $UserInterview->employer->email;
+            $UserInterview->save();
+            Mail::to($empEmail)->send(new acceptInterviewInvitationEmail($user->name, $UserInterview->employer->company,$UserInterview->url));
+            return response()->json([
+                'status' => 1,
+                'message' => 'Interview Rejected Successfully'
+            ]);
+        } 
+        }
+        else{
+            return false;
+        }
+        
+
+    }
+
+
+
+
+
 
     
 

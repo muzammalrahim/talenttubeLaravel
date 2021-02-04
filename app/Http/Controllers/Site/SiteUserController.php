@@ -1744,7 +1744,7 @@ class SiteUserController extends Controller
     public function jobApplySubmit(Request $request){
         $user = Auth::user();
         $requestData = $request->all();
-        dd($requestData);
+        // dd($requestData);
         $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
 
         if(isset($requestData['answer']) && !empty($requestData['answer'])){

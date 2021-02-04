@@ -158,6 +158,10 @@ $js = $jobSeeker;
     <a class="nav-link" id="reference-tab-md" data-toggle="tab" href="#reference-md" role="tab" aria-controls="contact-md"
       aria-selected="false">Reference</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" id="interview-tab-md" data-toggle="tab" href="#interview-md" role="tab" aria-controls="contact-md"
+      aria-selected="false">Interview</a>
+  </li>
 
 </ul>
 <div class="tab-content card pt-5 mb-3" id="myTabContentMD">
@@ -418,6 +422,30 @@ $js = $jobSeeker;
   </div>
 
   {{-- Reference Tab end here --}}
+
+{{-- =========================================== Interview =========================================== --}}
+
+   <div class="tab-pane fade" id="interview-md" role="tabpanel" aria-labelledby="interview-tab-md">
+    <p class="loader SaveQuestionsLoader"style="float: left;"></p>
+        <div class="cl"></div>
+          {{-- @dump($interview_booking) --}}
+          <div class="interviews text-dark">
+            @if ($interview_booking->count() > 0)
+            @foreach ($interview_booking as $booking)
+              <p> <span class="bold">{{$loop->index+1}})  {{$jobSeeker->name}} </span>  has booked interview for the position of 
+                <b> {{$booking->interview->positionname}}</b> </p>  
+            @endforeach
+            @else
+              <p> This user has not any booking yet</p> 
+            @endif
+          </div>
+
+
+          @include('mobile.employer.jobSeekers.parts.userInterviews')       {{-- mobile/employer/jobSeekers/parts/userInterviews --}}
+    </div>
+
+{{-- =========================================== Tabs end here =========================================== --}}
+
 </div>
 
 @stop
@@ -430,7 +458,9 @@ $js = $jobSeeker;
 .referees:nth-child(even) {
   background: #e9ecef;
 }
-
+.interviewrow:nth-child(even) {
+  background: #e9ecef;
+}
 p{
   font-size: 12px;
 }
@@ -466,6 +496,8 @@ div#home-just {
     width: 120px;
 }
 .seeCompletedReference{text-decoration: underline;font-size: 12px}
+.hide{display: none;}
+
 
 </style>
 
@@ -551,6 +583,14 @@ $('.cop_text').click(function (e) {
    console.log('Link Copied : ', copyText);
    alert('Link Copied: ' + copyText);
  });
+
+
+  // ======================== Show & Hide Employer's Response on jobseeker's profile ========================  
+  $(document).on("click" , ".seeEmployerResponse" , function(){
+        // alert('Hi employer response')
+        $(this).parents('.employerResponseDiv').find('.employerResponse').slideToggle();
+  });
+
 
 
 </script>

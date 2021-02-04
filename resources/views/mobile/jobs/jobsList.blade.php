@@ -11,7 +11,7 @@
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 
         <div class="card">
-            <div class="card-header jobAppHeader p-2 jobInfoFont">
+            <div class="card-header jobAppHeader p-2 font11">
                 <a>{{$job->title}}</a>
                 <div class="jobAppStatus float-right">
                     @if ($job->code)
@@ -22,15 +22,15 @@
 
                 <div>
                     <div class="row p-0 m-0">
-                        <span class="jobInfoFont">Location : </span>
-                            <div class="jobDetail" style="margin: 0.2rem 0 0 0.2rem;">
+                        <span class="font11">Location : </span>
+                            <div class="font11" style="margin: 0.2rem 0 0 0.2rem;">
                              {{$job->city}},  {{$job->state}}, {{$job->country}}</div>
                     </div>
                 </div>
 
                     <div class="row p-0 m-0">
-                        <span class="jobInfoFont">Employer : </span>
-                            <span class="jobDetail" style="margin: 0.2rem 0 0 0.2rem;"> {{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</span>
+                        <span class="font11">Employer : </span>
+                            <span class="font11" style="margin: 0.2rem 0 0 0.2rem;"> {{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</span>
                     </div>
 
             </div>
@@ -88,10 +88,10 @@
                     @endphp
                     <div class="col p-0 pl-3">
 
-                        <div class="jobInfoFont float-left mr-1">Job Salary: </div>
-                            <div class="jobDetail" style="margin: 0.2rem 0 0 0.2rem; "> {{$job->salary}}</div>
+                        <div class="font11 float-left mr-1 font-weight-bold">Job Salary: </div>
+                            <div class="jobDetail"> {{$job->salary}}</div>
                         <div class="mt-2">
-                            <span class="jobInfoFont">Job Experience</span>
+                            <span class="font11">Job Experience</span>
                         </div>
                         <div>
                             @if(!empty($industry_experienceData))
@@ -113,7 +113,7 @@
                 </div>
 
                 <div class="row p-0 mt-2">
-                    <div class="card-title col p-0 mb-0 jobInfoFont">Job Detail</div>
+                    <div class="card-title col p-0 mb-0 font11 font-weight-bold">Job Detail:</div>
                 </div>
                 <p class="card-text jobDetail row">{{$job->description}}</p>
 

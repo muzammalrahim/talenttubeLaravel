@@ -12,6 +12,8 @@ use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Mail;
+
 use App\User;
 use App\UserGallery;
 use App\Attachment;
@@ -25,6 +27,16 @@ use App\Tags;
 use App\JobsAnswers;
 use App\JobsQuestions;
 use App\LikeUser;
+
+use App\InterviewTemplate;
+use App\InterviewTempQuestion;
+use App\UserInterview;
+use App\UserInterviewAnswers;
+
+
+use App\Mail\conductInterviewEmail;
+use App\Mail\rejectInterviewInvitationEmail;
+use App\Mail\acceptInterviewInvitationEmail;
 
 
 class MobileEmployerController extends Controller
@@ -228,6 +240,245 @@ class MobileEmployerController extends Controller
             'message' => 'User unLiked Succesfully'
         ]);
     }
+
+
+    // ========================================= Interview Template =========================================
+
+
+    public function MinterviewTemplate(Request $request){
+        // dd($request->templateSelect);
+        $user = Auth::user();
+        if (!isEmployer($user) && (!isAdmin())){ return redirect(route('profile')); }
+        if ($request->templateSelect != 0) {
+            $interviewTemplate = InterviewTemplate::where('id',$request->templateSelect)->get();
+            // dd($interviewTemplate->id);
+            $InterviewTempQuestion = InterviewTempQuestion::where('temp_id',$request->templateSelect)->get();
+            if (!empty($interviewTemplate)) {
+            // dd($interviewTemplate->id);
+            $data['interviewTemplate'] = $interviewTemplate;
+            $data['InterviewTempQuestion'] = $InterviewTempQuestion;
+            return view('mobile.employer.interviewInvitation.template' , $data); 
+            // mobile/employer/interviewInvitation/template
+            }
+        }
+        else{
+            return false;
+        }
+        
+
+    }
+
+
+    // ========================================= Conduct Interview Template =========================================
+
+
+    public function MconductInterview(Request $request){
+        $data =  $request->all();
+        // dd($data);
+        $user = Auth::user();
+        $empName = $user->company;
+        if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
+            $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->first();
+            if(!$UserInterviewCheck){
+
+                $UserInterview = new UserInterview;
+                $UserInterview->temp_id = $data['inttTempId'];
+                $UserInterview->emp_id   = $user->id;
+                $UserInterview->user_id   = $data['user_id'];
+                $UserInterview->status   = 'pending';
+                $UserInterview->url   = generateRandomString();
+                $UserInterview->save();
+                $jsEmail = $UserInterview->js->email;
+
+                Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Interview conducted and Email sent to jobseeker successfully',
+                ]);
+            }
+            else{
+
+                    return response()->json([
+                    'status' => 0,
+                    'message' => 'You have already selected this template, please try another template'
+                ]);
+            }
+    }
+
+    // ============================================= Interview Initation =============================================
+
+    public function MintetviewInvitationEmp(){
+        $user = Auth::user();
+        $data['user'] = $user;
+        // dd($user->id);
+        if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
+        $UserInterview = UserInterview::where('emp_id',  $user->id)->orderBy('created_at' , 'desc')->get();
+        // $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        // $data['controlsession'] = $controlsession;
+        $data['title'] = 'Interview Invitation';
+        $data['UserInterview'] = $UserInterview ;
+        $data['classes_body'] = 'Interviews';
+        return view('mobile.employer.interviewInvitation.index', $data);
+        // mobile/employer/interviewInvitation/index
+    }
+
+
+    // ============================================= Interview Link to jobseeker =============================================
+
+
+     public function MinterviewInvitationUrl(Request $request){
+        $data =  $request->all();
+        // dd($data['url']);
+        $user = Auth::user();
+
+        $UserInterview = UserInterview::where('url', $data['url'])->first();
+        if (!isset($UserInterview)) { return redirect(route('intetviewInvitation'));}
+        $InterviewTempQuestion = InterviewTempQuestion::where('temp_id' , $UserInterview->temp_id)->get();
+        ($UserInterview->user_id);
+
+        $data['user'] = $user;
+        $data['UserInterview'] = $UserInterview;
+        $data['InterviewTempQuestion'] = $InterviewTempQuestion;
+        $data['classes_body'] = 'jobEdit';
+
+        // dd($empName);
+        if (isEmployer()) {
+            return view('mobile.employer.interviewInvitation.detail', $data);   //mobile/employer/interviewInvitation/detail
+
+        }
+        else{
+            return view('mobile.user.interviewInvitation.detail', $data);   // mobile/user/interviewInvitation/detail
+        }
+
+    }
+
+
+    // ============================================= Interview Initation Employer =============================================
+
+    public function MintetviewInvitation(){
+        $user = Auth::user();
+        $data['user'] = $user;
+        if (isEmployer($user)) {return redirect(route('intetviewInvitationEmp'));}
+        $Interviews_booking = UserInterview::where('user_id',  $user->id)->orderBy('created_at' , 'desc')->get();
+        $data['title'] = 'Interview Invitation';
+        $data['Interviews_booking'] = $Interviews_booking ;
+        $data['classes_body'] = 'Interviews';
+        return view('mobile.user.interviewInvitation.index', $data);
+        // mobile/user/interviewInvitation/index
+    }
+
+
+
+    // ============================================= Accept Interview =============================================
+
+     public function MacceptInterviewInvitation(Request $request){
+        $user = Auth::user();
+        $data =  $request->all();
+        $UserInterview = UserInterview::where('url', $data['url'])->where('user_id',$user->id)->first();
+        if ($UserInterview) {
+           if ($UserInterview->user_id != $user->id) {
+            return redirect()->route('mProfile');
+        }
+        else{
+            $UserInterview->status = 'Accepted';
+            $empEmail = $UserInterview->employer->email;
+            $UserInterview->save();
+            Mail::to($empEmail)->send(new acceptInterviewInvitationEmail($user->name, $UserInterview->employer->company,$UserInterview->url));
+            return response()->json([
+                'status' => 1,
+                'message' => 'Interview Rejected Successfully'
+            ]);
+        } 
+        }
+        else{
+            return false;
+        }
+        
+
+    }
+
+
+
+    // ============================================= Reject Interview =============================================
+
+    public function MrejectInterviewInvitation(Request $request){
+        $user = Auth::user();
+        $data =  $request->all();
+        $UserInterview = UserInterview::where('url', $data['url'])->where('user_id' , $user->id)->first();
+        if ($UserInterview->user_id != $user->id) {
+            return redirect()->route('profile');
+        }
+        else{
+            $UserInterview->status = 'Rejected';
+            $empEmail = $UserInterview->employer->email;
+            $UserInterview->save();
+            Mail::to('hassaansaeed1@gmail.com')->send(new rejectInterviewInvitationEmail($user->name, $UserInterview->employer->company));
+            return response()->json([
+                'status' => 1,
+                'message' => 'Interview Rejected Successfully'
+            ]);
+        }   
+    }
+
+    // ============================================= Save Interview's Response as empoloyer =============================================
+
+
+    public function MconfirmInterInvitation(Request $request){
+
+        $user = Auth::user();
+        $data = $request->all();
+        // dd($data);
+        // ================================================== Validation for answering the questions ==================================================
+        if(in_array(null, $data['answer'], true))
+        {
+            return response()->json([
+                'status' => 0,
+                'error' =>  "Please answer all questions"
+            ]);
+        }
+        else
+        {
+            $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('emp_id' , $user->id)->where('temp_id' ,$data['temp_id'])->first();
+            if ($UserInterview) {
+                if ($UserInterview->status == 'Accepted') {
+                    $UserInterview->status =  'Interview Confirmed';
+                    $UserInterview->save();
+
+                    foreach ($data['answer'] as $key => $value) {
+                        $answers = new UserInterviewAnswers;
+                        $answers->emp_id = $user->id;
+                        $answers->userInterview_id  = $data['userInterviewId'];
+                        $answers->user_id  = $data['user_id'];
+                        $answers->question_id = $key;
+                        $answers->answer = $value;
+                        $answers->save();
+                    }
+                    return response()->json([
+                        'status' => 1,
+                        'error' => 'Reponse added successfully'
+                    ]);
+                }
+
+                else{
+                    return response()->json([
+                        'status' => 0,
+                        'error' => 'You have already added response'
+                    ]);
+                }
+
+            }
+            else{
+                dd("nothing here for u");
+            }
+        }    
+
+
+       
+
+    }
+
+
+
 
 
 }

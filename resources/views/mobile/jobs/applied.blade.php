@@ -18,21 +18,24 @@
         @endphp
 
         <div class="card">
-            <div class="card-header jobInfoFont jobAppHeader p-2">
+            <div class="card-header jobAppHeader p-2">
 
-                <a>{{$job->title}}</a>
+                {{-- <div class="test"> --}}
+                    {{-- <div class=""> --}}
+                        <span class="font11 m-0">{{$job->title}}</span>                    
+                    {{-- </div> --}}
 
-                <div class="jobAppStatus float-right">
-                    <div class="font-weight-bold"> Status</div>
-                    <div class="jobAppStatus">{{$application->status}}</div>
-                </div>
+                    <div class="jobAppStatus float-right">
+                        <div class=""> Status</div>
+                        <div class="jobAppStatus">{{$application->status}}</div>
+                    </div>
 
+                {{-- </div> --}}
+                <p class="font11">Location : <span>{{$job->city}},  {{$job->state}}, {{$job->country}} </span> </p>
 
-                <div class="jobInfoFont">Location :
-                    <span style="font-size: 12px">{{$job->city}},  {{$job->state}}, {{$job->country}}
-                    </span>
-                </div>
             </div>
+
+
             @php
             // dd($user->qualification);
             $industry_experienceData =  json_decode($job->experience);
@@ -57,31 +60,24 @@
             $jobType = 'Part time';
             }
             @endphp
-            <div class="card-body jobAppBody">
+            <div class="card-body jobAppBody p-2 font11">
 
-                <div class="row jobInfo">
-                    <div class="p-0 float-right mr-2"><span>Job Type</span><br>
-                        {{$jobType}}
-                    </div>
+                <div class="d-flex mb-2" style="flex-wrap: wrap;">
+                    <div class="p-0 float-right mr-2"><span class="font-weight-bold">Job Type:</span>{{$jobType}}</div>
 
-                    <div>
-                        @if(!empty($industry_experienceData))
-                        @foreach($industry_experienceData as  $industry )
-                            <div class="IndustrySelect">
-                                  <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
-                                  <p>
-                                    <i class="fas fa-angle-right qualifiCationBullet"></i>
-                                      {{getIndustryName($industry)}}
+                    <div class="col jobInfo"><span>Job Salary:</span>{{$job->salary}}</div>
+                </div>
 
-                            </div>
-                        @endforeach
+                <div  class="p-0 mb-2"><span class="font-weight-bold">Job Experience:</span><br>
+
+                    @if(!empty($industry_experienceData))
+                    @foreach($industry_experienceData as  $industry )
+                        <div class="IndustrySelect">
+                              <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
+                              <p class="m-0"><i class="fas fa-angle-right qualifiCationBullet"></i>{{getIndustryName($industry)}}</p>
+                        </div>
+                    @endforeach
                     @endif
-                    </div>
-
-                    <div class="col jobInfo"><span>Job Salary</span><br>
-                        {{$job->salary}}
-                    </div>
-
 
                 </div>
 
@@ -112,23 +108,20 @@
                 </table> --}}
 
 
-                <h5 class="card-title jobDetailTitle">Job Detail</h5>
-                <p class="card-text jobDetail">{{$job->description}}</p>
+                <div class="card-title font11 font-weight-bold mb-2">
+                    <div>Job Detail:</div>
+                    <p class="card-text jobDetail">{{$job->description}}</p>
+                </div>
             </div>
 
             <div class="card-footer text-muted jobAppFooter p-2">
-                <div class="row jobInfo jobFooter">
-                    <div class="col"><span>Submitted</span><br>
+                <div class="font11 text-dark d-block" >
+                    <div class="d-inline-block"><span class="font-weight-bold">Submitted</span><br>
                         {{$application->created_at->format('yy-m-d')}}
                     </div>
-                    <a class="btn btn-sm btn-danger confirmJobAppRemoval redbtn jbtn mr-3" data-jobid="{{$application->id}}" data-toggle="modal" data-target="#deleteJobAppPopup" >Remove</a>
-
-
-               {{--      <div class="float-right">
-                        <a class="btn btn-sm btn-primary mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
-                    </div> --}}
-
-
+                    <div class="float-right">
+                        <a class="btn btn-sm btn-danger confirmJobAppRemoval redbtn jbtn mr-3 float-right" data-jobid="{{$application->id}}" data-toggle="modal" data-target="#deleteJobAppPopup" >Remove</a>
+                     </div>
                 </div>
             </div>
 
