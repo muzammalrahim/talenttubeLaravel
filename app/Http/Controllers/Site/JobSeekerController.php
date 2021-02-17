@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use App\crossreference;
 use App\ControlSession;
+use App\InterviewTempQuestion;
 
 use App\Interview;
 use App\Interviews_booking;
@@ -31,6 +32,7 @@ use App\History;
 use App\Notes;
 use App\InterviewTemplate;
 use App\UserInterview;
+use App\Mail\referenceEmail;
 
 
 class JobSeekerController extends Controller {
@@ -191,11 +193,11 @@ class JobSeekerController extends Controller {
         if (!isEmployer($user) && (!isAdmin($user)) ){ return redirect(route('profile')); }
         $jobSeeker = User::JobSeeker()->where('id',$jobSeekerId)->first();
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
-        $notes = Notes::where('user_id', $user->id)->where('admin_id', '1')->where('js_id' , $jobSeekerId)->get();
-        $UserInterview = UserInterview::where('user_id', $jobSeeker->id)->get(); 
-        // where('status' , 'Interview Confirmed')
-        // dd($UserInterview); 
-        // dd($jobSeeker->email);
+        $notes = Notes::where('admin_id', '1')->where('js_id' , $jobSeekerId)->get();
+        $UserInterview = UserInterview::where('user_id', $jobSeeker->id)->get(); // where('status' , 'Interview Confirmed')
+        // $temp_id = UserInterview::where('user_id', $jobSeeker->id)->first(); // where('status' , 'Interview Confirmed')
+        // dd($temp_id->temp_id);
+        // $InterviewTempQuestion = InterviewTempQuestion::where('temp_id' ,$temp_id->temp_id)->get();
         $isallowed = False;
         foreach($user->users as $us){
             if($us->id == $jobSeeker->id){
@@ -207,7 +209,6 @@ class JobSeekerController extends Controller {
         }
         // check if jobseeker not exist then redirect to jobseeker list.
         if(empty($jobSeeker) || isEmployer($jobSeeker) ){ return redirect(route('jobSeekers')); }
-        // check if this employer has not block you.
         if(hasBlockYou($user, $jobSeeker)){ return view('unauthorized', $data); }
         // $jobs                = Jobs::where('user_id',$employerId)->get();
         $galleries    = UserGallery::Public()->Active()->where('user_id',$jobSeekerId)->get();
@@ -215,15 +216,7 @@ class JobSeekerController extends Controller {
         $interview_booking = Interviews_booking::where('email',$jobSeeker->email)->get();
         $history = History::where('user_id',$jobSeeker->id)->orderBy('created_at', 'desc')->get();
         $historyCreated = User::where('id',$jobSeeker->id)->first();
-
         $interviewTemplate = InterviewTemplate::get();
-        // $historyRecentJobs = History::where('user_id',$jobSeeker->id)->where('type' , 'Recent job')->get();
-        // $historySalary = History::where('user_id',$jobSeeker->id)->where('type' , 'Salary')->get();
-        // $historyJobsApplied = History::where('user_id',$jobSeeker->id)->where('type' , 'Job Applied')->get();
-        // $historyReference = History::where('user_id',$jobSeeker->id)->where('type' , 'Refernce Completed')->get();
-        
-        // dd($interview_booking->email);
-
         $data['title']          = 'JobSeeker Info';
         $data['classes_body']   = 'jobSeekerInfo';
         $data['jobSeeker']       = $jobSeeker;
@@ -240,11 +233,7 @@ class JobSeekerController extends Controller {
         $data['notes'] = $notes;
         $data['interviewTemplate'] = $interviewTemplate;
         $data['UserInterview'] = $UserInterview;
-        // $data['historyJobsApplied'] = $historyJobsApplied;
-        // $data['historyReference'] = $historyReference;
-
-
-
+        // $data['InterviewTempQuestion'] = $InterviewTempQuestion;
         return view('site.user.jobSeekerInfo', $data);      //  site/user/jobSeekerInfo
     }
 

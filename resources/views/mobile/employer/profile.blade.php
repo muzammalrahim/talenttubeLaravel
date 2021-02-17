@@ -6,92 +6,61 @@
 
 <div class="card shadow mb-3 bg-white rounded">
 
-  <h6 class="card-header h6">Company Information {{-- <i class="fas fa-edit float-right"> --}}</i></h6>
+  <h6 class="card-header h6 m-0">Company Information {{-- <i class="fas fa-edit float-right"> --}}</i></h6>
 
-    <div class="card-body p-2 cardBody">
-
-
-
-
-{{-- ==================================================== For image ==================================================== --}}
-
-
-<!--Section: Testimonials v.1-->
-{{-- <section class="section pb-3 text-center"> --}}
-  <!--Section description-->
-
-  <div class="row">
-
-    <!--Grid column-->
-    <div class="col-lg-12 col-md-12 mb-1">
-
-      <!--Card-->
-      <div class="testimonial-card">
-        <!--Background color-->
-        <div class="card-up teal lighten-2">
+  <div class="card-body p-2 cardBody">
+    {{-- ==================================================== For image ==================================================== --}}
+    <div class="row">
+      <!--Grid column-->
+      <div class="col-lg-12 col-md-12 mb-1">
+        <!--Card-->
+        <div class="testimonial-card">
+          <!--Background color-->
+          <div class="card-up teal lighten-2"></div>
+          <!--Avatar-->
+          <div class="avatar mx-auto white">
+            <div class="avatarimg"><img src="{{$profile_image}}"alt="avatar mx-auto white" class="rounded-circle img-fluid" style="height: 110px"></div>
+          </div>
         </div>
-        <!--Avatar-->
-        <div class="avatar mx-auto white">
-
-            <div class="avatarimg">
-            <img src="{{$profile_image}}"
-                alt="avatar mx-auto white" class="rounded-circle img-fluid" style="height: 110px">
-            </div>
-        </div>
-
-
+        <!--Card-->
       </div>
-      <!--Card-->
-
+      <!--Grid column-->
     </div>
-    <!--Grid column-->
-  </div>
-
-{{-- </section> --}}
-<!--Section: Testimonials v.1-->
-
-{{-- ==================================================== For image ==================================================== --}}
+    {{-- ==================================================== For image ==================================================== --}}
 
     <div class="personalInfo">{{$user->name}} {{$user->surname}}</div>
     <div class="personalInfo"><b>Email:</b> {{$user->email}}</div>
     <div class="personalInfo"><b>Phone:</b> {{$user->phone}}</div>
     <div class="personalInfo"><b>Location: </b>{{userLocation($user)}}</div>
 
-
-
     <div class="aboutMeSection"><b>Interested In: </b>
             <div class="spinner-border spinner-border-sm text-primary IntsdInLoader ml-2" role="status" style="display:none;"></div>
             <i class="fas fa-edit float-right intInSecButton"></i> <p class="interestedInSec">{{$user->interested_in}}</p>
-        </div>
+    </div>
 
-    <div class="col-md-12 text-center my-2">
-                              <a class="btn btn-sm btn-success saveInterestedInButton d-none">Save</a>
-        </div>
-
-        <div class="alert alert-success interestedInAlert" role="alert" style="display:none;">
-          <strong>Success!</strong> Interested In have been updated successfully!
-        </div>
-
-        {{-- Interested In --}}
+    <div class="col-md-12 text-center my-2"> <a class="btn btn-sm btn-success saveInterestedInButton d-none">Save</a> </div>
+    <div class="alert alert-success interestedInAlert" role="alert" style="display:none;">
+      <strong>Success!</strong> Interested In have been updated successfully!
+    </div>
 
     <div class="aboutMeSection"><b>About Me: </b>
-            <div class="spinner-border spinner-border-sm text-primary AboutMeLoader ml-2" role="status" style="display:none;"></div>
-            <i class="fas fa-edit float-right aboutMeSecButton"></i> <p class="aboutMeSec">{{$user->about_me}}</p>
-        </div>
+      <div class="spinner-border spinner-border-sm text-primary AboutMeLoader ml-2" role="status" style="display:none;"></div>
+        <i class="fas fa-edit float-right aboutMeSecButton"></i> <p class="aboutMeSec">{{$user->about_me}}</p>
+    </div>
 
-        <div class="col-md-12 text-center my-2">
-            <a class="btn btn-sm btn-success saveAboutMeButton d-none">Save</a>
-        </div>
+    <div class="col-md-12 text-center my-2">
+      <a class="btn btn-sm btn-success saveAboutMeButton d-none">Save</a>
+    </div>
 
-        <div class="alert alert-success AboutMeAlert" role="alert" style="display:none;">
-          <strong>Success!</strong> About Me have been updated successfully!
-        </div>
+    <div class="alert alert-success AboutMeAlert" role="alert" style="display:none;">
+      <strong>Success!</strong> About Me have been updated successfully!
+    </div>
 
-        <div class="cardContent"></div>
-        <div class="cardEdit" style="display: none;"></div>
+    <div class="cardContent"></div>
+    <div class="cardEdit" style="display: none;"></div>
     {{-- @dump($user); --}}
 
-    </div>
+  </div>
 
 </div>
 
@@ -201,31 +170,26 @@
         </div>
   {{-- =================================================================== Photos end =================================================================== --}}
 
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
-  aria-hidden="true">
-
-  <!-- Add .modal-dialog-centered to .modal-dialog to vertically center the modal -->
-  <div class="modal-dialog modal-dialog-centered" role="document">
-
-
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-       <h5 class="modal-title" id="exampleModalLongTitle">Are you sure to delete the picture?</h5>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <button type="button" class="btn btn-primary" onclick="UProfile.deleteGallery(); return false;">OK</button>
-         <input type="hidden" name="deleteConfirmId" id="deleteConfirmId" value=""/>
+  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h5 class="modal-title" id="exampleModalLongTitle">Are you sure to delete the picture?</h5>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" onclick="UProfile.deleteGallery(); return false;">OK</button>
+          <input type="hidden" name="deleteConfirmId" id="deleteConfirmId" value=""/>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
       {{-- =================================================================== videos =================================================================== --}}
 
@@ -234,7 +198,7 @@
         <div id="video" >
             <div id="list_videos_public" class="list_videos_public">
                 <div id="photo_add_video" class="item add_photo add_video_public item_video">
-                    <a class="add_photo"">
+                    <a class="add_photo">
                         <img id="video_upload_select" class="transparent is_video bg-primary" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
                     </a>
                 </div>

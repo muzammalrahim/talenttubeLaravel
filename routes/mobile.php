@@ -34,9 +34,26 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	Route::post('ajax/uploadUserGallery', 'Mobile\MobileUserController@uploadUserGallery');
 
 
-// ========================================== Added by Hassan ==========================================
+	// ========================================== Added by Hassan ==========================================
+    
 
-// ======================================== JOb Seeker's Profile ========================================
+    // InterviewInvitaionByEmployerToJobseeker
+    Route::post('ajax/interview/template','Mobile\MobileEmployerController@MinterviewTemplate')->name('MinterviewTemplate');
+    Route::post('ajax/conduct/Minterview','Mobile\MobileEmployerController@MconductInterview')->name('MconductInterview');
+
+
+    Route::get('Intetview/Invitation/emp/',       'Mobile\MobileEmployerController@MintetviewInvitationEmp')->name('MintetviewInvitationEmp');
+    Route::get('MinterviewInvitation/url','Mobile\MobileEmployerController@MinterviewInvitationUrl')->name('MinterviewInvitationUrl');
+    Route::get('Intetview/Invitation',       'Mobile\MobileEmployerController@MintetviewInvitation')->name('MintetviewInvitation');
+
+    Route::post('ajax/accept/interview/Minvitation','Mobile\MobileEmployerController@MacceptInterviewInvitation')->name('MacceptInterviewInvitation');
+    Route::post('ajax/reject/interview/Minvitation','Mobile\MobileEmployerController@MrejectInterviewInvitation')->name('MrejectInterviewInvitation');
+    Route::post('ajax/MconfirmInterInvitation',    'Mobile\MobileEmployerController@MconfirmInterInvitation')->name('MconfirmInterInvitation');
+
+
+
+
+	// ======================================== JOb Seeker's Profile ========================================
 
 	Route::get('mJobApplications', 'Mobile\MobileUserController@mJobApplications')->name('mJobApplications');
 	Route::get('Mjobs', 'Mobile\MobileUserController@Mjobs')->name('Mjobs');
@@ -80,6 +97,8 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
 	// ================================================= Job Seeker =================================================
 	Route::post('ajax/MupdateInterested_in', 'Mobile\MobileUserController@MupdateInterested_in')->name('MupdateInterested_in');
+	Route::post('ajax/MupdateRecentJob', 'Mobile\MobileUserController@MupdateRecentJob')->name('MupdateRecentJob');
+	Route::post('ajax/MupdateSalaryRange', 'Mobile\MobileUserController@MupdateSalaryRange')->name('MupdateSalaryRange');
 	Route::post('ajax/Mabout_me', 'Mobile\MobileUserController@Mabout_me')->name('Mabout_me');
 	Route::post('ajax/MupdateQualification', 'Mobile\MobileUserController@MupdateQualification')->name('MupdateQualification');
 	Route::post('ajax/MupdateIndustryExperience', 'Mobile\MobileUserController@MupdateIndustryExperience')->name('MupdateIndustryExperience');
@@ -162,6 +181,8 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     Route::post('ajax/crossReference/MsendEmailReferee','Mobile\MobileReferenceController@MsendEmailReferee')->name('MsendEmailReferee');
 
     // =============================================== Cross Reference =============================================== 
+
+
 
 	// Send notification
 

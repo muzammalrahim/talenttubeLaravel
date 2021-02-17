@@ -6,7 +6,7 @@
 
 <div class="card shadow mb-3 bg-white rounded">
 
-  <h6 class="card-header h6">Personal Information {{-- <i class="fas fa-edit float-right"></i> --}} </h6>
+  <h6 class="card-header h6 m-0">Personal Information {{-- <i class="fas fa-edit float-right"></i> --}} </h6>
 
 	  <div class="card-body p-2 cardBody">
 
@@ -65,15 +65,49 @@
       <i class="fas fa-edit float-right intInSecButton"></i> <p class="interestedInSec">{{$user->interested_in}}</p>
     </div>
 
-		<div class="col-md-12 text-center my-2">
+    <div class="col-md-12 text-center my-2">
       <a class="btn btn-sm btn-success saveInterestedInButton d-none">Save</a>
     </div>
 
     <div class="alert alert-success interestedInAlert" role="alert" style="display:none;">
-      <strong>Success!</strong> Interested In have been updated successfully!
+      <strong>Success!</strong> Interested In updated successfully!
     </div>
 
-        {{-- Interested In --}}
+    {{-- =============================================== Recent Job =============================================== --}}
+    <div class="recentJobSection"><b>Recent Job: </b>
+      <div class="spinner-border spinner-border-sm text-primary recentJobLoader ml-2" role="status" style="display:none;"></div>
+      <i class="fas fa-edit float-right recentJobSecButton"></i> <p class="recentJobSec">{{$user->recentJob}}</p>
+    </div>
+
+
+		<div class="col-md-12 text-center my-2">
+      <a class="btn btn-sm btn-success saveRecentJobButton d-none">Save</a>
+    </div>
+
+    <div class="alert alert-success recentJobAlert" role="alert" style="display:none;">
+      <strong>Success!</strong> Recent job updated successfully!
+    </div>
+    
+    {{-- =============================================== Salary Range =============================================== --}}
+
+
+    <div class="salarySection"><b>Expecting Salary: </b>
+
+      <div class="spinner-border spinner-border-sm text-primary salaryLoader ml-2" role="status" style="display:none;"></div>
+      <i class="fas fa-edit float-right salarySecButton"></i> 
+      <p class="oldSalary my-1"> <b>{{'AUD: '}}</b><span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </p>
+    </div>
+
+    <div class="newSalary my-2 d-none">
+      {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, 
+      ['placeholder' => 'Select Salary Range', 'id' => 'salaryRangeFieldnew',  'class' => 'form-control custom-select']) }}
+    </div>
+
+     <div class="alert alert-success salaryAlert" role="alert" style="display:none;">
+      <strong>Success!</strong> Salary updated successfully!
+    </div>
+
+    {{-- =============================================== About Me =============================================== --}}
 
 		<div class="aboutMeSection"><b>About Me: </b>
       <div class="spinner-border spinner-border-sm text-primary AboutMeLoader ml-2" role="status" style="display:none;"></div>
@@ -333,12 +367,10 @@
        <!--Header-->
        <div class="modal-header">
          <p class="heading lead">Delete Resume</p>
-
          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
            <span aria-hidden="true" class="white-text">&times;</span>
          </button>
        </div>
-
        <!--Body-->
        <div class="modal-body">
          <div class="text-center">
@@ -346,13 +378,11 @@
             <p> This action can not be undone. Are you sure you wish to continue? </p>
          </div>
        </div>
-
        <!--Footer-->
        <div class="modal-footer justify-content-center">
          <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">No</a>
          <input type="hidden" name="" class="deleteAttachmentIdInModal">
          <a type="button" class="btn btn-danger confirmDeleteAttachment" data-dismiss="modal" >Yes </a>
-
        </div>
      </div>
      <!--/.Content-->
@@ -361,7 +391,7 @@
  <!-- Central Modal Medium Danger-->
 
 
-      {{-- =================================================================== videos =================================================================== --}}
+   {{-- =================================================================== videos =================================================================== --}}
 
     <div class="video text-dark mt-3">
     <div class="tabs_videos mb-2 font-weight-bold">Videos</div>
@@ -374,21 +404,13 @@
                 </div>
             </div>
             <div class="cl"></div>
-
-
             <div class="videos mt-2">
                 @if ($videos->count() > 0 )
                 @foreach ($videos as $video)
                     <div id="v_{{$video->id}}" class="video_box mb-2">
-                        <!-- Grid row -->
-
-
-              <!--Modal: Name-->
               <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
-                  <!--Content-->
                   <div class="modal-content">
-                    <!--Body-->
                     <div class="modal-body mb-0 p-0">
                       <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
                           <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
@@ -397,16 +419,12 @@
 
                       </div>
                     </div>
-                    <!--Footer-->
                     <div class="modal-footer justify-content-center">
                       <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
                     </div>
                   </div>
-                  <!--/.Content-->
                 </div>
               </div>
-
-              <!--Modal: Name-->
               <a>
                   {!! generateVideoThumbsm($video) !!}
                 </a>
@@ -414,10 +432,6 @@
                 @endforeach
             @endif
          </div>
-
-
-
-
         </div>
     </div>
   {{-- =================================================================== videos end =================================================================== --}}
@@ -433,23 +447,14 @@
 
 
     <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-
-
-
         <div class="mb-3 bg-white rounded text-dark">
-
             <h6 class="card-header h6">Questions <div class="spinner-border spinner-border-sm text-light userQuesLoader ml-2" role="status" style="display:none;"></div>
             <i class="fas fa-edit float-right editQuestions"></i></h6>
-
             <div class="card-body p-2 cardBody">
-
                     <p class="loader SaveQuestionsLoader"style="float: left;"></p>
                       <div class="cl"></div>
-
                         <div class="questionsOfUser">
                           @include('mobile.layout.parts.jobSeekerQuestions')  {{--  mobile/layout/parts/jobSeekerQuestions    --}}
-
-
                         </div>
                         <div class="col-md-12 text-center mt-3">
                             <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
@@ -458,32 +463,18 @@
                       <strong>Success!</strong> Questions have been updated successfully!
                     </div>
             </div>
-
         </div>
-
-
 
     </div>
 
-  {{-- ============================================================= Questions Tab End here ============================================================= --}}
 
   {{-- ============================================================= Reference Tab Start here ============================================================= --}}
 
 
     <div class="tab-pane fade" id="reference-just" role="tabpanel" aria-labelledby="reference-tab-just">
-
-
-
         <div class="mb-3 bg-white rounded text-dark">
-
           @include('mobile.layout.parts.jsAddReference')  {{--  mobile/layout/parts/jsAddReference    --}}
-
-          
-
-            {{-- <h1>Hi How Are YOu Man</h1> --}}
-
         </div>
-
     </div>
 
   {{-- ============================================================= Reference Tab End here ============================================================= --}}
@@ -711,7 +702,84 @@ $(".saveInterestedInButton").click(function(){
     });
 });
 
-// {{-- ==================================================== Edit Interested IN End ==================================================== --}}
+
+
+
+// {{-- ==================================================== Edit Recent Job ==================================================== --}}
+
+$('.recentJobSecButton').click(function(){
+
+        $('.recentJobSec').attr("contentEditable", "true");
+        $('.recentJobSec').addClass('interestedInEditColor').css("border","2px solid #dc9f4a");
+        $('.recentJobSec').addClass('editable');
+    $('.saveRecentJobButton').removeClass('d-none');
+
+
+});
+
+$(".saveRecentJobButton").click(function(){
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+    var recentJob = $('.recentJobSec').text();
+    console.log(recentJob);
+    $('.recentJobLoader').show();
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/m/ajax/MupdateRecentJob',
+        data: {'recentJob': recentJob},
+        success: function(resp){
+            if(resp.status){
+                $('.recentJobLoader').hide();
+                $('.saveRecentJobButton').addClass('d-none');
+                $('.recentJobSec').attr("contentEditable", "false");
+                $('.recentJobSec').removeClass('interestedInEditColor').css("border","none");
+                $('.recentJobAlert').show().delay(3000).fadeOut('slow');
+
+
+            }
+        }
+    });
+});
+
+// ========================================================= Edit Salary Range =========================================================
+
+$('.salarySecButton').click(function(){
+  $('.oldSalary').addClass('d-none');
+  $('.newSalary').removeClass('d-none');
+});
+
+$(document).on('change' , '#salaryRangeFieldnew' , function(){
+
+  var salaryRangeField = $('#salaryRangeFieldnew option:selected').val();
+  console.log(salaryRangeField);
+  $('.salaryLoader').show(); 
+
+    $.ajaxSetup({ headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+      $.ajax({
+
+        type: 'POST',
+        url: base_url+'/m/ajax/MupdateSalaryRange',
+        data: {'salaryRange': salaryRangeField},
+        success: function(data){
+          if(data.status == 1){
+            $('.salaryLoader').hide(); 
+            // $('.salaryRangeField').addClass('hide_it');
+            $('.salaryAlert').show().delay(3000).fadeOut('slow');
+            $('.oldSalary').removeClass('d-none');
+            $('.newSalary').addClass('d-none');
+            $('.salaryRangeValue').text(salaryRangeField);
+
+          }
+        }
+
+      });
+
+});
+
 
 // {{-- ==================================================== Edit About Me  ==================================================== --}}
 

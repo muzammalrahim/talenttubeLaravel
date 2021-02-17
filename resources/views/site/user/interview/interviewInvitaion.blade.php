@@ -10,7 +10,7 @@
 @section('content')
 
 <div class="newJobCont">
-  <div class="head icon_head_browse_matches">Welcome to Interview Invitation</div>
+  <div class="head icon_head_browse_matches">Received Interview Invitations <a href="{{ route('unhideInterviews') }}" class="unhideInterviews"> Click here to Un-Hide your interviews </a> </div>
   @if ($Interviews_booking->count() > 0)
   @foreach ($Interviews_booking   as $Int_booking)
 
@@ -18,9 +18,26 @@
   <div class="job_row interviewBookingsRow_{{$Int_booking->id}}">
     
     <div class="job_heading p10">
-      <div class="w_80p">
-        <h3 class=" job_title"><a> <b>Invitation {{$loop->index+1}}: </b> Inerview from {{$Int_booking->employer->company}}</a></h3>
+      <div class="w70 dinline_block">
+        <h3 class=" job_title"><a> <b>Invitation {{$loop->index+1}}: </b> Interview from {{$Int_booking->employer->company}}</a></h3>
       </div>
+
+      <div class="w10 selectStatus d-contents">
+
+        <form class="statusOfInterview d-contents" name="statusOfInterview">  
+          @csrf
+          <select name="hide">
+            <option value= "0"> Select Status   </option> 
+            <option value= "yes"> Hide Interview </option> 
+            @if ($Int_booking->status == 'pending')
+              <option value= "decline"> Decline Interview </option> 
+            @endif
+          </select>
+          <input type="hidden" class="interview_id" name="interview_id" value="{{$Int_booking->id}}">
+        </form>
+
+      </div>
+
       <div class="fl_right">
           <div class="j_label bold">
             Status:
@@ -34,34 +51,33 @@
     </div>
 
     <div class="job_info row p10 dblock">
-      <div class="timeTable">
+      {{-- <div class="timeTable"> --}}
         <div class="IndustrySelect">
-          <p class="p0 qualifType m5"> Template Name: <b> {{$Int_booking->template->template_name}} </b> </p>
+          <p class="p0 qualifType"> Template Name: <b> {{$Int_booking->template->template_name}} </b> </p>
           @if ($Int_booking->template->type == "phone_screeen")
             <p> Template Type: <b> Phone Screen</b> </p>
           @else
-            <p class="p0 qualifType m5"> Template Type: <b> {{$Int_booking->template->type}} </b> </p>
+            <p class="p0 qualifType"> Interview Type: <b> {{$Int_booking->template->type}} </b> </p>
           @endif
-           <div class="j_button pb20">
-               <a class="jobApplyBtn graybtn jbtn seeDetailOfInterview" data-jobid="{{$Int_booking->id}}">Click here to See the full detail of invitation</a>
+           <div class="j_button pb20 mt20">
+               <a class="jobApplyBtn graybtn jbtn seeDetailOfInterview" href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}">Click here to respond to this interview</a>
            </div>
         </div>
-      </div>
+      {{-- </div> --}}
 
       @php
         $question = $Int_booking->tempQuestions;
       @endphp
 
-      <div class="timeTable11 hide_it">
+      {{-- <div class="timeTable11 hide_it">
         <form method="POST" name="confirmSubmitInterview" id="confirmSubmitInterview" class="confirmSubmitInterview jobApply jobApply_validation">
         @csrf
 
         <input type="hidden" name="userInterviewId" value="{{$Int_booking->id}}">
         <input type="hidden" name="temp_id" value="{{$Int_booking->temp_id}}">
-        @foreach ($question as $key => $quest)
+        @foreach ($question as $quest)
               <p class="p0 qualifType m5"> {{ $quest->question }} </p>
               <input type="text" name="answer[{{$quest->id}}]" class="w80"> 
-              {{-- <input type="text" name="answer[{{$quest->id}}]" class="w80">  --}}
         @endforeach
         <div>
           <span class="btn small leftMargin turquoise confirmInterview custom-btn m5" data-intId="{{$Int_booking->id}}" >Confirm Interview</span>
@@ -70,13 +86,13 @@
         </div>
       </form>
       
-      </div>
+      </div> --}}
     </div>
   </div>
 
 @endforeach  
 @else
-<h5> You have not booked any interview yet</h5>
+<h3> You have not received any interview invitation yet.</h3>
 @endif
 
 <div class="cl"></div>
@@ -166,6 +182,36 @@ $(document).ready(function(){
   
   });
 
+
+  // ========================================================= Change Status of interview =========================================================
+
+  $('.statusOfInterview').on('change',function() {
+    event.preventDefault();
+    var formData = $(this).serializeArray();
+    var interview_id = $(this).closest('.statusOfInterview').find('.interview_id').val();
+    console.log(' formData ', formData);
+    $('.general_error1').html('');
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/ajax/userInterview/hide/js',
+        data: formData,
+        success: function(response){
+            console.log(' response ', response);
+            // $('.selectStatus').html('Send Email').prop('disabled',false);
+            $('.interviewBookingsRow_'+interview_id).remove();
+            if( response.status == 1 ){
+                // $('.errorsInFields').text('Notification sent sucessfully');
+                // setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
+            }else{
+
+                  
+            }
+
+        }
+    });
+  });
+
+  // ========================================================= Change Status of interview =========================================================
 
 
 

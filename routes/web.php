@@ -26,7 +26,7 @@ Route::get('testEmail', function () {
 
 // Route::get('testEmail1','Site\ReferenceController@testEmail1')->name('testEmail1');
 
-
+Route::get('interviewInvitation/url','Site\HomeController@interviewInvitationUrl')->name('interviewInvitationUrl');
 Route::get('userinterviewconcierge/url', 'Site\HomeController@userUniqueurl')->name('userinterviewconcierge.url');
 Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->name('publicuservideo');
 
@@ -37,7 +37,6 @@ Route::get('/alreadyBookedSlot',    'Site\HomeController@alreadyBookedSlot')->na
 Route::post('interviewConLogin',    'Site\HomeController@interviewConLogin')->name('interviewConLogin');
 Route::get('/interviewCon',    'Site\HomeController@interviewConLayout')->name('interviewCon');
 Route::get('/noBookingMade',    'Site\HomeController@noBookingMade')->name('noBookingMade');
-
 Route::post('ajax/booking/deleteBooking',    'Site\HomeController@deleteBooking')->name('deleteBooking');
 Route::post('ajax/booking/deleteSlot',    'Site\HomeController@deleteSlot')->name('deleteSlot');
 Route::post('ajax/booking/sendEmailEmployer',    'Site\HomeController@sendEmailEmployer')->name('sendEmailEmployer');
@@ -49,7 +48,6 @@ Route::get('crosssreference/url', 'Site\ReferenceController@crosssreference')->n
 Route::post('ajax/booking/sendReferenceW', 'Site\ReferenceController@sendReferenceW')->name('sendReferenceW');
 Route::post('ajax/booking/sendReferenceP', 'Site\ReferenceController@sendReferenceP')->name('sendReferenceP');
 Route::post('ajax/booking/sendReferenceE', 'Site\ReferenceController@sendReferenceE')->name('sendReferenceE');
-
 Route::post('ajax/crossreference/declineReference/{id}','Site\ReferenceController@declineReference')->name('declineReference');
 Route::get('reference/completed','Site\ReferenceController@referenceCompleted')->name('reference.completed');
 Route::get('reference/declined','Site\ReferenceController@referenceDeclined')->name('reference.declined');
@@ -57,15 +55,11 @@ Route::get('completed/reference/{id}/{name}','Site\ReferenceController@completed
 
 // =========================================== Cross Reference for unauthenticated ===========================================
 
-
-
 // =========================================== Resume Read Section ============================================
 
 Route::get('generate-docx','Site\HomeController@generateDocx')->name('generateDocx');
 
-
 // Route::get('userInterview',    'Site\HomeController@unregisteredUserInterview')->name('userInterview');
-
 
 Route::get('test', 'Site\SiteUserController@test')->name('test');
 Route::get('test2', 'Site\HomeController@test2')->name('test2');
@@ -79,7 +73,6 @@ Route::post('notifyPayment', 'Site\PaymentController@notifyPayment')->name('noti
 
 Route::get('paymentReturn', 'Site\PaymentController@paymentReturn')->name('paymentReturn');
 
-
 Auth::routes();
 Route::get('/clear', function() {
     $cache = Artisan::call('cache:clear');
@@ -92,7 +85,6 @@ Route::get('/clear', function() {
     dump(' config = '.$config);
     dd(' view = '.$view);
 });
-
 
 Route::get('images/user/{userid}/gallery/{any}', [
     'as'         => 'images.show',
@@ -113,8 +105,6 @@ Route::get('stream/{userid}/videos/{any}', [
     'middleware' => 'auth',
     'uses'       => 'Site\HomeController@videoStream',
 ])->where('any', '.*');
-
-
 
 //Media access gallery
 Route::get('media/public/{userid}/{any}', [
@@ -175,7 +165,7 @@ Route::get('media/private/{userid}/{any}', [
     // for deleting
     Route::post('employers/delete/{id}', 'Admin\UserController@destroyemployers')->name('employers.destroy');
 
-    // Route added by Hassaan
+    // Routes added by Hassaan
     Route::get('jobs','Admin\AdminJobsController@jobs')->name('adminJobs');
     Route::get('jobs/getList', 'Admin\AdminJobsController@getDatatable')->name('jobs.dataTable');
     Route::get('jobs/getListjob', 'Admin\AdminJobsController@getDatatablejob')->name('jobs.dataTablejob');
@@ -187,7 +177,6 @@ Route::get('media/private/{userid}/{any}', [
 
     // for deleting
     Route::post('jobs/delete/{id}', 'Admin\AdminJobsController@destroyJob')->name('jobs.destroy');
-
 
     // bulkEmailnewBulkEmailApplicant
     Route::get('bulkEmail/new', 'Admin\AdminEmailsController@newBulkEmail')->name('bulkEmail.new');
@@ -281,6 +270,53 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('template/edit/{id}', 'Admin\AdminInterviewController@templateEdit')->name('adminEditTemplateQuestion');
     Route::post('template/update/{id}', 'Admin\AdminInterviewController@templateUpdate')->name('template.update');
     Route::post('ajax/template/question/delete', 'Admin\AdminInterviewController@templateQuestionDelete')->name('templateQuestionDelete');
+
+    // ====================================== iteration-8 ======================================
+
+    Route::get('users/tracker', 'Admin\UserController@trackUsers')->name('trackUsers');
+    Route::get('tracker/getList', 'Admin\UserController@getDatatableTracker')->name('tracker.dataTable');
+    Route::get('users/tracker/jobs', 'Admin\AdminJobsController@getJobsOjs')->name('users.getJobs');
+
+    Route::post('jobs/status', 'Admin\AdminJobsController@changesJobStatus')->name('jobs.changesStatus');
+    Route::post('jobs/status/change', 'Admin\AdminJobsController@changesJobStatusConfirm')->name('jobs.changesJobStatusConfirm');
+
+
+
+    Route::get('users/tracker/addCandidate', 'Admin\UserController@addCandidate')->name('addCandidate');
+    Route::get('candidates/getList', 'Admin\UserController@addCandidateDatatable')->name('addCandidateDatatable.dataTable');
+    Route::post('candidates/addToTracker', 'Admin\UserController@addToTracker')->name('users.addToTracker');
+    Route::post('candidates/removeTracker', 'Admin\UserController@removefromTracker')->name('users.removeTracker');
+    Route::post('note/addUsersNote', 'Admin\UserController@addUsersNote')->name('users.addUsersNote');
+    Route::post('note/updateNote', 'Admin\UserController@updateNote')->name('users.updateNote');
+
+    // ========================================== Talent pool iteration-8 ==========================================
+    
+    Route::get('users/pool', 'Admin\TalentPoolController@talentPool')->name('talentPool');
+    Route::get('talent/pool/getList', 'Admin\TalentPoolController@talentPoolDataTable')->name('talentPool.dataTable');
+    Route::get('pool/create', 'Admin\TalentPoolController@poolCreate')->name('pool.create');
+    Route::post('pool/store', 'Admin\TalentPoolController@poolStore')->name('pool.store');
+    Route::get('pool/{id}/{name}', 'Admin\TalentPoolController@poolInfo')->name('poolInfo');
+    Route::get('userPoolDatatable/getList', 'Admin\TalentPoolController@userPoolDatatable')->name('userPool.dataTable');
+    Route::get('pool/addJobseeker', 'Admin\TalentPoolController@addJobseekerInPool')->name('addJobseekerInPool');
+
+    Route::get('addJobseekerinPoolDatatable/getList', 'Admin\TalentPoolController@addJobseekerinPoolDatatable')->name('addJobseekerinPool.dataTable');
+    Route::post('jobseeker/addInPool', 'Admin\TalentPoolController@addInPool')->name('users.addInPool');
+    Route::post('jobseeker/removeFromPool', 'Admin\TalentPoolController@removeFromPool')->name('users.removeFromPool');
+
+    // ===================================================== jobapplication page Interview ===================================================== 
+
+ 
+    Route::get('jobseeker/interview/{id}', 'Admin\AdminJobsController@jobseekerInterviews')->name('jobseekerInterviews');
+
+
+
+
+
+
+
+
+    Route::get('users/list', 'Admin\UserController@verifiedUsers')->name('userslist');
+
     
 
 });
@@ -289,7 +325,9 @@ Route::get('media/private/{userid}/{any}', [
     // User Registeration.
     Route::post('register', 'Site\HomeController@register')->name('register'); // user_register
     // Route::get('step2', 'Site\HomeController@step2')->name('step2');
-	Route::post('login', 'Site\HomeController@loginUser')->name('login');
+    Route::post('login', 'Site\HomeController@loginUser')->name('login');
+
+	Route::post('loginUserInterviewInvitation', 'Site\HomeController@loginUserInterviewInvitation')->name('loginUserInterviewInvitation');
 
 
     // =============================================== Forget Password ===============================================
@@ -343,13 +381,23 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/interview/template','Site\EmployerController@interviewTemplate')->name('interviewTemplate');
     Route::post('ajax/conduct/interview','Site\EmployerController@conductInterview')->name('conductInterview');
 
+    Route::post('ajax/live/interview','Site\EmployerController@liveInterview')->name('liveInterview');
+
+
+    Route::post('ajax/reject/interview/invitation','Site\EmployerController@rejectInterviewInvitation')->name('rejectInterviewInvitation');
+    Route::post('ajax/accept/interview/invitation','Site\EmployerController@acceptInterviewInvitation')->name('acceptInterviewInvitation');
+    Route::post('ajax/confirmInterInvitation',    'Site\InterviewController@confirmInterInvitation')->name('confirmInterInvitation');
+    Route::post('ajax/confirmInterInvitation/js',    'Site\InterviewController@confirmInterInvitationJs')->name('confirmInterInvitationJs');
+    
+
+
 
     Route::get('profile', function () { return redirect('user/'.Auth::user()->username); })->name('profile');
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
     Route::post('saveUserProfile', 'Site\SiteUserController@updateUserProfile')->name('saveUserProfile');
     Route::post('saveUserPersonalSetting', 'Site\SiteUserController@saveUserPersonalSetting')->name('saveUserPersonalSetting');
 
-// ======================================= For Updating User Setting =======================================
+    // ======================================= For Updating User Setting =======================================
 
     Route::get('updateUserPersonalSetting', 'Site\SiteUserController@updateUserPersonalSetting')->name('updateUserPersonalSetting');
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
@@ -396,7 +444,6 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     // ============================================= Save User Tags =============================================
 
     Route::post('ajax/updateUserTags', 'Site\SiteUserController@updateUserTags')->name('updateUserTags');
-
 
     // ============================================= Save User Tags =============================================
 
@@ -493,8 +540,11 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     // JobseekerInterviewInvitation
 
     Route::get('Intetview/Invitation',       'Site\InterviewController@interviewInvitataion')->name('intetviewInvitation');
-    Route::post('ajax/confirmInterInvitation',    'Site\InterviewController@confirmInterInvitation')->name('confirmInterInvitation');
-
+    Route::get('Intetview/Invitation/emp/',       'Site\InterviewController@intetviewInvitationEmp')->name('intetviewInvitationEmp');
+    Route::get('unhide/interviews',       'Site\InterviewController@unhideInterviews')->name('unhideInterviews');
+    Route::post('ajax/userInterview/hide','Site\InterviewController@hideUserInterview')->name('hideUserInterview');
+    Route::post('ajax/userInterview/hide/js','Site\InterviewController@hideUserInterviewJs')->name('hideUserInterviewJs');
+    Route::post('ajax/userInterview/unhide','Site\InterviewController@unhideUserInterview')->name('unhideUserInterview');
 
     // =============================================== Cross Reference ===============================================
 
@@ -508,7 +558,10 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/saveNote','Site\SiteUserController@saveNote')->name('saveNote');
     Route::post('ajax/deleteNote/{id}', 'Site\SiteUserController@deleteNote')->name('deleteNote');
 
-    // =============================================== Cross Reference =============================================== 
+    // =============================================== Completed Interview as Admin iteration-8  =============================================== 
+
+    Route::get('completed/interviews/{id}', 'Site\InterviewController@completedInterviews')->name('completedInterviews');
+
 
 
 

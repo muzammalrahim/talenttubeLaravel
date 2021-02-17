@@ -1,13 +1,6 @@
 {{-- @extends('site.user.usertemplate') --}}
 
 
-{{-- @if ($controlsession->count() > 0)
-    <div class="adminControl">
-            <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
-    </div>
-@endif
-
- --}}
 @extends('site.user.usermaster')
 
 @section('custom_css')
@@ -52,23 +45,11 @@
                 </div>
 
                 <div class="js_info w_70p w_box dblock fl_left">
-                    <div class="js_interested js_field">
-                        <span class="js_label">Recent Job:</span>
-                        <p>{{$js->recentJob}}</p>
-                    </div>
+                    <div class="js_interested js_field"> <span class="js_label">Recent Job:</span> <p>{{$js->recentJob}}</p></div>
 
-                    <div class="js_about js_field">
-                        <span class="js_label">About me:</span>
-                        <p class="js_about_me"> {{$js->about_me}}</p>
-                    </div>
-                    <div class="js_interested js_field">
-                        <span class="js_label">Interested in:</span>
-                        <p>{{$js->interested_in}}</p>
-                    </div>
-                    <div class="js_interested js_field">
-                        <span class="js_label">Expected Salary:</span>
-                        <p>{{$js->salaryRange}}</p>
-                    </div>
+                    <div class="js_about js_field"> <span class="js_label">About me:</span><p class="js_about_me"> {{$js->about_me}}</p> </div>
+                    <div class="js_interested js_field"><span class="js_label">Interested in:</span><p>{{$js->interested_in}}</p></div>
+                    <div class="js_interested js_field"><span class="js_label">Expected Salary:</span><p>{{$js->salaryRange}}</p></div>
 
                     <div class="js_education js_field">
                         <span class="js_label">Qualification:</span>
@@ -351,6 +332,7 @@
      <a id="tabs-7" class="tab_link tab_a"></a>
     <div class="tab_interviews tab_cont pt30px">
         @include('site.user.jobseekerInfoTabs.interviews')
+        {{--    site/user/jobseekerInfoTabs/interviews  --}}
 
     </div>
 
@@ -399,7 +381,7 @@
 <style type="text/css">
     /*.seeCompletedReference{text-decoration: underline;}*/
 
-a.seeCompletedReference {color: black;text-transform: uppercase;text-decoration: none;letter-spacing: 0.15em;display: inline-block;
+/*a.seeCompletedReference {color: black;text-transform: uppercase;text-decoration: none;letter-spacing: 0.15em;display: inline-block;
   padding: 15px 20px;
   position: relative;
 }
@@ -408,10 +390,12 @@ a.seeCompletedReference:after {
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
-a.seeCompletedReference:hover:after { width: 100%; left: 0; }
+a.seeCompletedReference:hover:after { width: 100%; left: 0; }*/
 .js_location {font-size: 11px !important;}
 div#tabs_profile>ul.tab.customTab { margin-bottom: 15px;}
 .item_video .video_link{height: 23% !important;}
+ .hide{display: none;}
+
 /*.jq-selectbox.jqselect.templateSelect { position: revert  !important; }*/
 
 

@@ -33,10 +33,7 @@ use App\Interviews_booking;
 use App\ControlSession;
 use App\Notes;
 use App\History;
-
 use Jenssegers\Agent\Agent;
-
-
 use PDFMerger;
 use Spatie\PdfToText\Pdf;
 use KeywordExtractor\KeywordExtractor;
@@ -65,6 +62,7 @@ class SiteUserController extends Controller
         // $session11 = session()->get('adminControls');
         // dd($session11);
 
+        // dd($request->ip());
         $user = Auth::user();
         if ($request->username ===  $user->username) {
             $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
@@ -114,7 +112,8 @@ class SiteUserController extends Controller
             $data['userquestion'] = getUserRegisterQuestions();
             $data['empquestion'] = getEmpRegisterQuestions();
 
-            
+            $ip = $request->ip();
+            // dd($ip);
             $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
             $data['controlsession'] = $controlsession;
 
@@ -826,7 +825,7 @@ class SiteUserController extends Controller
         // dump($request->questions);
         $user = Auth::user();
 
-             $rules = array('questions' => 'string|max:100');
+            $rules = array('questions' => 'string|max:100');
             $user->questions = json_encode($request->questions);
             $user->save();
             $data['user'] = User::find($user->id);
@@ -1744,7 +1743,7 @@ class SiteUserController extends Controller
     public function jobApplySubmit(Request $request){
         $user = Auth::user();
         $requestData = $request->all();
-        dd($requestData);
+        // dd($requestData);
         $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
 
         if(isset($requestData['answer']) && !empty($requestData['answer'])){

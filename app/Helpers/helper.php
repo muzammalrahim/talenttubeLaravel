@@ -927,6 +927,7 @@ function getInterviewTemplateType(){
     $templatetype = array(
         'Phone Screeen' => 'Phone Screen',
         'Traditional' => 'Traditional',
+        'Correspondence' => 'Correspondence',
     );
     return $templatetype;
 }

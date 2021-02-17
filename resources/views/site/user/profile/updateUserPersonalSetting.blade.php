@@ -121,7 +121,7 @@
     color: white !important;
 }
 div#colfix_l {
-    height: 310px;
+    height: 470px;
     width: 185px;
 }
 div.cont_w>.column_main {

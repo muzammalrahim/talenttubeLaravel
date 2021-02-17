@@ -27,6 +27,10 @@ use App\JobsQuestions;
 use App\LikeUser;
 use App\fbremacc;
 use App\crossreference;
+use App\History;
+use App\Interviews_booking;
+use App\UserInterview;
+use App\InterviewTemplate;
 
 use App\CvData;
 use PDFMerger;
@@ -110,23 +114,14 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
 
     public function step2User(){
-        // dd(' step2Employer ');
-								$user = Auth::user();
-								// dd($user);
+        $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'User';
         $data['classes_body'] = 'userStep2';
-        // $data['content'] = 'this is page content';
-
         $tagCategories = TagCategory::get();
         $tags = Tags::orderBy('usage', 'DESC')->limit(30)->get();
-
-        // dump(  $tags );
-        // dd(  $tagCategories );
-
         $data['tags'] = $tags;
         $data['tagCategories'] = $tagCategories;
-
         return view('mobile.register.user_step2', $data);    //		mobile/register/user_step2
 
     }
@@ -447,6 +442,8 @@ class MobileUserController extends Controller
             $user = Auth::user();
             $user->recentJob = $request->recentjob;
             $user->save();
+
+
             return response()->json([
                     'status' => 1,
                     'data' => $user->recentJob
@@ -458,14 +455,22 @@ class MobileUserController extends Controller
     //====================================================================================================================================//
 
 
-    public function updateSalaryRange(Request $request)
-    {
-        $rules = array('salaryRange' => 'string|max:100');
+    public function MupdateSalaryRange(Request $request){
+
+    	// dd($request->salaryRange);
+    	$rules = array('salaryRange' => 'string|max:100');
         $validator = Validator::make($request->all(), $rules);
         if (!$validator->fails()) {
             $user = Auth::user();
             $user->salaryRange = $request->salaryRange;
             $user->save();
+            $history = new History;
+
+            $history->user_id = $user->id; 
+            $history->new_salary = $user->salaryRange; 
+            $history->type = 'Salary'; 
+            $history->save();
+
             return response()->json([
                     'status' => 1,
                     'data' => $user->salaryRange
@@ -511,6 +516,30 @@ class MobileUserController extends Controller
                     'data' => $data
             ]);
         // }
+    }
+
+    //====================================================================================================================================//
+    // Ajax For updating Interested In.
+    // Called from JobSeeker Profile page.
+    //====================================================================================================================================//
+    public function MupdateRecentJob(Request $request){
+
+        $user = Auth::user();
+        $user->recentJob = $request->recentJob;
+        $user->save();
+
+        $history = new History;
+        $history->user_id = $user->id; 
+        $history->recentJob = $user->recentJob; 
+        $history->type = 'Recent job'; 
+        $history->save();
+
+        $data['user'] = User::find($user->id);
+        return response()->json([
+                'status' => 1,
+                'data' => $data
+        ]);
+  
     }
 
     // Ajax For updating Interested In.
@@ -571,6 +600,12 @@ class MobileUserController extends Controller
             $user->qualification = $request->qualification;
             $user->qualificationRelation()->sync($requestData['qualification']);
             $user->save();
+
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->type = 'Qualification Updated'; 
+            $history->save();
+
             $data['user'] = User::find($user->id);
             $QualificationView =  view('mobile.layout.parts.jobSeekerQualificationList', $data);
             $QualificationHtml = $QualificationView->render();
@@ -1886,65 +1921,31 @@ class MobileUserController extends Controller
     // Get // layout for Employer Detail.
     //====================================================================================================================================//
     public function MjobSeekersInfo($jobSeekerId){
-
-    	// dd($jobSeekerId);
-       //  $user = Auth::user();
-       //  // dump($jobseekerId);
-
-       //  // if (isEmployer($user)){ return redirect(route('employers')); }
-       //  $data['user'] = $user;
-       //  $employer = User::JobSeeker()->where('id',$jobseekerId)->first();
-
-       //  // check if employer with id exist.
-       //  // if(empty($employer) || !isEmployer($employer) ){ return redirect(route('employers')); }
-
-       //  // check if this employer has not block you.
-       // if(hasBlockYou($user, $employer)){ return view('unauthorized', $data); }
-
-       //  $jobs                = Jobs::where('user_id',$jobseekerId)->get();
-       //  $employer_gallery    = UserGallery::Public()->Active()->where('user_id',$jobseekerId)->get();
-       //  $employer_video      = Video::where('user_id', $jobseekerId)->get();
-
-       //  $data['title']          = 'JobSeeker Info';
-       //  $data['classes_body']   = 'Jobseeker Info';
-       //  $data['jobseeker']       = $employer;
-       //  $data['likeUsers']      = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
-       //  $data['jobs']           = $jobs;
-       //  $data['galleries']        = $employer_gallery;
-       //  $data['videos']          = $employer_video;
-       //  $data['empquestion'] = getEmpRegisterQuestions();
-        $data['userquestion'] = getUserRegisterQuestions();
-
-
-    	 $user = Auth::user();
-        // if not employer then do not allowed him.
+    	$user = Auth::user();
         if (!isEmployer($user)){ return redirect(route('jobSeekers')); }
-
+       	$userquestion = getUserRegisterQuestions();
+       	$data['userquestion'] = $userquestion;
         $data['user'] = $user;
-
-
         $jobSeeker = User::JobSeeker()->where('id',$jobSeekerId)->first();
-
         $isallowed = False;
         foreach($user->users as $us){
             if($us->id == $jobSeeker->id){
                 $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
                 $isallowed = True;
                 $data['attachments'] = $attachments;
-
             }
-
         }
 
         // check if jobseeker not exist then redirect to jobseeker list.
         if(empty($jobSeeker) || isEmployer($jobSeeker) ){ return redirect(route('jobSeekers')); }
-
-        // check if this employer has not block you.
-       if(hasBlockYou($user, $jobSeeker)){ return view('unauthorized', $data); }
+       	if(hasBlockYou($user, $jobSeeker)){ return view('unauthorized', $data); }
 
         // $jobs                = Jobs::where('user_id',$employerId)->get();
         $galleries    = UserGallery::Public()->Active()->where('user_id',$jobSeekerId)->get();
         $videos      = Video::where('user_id', $jobSeekerId)->get();
+        $interview_booking = Interviews_booking::where('email',$jobSeeker->email)->get();
+        $UserInterview = UserInterview::where('user_id', $jobSeeker->id)->get(); 
+        $interviewTemplate = InterviewTemplate::get();
 
         $data['title']          = 'JobSeeker Info';
         $data['classes_body']   = 'jobSeekerInfo';
@@ -1954,9 +1955,10 @@ class MobileUserController extends Controller
         $data['galleries']        = $galleries;
         $data['videos']          = $videos;
         $data['qualificationList'] = getQualificationsList();
-        // dd($data['qualificationList'] );
         $data['crossreference'] = crossreference::where('jobseekerId', $jobSeekerId)->where('refStatus','Reference Completed')->get();
-        
+        $data['UserInterview'] = $UserInterview;
+        $data['interviewTemplate'] = $interviewTemplate;
+        $data['interview_booking'] = $interview_booking;
 
         return view('mobile.employer.jobSeekers.jobseekersInfo', $data);
 
@@ -2040,7 +2042,7 @@ class MobileUserController extends Controller
          // dd($request->toArray());
         $user = Auth::user();
         $requestData = $request->all();
-        dd($requestData);
+        // dd($requestData);
         $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
 
         if(isset($requestData['answer']) && !empty($requestData['answer'])){
@@ -2081,9 +2083,13 @@ class MobileUserController extends Controller
             $newJobApplication->job_id = $job->id;
             $newJobApplication->status = 'applied';
             $newJobApplication->description = $request->application_description;
-            // $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
-            // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
             $newJobApplication->save();
+
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->type = 'Job Applied'; 
+            $history->job_id = $job->id; 
+            $history->save();
 
             // if jobApplication is succesfully added then add job answers.
             if( $newJobApplication->id > 0 ){
@@ -2236,7 +2242,14 @@ class MobileUserController extends Controller
             ]);
         }
 
+        $history = new History;
+        $history->user_id = $user->id; 
+        $history->type = 'Deleted Job Application'; 
+        $history->job_id = $jobApplication->job_id; 
+        $history->save();
+
         $jobApplication->delete();
+
         return response()->json([
             'status' => 1,
             'message' => 'Job application succesfully deleted'
@@ -2684,7 +2697,7 @@ class MobileUserController extends Controller
             $IndustryHtml = $IndustryView->render();
             return response()->json([
                     'status' => 1,
-                    'data' => "hi"
+                    'data' => $IndustryHtml
             ]);
         }
     }
@@ -2757,6 +2770,15 @@ class MobileUserController extends Controller
                         if(isset($jobAppStatusArray[$status])){
                             $jobsApplication->status =  $status;
                             $jobsApplication->save();
+
+                            // $history = new History;
+                            // $history->user_id = $jobsApplication->jobseeker->id; 
+                            // $history->job_status = $request->status; 
+                            // $history->job_id = $jobsApplication->job->id; 
+                            // $history->old_job_status = $oldjobstatus;
+                            // $history->type = 'job_Status';
+                            // $history->save();
+
                              return response()->json([
                                 'status' => 1,
                                 'message' => 'Job Application Status Updated',
@@ -2796,6 +2818,7 @@ class MobileUserController extends Controller
         // $jobs                = Jobs::where('user_id',$employerId)->get();
         $galleries    = UserGallery::Public()->Active()->where('user_id',$jobSeekerId)->get();
         $videos      = Video::where('user_id', $jobSeekerId)->get();
+        $interview_booking = Interviews_booking::where('email',$jobSeeker->email)->get();
 
         $data['title']          = 'JobSeeker Info';
         $data['classes_body']   = 'jobSeekerInfo';
@@ -2805,6 +2828,7 @@ class MobileUserController extends Controller
         $data['galleries']        = $galleries;
         $data['videos']          = $videos;
         $data['qualificationList'] = getQualificationsList();
+        $data['interview_booking'] = $interview_booking;
        
 
 

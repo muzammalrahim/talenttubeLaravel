@@ -23,6 +23,13 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Response;
 use Jenssegers\Agent\Agent;
+use Illuminate\Support\Facades\Mail;
+use URL;
+use App\Mail\conductInterviewEmail;
+use App\Mail\rejectInterviewInvitationEmail;
+use App\Mail\acceptInterviewInvitationEmail;
+
+
 use App\TagCategory;
 use App\Tags;
 use App\UserTags;
@@ -32,6 +39,9 @@ use App\History;
 use App\InterviewTemplate;
 use App\InterviewTempQuestion;
 use App\UserInterview;
+use App\UserInterviewAnswers;
+
+// use App\Mail\conductInterview;
 
 
 class EmployerController extends Controller {
@@ -459,6 +469,8 @@ class EmployerController extends Controller {
     public function jobEdit($id){
         $user = Auth::user();
         $job = Jobs::where('id',$id)->first();
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['user']   = $user;
         $data['job']    = $job;
         $industry_experience = json_decode($job->experience);
@@ -959,9 +971,10 @@ class EmployerController extends Controller {
     public function interviewTemplate(Request $request){
         // dd($request->templateSelect);
         $user = Auth::user();
-        if (!isEmployer($user)){ return redirect(route('profile')); }
+        if (!isEmployer($user) && (!isAdmin())){ return redirect(route('profile')); }
         if ($request->templateSelect != 0) {
             $interviewTemplate = InterviewTemplate::where('id',$request->templateSelect)->get();
+            // dd($interviewTemplate->id);
             $InterviewTempQuestion = InterviewTempQuestion::where('temp_id',$request->templateSelect)->get();
             if (!empty($interviewTemplate)) {
             // dd($interviewTemplate->id);
@@ -986,27 +999,165 @@ class EmployerController extends Controller {
         $data =  $request->all();
         // dd($data);
         $user = Auth::user();
-        if (!isEmployer($user)){ return redirect(route('profile')); }
-            $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->first();
+        $empName = $user->company;
+        if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
+            $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
             if(!$UserInterviewCheck){
+
                 $UserInterview = new UserInterview;
                 $UserInterview->temp_id = $data['inttTempId'];
                 $UserInterview->emp_id   = $user->id;
                 $UserInterview->user_id   = $data['user_id'];
                 $UserInterview->status   = 'pending';
+                $UserInterview->hide   = 'no';
+                $UserInterview->url   = generateRandomString();
                 $UserInterview->save();
+                $jsEmail = $UserInterview->js->email;
+
+                Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));
                 return response()->json([
                     'status' => 1,
-                    'message' => 'User interview Conducted Successfully'
+                    'message' => 'Interview conducted and Email sent to jobseeker successfully',
                 ]);
-            }else{
+            }
+            else{
 
                     return response()->json([
                     'status' => 0,
-                    'message' => 'You have already booked interview for this jobseeker Exist'
+                    'message' => 'You have already selected this template, please try another template'
                 ]);
             }
     }
+
+
+
+
+
+    // Interview Link to jobseeker
+
+
+     
+
+
+    // Reject Interview
+
+    public function rejectInterviewInvitation(Request $request){
+        $user = Auth::user();
+        $data =  $request->all();
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+        $UserInterview = UserInterview::where('url', $data['url'])->where('user_id' , $user->id)->first();
+        if ($UserInterview->user_id != $user->id) {
+            return redirect()->route('profile');
+        }
+        else{
+
+            $UserInterview->status = 'Rejected';
+            $empEmail = $UserInterview->employer->email;
+            $UserInterview->save();
+            Mail::to('hassaansaeed1@gmail.com')->send(new rejectInterviewInvitationEmail($user->name, $UserInterview->employer->company));
+            return response()->json([
+                'status' => 1,
+                'message' => 'Interview Rejected Successfully'
+            ]);
+        }   
+    }
+
+    // Accept Interview
+
+     public function acceptInterviewInvitation(Request $request){
+        $user = Auth::user();
+        $data =  $request->all();
+        // dd($data);
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+        $UserInterview = UserInterview::where('url', $data['url'])->where('user_id',$user->id)->first();
+        // dd($UserInterview);
+        if ($UserInterview) {
+           if ($UserInterview->user_id != $user->id) {
+            return redirect()->route('profile');
+        }
+        else{
+
+            $UserInterview->status = 'Accepted';
+            $empEmail = $UserInterview->employer->email;
+            $UserInterview->save();
+            Mail::to($empEmail)->send(new acceptInterviewInvitationEmail($user->name, $UserInterview->employer->company,$UserInterview->url));
+            return response()->json([
+                'status' => 1,
+                'message' => 'Interview Rejected Successfully'
+            ]);
+        } 
+        }
+        else{
+            return false;
+        }
+        
+
+    }
+
+
+
+    // ======================================================== Live Interview ========================================================
+
+    public function liveInterview(Request $request){
+        $user = Auth::user();
+        if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
+        $data = $request->all();
+        // ================================================== Validation for answering the questions ==================================================
+        if(in_array(null, $data['answer'], true))
+        {
+            return response()->json([
+                'status' => 0,
+                'message' =>  "Please answer all questions"
+            ]);
+        }
+        else
+        {
+            $UserInterviewCheck = UserInterview::where('temp_id' , $data['temp_id'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
+            if (!$UserInterviewCheck) {
+                $UserInterview = new UserInterview;
+                $UserInterview->temp_id = $data['temp_id'];
+                $UserInterview->emp_id   = $user->id;
+                $UserInterview->user_id   = $data['user_id'];
+                $UserInterview->status   = 'Interview Confirmed';
+                $UserInterview->hide   = 'no';
+                $UserInterview->url   = generateRandomString();
+                $UserInterview->save();
+
+                foreach ($data['answer'] as $key => $value) {
+
+                    $answers = new UserInterviewAnswers;
+                    $answers->emp_id = $user->id;
+                    $answers->userInterview_id  = $UserInterview->id;
+                    $answers->user_id  = $data['user_id'];
+                    $answers->question_id = $key;
+                    $answers->answer = $value;
+                    $answers->save();
+                }
+
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Reponse added successfully'
+                ]);                
+            }
+
+            else{
+
+                    return response()->json([
+                    'status' => 0,
+                    'message' => 'You have already selected this template, please try another template'
+                ]);
+            }
+
+        }
+
+    }
+
+
+
+
+
 
     
 
