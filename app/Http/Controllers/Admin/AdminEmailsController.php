@@ -379,6 +379,7 @@ class AdminEmailsController extends Controller {
     //===============================================================================================================//
     
     public function GeneratePDF(Request $request){
+      // dd($request->cbx);
       if(!empty($request->cbx)){
         $data['title'] = 'Generate PDF';
         $users = User::whereIn('id', $request->cbx)->get();

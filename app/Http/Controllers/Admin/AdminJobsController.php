@@ -20,6 +20,11 @@ use Yajra\Datatables\Datatables;
 // use Illuminate\Support\Facades\Hash;
 use PDF;
 
+use App\UserInterview;
+
+
+
+
 class AdminJobsController extends Controller
 {
 
@@ -735,6 +740,13 @@ class AdminJobsController extends Controller
               return $rhtml;
         }
       })
+
+      ->addColumn('interview', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<a class="btn btn-primary btn-sm far fa-edit" href="'.route('jobseekerInterviews',['id'=>$records->jobseeker->id]).'" target="_blank" ></a>';
+            return $rhtml;
+        }})
+
       ->addColumn('profile', function ($records) {
         if (isAdmin()){
             $rhtml = '<a class="btn btn-primary btn-sm btnUserInfo" href="'.route('jobSeekerInfo',['id'=>$records->jobseeker->id]).'" target="_blank" >Info</a>';
@@ -765,7 +777,7 @@ class AdminJobsController extends Controller
      })
 
 
-      ->rawColumns(['profile','action'])
+      ->rawColumns(['profile','interview','action'])
       ->toJson();
     }
 
@@ -932,6 +944,87 @@ class AdminJobsController extends Controller
             }
         }
     }
+
+
+  // ===================================================== Get Job Application for admin iteration-8 =====================================================
+
+    public function getJobsOjs(Request $request){
+        // dd($request->id);
+        if (isAdmin()) {
+            $jobApp =JobsApplication::where('user_id' , $request->id)->get();
+            $data['jobApp'] = $jobApp; 
+            return view('admin.candidate_tracking.jobApp' , $data);  /* admin/candidate_tracking/jobApp */
+            // dd($jobApp);
+        }
+
+    }
+
+
+  // ===================================================== Get Job Application for admin iteration-8 =====================================================
+
+    public function changesJobStatus(Request $request){
+        // dd($request->id);
+/*
+        $status = jobStatusArray(); 
+        $data['status'] = $status;*/
+
+        return view('admin.candidate_tracking.layout.jobStatus');  /* admin/candidate_tracking/jobApp */
+
+    }
+
+
+  // ===================================================== Get Job Application for admin iteration-8 =====================================================
+
+  public function changesJobStatusConfirm(Request $request){
+    // dd($request->user_id);
+    
+    if (isAdmin()) {
+        $JobsApplication = JobsApplication::where('id' , $request->jobapp_id)->first();
+        // dd($JobsApplication->user_id);
+        if ($JobsApplication->user_id == $request->user_id) {
+          
+           $JobsApplication->status = $request->status;
+           $JobsApplication->save();
+           return redirect(route('trackUsers'))->withSuccess( __('admin.record_updated_successfully'));
+        }
+       
+      }  
+
+
+
+      // return view('admin.candidate_tracking.layout.jobStatus');  /* admin/candidate_tracking/jobApp */
+
+  }
+
+
+    // ===================================================== jobseeker's interview iteration-8 =====================================================
+
+  public function jobseekerInterviews($id){
+    // dd($id);
+
+    $UserInterview = UserInterview::where('user_id' , $id)->get();
+    $data['content_header'] = 'Interviews';
+    $data['title'] = 'Jobseeker interview';
+    $data['UserInterview'] = $UserInterview;
+
+    // $data['record'] = $record;
+
+    if (isAdmin()) {
+
+
+      return view('admin.job_applications.jobseekerInterviews', $data);  /* admin/candidate_tracking/jobApp */
+        
+       
+      }  
+
+
+
+      // return view('admin.candidate_tracking.layout.jobStatus');  /* admin/candidate_tracking/jobApp */
+
+  }
+
+  
+
 
 
 }

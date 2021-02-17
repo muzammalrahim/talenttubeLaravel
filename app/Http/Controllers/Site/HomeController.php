@@ -28,6 +28,13 @@ use App\Mail\saveSlotUserEmail;
 use App\Mail\deleteSlotToUserEmail;
 use App\Mail\confirmSlotMailToJobSeeker;
 use App\History;
+use App\UserInterview;
+use App\InterviewTempQuestion;
+use App\ControlSession;
+
+
+
+
 
 
 class HomeController extends Controller {
@@ -1075,6 +1082,139 @@ class HomeController extends Controller {
         }
         return response()->download(storage_path('helloWorld.docx'));
     }
+
+
+
+
+
+
+    // =============================================== Interview invitation Url ===============================================
+
+    public function interviewInvitationUrl(Request $request){
+
+        if (Auth::check()) {
+            $data =  $request->all();
+            $user = Auth::user();
+            $UserInterview = UserInterview::where('url', $data['url'])->first();
+            if (!isset($UserInterview)) { return redirect(route('intetviewInvitation'));}
+            $InterviewTempQuestion = InterviewTempQuestion::where('temp_id' , $UserInterview->temp_id)->get();
+            $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+            $data['controlsession'] = $controlsession;
+            $data['user'] = $user;
+            $data['UserInterview'] = $UserInterview;
+            $data['InterviewTempQuestion'] = $InterviewTempQuestion;
+            $data['classes_body'] = 'Interview Template';
+            if ($this->agent->isMobile()){
+                if (isEmployer()) {
+                    return view('mobile.employer.interviewInvitation.detail', $data);   //mobile/employer/interviewInvitation/detail
+                }
+                else{
+                    return view('mobile.user.interviewInvitation.detail', $data);   // mobile/user/interviewInvitation/detail
+                }
+            }
+
+            else{
+
+                if (isEmployer()) {
+                    if  ($UserInterview->emp_id != $user->id){
+                        return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser
+                    }
+                    else{
+                        return view('site.user.interviewInvitation.acceptedInterviewInvitation', $data);   
+                        // site/user/interviewInvitation/acceptedInterviewInvitation
+
+                    }
+                }
+                else{
+                    if  ($UserInterview->user_id != $user->id){
+                        return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser  
+                    }
+                    else{ 
+                        return view('site.user.interviewInvitation.acceptedInterviewInvitation', $data);
+                        // site/user/interviewInvitation/acceptedInterviewInvitation   
+                    }
+                }
+            }
+                
+        }
+        else{
+
+            if ($this->agent->isMobile()){
+                $data['title'] = 'User';
+                return view('mobile.interviewInvitation.home' , $data);            
+
+            }
+            else{
+                $data['title'] = 'User';
+                return view('site.interviewInvitation.home' , $data);
+            }
+        }
+    }
+
+    // =============================================== Interview invitation login ===============================================
+
+
+    public function loginUserInterviewInvitation(Request $request){
+
+        $rules = array(
+            'email' => 'required|email', // make sure the email is an actual email
+            'password' => 'required|min:6'
+        );
+        $validator = Validator::make( $request->all() , $rules);
+        $agent = new Agent();
+
+        if ($validator->fails()){
+            // dd($validator->getMessageBag()->toArray());
+            return array(
+                'status'    => 0,
+                'message'   => $validator->getMessageBag()->toArray()
+            );
+        }else{
+            // create our user data for the authentication
+            $userdata = array(
+            'email' =>  $request->get('email') ,
+            'password' => $request->get('password')
+            );
+
+            if( $request->login_type == 'site_ajax' ){
+                // check user verification before login
+                $userData = User::where('email', $request->get('email'))->first();
+                if( !empty($userData) ){
+                    // check if employer is verified by admin
+                    if ( $userData->email_verified_at == null){
+                        return array(
+                            'status'    => 1,
+                            'message'   => 'not verified account',
+                            'redirect' =>   route('employerNotVerified')
+                        );
+                    }
+                }
+            }
+
+            // attempt to do the login
+            if (Auth::attempt($userdata)){
+                return Redirect::back()->with('message','Operation Successful !');
+            }else{
+
+
+                // validation not successful, send back to form
+                return array(
+                    'status'    => 0,
+                    'message'   => 'Wrong password or log in information'
+                );
+            }
+        }
+
+        // dd( $request->toArray() );
+        // exit;
+
+        // dd( $request->toArray() );
+        // exit;
+    }
+
+
+    // =============================================== Interview invitation login ===============================================
+ 
     
 
 

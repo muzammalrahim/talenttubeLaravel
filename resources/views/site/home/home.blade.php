@@ -73,7 +73,7 @@
                   <div class="pic">
                      <img src="{{asset('/images/site/homepage/pic_chat.png')}}" width="128" height="112" alt="" />
                   </div>
-                  <p>You can chat, see photos, have fun, and even meet!</p>
+                  <p>Find your dream job here</p>
                </div>
             </div>
             <div class="cl"></div>

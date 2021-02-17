@@ -17,7 +17,7 @@ $(function () {
         $ppSignIn.open();
         return false;
     })
-
+ 
     var $ppForgotPass=$('#pp_resend_password').modalPopup();
     $('#pp_forgot_pass_open').click(function(){
         //var $shadow=$('<div class="pp_shadow"></div>').hide().prependTo('body').fadeIn('fast');

@@ -1138,6 +1138,8 @@ class UserController extends Controller
         }
     }
 
+    // ========================================= Admin Notes Edit =========================================
+
     public function adminEditNote($id){
 
         return view('admin.user.edit', $data);
@@ -1155,6 +1157,268 @@ class UserController extends Controller
             
         }
     }
+
+
+
+
+    // ========================================= Iteration-8 Live Tracker =========================================
+
+    public function trackUsers() {
+        $data['title'] = 'Live Tracker';
+        $data['content_header'] = 'Live Tracker';
+        $data['filter_status'] = 'verified';
+        // $data['jobStatusArray'] = jobStatusArray();
+        
+        return view('admin.candidate_tracking.list', $data); // admin/candidate_tracking/list
+    }
+
+
+
+
+    //  =================================================== Tracker datatable ===================================================
+
+    public function getDatatableTracker(Request $request){
+      $records = array();
+
+       // dd($request);
+      $records = User::select(['id', 'name','email','phone','verified'])
+      ->where('tracker' , '1')
+        ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
+        ->orderBy('created_at', 'desc');
+     if(isset($request->status) && !empty($request->status)){
+
+        if($request->status == 'verified')
+            $records = $records->where('verified','1');
+
+        if($request->status == 'pending')
+            $records = $records->where('verified','0');
+
+     }
+
+      return datatables($records)
+
+      ->addColumn('action', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<a > <i class ="far fa-trash-alt btn btn-danger btn-sm deleteCandidate" data-id= "'.$records->id.'"> </i> </a>';
+            return $rhtml;
+        }})
+
+        ->addColumn('profile', function ($records) {
+            if (isAdmin()){
+                $rhtml = '<a class="btn btn-primary btn-sm" href="'.route('jobSeekerInfo',['id'=>$records->id]).'" target="_blank" >Info</a>';
+                return $rhtml;
+            }})
+
+        ->addColumn('select_job', function ($records) {
+            if (isAdmin()){
+                $jobAppCount = ($records->jobAppCount)?($records->jobAppCount->aggregate):0;
+                if ($jobAppCount > 0) {
+                    $viewjob = '<span class = "ml-1">Job-<u><span><a class="pointer text-success " href="" target="_blank" >View</a>';
+                    // $jobHtml = '<span class = "text-success "> '.$jobAppCount.' '.$viewjob.' </u></span>';
+
+                    $jobStatusArray = jobStatusArray();
+                    // dd($jobStatusArray);
+                    $jobHtml = '<button class = "btn btn-primary userJobsModal" data-toggle ="modal" user_id = '.$records->id.' data-target = "#getJobsModal"> Select Job </button>';
+
+                   
+                    $jobStatus  =  jobStatusArray();
+                    
+                    // $jobHtml .= Form::select('salaryRange', $jobStatus, ['placeholder' => 'Select Salary Range', 'onchange' => 'UProfile.updateSalaryRange()', 'id' => 'salaryRangeFieldnew', 'class' => 'hide_it salaryRangeField']);
+
+                    /*$jobHtml .= '<select>';
+                    $jobHtml .= '<option>  '.$jobStatus.'  </option>' ;
+                    $jobHtml .= '</select>' ;*/
+
+                    return $jobHtml;
+                }
+                else{
+                    $nan = '<span class = "text-danger"> None Available </span>';
+                    return $nan;
+                }
+
+            }})
+
+        ->addColumn('job_status', function ($records) {
+            if (isAdmin()){
+
+                $jobAppCount = ($records->jobAppCount)?($records->jobAppCount->aggregate):0;
+                if ($jobAppCount > 0) {
+                    $rhtml = '<a class="text-dark jobStatus pointer jobStatus_'.$records->id.'" user_id = "'.$records->id.'" target="_blank" >Job Status</a>';
+                    return $rhtml;
+                }
+                else{
+                    $nan = '<span class = "text-danger"> None Available </span>';
+                    return $nan;
+                }
+                
+            }})
+
+        ->addColumn('ref_check', function ($records) {
+        if (isAdmin()){
+            $refCount = ($records->crossreferenceCount)?($records->crossreferenceCount->aggregate):0;
+            if ($refCount > 0) {
+                $viewRef = '<span class = "ml-1">Complete-<u><span><a class="pointer text-success " href="'.route('referencesForAll',['id'=>$records->id, 'name'=>$records->name ]).'" target="_blank" >View</a>';
+                $refHtml = '<span class = "text-success "> '.$refCount.' '.$viewRef.' </u></span>';
+                return $refHtml;
+            }
+            else{
+                $nan = '<span class = "text-danger"> None Available </span>';
+                return $nan;
+            }
+
+        }})
+
+
+
+        ->addColumn('interviews', function ($records) {
+        if (isAdmin()){
+            $refCount = ($records->user_interviewsAccount)?($records->user_interviewsAccount->aggregate):0;
+            if ($refCount > 0) {
+                $viewRef = '<span class = "ml-1">Complete-<u><span><a class="pointer text-success " 
+                href="'.route('completedInterviews',['id'=>$records->id]).'" target="_blank" >View</a>';
+                $refHtml = '<span class = "text-success "> '.$refCount.' '.$viewRef.' </u></span>';
+                return $refHtml;
+            }
+            else{
+                $nan = '<span class = "text-danger"> None Available </span>';
+                return $nan;
+            }
+
+        }})
+
+
+        ->addColumn('notes', function ($records) {
+            if (isAdmin()){
+                $notes = $records->notesCount;
+                if ($notes) {
+                    $rview = '<div class = "noteDiv">';
+                    $rview .= '<h4><i class = "fas fa-times adminNote">  </i></h4>';
+                    $rview .= '<p class = "noteText mt-3"> '.$notes->text.' </p>';
+                    $rview .= '</div>';
+                    $rview .= '<span class = "newNote d-none" ><input type = "text" note_id = "'.$notes->id.'" user_id = '.$records->id.' class = "form-control newNoteInput"></span';
+
+                    return $rview;
+                }
+                else{
+
+                    $view = '<span class = "addNotesField btn btn-primary"> Add Note' ;
+                    $view .= '</span>';
+                    $view .= '<input type = "text" user_id = '.$records->id.' class = "form-control d-none inputType">';
+
+                    return $view;
+                }
+            }})
+
+        // ->addColumn('resume', function ($records) {
+        // if (isAdmin()){
+        //     $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserResumeInfo" user-id='. $records->id.' >Info</button>';
+        //     return $rhtml;
+        // }})
+
+      ->removeColumn('verified')
+      ->rawColumns(['profile','select_job','job_status','ref_check','interviews', 'notes' ,'action'])
+      ->toJson();
+    }
+
+
+    // =================================================== Get Job Application for admin iteration-8 ===================================================
+
+  public function addCandidate(Request $request){
+
+
+    $data['title'] = 'Add Candidate';
+    $data['content_header'] = 'Add Candidate';
+    $data['filter_status'] = 'verified';
+    // $data['jobStatusArray'] = jobStatusArray();        
+    return view('admin.candidate_tracking.add_candidate', $data);
+    // admin/candidate_tracking/list
+  }
+
+    // =================================================== Get Job Application for admin iteration-8 ===================================================
+
+    
+    
+    public function addCandidateDatatable(Request $request){
+      $records = array();
+      $records = User::select(['id', 'name', 'email', 'phone', 'created_at'])->where('tracker', '0')
+        ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
+        ->orderBy('created_at', 'desc');
+      return datatables($records)
+
+      // ->editColumn('created_at', function ($request) {
+      //   return $request->created_at->format('Y-m-d'); // human readable format
+      // })
+
+      ->addColumn('profile', function ($records) {
+            if (isAdmin()){
+                $rhtml = '<a class="btn btn-primary btn-sm" href="'.route('jobSeekerInfo',['id'=>$records->id]).'" target="_blank" >Info</a>';
+                return $rhtml;
+            }})
+
+      ->addColumn('action', function ($records) {
+        if (isAdmin()){
+                $rhtml = ' <button value = "'.$records->id.'" class="btn btn-primary addCandidate" > Add to Tracker</button>';
+            return $rhtml;
+        }
+      })
+      
+      ->rawColumns(['profile','action'])
+      ->toJson();
+
+    }
+
+    // =================================================== Add to tracker admin iteration-8 ===================================================
+
+    public function addToTracker(Request $request){
+
+        $user = User::where('id' , $request->id)->first();
+        // dd($user->tracker);
+        $user->tracker = 1;
+        $user->save();
+
+    }
+
+    // =================================================== Remove candidate from tracker admin iteration-8 ===================================================
+
+    public function removefromTracker(Request $request){
+
+        $user = User::where('id' , $request->id)->first();
+        // dd($user->tracker);
+        if (isAdmin()) {
+            $user->tracker = 0;
+            $user->save();
+        }
+    }
+
+    // =================================================== Add Note admin iteration-8 ===================================================
+
+    public function addUsersNote(Request $request){
+        $user = Auth::user();
+        $note = new Notes();
+        $note->admin_id = $user->id;
+        $note->js_id = $request->user_id;
+        $note->user_id = $user->id;
+        $note->text = $request->text;
+        $note->save();
+    }
+
+    // =================================================== Add Note admin iteration-8 ===================================================
+
+    public function updateNote(Request $request){
+        $user = Auth::user();
+        $note = Notes::find($request->id);
+        $note->text = $request->text;
+        $note->save();
+    }
+
+
+
+
+
+
+
+    
+
 
 
 }

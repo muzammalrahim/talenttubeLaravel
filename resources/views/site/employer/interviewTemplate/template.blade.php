@@ -13,10 +13,24 @@
 	@foreach ($InterviewTempQuestion as $key=> $quest)
 		<div class="mb10"> <b> Question:{{$loop->index+1}}  </b> 
 			<span class="test qualifType" name = "question[{{$key+1}}]">{{$quest->question}} </span>
+            <input type="text" class="w100 mt10 hide_it answersInput" name="answer[{{$quest->id}}]">
+
         </div>
 	@endforeach
     </div>
-    <button class="btn small leftMargin turquoise conductInterview123" value="{{$template->id}}" >Conduct Interview</button> <span class="recordalreadExist hide_it"></span>
+
+    <input type="hidden" name="temp_id" value="{{$template->id}}">
+    <button class="btn small leftMargin turquoise conductInterview123" value="{{$template->id}}" >Correspondence Interview</button> 
+
+    <span class="btn small leftMargin turquoise liveInterviewButton pointer" value="{{$template->id}}" >Live Interview</span> 
+    <button class="btn small leftMargin turquoise liveInterview pointer hide_it" value="{{$template->id}}" >Save Response</button> 
+
+    <p>
+	    <span class="recordalreadExist hide_it"></span>
+
+	    <span class="liveInterviewError hide_it"></span> 
+	</p>
+
 </div>
 
 {{-- </form> --}}
@@ -82,7 +96,14 @@
 
 .template:nth-child(odd) { background-color:#e0e0e0;}
 
-
+.liveInterviewButton {
+    background: #40c7db;
+    padding: 7px 25px;
+    color: white;
+}
+.liveInterviewButton:hover{
+	background: #015761;
+}
 </style>
 {{-- 
 @stop --}}

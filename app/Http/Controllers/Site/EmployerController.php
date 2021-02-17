@@ -39,6 +39,7 @@ use App\History;
 use App\InterviewTemplate;
 use App\InterviewTempQuestion;
 use App\UserInterview;
+use App\UserInterviewAnswers;
 
 // use App\Mail\conductInterview;
 
@@ -468,6 +469,8 @@ class EmployerController extends Controller {
     public function jobEdit($id){
         $user = Auth::user();
         $job = Jobs::where('id',$id)->first();
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
         $data['user']   = $user;
         $data['job']    = $job;
         $industry_experience = json_decode($job->experience);
@@ -998,7 +1001,7 @@ class EmployerController extends Controller {
         $user = Auth::user();
         $empName = $user->company;
         if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
-            $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->first();
+            $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
             if(!$UserInterviewCheck){
 
                 $UserInterview = new UserInterview;
@@ -1006,6 +1009,7 @@ class EmployerController extends Controller {
                 $UserInterview->emp_id   = $user->id;
                 $UserInterview->user_id   = $data['user_id'];
                 $UserInterview->status   = 'pending';
+                $UserInterview->hide   = 'no';
                 $UserInterview->url   = generateRandomString();
                 $UserInterview->save();
                 $jsEmail = $UserInterview->js->email;
@@ -1032,55 +1036,7 @@ class EmployerController extends Controller {
     // Interview Link to jobseeker
 
 
-     public function interviewInvitationUrl(Request $request){
-        $data =  $request->all();
-        // dd($data['url']);
-        $user = Auth::user();
-        // dd($user->id);
-        $UserInterview = UserInterview::where('url', $data['url'])->first();
-        // $UserInterview->emp_id == $user->id
-        if (!isset($UserInterview)) { return redirect(route('intetviewInvitation'));}
-        $InterviewTempQuestion = InterviewTempQuestion::where('temp_id' , $UserInterview->temp_id)->get();
-        // ($UserInterview->user_id);
-        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
-        // dd($UserInterview->temp_id);
-        $data['controlsession'] = $controlsession;
-        $data['user'] = $user;
-        $data['UserInterview'] = $UserInterview;
-        $data['InterviewTempQuestion'] = $InterviewTempQuestion;
-        $data['classes_body'] = 'Interview Template';
-
-        if (isEmployer()) {
-            
-            if  ($UserInterview->emp_id != $user->id){
-                return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser
-               
-            }
-            else{
-                return view('site.user.interviewInvitation.acceptedInterviewInvitation', $data);   // site/user/interviewInvitation/acceptedInterviewInvitation
-
-            }
-
-        }
-        else{
-
-            if  ($UserInterview->user_id != $user->id){
-                return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser
-               
-            }
-            else{
-
-                return view('site.employer.interviewInvitation.interviewInvitationUrl', $data);   // site/employer/interviewInvitation/interviewInvitationUrl
-
-            }
-
-
-        }
-
-
-
-
-    }
+     
 
 
     // Reject Interview
@@ -1137,6 +1093,64 @@ class EmployerController extends Controller {
             return false;
         }
         
+
+    }
+
+
+
+    // ======================================================== Live Interview ========================================================
+
+    public function liveInterview(Request $request){
+        $user = Auth::user();
+        if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
+        $data = $request->all();
+        // ================================================== Validation for answering the questions ==================================================
+        if(in_array(null, $data['answer'], true))
+        {
+            return response()->json([
+                'status' => 0,
+                'message' =>  "Please answer all questions"
+            ]);
+        }
+        else
+        {
+            $UserInterviewCheck = UserInterview::where('temp_id' , $data['temp_id'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
+            if (!$UserInterviewCheck) {
+                $UserInterview = new UserInterview;
+                $UserInterview->temp_id = $data['temp_id'];
+                $UserInterview->emp_id   = $user->id;
+                $UserInterview->user_id   = $data['user_id'];
+                $UserInterview->status   = 'Interview Confirmed';
+                $UserInterview->hide   = 'no';
+                $UserInterview->url   = generateRandomString();
+                $UserInterview->save();
+
+                foreach ($data['answer'] as $key => $value) {
+
+                    $answers = new UserInterviewAnswers;
+                    $answers->emp_id = $user->id;
+                    $answers->userInterview_id  = $UserInterview->id;
+                    $answers->user_id  = $data['user_id'];
+                    $answers->question_id = $key;
+                    $answers->answer = $value;
+                    $answers->save();
+                }
+
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Reponse added successfully'
+                ]);                
+            }
+
+            else{
+
+                    return response()->json([
+                    'status' => 0,
+                    'message' => 'You have already selected this template, please try another template'
+                ]);
+            }
+
+        }
 
     }
 

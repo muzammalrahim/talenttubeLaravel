@@ -4,10 +4,15 @@
 
 @section('content_header')
 
+
 <div class="block row">
     <div class="col-md-3"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
 
 </div>
+
+
+<hr>
+
 
 @stop
 
@@ -21,9 +26,37 @@
 
 
 {{-- @dump( $jobs->toArray() ) --}}
-<div class="row" style="margin-bottom: 15px;">
 
-  <div class="col-md-3 mt-2">
+
+<div class="form-group row">
+  
+
+
+  {{-- <div class="col-md-8 mt-2"> --}}
+    {{-- <div class="dtHeader"> --}}
+        {{-- <div class="dtFilter dtHead"> --}}
+            <label class="dtFilterLabel col-sm-2 col-form-label">Select Job</label>
+            <select name="filter_job" id="filter_job" class="col-sm-3 form-control custom-select">
+                <option value="">Filter By Job</option>
+                @if(!empty($jobs))
+                    @foreach ($jobs as $job)
+                        <option value="{{$job->id}}"  {{($request->job_id && $request->job_id == $job->id)?'selected="selected"':''}}> {{$job->title}}  ({{ ($job->applicationCount)?($job->applicationCount->aggregate):0 }})</option>
+                    @endforeach
+                @endif
+            </select>
+
+        {{-- </div> --}}
+      {{-- </div> --}}
+  {{-- </div> --}}
+
+
+</div>
+
+
+
+{{-- <div class="row mb-3"> --}}
+
+  {{-- <div class="col-md-3 mt-2">
     <div class="dtHeader">
         <div class="dtFilter dtHead">
             <label class="dtFilterLabel">Select Job</label>
@@ -38,20 +71,25 @@
 
         </div>
       </div>
-  </div>
+  </div> --}}
 
-  <div class="block row mt-4 col-md-9 text-white">
+{{-- </div>
 
+<div class="row" style="margin-bottom: 15px;">
+ --}}
 
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkApproved mt-1" style="margin-right:5px;">Bulk Assign Job</a></div>
+  <div class="block row col-md-9 text-white mb-3 margin_auto">
+
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkApproved mt-1" style="margin-right:5px;">Bulk Assign</a></div>
     <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkPDFGenerate mt-1">Bulk Snapshot</a></div>
     <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnExportCSV mt-1">Bulk Export CSV</a></div>
     <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkEmail mt-1">Bulk Email</a></div>
     <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV mt-1">Bulk Compile CV</a></div>
     <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkStatus ml-1 mt-1">Multi Bulk Status</a></div>
+    <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-block btn-primary bulkInterview">Bulk Interview</a></div>
     {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
   </div>
-</div>
+{{-- </div> --}}
 
 {{-- <div class="col-md-2">
     <div class="dtActions">
@@ -73,6 +111,7 @@
             <th>Profile</th>
             <th>goldstar</th>
             <th>undesirable</th>
+            <th>interview</th>
             <th>action</th>
         </tr>
     </thead>
@@ -255,11 +294,13 @@ function nextTabQuestion(jobPopId) {
 jQuery(function() {
 
 
-    $(document).on('click','.btnBulkApproved', function(){
+  $(document).on('click','.btnBulkApproved', function(){
   console.log(' btnBulkApproved click ');
 
 
   var UserInfoId = parseInt($(this).attr('user-id'));
+
+  console.log(UserInfoId);
   jQuery('input[name="cbx[]"]:checked').each(function(i,el){ console.log('i', i, 'el', $(el).val()); });
   var cbx = $('input[name="cbx[]"]:checked').map(function(){return $(this).val(); });
 
@@ -408,6 +449,7 @@ $(document).on('click','.btnBulkStatus', function(){
             { data: 'profile', name: 'profile' },
             { data: 'goldstar', name: 'goldstar' },
             { data: 'preffer', name: 'preffer' },
+            { data: 'interview', name: 'interview'},
             { data: 'action', name: 'action'},
         ],
         columnDefs: [{
@@ -416,7 +458,7 @@ $(document).on('click','.btnBulkStatus', function(){
          'orderable':false,
          'className': 'dt-body-center',
          'render': function (data, type, full, meta){
-             return '<input type="checkbox" name="cbx" value="'+ $('<div/>').text(data).html() + '">';
+             return '<input type="checkbox" name="cbx[]" value="'+ $('<div/>').text(data).html() + '">';
          }
       },{
          'targets': 1,

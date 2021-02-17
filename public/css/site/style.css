@@ -4551,3 +4551,24 @@ p.slotbooking {
 
 .templateSelect + .jq-selectbox__select {height: auto;}
 .templateSelect .jq-selectbox__dropdown {position: inherit !important;top: 0 !important;}
+
+
+/* ================================================== Completed Reference link ================================================== */
+
+a.seeCompletedReference {color: black;text-transform: uppercase;text-decoration: none;letter-spacing: 0.15em;display: inline-block;
+    padding: 15px 20px;position: relative;}
+a.seeCompletedReference:after {    
+  background: none repeat scroll 0 0 transparent;bottom: 0;content: "";display: block;height: 2px;left: 50%;position: absolute;background: black;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;width: 0;}
+a.seeCompletedReference:hover:after { width: 100%; left: 0; }
+
+/* ================================================== Unhide your interviews ================================================== */
+
+.unhideInterviews{float: right;font-size: 20px;text-decoration: underline !important;cursor: pointer;color: black !important;
+transition: .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
+.unhideInterviews:hover{text-decoration: none !important;}
+
+
+
+
+

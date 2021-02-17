@@ -381,7 +381,7 @@
 <style type="text/css">
     /*.seeCompletedReference{text-decoration: underline;}*/
 
-a.seeCompletedReference {color: black;text-transform: uppercase;text-decoration: none;letter-spacing: 0.15em;display: inline-block;
+/*a.seeCompletedReference {color: black;text-transform: uppercase;text-decoration: none;letter-spacing: 0.15em;display: inline-block;
   padding: 15px 20px;
   position: relative;
 }
@@ -390,7 +390,7 @@ a.seeCompletedReference:after {
   transition: width 0.3s ease 0s, left 0.3s ease 0s;
   width: 0;
 }
-a.seeCompletedReference:hover:after { width: 100%; left: 0; }
+a.seeCompletedReference:hover:after { width: 100%; left: 0; }*/
 .js_location {font-size: 11px !important;}
 div#tabs_profile>ul.tab.customTab { margin-bottom: 15px;}
 .item_video .video_link{height: 23% !important;}

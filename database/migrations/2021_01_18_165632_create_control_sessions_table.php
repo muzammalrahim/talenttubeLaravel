@@ -12,7 +12,9 @@ class CreateControlSessionsTable extends Migration
      * @return void
      */
     public function up()
-    {
+    {   
+
+        
         Schema::create('control_sessions', function (Blueprint $table) {
             $table->id('id');
             $table->integer('user_id');

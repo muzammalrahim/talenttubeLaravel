@@ -780,7 +780,7 @@ class InterviewController extends Controller
         $data['user'] = $user;
         // dd($user->id);
         if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
-        $UserInterview = UserInterview::where('emp_id',  $user->id)->orderBy('created_at' , 'desc')->get();
+        $UserInterview = UserInterview::where('emp_id',  $user->id)->where('hide', 'no')->orderBy('created_at' , 'desc')->get();
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         $data['controlsession'] = $controlsession;
         $data['title'] = 'My Jobs';
@@ -798,7 +798,7 @@ class InterviewController extends Controller
         $data['user'] = $user;
         // dd($user->id);
         if (isEmployer($user)) {return redirect(route('intetviewInvitationEmp'));}
-        $Interviews_booking = UserInterview::where('user_id',  $user->id)->orderBy('created_at' , 'desc')->get();
+        $Interviews_booking = UserInterview::where('user_id',  $user->id)->where('hide' , 'no')->orderBy('created_at' , 'desc')->get();
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         $data['controlsession'] = $controlsession;
         $data['title'] = 'My Jobs';
@@ -807,6 +807,8 @@ class InterviewController extends Controller
         return view('site.user.interview.interviewInvitaion', $data);
         // site/user/interview/interviewInvitaion
     }
+
+    // ================================================== Save Response As Employer ==================================================
 
     public function confirmInterInvitation(Request $request){
 
@@ -856,11 +858,229 @@ class InterviewController extends Controller
                 dd("nothing here for u");
             }
         }    
+    }
 
 
-       
+        // ================================================== Save Response As Jobseeker ==================================================
+
+    public function confirmInterInvitationJs(Request $request){
+
+        $user = Auth::user();
+        $data = $request->all();
+        // dd($data);
+        // ================================================== Validation for answering the questions ==================================================
+        if(in_array(null, $data['answer'], true))
+        {
+            return response()->json([
+                'status' => 0,
+                'error' =>  "Please answer all questions"
+            ]);
+        }
+        else
+        {
+            $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('emp_id' , $data['emp_id'])->where('temp_id' ,$data['temp_id'])->first();
+            if ($UserInterview) {
+                // dd($UserInterview);
+                if ($UserInterview->status == 'pending') {
+                    $UserInterview->status =  'Interview Confirmed';
+                    $UserInterview->save();
+                    foreach ($data['answer'] as $key => $value) {
+                        $answers = new UserInterviewAnswers;
+                        $answers->emp_id = $data['emp_id'];
+                        $answers->userInterview_id  = $data['userInterviewId'];
+                        $answers->user_id  = $user->id;
+                        $answers->question_id = $key;
+                        $answers->answer = $value;
+                        $answers->save();
+                    }
+                    return response()->json([
+                        'status' => 1,
+                        'error' => 'Reponse added successfully'
+                    ]);
+                }
+
+                else{
+                    return response()->json([
+                        'status' => 0,
+                        'error' => 'You have already added response'
+                    ]);
+                }
+
+            }
+            else{
+                dd("nothing here for u");
+            }
+        }    
+    }
+
+
+
+    // ============================================= Unhide Interviews =============================================
+
+    public function unhideInterviews(Request $request){
+        $user = Auth::user();
+        $data['user'] = $user;
+        // if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
+        if (isEmployer()) {
+            $UserInterview = UserInterview::where('emp_id',  $user->id)->where('hide' , 'yes')->orderBy('created_at' , 'desc')->get();
+        }
+        else{
+            $UserInterview = UserInterview::where('user_id',  $user->id)->where('hide' , 'yes')->orderBy('created_at' , 'desc')->get();
+        }
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+        $data['title'] = 'My Jobs';
+        $data['UserInterview'] = $UserInterview ;
+        $data['classes_body'] = 'Interviews';
+        return view('site.employer.interviewInvitation.unhideInterview', $data);
+            
+        
+        // site/employer/interviewInvitation/unhideInterview
+    }
+
+    // ============================================= Hide User-Interviews Ajax =============================================
+
+    public function hideUserInterview(Request $request){
+        $user = Auth::user();
+        $data = $request->toArray();
+        $data['user'] = $user;
+        // if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
+        $UserInterview = UserInterview::where('id',  $data['interview_id'])->first();
+        if ($UserInterview->emp_id == $user->id) {
+            if ($data['hide'] != '0') {
+                if ($data['hide'] == 'yes') {    
+                    $UserInterview->hide = 'yes';
+                    $UserInterview->save();
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'Interview Status updated Successfully'
+                    ]);
+                }
+                else{
+                    $UserInterview->delete();
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'User Interview deleted successfully'
+                    ]);
+
+                }
+                
+            }
+            
+        }
+        else{
+            return false;
+        }
 
     }
+
+
+
+
+    // ============================================= Hide User-Interviews Ajax =============================================
+
+    public function hideUserInterviewJs(Request $request){
+        $user = Auth::user();
+        $data = $request->toArray();
+        $data['user'] = $user;
+        // if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
+        $UserInterview = UserInterview::where('id',  $data['interview_id'])->first();
+        if ($UserInterview->user_id == $user->id) {
+            if ($data['hide'] != '0') {
+                if ($data['hide'] == 'yes') {    
+                    $UserInterview->hide = 'yes';
+                    $UserInterview->save();
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'Interview Status updated Successfully'
+                    ]);
+                }
+                else{
+                    $UserInterview->delete();
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'User Interview deleted successfully'
+                    ]);
+
+                }
+                
+            }
+            
+        }
+        else{
+            return false;
+        }
+
+    }
+
+
+    // ============================================= Un-Hide User-Interviews Ajax =============================================
+
+    public function unhideUserInterview(Request $request){
+        $user = Auth::user();
+        $data = $request->toArray();
+        // dd($data);
+        $data['user'] = $user;
+        // if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
+        $UserInterview = UserInterview::where('id',  $data['interview_id'])->first();
+        // if ($UserInterview->emp_id == $user->id) {
+            if ($data['unhide'] != '0') {
+
+                // dd($UserInterview->id);
+                if ($data['unhide'] == 'yes') {    
+                    $UserInterview->hide = 'no';
+                    $UserInterview->save();
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'Interview Status updated Successfully'
+                    ]);
+                }
+                else{
+                    $UserInterview->delete();
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'User Interview deleted successfully'
+                    ]);
+
+                }
+                
+            }
+            
+        // }
+        // else{
+        //     return false;
+        // }
+
+    }
+
+
+
+
+
+    // ======================================================= completedInterviews =======================================================
+
+    public function completedInterviews($id){
+
+        // $data = $id;
+        // dd($id);
+        $user = Auth::user();
+        if (isAdmin($user)) {
+            $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+            $UserInterview = UserInterview::where('user_id',$id)->where('status' , 'Interview Confirmed')->get();
+            $data['controlsession'] = $controlsession;
+            $data['title'] = 'User Interviews';
+            $data['UserInterview'] = $UserInterview;
+            $data['classes_body'] = 'Interviews';
+            $data['user'] = $user;
+            $data['id'] = $id;
+
+            return view('site.employer.interviewInvitation.completed_interviews', $data);
+            // site/employer/interviewInvitation/completed_interviews
+        }
+
+
+    }
+
 
 
 

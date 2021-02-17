@@ -39,6 +39,10 @@
     <form method="POST" name="interviewTemplateSave" class="interviewTemplateSave newJob job_validation">
         <div class="templateData p10"></div>
 
+        <input type="hidden" name="user_id" value="{{$jobSeeker->id}}" class="jsId">
+
+
+
         {{-- <button type="button"> Save response</button> --}}
     </form>
 
@@ -102,8 +106,9 @@
                     setTimeout(function(){
                     $('.recordalreadExist').addClass('hide_it'); },
                     3000);  
+                    location.reload();
 
-                    window.location.href = "{{ route('intetviewInvitationEmp')}}" ;
+                    // window.location.href = "{{ route('intetviewInvitationEmp')}}" ;
 
                 }
                 else{
@@ -127,10 +132,60 @@
 
 
 
-    // ============================================ See Employers's Response hide & show ============================================
 
-    $(document).on("click" , ".seeEmployerResponse" , function(){
-        $(this).parents('.employerResponseDiv').find('.employerResponse').slideToggle();
+
+    // ============================================ Live Interview button ============================================
+
+    $(document).on('click' , '.liveInterviewButton', function (){
+        $('.answersInput').removeClass('hide_it');
+        $('.liveInterview').removeClass('hide_it'); 
+        $('.liveInterviewButton').addClass('hide_it'); 
+        $('.conductInterview123').addClass('hide_it');
+    });
+
+    // ============================================ Live Interview ============================================
+    
+
+    $(document).on("click" , ".liveInterview" , function(){
+        var formData = $('.interviewTemplateSave').serializeArray();
+        $('.liveInterview').html(getLoader('pp_profile_edit_main_loader liveInterviewTemplateLoader')).prop('disabled',true);
+        console.log(' formData ', formData);
+        // return;
+        $('.general_error1').html('');
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.ajax({
+                type: 'POST',
+                url: base_url+'/ajax/live/interview',
+                data: formData,
+                success: function(response){
+                if(response.status == 1){
+                    var message = response.message;
+                    // console.log(message);
+                    $('.liveInterviewError').removeClass('hide_it').text(message);
+                    $('.conductInterviewLoader').addClass('hide_it');
+                    $('.liveInterviewTemplateLoader').addClass('hide_it');
+                    $('.liveInterview').html('Interview Saved').prop('disabled',false);
+                    location.reload();
+                    setTimeout(function(){
+                    $('.liveInterviewError').addClass('hide_it'); },
+                    3000);  
+                    // window.location.href = "{{ route('intetviewInvitationEmp')}}" ;
+                }
+                else{
+                    var message = response.message;
+                    $('.liveInterviewError').removeClass('hide_it').text(message);
+                    $('.liveInterviewTemplateLoader').addClass('hide_it');
+                    $('.liveInterview').html('Live Interview').prop('disabled',false);
+                    setTimeout(function(){
+                    $('.liveInterviewError').addClass('hide_it'); },
+                    3000);
+
+                }
+            }
+            });
+
+
+
     });
 
 </script>

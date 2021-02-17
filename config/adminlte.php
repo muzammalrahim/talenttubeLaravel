@@ -206,10 +206,26 @@ return [
             'search' => true,
             'topnav' => true,
         ],
+
         [   'header'      => 'Job Seekers'],
+
         [
             'text'        => 'Job Seekers',
             'url'         => 'admin/users/verified',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
+        [
+            'text'        => 'Live Tracker',
+            'url'         => 'admin/users/tracker',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
+        [
+            'text'        => 'Talent Pool',
+            'url'         => 'admin/users/pool',
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],

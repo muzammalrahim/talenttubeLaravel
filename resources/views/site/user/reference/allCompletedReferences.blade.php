@@ -36,7 +36,7 @@
         </div>
       @endforeach
       @else
-          <div class="p-0 m-0"> <span class="bold">{{$jsName}} </span> <span> has not any completed reference yet</span></div>
+          <div class="p-2 m-2"> <span class="bold">{{$jsName}} </span> <span> has not any completed reference yet</span></div>
       @endif
     </div>
     <div class="card-footer text-center headerBG font-weight-bold"> TalentTube </div>

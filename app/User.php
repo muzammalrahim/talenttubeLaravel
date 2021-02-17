@@ -337,5 +337,41 @@ class User extends Authenticatable
         return $this->hasMany('App\CvData', 'user_id' );
     }
 
+    // =================================== Cross Reference count for Admin in iteration-8 ===================================
+    public function crossreferenceCount()
+    {
+        // return $this->hasMany('App\Interviews_booking', 'interview_id');
+        return $this->hasOne(crossreference::class, 'jobseekerId')->where('refStatus', 'Reference Completed' )->selectRaw('jobseekerId, count(*) as aggregate')->groupBy('jobseekerId');
+        
+    }
+
+    // =================================== Cross Reference count for Admin in iteration-8 ===================================
+
+    public function jobAppCount(){
+        return $this->hasOne(JobsApplication::class, 'user_id')->selectRaw('user_id, count(*) as aggregate')->groupBy('user_id');        
+    }
+
+
+    // =================================== Cross Reference count for Admin in iteration-8 ===================================
+
+    public function user_interviewsAccount(){
+        return $this->hasOne(UserInterview::class, 'user_id')->where('status' , 'Interview Confirmed')->selectRaw('user_id, count(*) as aggregate')->groupBy('user_id');        
+    }
+
+    // =================================== Notes for Admin in iteration-8 ===================================
+
+    public function notesCount()
+    {
+        return $this->hasOne('App\Notes' , 'js_id')->orderBy('id' , 'desc');
+    }
+
+    // =================================== User Pool in iteration-8 ===================================
+
+    public function userPool()
+    {
+        return $this->hasMany('App\UserPool' , 'user_id');
+    }
+
+
 
 }

@@ -193,7 +193,7 @@ class JobSeekerController extends Controller {
         if (!isEmployer($user) && (!isAdmin($user)) ){ return redirect(route('profile')); }
         $jobSeeker = User::JobSeeker()->where('id',$jobSeekerId)->first();
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
-        $notes = Notes::where('user_id', $user->id)->where('admin_id', '1')->where('js_id' , $jobSeekerId)->get();
+        $notes = Notes::where('admin_id', '1')->where('js_id' , $jobSeekerId)->get();
         $UserInterview = UserInterview::where('user_id', $jobSeeker->id)->get(); // where('status' , 'Interview Confirmed')
         // $temp_id = UserInterview::where('user_id', $jobSeeker->id)->first(); // where('status' , 'Interview Confirmed')
         // dd($temp_id->temp_id);

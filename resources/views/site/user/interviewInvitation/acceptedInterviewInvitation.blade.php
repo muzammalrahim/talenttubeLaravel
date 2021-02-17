@@ -8,78 +8,68 @@
 @stop
 
 @section('content')
-  <div class="head icon_head_browse_matches">Interview Detail</div>
+  <div class="head icon_head_browse_matches">Interview Detail 
+    @if (isEmployer())
+      <a href="{{ route('jobSeekerInfo' ,['id'=> $UserInterview->js->id] ) }}" class="unhideInterviews"> Click here to go to Job Seeker profile </a> 
+    @endif
+  </div>
   
-  @if ($UserInterview->status == 'Accepted' )
+  @if ($UserInterview->status == 'pending')
 
-  <form method="POST" name="saveInterviewResponse" class="saveInterviewResponse">
+    @if (isEmployer())
+      <h3> <b> {{$UserInterview->js->name}} </b> has not accepted your interview proposal yet. </h3>
+    @else
 
-    <div class="job_row interviewBookingsRow_24">
-      <div class="mb20"></div>
-      <div class="job_heading p10">
-        <div class="w_80p">
-          <h3 class=" job_title"><a> <b>Invitation 1: </b> Inerview of {{$UserInterview->js->name}}</a></h3>
-        </div>
-        <div class="fl_right">
-            <div class="j_label bold">
-              Status:
-            </div>
-            <div class="j_value text_capital">
-              {{$UserInterview->status}}
-            </div>
-        </div>
-      </div>
+     @include('site.user.interviewInvitation.jsAccepInterview')
 
-      <div class="job_info row p10 dblock">
-        <div class="timeTable">
-          <div class="IndustrySelect">
-            <p class="p0 qualifType"> Template Name: <b>  {{$UserInterview->template->template_name}} </b> </p>
-            @if ($UserInterview->template->type == 'phone_screeen' )
-              <p class="p0 qualifType"> Template Type: <b> Phone Screen</b> </p>
-            @else
-              <p class="p0 qualifType"> Template Type: <b> {{$UserInterview->template->type}} </b> </p>
-            @endif
-            <p class="p0 qualifType"> Interviewee Name: <b> {{$UserInterview->js->name}} </b> </p>
-          </div>
-        </div>
+    @endif
 
-        <input type="hidden" name="userInterviewId" value="{{$UserInterview->id}}">
-        <input type="hidden" name="temp_id" value="{{$UserInterview->template->id}}">
-        <input type="hidden" name="user_id" value="{{$UserInterview->js->id}}">
-        <div class="timeTable">
-          <div class="IndustrySelect">
-            <p class="p0 qualifType center bold"> Template Questions </p>
-              {{-- @dump($UserInterview->tempQuestions) --}}
-              @foreach ($InterviewTempQuestion as $key=> $quest)
-                {{-- @dump($quest->question) --}}
-                <p class="p0 qualifType" name = ""> {{$quest->question}} </p>
-                <input type="text" class="w100" name="answer[{{$quest->id}}]">
-              @endforeach
-          </div>
-        </div>
-        <div class="actionButton mt20">
-          <button class="btn small leftMargin turquoise saveResponse" data_url = "{{$UserInterview->url}}">Save Reponse</button>
-        </div>
-        <p class="errorsInFields qualifType"></p>
-      </div>
-    </div>
-  </form>
+  @elseif ($UserInterview->status == 'Accepted')
+
+    @if (isEmployer())
+     
+     @include('site.user.interviewInvitation.empAddResponse')
+
+    @else
+
+     @include('site.user.interviewInvitation.userAddResponse')
+    
+    @endif
+
+  
   @elseif($UserInterview->status == 'Interview Confirmed' )
     {{-- <h3> Interview has been confirmed. </h3> --}}
     @php
       $temp_id = $UserInterview->temp_id;
       $tempQuestions = App\InterviewTempQuestion::where('temp_id', $temp_id)->get();
     @endphp
-    @foreach ($tempQuestions as $question)
-      <p class="qualifType p0"> <b>Question {{$loop->index+1}}:</b> {{$question->question}} </p>
-    @php
-      $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('emp_id' ,$user->id)->where('user_id' , $UserInterview->js->id)->first();   
-    @endphp
-      <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
-    @endforeach
 
+      @if (isEmployer())
+        
+          @foreach ($tempQuestions as $question)
+          <p class="qualifType p0"> <b>Question {{$loop->index+1}}:</b> {{$question->question}} </p>
+          @php
+            $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('emp_id' ,$user->id)->where('user_id' , $UserInterview->js->id)->first();   
+          @endphp
+            <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
+          @endforeach
+
+        @else
+
+          @foreach ($tempQuestions as $question)
+          <p class="qualifType p0"> <b>Question {{$loop->index+1}}:</b> {{$question->question}} </p>
+          @php
+            $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('emp_id' ,$UserInterview->employer->id)->where('user_id' , $user->id)->first();   
+          @endphp
+            <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
+          @endforeach
+
+      @endif
+    
     @else
+
     <h3> <b> {{$UserInterview->js->name}} </b> has not accepted your interview proposal yet. </h3>
+
   @endif
 
 <div class="cl"></div>
@@ -123,7 +113,6 @@
 $('.saveResponse').on('click',function() {
     event.preventDefault();
     var formData = $('.saveInterviewResponse').serializeArray();
-    // console.log(formData);
     $('.saveResponse').html(getLoader('pp_profile_edit_main_loader responseLoader')).prop('disabled',true);
     $('.general_error1').html('');
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -137,21 +126,9 @@ $('.saveResponse').on('click',function() {
             if( response.status == 1 ){
                 $('.errorsInFields').text('Response addedd successfully');
                 location.href = base_url + '/Intetview/Invitation/emp/';
-                
                 setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
                 window.location.href = "{{ route('intetviewInvitation')}}" ;
             }
-            // else if(response.status == 0){
-
-            //     var answer = response.validator['answer[]'];
-            //     var error = answer.toString();
-            //     // console.log(error);
-            //     $('.errorsInFields').text(error);
-            //     setTimeout(() => { $('.errorsInFields').css("color" , "red").removeClass('to_show').addClass('to_hide').text(''); },3000);
-
-
-
-            // }
             else{
                 $('.saveResponse').html('Save Response');
                setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
@@ -164,6 +141,39 @@ $('.saveResponse').on('click',function() {
 });
 
 
+
+// ============================================================== Save Response As Jobseeker ==============================================================
+
+
+$('.saveResponseAsJobseeker').on('click',function() {
+    event.preventDefault();
+    var formData = $('.saveInterviewResponse').serializeArray();
+    $('.saveResponseAsJobseeker').html(getLoader('pp_profile_edit_main_loader responseLoader')).prop('disabled',true);
+    $('.general_error1').html('');
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/ajax/confirmInterInvitation/js',
+        data:formData,
+        success: function(response){
+            console.log(' response ', response);
+            $('.saveResponseAsJobseeker').html('Response Saved').prop('disabled',false);
+            if( response.status == 1 ){
+                $('.errorsInFields').text('Response addedd successfully');
+                location.href = base_url + '/Intetview/Invitation';
+                setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
+                // window.location.href = "{{ route('intetviewInvitation')}}" ;
+            }
+            else{
+                $('.saveResponseAsJobseeker').html('Save Response');
+               setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
+               $('.errorsInFields').text(response.error);
+            }
+
+        }
+    });
+
+});
 
 </script>
 @stop

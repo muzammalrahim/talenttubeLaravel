@@ -78,7 +78,7 @@
 
       <div class="card-footer">
         <div class="row">
-          <div class="col"><a class="btn btn-danger btn-sm" href=" {!! route('users') !!}">Cancel</a></div>
+          <div class="col"><a class="btn btn-danger btn-sm" href=" {!! route('interviewTemplates') !!}">Cancel</a></div>
           <div class="col text-right"><button class="btn btn-success btn-sm pull-right" type="submit">Update</button></div>
         </div>
       </div>

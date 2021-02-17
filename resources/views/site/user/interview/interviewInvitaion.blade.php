@@ -10,7 +10,7 @@
 @section('content')
 
 <div class="newJobCont">
-  <div class="head icon_head_browse_matches">Received Interview Invitations</div>
+  <div class="head icon_head_browse_matches">Received Interview Invitations <a href="{{ route('unhideInterviews') }}" class="unhideInterviews"> Click here to Un-Hide your interviews </a> </div>
   @if ($Interviews_booking->count() > 0)
   @foreach ($Interviews_booking   as $Int_booking)
 
@@ -18,9 +18,26 @@
   <div class="job_row interviewBookingsRow_{{$Int_booking->id}}">
     
     <div class="job_heading p10">
-      <div class="w_80p">
-        <h3 class=" job_title"><a> <b>Invitation {{$loop->index+1}}: </b> Inerview from {{$Int_booking->employer->company}}</a></h3>
+      <div class="w70 dinline_block">
+        <h3 class=" job_title"><a> <b>Invitation {{$loop->index+1}}: </b> Interview from {{$Int_booking->employer->company}}</a></h3>
       </div>
+
+      <div class="w10 selectStatus d-contents">
+
+        <form class="statusOfInterview d-contents" name="statusOfInterview">  
+          @csrf
+          <select name="hide">
+            <option value= "0"> Select Status   </option> 
+            <option value= "yes"> Hide Interview </option> 
+            @if ($Int_booking->status == 'pending')
+              <option value= "decline"> Decline Interview </option> 
+            @endif
+          </select>
+          <input type="hidden" class="interview_id" name="interview_id" value="{{$Int_booking->id}}">
+        </form>
+
+      </div>
+
       <div class="fl_right">
           <div class="j_label bold">
             Status:
@@ -165,6 +182,36 @@ $(document).ready(function(){
   
   });
 
+
+  // ========================================================= Change Status of interview =========================================================
+
+  $('.statusOfInterview').on('change',function() {
+    event.preventDefault();
+    var formData = $(this).serializeArray();
+    var interview_id = $(this).closest('.statusOfInterview').find('.interview_id').val();
+    console.log(' formData ', formData);
+    $('.general_error1').html('');
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/ajax/userInterview/hide/js',
+        data: formData,
+        success: function(response){
+            console.log(' response ', response);
+            // $('.selectStatus').html('Send Email').prop('disabled',false);
+            $('.interviewBookingsRow_'+interview_id).remove();
+            if( response.status == 1 ){
+                // $('.errorsInFields').text('Notification sent sucessfully');
+                // setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
+            }else{
+
+                  
+            }
+
+        }
+    });
+  });
+
+  // ========================================================= Change Status of interview =========================================================
 
 
 
