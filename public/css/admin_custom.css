@@ -399,3 +399,8 @@ select#filter_job {
 .pointer{ cursor: pointer; }
 p.slotbooking {text-align: center;margin: 20px;font-weight: 700;font-size: 20px;}
 .font-20{font-size: 20px}
+.hide{display: none}
+
+.card-primary:not(.card-outline)>.card-header {
+    background-color: #343a40;
+}

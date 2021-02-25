@@ -1,4 +1,6 @@
-<div class="tab-pane fade " id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+
+
+<div class="tab-pane fade" id="custom-tabs-one-profile" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
 
 	    <div class="form-group row">
 		    {{ Form::label('questions', null, ['class' => 'col-md-2 form-control-label']) }}
@@ -42,7 +44,7 @@
 		   </div> 
 	    </div>
 
-     <a class="btn btn-primary btnNext text-white" style="float:right;"onclick="scrollToTop()">Next</a>
+     {{-- <a class="btn btn-primary btnNext text-white" style="float:right;"onclick="scrollToTop()">Next</a> --}}
 	 <a class="btn btn-primary btnPrevious text-white"onclick="scrollToTop()" >Previous</a>
 
 </div>

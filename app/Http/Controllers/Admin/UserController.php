@@ -1142,6 +1142,8 @@ class UserController extends Controller
 
     public function adminEditNote($id){
 
+        Auth::user();
+
         return view('admin.user.edit', $data);
         
         $id = $request->id;
@@ -1164,6 +1166,7 @@ class UserController extends Controller
     // ========================================= Iteration-8 Live Tracker =========================================
 
     public function trackUsers() {
+        Auth::user();
         $data['title'] = 'Live Tracker';
         $data['content_header'] = 'Live Tracker';
         $data['filter_status'] = 'verified';
@@ -1181,7 +1184,7 @@ class UserController extends Controller
       $records = array();
 
        // dd($request);
-      $records = User::select(['id', 'name','email','phone','verified'])
+      $records = User::select(['id', 'name','email', 'default_job' ,'phone','verified'])
       ->where('tracker' , '1')
         ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
         ->orderBy('created_at', 'desc');
@@ -1213,23 +1216,25 @@ class UserController extends Controller
             if (isAdmin()){
                 $jobAppCount = ($records->jobAppCount)?($records->jobAppCount->aggregate):0;
                 if ($jobAppCount > 0) {
-                    $viewjob = '<span class = "ml-1">Job-<u><span><a class="pointer text-success " href="" target="_blank" >View</a>';
-                    // $jobHtml = '<span class = "text-success "> '.$jobAppCount.' '.$viewjob.' </u></span>';
 
-                    $jobStatusArray = jobStatusArray();
-                    // dd($jobStatusArray);
-                    $jobHtml = '<button class = "btn btn-primary userJobsModal" data-toggle ="modal" user_id = '.$records->id.' data-target = "#getJobsModal"> Select Job </button>';
+                    if (isset($records->default_job)) { 
+                        $viewjob = '<span class = "ml-1">Job-<u><span><a class="pointer text-success " href="" target="_blank" >View</a>';
+                        $jobStatusArray = jobStatusArray();
+                        $jobHtml = '<button class = "btn btn-primary userJobsModal jobTitle_'.$records->id.'"  data-toggle ="modal" user_id = '.$records->id.' data-target = "#getJobsModal"> '.$records->defaultJob->job->title.' </button>';
 
-                   
-                    $jobStatus  =  jobStatusArray();
+                        $jobStatus  =  jobStatusArray();
+                        return $jobHtml;
+                        
+                    }
+                    else{
+                        $viewjob = '<span class = "ml-1">Job-<u><span><a class="pointer text-success " href="" target="_blank" >View</a>';
+                        $jobStatusArray = jobStatusArray();
+                        $jobHtml = '<button class = "btn btn-primary userJobsModal jobTitle_'.$records->id.'"  data-toggle ="modal" user_id = '.$records->id.' data-target = "#getJobsModal"> Select Job </button>';
+
+                        $jobStatus  =  jobStatusArray();
+                        return $jobHtml;
+                    }
                     
-                    // $jobHtml .= Form::select('salaryRange', $jobStatus, ['placeholder' => 'Select Salary Range', 'onchange' => 'UProfile.updateSalaryRange()', 'id' => 'salaryRangeFieldnew', 'class' => 'hide_it salaryRangeField']);
-
-                    /*$jobHtml .= '<select>';
-                    $jobHtml .= '<option>  '.$jobStatus.'  </option>' ;
-                    $jobHtml .= '</select>' ;*/
-
-                    return $jobHtml;
                 }
                 else{
                     $nan = '<span class = "text-danger"> None Available </span>';
@@ -1243,8 +1248,30 @@ class UserController extends Controller
 
                 $jobAppCount = ($records->jobAppCount)?($records->jobAppCount->aggregate):0;
                 if ($jobAppCount > 0) {
-                    $rhtml = '<a class="text-dark jobStatus pointer jobStatus_'.$records->id.'" user_id = "'.$records->id.'" target="_blank" >Job Status</a>';
-                    return $rhtml;
+
+                    if (isset($records->default_job)) { 
+
+                        if ($records->defaultJob->status == 'inreview') {
+
+                            $rhtml = '<a class="text-dark jobStatus changeJobStatusButton text-capitalize pointer jobStatus_'.$records->id.'" jobapp_id = "'.$records->defaultJob->id.'" user_id = "'.$records->id.'" target="_blank" > In Review</a>';
+                            return $rhtml;
+                            
+                        }
+
+                        else{
+
+                            $rhtml = '<a class="text-dark jobStatus changeJobStatusButton text-capitalize pointer jobStatus_'.$records->id.'" jobapp_id = "'.$records->defaultJob->id.'" user_id = "'.$records->id.'" target="_blank" > '.$records->defaultJob->status.'</a>';
+                            return $rhtml;
+
+                        }
+                        
+                    }
+
+                    else{
+                        $rhtml = '<a class="text-dark jobStatus pointer jobStatus_'.$records->id.'" user_id = "'.$records->id.'" target="_blank" >Job Status</a>';
+                        return $rhtml;
+                    }
+                    
                 }
                 else{
                     $nan = '<span class = "text-danger"> None Available </span>';
@@ -1405,10 +1432,24 @@ class UserController extends Controller
     // =================================================== Add Note admin iteration-8 ===================================================
 
     public function updateNote(Request $request){
+        // dd($request->all());
         $user = Auth::user();
-        $note = Notes::find($request->id);
-        $note->text = $request->text;
-        $note->save();
+        if (isAdmin()) {
+            
+            $note = new Notes;
+            $note->text = $request->text;
+            $note->js_id = $request->js_id;
+            $note->admin_id = 1;
+            $note->save();
+
+            return response()->json([
+                'status' => 1,
+                'message' => 'Note added successfully'
+
+            ]);
+
+        }
+        
     }
 
 

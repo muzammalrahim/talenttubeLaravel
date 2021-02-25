@@ -982,6 +982,7 @@ class InterviewController extends Controller
     public function hideUserInterviewJs(Request $request){
         $user = Auth::user();
         $data = $request->toArray();
+        // dd($data);
         $data['user'] = $user;
         // if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
         $UserInterview = UserInterview::where('id',  $data['interview_id'])->first();
@@ -996,11 +997,21 @@ class InterviewController extends Controller
                     ]);
                 }
                 else{
-                    $UserInterview->delete();
-                    return response()->json([
-                        'status' => 1,
-                        'message' => 'User Interview deleted successfully'
-                    ]);
+                    if ($UserInterview->status == 'pending') {
+                        $UserInterview->delete();
+                        return response()->json([
+                            'status' => 1,
+                            'message' => 'User Interview deleted successfully'
+                        ]);
+
+                    }
+                    else{
+                        return response()->json([
+                            'status' => 0,
+                            'message' => 'Error Occured'
+                        ]);
+                    }
+
 
                 }
                 

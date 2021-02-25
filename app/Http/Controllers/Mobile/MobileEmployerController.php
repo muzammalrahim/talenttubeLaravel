@@ -286,6 +286,7 @@ class MobileEmployerController extends Controller
                 $UserInterview->emp_id   = $user->id;
                 $UserInterview->user_id   = $data['user_id'];
                 $UserInterview->status   = 'pending';
+                $UserInterview->hide   = 'no';
                 $UserInterview->url   = generateRandomString();
                 $UserInterview->save();
                 $jsEmail = $UserInterview->js->email;
@@ -303,6 +304,65 @@ class MobileEmployerController extends Controller
                     'message' => 'You have already selected this template, please try another template'
                 ]);
             }
+    }
+
+
+
+    // ======================================================== Live Interview ========================================================
+
+    public function MliveInterview(Request $request){
+        $user = Auth::user();
+        if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
+        $data = $request->all();
+        // dd($data);
+        // ================================================== Validation for answering the questions ==================================================
+        if(in_array(null, $data['answer'], true))
+        {
+            return response()->json([
+                'status' => 0,
+                'message' =>  "Please answer all questions"
+            ]);
+        }
+        else
+        {
+            $UserInterviewCheck = UserInterview::where('temp_id' , $data['temp_id'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
+            if (!$UserInterviewCheck) {
+                $UserInterview = new UserInterview;
+                $UserInterview->temp_id = $data['temp_id'];
+                $UserInterview->emp_id   = $user->id;
+                $UserInterview->user_id   = $data['user_id'];
+                $UserInterview->status   = 'Interview Confirmed';
+                $UserInterview->hide   = 'no';
+                $UserInterview->url   = generateRandomString();
+                $UserInterview->save();
+
+                foreach ($data['answer'] as $key => $value) {
+
+                    $answers = new UserInterviewAnswers;
+                    $answers->emp_id = $user->id;
+                    $answers->userInterview_id  = $UserInterview->id;
+                    $answers->user_id  = $data['user_id'];
+                    $answers->question_id = $key;
+                    $answers->answer = $value;
+                    $answers->save();
+                }
+
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Reponse added successfully'
+                ]);                
+            }
+
+            else{
+
+                    return response()->json([
+                    'status' => 0,
+                    'message' => 'You have already selected this template, please try another template'
+                ]);
+            }
+
+        }
+
     }
 
     // ============================================= Interview Initation =============================================
@@ -343,11 +403,28 @@ class MobileEmployerController extends Controller
 
         // dd($empName);
         if (isEmployer()) {
-            return view('mobile.employer.interviewInvitation.detail', $data);   //mobile/employer/interviewInvitation/detail
+
+            if ($UserInterview->emp_id == $user->id) {
+
+                return view('mobile.employer.interviewInvitation.detail', $data);   //mobile/employer/interviewInvitation/detail
+                // dd('interview does not belong to you check');
+            }
+
+            else{
+                dd('interview does not belong to you');
+            }
 
         }
         else{
-            return view('mobile.user.interviewInvitation.detail', $data);   // mobile/user/interviewInvitation/detail
+            if ($UserInterview->user_id == $user->id) {
+                return view('mobile.user.interviewInvitation.detail', $data);   // mobile/user/interviewInvitation/detail
+
+            }
+            else{
+
+                dd('Interview does not belong to you');
+
+            }
         }
 
     }
@@ -358,7 +435,7 @@ class MobileEmployerController extends Controller
     public function MintetviewInvitation(){
         $user = Auth::user();
         $data['user'] = $user;
-        if (isEmployer($user)) {return redirect(route('intetviewInvitationEmp'));}
+        if (isEmployer($user)) {return redirect(route('MintetviewInvitationEmp'));}
         $Interviews_booking = UserInterview::where('user_id',  $user->id)->orderBy('created_at' , 'desc')->get();
         $data['title'] = 'Interview Invitation';
         $data['Interviews_booking'] = $Interviews_booking ;
@@ -472,10 +549,58 @@ class MobileEmployerController extends Controller
             }
         }    
 
+    }
 
-       
+
+
+
+    // ============================================= Hide User-Interviews Ajax =============================================
+
+    public function MhideUserInterviewJs(Request $request){
+        $user = Auth::user();
+        $data = $request->toArray();
+        // dd($data);
+        $data['user'] = $user;
+        // if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
+        $UserInterview = UserInterview::where('id',  $data['interview_id'])->first();
+        if ($UserInterview->user_id == $user->id) {
+            if ($data['hide'] != '0') {
+                if ($data['hide'] == 'yes') {    
+                    $UserInterview->hide = 'yes';
+                    $UserInterview->save();
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'Interview Status updated Successfully'
+                    ]);
+                }
+                else{
+                    if ($UserInterview->status == 'pending') {
+                        $UserInterview->delete();
+                        return response()->json([
+                            'status' => 1,
+                            'message' => 'User Interview deleted successfully'
+                        ]);
+
+                    }
+                    else{
+                        return response()->json([
+                            'status' => 0,
+                            'message' => 'Error Occured'
+                        ]);
+                    }
+
+
+                }
+                
+            }
+            
+        }
+        else{
+            return false;
+        }
 
     }
+
 
 
 

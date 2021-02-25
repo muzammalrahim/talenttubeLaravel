@@ -5,7 +5,7 @@
 @section('content_header')
 
 <div class="block row">
-    <div class="col-md-2"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
+    <div class="col-md-2"><a href=" {{url()->previous()}} " class="seeCompletedReference"><h1 class="m-0 text-dark">{{$content_header}}</h1></a></div>
 
 
 
@@ -54,8 +54,9 @@
             </th>
             <th>Name</th>
             <th>Email</th>
+            {{-- <th>Qualification Type</th> --}}
             <th>qualification</th>
-            {{-- <th>Profile</th> --}}
+            <th>Industry Experience</th>
             <th>action</th>
 
         </tr>
@@ -69,6 +70,19 @@
 @section('css')
 <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
 <style type="text/css">
+
+
+  a.seeCompletedReference {color: black;text-transform: uppercase;text-decoration: none;letter-spacing: 0.15em;display: inline-block;
+  padding: 15px 20px;
+  position: relative;
+}
+a.seeCompletedReference:after {    
+  background: none repeat scroll 0 0 transparent;bottom: 0;content: "";display: block;height: 2px;left: 50%;position: absolute;background: black;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+a.seeCompletedReference:hover:after { width: 100%; left: 0; }
+
 
 </style>
 @stop
@@ -106,8 +120,9 @@ jQuery(function() {
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
             { data: 'email', name: 'email' },
+            // { data: 'qualificationType', name: 'qualificationType' },
             { data: 'qualification', name: 'qualification' },
-            // { data: 'profile', name: 'profile' },
+            { data: 'industry_experience', name: 'industry_experience' },
             { data: 'action', name: 'action' }
         ],
 

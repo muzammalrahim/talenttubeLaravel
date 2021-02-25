@@ -40,6 +40,8 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     // InterviewInvitaionByEmployerToJobseeker
     Route::post('ajax/interview/template','Mobile\MobileEmployerController@MinterviewTemplate')->name('MinterviewTemplate');
     Route::post('ajax/conduct/Minterview','Mobile\MobileEmployerController@MconductInterview')->name('MconductInterview');
+    Route::post('ajax/live/MliveInterview','Mobile\MobileEmployerController@MliveInterview')->name('MliveInterview');
+    
 
 
     Route::get('Intetview/Invitation/emp/',       'Mobile\MobileEmployerController@MintetviewInvitationEmp')->name('MintetviewInvitationEmp');
@@ -49,6 +51,9 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     Route::post('ajax/accept/interview/Minvitation','Mobile\MobileEmployerController@MacceptInterviewInvitation')->name('MacceptInterviewInvitation');
     Route::post('ajax/reject/interview/Minvitation','Mobile\MobileEmployerController@MrejectInterviewInvitation')->name('MrejectInterviewInvitation');
     Route::post('ajax/MconfirmInterInvitation',    'Mobile\MobileEmployerController@MconfirmInterInvitation')->name('MconfirmInterInvitation');
+
+    Route::post('ajax/userInterview/hide/js','Mobile\MobileEmployerController@MhideUserInterviewJs')->name('MhideUserInterviewJs');
+
 
 
 

@@ -22,26 +22,48 @@
   <div class="card mb-3 interviewBookingsRow_{{$Int_booking->id}}">
 
     <div class="card-header jobAppHeader p-2 jobInfoFont">
-      <p class="font11 m-0"><b>Invitation {{$loop->index+1}}: </b> Inerview from {{$Int_booking->employer->comany}}</p>
-      <p class="font11 m-0"><b>Status : </b> {{$Int_booking->status}}</p>
+
+      <div class="invitation float-left">
+        
+        <p class="font11 m-0"><b>Invitation {{$loop->index+1}}: </b> Inerview from {{$Int_booking->employer->company}}</p>
+        <p class="font11 m-0"><b>Status : </b> {{$Int_booking->status}}</p>
+
+      </div>
+      <div class="font11 float-right">
+        <form class="statusOfInterview" name="statusOfInterview">  
+          @csrf
+          <select name="hide" class="form-control font11">
+            <option value= "0"> Select Status   </option> 
+            <option value= "yes"> Hide Interview </option> 
+            @if ($Int_booking->status == 'pending')
+              <option value= "decline"> Decline Interview </option> 
+            @endif
+          </select>
+          <input type="hidden" class="interview_id" name="interview_id" value="{{$Int_booking->id}}">
+        </form>
+      </div>
+
     </div>
 
     <div class="card-body jobAppBody p-2">
-          <p class="font11 m-0"> Template Name: <b> {{$Int_booking->template->template_name}} </b> </p>
-          @if ($Int_booking->template->type == "phone_screeen")
-            <p class="font11 m-0"> Template Type: <b> Phone Screen</b> </p>
-          @else
-            <p class="font11 m-0"> Interview Type: <b> {{$Int_booking->template->type}} </b> </p>
-          @endif
-           <div class="j_button pb20 mt20">
-               <a class="btn btn-sm btn-primary seeDetailOfInterview" href="{{ route('MinterviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}">Click here to respond to this interview</a>
-           </div>
+
+      
+
+
+      <p class="font11 m-0"> Template Name: <b> {{$Int_booking->template->template_name}} </b> </p>
+      @if ($Int_booking->template->type == "phone_screeen")
+        <p class="font11 m-0"> Template Type: <b> Phone Screen</b> </p>
+      @else
+        <p class="font11 m-0"> Interview Type: <b> {{$Int_booking->template->type}} </b> </p>
+      @endif
+      <div class="j_button pb20 mt20">
+         <a class="btn btn-sm btn-primary seeDetailOfInterview" href="{{ route('MinterviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}">Click here to respond to this interview</a>
+      </div>
+
       @php
         $question = $Int_booking->tempQuestions;
       @endphp
     </div>
-
-
 
   </div>
 
@@ -78,6 +100,34 @@ $(document).ready(function(){
   $(document).on("click" , ".confirmInterview" , function(){
 
   });
+
+
+  // ========================================================= Change Status of interview =========================================================
+
+  $('.statusOfInterview').on('change',function() {
+    event.preventDefault();
+    var formData = $(this).serializeArray();
+    var interview_id = $(this).closest('.statusOfInterview').find('.interview_id').val();
+    console.log(' formData ', formData);
+    $('.general_error1').html('');
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/m/ajax/userInterview/hide/js',
+        data: formData,
+        success: function(response){
+            console.log(' response ', response);
+            if( response.status == 1 ){
+              $('.interviewBookingsRow_'+interview_id).remove();
+            }else{
+                alert('Error Occured');
+            }
+
+        }
+    });
+  });
+
+});
+
 
 </script>
 @stop

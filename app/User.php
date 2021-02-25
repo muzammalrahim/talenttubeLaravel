@@ -373,5 +373,13 @@ class User extends Authenticatable
     }
 
 
+    // =================================== Notes for Admin in iteration-8 ===================================
+
+    public function defaultJob()
+    {
+        return $this->belongsTo('App\JobsApplication' , 'default_job');
+    }
+
+
 
 }

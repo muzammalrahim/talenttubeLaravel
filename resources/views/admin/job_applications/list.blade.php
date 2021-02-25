@@ -80,13 +80,13 @@
 
   <div class="block row col-md-9 text-white mb-3 margin_auto">
 
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkApproved mt-1" style="margin-right:5px;">Bulk Assign</a></div>
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkPDFGenerate mt-1">Bulk Snapshot</a></div>
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnExportCSV mt-1">Bulk Export CSV</a></div>
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-primary btnBulkEmail mt-1">Bulk Email</a></div>
-    <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV mt-1">Bulk Compile CV</a></div>
-    <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkStatus ml-1 mt-1">Multi Bulk Status</a></div>
-    <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-block btn-primary bulkInterview">Bulk Interview</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkApproved mt-1" style="margin-right:5px;">Bulk Assign</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkPDFGenerate mt-1">Bulk Snapshot</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnExportCSV mt-1">Bulk Export CSV</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkEmail mt-1">Bulk Email</a></div>
+    <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-sm btn-primary btnBulkCompileCV mt-1">Bulk Compile CV</a></div>
+    <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-sm btn-primary btnBulkStatus ml-1 mt-1">Multi Bulk Status</a></div>
+    <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-block btn-sm btn-primary bulkInterview">Bulk Interview</a></div>
     {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
   </div>
 {{-- </div> --}}
@@ -248,6 +248,16 @@
       </div>
     </form>
 </div>
+
+<div class="d-none">
+    <form method="POST" class="BulkInterviewForm" action="{{route('bulk.bulkInterview')}}">
+      @csrf
+      <div class="cbx_list">
+      </div>
+    </form>
+</div>
+
+
 {{-- BulkCSV download end --}}
 
 @stop
@@ -535,6 +545,27 @@ $(document).on('click','.btnBulkCompileCV', function(){
 
 
 });
+
+
+  $(document).on('click','.bulkInterview', function(){
+  console.log(' bulkInterview click ');
+  var cbx = $('input[name="cbx[]"]:checked').map(function(){return $(this).val(); }).toArray();
+    console.log(cbx);
+    if(cbx.length <= 0){
+      alert('Please Select Checkboxes');
+      return false;
+    }
+
+      // return;
+
+    var cbx_hidden =  '';
+    cbx.forEach(function(id){ cbx_hidden += '<input type="hidden" name="cbx[]" value="'+id+'" />'  });
+    $('.BulkInterviewForm .cbx_list').html(cbx_hidden);
+    $('.BulkInterviewForm').submit();
+});
+
+
+
 </script>
 @stop
 

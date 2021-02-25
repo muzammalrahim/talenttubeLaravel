@@ -121,6 +121,7 @@ class AdminEmailsController extends Controller {
         $data['content_header'] = 'bulkEmail';
         $data['classes_body'] = 'bulkEmail';
         $data['record'] = null;
+
         $data['jobSeekers'] = User::whereIn('id',$userIDs)->get();
         return view('admin.bulkEmail.new', $data);
 
@@ -422,4 +423,34 @@ class AdminEmailsController extends Controller {
         }
       }
     }
+
+
+
+
+    // public function bulkInterview(Request $request){
+
+    //   dd($request->cbx);
+    //   if(!empty($request->cbx)){
+
+    //     // $userIDs = array();
+
+    //     // foreach($request->cbx as $userID){
+    //     // $jobApp = JobsApplication::where('id',$userID)->first();
+    //     // $userIDs[] = $jobApp->user_id;
+    //     // }
+    //     $user = Auth::user();
+    //     $data['user'] = $user;
+    //     $data['title'] = 'Bulk Email';
+    //     $data['content_header'] = 'bulkEmail';
+    //     $data['classes_body'] = 'bulkEmail';
+    //     $data['record'] = null;
+    //     $data['jobSeekers'] = User::whereIn('id',$request->cbx)->get();
+    //     return view('admin.bulkEmail.new', $data);
+
+    //     }
+
+    // }
+
+
+    
 }

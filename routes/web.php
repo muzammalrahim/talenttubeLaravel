@@ -196,6 +196,12 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('bulk/generatePDF', 'Admin\AdminEmailsController@GeneratePDF');
     Route::post('bulk/BulkGenerateCVPDF', 'Admin\AdminEmailsController@BulkGenerateCVPDF')->name('bulk.BulkGenerateCVPDF');
     Route::post('bulk/BulkGenerateCVPDFApplicant', 'Admin\AdminEmailsController@BulkGenerateCVPDFApplicant')->name('bulk.BulkGenerateCVPDFApplicant');
+
+    // iteration-8 BulkInterview
+
+    Route::post('ajax/interview/bulkInterviewTemplate','Admin\AdminInterviewController@bulkInterviewTemplate')->name('bulkInterviewTemplate');
+    Route::post('bulk/bulkInterview', 'Admin\AdminInterviewController@bulkInterview')->name('bulk.bulkInterview');
+    Route::post('ajax/bulk/bulkInterview/send', 'Admin\AdminInterviewController@bulkInterviewSend')->name('bulkIntrerview.send');
     // End here
 
     // Job Application Start here
@@ -279,6 +285,7 @@ Route::get('media/private/{userid}/{any}', [
 
     Route::post('jobs/status', 'Admin\AdminJobsController@changesJobStatus')->name('jobs.changesStatus');
     Route::post('jobs/status/change', 'Admin\AdminJobsController@changesJobStatusConfirm')->name('jobs.changesJobStatusConfirm');
+    Route::post('jobs/defaultJobApplication', 'Admin\AdminJobsController@defaultJobApplication')->name('jobs.defaultJobApplication');
 
 
 

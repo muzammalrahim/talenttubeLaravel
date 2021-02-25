@@ -139,6 +139,8 @@
                 <a href="#tabs-7" title=""><span>Interview</span></a>
             </li>
 
+            
+
            {{--  <li id="tabs-3_switch" class="switch_tab">
                 <a href="#tabs-3" title=""><span>Questions</span></a>
             </li> --}}
@@ -326,15 +328,28 @@
 
         </div>
 
+            <!-- =============================================== Tab Jobs =============================================== -->
+
+        <a id="tabs-8" class="tab_link tab_a"></a>
+        <div class="tab_interviews tab_cont pt30px">
+        @include('site.user.jobseekerInfoTabs.jobApplications')
+            
+            {{--    site/user/jobseekerInfoTabs/interviews  --}}
+
+        </div>
+
     @endif
     <!-- =============================================== Tab Interview =============================================== -->
 
-     <a id="tabs-7" class="tab_link tab_a"></a>
+    <a id="tabs-7" class="tab_link tab_a"></a>
     <div class="tab_interviews tab_cont pt30px">
         @include('site.user.jobseekerInfoTabs.interviews')
         {{--    site/user/jobseekerInfoTabs/interviews  --}}
 
     </div>
+
+
+
 
     <!-- =============================================== Tabs End here =============================================== -->
 

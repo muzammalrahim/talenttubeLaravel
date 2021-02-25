@@ -21,6 +21,8 @@ use Yajra\Datatables\Datatables;
 use PDF;
 
 use App\UserInterview;
+use App\InterviewTemplate;
+use App\History;
 
 
 
@@ -976,50 +978,99 @@ class AdminJobsController extends Controller
   // ===================================================== Get Job Application for admin iteration-8 =====================================================
 
   public function changesJobStatusConfirm(Request $request){
-    // dd($request->user_id);
-    
+    // dd($request->status);
     if (isAdmin()) {
         $JobsApplication = JobsApplication::where('id' , $request->jobapp_id)->first();
-        // dd($JobsApplication->user_id);
+        $oldjobstatus = $JobsApplication->status;
+
+
         if ($JobsApplication->user_id == $request->user_id) {
-          
-           $JobsApplication->status = $request->status;
-           $JobsApplication->save();
-           return redirect(route('trackUsers'))->withSuccess( __('admin.record_updated_successfully'));
+          $JobsApplication->status = $request->status;
+          $JobsApplication->save();
+
+          $history = new History;
+          $history->user_id = $JobsApplication->user_id; 
+          $history->job_status = $request->status; 
+          $history->job_id = $JobsApplication->job->id; 
+          $history->old_job_status = $oldjobstatus;
+          $history->type = 'job_Status';
+          $history->save();
+
+           // return redirect(route('trackUsers'))->withSuccess( __('admin.record_updated_successfully'));
+          return response()->json([
+              'status' => 1,
+              'message' => 'Status updated successfully'
+          ]);
+        }
+        else{
+            return response()->json([
+              'status' => 0,
+              'message' => 'Error Occured'
+           ]);
         }
        
       }  
 
-
-
-      // return view('admin.candidate_tracking.layout.jobStatus');  /* admin/candidate_tracking/jobApp */
-
   }
 
 
-    // ===================================================== jobseeker's interview iteration-8 =====================================================
+
+
+  // ============================================================ Make default Job ==============================================
+
+  public function defaultJobApplication(request $request){
+    $data = $request->all();
+    // dd($data);
+    $user = Auth::user();
+    if (isAdmin($user)) {
+      $jobseeker = User::Where('id' , $data['user_id'])->first();
+      $jobseeker->default_job = $data['jobApp_id'];
+      $jobseeker->save();
+      return response()->json([
+        'message' => 'Default Job Set Successfully'
+      ]);
+    }
+
+
+  }
+
+  // ===================================================== jobseeker's interview iteration-8 =====================================================
 
   public function jobseekerInterviews($id){
     // dd($id);
-
+    $user = Auth::user();
     $UserInterview = UserInterview::where('user_id' , $id)->get();
     $data['content_header'] = 'Interviews';
     $data['title'] = 'Jobseeker interview';
     $data['UserInterview'] = $UserInterview;
+    $data['user_id'] = $id;
+    $interviewTemplate = InterviewTemplate::get();
+    $data['interviewTemplate'] = $interviewTemplate;
+    $data['user'] = $user;
+
+    // dd($UserInterview);
 
     // $data['record'] = $record;
 
     if (isAdmin()) {
 
-
-      return view('admin.job_applications.jobseekerInterviews', $data);  /* admin/candidate_tracking/jobApp */
+      // if ($UserInterview->count() > 0) {
+        return view('admin.job_applications.jobseekerInterviews', $data);  /* admin/job_applications/jobseekerInterviews */        
+      // }
         
+     /* else{
+        return response()->json([
+
+          'message' => 'No interview here'
+
+        ]);
        
-      }  
+      }  */
 
 
 
       // return view('admin.candidate_tracking.layout.jobStatus');  /* admin/candidate_tracking/jobApp */
+      }
 
   }
 
