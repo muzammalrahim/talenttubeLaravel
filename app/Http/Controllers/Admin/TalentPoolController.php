@@ -100,7 +100,7 @@ class TalentPoolController extends Controller
         $UserPool = UserPool::where('id' , $id)->first();
         // dd($UserPool);
         $data['id'] = $id;
-        $data['title'] = $name;
+        $data['title'] = $name ;
         $data['content_header'] = $name;
         // $data['filter_status'] = 'verified';
         // $data['jobStatusArray'] = jobStatusArray();
@@ -122,9 +122,16 @@ class TalentPoolController extends Controller
       //   return $request->created_at->format('Y-m-d'); // human readable format
       // })
 
-      ->addColumn('name', function ($records) {
+      ->addColumn('surname', function ($records) {
         if (isAdmin()){
-                $rhtml = '<p>'.$records->user->name.'</p>';
+                $rhtml = '<p>'.$records->user->surname.'</p>';
+            return $rhtml;
+        }
+      })
+
+      ->addColumn('city', function ($records) {
+        if (isAdmin()){
+                $rhtml = '<p>'.$records->user->city.'</p>';
             return $rhtml;
         }
       })
@@ -136,6 +143,38 @@ class TalentPoolController extends Controller
         }
       })
 
+      ->addColumn('phone', function ($records) {
+        if (isAdmin()){
+                $rhtml = '<p>'.$records->user->phone.'</p>';
+            return $rhtml;
+        }
+      })
+
+      ->addColumn('created_at', function ($records) {
+        if (isAdmin()){
+                $rhtml = '<p>'.$records->user->created_at.'</p>';
+            return $rhtml;
+        }
+      })
+
+
+      ->addColumn('profile', function ($records) {
+            if (isAdmin()){
+                $rhtml = '<a class="btn btn-primary btn-sm" href="'.route('jobSeekerInfo',['id'=>$records->user->id]).'" target="_blank" >Info</a>';
+                return $rhtml;
+            }})
+        ->addColumn('videoInfo', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserVideoInfo" user-id='. $records->user->id.' >Info</button>';
+            return $rhtml;
+        }})
+
+        ->addColumn('resume', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserResumeInfo" user-id='. $records->user->id.' >Info</button>';
+            return $rhtml;
+        }})
+
       ->addColumn('action', function ($records) {
         if (isAdmin()){
                 $rhtml = ' <span user_id = "'.$records->user_id.'" class="fas fa-trash text-danger removeFromPool pointer" >  </span>';
@@ -145,7 +184,7 @@ class TalentPoolController extends Controller
 
 
       
-      ->rawColumns(['name','email','action'])
+      ->rawColumns(['surname', 'city', 'email','phone','created_at','profile','videoInfo','resume','action'])
       ->toJson();
 
     }
@@ -177,15 +216,45 @@ class TalentPoolController extends Controller
     	$UserPool = UserPool::where('pool_id', $request->id)->pluck('user_id');
     	// dd($UserPool);
     	$records = array();
-    	$records = User::select(['id', 'name','email','qualification','created_at'])->whereNotIn('id' , $UserPool)
+    	$records = User::select(['id', 'name','email','qualificationType', 'industry_experience' ,'qualification','created_at'])->whereNotIn('id' , $UserPool)
         ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
         ->orderBy('created_at', 'desc');
-
+        
         return datatables($records)
 
-      // ->editColumn('created_at', function ($request) {
-      //   return $request->created_at->format('Y-m-d'); // human readable format
-      // })
+        ->editColumn('qualification', function ($records) {
+
+        $qualificationsData =  ($records->qualification)?(getQualificationsData($records->qualification)):(array());
+
+        if(!empty($qualificationsData))
+            foreach($qualificationsData as $qualification)
+            {
+                $rhtml = '<div class="QualificationSelect">';
+                $rhtml .= '<p style="margin-bottom: 0px;"> '.$qualification['title'].' </p>'; 
+                $rhtml .= '</div>';
+                return $rhtml;
+            }
+
+        })
+
+
+        ->editColumn('industry_experience', function ($records) {
+           if(isset($records->industry_experience)){
+               foreach ($records->industry_experience as $ind){
+                $rhtml = '<div class="indsutrySelect">';
+                $rhtml .= '<p style="margin-bottom: 0px;">'.getIndustryName($ind).'</p>';
+                $rhtml .= '</div>';
+                return $rhtml;
+               }
+           }
+        })
+
+        // ->addColumn('qualification_type', function ($records) {
+        //     if (isAdmin()){
+        //         $rhtml = ' <span> '.$records->qualificationType.'  </span>';
+        //         return $rhtml;
+        //     }
+        // })
 
         ->addColumn('action', function ($records) {
         	if (isAdmin()){
@@ -194,27 +263,8 @@ class TalentPoolController extends Controller
         	}
     	})
 
-
-        ->addColumn('qualification', function ($records) {
-        	if (isAdmin()){
-
-                // $qualificationsData =  ($records->qualification)?(getQualificationsData($records->qualification)):(array());
-
-                $rhtml = $records->qualification;
-
-				// $qualification = '';
-				//     foreach ($qualificationsData as $qualification) {
-				//         $qualification .= '<p value="test">'.$qualification['title'].'</p>';
-				//     }
-				// $rhtml = '</p> '.$qualification.' </p>';
- 
-
       
-            	return $rhtml;
-        	}
-    	})
-      
-      ->rawColumns(['action','qualification'])
+      ->rawColumns(['qualificationType','qualification','industry_experience','action'])
       ->toJson();
       dump($records);
 

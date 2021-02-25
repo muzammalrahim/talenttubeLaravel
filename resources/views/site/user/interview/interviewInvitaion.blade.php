@@ -197,20 +197,15 @@ $(document).ready(function(){
         data: formData,
         success: function(response){
             console.log(' response ', response);
-            // $('.selectStatus').html('Send Email').prop('disabled',false);
-            $('.interviewBookingsRow_'+interview_id).remove();
             if( response.status == 1 ){
-                // $('.errorsInFields').text('Notification sent sucessfully');
-                // setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
+              $('.interviewBookingsRow_'+interview_id).remove();
             }else{
-
-                  
+                alert('Error Occured');
             }
 
         }
     });
   });
-
   // ========================================================= Change Status of interview =========================================================
 
 

@@ -25,6 +25,7 @@ use Illuminate\Support\Facades\Response;
 use App\crossreference;
 use App\ControlSession;
 use App\InterviewTempQuestion;
+use App\JobsApplication;
 
 use App\Interview;
 use App\Interviews_booking;
@@ -217,6 +218,8 @@ class JobSeekerController extends Controller {
         $history = History::where('user_id',$jobSeeker->id)->orderBy('created_at', 'desc')->get();
         $historyCreated = User::where('id',$jobSeeker->id)->first();
         $interviewTemplate = InterviewTemplate::get();
+        $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$jobSeekerId)->get();
+
         $data['title']          = 'JobSeeker Info';
         $data['classes_body']   = 'jobSeekerInfo';
         $data['jobSeeker']       = $jobSeeker;

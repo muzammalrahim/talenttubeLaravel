@@ -980,8 +980,17 @@ class EmployerController extends Controller {
             // dd($interviewTemplate->id);
             $data['interviewTemplate'] = $interviewTemplate;
             $data['InterviewTempQuestion'] = $InterviewTempQuestion;
-            return view('site.employer.interviewTemplate.template' , $data); 
-            // site/employer/interviewTemplate/template
+                if (isAdmin()) {
+                    return view('admin.job_applications.interviewTemplate.template' , $data); 
+                    // admin/job_applications/interviewTemplate/template
+                    
+
+                }
+                else{
+                    return view('site.employer.interviewTemplate.template' , $data);
+                    // site/employer/interviewTemplate/template
+
+                }
             }
         }
         else{
@@ -1104,6 +1113,7 @@ class EmployerController extends Controller {
         $user = Auth::user();
         if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
         $data = $request->all();
+        // dd($data);
         // ================================================== Validation for answering the questions ==================================================
         if(in_array(null, $data['answer'], true))
         {
@@ -1115,7 +1125,7 @@ class EmployerController extends Controller {
         else
         {
             $UserInterviewCheck = UserInterview::where('temp_id' , $data['temp_id'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
-            if (!$UserInterviewCheck) {
+            // if (!$UserInterviewCheck) {
                 $UserInterview = new UserInterview;
                 $UserInterview->temp_id = $data['temp_id'];
                 $UserInterview->emp_id   = $user->id;
@@ -1140,15 +1150,15 @@ class EmployerController extends Controller {
                     'status' => 1,
                     'message' => 'Reponse added successfully'
                 ]);                
-            }
+            // }
 
-            else{
+            /*else{
 
                     return response()->json([
                     'status' => 0,
                     'message' => 'You have already selected this template, please try another template'
                 ]);
-            }
+            }*/
 
         }
 

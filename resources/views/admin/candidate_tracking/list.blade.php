@@ -10,12 +10,12 @@
      <div class="block row col-md-10 text-white">
 
 
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign Job</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign</a></div>
       <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
       <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
       <div class="col-md-1.5 bulkButton"><a  class="btn btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
       <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary addCondidate" href="{{ route('addCandidate') }}" >Add Condidate</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary addCondidate" href="{{ route('addCandidate') }}" >Add Candidate</a></div>
       {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
     </div>
     {{-- testing --}}
@@ -448,12 +448,28 @@ jQuery(function() {
     $(document).on('click', '.selectJobButton' , function(){
       var id = $(this).val();
       var user_id = $('.user_id').val();
-      // console.log(user_id);
+      // var job_title = $('.job_title').val();
+      // console.log(job_title);
+
       var status = $(this).siblings('.row').find('.status').attr('data-status');
+      var title = $(this).parents('.bgColor').find('.job_title').val();
+      console.log(title);
       var abc = $('.jobStatus_'+user_id ).text(status);
       $('.jobStatus_'+user_id ).attr('jobapp_id' , id);
+      $('.jobTitle_'+user_id ).text(title);
       $('.jobStatus_'+user_id ).addClass('changeJobStatusButton');
       // console.log(bcd);
+
+      $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+      $.ajax({
+        type: 'POST',
+        url: '{!! route('jobs.defaultJobApplication') !!}',
+        data: {'jobApp_id': id , 'user_id': user_id},
+        success: function(data) {
+          console.log(' data ', data);
+        }
+      });
+
 
     });
 
@@ -472,7 +488,7 @@ jQuery(function() {
         url: '{!! route('jobs.changesStatus') !!}',
         data: {'id': user_id},
         success: function(data) {
-          // console.log(' data ', data);
+          console.log(' data ', data);
           // $('.applyJobModalHeader').html(data);/
            // $('#dataTable').DataTable().ajax.reload();
           $('.jobStatus_'+user_id ).html(data);
@@ -505,11 +521,9 @@ jQuery(function() {
         data: {'status':status, 'user_id':user_id, 'jobapp_id':jobapp_id},
         success: function(data) {
           // console.log(' data ', data);
-          // $('.applyJobModalHeader').html(data);/
-           // $('#dataTable').DataTable().ajax.reload();
-          // $('.jobStatus_'+user_id ).html(data);
-          // $('.jobStatus_'+user_id ).removeClass('changeJobStatusButton');
-          // $('.jobStatus_'+user_id ).addClass('changeJobStatus');
+
+          $('#dataTable').DataTable().ajax.reload();
+
         }
       });
 
@@ -569,14 +583,14 @@ jQuery(function() {
     });
 
     $(document).on('change' , '.newNoteInput', function(){
-      var note_id = $(this).attr('note_id');
+      var user_id = $(this).attr('user_id');
       var text = $(this).val();
       // console.log(text);
       $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
           type: 'POST',
           url: '{!! route('users.updateNote') !!}',
-          data: {'text': text , 'id':note_id },
+          data: {'text': text , 'js_id':user_id },
           success: function(data) {
              $('#dataTable').DataTable().ajax.reload(); 
           }

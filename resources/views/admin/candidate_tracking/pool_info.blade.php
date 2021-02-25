@@ -7,40 +7,27 @@
 
 
 <div class="block row">
-    <div class="col-md-2"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
+    <div class="col-md-3"><h4 class="m-0 text-dark">{{$content_header}} Talent Pool </h4></div>
 
     <input type="hidden" name="" class="pool_id" pool_id = "{{$id}}">
 
-    <div class="block row col-md-10 text-white">
+    <div class="block row col-md-9 text-white">
 
 
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkApproved">Bulk Assign Job</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
-      <div class="col-md-1.5 bulkButton"><a  class="btn btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary" target="_blank" href = "{{ route('addJobseekerInPool',['id'=>$id] ) }}">Add Job Seeker</a></div>
-      <div class="col-md-1.5 bulkButton"><a href="{!! route('pool.create') !!}" class="btn btn-block btn-primary">Create New Pool</a></div>
-      {{-- <div class="col-md-2"> --}}
-        
-    {{-- </div> --}}
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkApproved">Bulk Assign</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
+      <div class="col-md-1.5 bulkButton"><a  class="btn btn-sm btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary" href = "{{ route('addJobseekerInPool',['id'=>$id] ) }}">Add Job Seeker</a></div>
+      <div class="col-md-1.5 bulkButton"><a href="{!! route('pool.create') !!}" class="btn btn-sm btn-block btn-primary">Create New Pool</a></div>
+      </div>
 
-      {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
-    </div>
-    {{-- testing --}}
-
-    {{-- <div class="col-md-2">
-        <div class="float-right">
-            <a href="{!! route('users.create') !!}" class="btn btn-block btn-success">Add New</a>
-        </div>
-    </div> --}}
 
 </div>
 <div class="row">
   <div class="col-md-2"></div>
-  {{-- <div class="col-md-1.5">
-              <a href="{!! route('pool.create') !!}" class="btn btn-block btn-primary">Add New</a>
-  </div> --}}
+
 </div>
 
 
@@ -60,48 +47,21 @@
         <tr style = "text-align: center">
             {{-- <th>select</th> --}}
             <th><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th>
-            <th>name</th>
-            {{-- <th>pool_id</th> --}}
+            <th>surname</th>
+            <th>City</th>
             <th>email</th>
-  {{--           <th>created_at</th>
-            <th>profile</th>
+            <th>Phone</th>
+            <th>created_at</th>
+            <th>Profile</th>
             <th>View Video</th>
-            <th>View Resume</th> --}}
+            <th>View Resume</th>
             <th>action</th>
 
         </tr>
     </thead>
   </table>
 
-{{-- User Deleting Pop Up --}}
 
-  <div id="deleteModaluser" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-                 <!-- Modal content-->
-        <div class="modal-content">
-             <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-             </div>
-             <div class="modal-body">
-
-                <div class="modalContentUser">
-                    <p>Do you want to Delete <b><span id="delConfirmIdUser"></span></b> User ?</p>
-
-                </div>
-
-                <div class="modelProcessingUser" style="display: none;">
-                        <h4>Deleting User...</h4>
-                 </div>
-
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-danger" id="removeuser" style="margin: 0 auto">Yes</button>
-              <input type="hidden" name="deleteConfirmUser" id="deleteConfirmUser" value="">
-             </div>
-
-        </div>
-    </div>
-</div>
 
 {{-- User Deleting Pop Up End Here --}}
 
@@ -356,14 +316,14 @@ jQuery(function() {
         columns: [
             // { data: 'select', name: 'select' },
             { data: 'user_id', name: 'user_id' },
-            { data: 'name', name: 'name' },
-            // { data: 'pool_id', name: 'pool_id' },
+            { data: 'surname', name: 'surname' },
+            { data: 'city', name: 'city' },
             { data: 'email', name: 'email' },
-    /*        { data: 'phone', name: 'phone' },
+            { data: 'phone', name: 'phone' },
             { data: 'created_at', name: 'created_at' },
             { data: 'profile', name: 'profile' },
             { data: 'videoInfo', name: 'videoInfo' },
-            { data: 'resume', name: 'resume' },*/
+            { data: 'resume', name: 'resume' },
             { data: 'action', name: 'action' }
         ],
      columnDefs: [{

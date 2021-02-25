@@ -15,6 +15,7 @@ use App\User;
 use App\Interviews_booking;
 use App\InterviewTemplate;
 use App\InterviewTempQuestion;
+use App\JobsApplication;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotiEmailForQueuing;
@@ -454,6 +455,92 @@ class AdminInterviewController extends Controller
             'message'=> 'Question Deleted Successfully'
         ]); 
         // admin/interviewTemplate/edit
+    }
+
+
+
+    // ============================================================ Bulk Interview Template ============================================================
+
+        public function bulkInterviewTemplate(Request $request){
+        // dd($request->templateSelect);
+        $user = Auth::user();
+        if (!isEmployer($user) && (!isAdmin())){ return redirect(route('profile')); }
+        if ($request->templateSelect != 0) {
+            $interviewTemplate = InterviewTemplate::where('id',$request->templateSelect)->get();
+            // dd($interviewTemplate->id);
+            $InterviewTempQuestion = InterviewTempQuestion::where('temp_id',$request->templateSelect)->get();
+            if (!empty($interviewTemplate)) {
+            // dd($interviewTemplate->id);
+            $data['interviewTemplate'] = $interviewTemplate;
+            $data['InterviewTempQuestion'] = $InterviewTempQuestion;
+                if (isAdmin()) {
+                    return view('admin.job_applications.interviewTemplate.bulkTemplate' , $data); 
+                    // admin/job_applications/interviewTemplate/bulkTemplate
+                    
+
+                }
+                else{
+
+                    return view('site.employer.interviewTemplate.template' , $data);
+                    // site/employer/interviewTemplate/template
+
+                }
+            }
+        }
+        else{
+            return false;
+        }
+        
+
+    }
+
+
+    // ============================================================ Bulk interview ============================================================
+
+
+    public function bulkInterview(Request $request){
+
+      // dd($request->cbx);
+      if(!empty($request->cbx)){
+
+
+        $userIDs = array();
+        // dd($userIDs);
+
+        foreach($request->cbx as $userID){
+        $jobApp = JobsApplication::where('id',$userID)->first();
+        $userIDs[] = $jobApp->user_id;
+        }
+
+        // dd($userIDs);
+
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Bulk Interview';
+        $data['content_header'] = 'Bulk Interview';
+        $data['classes_body'] = 'bulkEmail';
+        $data['record'] = null;
+        // $cbx[] = $request->cbx;
+        $data['user_ids'] = $userIDs;
+        // $data['interviewTemplate'] = InterviewTemplate::get();
+        $interviewTemplate = InterviewTemplate::get();
+        $data['interviewTemplate'] = $interviewTemplate;
+        $data['jobSeekers'] = User::whereIn('id',$userIDs)->get();
+        return view('admin.job_applications.interviewTemplate.bulkInterview', $data);
+
+        }
+
+
+
+    }
+
+
+
+
+    public function bulkInterviewSend(Request $request){
+
+        $data = $request->toArray();
+        // dd($data);
     }
 
 
