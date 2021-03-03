@@ -35,6 +35,7 @@ use App\Mail\updateSlotToUserEmail;
 use App\ControlSession;
 use App\UserInterview;
 use App\UserInterviewAnswers;
+use App\History;
 
 
 class InterviewController extends Controller
@@ -884,6 +885,14 @@ class InterviewController extends Controller
                 if ($UserInterview->status == 'pending') {
                     $UserInterview->status =  'Interview Confirmed';
                     $UserInterview->save();
+
+                    $history = new History;
+                    $history->user_id = $UserInterview->user_id; 
+                    $history->type = 'Interview Confirmed'; 
+                    $history->userinterview_id = $UserInterview->id; 
+                    // $history->job_id = $UserInterview->jobApp_id;
+                    $history->save();
+
                     foreach ($data['answer'] as $key => $value) {
                         $answers = new UserInterviewAnswers;
                         $answers->emp_id = $data['emp_id'];
@@ -1091,6 +1100,8 @@ class InterviewController extends Controller
 
 
     }
+
+
 
 
 

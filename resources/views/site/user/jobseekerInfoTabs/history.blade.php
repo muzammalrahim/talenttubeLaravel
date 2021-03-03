@@ -32,8 +32,12 @@
 			@if ($hist->type == "Salary")
 				<p> <span>{{$hist->created_at->format('h:i:s')}} : </span>  <b> {{$jobSeeker->name}} </b> Updated {{$hist->type}} to <span class="bold"> {{$hist->new_salary}} </span>  </p>
 
+			@elseif ($hist->type == "refernce_sent")
+				<p> <span>{{$hist->created_at->format('h:i:s')}} : </span> <b> {{$jobSeeker->name}} </b> has sent  <b> {{$hist->reference->refType}} </b>   at <b> {{$hist->created_at}} </b> </p>
+
 			@elseif ($hist->type == "Refernce Completed")
-				<p> <span>{{$hist->created_at->format('h:i:s')}} : </span> <b> {{$jobSeeker->name}} </b> completed reference  {{$hist->reference_id}} </p>
+				<p> <span>{{$hist->created_at->format('h:i:s')}} : </span> <b> {{$jobSeeker->name}} </b> has  <b> {{$hist->reference->refType}} </b>  from  {{$hist->reference->refName}} at <b> {{$hist->created_at}} </b></p>
+			
 			
 			@elseif ($hist->type == "Recent job")
 				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span> <b> {{$jobSeeker->name}} </b> Updated  {{$hist->type}} to <span class="bold"> {{$hist->recentJob}} </span> </p>
@@ -43,7 +47,6 @@
 					<a class="jobDetailBtn graybtn jbtn viewJobDetail" target="_blank" href="{{route('jobDetail', ['id' => $hist->job_id]) }}" > View Job Detail
 					</a>
 				</p>
-				
 			@elseif($hist->type == "User_Gallery")
 				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span> <b> {{$jobSeeker->name}} </b> uploaded   new image </p>
 			
@@ -57,12 +60,22 @@
 					"{{$hist->job_status}}" for <b> {{$hist->jobs->title}} </b> </p>
 
 			@elseif($hist->type == "Deleted Job Application")
-						{{-- @dump($hist->type) --}}
 				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span>  <b> {{$jobSeeker->name}} </b> removed job application  from the role of <b> {{ $hist->jobs->title }} </b>
-
-						<a class="jobDetailBtn graybtn jbtn" target="_blank" href="{{route('jobDetail',['id' => $hist->job_id])}}">See Job Detail</a>
+					<a class="jobDetailBtn graybtn jbtn" target="_blank" href="{{route('jobDetail',['id' => $hist->job_id])}}">See Job Detail</a>
 				</p>
 
+			@elseif($hist->type == "interview_sent")
+				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span>  <b> {{$jobSeeker->name}} </b> has received <b> {{ $hist->userInterviews->template->type }}
+				</b>  interview of <b> {{$hist->userInterviews->template->template_name}} </b> at <b> {{$hist->created_at}}</b>
+					{{-- <a class="jobDetailBtn graybtn jbtn" target="_blank" href="{{route('jobDetail',['id' => $hist->job_id])}}">See Job Detail</a> --}}
+				</p>
+
+			@elseif($hist->type == "Interview Confirmed")
+				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span>  <b> {{$jobSeeker->name}} </b> has confirmed <b> {{ $hist->userInterviews->template->type }}
+				</b>  interview of <b> {{$hist->userInterviews->template->template_name}} </b> at <b> {{$hist->created_at}}</b>
+					{{-- <a class="jobDetailBtn graybtn jbtn" target="_blank" href="{{route('jobDetail',['id' => $hist->job_id])}}">See Job Detail</a> --}}
+				</p>
+				
 			@else
 				<span>{{$hist->created_at->format('h:i:s')}} : </span> The user has not any activity	
 			@endif

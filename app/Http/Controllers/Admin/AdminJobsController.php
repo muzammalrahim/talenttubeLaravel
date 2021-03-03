@@ -17,6 +17,11 @@ use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use App\UserGallery;
 use Yajra\Datatables\Datatables;
+
+use Illuminate\Support\Facades\Mail;
+
+use App\Mail\conductInterviewEmail;
+
 // use Illuminate\Support\Facades\Hash;
 use PDF;
 
@@ -736,34 +741,8 @@ class AdminJobsController extends Controller
       }
 
       return datatables($records)
-      ->addColumn('action', function ($records) {
-        if (isAdmin()){
-            $rhtml = '<a href="'.route('job_applications.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
-              return $rhtml;
-        }
-      })
-
-      ->addColumn('interview', function ($records) {
-        if (isAdmin()){
-            $rhtml = '<a class="btn btn-primary btn-sm far fa-edit" href="'.route('jobseekerInterviews',['id'=>$records->jobseeker->id]).'" target="_blank" ></a>';
-            return $rhtml;
-        }})
-
-      ->addColumn('profile', function ($records) {
-        if (isAdmin()){
-            $rhtml = '<a class="btn btn-primary btn-sm btnUserInfo" href="'.route('jobSeekerInfo',['id'=>$records->jobseeker->id]).'" target="_blank" >Info</a>';
-            return $rhtml;
-        }})
-      ->editColumn('user_id', function ($records) {
-          return ($records->jobseeker)?($records->jobseeker->name.' '.$records->jobseeker->surname.' ('.$records->user_id.')'):'';
-      })
-      ->editColumn('job_id', function ($records) {
-         return  ($records->job)?($records->job->title.' ('.$records->job_id.')'):'';
-      })
-      ->editColumn('city', function ($records) {
-         return ($records->city);
-      })
-      ->editColumn('status', function ($records) {
+      
+       ->editColumn('status', function ($records) {
         if($records->status=='applied'){
             return 'Applied';
         }
@@ -776,10 +755,69 @@ class AdminJobsController extends Controller
         else if($records->status=='unsuccessful'){
             return 'Unsuccessful';
         }
-     })
+      })
 
 
-      ->rawColumns(['profile','interview','action'])
+      ->addColumn('profile', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<a class="btn btn-primary btn-sm btnUserInfo" href="'.route('jobSeekerInfo',['id'=>$records->jobseeker->id]).'" target="_blank" >Info</a>';
+            return $rhtml;
+        }})
+
+      ->editColumn('user_id', function ($records) {
+          return ($records->jobseeker)?($records->jobseeker->name.' '.$records->jobseeker->surname.' ('.$records->user_id.')'):'';
+      })
+
+
+      ->editColumn('job_id', function ($records) {
+         return  ($records->job)?($records->job->title.' ('.$records->job_id.')'):'';
+      })
+      ->editColumn('city', function ($records) {
+         return ($records->city);
+      })
+
+      ->addColumn('correspondance', function ($records) {
+        if (isAdmin()){
+            $UserInterview = UserInterview::where('interview_type', 'Correspondance')->where('jobApp_id', $records->id)->get();
+            if ($UserInterview->count() > 0) {
+              foreach ($UserInterview as $userInt) {
+                $interviewCount = $userInt->status;
+                if ($interviewCount == 'Interview Confirmed') {
+
+                  $rhtml = '<a href="'.route('corresInterviewJobApplciation',['user_id'=> $records->jobseeker->id ,'jobApp_id' => $records->id  ]).'" target = "_blank"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "> Complete</button></a>';
+                  return $rhtml;
+
+                }
+                else  {
+                  return 'Sent';
+                  
+                }
+
+              }
+            }
+            else{
+                $nan = '<span class = "text-danger"> None Available </span>';
+                return $nan;
+            }
+        }})
+
+
+      ->addColumn('interview', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<a class="btn btn-primary btn-sm far fa-edit" href="'.route('jobseekerInterviews',
+              ['id'=>$records->jobseeker->id, 'jobApp_id'=>$records->id  ]).'" target="_blank" ></a>';
+            return $rhtml;
+        }})
+
+      ->addColumn('action', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<a href="'.route('job_applications.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
+              return $rhtml;
+        }
+      })
+
+
+      ->rawColumns(['profile', 'correspondance' ,'interview', 'action'])
       ->toJson();
     }
 
@@ -1036,8 +1074,8 @@ class AdminJobsController extends Controller
 
   // ===================================================== jobseeker's interview iteration-8 =====================================================
 
-  public function jobseekerInterviews($id){
-    // dd($id);
+  public function jobseekerInterviews(request $request, $id){
+    // dd($request->jobApp_id);
     $user = Auth::user();
     $UserInterview = UserInterview::where('user_id' , $id)->get();
     $data['content_header'] = 'Interviews';
@@ -1047,6 +1085,7 @@ class AdminJobsController extends Controller
     $interviewTemplate = InterviewTemplate::get();
     $data['interviewTemplate'] = $interviewTemplate;
     $data['user'] = $user;
+    $data['jobApp_id'] = $request->jobApp_id;
 
     // dd($UserInterview);
 
@@ -1073,6 +1112,59 @@ class AdminJobsController extends Controller
       }
 
   }
+
+
+
+  // ========================================= Conduct Interview Template =========================================
+
+
+    public function adminConductInterview(Request $request){
+        $data =  $request->all();
+        // dd($data);
+        $user = Auth::user();
+        $empName = $user->company;
+        if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
+            $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
+            // if(!$UserInterviewCheck){
+
+                $UserInterview = new UserInterview;
+                $UserInterview->temp_id = $data['inttTempId'];
+                $UserInterview->emp_id   = $user->id;
+                $UserInterview->user_id   = $data['user_id'];
+                $UserInterview->status   = 'pending';
+                $UserInterview->hide   = 'no';
+                $UserInterview->jobApp_id   = $data['jobApp_id'];
+                $UserInterview->interview_type   = 'Correspondance';
+                $UserInterview->url   = generateRandomString();
+                $UserInterview->save();
+
+                $history = new History;
+                $history->user_id = $UserInterview->user_id; 
+                $history->type = 'interview_sent'; 
+                $history->userinterview_id = $UserInterview->id; 
+                $history->save();
+
+                $jsEmail = $UserInterview->js->email;
+
+                Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Interview conducted and Email sent to jobseeker successfully',
+                ]);
+        /*    }
+            else{
+
+                    return response()->json([
+                    'status' => 0,
+                    'message' => 'You have already selected this template, please try another template'
+                ]);
+            }*/
+    }
+
+
+
+
+
 
   
 

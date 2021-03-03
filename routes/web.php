@@ -197,11 +197,7 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('bulk/BulkGenerateCVPDF', 'Admin\AdminEmailsController@BulkGenerateCVPDF')->name('bulk.BulkGenerateCVPDF');
     Route::post('bulk/BulkGenerateCVPDFApplicant', 'Admin\AdminEmailsController@BulkGenerateCVPDFApplicant')->name('bulk.BulkGenerateCVPDFApplicant');
 
-    // iteration-8 BulkInterview
 
-    Route::post('ajax/interview/bulkInterviewTemplate','Admin\AdminInterviewController@bulkInterviewTemplate')->name('bulkInterviewTemplate');
-    Route::post('bulk/bulkInterview', 'Admin\AdminInterviewController@bulkInterview')->name('bulk.bulkInterview');
-    Route::post('ajax/bulk/bulkInterview/send', 'Admin\AdminInterviewController@bulkInterviewSend')->name('bulkIntrerview.send');
     // End here
 
     // Job Application Start here
@@ -309,11 +305,25 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('addJobseekerinPoolDatatable/getList', 'Admin\TalentPoolController@addJobseekerinPoolDatatable')->name('addJobseekerinPool.dataTable');
     Route::post('jobseeker/addInPool', 'Admin\TalentPoolController@addInPool')->name('users.addInPool');
     Route::post('jobseeker/removeFromPool', 'Admin\TalentPoolController@removeFromPool')->name('users.removeFromPool');
+    Route::get('ajax/bulk/bulkPool', 'Admin\TalentPoolController@bulkPool')->name('bulkPool');
+    Route::post('ajax/bulk/AddBulkJobseekerInPool', 'Admin\TalentPoolController@AddBulkJobseekerInPool')->name('AddBulkJobseekerInPool');
 
-    // ===================================================== jobapplication page Interview ===================================================== 
 
- 
+    // ===================================================== jobapplication page Interview Iteration-8 ===================================================== 
+
+     // iteration-8 BulkInterview
+    Route::post('ajax/interview/adminInterviewTemplate','Admin\AdminInterviewController@adminInterviewTemplate')->name('adminInterviewTemplate');
+
+    Route::post('ajax/interview/bulkInterviewTemplate','Admin\AdminInterviewController@bulkInterviewTemplate')->name('bulkInterviewTemplate');
+    Route::post('bulk/bulkInterview', 'Admin\AdminInterviewController@bulkInterview')->name('bulk.bulkInterview');
+    Route::post('ajax/bulk/bulkInterview/send', 'Admin\AdminInterviewController@bulkInterviewSend')->name('bulkIntrerview.send');
+
+
     Route::get('jobseeker/interview/{id}', 'Admin\AdminJobsController@jobseekerInterviews')->name('jobseekerInterviews');
+    Route::post('ajax/conduct/interview','Admin\AdminJobsController@adminConductInterview')->name('adminConductInterview');
+    Route::get('correspondance/interviews/{user_id}/{jobApp_id}', 'Admin\AdminInterviewController@corresInterviewJobApplciation')->name('corresInterviewJobApplciation');
+
+
 
 
 
@@ -568,7 +578,6 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     // =============================================== Completed Interview as Admin iteration-8  =============================================== 
 
     Route::get('completed/interviews/{id}', 'Site\InterviewController@completedInterviews')->name('completedInterviews');
-
 
 
 

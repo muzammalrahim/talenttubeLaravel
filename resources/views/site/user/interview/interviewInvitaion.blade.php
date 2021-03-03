@@ -60,7 +60,12 @@
             <p class="p0 qualifType"> Interview Type: <b> {{$Int_booking->template->type}} </b> </p>
           @endif
            <div class="j_button pb20 mt20">
-               <a class="jobApplyBtn graybtn jbtn seeDetailOfInterview" href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}">Click here to respond to this interview</a>
+              @if ($Int_booking->status == "Interview Confirmed" )
+                <a class="jobApplyBtn graybtn jbtn seeDetailOfInterview" href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}">View my responses</a>
+              @else
+              <a class="jobApplyBtn graybtn jbtn seeDetailOfInterview" href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}">Click here to respond to this interview</a>
+              @endif
+               
            </div>
         </div>
       {{-- </div> --}}
@@ -70,6 +75,7 @@
       @endphp
 
       {{-- <div class="timeTable11 hide_it">
+        <a class="jobApplyBtn graybtn jbtn seeDetailOfInterview" href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}">Click here to respond to this interview</a>
         <form method="POST" name="confirmSubmitInterview" id="confirmSubmitInterview" class="confirmSubmitInterview jobApply jobApply_validation">
         @csrf
 

@@ -32,6 +32,7 @@ use App\InterviewTemplate;
 use App\InterviewTempQuestion;
 use App\UserInterview;
 use App\UserInterviewAnswers;
+use App\History;
 
 
 use App\Mail\conductInterviewEmail;
@@ -279,7 +280,7 @@ class MobileEmployerController extends Controller
         $empName = $user->company;
         if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
             $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->first();
-            if(!$UserInterviewCheck){
+            // if(!$UserInterviewCheck){
 
                 $UserInterview = new UserInterview;
                 $UserInterview->temp_id = $data['inttTempId'];
@@ -289,6 +290,16 @@ class MobileEmployerController extends Controller
                 $UserInterview->hide   = 'no';
                 $UserInterview->url   = generateRandomString();
                 $UserInterview->save();
+
+                
+                $history = new History;
+                $history->user_id = $UserInterview->user_id; 
+                $history->type = 'interview_sent'; 
+                $history->userinterview_id = $UserInterview->id; 
+                $history->job_id = $UserInterview->jobApp_id;
+                $history->save();
+
+
                 $jsEmail = $UserInterview->js->email;
 
                 Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));
@@ -296,14 +307,14 @@ class MobileEmployerController extends Controller
                     'status' => 1,
                     'message' => 'Interview conducted and Email sent to jobseeker successfully',
                 ]);
-            }
-            else{
+            // }
+            // else{
 
-                    return response()->json([
-                    'status' => 0,
-                    'message' => 'You have already selected this template, please try another template'
-                ]);
-            }
+            //         return response()->json([
+            //         'status' => 0,
+            //         'message' => 'You have already selected this template, please try another template'
+            //     ]);
+            // }
     }
 
 

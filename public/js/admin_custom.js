@@ -233,13 +233,13 @@ $('.interviewTemplate').on('change',function() {
   event.preventDefault();
   var formData = $('.interviewTemplate').serializeArray();
   // $('.interviewLoader').html(getLoader('pp_profile_edit_main_loader interviewTemplateLoader')).prop('disabled',true);
-  console.log(' formData ', formData);
+  // console.log(' formData ', formData);
     $('.general_error1').html('');
 //     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 
       $.ajax({
           type: 'POST',
-          url: base_url+'/ajax/interview/template',
+          url: base_url+'/admin/ajax/interview/adminInterviewTemplate',
           data: formData,
             success: function(data){
                 // console.log(' data ', data);
@@ -254,17 +254,18 @@ $('.interviewTemplate').on('change',function() {
 
     $(document).on("click" , ".conductInterview123" , function(){
         var inttTempId = $(this).attr('data-tempId');
-        console.log(inttTempId);
+        // console.log(inttTempId);
         var user_id = $('.jsId').val();
-        console.log(user_id);
+        var jobApp_id = $('.jobApp_id').val();
+        // console.log(jobApp_id);return;
         $('.conductInterview123').html(getLoader('pp_profile_edit_main_loader conductInterviewLoader')).prop('disabled',true);
         $('.general_error1').html('');
         $.ajaxSetup({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
-            url: base_url+'/ajax/conduct/interview',
-            data: {inttTempId,user_id},
+            url: base_url+'/admin/ajax/conduct/interview',
+            data: {inttTempId,user_id,jobApp_id},
             success: function(response){
                 if(response.status == 1){
                     
@@ -277,8 +278,6 @@ $('.interviewTemplate').on('change',function() {
                     $('.recordalreadExist').addClass('d-none'); },
                     3000);  
                     location.reload();
-
-                    // window.location.href = "{{ route('intetviewInvitationEmp')}}" ;
 
                 }
                 else{

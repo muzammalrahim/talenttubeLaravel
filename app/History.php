@@ -21,5 +21,10 @@ class History extends Model
         return $this->belongsTo('App\crossreference', 'reference_id');
     }
 
+    public function userInterviews()
+    {
+        return $this->belongsTo('App\UserInterview', 'userinterview_id');
+    }
+
 
 }

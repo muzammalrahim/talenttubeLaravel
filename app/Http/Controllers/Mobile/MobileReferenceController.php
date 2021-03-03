@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Interview;
+use App\History;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -79,6 +80,15 @@ class MobileReferenceController extends Controller
       $crossreference->uniqueDigits = rand(10000,99999);
       $crossreference->refURL = generateRandomString();
       $crossreference->save();
+
+      $history = new History;
+      $history->user_id = $crossreference->jobseekerId; 
+      $history->type = 'refernce_sent'; 
+      $history->reference_id = $crossreference->id; 
+      $history->save();
+
+
+
       $request->session()->put('refurl',$crossreference->refURL);
         // dd($crossreference->refURL);
 
@@ -195,6 +205,15 @@ class MobileReferenceController extends Controller
        }
        
        $crossreference->save();
+
+       if ($crossreference->refStatus == 'Reference Completed') {
+        $history = new History;
+        $history->user_id = $crossreference->jsdata->id;
+        $history->type = 'Refernce Completed'; 
+        $history->reference_id = $crossreference->id; 
+        $history->save();
+      }
+
        Mail::to($crossreference->jsdata->email)->send(new refSubmitConfirmation($jsname, $refname));
        return response()->json([
             'status' => 1,
@@ -266,6 +285,15 @@ class MobileReferenceController extends Controller
           $crossreference->refStatus = 'Reference Completed';
         }
        $crossreference->save();
+
+       if ($crossreference->refStatus == 'Reference Completed') {
+        $history = new History;
+        $history->user_id = $crossreference->jsdata->id;
+        $history->type = 'Refernce Completed'; 
+        $history->reference_id = $crossreference->id; 
+        $history->save();
+      }
+
        Mail::to($crossreference->jsdata->email)->send(new refSubmitConfirmation($jsname, $refname));
        return response()->json([
             'status' => 1,
@@ -349,6 +377,15 @@ class MobileReferenceController extends Controller
           $crossreference->refStatus = 'Reference Completed';
         }
        $crossreference->save();
+
+       if ($crossreference->refStatus == 'Reference Completed') {
+        $history = new History;
+        $history->user_id = $crossreference->jsdata->id;
+        $history->type = 'Refernce Completed'; 
+        $history->reference_id = $crossreference->id; 
+        $history->save();
+      }
+      
        Mail::to($crossreference->jsdata->email)->send(new refSubmitConfirmation($jsname, $refname));
 
        return response()->json([

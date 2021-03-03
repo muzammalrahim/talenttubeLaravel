@@ -11,6 +11,8 @@
 
     @include('admin.errors',[ 'error' => $errors, 'record' => $record ])
 
+    {{-- @dump($jobApp) --}}
+
         {{-- {!! Form::open(array('url' => route('bulkIntrerview.send'), 'method' => 'POST', 'files' => true, 'name'=>'formJob', 'novalidate'=>'')) !!} --}}
 
     <div class="card">
@@ -45,8 +47,8 @@
 					    <form method="POST" name="interviewTemplateSave" class="interviewTemplateSave newJob job_validation">
 					        <div class="templateData p10"></div>
 
-					        @foreach ($jobSeekers as $jobseeker)
-					        	<input type="hidden" name="user_id[]" value="{{$jobseeker->id}}" class="jsId">
+					        @foreach ($jobApplications as $jobApp)
+					        	<input type="hidden" name="jobApp_id[{{$jobApp->jobseeker->id}}]" value="{{$jobApp->id}}" class="jobApp_id">
 					        @endforeach
 					    </form>
 
@@ -59,8 +61,8 @@
                         {{ Form::label('Users', null, ['class' => 'col-md-3 form-control-label']) }}
                         <div class="col-md-9">
                         <select name="user_ids2" multiple class="form-control" disabled>
-                            @foreach ($jobSeekers as $js)
-                                <option>{{$js->name.' '.$js->email}}</option>
+                            @foreach ($jobApplications as $js)
+                                <option>{{$js->jobseeker->name.' '.$js->jobseeker->surname}}</option>
                             @endforeach
                         </select>
                         </div>

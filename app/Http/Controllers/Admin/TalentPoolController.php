@@ -298,6 +298,51 @@ class TalentPoolController extends Controller
     }
 
 
+    // =================================================== Bulk jobseeker  iteration-8 ===================================================
+
+    public function bulkPool(Request $request){
+        $user = Auth::user();
+        // $data = $request->toArray();
+        // dd($data);
+        $UserPool = TalentPool::get();
+        $data['UserPool'] = $UserPool;
+        return view('admin.candidate_tracking.poolAjax', $data); 
+
+  
+    }
+
+    // =================================================== Add Bulk Jobseeker in Pool iteration-8 ===================================================
+
+    public function AddBulkJobseekerInPool(Request $request){
+        $user = Auth::user();
+        $data = $request->toArray();
+        $notSavedUser = array();
+        // dd($data);
+        foreach ($data['cbx'] as $key => $value) {
+            $user = User::where('id' , $value)->where('type', 'user')->first();
+            // dd($user);
+            if ($user != null) {
+
+                $UserPool = new UserPool;
+                $UserPool->user_id = $value;
+                $UserPool->pool_id = $data['pool_id'];
+
+                $UserPool->save();
+            /*    return response()->json([
+                    'status' => 1,
+                    'message' => 'Users added in pool successfully'
+                ]);*/
+
+            }
+            /*else if($user == null){
+                   array_push($notSavedUser, $value);
+                   dump($notSavedUser); 
+            }*/
+         
+        }
+    }
+
+
 
 
 }

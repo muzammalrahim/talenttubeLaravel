@@ -87,6 +87,7 @@
     <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-sm btn-primary btnBulkCompileCV mt-1">Bulk Compile CV</a></div>
     <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-sm btn-primary btnBulkStatus ml-1 mt-1">Multi Bulk Status</a></div>
     <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-block btn-sm btn-primary bulkInterview">Bulk Interview</a></div>
+    <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-block btn-sm btn-primary bulkPool">Bulk Pool</a></div>
     {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
   </div>
 {{-- </div> --}}
@@ -105,12 +106,16 @@
         <tr style = "text-align: center">
             <th><label>Bulk Select</label><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th>
             <th><label class="adminStatus">Status</label><input name="selecta_all" class="specialinputblue" value="1" id="cxx_all" type="checkbox" /><input name="selecta_all" class="specialinputgreen" value="1" id="cyx_all" type="checkbox" /><input name="selecta_all" class="specialinputred" value="1" id="czx_all" type="checkbox" /></th>
+
+            {{-- <th><label>Bulk Pool</label><input name="select_all" value="1" id="cbxp_all" type="checkbox" /></th> --}}
+
             <th>status</th>
             <th>JobSeeker</th>
             <th>Job</th>
             <th>Profile</th>
             <th>goldstar</th>
-            <th>undesirable</th>
+            {{-- <th>undesirable</th> --}}
+            <th>correspondance</th>
             <th>interview</th>
             <th>action</th>
         </tr>
@@ -144,7 +149,7 @@
     </div>
 </div> --}}
 
-<div id="ModalBulkApprovedInfo" class="modal fade ModalBulkApprovedInfo" role="dialog">
+  <div id="ModalBulkApprovedInfo" class="modal fade ModalBulkApprovedInfo" role="dialog">
     <div class="modal-dialog">
       <!-- Modal content-->
       <div class="modal-content">
@@ -255,6 +260,35 @@
       <div class="cbx_list">
       </div>
     </form>
+</div>
+
+
+<div id="ModalBulkPool" class="modal fade ModalBulkPool" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    {{-- <div class="modal-header bg-white text-black"> Add Jobseekers in Talent Pool</div> --}}
+
+    <form class="addBulkJobSeekerInPool" name="addBulkJobSeekerInPool">
+      <div class="modal-content">
+           <div class="modal-header">Add Jobseekers in Talent Pool<button type="button" class="close" data-dismiss="modal">&times;</button></div>
+           <div class="modal-body p-3 bulkPoolContent">
+              <div class="poolsInModal">
+
+
+              </div>
+
+              <div class="cbx_list"></div>
+
+           </div>
+
+           <p class="d-none usersAddedMessage px-3"> Users are added in pool successfully </p>
+           <div class="modal-footer text-center margin_auto">
+                  <button type="button" class="btn btn-success btn-md addInPoolConfirm">Confirm</button>
+                  <button type="button" class="btn btn-default btn-md modelCancelAction" data-dismiss="modal">Cancel</button>
+           </div>
+      </div>
+    </form>
+  </div>
 </div>
 
 
@@ -453,12 +487,15 @@ $(document).on('click','.btnBulkStatus', function(){
         columns: [
             { data: 'id', name: 'id' },
             { data: 'id', name: 'id2' },
+            // { data: 'js_id', name: 'js_id' },
+
             { data: 'status', name: 'status' },
             { data: 'user_id', name: 'user_id' },
             { data: 'job_id', name: 'job_id' },
             { data: 'profile', name: 'profile' },
             { data: 'goldstar', name: 'goldstar' },
-            { data: 'preffer', name: 'preffer' },
+            // { data: 'preffer', name: 'preffer' },
+            { data: 'correspondance', name: 'correspondance' },
             { data: 'interview', name: 'interview'},
             { data: 'action', name: 'action'},
         ],
@@ -479,6 +516,18 @@ $(document).on('click','.btnBulkStatus', function(){
              return '<div><input type="checkbox" class="specialinputblue" name="cxx" value="'+ $('<div/>').text(data).html() + '">'+'<input type="checkbox" class="specialinputgreen" name="cyx" value="'+ $('<div/>').text(data).html() + '">'+'<input type="checkbox" class="specialinputred" name="czx" value="'+ $('<div/>').text(data).html() + '"></div>';
          }
       },
+
+/*      {
+         'targets': 2,
+         'searchable':false,
+         'orderable':false,
+         'className': 'dt-body-center',
+         'render': function (data, type, full, meta){
+             return '<input type="checkbox" name="cbxp[]" value="'+ $('<div/>').text(data).html() + '">';
+            
+         }
+      },*/
+
 
       ],
     });
@@ -562,6 +611,82 @@ $(document).on('click','.btnBulkCompileCV', function(){
     cbx.forEach(function(id){ cbx_hidden += '<input type="hidden" name="cbx[]" value="'+id+'" />'  });
     $('.BulkInterviewForm .cbx_list').html(cbx_hidden);
     $('.BulkInterviewForm').submit();
+  });
+
+  // ================================================== Bulk Pool Ajax ==================================================
+
+
+
+
+  $('#cbxp_all').on('click', function(event){
+    var checked_status = this.checked;
+    console.log(' checked_status ', checked_status, this );
+    $.each($("input[name='cbx[]'"), function(){
+      $(this).prop('checked', checked_status);
+    });
+  });
+
+
+  $(document).on('click', '.bulkPool', function(){
+    var cbx = $('input[name = "cbx[]" ]:checked').map(function(){return $(this).val();}).toArray();
+    var cbx_hidden =  '';
+    cbx.forEach(function(id){ cbx_hidden += '<input type="hidden" name="cbx[]" value="'+id+'" />'  });
+    $('.bulkPoolContent .cbx_list').html(cbx_hidden);
+    console.log(cbx);
+
+    if(cbx.length <= 0){
+      alert('Please Select Checkboxes');
+      return false;
+    }
+    else{
+
+      $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+      $.ajax({
+            type: 'GET',
+            url: base_url+'/admin/ajax/bulk/bulkPool',
+            // data: cbx,
+              success: function(data){
+                  console.log(' data ', data);
+                  $('.poolsInModal').html(data);
+                  $('.ModalBulkPool').modal('show');
+
+              }
+            });
+
+    }
+  });
+
+// ================================================== Bulk Pool Confirm ==================================================
+
+
+
+$(document).on('click', '.addInPoolConfirm', function(){
+
+  var formdata = $('.addBulkJobSeekerInPool').serializeArray();
+  console.log(formdata);
+
+  $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+      $.ajax({
+            type: 'POST',
+            url: base_url+'/admin/ajax/bulk/AddBulkJobseekerInPool',
+            data: formdata,
+              success: function(data){
+                  console.log(' data ', data);
+                  $('.poolsInModal').html(data);
+                  $('.ModalBulkPool').modal('show');
+                  $('.usersAddedMessage').removeClass('d-none');
+                  $('#dataTable').DataTable().ajax.reload();
+                  setTimeout(function() { 
+                      $('.usersAddedMessage').addClass('d-none');
+                      $('.ModalBulkPool').modal('hide');
+                      
+                  }, 3000);
+
+              }
+      });
+
+
+
 });
 
 
