@@ -16,11 +16,14 @@ use App\Interviews_booking;
 use App\InterviewTemplate;
 use App\InterviewTempQuestion;
 use App\JobsApplication;
+use App\UserInterview;
+use App\ControlSession;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotiEmailForQueuing;
 use App\Mail\updateSlotToUserEmail;
 use App\Mail\deleteSlotToUserEmail;
+use App\Mail\conductInterviewEmail;
 
 // use Illuminate\Support\Facades\Hash;
 use PDF;
@@ -505,14 +508,21 @@ class AdminInterviewController extends Controller
 
 
         $userIDs = array();
-        // dd($userIDs);
+        $jobApp_id = array();
 
-        foreach($request->cbx as $userID){
+        /*foreach($request->cbx as $userID){
         $jobApp = JobsApplication::where('id',$userID)->first();
         $userIDs[] = $jobApp->user_id;
-        }
+        $jobApp_id[] = $jobApp->id;
 
-        // dd($userIDs);
+        }*/
+
+
+        $jobApplications = JobsApplication::whereIn('id',$request->cbx)->get();
+        // $jobApp_id[] = $jobApp->id;
+        // dd($jobApp->id); 
+
+
 
         $user = Auth::user();
         $data['user'] = $user;
@@ -522,11 +532,13 @@ class AdminInterviewController extends Controller
         $data['record'] = null;
         // $cbx[] = $request->cbx;
         $data['user_ids'] = $userIDs;
+        $data['jobApplications'] = $jobApplications;
         // $data['interviewTemplate'] = InterviewTemplate::get();
         $interviewTemplate = InterviewTemplate::get();
         $data['interviewTemplate'] = $interviewTemplate;
         $data['jobSeekers'] = User::whereIn('id',$userIDs)->get();
         return view('admin.job_applications.interviewTemplate.bulkInterview', $data);
+        // admin/job_applications/interviewTemplate/bulkInterview
 
         }
 
@@ -539,8 +551,94 @@ class AdminInterviewController extends Controller
 
     public function bulkInterviewSend(Request $request){
 
+        $user = Auth::user();
         $data = $request->toArray();
-        // dd($data);
+        foreach ($data['jobApp_id'] as $key => $value) {
+            $UserInterview = new UserInterview;
+            $UserInterview->temp_id = $data['temp_id'];
+            $UserInterview->jobApp_id = $value;
+            $UserInterview->user_id = $key;
+            $UserInterview->emp_id   = $user->id;
+            $UserInterview->hide   = 'no';
+            $UserInterview->url   = generateRandomString();
+            $UserInterview->status   = 'pending'; 
+            $UserInterview->interview_type   = 'Correspondance';
+            $UserInterview->save();
+            $jsEmail = $UserInterview->js->email;
+            $empName = $UserInterview->employer->name;
+            Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));
+                      
+        }
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Correspondance Interview Sent Successfully'
+        ]); 
+
+    }
+
+
+
+
+            // ======================================================= completedInterviews =======================================================
+
+    public function corresInterviewJobApplciation($user_id,$jobApp_id){
+
+
+        $user = Auth::user();
+        if (isAdmin($user)) {
+            $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+            $UserInterview = UserInterview::where('jobApp_id',$jobApp_id)->where('user_id', $user_id)->where('status', 'Interview Confirmed')->get();
+            $data['controlsession'] = $controlsession;
+            $data['title'] = 'User Interviews';
+            $data['UserInterview'] = $UserInterview;
+            $data['classes_body'] = 'Interviews';
+            $data['user'] = $user;
+            $data['jobApp_id'] = $jobApp_id;
+            $data['user_id'] = $user_id;
+
+            return view('site.employer.interviewInvitation.jobAppCorrespondanceInter', $data);
+            // site/employer/interviewInvitation/jobAppCorrespondanceInter
+        }
+
+
+    }
+
+
+
+        // ========================================= Interview Template =========================================
+
+
+    public function adminInterviewTemplate(Request $request){
+        // dd($request->templateSelect);
+        $user = Auth::user();
+        if (!isEmployer($user) && (!isAdmin())){ return redirect(route('profile')); }
+        if ($request->templateSelect != 0) {
+            $interviewTemplate = InterviewTemplate::where('id',$request->templateSelect)->get();
+            // dd($interviewTemplate->id);
+            $InterviewTempQuestion = InterviewTempQuestion::where('temp_id',$request->templateSelect)->get();
+            if (!empty($interviewTemplate)) {
+            // dd($interviewTemplate->id);
+            $data['interviewTemplate'] = $interviewTemplate;
+            $data['InterviewTempQuestion'] = $InterviewTempQuestion;
+                if (isAdmin()) {
+                    return view('admin.job_applications.interviewTemplate.template' , $data); 
+                    // admin/job_applications/interviewTemplate/template
+                    
+
+                }
+                else{
+                    return view('site.employer.interviewTemplate.template' , $data);
+                    // site/employer/interviewTemplate/template
+
+                }
+            }
+        }
+        else{
+            return false;
+        }
+        
+
     }
 
 

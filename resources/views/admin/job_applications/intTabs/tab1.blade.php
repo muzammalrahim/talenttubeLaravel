@@ -27,9 +27,6 @@
 
 	    <button class="btn btn-sm btn-primary seeEmployerResponse"> See Candidate's Response</button>
 
-
-
-
 	    @php
 	    	$temp_id = $int->temp_id;
             $emp_id = $int->employer->id;

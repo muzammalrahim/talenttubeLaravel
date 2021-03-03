@@ -980,7 +980,8 @@ class EmployerController extends Controller {
             // dd($interviewTemplate->id);
             $data['interviewTemplate'] = $interviewTemplate;
             $data['InterviewTempQuestion'] = $InterviewTempQuestion;
-                if (isAdmin()) {
+                    return view('site.employer.interviewTemplate.template' , $data);
+                /*if (isAdmin()) {
                     return view('admin.job_applications.interviewTemplate.template' , $data); 
                     // admin/job_applications/interviewTemplate/template
                     
@@ -990,7 +991,7 @@ class EmployerController extends Controller {
                     return view('site.employer.interviewTemplate.template' , $data);
                     // site/employer/interviewTemplate/template
 
-                }
+                }*/
             }
         }
         else{
@@ -1021,6 +1022,15 @@ class EmployerController extends Controller {
                 $UserInterview->hide   = 'no';
                 $UserInterview->url   = generateRandomString();
                 $UserInterview->save();
+
+
+                $history = new History;
+                $history->user_id = $UserInterview->user_id; 
+                $history->type = 'interview_sent'; 
+                $history->userinterview_id = $UserInterview->id; 
+                $history->save();
+
+
                 $jsEmail = $UserInterview->js->email;
 
                 Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));
@@ -1135,6 +1145,12 @@ class EmployerController extends Controller {
                 $UserInterview->url   = generateRandomString();
                 $UserInterview->save();
 
+                $history = new History;
+                $history->user_id = $UserInterview->user_id; 
+                $history->type = 'Interview Confirmed'; 
+                $history->userinterview_id = $UserInterview->id; 
+                $history->save();
+
                 foreach ($data['answer'] as $key => $value) {
 
                     $answers = new UserInterviewAnswers;
@@ -1150,9 +1166,9 @@ class EmployerController extends Controller {
                     'status' => 1,
                     'message' => 'Reponse added successfully'
                 ]);                
-            // }
+            /*}
 
-            /*else{
+            else{
 
                     return response()->json([
                     'status' => 0,

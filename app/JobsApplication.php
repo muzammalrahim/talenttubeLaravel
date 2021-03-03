@@ -25,6 +25,20 @@ class JobsApplication extends Model{
     }
 
 
+    public function userInterviewCount(){
+        // return $this->hasOne(UserInterview::class, 'user_id')->selectRaw('user_id, count(*) as aggregate')->groupBy('user_id');  
+         return $this->hasMany('App\UserInterview', 'jobApp_id');
+        // ->withTimestamps()
+        // ->withPivot(['status','type']);
+
+    }
+
+
+   /* public function user_interviewsAccount(){
+        return $this->hasOne(UserInterview::class, 'user_id')->where('status' , 'Interview Confirmed')->selectRaw('user_id, count(*) as aggregate')->groupBy('user_id');        
+    }*/
+
+
     //====================================================================================================================================//
     // Function to filter jobApplication. // called from jobSeeker->job->applications layout.
     //====================================================================================================================================//

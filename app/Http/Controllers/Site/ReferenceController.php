@@ -82,6 +82,14 @@ class ReferenceController extends Controller
       $crossreference->uniqueDigits = rand(10000,99999);
       $crossreference->refURL = generateRandomString();
       $crossreference->save();
+      // dd($crossreference->jobseekerId);
+
+      $history = new History;
+      $history->user_id = $crossreference->jobseekerId; 
+      $history->type = 'refernce_sent'; 
+      $history->reference_id = $crossreference->id; 
+      $history->save();
+
       $request->session()->put('refurl',$crossreference->refURL);
         // dd($crossreference->refURL);
 
@@ -222,13 +230,13 @@ class ReferenceController extends Controller
 
       // dd($crossreference->jsdata->id);
 
-      if ($crossreference->refStatus == 'Reference Completed') {
+      // if ($crossreference->refStatus == 'Reference Completed') {
         $history = new History;
         $history->user_id = $crossreference->jsdata->id;
         $history->type = 'Refernce Completed'; 
         $history->reference_id = $crossreference->id; 
         $history->save();
-      }
+      // }
 
 
        Mail::to($crossreference->jsdata->email)->send(new refSubmitConfirmation($jsname, $refname));
@@ -303,13 +311,13 @@ class ReferenceController extends Controller
         }
        $crossreference->save();
 
-      if ($crossreference->refStatus == 'Reference Completed') {
+      // if ($crossreference->refStatus == 'Reference Completed') {
         $history = new History;
         $history->user_id = $crossreference->jsdata->id;
         $history->type = 'Refernce Completed'; 
         $history->reference_id = $crossreference->id; 
         $history->save();
-      }
+      // }
 
        Mail::to($crossreference->jsdata->email)->send(new refSubmitConfirmation($jsname, $refname));
        return response()->json([
@@ -395,13 +403,13 @@ class ReferenceController extends Controller
         }
        $crossreference->save();
 
-       if ($crossreference->refStatus == 'Reference Completed') {
+       // if ($crossreference->refStatus == 'Reference Completed') {
         $history = new History;
         $history->user_id = $crossreference->jsdata->id;
         $history->type = 'Refernce Completed'; 
         $history->reference_id = $crossreference->id; 
         $history->save();
-      }
+      // }
       
        Mail::to($crossreference->jsdata->email)->send(new refSubmitConfirmation($jsname, $refname));
 

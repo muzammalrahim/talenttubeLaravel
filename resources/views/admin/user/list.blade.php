@@ -25,6 +25,7 @@
       <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
       <div class="col-md-1.5 bulkButton"><a  class="btn btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
       <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary bulkPool">Bulk Pool</a></div>
       {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
     </div>
     {{-- testing --}}
@@ -235,6 +236,38 @@
     </form>
 </div>
 {{-- BulkCSV download end --}}
+
+
+
+<div id="ModalBulkPool" class="modal fade ModalBulkPool" role="dialog">
+  <div class="modal-dialog">
+    <!-- Modal content-->
+    {{-- <div class="modal-header bg-white text-black"> Add Jobseekers in Talent Pool</div> --}}
+
+    <form class="addBulkJobSeekerInPool" name="addBulkJobSeekerInPool">
+      <div class="modal-content">
+           <div class="modal-header">Add Jobseekers in Talent Pool<button type="button" class="close" data-dismiss="modal">&times;</button></div>
+           <div class="modal-body p-3 bulkPoolContent">
+              <div class="poolsInModal">
+
+
+              </div>
+
+              <div class="cbx_list"></div>
+
+           </div>
+
+           <p class="d-none usersAddedMessage px-3"> Users are added in pool successfully </p>
+           <div class="modal-footer text-center margin_auto">
+                  <button type="button" class="btn btn-success btn-md addInPoolConfirm">Confirm</button>
+                  <button type="button" class="btn btn-default btn-md modelCancelAction" data-dismiss="modal">Cancel</button>
+           </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+
 
 @stop
 
@@ -690,6 +723,98 @@ $(document).on('click','.btnBulkEmail', function(){
 
 
 
+
+
+
+
+  $(document).on('click', '.bulkPool', function(){
+    var cbx = $('input[name = "cbx[]" ]:checked').map(function(){return $(this).val();}).toArray();
+    var cbx_hidden =  '';
+    cbx.forEach(function(id){ cbx_hidden += '<input type="hidden" name="cbx[]" value="'+id+'" />'  });
+    $('.bulkPoolContent .cbx_list').html(cbx_hidden);
+    console.log(cbx);
+
+    if(cbx.length <= 0){
+      alert('Please Select Checkboxes');
+      return false;
+    }
+    else{
+
+      $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+      $.ajax({
+            type: 'GET',
+            url: base_url+'/admin/ajax/bulk/bulkPool',
+            // data: cbx,
+              success: function(data){
+                  console.log(' data ', data);
+                  $('.poolsInModal').html(data);
+                  $('.ModalBulkPool').modal('show');
+
+              }
+            });
+
+    }
+  });
+
+// ================================================== Bulk Pool Confirm ==================================================
+
+
+
+$(document).on('click', '.addInPoolConfirm', function(){
+
+  var formdata = $('.addBulkJobSeekerInPool').serializeArray();
+  console.log(formdata);
+
+  $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+      $.ajax({
+            type: 'POST',
+            url: base_url+'/admin/ajax/bulk/AddBulkJobseekerInPool',
+            data: formdata,
+              success: function(data){
+                  console.log(' data ', data);
+                  $('.poolsInModal').html(data);
+                  $('.ModalBulkPool').modal('show');
+                  $('.usersAddedMessage').removeClass('d-none');
+                  $('#dataTable').DataTable().ajax.reload();
+                  setTimeout(function() { 
+                      $('.usersAddedMessage').addClass('d-none');
+                      $('.ModalBulkPool').modal('hide');
+                      
+                  }, 3000);
+
+              }
+      });
+
+
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+});
+
+
+
+
 </script>
 @stop

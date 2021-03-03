@@ -49,7 +49,7 @@
           @foreach ($tempQuestions as $question)
           <p class="qualifType p0"> <b>Question {{$loop->index+1}}:</b> {{$question->question}} </p>
           @php
-            $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('emp_id' ,$user->id)->where('user_id' , $UserInterview->js->id)->first();   
+            $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $UserInterview->id)->where('emp_id' ,$user->id)->where('user_id' , $UserInterview->js->id)->first();   
           @endphp
             <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
           @endforeach
@@ -59,7 +59,7 @@
           @foreach ($tempQuestions as $question)
           <p class="qualifType p0"> <b>Question {{$loop->index+1}}:</b> {{$question->question}} </p>
           @php
-            $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('emp_id' ,$UserInterview->employer->id)->where('user_id' , $user->id)->first();   
+            $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $UserInterview->id)->where('emp_id' ,$UserInterview->employer->id)->where('user_id' , $user->id)->first();   
           @endphp
             <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
           @endforeach

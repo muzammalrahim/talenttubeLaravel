@@ -48,6 +48,10 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     Route::get('MinterviewInvitation/url','Mobile\MobileEmployerController@MinterviewInvitationUrl')->name('MinterviewInvitationUrl');
     Route::get('Intetview/Invitation',       'Mobile\MobileEmployerController@MintetviewInvitation')->name('MintetviewInvitation');
 
+
+    Route::post('ajax/confirmInterInvitation/js',    'Mobile\InterviewController@MconfirmInterInvitationJs')->name('confirmInterInvitationJs');
+
+
     Route::post('ajax/accept/interview/Minvitation','Mobile\MobileEmployerController@MacceptInterviewInvitation')->name('MacceptInterviewInvitation');
     Route::post('ajax/reject/interview/Minvitation','Mobile\MobileEmployerController@MrejectInterviewInvitation')->name('MrejectInterviewInvitation');
     Route::post('ajax/MconfirmInterInvitation',    'Mobile\MobileEmployerController@MconfirmInterInvitation')->name('MconfirmInterInvitation');

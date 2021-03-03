@@ -27,9 +27,13 @@
 
                     <div class="fl_right">
                         <div class="j_label bold">Status</div>
-                        <div class="j_value text_capital">{{$application->status}}</div>
+                        {{-- @dump($application->status) --}}
+                        @if ($application->status == 'inreview')
+                            <div class="j_value text_capital">In Review</div>
+                        @else
+                            <div class="j_value text_capital">{{$application->status}}</div>
+                        @endif
                     </div>
-
                 </div>
                 @php
                 $experience = json_decode($job->experience);

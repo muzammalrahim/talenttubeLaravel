@@ -12,6 +12,9 @@ use App\Video;
 use App\Jobs;
 use App\LikeUser;
 use App\JobsApplication;
+use App\UserInterview;
+use App\History;
+use App\UserInterviewAnswers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -29,6 +32,10 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotiEmailForQueuing;
 use App\Mail\updateSlotToUserEmail;
+
+
+
+
 
 class InterviewController extends Controller
 {
@@ -707,6 +714,70 @@ $user = Auth::user();
             ]);
         }
     }
+
+
+
+    // ================================================== Save Response As Jobseeker ==================================================
+
+    public function MconfirmInterInvitationJs(Request $request){
+
+        $user = Auth::user();
+        $data = $request->all();
+        // dd($data);
+        // ================================================== Validation for answering the questions ==================================================
+        if(in_array(null, $data['answer'], true))
+        {
+            return response()->json([
+                'status' => 0,
+                'error' =>  "Please answer all questions"
+            ]);
+        }
+        else
+        {
+            $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('emp_id' , $data['emp_id'])->where('temp_id' ,$data['temp_id'])->first();
+            if ($UserInterview) {
+                // dd($UserInterview);
+                if ($UserInterview->status == 'pending') {
+                    $UserInterview->status =  'Interview Confirmed';
+                    $UserInterview->save();
+
+                    $history = new History;
+                    $history->user_id = $UserInterview->user_id; 
+                    $history->type = 'Interview Confirmed'; 
+                    $history->userinterview_id = $UserInterview->id; 
+                    // $history->job_id = $UserInterview->jobApp_id;
+                    $history->save();
+
+                    foreach ($data['answer'] as $key => $value) {
+                        $answers = new UserInterviewAnswers;
+                        $answers->emp_id = $data['emp_id'];
+                        $answers->userInterview_id  = $data['userInterviewId'];
+                        $answers->user_id  = $user->id;
+                        $answers->question_id = $key;
+                        $answers->answer = $value;
+                        $answers->save();
+                    }
+                    return response()->json([
+                        'status' => 1,
+                        'error' => 'Reponse added successfully'
+                    ]);
+                }
+
+                else{
+                    return response()->json([
+                        'status' => 0,
+                        'error' => 'You have already added response'
+                    ]);
+                }
+
+            }
+            else{
+                dd("nothing here for u");
+            }
+        }    
+    }
+
+
 
 
 

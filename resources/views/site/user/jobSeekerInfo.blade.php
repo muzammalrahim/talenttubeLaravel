@@ -220,7 +220,7 @@
                 @if ($videos->count() > 0 )
                	@foreach ($videos as $video)
                 <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-                    <a onclick="UProfile.showVideoModal('{{assetVideo($video)}}')" class="video_link" target="_blank">
+                    <a onclick="UProfile.showVideoModal( '{{assetVideo($video)}}'  )" class="video_link" target="_blank">
                         <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
                             {!! generateVideoThumbs($video) !!}
                         </a>
@@ -317,7 +317,7 @@
 
         <a id="tabs-5" class="tab_link tab_a"></a>
         <div class="tab_history tab_cont pt30px">
-            @include('site.user.jobseekerInfoTabs.history')
+            @include('site.user.jobseekerInfoTabs.history') {{-- site/user/jobseekerInfoTabs/history --}}
         </div>
 
         <!-- =============================================== Tab Notes =============================================== -->
@@ -334,7 +334,7 @@
         <div class="tab_interviews tab_cont pt30px">
         @include('site.user.jobseekerInfoTabs.jobApplications')
             
-            {{--    site/user/jobseekerInfoTabs/interviews  --}}
+            {{--    site/user/jobseekerInfoTabs/jobApplications  --}}
 
         </div>
 

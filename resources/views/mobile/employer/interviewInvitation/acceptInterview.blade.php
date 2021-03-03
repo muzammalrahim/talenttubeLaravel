@@ -75,4 +75,38 @@ $('.acceptButton').on('click',function() {
 });
 
 
+
+// ============================================================== Save Response As Jobseeker ==============================================================
+
+
+$('.saveResponseAsJobseeker').on('click',function() {
+    event.preventDefault();
+    var formData = $('.saveInterviewResponse').serializeArray();
+    // $('.saveResponseAsJobseeker').html(getLoader('pp_profile_edit_main_loader responseLoader')).prop('disabled',true);
+    $('.general_error1').html('');
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.ajax({
+        type: 'POST',
+        url: base_url+'/m/ajax/confirmInterInvitation/js',
+        data:formData,
+        success: function(response){
+            console.log(' response ', response);
+            $('.saveResponseAsJobseeker').html('Response Saved').prop('disabled',false);
+            if( response.status == 1 ){
+                $('.errorsInFields').text('Response addedd successfully');
+                location.href = base_url + '/Intetview/Invitation';
+                setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
+                // window.location.href = "{{ route('intetviewInvitation')}}" ;
+            }
+            else{
+                $('.saveResponseAsJobseeker').html('Save Response');
+               setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
+               $('.errorsInFields').text(response.error);
+            }
+
+        }
+    });
+
+});
+
 </script>
