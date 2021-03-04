@@ -24,30 +24,25 @@
    <!-- wrapper -->
    <div class="wrapper">
 
-    {{-- @include('site.header2') --}}
-
-
-
+    @include('site.header2')
 
 
     <!-- header_cont  -->
     <div class="wrap_header_cont absolute"  style="background-image: url({{asset('/images/homepage_bg.jpg')}});">
     <!-- header_cont_bl -->
     <div class="bl" style="background: rgba(0, 0, 0, 0.5);">
+      {{--   <div class="bl_logo">
+             <a href="{{route('homepage')}}"><img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" /></a>
+        </div> --}}
 
-        <div class="head_top1">
-            <div class="abc fl_right">
-                <span class="link">Have an account?</span>
-                <a id="pp_sign_in_open" class="btn_sign">Sign in</a>
-            </div>
 
+        <div class="talenttubeLogo">
             <div class="bl_logo">
-             {{-- <a href="{{route('homepage')}}"><img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" /></a> --}}
-                <a href="{{route('homepage')}}"><img id="logo_main_page" src="https://talenttube.tv/wp-content/themes/talenttube/images/talenttube.png" alt="" /></a>
-             </div>
-
+                 <a href="{{route('homepage')}}"><img id="logo_main_page" src="{{asset('/images/talenttube.png')}}" style="height:70px;" alt="" /></a>
+            </div>
         </div>
-        
+
+
         @include('site.register.employer_step1')
 
     </div>
@@ -92,8 +87,8 @@
 .header, .main.above .wrapper {
     background: #5b0079;
 }
-
-
-
+.bl_logo{
+    width: 20% !important;
+}
 </style>
 @stop

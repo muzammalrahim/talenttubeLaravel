@@ -632,3 +632,12 @@ Route::get('phpinfo', function () {
     phpinfo();
      
 });
+
+
+
+
+ /*   width: 100%;
+    height: 100%;
+    background-color: #2f2d2d94;
+    position: absolute;
+}*/
