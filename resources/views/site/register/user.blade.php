@@ -31,8 +31,11 @@
     <div class="wrap_header_cont absolute"  style="background-image: url({{asset('/images/homepage_bg.jpg')}});">
     <!-- header_cont_bl -->
     <div class="bl" style="background: rgba(0, 0, 0, 0.5);">
-        <div class="bl_logo">
-             <a href="{{route('homepage')}}"><img id="logo_main_page" src="{{asset('/images/site/header_impact.png')}}" style="height:44px;" alt="" /></a>
+
+        <div class="talenttubeLogo">
+            <div class="bl_logo">
+                 <a href="{{route('homepage')}}"><img id="logo_main_page" src="{{asset('/images/talenttube.png')}}" style="height:70px;" alt="" /></a>
+            </div>
         </div>
 
         @include('site.register.user_step1')
@@ -76,6 +79,9 @@
 <style>
 .header, .main.above .wrapper {
     background: #5b0079;
+}
+.bl_logo{
+    width: 20% !important;
 }
 </style>
 @stop
