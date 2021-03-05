@@ -668,7 +668,7 @@ $(document).on('click', '.addInPoolConfirm', function(){
   $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
       $.ajax({
             type: 'POST',
-            url: base_url+'/admin/ajax/bulk/AddBulkJobseekerInPool',
+            url: base_url+'/admin/ajax/bulk/jobApplication/AddBulkJobseekerInPool',
             data: formdata,
               success: function(data){
                   console.log(' data ', data);

@@ -447,7 +447,7 @@ class MobileEmployerController extends Controller
         $user = Auth::user();
         $data['user'] = $user;
         if (isEmployer($user)) {return redirect(route('MintetviewInvitationEmp'));}
-        $Interviews_booking = UserInterview::where('user_id',  $user->id)->orderBy('created_at' , 'desc')->get();
+        $Interviews_booking = UserInterview::where('user_id',  $user->id)->where('hide' , 'no')->orderBy('created_at' , 'desc')->get();
         $data['title'] = 'Interview Invitation';
         $data['Interviews_booking'] = $Interviews_booking ;
         $data['classes_body'] = 'Interviews';
@@ -574,10 +574,11 @@ class MobileEmployerController extends Controller
         $data['user'] = $user;
         // if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
         $UserInterview = UserInterview::where('id',  $data['interview_id'])->first();
+        // dd($UserInterview);
         if ($UserInterview->user_id == $user->id) {
             if ($data['hide'] != '0') {
                 if ($data['hide'] == 'yes') {    
-                    $UserInterview->hide = 'yes';
+                    $UserInterview->hide = 'no';
                     $UserInterview->save();
                     return response()->json([
                         'status' => 1,
@@ -609,6 +610,73 @@ class MobileEmployerController extends Controller
         else{
             return false;
         }
+
+    }
+
+
+    // ============================================= Unhide Interviews =============================================
+
+    public function MunhideInterviews(Request $request){
+        $user = Auth::user();
+        // dd($user);
+        $data['user'] = $user;
+        // if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
+        if (isEmployer()) {
+            $UserInterview = UserInterview::where('emp_id',  $user->id)->where('hide' , 'yes')->orderBy('created_at' , 'desc')->get();
+        }
+        else{
+            $UserInterview = UserInterview::where('user_id',  $user->id)->where('hide' , 'yes')->orderBy('created_at' , 'desc')->get();
+        }
+        // $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        // $data['controlsession'] = $controlsession;
+        $data['title'] = 'Unhide Interview';
+        $data['UserInterview'] = $UserInterview ;
+        $data['classes_body'] = 'Interviews';
+        // return view('site.employer.interviewInvitation.unhideInterview', $data);
+
+        return view('mobile.user.interviewInvitation.unhideInterview', $data);
+
+            
+        
+        // site/employer/interviewInvitation/unhideInterview
+    }
+
+    // ============================================= Un-Hide User-Interviews Ajax =============================================
+
+    public function MunhideUserInterviewAjax(Request $request){
+        $user = Auth::user();
+        $data = $request->toArray();
+        // dd($data);
+        $data['user'] = $user;
+        // if (!isEmployer($user)) { return redirect(route('intetviewInvitation')); }
+        $UserInterview = UserInterview::where('id',  $data['interview_id'])->first();
+        // if ($UserInterview->emp_id == $user->id) {
+            if ($data['unhide'] != '0') {
+
+                // dd($UserInterview->id);
+                if ($data['unhide'] == 'yes') {    
+                    $UserInterview->hide = 'no';
+                    $UserInterview->save();
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'Interview Status updated Successfully'
+                    ]);
+                }
+                else{
+                    $UserInterview->delete();
+                    return response()->json([
+                        'status' => 1,
+                        'message' => 'User Interview deleted successfully'
+                    ]);
+
+                }
+                
+            }
+            
+        // }
+        // else{
+        //     return false;
+        // }
 
     }
 

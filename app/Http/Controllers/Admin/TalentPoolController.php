@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 use App\TalentPool;
 use App\UserPool;
+use App\JobsApplication;
 
 class TalentPoolController extends Controller
 {
@@ -342,6 +343,24 @@ class TalentPoolController extends Controller
         }
     }
 
+    // =================================================== Add Bulk Jobseeker in Pool iteration-8 ===================================================
+
+    public function AddBulkJobseekerInPoolJobApp(Request $request){
+        $user = Auth::user();
+        $data = $request->toArray();
+        $notSavedUser = array();
+        foreach ($data['cbx'] as $key => $value) {
+            $JobsApplication = JobsApplication::where('id' , $value)->pluck('user_id');
+            $user = User::whereIn('id', $JobsApplication)->where('type', 'user')->first();
+            if ($user != null) {
+                $UserPool = new UserPool;
+                $UserPool->user_id = $user->id;
+                $UserPool->pool_id = $data['pool_id'];
+                $UserPool->save();
+            }
+   
+        }
+    }
 
 
 

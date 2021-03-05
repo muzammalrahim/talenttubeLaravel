@@ -13,13 +13,13 @@
 <div class="newJobCont">
   {{-- <div class="head icon_head_browse_matches">Received Interview Invitations</div> --}}
 
-  <h6 class="h6 jobAppH6">Received Interview Invitations</h6>
+  <h6 class="h6 jobAppH6">Hidden Interview Invitations</h6>
 
-  <div class="font11 my-3"><a href="{{ route('MunhideInterviews') }}" class="unhideInterviews"> Click here to Un-Hide your hidden interviews </a> </div>
+  {{-- <div class="font11 my-3"><a href="{{ route('MunhideInterviews') }}" class="unhideInterviews"> Click here to Un-Hide your interviews </a> </div> --}}
 
 
-  @if ($Interviews_booking->count() > 0)
-  @foreach ($Interviews_booking   as $Int_booking)
+  @if ($UserInterview->count() > 0)
+  @foreach ($UserInterview   as $Int_booking)
 
   <div class="card mb-3 interviewBookingsRow_{{$Int_booking->id}}">
 
@@ -54,7 +54,7 @@
           @csrf
           <select name="hide" class="form-control font11">
             <option value= "0"> Select Status   </option> 
-            <option value= "yes"> Hide Interview </option> 
+            <option value= "yes"> un-Hide Interview </option> 
             @if ($Int_booking->status == 'pending')
               <option value= "decline"> Decline Interview </option> 
             @endif
