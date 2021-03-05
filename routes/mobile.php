@@ -92,7 +92,7 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	Route::get('Memployer/job/{id}/applications', 'Mobile\MobileUserController@MempJobApplications')->name('MempJobApplications');
 	Route::get('ajax/purchaseUserInfo/', 'Mobile\MobileUserController@purchaseUserInfo')->name('purchaseUserInfo');
 
-
+ 
     Route::get('MjobSeekerInfo/{id}', 'Mobile\MobileUserController@MjobSeekerInfo')->name('MjobSeekerInfo');
 
 // ============================================ Jobs ============================================
