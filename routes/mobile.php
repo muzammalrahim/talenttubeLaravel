@@ -57,6 +57,8 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     Route::post('ajax/MconfirmInterInvitation',    'Mobile\MobileEmployerController@MconfirmInterInvitation')->name('MconfirmInterInvitation');
 
     Route::post('ajax/userInterview/hide/js','Mobile\MobileEmployerController@MhideUserInterviewJs')->name('MhideUserInterviewJs');
+    Route::get('Munhide/interviews',       'Mobile\MobileEmployerController@MunhideInterviews')->name('MunhideInterviews');
+
 
 
 

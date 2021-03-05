@@ -307,6 +307,7 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('jobseeker/removeFromPool', 'Admin\TalentPoolController@removeFromPool')->name('users.removeFromPool');
     Route::get('ajax/bulk/bulkPool', 'Admin\TalentPoolController@bulkPool')->name('bulkPool');
     Route::post('ajax/bulk/AddBulkJobseekerInPool', 'Admin\TalentPoolController@AddBulkJobseekerInPool')->name('AddBulkJobseekerInPool');
+    Route::post('ajax/bulk/jobApplication/AddBulkJobseekerInPool', 'Admin\TalentPoolController@AddBulkJobseekerInPoolJobApp')->name('AddBulkJobseekerInPoolJobApp');
 
 
     // ===================================================== jobapplication page Interview Iteration-8 ===================================================== 
