@@ -73,15 +73,13 @@ class EmployerController extends Controller {
 				// $profile_image   = asset('images/user/'.$user->id.'/gallery/'.$profile_image->image);
                 $profile_image   = assetGallery($profile_image->access,$user->id,'',$profile_image->image);
 			}
-
             $attachments = Attachment::where('user_id', $user->id)->get();
             $activities = UserActivity::where('user_id', $user->id)->get();
             $videos     = Video::where('user_id', $user->id)->get();
-
             $data['user'] =  $user;
             $data['user_gallery'] = $user_gallery;
             $data['geo_country'] = get_Geo_Country();
-             $data['geo_state'] = !empty($user->country)?(get_Geo_State($user->country)):null;
+            $data['geo_state'] = !empty($user->country)?(get_Geo_State($user->country)):null;
             $data['geo_city'] = !empty($user->country)?(get_Geo_City($user->country,$user->state)):null;
             $data['profile_image']    = $profile_image;
             $data['title'] = 'profile';
@@ -91,11 +89,8 @@ class EmployerController extends Controller {
             $data['activities'] = $activities;
             $data['videos'] = $videos;
             $data['industriesList'] = getIndustries();
-
             $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
             $data['controlsession'] = $controlsession;
-
-            
 			$view_name = 'site.employer.profile.profile'; // site/employer/profile/profile
             return view($view_name, $data);
         }else{
@@ -114,10 +109,10 @@ class EmployerController extends Controller {
         $data['user'] = $user;
         $data['title'] = 'Employer';
         $data['classes_body'] = 'empStep2';
-								// $data['content'] = 'this is page content';
-								if($this->agent->isMobile()){
-									return view('mobile.register.employer_step2', $data);
-								}
+		// $data['content'] = 'this is page content';
+		if($this->agent->isMobile()){
+		  return view('mobile.register.employer_step2', $data);
+        }
         return view('site.register.employer_step2', $data);
 
     }

@@ -29,16 +29,23 @@
                     <li id="list_info_location">{{userLocation($user)}}</li>
                     <li><span class="basic_info">•</span><span id="list_info_gender">Employer</span></li>
                 </ul>
-                <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div>
+                <div class="icon_edit">
+
+                    {{-- <span onclick="UProfile.showMainEditor();"></span> --}}
+
+                    <i onclick="UProfile.showMainEditor();" class=" fas fa-edit"></i>
+
+
+                </div>
             </div>
 
-            <div class="status">
+            {{-- <div class="status">
                 <div id="profile_status" class="status_text" style="min-height: 24.0078px; min-width: 163.008px;">
                     <span class="statusText">{{($user->statusText)?($user->statusText):'Enter Your Status'}}</span>
                     <input class="hide_it" type="text" id="statusText" value="{{($user->statusText)?($user->statusText):''}}" onchange="UProfile.updateStatusText()" />
                 </div>
                 <div id="profile_status_edit" class="icon_edit" onclick="UProfile.enableStatusTextEdit();" style="opacity: 1;"><span></span></div>
-            </div>
+            </div> --}}
 
         </div>
         <div class="cl"></div>
@@ -495,19 +502,15 @@ $(document).ready(function(){
     newIndusHtml += '</select>';
     newIndusHtml += '<i class="fa fa-trash removeIndustry"></i>';
     newIndusHtml += '</div>';
-
     $('.IndusList').append(newIndusHtml);
-
    });
 });
 
 $(".editIndustry").click(function(){
     $(this).closest('.IndusListBox').addClass('edit');
-
     $('.removeIndustry').removeClass('hide_it2');
     $('.addIndus').removeClass('hide_it2');
     $('.buttonSaveIndustry').removeClass('hide_it2');
-
     // console.log('welcome');
   });
 </script>

@@ -3,7 +3,7 @@
         {{-- <a href="{{route('homepage')}}" class="logo"><img src="{{asset('/images/site/logo_inner.png')}}" style="max-width:183px; max-height: 60px;" alt="" /></a> --}}
 
         
-        <a href="{{route('homepage')}}" class="logo"><img src="https://talenttube.tv/wp-content/themes/talenttube/images/talenttube.png" style="max-width:183px; max-height: 60px;" alt="" /></a>
+        <a href="{{route('homepage')}}" class="logo"><img src="{{ asset('images/talenttube.png') }}" style="max-width:183px; max-height: 60px;" alt="" /></a>
 
     </div>
     <div id="colfix_l" class="cont col_fix">
@@ -56,12 +56,12 @@
                 <li><a href="{{route('likeList')}}" class="column_narrow_search_results {{(request()->is('like'))?'active':''}}"><span class="icon"></span>Like Users</a></li>
 
 
-                <li>
+               {{--  <li>
                     <a id="narrow_menu_link_31" href="{{route('mutualLikes')}}" class="column_narrow_mutual_likes {{(request()->is('mutual-likes'))?'active':''}}">
                         <span class="icon"></span>Mutual likes
                         <span id="narrow_mutual_likes_count" class="count "></span>
                     </a>
-                </li>
+                </li> --}}
 
                 {{-- Liker User List End --}}
 

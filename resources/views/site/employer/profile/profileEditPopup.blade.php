@@ -38,7 +38,7 @@
 									<div class="locationContainer">
 										<div class="bl bl_location">
 
-                        <div class="location_filed">
+                        <div class="location_filed mt10">
                             <div class="location_input dtable w100">
                                 <input type="text" name="location_search" class="inp w80 fl_left" id="location_search"
                                 value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
