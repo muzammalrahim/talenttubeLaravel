@@ -1,7 +1,7 @@
 
 @if(!empty($userquestion))
         @foreach ($userquestion as $qk => $question)
-            <p>{{($question)}}</p>
+            <p class="m0 p0">{{($question)}}</p>
                 <b><p class="QuestionsKeyPTag">
                     {{$userQuestions[$qk]}}
                 </p></b>

@@ -124,12 +124,12 @@
                 <li><a href="{{route('MlikeList')}}" class="column_narrow_search_results {{(request()->is('m/Mlike'))?'active':''}}"><span class="icon"></span>Like Users</a></li>
                 
 
-                <li>
+              {{--   <li>
                     <a id="narrow_menu_link_31" href="{{route('MmutualLikes')}}" class="column_narrow_mutual_likes {{(request()->is('m/Mmutual-likes'))?'active':''}}">
                         <span class="icon"></span>Mutual likes
                         <span id="narrow_mutual_likes_count" class="count "></span>
                     </a>
-                </li>
+                </li> --}}
 {{-- 
             <li><a class="collapsible-header waves-effect arrow-r"><i class="fas fa-envelope"></i> Contact me<i
                   class="fas fa-angle-down rotate-icon"></i></a>

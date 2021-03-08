@@ -36,7 +36,7 @@
         <div class="slogan"><span id="join_slogan">Answer 6 questions to calculate your best matches.</span></div>
 
         <div class="logo">
-            <a href="./index"><img src="{{asset('/images/site/logo.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
+            <a href="./index"><img src="{{asset('/images/talenttube.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
         </div>
     </div>
     <!-- /header -->

@@ -26,7 +26,11 @@
             <div class="bl">
                 <div class="title">
                     <div id="basic_anchor_about_me" class="title_icon_edit">About Us
-                        <span id="basic_pen_about_me" onclick="UProfile.showBasicFieldEditor('about_me');"></span>
+                        {{-- <span id="basic_pen_about_me" onclick="UProfile.showBasicFieldEditor('about_me');"></span> --}}
+
+                        <i id="basic_pen_about_me" onclick="UProfile.showBasicFieldEditor('about_me');" class=" fas fa-edit"></i>
+
+
                     </div>
                     <div class="cl"></div>
                 </div>
@@ -47,7 +51,10 @@
             <div class="bl">
                 <div class="title">
                     <div id="basic_anchor_interested_in" class="title_icon_edit">Interested in
-                        <span id="basic_pen_interested_in" onclick="UProfile.showBasicFieldEditor('interested_in');"></span>
+                        {{-- <span id="basic_pen_interested_in" onclick="UProfile.showBasicFieldEditor('interested_in');"></span> --}}
+
+                        <i id="basic_pen_interested_in" onclick="UProfile.showBasicFieldEditor('interested_in');" class=" fas fa-edit"></i>
+
                     </div>
                     <div class="cl"></div>
                 </div>
