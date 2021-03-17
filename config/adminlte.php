@@ -317,6 +317,13 @@ return [
             'icon'        => 'far fa-fw fa-file',
             'label_color' => 'success',
         ],
+
+        [
+            'text'        => 'Online Test',
+            'url'         => 'admin/online/test',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
     
 
         // [   'header'      => 'Interviews'],

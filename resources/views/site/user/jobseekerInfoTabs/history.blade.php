@@ -65,16 +65,22 @@
 				</p>
 
 			@elseif($hist->type == "interview_sent")
-				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span>  <b> {{$jobSeeker->name}} </b> has received <b> {{ $hist->userInterviews->template->type }}
+				@if ($hist->userInterviews)
+					<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span>  <b> {{$jobSeeker->name}} </b> has received <b> {{ $hist->userInterviews->template->type }}
 				</b>  interview of <b> {{$hist->userInterviews->template->template_name}} </b> at <b> {{$hist->created_at}}</b>
 					{{-- <a class="jobDetailBtn graybtn jbtn" target="_blank" href="{{route('jobDetail',['id' => $hist->job_id])}}">See Job Detail</a> --}}
 				</p>
+			@endif
+			
 
 			@elseif($hist->type == "Interview Confirmed")
+				@if ($hist->userInterviews)
+
 				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span>  <b> {{$jobSeeker->name}} </b> has confirmed <b> {{ $hist->userInterviews->template->type }}
 				</b>  interview of <b> {{$hist->userInterviews->template->template_name}} </b> at <b> {{$hist->created_at}}</b>
 					{{-- <a class="jobDetailBtn graybtn jbtn" target="_blank" href="{{route('jobDetail',['id' => $hist->job_id])}}">See Job Detail</a> --}}
 				</p>
+				@endif
 				
 			@else
 				<span>{{$hist->created_at->format('h:i:s')}} : </span> The user has not any activity	
@@ -142,13 +148,7 @@
 	.head3 {
     font-size: 20px;
     color: black;
-    /*background: #142d69;*/
     font-weight: 700;
-    /*padding: 10px;*/
-    /*text-align: center;*/
-    /*width: 25%;*/
-    /*margin: 0 auto;*/
-    /*border-radius: 11%;*/
 }
 
 

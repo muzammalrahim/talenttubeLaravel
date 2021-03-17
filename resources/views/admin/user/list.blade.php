@@ -20,12 +20,12 @@
     <div class="block row col-md-8 text-white">
 
 
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign Job</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
-      <div class="col-md-1.5 bulkButton"><a  class="btn btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary bulkPool">Bulk Pool</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign Job</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
+      <div class="col-md-1.5 bulkButton"><a  class="btn btn-sm btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary bulkPool">Bulk Pool</a></div>
       {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
     </div>
     {{-- testing --}}
