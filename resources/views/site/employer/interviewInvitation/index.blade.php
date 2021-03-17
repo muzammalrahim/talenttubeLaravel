@@ -55,7 +55,7 @@
             <p class="p0 qualifType m5"> Template Type: <b> {{$interview->template->type}} </b> </p>
           @endif
            <div class="j_button pb20">
-               <a class="jobApplyBtn graybtn jbtn seeDetailOfInterview" href="{{ route('interviewInvitationUrl',['url' =>$interview->url]) }}" data-jobid="{{$interview->id}}">Click here to See the full detail of invitation</a>
+               <a class="jobApplyBtn graybtn jbtn seeDetailOfInterview" href="{{ route('interviewInvitationUrl',['url' =>$interview->url]) }}" data-jobid="{{$interview->id}}">Click here to See the response</a>
            </div>
         </div>
       </div>

@@ -13,104 +13,109 @@
 
     <div class="add_new_job">
 
-        <form method="POST" name="new_job_form" class="new_job_form newJob job_validation">
-            @csrf
-            <div class="job_title form_field">
-                <span class="form_label">Title :</span>
-                <div class="form_input">
-                    <input type="text" value="" name="title" class="w100" required>
-                    <div id="title_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
+    <form method="POST" name="new_job_form" class="new_job_form newJob job_validation">
+        @csrf
+        <div class="job_title form_field">
+            <span class="form_label">Title :</span>
+            <div class="form_input">
+                <input type="text" value="" name="title" class="w100" required>
+                <div id="title_error" class="error field_error to_hide">&nbsp;</div>
             </div>
+        </div>
 
-            <div class="job_description form_field" required>
-                <span class="form_label">Description :</span>
-                <div class="form_input">
-                    <textarea name="description" class="form_editor w100" maxlength="1000" style="min-height: 120px;"></textarea>
-                    <div id="description_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
+        <div class="job_description form_field" required>
+            <span class="form_label">Description :</span>
+            <div class="form_input">
+                <textarea name="description" class="form_editor w100" maxlength="1000" style="min-height: 120px;"></textarea>
+                <div id="description_error" class="error field_error to_hide">&nbsp;</div>
             </div>
+        </div>
 
+        
 
-            <div class="job_type form_field">
-                <span class="form_label ">Type :</span>
-                <div class="form_input">
-                    {{-- @dump($jobType) --}}
+        <div class="job_type form_field pb10">
+            <span class="form_label">Type :</span>
+            <div class="form_input">
+                {{-- @dump($jobType) --}}
 
-                    {{ Form::select('type', $jobType, ['placeholder' => 'Select Job Type',]) }}
+                {{ Form::select('type', $jobType, ['placeholder' => 'Select Job Type',]) }}
 
-                    {{--
-                    <select name="type" class="form_select " >
-                        <option value="contract">Contract</option>
-                        <option value="temporary">Temporary</option>
-                        <option value="casual">Casual</option>
-                        <option value="Part_Time">Part Time</option>
-                        <option value="full_time">Full Time</option>
-                    </select> --}}
+{{--
+                <select name="type" class="form_select " >
+                    <option value="contract">Contract</option>
+                    <option value="temporary">Temporary</option>
+                    <option value="casual">Casual</option>
+                    <option value="Part_Time">Part Time</option>
+                    <option value="full_time">Full Time</option>
+                </select> --}}
 
-                    <div id="type_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
+                <div id="type_error" class="error field_error to_hide">&nbsp;</div>
             </div>
+        </div>
+
+        
 
 
-            <div class="job_vacancies form_field">
-                <span class="form_label">Vacancies :</span>
-                <div class="form_input">
-                    <input type="text" value="" name="vacancies" class="">
-                    <div id="vacancies_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
+        
+
+
+        <div class="job_vacancies form_field pb10">
+            <span class="form_label">Vacancies :</span>
+            <div class="form_input">
+                <input type="text" value="" name="vacancies" class="">
+                <div id="vacancies_error" class="error field_error to_hide">&nbsp;</div>
             </div>
+        </div>
 
 
 
-            <div class="job_salary form_field">
-                <span class="form_label">Salary :</span>
+        <div class="job_salary form_field pb10">
+            <span class="form_label">Salary :</span>
 
-                <div class="form_input">
-                    {{ Form::select('salary', $salaryRange, ['placeholder' => 'Select Salary Range', 'onchange' => '', 'id' => 'salaryRangeFieldnew', 'class' => ' salaryRangeField']) }}
-                    <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
-                </div>
-
-                                                
-
+            <div class="form_input">
+                {{ Form::select('salary', $salaryRange, ['placeholder' => 'Select Salary Range', 'onchange' => '', 'id' => 'salaryRangeFieldnew', 'class' => ' salaryRangeField']) }}
+                <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
             </div>
+							
+
+        </div>
 
 
-            <div class="job_age form_field margintop">
-                <span class="form_label">Expiration Date:</span>
-                <div class="form_input">
-                    <input type="text" name="expiration" class="datepicker" />
-                    <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
-                </div>
+        <div class="job_age form_field pb10">
+            <span class="form_label">Expiration Date:</span>
+            <div class="form_input">
+                <input type="text" name="expiration" class="datepicker" />
+                <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
             </div>
+        </div>
 
+        <div class="form_field pb10">
 
-
-            <div class="form_field">
-
-                {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
-              <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
-              <div class="cl"></div> --}}
-              <span class="form_label2">Industry Experience :<i class="editIndustry fas fa-edit "></i></span>
+            {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
+          <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
+          <div class="cl"></div> --}}
+            <span class="form_label2">Industry Experience :
+                <i class="editIndustry fas fa-edit baw "></i></span>
                 <p class="loader SaveindustryExperience"style="float: left;"></p>
                 <div class="IndusList form_input">
                     <div class="IndustrySelect" style="width:80%;"></div>
                 </div>
-                <div class="">
+
+                <div class="buttonGroup">
                     <a class=" block addIndus jbtn hide_it " style="background: #499ffd;">+ Add</a>
                     <a class="block jbtn hide_it buttonSaveIndustry"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
                 </div>
-            </div>
+        </div>
 
-            
 
+        {{-- <div class="form_field"> --}}
 
             <div class="job_country form_field geo_location_cont">
                 <span class="form_label">Location :</span>
                 <div class="location_search_cont">
                     <div class="location_input dtable form_input">
-                        <input type="text" name="location_search" class="inp w70 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
-                        <select class="dinline_block filter_location_radius select_aw" name="filter_location_radius" data-placeholder="Select Location Radius">
+                        <input type="text" name="location_search" class="inp w80 fl_left w70" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
+                        <select class="dinline_block filter_location_radius select_aw w15" name="filter_location_radius" data-placeholder="Select Location Radius">
                              <option value="5">5km</option>
                              <option value="10">10km</option>
                              <option value="25">25km</option>
@@ -131,114 +136,119 @@
                     <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
                 </div>
             </div>
+        {{-- </div> --}}
 
-            <div class="job_age form_field">
-                <span class="form_label">Job Questions:</span>
-                <div class="form_input w100">
-                    {{--
-                    <div class="jobQuestions">
-                       <div class="question mb10 relative"><input type="text" name="questions[]" class="w100" />
-                        <span class="close_icon jobQuestion"></span>
-                       </div>
-                    </div>
-                     --}}
-                     <div class="jobQuestions">
-                         <div class="jobQuestion q1">
-                             <div class="jq_field_box ">
-                                 <div class="jq_field_label">Title</div>
-                                 <div class="jq_field title"><input type="text" name="jq[0][title]" /></div>
-                             </div>
-                             <div class="jq_field_box">
-                                 <div class="jq_field_label">Options</div>
-                                 <div class="jq_field_questions mb20">
-                                     <div class="option">
-                                         <input type="text" name="jq[0][option][0][text]" />
-                                         <div class="jq_option_cbx">
-                                            <input type="checkbox" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer">
-                                            <label for="jq_0_option_0_preffer">Undiserable</label>
-                                         </div>
-                                          <div class="jq_option_cbx">
-                                            <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar">
-                                            <label for="jq_0_option_0_goldstar">Gold Star</label>
-                                         </div>
-                                      </div>
-                                 </div>
 
-                                 <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn" data-qc="0">Add Option+</a></div>
-                             </div>
-                             <div class="jq_remove"><span class="close_icon removeJobQuestion"></span></div>
+
+        <div class="job_age form_field">
+            <span class="form_label">Job Questions:</span>
+            <div class="form_input w100">
+                {{--
+                <div class="jobQuestions">
+                   <div class="question mb10 relative"><input type="text" name="questions[]" class="w100" />
+                    <span class="close_icon jobQuestion"></span>
+                   </div>
+                </div>
+                 --}}
+                 <div class="jobQuestions">
+                     <div class="jobQuestion q1">
+                         <div class="jq_field_box ">
+                             <div class="jq_field_label">Title</div>
+                             <div class="jq_field title"><input type="text" name="jq[0][title]" /></div>
                          </div>
+                         <div class="jq_field_box">
+                             <div class="jq_field_label">Options</div>
+                             <div class="jq_field_questions mb20">
+                                 <div class="option">
+                                     <input type="text" name="jq[0][option][0][text]" />
+                                     <div class="jq_option_cbx">
+                                        <input type="checkbox" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer">
+                                        <label for="jq_0_option_0_preffer">Undiserable</label>
+                                     </div>
+                                      <div class="jq_option_cbx">
+                                        <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar">
+                                        <label for="jq_0_option_0_goldstar">Gold Star</label>
+                                     </div>
+                                  </div>
+                             </div>
+
+                             <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn" data-qc="0">Add Option+</a></div>
+                         </div>
+                         <div class="jq_remove"><span class="close_icon removeJobQuestion"></span></div>
                      </div>
+                 </div>
 
-                     <input type="hidden" name="questionCounter" id="questionCounter" value="0">
-                    <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn">Add+</a></div>
-                </div>
+                 <input type="hidden" name="questionCounter" id="questionCounter" value="0">
+                <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn">Add+</a></div>
             </div>
+        </div>
 
 
 
-            <div class="form_field">
-                <span class="form_label"></span>
-                <div class="form_input">
-                    <div class="general_error error to_hide">&nbsp;</div>
-                </div>
+        <div class="form_field">
+            <span class="form_label"></span>
+            <div class="form_input">
+                <div class="general_error error to_hide">&nbsp;</div>
             </div>
+        </div>
 
-            <div class="fomr_btn act_field">
-                <span class="form_label"></span>
-                {{-- <input type="type" value="academic" /> --}}
-                <button class="btn small turquoise saveNewJob">Save</button>
-            </div>
-        </form>
+        <div class="fomr_btn act_field">
+            <span class="form_label"></span>
+            {{-- <input type="type" value="academic" /> --}}
+            <button class="btn small turquoise saveNewJob">Save</button>
+        </div>
+
+    </form>
     </div>
 
 
 
 
+<div class="cl"></div>
 
-    <div class="cl"></div>
 
-
-    {{--
-    <div style="display:none;">
-    <div id="addNewQuestionModel" class="modal cmodal p0 addNewQuestionModel wauto">
-        <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-            <div class="cont">
-                <div class="title">Delete Job Application?</div>
-                <div class="spinner_loader">
-                    <div class="spinner center">
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                        <div class="spinner-blade"></div>
-                    </div>
+{{--
+<div style="display:none;">
+<div id="addNewQuestionModel" class="modal cmodal p0 addNewQuestionModel wauto">
+    <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+        <div class="cont">
+            <div class="title">Delete Job Application?</div>
+            <div class="spinner_loader">
+                <div class="spinner center">
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
+                    <div class="spinner-blade"></div>
                 </div>
-                <div class="apiMessage mt20"></div>
-                <div class="img_chat">
-                    <div class="icon">
-                        <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
-                    </div>
-                    <div class="msg">Are you sure you wish to continue?</div>
+            </div>
+            <div class="apiMessage mt20"></div>
+            <div class="img_chat">
+                <div class="icon">
+                    <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
                 </div>
-                <div class="double_btn">
-                    <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
-                    <button class="confirm_jobAppDelete_ok confirm_btn btn small marsh">OK</button>
-                    <input type="hidden" name="deleteConfirmJobAppId" id="deleteConfirmJobAppId" value=""/>
-                    <div class="cl"></div>
-                </div>
+                <div class="msg">Are you sure you wish to continue?</div>
+            </div>
+            <div class="double_btn">
+                <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
+                <button class="confirm_jobAppDelete_ok confirm_btn btn small marsh">OK</button>
+                <input type="hidden" name="deleteConfirmJobAppId" id="deleteConfirmJobAppId" value=""/>
+                <div class="cl"></div>
             </div>
         </div>
     </div>
-    </div>
-    --}}
+</div>
+</div>
+--}}
+
+
 
 </div>
 @stop
@@ -252,103 +262,7 @@
 
 <style type="text/css">
 
-.jq_field_label {float: left;width: 10%;}
-.jq_field {float: left;width: 90%;}
-.jq_field_box {display: table;width: 100%;margin-bottom: 5px;}
-.jq_field.title input { width: 100%; }
-.jq_field.option input[type="text"]{width: 60%;float: left;}
-.jq_option_cbx {width: 20%;float: left;margin: 7px 0px;text-align: center;}
-.jq_field_box.optionfield {height: 80px;}
-.addOptionsBtn {float: none;margin-left: 10%;margin-top: 5px;margin-bottom: 10px;}
-.jq_field_questions.mb20 {min-height: 20px;}
-.jobQuestion {position: relative;margin: 6px 0px;padding: 10px 4px;border-radius: 4px;background: rgba(0, 0, 0, 0.08);}
-.jq_remove {position: absolute;right: 0px;bottom: 0px;cursor: pointer;}
-.jq_option_cbx label {margin: 0px 4px;}
-.jq_field_questions input[type="text"] {float: left;}
-.jq_field_questions .option {display: table;width: 100%;}
-.jq_field_questions {float: left;width: 90%;}
-div.tab_about.tab_cont>div#basic {margin: 0px 10px 20px 0px;}
-i.editEmployerQuestions.fas.fa-edit {cursor: pointer;font-size: 14px;color: mediumseagreen;}
-.button {background-color: #4CAF50;border: none;color: white;padding: 10px 20px;text-align: center;text-decoration: none;display: none;font-size: 14px;margin: 4px 2px;border-radius: 10px;cursor: pointer;}
-.button:hover {background-color: #3e8e41}
-div.employerRegisterQuestions>div#basic {margin: 0px 10px 20px 0px;}
-i.editEmployerQuestions.fas.fa-edit {cursor: pointer;font-size: 14px;color: mediumseagreen;float:left;}
-.jq-selectbox.jqselect.EmployerRegQuestion{margin-bottom: 15px;}
-.jq-selectbox__select {width: 25px;border-radius: 0px;}
-.smallSpinner.SaveEmployerQuestionsSpinner {float: left;position: relative;margin:8px 0px 0px 10px;font-size: 18px;}
-.alert.alert-success.EmployerQuestionsAlert {background: #3e8e41;height: 30px;width: 50%;text-align: center;padding: 15px 0px 0px 0px;color: white;font-size: 16px;margin: 0px auto;border-radius: 20px;}
-.fa-edit{cursor: pointer;font-size: 14px;color: mediumseagreen;}
-.title.IndusListBox.edit .hide_it {display: block !important;}
-div.title.IndusListBox>div#basic {margin-bottom: 13px;}
-i.fa.fa-trash.removeIndustry {margin-top: 7px;}
-.qualifiCationBullet {margin-right: 10px;}
-.saveIndus,.saveQualification{background: #28a745;text-align: center;height: 22px;padding-top: 6px;border-radius: 4px;opacity: 0.7;color: white;cursor: pointer;}
-div#basic_anchor_industry_experience,div.title.qualificationList>div#basic {margin-bottom: 13px;}
-.job{margin: 5px 23px;}
-.jq-selectbox.jqselect.salaryRangeField.dropup.opened{ width: 100px;}
-.jq-selectbox__select {min-width: 151px;}
-.jq-selectbox__select-text{display: table;}
-div.jq-selectbox__dropdown.drop_down>ul {width: 136px;}
-div.jq-selectbox__dropdown.drop_down>ul>li {font-size: 15px;}
-div.jq-selectbox__dropdown.drop_up>ul>li {font-size: 15px;}
-.fa-edit{cursor: pointer;font-size: 14px;color: mediumseagreen;}
-.fa-trash{cursor: pointer;font-size: 14px;float: right;color: #a94442;margin-top: 5px;}
-.fa-trash2 {cursor: pointer;font-size: 26px;float: right;color: #a94442;margin-top: 5px;margin-top: 15px;margin-right: -18%;}
-select{display: block;width: 100%;height: calc(2.75rem + 2px);padding: .375rem .75rem;
-        font-size: 1.5rem;font-weight: 400;line-height: 1.5;color: #495057;margin: 5px 0px 5px 0px ;background-color: #fff;background-clip: padding-box;
-        border: 1px solid #ced4da;border-radius: .25rem;box-shadow: inset 0 0 0 transparent;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
-.QualificationSelect{font-size: 14px;}
-div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {font-size: 12px;}
-.spinner.center{position: relative;opacity: 1;left: 0;right: 0;top: 0;bottom: 0;}
-.qualificationBox.editQualif .hide_it {display: block !important;}
-.title.IndusListBox.edit .hide_it {display: block !important;}
-div#basic_anchor_industry_experience,div.title.qualificationList>div#basic {margin-bottom: 13px;}
-div.title.IndusListBox>div#basic {margin-bottom: 13px;}
-.smallSpinner.SaveIndustrySpinner {font-size: 20px;}
-select.userQualification {width: 90%;display: inline-block;}
-div>div.jq-selectbox__dropdown.drop_up>ul {width: 189px;text-align: center;}
-div>div.jq-selectbox__dropdown.drop_down>ul {width: 189px;text-align: center;}
-div.questionsOfUser>div>p {margin: 10px 0px 0;padding: 0px;}
-.alert.alert-success.questionsAlert {margin-top: 50px;}
-.questionsAlert{display: none;}
-.SaveIndustryLoader{font-size: 20px;}
-.hide2{display: none;}
-select.jobSeekerRegQuestion {width: auto;cursor: pointer;}
-div.smallSpinner.SaveQuestionsSpinner>.spinner.center {font-size: 20px;margin: 5px 0px 0px 10px;}
-div.IndusList>div.IndustrySelect>select {width: 40%;display: inline-block;}
-i.fa.fa-trash.removeIndustry {margin-top: 7px;}
-.rounded{border-top: 3px solid #142d69;border-radius: 3px;}
-.lineDivivder {width: 100%;text-align: center;border-bottom: 1px solid #000;line-height: 0.1em;margin: 10px 0 20px;}
-.lineDivivder span {background:#f3f5f9;padding:0 10px;}
-span.addTags.btn.btn-primary{display: block;margin-top: 15px;}
-div.col_left>div>div#basic {margin-bottom: 13px;}
-.userTag {margin-bottom: 7px;}
-select.userTags.userTagsSelect {width: 45%;display: inline-block;}
-.tab_photos>.col_left {float: none !important;}
-.savebuttonUsertags{text-align: center;margin-top:10px}
-.jobSeekerProfileUpdate,.signOutButtonHeader{color: white !important;}
 
-/*===================================================== Save Resume ===========================================*/
-
-button.btn.violet.save-resume-btn.valign-top {margin-bottom: 23px;}
-
-/*===================================================== Make Profile Icon ===========================================*/
-span.icon_image_profile {bottom: 42px;right: 5px;}
-div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{position: absolute !important;}
-.jq-selectbox__search {display: none;}
-.qualifiCationBullet {margin-right: 10px;}
-.qualifType{font-size: 16px;}
-.qualifTypeSpan{text-transform: capitalize;font-weight: bold;}
-.QuestionsKeyPTag{padding: 0px;}
-.jq-selectbox__dropdown.drop_down {width: 100% !important;}
-hr.rounded {margin: 20px 0px 20px 0px;}
-.saveIndus,.saveQualification{background: #28a745;text-align: center;height: 22px;padding-top: 6px;border-radius: 4px;opacity: 0.7;color: white;cursor: pointer;}
-.saveQuestionsButton {background: #28a745;text-align: center;border-radius: 4px;height: 22px;padding-top: 6px;opacity: 0.7;color: white;cursor: pointer;}
-.buttonGroup{margin-top: 10%;}
-.marginButton{margin-right: 1%;}
-.margintop{margin-top: 17px;}
-.block {display: inline-block;width: 88%;border: none;background-color: #4CAF50;color: white;padding: 10px 28px;font-size: 16px;cursor: pointer;text-align: center;margin-top:13px;}
-.block:hover {background-color: #ddd;color: black;}
 </style>
 
 @stop
@@ -357,29 +271,37 @@ hr.rounded {margin: 20px 0px 20px 0px;}
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
+{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
+{{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
 
 <script type="text/javascript">
+
+
+
 
 $('input:checkbox').change(function() {
 	if ($(this).is(':checked')) {
         $(this).closest('label').addClass('checked');
+
         if($(this).attr('name').includes('preffer')){
             var res = $(this).attr('name').replace("preffer", "goldstar");
             var arrChkBox = $('[name="'+res+'"]');
             arrChkBox.prop('checked', false).trigger('refresh');
         }
+
         if($(this).attr('name').includes('goldstar')){
             var res = $(this).attr('name').replace("goldstar", "preffer");
             var arrChkBox = $('[name="'+res+'"]');
             arrChkBox.prop('checked', false).trigger('refresh');
         }
 
+
 	} else {
 		$(this).closest('label').removeClass('checked');
 	}
 });
 
-// ====================================================== Remove Industry. ======================================================
 
 $(document).ready(function(){
    $(document).on('click','.removeIndustry', function(){
@@ -408,7 +330,20 @@ $(".editIndustry").click(function(){
     $('.removeIndustry').removeClass('hide_it');
     $('.addIndus').removeClass('hide_it');
     $('.buttonSaveIndustry').removeClass('hide_it');
+
+    // console.log('welcome');
   });
+
+
+
+
+
+
+
+
+
+
+
 
 $(document).ready(function() {
     console.log(' new job doc ready  ');
@@ -416,10 +351,20 @@ $(document).ready(function() {
         dateFormat: "yy-mm-dd"
     });
 
-    // ====================================================== add more question. ======================================================
 
+
+    // add new question html to dom.
     $('.addQuestion').on('click',function(){
         console.log(' addQuestion clck  ');
+        // var question = '<div class="question mb10 relative"><input type="text" name="questions[]" class="w100" /><span class="close_icon jobQuestion"></span></div>';
+        // $('.jobQuestions').append(question);
+        //  $('#addNewQuestionModel').modal({
+        //     fadeDuration: 200,
+        //     fadeDelay: 2.5,
+        //     escapeClose: false,
+        //     clickClose: false,
+        // });
+
         var qC = parseInt($('#questionCounter').val())+1;
         if(qC<=5){
         var jobQuestion  = '<div class="jobQuestion q'+qC+'">';
@@ -451,33 +396,32 @@ $(document).ready(function() {
          $('#questionCounter').val(qC);
          jQFormStyler(); // rerun the form styler.
          $('input:checkbox').change(function() {
-        	if ($(this).is(':checked')) {
-                $(this).closest('label').addClass('checked');
+	if ($(this).is(':checked')) {
+        $(this).closest('label').addClass('checked');
 
-                if($(this).attr('name').includes('preffer')){
-                    var res = $(this).attr('name').replace("preffer", "goldstar");
-                    var arrChkBox = $('[name="'+res+'"]');
-                    arrChkBox.prop('checked', false).trigger('refresh');
-                }
+        if($(this).attr('name').includes('preffer')){
+            var res = $(this).attr('name').replace("preffer", "goldstar");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
 
-                if($(this).attr('name').includes('goldstar')){
-                    var res = $(this).attr('name').replace("goldstar", "preffer");
-                    var arrChkBox = $('[name="'+res+'"]');
-                    arrChkBox.prop('checked', false).trigger('refresh');
-                }
+        if($(this).attr('name').includes('goldstar')){
+            var res = $(this).attr('name').replace("goldstar", "preffer");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
 
 
-        	} else {
-        		$(this).closest('label').removeClass('checked');
-        	}
-        });
+	} else {
+		$(this).closest('label').removeClass('checked');
+	}
+});
 
     }
 
     });
 
-    // ====================================================== add more option to question. ======================================================
-
+    // add more option to question
     $('.jobQuestions').on('click','.addQuestionOption', function(){
         var oC = $(this).closest('.jobQuestion').find('.jq_field_questions .option').length;
         // var qC = $(this).attr('data-qc');
@@ -499,45 +443,57 @@ $(document).ready(function() {
         jQFormStyler(); // rerun the form styler.
 
         $('input:checkbox').change(function() {
-        	if ($(this).is(':checked')) {
-                $(this).closest('label').addClass('checked');
-                if($(this).attr('name').includes('preffer')){
-                    var res = $(this).attr('name').replace("preffer", "goldstar");
-                    var arrChkBox = $('[name="'+res+'"]');
-                    arrChkBox.prop('checked', false).trigger('refresh');
-                }
-                if($(this).attr('name').includes('goldstar')){
-                    var res = $(this).attr('name').replace("goldstar", "preffer");
-                    var arrChkBox = $('[name="'+res+'"]');
-                    arrChkBox.prop('checked', false).trigger('refresh');
-                }
-        	} else {
-        		$(this).closest('label').removeClass('checked');
-        	}
-        });
+	if ($(this).is(':checked')) {
+        $(this).closest('label').addClass('checked');
+
+        if($(this).attr('name').includes('preffer')){
+            var res = $(this).attr('name').replace("preffer", "goldstar");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+        if($(this).attr('name').includes('goldstar')){
+            var res = $(this).attr('name').replace("goldstar", "preffer");
+            var arrChkBox = $('[name="'+res+'"]');
+            arrChkBox.prop('checked', false).trigger('refresh');
+        }
+
+
+	} else {
+		$(this).closest('label').removeClass('checked');
+	}
+});
 
     });
 
 
 
-    // ====================================================== remove question html from dom. ======================================================
-
+    // remove question html from dom.
     $(document).on('click','.close_icon.removeJobQuestion',function(){
         $(this).closest('.jobQuestion').remove();
         var qC = parseInt($('#questionCounter').val());
         qC -=1;
         $('#questionCounter').val(qC);
     });
+
+
     var jQFormStyler = function(){
         $('input, select').styler({ selectSearch: true, });
     }
 
 
+
+
+
+
+
+
+
     //====================================================================================================================================//
     // Google map location script
     //====================================================================================================================================//
-
     var map;
+
     var input = document.getElementById('location_search');
     var autocomplete = new google.maps.places.Autocomplete(input);
     var geocoder = new google.maps.Geocoder();
@@ -545,6 +501,7 @@ $(document).ready(function() {
     var latlng = new google.maps.LatLng(-31.2532183, 146.921099);
     var marker = "";
     var circle = "";
+
     var options = {
         zoom: 14,
         center: latlng,

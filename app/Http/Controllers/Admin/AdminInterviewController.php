@@ -18,6 +18,7 @@ use App\InterviewTempQuestion;
 use App\JobsApplication;
 use App\UserInterview;
 use App\ControlSession;
+use App\History;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NotiEmailForQueuing;
@@ -564,6 +565,11 @@ class AdminInterviewController extends Controller
             $UserInterview->status   = 'pending'; 
             $UserInterview->interview_type   = 'Correspondance';
             $UserInterview->save();
+            $history = new History;
+            $history->user_id = $UserInterview->user_id; 
+            $history->type = 'interview_sent'; 
+            $history->userinterview_id = $UserInterview->id; 
+            $history->save();
             $jsEmail = $UserInterview->js->email;
             $empName = $UserInterview->employer->name;
             Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));

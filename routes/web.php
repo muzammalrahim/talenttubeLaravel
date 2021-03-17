@@ -44,7 +44,6 @@ Route::post('ajax/rescheduleSlot',    'Site\HomeController@rescheduleSlot')->nam
 
 // =========================================== Cross Reference for unauthenticated ===========================================
 Route::get('crosssreference/url', 'Site\ReferenceController@crosssreference')->name('crosssreference');
-
 Route::post('ajax/booking/sendReferenceW', 'Site\ReferenceController@sendReferenceW')->name('sendReferenceW');
 Route::post('ajax/booking/sendReferenceP', 'Site\ReferenceController@sendReferenceP')->name('sendReferenceP');
 Route::post('ajax/booking/sendReferenceE', 'Site\ReferenceController@sendReferenceE')->name('sendReferenceE');
@@ -187,7 +186,6 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('bulkEmail/SendEmail', 'Admin\AdminEmailsController@SendEmail')->name('bulkEmail.SendEmail');
     Route::post('bulkEmail/DeleteEmail', 'Admin\AdminEmailsController@DeleteEmail')->name('bulkEmail.DeleteEmail');
 
-
     // bulkCVS
     Route::post('bulk/generateCVS', 'Admin\AdminEmailsController@GenerateCVS')->name('bulk.GenerateCVS');
     Route::get('bulk/generateCVS', 'Admin\AdminEmailsController@GenerateCVS');
@@ -196,7 +194,6 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('bulk/generatePDF', 'Admin\AdminEmailsController@GeneratePDF');
     Route::post('bulk/BulkGenerateCVPDF', 'Admin\AdminEmailsController@BulkGenerateCVPDF')->name('bulk.BulkGenerateCVPDF');
     Route::post('bulk/BulkGenerateCVPDFApplicant', 'Admin\AdminEmailsController@BulkGenerateCVPDFApplicant')->name('bulk.BulkGenerateCVPDFApplicant');
-
 
     // End here
 
@@ -211,7 +208,6 @@ Route::get('media/private/{userid}/{any}', [
 
     // for filtering
     Route::post('job_applications/search', 'Admin\AdminJobsController@filter')->name('job_applications.filter');
-
     Route::post('ajax/addNewLocation', 'Admin\UserController@addNewLoaction');
     Route::post('ajax/addNewJobLocation', 'Admin\AdminJobsController@addNewJobLocation');
     // Job Application End Here
@@ -219,7 +215,6 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('ajax/massJobApplySubmit', 'Admin\AdminJobsController@massJobApplySubmit')->name('massJobApplySubmit');
     Route::post('ajax/massJobApplySubmitApplicant', 'Admin\AdminJobsController@massJobApplySubmitApplicant')->name('massJobApplySubmitApplicant');
     Route::post('ajax/massStatusChange', 'Admin\AdminJobsController@massStatusChange')->name('massStatusChange');
-
     Route::post('ajax/deleteGallery/{id}/{userID}', 'Admin\UserController@deleteGallery');
     
     // ====================================== Interview Concierge ======================================
@@ -263,7 +258,6 @@ Route::get('media/private/{userid}/{any}', [
 
     // ====================================== Admin Interview Templates ======================================
 
-
     Route::get('interview/templates', 'Admin\AdminInterviewController@interviewTemplates')->name('interviewTemplates');
     Route::get('template/create', 'Admin\AdminInterviewController@templateCreate')->name('template.create');
     Route::post('template/create', 'Admin\AdminInterviewController@storeTemplate')->name('template.store');
@@ -278,13 +272,9 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('users/tracker', 'Admin\UserController@trackUsers')->name('trackUsers');
     Route::get('tracker/getList', 'Admin\UserController@getDatatableTracker')->name('tracker.dataTable');
     Route::get('users/tracker/jobs', 'Admin\AdminJobsController@getJobsOjs')->name('users.getJobs');
-
     Route::post('jobs/status', 'Admin\AdminJobsController@changesJobStatus')->name('jobs.changesStatus');
     Route::post('jobs/status/change', 'Admin\AdminJobsController@changesJobStatusConfirm')->name('jobs.changesJobStatusConfirm');
     Route::post('jobs/defaultJobApplication', 'Admin\AdminJobsController@defaultJobApplication')->name('jobs.defaultJobApplication');
-
-
-
     Route::get('users/tracker/addCandidate', 'Admin\UserController@addCandidate')->name('addCandidate');
     Route::get('candidates/getList', 'Admin\UserController@addCandidateDatatable')->name('addCandidateDatatable.dataTable');
     Route::post('candidates/addToTracker', 'Admin\UserController@addToTracker')->name('users.addToTracker');
@@ -301,7 +291,6 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('pool/{id}/{name}', 'Admin\TalentPoolController@poolInfo')->name('poolInfo');
     Route::get('userPoolDatatable/getList', 'Admin\TalentPoolController@userPoolDatatable')->name('userPool.dataTable');
     Route::get('pool/addJobseeker', 'Admin\TalentPoolController@addJobseekerInPool')->name('addJobseekerInPool');
-
     Route::get('addJobseekerinPoolDatatable/getList', 'Admin\TalentPoolController@addJobseekerinPoolDatatable')->name('addJobseekerinPool.dataTable');
     Route::post('jobseeker/addInPool', 'Admin\TalentPoolController@addInPool')->name('users.addInPool');
     Route::post('jobseeker/removeFromPool', 'Admin\TalentPoolController@removeFromPool')->name('users.removeFromPool');
@@ -309,31 +298,33 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('ajax/bulk/AddBulkJobseekerInPool', 'Admin\TalentPoolController@AddBulkJobseekerInPool')->name('AddBulkJobseekerInPool');
     Route::post('ajax/bulk/jobApplication/AddBulkJobseekerInPool', 'Admin\TalentPoolController@AddBulkJobseekerInPoolJobApp')->name('AddBulkJobseekerInPoolJobApp');
 
-
     // ===================================================== jobapplication page Interview Iteration-8 ===================================================== 
 
-     // iteration-8 BulkInterview
+    // iteration-8 BulkInterview
     Route::post('ajax/interview/adminInterviewTemplate','Admin\AdminInterviewController@adminInterviewTemplate')->name('adminInterviewTemplate');
-
     Route::post('ajax/interview/bulkInterviewTemplate','Admin\AdminInterviewController@bulkInterviewTemplate')->name('bulkInterviewTemplate');
     Route::post('bulk/bulkInterview', 'Admin\AdminInterviewController@bulkInterview')->name('bulk.bulkInterview');
     Route::post('ajax/bulk/bulkInterview/send', 'Admin\AdminInterviewController@bulkInterviewSend')->name('bulkIntrerview.send');
-
-
     Route::get('jobseeker/interview/{id}', 'Admin\AdminJobsController@jobseekerInterviews')->name('jobseekerInterviews');
     Route::post('ajax/conduct/interview','Admin\AdminJobsController@adminConductInterview')->name('adminConductInterview');
     Route::get('correspondance/interviews/{user_id}/{jobApp_id}', 'Admin\AdminInterviewController@corresInterviewJobApplciation')->name('corresInterviewJobApplciation');
-
-
-
-
-
-
-
-
-
-
     Route::get('users/list', 'Admin\UserController@verifiedUsers')->name('userslist');
+
+    // ====================================== Admin Online Test iteration-9 ======================================
+
+    Route::get('online/test', 'Admin\AdminTestController@onlinetest')->name('onlinetest');
+    Route::get('online/test/getList', 'Admin\AdminTestController@onlineTestDataTable')->name('onlineTest.dataTable');
+    Route::get('onlineTest/create', 'Admin\AdminTestController@onlineTestCreate')->name('onlineTest.create');
+    Route::post('onlineTest/store', 'Admin\AdminTestController@storeOnlineTest')->name('onlineTest.store');
+    Route::get('onlineTest/edit/{id}', 'Admin\AdminTestController@onlineTestEdit')->name('onlineTestEdit');
+    Route::post('ajax/onlineTest/question/delete', 'Admin\AdminTestController@testQuestionDelete')->name('testQuestionDelete');
+    Route::post('ajax/onlineTest/addQuestion', 'Admin\AdminTestController@addOnlineTestQuestion')->name('addOnlineTestQuestion');
+
+    Route::post('onlineTest/update/{id}', 'Admin\AdminTestController@onlineTestUpdate')->name('onlineTest.update');
+
+
+
+    // Route::get('users/pool', 'Admin\TalentPoolController@talentPool')->name('talentPool');
 
     
 
@@ -351,7 +342,6 @@ Route::get('media/private/{userid}/{any}', [
     // =============================================== Forget Password ===============================================
 
     Route::get('forgetPassword', 'Site\HomeController@forgetPassword')->name('forgetPassword');
-
 
     // =============================================== Forget Password ===============================================
 
@@ -470,13 +460,11 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     // activity  user/employer
     Route::post('ajax/saveNewActivity', 'Site\SiteUserController@saveNewActivity')->name('saveNewActivity');
     Route::post('ajax/removeActivity', 'Site\SiteUserController@removeActivity')->name('removeActivity');
-
     // video user/employer
     Route::post('ajax/uploadVideo', 'Site\SiteUserController@uploadVideo')->name('uploadVideo');
     Route::post('ajax/deleteVideo', 'Site\SiteUserController@deleteVideo')->name('deleteVideo');
     Route::get('block',         'Site\SiteUserController@blockList')->name('blockList');
     Route::post('ajax/unBlockUser', 'Site\SiteUserController@unBlockUser')->name('unBlockUser');
-
     // Like Route and unlike route
     Route::get('like',         'Site\SiteUserController@likeList')->name('likeList');
     Route::post('ajax/unLikeUser', 'Site\SiteUserController@unLikeUser')->name('unLikeUser');
