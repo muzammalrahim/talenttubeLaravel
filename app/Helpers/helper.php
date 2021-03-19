@@ -638,6 +638,7 @@ function assetGallery($access,$userId,$type,$file){
         $path .= 'media/public/';
     }
     $path .= $userId.'/gallery/'.(($type)?($type.'/'):'').$file;
+    // dd($path);
     return asset( $path );
 }
 
