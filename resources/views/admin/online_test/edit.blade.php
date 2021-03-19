@@ -29,16 +29,19 @@
         <div class="form-group row">
           {{ Form::label('name', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
-            {{ Form::text('name', $value = $record->name, $attributes = array('class'=>'form-control', 'placeholder' => 'name','required'=> 'false')) }}
+            {{ Form::text('name', $value = $record->name, $attributes = array('class'=>'form-control', 'placeholder' => 'Enter test name','required'=> 'false')) }}
           </div>
         </div>
 
         <div class="form-group row">
           {{ Form::label('time', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
-            {{ Form::text('time', $value = $record->time , $attributes = array('class'=>'form-control', 'required'=> 'false')) }}
+            {{ Form::number('time', $value = $record->time , $attributes = array('class'=>'form-control', 'required'=> 'false')) }}
           </div>
         </div>
+
+          <hr>
+
 
         
 
@@ -47,25 +50,26 @@
         @endphp
         @foreach ($questions as $key => $question)
           
-
-
-          <div class="form-group row oldQuestion">
+          <div class="oldQuestion">
             
-            <label for="tempQuestions" class="col-sm-2 col-form-label">Question <span class="test">{{$key+1}}</span>  </label>
-            <div class="col-sm-9">
+            <div class="row form-group">
+              <label for="tempQuestions" class="col-sm-2 col-form-label">Question <span class="test">{{$key+1}}</span>  </label>
+              <div class="col-sm-9">
 
-              <input type="hidden" name="question[{{$key+1}}][id]" value="{{$question->id}}" />
-              <input type="text" class="form-control" name="question[{{$key+1}}][text] " id="tempQuestions" placeholder="Password" value=" {{$question->question}} " >
+                <input type="hidden" name="question[{{$key+1}}][id]" value="{{$question->id}}" />
+                <input type="text" class="form-control" name="question[{{$key+1}}][question] " id="tempQuestions" placeholder="Enter question" value=" {{$question->question}} " >
 
-            </div>
+              </div>
 
-            <div class="col-md-1">
-              <span class="pointer removeOldQuestion btn btn-danger" data-testId = "{{$record->id}}" data-qId = "{{$question->id}}"> Remove</span>
-              <input type="hidden" name="" class="tempLateId" value=" {{$record->id}} " >
+              <div class="col-md-1">
+                <span class="pointer removeOldQuestion btn btn-danger" data-testId = "{{$record->id}}" data-qId = "{{$question->id}}"> <i class="fa fa-trash"></i></span>
+                <input type="hidden" name="" class="tempLateId" value=" {{$record->id}} " >
+              </div>
             </div>
 
 
             {{-- <div class="options"> --}}
+            <div class="row form-group">
 
               <div class="col-md-2 my-3"> Options </div>
 
@@ -84,7 +88,10 @@
                   <input class="form-input" name="question[{{$key+1}}][option4]" value="{{$question->option4}}" type="text" id="flexCheckDefault">
                 </div>
               </div>
+            </div>
 
+
+            <div class="row form-group">
 
               <div class="col-md-2"> Answer </div>
               <div class="col-md-2">
@@ -96,11 +103,37 @@
                 </select>
               </div>
 
+              @if (empty($question->image_name) )
+                <div class="col-md-2"> <span class="btn btn-primary addImg"> Add Image </span> </div>
+              @endif
+
+
+
+            </div>
+              @if (!empty($question->image_name) )
+              <div class="row form-group questionImage" >
+                <div class="col-md-2"> Question Image </div>
+                <img data-photo-id=""  id="photo" style="height:50px"   class="photo" data-src="" src="{{ asset('media/public/onlineTest/' . $question->image_name ) }}" >
+                  {{-- src="http://localhost/talenttube/public/media/public/onlineTest/1616073022.jpg" > --}}
+                {{-- <div class="col-md-10"> <input type="file" name="question[1][questionImage]"> </div> --}}
+              </div>
+
+              @else
+
+              <div class="row form-group imgDiv d-none" >
+                <div class="col-md-2"> Add Image </div>
+                <div class="col-md-10"> <input type="file" name="question[{{$key+1}}][questionImage]"> </div>
+              </div>
+
+              @endif
+
           </div>
+
+          <hr>
 
         @endforeach
 
-        <div class="questionslist"></div>
+        <div class="questionslist mb-2"></div>
 
         <span class="addTemplateQuestion btn btn-primary"style = "cursor:pointer;">+ Add Question</span>
 
@@ -146,8 +179,19 @@
 
 $(document).ready(function(){
 
+  $(document).on('click' , '.addImg', function(){
+    console.log('add new image edit');
+    $(this).parents('.oldQuestion').find('.imgDiv').toggleClass('d-none');
+  });
+
+
+  $(document).on('click' , '.addImg', function(){
+    console.log('add new image edit');
+    $(this).parents('.question').find('.imgDiv').toggleClass('d-none');
+  });
+
   $(document).on('click','.removeQuestion', function(){
-    $(this).closest('.questions').remove();
+    $(this).closest('.question').remove();
 
 
    });
@@ -155,11 +199,8 @@ $(document).ready(function(){
   $(document).on('click','.removeOldQuestion', function(){
     var qId = $(this).attr('data-qId');
     var test_id = $(this).attr('data-testId');
-
-    console.log(qId);
+    // console.log(qId);
     $(this).closest('.oldQuestion').remove();
-
-
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
       $.ajax({
       type: 'POST',
@@ -167,23 +208,14 @@ $(document).ready(function(){
       data:{id: qId,test_id:test_id},
       success: function(data){
           console.log(' data ', data);
-
           if( data.status == 1 ){
-
           $(this).closest('.oldQuestion').remove();
           }else{
-
             return false;
-             
           }
-
         }
     });
-
-    // console.log(q_id);
-    // $(this).closest('.oldQuestion').remove();
-   
-   });
+  });
 
   
 
@@ -196,13 +228,17 @@ $(document).ready(function(){
     if(i <= 30){
       
 
-      var newQuestionsList = '<div class="questions t'+i+' ">';
+      var newQuestionsList = '<div class="question q'+i+' border-bottom mb-2">';
       newQuestionsList += '<div class="row t'+i+' ">';
       newQuestionsList += '<div class="text col-md-2 font-weight-bold">Question '+i+'</div>';
       newQuestionsList +='<input name="newQuestion['+i+'][question]" class="questionInput form-control col-md-9" id = "summernote">';
       newQuestionsList += '</input>';
-      newQuestionsList += '<span class="removeQuestion btn btn-danger col-md-1"><i class = "fa fa-trash"> </i></span>';
+      newQuestionsList += '<div class = "col-md-1">';
+      newQuestionsList += '<span class="removeQuestion btn btn-danger"><i class = "fa fa-trash"> </i></span>';
       newQuestionsList += '</div>';
+      newQuestionsList += '</div>';
+
+
 
       newQuestionsList += '<div class="form-group row my-3">';
       newQuestionsList += '<div class="col-md-2"> Options';
@@ -233,8 +269,12 @@ $(document).ready(function(){
       newQuestionsList += ' <input class="form-input" type="text" name="newQuestion['+i+'][option4]" id="flexCheckDefault">';
 
 
+
       newQuestionsList += ' </div>';
+
+
       newQuestionsList += ' </div>';
+
 
 
       newQuestionsList += '</div>';
@@ -250,6 +290,24 @@ $(document).ready(function(){
       newQuestionsList +=        '<option>4</option>';
       newQuestionsList +=      '</select>';
       newQuestionsList += '</div>';
+
+
+
+
+      newQuestionsList +=  '<div class="col-md-2">'; 
+      newQuestionsList += '<span class="btn btn-primary addImg"> Add Image </span>';
+      newQuestionsList += '</div>';
+
+
+
+      newQuestionsList += '</div>';
+      
+
+      newQuestionsList +=   '<div class="row form-group imgDiv d-none" >';
+      newQuestionsList +=    '<div class="col-md-2"> Add Image </div>';
+      newQuestionsList +=   '<div class="col-md-10"> <input type="file" name="newQuestion['+i+'][questionImage]">';
+      newQuestionsList += '</div>';
+
 
 
       i++;  
@@ -277,10 +335,10 @@ $(document).ready(function(){
 
 <!-- added by Hassan -->
 <script type="text/javascript"> var base_url = '{!! url('/') !!}';</script>
-<script src="http://malsup.github.com/jquery.form.js"></script>
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
-<link rel="stylesheet" href="{{ asset('css/viewer.css') }}">
-<script type="text/javascript" src="{{ asset('js/viewer.js') }}"></script>
+{{-- <script src="http://malsup.github.com/jquery.form.js"></script> --}}
+{{-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/viewer.css') }}"> --}}
+{{-- <script type="text/javascript" src="{{ asset('js/viewer.js') }}"></script> --}}
 <script type="text/javascript">  
 
 

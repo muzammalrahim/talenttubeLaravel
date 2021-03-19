@@ -16,14 +16,13 @@
     @if ($user_gallery)
         @foreach ($user_gallery as $gallery)
             <div id="{{$gallery->id}}" class="item profile_photo_frame gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
-               <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-                    href="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
-                    data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}"
-                    >
+               <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery" href="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
+                    data-lcl-thumb="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}" >
+                    
                    <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo"
                     data-src="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
-																				src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}" >
-																				{{-- <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo"
+						src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}" >
+							{{-- <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo"
                     data-src="{{asset('/images/site/icons/profileimage.jpg')}}"
                     src="{{asset('/images/site/icons/profileimage.jpg')}}" > --}}
                 </a>

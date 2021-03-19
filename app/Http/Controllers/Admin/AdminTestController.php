@@ -5,6 +5,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use \Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
+
 use App\User;
 use App\OnlineTest;
 use App\TestQuestion;
@@ -67,58 +70,60 @@ class AdminTestController extends Controller
 
     }
 
+    // ========================================= Iteration-9 Store Online Test =========================================
 
-        public function storeOnlineTest(Request $request){
+
+    public function storeOnlineTest(Request $request){
         $data =  $request->toArray();
-        // dd($data);
-        
-        
-
         $user = Auth::user();
-        // dd($user->id);
-        // $data['user'] = $user;
         $data = $request->all();
-        // dd($data);
          $this->validate($request, [
             'name' => 'required|max:255',
-            'time' => 'required|max:255',
-            'question' => 'required|max:255',
+            'time' => 'digits_between:2,5',
+            'question.*.question' => 'required|max:255',
+            'question.*.option1' => 'required|max:255',
+            'question.*.option2' => 'required|max:255',
+            'question.*.option3' => 'required|max:255',
+            'question.*.option4' => 'required|max:255',
+            'question.*.questionImage' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-        // dd($data['question']);
-        if(in_array(null, $data['question'], true))
-            {
-                return response()->json([
-                    'status' => 0,
-                    'error' =>  "please add all questions"
-                ]);
+
+        $name = $data['time'];
+        $test = new OnlineTest();
+        $test->name = $data['name'];
+        $test->time = $data['time'];
+        $test->save();
+        foreach ($data['question'] as $key => $question) {
+            $testQuestions = new TestQuestion;
+            $testQuestions->test_id =  $test->id;
+            $testQuestions->question = $question['question']; 
+            $testQuestions->option1 =  $question['option1']; 
+            $testQuestions->option2 =  $question['option2']; 
+            $testQuestions->option3 =  $question['option3']; 
+            $testQuestions->option4 =  $question['option4']; 
+            $testQuestions->answer =  $question['answer']; 
+            if (isset($question['questionImage'])) {
+                // =========================================================== For uploading image ===========================================================
+                $user = Auth::user();
+                $image = $question['questionImage'];
+                $fileName   = time() . '.' . $image->getClientOriginalExtension();
+                $file_path   = '/onlineTest/'.$fileName;
+                $img = Image::make($image->getRealPath());
+                $img->resize(120, 120, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->stream();
+                $img = Image::make($image->getRealPath());
+                $img->stream();
+                Storage::disk('publicMedia')->put($file_path, $img, 'public');
+                $testQuestions->image_name = $fileName;
+                $testQuestions->image_path = $file_path;
+                // =========================================================== For uploading image ===========================================================
             }
-        else{
-
-            $name = $data['time'];
-            // dd($name);
-
-            $test = new OnlineTest();
-            $test->name = $data['name'];
-            $test->time = $data['time'];
-            $test->save();
-            foreach ($data['question'] as $key => $question) {
-
-                // dd($question['question']);
-                $testQuestions = new TestQuestion;
-                $testQuestions->test_id =  $test->id;
-                $testQuestions->question = $question['question']; 
-                $testQuestions->option1 =  $question['option1']; 
-                $testQuestions->option2 =  $question['option2']; 
-                $testQuestions->option3 =  $question['option3']; 
-                $testQuestions->option4 =  $question['option4']; 
-                $testQuestions->answer =  $question['answer']; 
-                $testQuestions->save();
-
-            }
-            // $temp->questions = json_encode($request->questions);
-            if( $test->save() ){
-                return redirect(route('onlinetest'))->withSuccess( __('admin.record_added_successfully'));
-            }
+            $testQuestions->save();
+        }
+        if( $test->save() ){
+            return redirect(route('onlinetest'))->withSuccess( __('admin.record_added_successfully'));
         }
     }
 
@@ -145,7 +150,18 @@ class AdminTestController extends Controller
         $question = TestQuestion::where('id' , $request->id)->where('test_id' , $request->test_id)->first();
         // dd($question);
         if ($question) {
+
+            if (isset($question->image_path)) {
+
+                $imgPath = ('/public').'/onlineTEST/'.$question->image_name;
+                // dd($imgPath);
+
+                Storage::disk('media')->delete($imgPath);
+                // Storage::disk('media')->delete($imgPath);
+
+            }
             $question->delete();
+
             return response()->json([
                 'status' => 1,
                 'message'=> 'Question Deleted Successfully'
@@ -153,7 +169,7 @@ class AdminTestController extends Controller
         }
     }
 
-    // ============================================================ Delete Question ============================================================
+    // ============================================================ Add Onlien test question ============================================================
 
      public function addOnlineTestQuestion(Request $request){
         // dd($request->id);
@@ -166,61 +182,138 @@ class AdminTestController extends Controller
      public function onlineTestUpdate(Request $request,$id){
         // dd($id);
         $data = $request->all();
-        dd($data);
-        foreach($data['question'] as $key =>$value){
-                if(in_array(null, $value, true))
-                {
-                    return response()->json([
-                        'status' => 0,
-                        'error' =>  "please complete question"
-                    ]);
-                }
+        // dd($data);
+
+        // ========================================== Validation =============================
+
+        $user = Auth::user();
+     
+        $this->validate($request, [
+            'name' => 'required|max:255',
+            'time' => 'digits_between:2,5',
+            'question.*.question' => 'required|max:255',
+            'question.*.option1' => 'required|max:255',
+            'question.*.option2' => 'required|max:255',
+            'question.*.option3' => 'required|max:255',
+            'question.*.option4' => 'required|max:255',
+            // 'newQuestion.*.questionImage' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if (isset($data['newQuestion'])) {
+
+            $this->validate($request, [
+            'name' => 'required|max:255',
+            'time' => 'digits_between:2,5',
+            'newQuestion.*.question' => 'required|max:255',
+            'newQuestion.*.option1' => 'required|max:255',
+            'newQuestion.*.option2' => 'required|max:255',
+            'newQuestion.*.option3' => 'required|max:255',
+            'newQuestion.*.option4' => 'required|max:255',
+            'newQuestion.*.questionImage' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+             
         }
+
+        // ========================================== Validation =============================
+
+        
         $onlineTest = OnlineTest::where('id' , $id)->first();
         $onlineTest->name = $data['name'];
         $onlineTest->time = $data['time'];
         $onlineTest->save();
-           foreach ($data['question'] as $question) {
-            if (isset($question['id'])) {
-                $tempQuestion = TestQuestion::where('id' , $question['id'])->get();
-                foreach ($tempQuestion as $tempQ) {
-                    // dd($tempQ);
-                    $tempQ->question = $question['text'];
-                    $tempQ->option1 = $question['option1'];
-                    $tempQ->option2 = $question['option2'];
-                    $tempQ->option3 = $question['option3'];
-                    $tempQ->option4 = $question['option4'];
-                    $tempQ->answer = $question['answer'];
-                    $tempQuestion->test_id = $id;
-                    $tempQ->save();
+
+        if (isset($data['question'])) {
+            
+            foreach ($data['question'] as $question) {
+            // if (isset($question['id'])) {
+                $testQuestion = TestQuestion::where('id' , $question['id'])->get();
+                foreach ($testQuestion as $testQues) {
+                    // dd($testQues);
+                    $testQues->question = $question['question'];
+                    $testQues->option1 = $question['option1'];
+                    $testQues->option2 = $question['option2'];
+                    $testQues->option3 = $question['option3'];
+                    $testQues->option4 = $question['option4'];
+                    $testQues->answer = $question['answer'];
+                    $testQuestion->test_id = $id;
+
+                    // =========================================================== For uploading image ===========================================================
+                    if (isset($question['questionImage'])) {
+
+                    $image = $question['questionImage'];
+                    $fileName   = time() . '.' . $image->getClientOriginalExtension();
+                    // $file_thumb  = '/onlineTest/images/'.$fileName;
+                    $file_path   = '/onlineTest/'.$fileName;
+                    $img = Image::make($image->getRealPath());
+                    $img->resize(120, 120, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    $img->stream();
+                    // Storage::disk('publicMedia')->put( $file_thumb , $img);
+                    $img = Image::make($image->getRealPath());
+                    $img->stream();
+                    Storage::disk('publicMedia')->put($file_path, $img, 'public');
+                    // dd($fileName);
+
+                    $testQues->image_name = $fileName;
+                    $testQues->image_path = $file_path;
+        
+                    }
+
+                    // =========================================================== For uploading image ===========================================================
+                    
+
+                    $testQues->save();
                 }
             }
-
-            else{
-                
-                $tempQuestion = new TestQuestion;
-                $tempQuestion->temp_id = $id;
-                $tempQuestion->question = $data['new'];
-                $tempQuestion->save();
-            }
         }
+           
 
         if (isset($data['newQuestion'])) {
             foreach ($data['newQuestion'] as $newQuest) {
-                // dd($newQuest);
-            $tempQuestion = new TestQuestion;
-            $tempQuestion->question = $newQuest['question'];
-            $tempQuestion->option1 = $newQuest['option1'];
-            $tempQuestion->option2 = $newQuest['option2'];
-            $tempQuestion->option3 = $newQuest['option3'];
-            $tempQuestion->option4 = $newQuest['option4'];
-            $tempQuestion->answer = $newQuest['answer'];
-            $tempQuestion->test_id = $id;
-            $tempQuestion->save();
+            $testQuestion = new TestQuestion;
+            $testQuestion->question = $newQuest['question'];
+            $testQuestion->option1 = $newQuest['option1'];
+            $testQuestion->option2 = $newQuest['option2'];
+            $testQuestion->option3 = $newQuest['option3'];
+            $testQuestion->option4 = $newQuest['option4'];
+            $testQuestion->answer = $newQuest['answer'];
+            $testQuestion->test_id = $id;
+
+
+            if (isset($newQuest['questionImage'])) {
+                // =========================================================== For uploading image ===========================================================
+
+                // $user = Auth::user();
+                $image = $newQuest['questionImage'];
+                $fileName   = time() . '.' . $image->getClientOriginalExtension();
+                // $file_thumb  = '/onlineTest/images/'.$fileName;
+                $file_path   = '/onlineTest/'.$fileName;
+                $img = Image::make($image->getRealPath());
+                $img->resize(120, 120, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $img->stream();
+                // Storage::disk('publicMedia')->put( $file_thumb , $img);
+                $img = Image::make($image->getRealPath());
+                $img->stream();
+                Storage::disk('publicMedia')->put($file_path, $img, 'public');
+                // dd($fileName);
+
+                $testQuestion->image_name = $fileName;
+                $testQuestion->image_path = $file_path;
+    
+
+                // =========================================================== For uploading image ===========================================================
+            }
+
+            $testQuestion->save();
             }
 
         }
-
+                
+                      
         return redirect(route('onlinetest'))->withSuccess( __('admin.record_aupdated_successfully'));
  
     }
