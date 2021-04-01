@@ -1181,30 +1181,24 @@ class UserController extends Controller
     //  =================================================== Tracker datatable ===================================================
 
     public function getDatatableTracker(Request $request){
-      $records = array();
-
-       // dd($request);
-      $records = User::select(['id', 'name','email', 'default_job' ,'phone','verified'])
-      ->where('tracker' , '1')
+        $records = array();
+        // dd($request);
+        $records = User::select(['id', 'name','email', 'default_job' ,'phone','verified'])
+        ->where('tracker' , '1')
         ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
         ->orderBy('created_at', 'desc');
-     if(isset($request->status) && !empty($request->status)){
+        if(isset($request->status) && !empty($request->status)){
+            if($request->status == 'verified')
+                $records = $records->where('verified','1');
+            if($request->status == 'pending')
+                $records = $records->where('verified','0');
+        }
+        return datatables($records)
+        
+ 
 
-        if($request->status == 'verified')
-            $records = $records->where('verified','1');
 
-        if($request->status == 'pending')
-            $records = $records->where('verified','0');
 
-     }
-
-      return datatables($records)
-
-      ->addColumn('action', function ($records) {
-        if (isAdmin()){
-            $rhtml = '<a > <i class ="far fa-trash-alt btn btn-danger btn-sm deleteCandidate" data-id= "'.$records->id.'"> </i> </a>';
-            return $rhtml;
-        }})
 
         ->addColumn('profile', function ($records) {
             if (isAdmin()){
@@ -1216,68 +1210,50 @@ class UserController extends Controller
             if (isAdmin()){
                 $jobAppCount = ($records->jobAppCount)?($records->jobAppCount->aggregate):0;
                 if ($jobAppCount > 0) {
-
                     if (isset($records->default_job)) { 
                         $viewjob = '<span class = "ml-1">Job-<u><span><a class="pointer text-success " href="" target="_blank" >View</a>';
                         $jobStatusArray = jobStatusArray();
                         $jobHtml = '<button class = "btn btn-primary userJobsModal jobTitle_'.$records->id.'"  data-toggle ="modal" user_id = '.$records->id.' data-target = "#getJobsModal"> '.$records->defaultJob->job->title.' </button>';
-
                         $jobStatus  =  jobStatusArray();
                         return $jobHtml;
-                        
                     }
                     else{
                         $viewjob = '<span class = "ml-1">Job-<u><span><a class="pointer text-success " href="" target="_blank" >View</a>';
                         $jobStatusArray = jobStatusArray();
                         $jobHtml = '<button class = "btn btn-primary userJobsModal jobTitle_'.$records->id.'"  data-toggle ="modal" user_id = '.$records->id.' data-target = "#getJobsModal"> Select Job </button>';
-
                         $jobStatus  =  jobStatusArray();
                         return $jobHtml;
                     }
-                    
                 }
                 else{
                     $nan = '<span class = "text-danger"> None Available </span>';
                     return $nan;
                 }
-
             }})
 
         ->addColumn('job_status', function ($records) {
             if (isAdmin()){
-
                 $jobAppCount = ($records->jobAppCount)?($records->jobAppCount->aggregate):0;
                 if ($jobAppCount > 0) {
-
                     if (isset($records->default_job)) { 
-
                         if ($records->defaultJob->status == 'inreview') {
-
                             $rhtml = '<a class="text-dark jobStatus changeJobStatusButton text-capitalize pointer jobStatus_'.$records->id.'" jobapp_id = "'.$records->defaultJob->id.'" user_id = "'.$records->id.'" target="_blank" > In Review</a>';
                             return $rhtml;
-                            
                         }
-
                         else{
-
                             $rhtml = '<a class="text-dark jobStatus changeJobStatusButton text-capitalize pointer jobStatus_'.$records->id.'" jobapp_id = "'.$records->defaultJob->id.'" user_id = "'.$records->id.'" target="_blank" > '.$records->defaultJob->status.'</a>';
                             return $rhtml;
-
                         }
-                        
                     }
-
                     else{
                         $rhtml = '<a class="text-dark jobStatus pointer jobStatus_'.$records->id.'" user_id = "'.$records->id.'" target="_blank" >Job Status</a>';
                         return $rhtml;
                     }
-                    
                 }
                 else{
                     $nan = '<span class = "text-danger"> None Available </span>';
                     return $nan;
                 }
-                
             }})
 
         ->addColumn('ref_check', function ($records) {
@@ -1296,14 +1272,18 @@ class UserController extends Controller
         }})
 
 
-
-        ->addColumn('interviews', function ($records) {
+        ->addColumn('tests', function ($records) {
         if (isAdmin()){
-            $refCount = ($records->user_interviewsAccount)?($records->user_interviewsAccount->aggregate):0;
+            $refCount = ($records->userOnlineTestCount)?($records->userOnlineTestCount->aggregate):0;
             if ($refCount > 0) {
                 $viewRef = '<span class = "ml-1">Complete-<u><span><a class="pointer text-success " 
-                href="'.route('completedInterviews',['id'=>$records->id]).'" target="_blank" >View</a>';
+                href="'.route('completedOnlineTests',['id'=>$records->id]).'" target="_blank" >View</a>';
                 $refHtml = '<span class = "text-success "> '.$refCount.' '.$viewRef.' </u></span>';
+
+
+                // $userOnlineTestCount = ($records->userOnlineTestCount)?($records->userOnlineTestCount->aggregate):0;
+                // dd($userOnlineTestCount);
+                
                 return $refHtml;
             }
             else{
@@ -1313,6 +1293,26 @@ class UserController extends Controller
 
         }})
 
+        ->addColumn('interviews', function ($records) {
+        if (isAdmin()){
+            $refCount = ($records->user_interviewsAccount)?($records->user_interviewsAccount->aggregate):0;
+            if ($refCount > 0) {
+                $viewRef = '<span class = "ml-1">Complete-<u><span><a class="pointer text-success " 
+                href="'.route('completedInterviews',['id'=>$records->id]).'" target="_blank" >View</a>';
+                $refHtml = '<span class = "text-success "> '.$refCount.' '.$viewRef.' </u></span>';
+
+
+                // $userOnlineTestCount = ($records->userOnlineTestCount)?($records->userOnlineTestCount->aggregate):0;
+                // dd($userOnlineTestCount);
+
+                return $refHtml;
+            }
+            else{
+                $nan = '<span class = "text-danger"> None Available </span>';
+                return $nan;
+            }
+
+        }})
 
         ->addColumn('notes', function ($records) {
             if (isAdmin()){
@@ -1336,6 +1336,14 @@ class UserController extends Controller
                 }
             }})
 
+
+
+        /*->addColumn('action', function ($records) {
+        if (isAdmin()){
+            $rhtml = '<a > <i class ="far fa-trash-alt btn btn-danger btn-sm deleteCandidate" data-id= "'.$records->id.'"> </i> </a>';
+            return $rhtml;
+        }})*/
+
         // ->addColumn('resume', function ($records) {
         // if (isAdmin()){
         //     $rhtml = '<button type="button" class="btn btn-primary btn-sm btnUserResumeInfo" user-id='. $records->id.' >Info</button>';
@@ -1343,7 +1351,7 @@ class UserController extends Controller
         // }})
 
       ->removeColumn('verified')
-      ->rawColumns(['profile','select_job','job_status','ref_check','interviews', 'notes' ,'action'])
+      ->rawColumns(['profile','select_job','job_status','ref_check', 'tests', 'interviews', 'notes'])
       ->toJson();
     }
 
@@ -1358,7 +1366,7 @@ class UserController extends Controller
     $data['filter_status'] = 'verified';
     // $data['jobStatusArray'] = jobStatusArray();        
     return view('admin.candidate_tracking.add_candidate', $data);
-    // admin/candidate_tracking/list
+    // admin/candidate_tracking/add_candidate
   }
 
     // =================================================== Get Job Application for admin iteration-8 ===================================================
@@ -1405,16 +1413,20 @@ class UserController extends Controller
 
     }
 
-    // =================================================== Remove candidate from tracker admin iteration-8 ===================================================
+    // =================================================== Remove candidate from tracker admin iteration-9 ===================================================
 
     public function removefromTracker(Request $request){
-
-        $user = User::where('id' , $request->id)->first();
-        // dd($user->tracker);
-        if (isAdmin()) {
-            $user->tracker = 0;
-            $user->save();
+        $data = $request->toArray();
+        foreach ($data['cbx'] as $key => $value) {
+            $user = User::where('id' , $value)->first();
+            if (isAdmin()) {
+                $user->tracker = 0;
+                $user->save();
+            }
         }
+        // return redirect()->route('trackUsers');
+        return redirect(route('trackUsers'))->withSuccess( __('Users removed from tracker successfully'));
+
     }
 
     // =================================================== Add Note admin iteration-8 ===================================================

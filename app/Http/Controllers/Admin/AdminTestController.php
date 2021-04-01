@@ -11,6 +11,10 @@ use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\OnlineTest;
 use App\TestQuestion;
+use App\InterviewTemplate;
+
+use App\UserOnlineTest;
+
 
 class AdminTestController extends Controller
 {
@@ -91,7 +95,7 @@ class AdminTestController extends Controller
         $name = $data['time'];
         $test = new OnlineTest();
         $test->name = $data['name'];
-        $test->time = $data['time'];
+        $test->time = $data['time'] . ':00';
         $test->save();
         foreach ($data['question'] as $key => $question) {
             $testQuestions = new TestQuestion;
@@ -300,10 +304,8 @@ class AdminTestController extends Controller
                 $img->stream();
                 Storage::disk('publicMedia')->put($file_path, $img, 'public');
                 // dd($fileName);
-
                 $testQuestion->image_name = $fileName;
                 $testQuestion->image_path = $file_path;
-    
 
                 // =========================================================== For uploading image ===========================================================
             }
@@ -314,9 +316,100 @@ class AdminTestController extends Controller
         }
                 
                       
-        return redirect(route('onlinetest'))->withSuccess( __('admin.record_aupdated_successfully'));
+        return redirect(route('onlinetest'))->withSuccess( __('admin.record_updated_successfully'));
  
     }
+
+
+    // ============================================================ Bulk testing ============================================================
+
+    public function bulkTesting(Request $request){
+        $data = $request->toArray();
+        $user_ids = array();
+        foreach ($data['cbx'] as $key => $value) {
+            array_push($user_ids, $value);
+        }
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Bulk Testing';
+        $data['content_header'] = 'Bulk Testing';
+        $data['classes_body'] = 'Bulk Testing';
+        $data['record'] = null;
+        $data['user_ids'] = $user_ids;
+        $onlineTestTemplate = OnlineTest::get();
+        $data['onlineTestTemplate'] = $onlineTestTemplate;
+        $data['jobSeekers'] = User::whereIn('id',$user_ids)->get();
+        return view('admin.candidate_tracking.bulkTesting.bulk_Testing', $data);
+        // admin/candidate_tracking/bulkTesting/bulk_Testing
+
+    }
+
+
+    // ============================================================ Bulk Interview Template ============================================================
+
+    public function bulkTestView(Request $request){
+    // dd($request->toArray());
+    $user = Auth::user();
+    if (!isEmployer($user) && (!isAdmin())){ return redirect(route('profile')); }
+    if ($request->templateSelect != 0) {
+        $onlineTestTemplate = OnlineTest::where('id',$request->templateSelect)->first();
+        if (!empty($onlineTestTemplate)) {
+        // dd($onlineTestTemplate->id);
+        $data['onlineTestTemplate'] = $onlineTestTemplate;
+        // $data['InterviewTempQuestion'] = $InterviewTempQuestion;
+            if (isAdmin()) {
+                return view('admin.candidate_tracking.bulkTesting.bulk_TestingTemplate' , $data); 
+                // admin/candidate_tracking/bulkTesting/bulk_TestingTemplate
+
+            }
+            else{
+
+                return false;
+
+            }
+        }
+    }
+    else{
+        return false;
+    }
+    
+
+}
+
+
+// ============================================================ Bulk interview send ============================================================
+
+    public function bulkTestSend(Request $request){
+
+        $user = Auth::user();
+
+        $data = $request->toArray();
+        // dd($data);
+        foreach ($data['user'] as $key => $value) {
+            $OnlineTest = OnlineTest::where('id' , $data['test_id'])->first();
+            $UserOnlineTest = new UserOnlineTest;
+            $UserOnlineTest->user_id = $value;
+            $UserOnlineTest->emp_id = $user->id;
+            $UserOnlineTest->test_id = $data['test_id'];
+            $UserOnlineTest->status = 'pending';
+            $UserOnlineTest->rem_time = $OnlineTest->time;
+            $UserOnlineTest->current_qid = 0;
+            $UserOnlineTest->save();     
+        }
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Online Test Sent Successfully'
+        ]); 
+
+    }
+
+
+
+
+
+
+
 
 
 

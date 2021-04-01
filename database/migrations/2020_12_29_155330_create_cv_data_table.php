@@ -15,9 +15,9 @@ class CreateCvDataTable extends Migration
     {
         Schema::create('cv_data', function (Blueprint $table) {
             $table->id();
-            $table->integer('jobseekerId');
+            $table->integer('user_id');
             $table->string('jsname');
-            $table->string('cvData');
+            $table->string('data_text');
             $table->timestamps();
         });
     }

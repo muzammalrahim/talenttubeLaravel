@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers\Site;
 
-// use PhpOffice\PhpWord\PhpWord;
-
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -33,6 +31,8 @@ use App\Interviews_booking;
 use App\ControlSession;
 use App\Notes;
 use App\History;
+use App\OnlineTest;
+use App\UserOnlineTest;
 use Jenssegers\Agent\Agent;
 use PDFMerger;
 use Spatie\PdfToText\Pdf;
@@ -111,7 +111,7 @@ class SiteUserController extends Controller
             $data['industriesList'] = getIndustries();
             $data['userquestion'] = getUserRegisterQuestions();
             $data['empquestion'] = getEmpRegisterQuestions();
-
+ 
             $ip = $request->ip();
             // dd($ip);
             $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
@@ -1572,7 +1572,7 @@ class SiteUserController extends Controller
     public function uploadVideo(Request $request){
 
         $user = Auth::user();
-								$video = $request->file('video');
+        $video = $request->file('video');
         // $rules = array('video.*' => 'required|file|max:20000');
         $rules = array('video' => 'required|file|max:50000');
         // $rules = array('video.*' => 'required|file|max:2');
@@ -1729,7 +1729,16 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         // $data['title'] = 'Jobs';
         // $data['classes_body'] = 'jobs';
-        $data['job'] = Jobs::with('questions')->find($job_id);
+        $job = Jobs::with('questions')->find($job_id);
+        $data['job'] = $job;
+
+        if ($job->onlineTest_id != null) {
+            $onlineTest = $job->onlineTest;
+            $data['onlineTest'] = $onlineTest;
+            $duration = $onlineTest->time;
+            $data['duration'] = $duration;
+
+        }
         // dd( $data['job']  );
         // dd( $data['job']->questions()->count() );
         return view('site.jobs.applyInfo', $data);
@@ -1740,7 +1749,7 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     // Ajax POST // Job Apply Submitted.
     //====================================================================================================================================//
-    public function jobApplySubmit(Request $request){
+    public function jobApplySubmit(Request $request){ 
         $user = Auth::user();
         $requestData = $request->all();
         // dd($requestData);
@@ -1786,7 +1795,19 @@ class SiteUserController extends Controller
             $newJobApplication->description = $request->application_description;
             // $newJobApplication->questions = ($job->questions)?(json_encode($job->questions)):'';
             // $newJobApplication->answers  = isset($requestData['applyAnswer'])?(json_encode($requestData['applyAnswer'])):'';
+
+
             $newJobApplication->save();
+
+            // =============================================== For useronlineTest  ===============================================
+            $UserOnlineTest = UserOnlineTest::where('user_id', $user->id)->where('job_id' , $job->id)->first();
+            // dd($newJobApplication->id);
+            if (isset($UserOnlineTest)) {
+                // dd('value exists');
+                $UserOnlineTest->jobApp_id = $newJobApplication->id;
+                $UserOnlineTest->save();
+            }
+            // =============================================== For useronlineTest end here  ===============================================
 
             $history = new History;
             $history->user_id = $user->id; 
@@ -1864,13 +1885,19 @@ class SiteUserController extends Controller
             }
 
 
-             // dd($request->toArray());
+            // dd($request->toArray());
 
-             $jobQuestion = JobsQuestions::find(164);
+            $jobQuestion = JobsQuestions::find(164);
+
+            $jobApp_id = $newJobApplication->id;
+
+
             if ($newJobApplication) {
                 return response()->json([
                     'status' => 1,
-                    'message' => 'You Job Application has been submitted succesfully'
+                    'message' => 'You Job Application has been submitted succesfully',
+                    'jobApp_id' => $jobApp_id
+
                 ]);
             }
         }
@@ -1988,7 +2015,6 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'Like Users';
         $data['classes_body'] = 'likeUsers';
-
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         $data['controlsession'] = $controlsession;
         $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
@@ -2384,6 +2410,137 @@ class SiteUserController extends Controller
             ]);
         }
     }
+
+
+    //====================================================================================================================================//
+    // Ajax POST // Job Apply Submitted with reject test .
+    //====================================================================================================================================//
+    public function rejectTest(Request $request){ 
+        $user = Auth::user();
+        $requestData = $request->all();
+        // dd($requestData);
+        $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
+        if(isset($requestData['answer']) && !empty($requestData['answer'])){
+            foreach ($requestData['answer'] as $ansK => $ansV) {
+                $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']);
+                $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
+            }
+        }
+        $job = Jobs::find($requestData['job_id']);
+        // check to confirm job with id exist
+        if ($job == null){
+            return response()->json([
+                'status' => 0,
+                'error' => 'Job with id '.$requestData['job_id'].' does not exist'
+            ]);
+        }else{
+            // check if user has not submitted application already.
+            $jobApplication = JobsApplication::where('user_id',$user->id)->where('job_id',$requestData['job_id'])->first();
+            if (!empty($jobApplication)) {
+                return response()->json([
+                    'status' => 0,
+                    'error' => 'You already submit application for this job'
+                ]);
+            }
+            if(empty($request->application_description)){
+                 return response()->json([
+                    'status' => 0,
+                    'error' => 'Please answer all mandatory question.'
+                ]);
+            }
+
+            $newJobApplication = new JobsApplication();
+            $newJobApplication->user_id = $user->id;
+            $newJobApplication->job_id = $job->id;
+            $newJobApplication->status = 'pending';
+            $newJobApplication->description = $request->application_description;
+            $newJobApplication->save();
+
+
+            // dd($job->onlineTest->time);
+            // =============================================== For useronlineTest  ===============================================
+
+
+            $UserOnlineTest = new UserOnlineTest;
+            $UserOnlineTest->user_id = $user->id;
+            $UserOnlineTest->emp_id = $job->jobEmployer->id;
+            $UserOnlineTest->jobApp_id = $newJobApplication->id;
+            $UserOnlineTest->test_id = $job->onlineTest_id;
+            $UserOnlineTest->status = 'pending';
+            $UserOnlineTest->rem_time = $job->onlineTest->time;
+            $UserOnlineTest->current_qid = 0;
+            $UserOnlineTest->test_result = 0;
+
+            $UserOnlineTest->save();
+
+            $JobsApplication = JobsApplication::where('id', $newJobApplication->id)->first();
+            
+            $JobsApplication->userOnlineTest_id = $UserOnlineTest->id;
+            $JobsApplication->save();
+
+
+            // =============================================== For useronlineTest end here  ===============================================
+
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->type = 'Job Applied'; 
+            $history->job_id = $job->id; 
+            $history->save();
+
+            // if jobApplication is succesfully added then add job answers.
+            if( $newJobApplication->id > 0 ){
+                if(isset($requestData['answer']) && !empty($requestData['answer'])){
+                    foreach ($requestData['answer'] as $ansK => $ansV) {
+                        $jobQuestion = JobsQuestions::find($ansV['question_id']);
+                        $goldstar = 0;
+                        $preffer = 0;
+                        // check if jqb question exist
+                        if(!empty($jobQuestion)){
+                        $key = array_search($ansV['option'], $jobQuestion->options);
+                        foreach ($jobQuestion->preffer as $preferQ) {
+                            if($preferQ == $key){
+                                $preffer +=1;
+                            }
+                        }
+                        foreach ($jobQuestion->goldstar as $goldstarQ) {
+                            if($goldstarQ == $key){
+                                $goldstar +=1;
+                            }
+                        }
+                            $jobAnswer              = new JobsAnswers();
+                            $jobAnswer->question_id = $ansV['question_id'];
+                            $jobAnswer->user_id     = $user->id;
+                            $jobAnswer->answer      = $ansV['option'];
+
+                            $newJobApplication->goldstar += $goldstar;
+                            $newJobApplication->preffer += $preffer;
+                            $goldstar = 0;
+                            $preffer = 0;
+                            $newJobApplication->save();
+                            $newJobApplication->answers()->save($jobAnswer);
+
+                        }
+
+                    }
+                }
+
+            }
+            $jobQuestion = JobsQuestions::find(164);
+            
+            $UserOnlineTest = $UserOnlineTest->id;
+
+            if ($newJobApplication) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'You Job Application has been submitted succesfully',
+                    'userTest_id' => $UserOnlineTest
+                ]);
+            }
+        }
+
+    }
+
+
 
 
 

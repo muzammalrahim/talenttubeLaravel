@@ -16,7 +16,6 @@ class CreateCrossreferencesTable extends Migration
         Schema::create('crossreferences', function (Blueprint $table) {
             $table->id();
             $table->integer('jobseekerId');
-            // $table->integer('jobseekerId');
             $table->string('refType');
             $table->string('userName');
             $table->string('jsIP');
@@ -46,16 +45,16 @@ class CreateCrossreferencesTable extends Migration
             $table->string('refereeProspective')->nullable();
             $table->string('refereePotentially')->nullable();
             $table->string('refereeComments')->nullable();
-
             $table->string('candidateTitle')->nullable();
             $table->string('refereeLeaving')->nullable();
-
             $table->string('ddText1')->nullable();
             $table->string('ddText2')->nullable();
             $table->string('ddText3')->nullable();
             $table->string('ddText4')->nullable();
             $table->string('ddText5')->nullable();
             $table->string('ddText6')->nullable();
+            $table->string('refereeBasedExp')->nullable();
+            
 
             // Personal Reference 
 
@@ -66,7 +65,6 @@ class CreateCrossreferencesTable extends Migration
             $table->string('refereePunctual')->nullable();
             $table->string('refereeCommunication')->nullable();
             $table->string('refereeRelatively')->nullable();
-            
             $table->string('refereeMotivation')->nullable();
 
             // Personal Reference 

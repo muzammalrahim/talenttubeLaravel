@@ -321,35 +321,33 @@ function showMap(){
      map.setZoom(12);
  }
 
- function drawCircle(location){
-     // var center = new google.maps.LatLng(19.0822507, 72.8812041);
-      // place circle.
-     var filter_location_radius =  parseInt(jQuery('select[name="filter_location_radius"]').val())*1000;
-     if (circle == "") {
-         //  var circle = new google.maps.Circle({
-         //     center: location,
-         //     map: map,
-         //     radius: filter_location_radius,          // IN METERS.
-         //
-         // });
+function drawCircle(location){
+    // var center = new google.maps.LatLng(19.0822507, 72.8812041);
+    // place circle.
+    var filter_location_radius =  parseInt(jQuery('select[name="filter_location_radius"]').val())*1000;
+    if (circle == "") {
+        //  var circle = new google.maps.Circle({
+        //     center: location,
+        //     map: map,
+        //     radius: filter_location_radius,          // IN METERS.
+        //
+        // });
+        circle = new google.maps.Circle({
+            map: map,
+            radius: filter_location_radius,    // 10 miles in metres
+            fillColor: '#FF6600',
+            fillOpacity: 0.3,
+            strokeColor: "#FFF",
+            strokeWeight: 0         // DON'T SHOW CIRCLE BORDER.
+        });
+    }
+    console.log(' circle marker ', circle);
+    circle.bindTo('center', marker, 'position');
+    circle.setRadius(filter_location_radius);
+    map.fitBounds(circle.getBounds());
+}
 
-          circle = new google.maps.Circle({
-                  map: map,
-                  radius: filter_location_radius,    // 10 miles in metres
-                  fillColor: '#FF6600',
-                  fillOpacity: 0.3,
-                  strokeColor: "#FFF",
-                  strokeWeight: 0         // DON'T SHOW CIRCLE BORDER.
-                 });
-     }
-     console.log(' circle marker ', circle);
-     circle.bindTo('center', marker, 'position');
-     circle.setRadius(filter_location_radius);
-     map.fitBounds(circle.getBounds());
-
- }
-
- function geocode(address) {
+function geocode(address) {
      // console.log('---2-- geocode ', address);
      if (geocoder) {
          geocoder.geocode({"address": address}, function(results, status) {

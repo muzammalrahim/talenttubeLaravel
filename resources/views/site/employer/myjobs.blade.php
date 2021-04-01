@@ -1,10 +1,4 @@
-{{-- @extends('site.user.usertemplate') --}}
-{{-- @if ($controlsession->count() > 0)
-<div class="adminControl">
-        <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
-</div>
 
-@endif --}}
 @extends('site.employer.employermaster')
 
 @section('custom_css')
@@ -52,34 +46,26 @@
             <div class="job_info row p10 dblock">
                 <div class="w_25p">
                     <div class="j_label bold">Job Type</div>
-                <div class="j_value">{{$jobType}}</div>
+                    <div class="j_value">{{$jobType}}</div>
                 </div>
-
-
-
 
                 <div class="w_25p">
                     <div class="j_label bold">Job Experience</div>
                     <div class="j_value">  @if(!empty($experience))
                         @foreach($experience as $industry )
                             <div class="IndustrySelect">
-
-                                  <p>
-                                    <i class="fas fa-angle-right qualifiCationBullet"></i>
-                                      {{getIndustryName($industry)}}
-                                      <i class="fa fa-trash removeIndustry hide_it"></i></p>
+                                <p><i class="fas fa-angle-right qualifiCationBullet"></i>{{getIndustryName($industry)}}
+                                      <i class="fa fa-trash removeIndustry hide_it"></i>
+                                </p>
                             </div>
                         @endforeach
                     @endif</div>
-
-
                 </div>
 
                 <div class="w_25p">
                     <div class="j_label bold">Job Salary</div>
                     <div class="j_value">{{$job->salary}}</div>
                 </div>
-
 
             </div>
 
@@ -105,9 +91,21 @@
                 </div>
 
                 <div class="w50 fl_right">
-                    <div class="j_button dinline_block fl_right m5"><a class="jobDetailBtn graybtn jbtn " href="{{route('jobDetail',['id' => $job->id])}}">Detail</a></div>
-                    <div class="j_button dinline_block fl_right m5"><a class="graybtn jbtn" href="{{route('employerJobEdit',['id' => $job->id])}}">Edit</a></div>
-                    <div class="j_button dinline_block fl_right m5"><a class="myJobDeleteBtn graybtn jbtn"  data-jobid="{{$job->id}}">Delete</a></div>
+
+                    <div class="j_button dinline_block fl_right m5">
+                        <a class="jobDetailBtn graybtn jbtn " href="{{route('jobDetail',['id' => $job->id])}}">Detail</a>
+                    </div>
+                    <div class="j_button dinline_block fl_right m5">
+                        <a class="graybtn jbtn" href="{{route('employerJobEdit',['id' => $job->id])}}">Edit</a>
+                    </div>
+                    <div class="j_button dinline_block fl_right m5">
+                        <a class="myJobDeleteBtn graybtn jbtn"  data-jobid="{{$job->id}}">Delete</a>
+                    </div>
+
+                    {{-- <div class="j_button dinline_block fl_right m5">
+                        <a class="jobDetailBtn graybtn jbtn " href="{{route('advertise',['id' => $job->id])}}">Advertising</a>
+                    </div> --}}
+
                 </div>
             </div>
 

@@ -10,13 +10,14 @@
             @endif
                 {{-- <li><a href="" onclick="Profile.showSettingsEditor(); return false;">Update</a></li> --}}
 
-    {{--===================================== Added For Iteration 4 Changing Point "18"  =====================================--}}
+                {{--===================================== Added For Iteration 4 Changing Point "18"  =====================================--}}
 
                 <li><a href="{{route('updateUserPersonalSetting')}}"><span class="jobSeekerProfileUpdate">Update</span></a></li>
 
-    {{--===================================== Added For Iteration 4 Changing Point "18"  =====================================--}}
+                {{--===================================== Added For Iteration 4 Changing Point "18"  =====================================--}}
 
                 {{-- <li><a href="./upgrade">Upgrade</a></li> --}}
+                
                 <li><a href="{{route('logout')}}"><span class = "signOutButtonHeader">Sign out</span></a></li>
 		</ul>
 	</div>

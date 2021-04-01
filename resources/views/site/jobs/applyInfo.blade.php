@@ -4,17 +4,18 @@
 <div class="p20">
     <form method="POST" name="job_apply_form" id="job_apply_form" class="job_apply_form jobApply jobApply_validation">
     @csrf
-    <div class="ja_header">
-        <h3 class="jobTitle">{{$job->title}}</h3>
-    </div>
+
+    <div class="applyData">
+
+        <div class="ja_header">
+            <h3 class="jobTitle">{{$job->title}}</h3>
+        </div>
+
     {{-- @dd( $job->questions ) --}}
     @if (!empty($job->questions))
         @php
             $questions = $job->questions;
         @endphp
-
-        {{-- @dump($questions) --}}
-
         @if (count($questions) > 0)
         <div class="ja_header"><p>Almost done, few questions before your resume is accepted for this job.</p></div>
         <div class="jobQuestions">
@@ -35,7 +36,11 @@
 
                         <select name="answer[{{$question['id']}}][option]">
                             @foreach($question->options as $option)
-                                <option value="{{$option}}">{{$option}}</option>
+
+                                @php
+                                    $remSpecialChar = str_replace("\&#39;","'",$option);
+                                @endphp
+                                <option value="{{$option}}">{{$remSpecialChar}}</option>
                             @endforeach
                         </select>
 
@@ -59,19 +64,45 @@
         </div>
     </div>
 
+    </div>
 
     <input type="hidden" name="job_id" value="{{$job->id}}" />
+
+
+    {{-- ========================================== If online test exists ========================================== --}}
+    @if (!isset($onlineTest))
+
     <div class="fomr_btn act_field center">
         <button class="btn small turquoise submitApplication" disabled>Submit</button>
     </div>
 
+    @else
+        <div class="fomr_btn act_field center submitBuutonDiv hide_it">
+        </div>
+
+    @endif
+
     </form>
+
+        {{-- ========================================== If online test exists ========================================== --}}
+    
+    @if (isset($onlineTest))
+        @include('site.jobs.onlineTest') {{-- site/jobs/onlineTest --}}
+    @endif
+
 </div>
 
 <script type="text/javascript">
   jQuery(document).ready(function(){
     $('.jobApplyform input, .jobApplyform select').styler({ selectSearch: true,});
   });
+
+
+$(document).on('click' , '.proceedTest', function(){
+
+    $('.applyData').addClass('hide_it');
+
+}); 
 </script>
 
 </div>

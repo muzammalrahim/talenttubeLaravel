@@ -7,26 +7,31 @@
     <div class="js_about js_field">
         <span class="js_label">Recent Job:</span>
         <span class="js_about_me"> {{$js->recentJob}}</span>
+
+        @if ($application->userOnlineTests ->count() > 0 )
+            @foreach ($application->userOnlineTests as $test)
+                <span class="fl_right"> Test Result: <b> {{$test->test_result}} </b> </span>
+            @endforeach
+        @else
+            <span class="fl_right"> No Test attempted </span>
+
+        @endif
+
     </div>
 
     <div class="js_education js_field">
         <span class="js_label">Qualification:</span>
-
-        {{-- @dump($js->qualificationType) --}}
         @php
          $qualification_names =  getQualificationNames($js->qualification)
         @endphp
-
         @if(!empty($qualification_names))
-
         <div class="font13"><i class="fas fa-angle-right qualifiCationBullet"></i>
             Type:<span class="qualifTypeSpan">{{$js->qualificationType}}</span>
         </div>
         @foreach ($qualification_names as $qnKey => $qnValue)
-               {{-- <span class="qualification dblock">{{$js->qualificationType}}</span> --}}
                <p class="qualification"> <i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qnValue}}</p>
-            @endforeach
-         @endif
+        @endforeach
+        @endif
     </div>
 
     <div class="js_about js_field">

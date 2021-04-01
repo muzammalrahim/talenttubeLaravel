@@ -191,4 +191,23 @@ class JobsApplication extends Model{
             return $applications;
     }
 
+
+    //=========================================================================
+    // iteration-9 relation with user's online test
+    //=========================================================================
+
+    public function userOnlineTests(){
+        return $this->hasMany('App\UserOnlineTest', 'jobApp_id');
+    }
+
+    public function userstestAndStatus(){
+        $id = $this->id;
+        // $user_id = $this->user_id;
+        // dd($user_id);
+        return $this->belongsTo(UserOnlineTest::class, $id);
+
+        // return $this->belongsTo('App\UserOnlineTest', $user_id)->where('jobApp_id' , $id)->first();
+    }
+
+
 }

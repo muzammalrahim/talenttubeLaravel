@@ -15,10 +15,14 @@ class CreateUserInterviewsTable extends Migration
     {
         Schema::create('user_interviews', function (Blueprint $table) {
             $table->id();
-            $table->integer('temp_id');
             $table->integer('user_id');
             $table->integer('emp_id');
+            $table->integer('temp_id');
+            $table->string('url');
             $table->string('status');
+            $table->string('hide');
+            $table->integer('jobApp_id');
+            $table->string('interview_type');
             $table->timestamps();
         });
     }

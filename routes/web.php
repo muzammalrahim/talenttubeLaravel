@@ -278,7 +278,7 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('users/tracker/addCandidate', 'Admin\UserController@addCandidate')->name('addCandidate');
     Route::get('candidates/getList', 'Admin\UserController@addCandidateDatatable')->name('addCandidateDatatable.dataTable');
     Route::post('candidates/addToTracker', 'Admin\UserController@addToTracker')->name('users.addToTracker');
-    Route::post('candidates/removeTracker', 'Admin\UserController@removefromTracker')->name('users.removeTracker');
+    Route::get('ajax/bulk/removeTracker', 'Admin\UserController@removefromTracker')->name('users.removeTracker');
     Route::post('note/addUsersNote', 'Admin\UserController@addUsersNote')->name('users.addUsersNote');
     Route::post('note/updateNote', 'Admin\UserController@updateNote')->name('users.updateNote');
 
@@ -319,8 +319,15 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('onlineTest/edit/{id}', 'Admin\AdminTestController@onlineTestEdit')->name('onlineTestEdit');
     Route::post('ajax/onlineTest/question/delete', 'Admin\AdminTestController@testQuestionDelete')->name('testQuestionDelete');
     Route::post('ajax/onlineTest/addQuestion', 'Admin\AdminTestController@addOnlineTestQuestion')->name('addOnlineTestQuestion');
-
     Route::post('onlineTest/update/{id}', 'Admin\AdminTestController@onlineTestUpdate')->name('onlineTest.update');
+    Route::get('bulk/bulkTesting', 'Admin\AdminTestController@bulkTesting')->name('bulk.bulkTesting');
+    Route::post('ajax/online/bulkTest','Admin\AdminTestController@bulkTestView')->name('bulkTestView');
+    Route::post('ajax/online/bulkTest/send', 'Admin\AdminTestController@bulkTestSend')->name('bulkTestView.send');
+
+
+
+
+
 
 
 
@@ -557,8 +564,6 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('crossreference.user','Site\ReferenceController@crossreferenceIndex')->name('crossreference.user');
     Route::post('ajax/crossReference/sendEmailReferee','Site\ReferenceController@sendEmailReferee')->name('sendEmailReferee');
 
-    // =============================================== Cross Reference =============================================== 
-
     // =============================================== Save Notes as Admin ===============================================  
     
     Route::post('ajax/saveNote','Site\SiteUserController@saveNote')->name('saveNote');
@@ -567,6 +572,25 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     // =============================================== Completed Interview as Admin iteration-8  =============================================== 
 
     Route::get('completed/interviews/{id}', 'Site\InterviewController@completedInterviews')->name('completedInterviews');
+
+    // =============================================== Advertise job iteration-9  =============================================== 
+
+    Route::get('advertise/job/{id}', 'Site\EmployerController@advertiseJob')->name('advertise');
+    Route::post('ajax/sendOnlineTest/', 'Site\OnlineTestController@sendOnlineTest')->name('sendOnlineTest');
+    Route::get('testing', 'Site\OnlineTestController@testing')->name('testing');
+    Route::get('proceed/test/{id}', 'Site\OnlineTestController@proceedTesting')->name('proceedTesting');
+    Route::post('ajax/saveQuestion/nextQuestion/{time}', 'Site\OnlineTestController@SaveandNextQuestion')->name('nextQuestion');
+    Route::post('ajax/saveQuestion/result/{time}', 'Site\OnlineTestController@saveTestAndResult')->name('saveTestAndResult');
+    Route::get('ajax/jobApplication/proceed/{id}', 'Site\OnlineTestController@jobAppProceedTest')->name('jobAppProceedTest');
+    Route::get('completed/onlineTests/{id}', 'Site\OnlineTestController@completedOnlineTests')->name('completedOnlineTests');
+
+    Route::post('ajax/reject/test', 'Site\SiteUserController@rejectTest')->name('rejectTest');
+
+
+
+
+
+
 
 
 

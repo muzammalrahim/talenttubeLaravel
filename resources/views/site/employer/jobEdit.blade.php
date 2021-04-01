@@ -171,9 +171,11 @@
                                 @foreach ($question['options'] as $key=>$option)
                                 @php
                                 $checked = '';
+
+                                $remSpecialChar = str_replace("\&#39;","'",$option);
                                 @endphp
                                  <div class="option">
-                                 <input type="text" name="jq[{{$keyq}}][option][{{$key}}][text]" value="{{$option}}" />
+                                 <input type="text" name="jq[{{$keyq}}][option][{{$key}}][text]" value="{{$remSpecialChar}}" />
                                                 {{-- @dd($question) --}}
                                             <div class="jq_option_cbx">
                                                 @if (!empty($question['preffer']) && count($question['preffer']) > 0)
@@ -608,84 +610,25 @@ div.questionsOfUser>div>p {
 /*span.addIndus.btn.btn-primary.hide_it {
     margin: 25px 0px 5px 0px;
 }*/
-.questionsAlert{
-    display: none;
-}
-.SaveIndustryLoader{
-    font-size: 20px;
-}
-.hide2{
-    display: none;
-}
-select.jobSeekerRegQuestion {
-    width: auto;
-    cursor: pointer;
-}
-div.smallSpinner.SaveQuestionsSpinner>.spinner.center {
-    font-size: 20px;
-    margin: 5px 0px 0px 10px;
-}
-div.IndusList>div.IndustrySelect>select {
-    width: 40%;
-    display: inline-block;
-}
-i.fa.fa-trash.removeIndustry {
-    margin-top: 7px;
-}
-
-.rounded{
-    /*border-top: 3px solid #bbb;*/
-    border-top: 3px solid #142d69;
-
-    border-radius: 3px;
-}
-.lineDivivder {
-   width: 100%;
-   text-align: center;
-   border-bottom: 1px solid #000;
-   line-height: 0.1em;
-   margin: 10px 0 20px;
-}
-
-.lineDivivder span {
-    background:#f3f5f9;
-    padding:0 10px;
-}
-
-span.addTags.btn.btn-primary
-{
-    display: block;
-    margin-top: 15px;
-}
-div.col_left>div>div#basic {
-    margin-bottom: 13px;
-}
-.userTag {
-    margin-bottom: 7px;
-}
-select.userTags.userTagsSelect {
-    width: 45%;
-    display: inline-block;
-}
-
-.tab_photos>.col_left {
-    float: none !important;
-}
-.savebuttonUsertags{
-    text-align: center;
-    margin-top:10px
-}
-.jobSeekerProfileUpdate,.signOutButtonHeader{
-    color: white !important;
-}
-
-
-
+.questionsAlert{display: none;}
+.SaveIndustryLoader{font-size: 20px;}
+.hide2{display: none;}
+select.jobSeekerRegQuestion {width: auto;cursor: pointer;}
+div.smallSpinner.SaveQuestionsSpinner>.spinner.center {font-size: 20px;margin: 5px 0px 0px 10px;}
+div.IndusList>div.IndustrySelect>select {width: 40%;display: inline-block;}
+i.fa.fa-trash.removeIndustry {margin-top: 7px;}
+.rounded{border-top: 3px solid #142d69;border-radius: 3px;}
+.lineDivivder {width: 100%;text-align: center;border-bottom: 1px solid #000;line-height: 0.1em;margin: 10px 0 20px;}
+.lineDivivder span {background:#f3f5f9;padding:0 10px;}
+span.addTags.btn.btn-primary{display: block;margin-top: 15px;}
+div.col_left>div>div#basic {margin-bottom: 13px;}
+.userTag {margin-bottom: 7px;}
+select.userTags.userTagsSelect {width: 45%;display: inline-block;}
+.tab_photos>.col_left {float: none !important;}
+.savebuttonUsertags{text-align: center;margin-top:10px}
+.jobSeekerProfileUpdate,.signOutButtonHeader{color: white !important;}
 /*===================================================== Save Resume ===========================================*/
-
-button.btn.violet.save-resume-btn.valign-top {
-    margin-bottom: 23px;
-}
+button.btn.violet.save-resume-btn.valign-top {margin-bottom: 23px;}
 
 /*===================================================== Image Sizing ===========================================*/
 /*.tabs_profile .tab_photos img.photo {
@@ -696,42 +639,15 @@ button.btn.violet.save-resume-btn.valign-top {
 }*/
 
 /*===================================================== Make Profile Icon ===========================================*/
-span.icon_image_profile {
-    bottom: 42px;
-    right: 5px;
-}
-
-
-div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{
-    position: unset !important;
-}
-
-.jq-selectbox__search {
-    display: none;
-}
-.qualifiCationBullet {
-    margin-right: 10px;
-}
-.qualifType{
-    /*margin-left: 10px;*/
-    font-size: 16px;
-}
-.qualifTypeSpan{
-    text-transform: capitalize;
-    font-weight: bold;
-}
-
-.QuestionsKeyPTag{
-    padding: 0px;
-}
-.jq-selectbox__dropdown.drop_down {
-    width: 100% !important;
-}
-hr.rounded {
-    margin: 20px 0px 20px 0px;
-}
-
-
+span.icon_image_profile {bottom: 42px;right: 5px;}
+div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{position: unset !important;}
+.jq-selectbox__search {display: none;}
+.qualifiCationBullet {margin-right: 10px;}
+.qualifType{font-size: 16px;}
+.qualifTypeSpan{text-transform: capitalize;font-weight: bold;}
+.QuestionsKeyPTag{padding: 0px;}
+.jq-selectbox__dropdown.drop_down {width: 100% !important;}
+hr.rounded {margin: 20px 0px 20px 0px;}
 .saveIndus,.saveQualification{
     background: #28a745;
     text-align: center;

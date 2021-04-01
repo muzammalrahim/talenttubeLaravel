@@ -5,7 +5,7 @@
 @section('content_header')
 
 <div class="block row">
-    <div class="col-md-2"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
+    <div class="col-md-4"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
 
     {{-- testing --}}
 

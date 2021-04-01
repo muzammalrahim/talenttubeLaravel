@@ -20,8 +20,7 @@
                 <input type="hidden" name="" class="useremailInPopup">
                 <input type="hidden" name="" class="posNamePopup">
 
-              <div class="center deleteSlotDiv">  <button id="deleteSlot_confirm" type="submit" class="btn pink">Yes</button>
-              </div>
+              <div class="center deleteSlotDiv">  <button id="deleteSlot_confirm" type="submit" class="btn pink">Yes</button></div>
             {{-- </form> --}}
             
         </div>

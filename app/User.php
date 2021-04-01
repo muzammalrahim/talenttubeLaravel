@@ -383,5 +383,13 @@ class User extends Authenticatable
     }
 
 
+    // =================================== User Online Tests iteration-9  ===================================
+    public function userOnlineTestCount()
+    {
+        return $this->hasOne(UserOnlineTest::class, 'user_id')->where('status', 'complete' )->selectRaw('user_id, count(*) as aggregate')->groupBy('user_id');
+        
+    }
+
+
 
 }

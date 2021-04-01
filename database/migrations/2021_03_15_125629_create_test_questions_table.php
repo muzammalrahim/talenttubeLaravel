@@ -22,6 +22,8 @@ class CreateTestQuestionsTable extends Migration
             $table->string('option3');
             $table->string('option4');
             $table->string('answer');
+            $table->string('image_name');
+            $table->string('image_path');
             $table->timestamps();
         });
     }

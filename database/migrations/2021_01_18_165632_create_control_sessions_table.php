@@ -14,10 +14,10 @@ class CreateControlSessionsTable extends Migration
     public function up()
     {   
 
-        
         Schema::create('control_sessions', function (Blueprint $table) {
             $table->id('id');
             $table->integer('user_id');
+            $table->integer('admin_id');
             $table->string('ip_address');
             $table->string('mac_address');
             $table->timestamps();

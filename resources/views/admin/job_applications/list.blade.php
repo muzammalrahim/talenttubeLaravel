@@ -116,6 +116,7 @@
             <th>goldstar</th>
             {{-- <th>undesirable</th> --}}
             <th>correspondance</th>
+            <th>Test</th>
             <th>interview</th>
             <th>action</th>
         </tr>
@@ -496,6 +497,7 @@ $(document).on('click','.btnBulkStatus', function(){
             { data: 'goldstar', name: 'goldstar' },
             // { data: 'preffer', name: 'preffer' },
             { data: 'correspondance', name: 'correspondance' },
+            { data: 'test', name: 'test' },
             { data: 'interview', name: 'interview'},
             { data: 'action', name: 'action'},
         ],

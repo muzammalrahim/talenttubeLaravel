@@ -802,6 +802,33 @@ class AdminJobsController extends Controller
         }})
 
 
+      ->addColumn('test', function ($records) {
+        if (isAdmin()){
+            $UserInterview = $records->userOnlineTests;
+            // dump($UserInterview);
+            if ($UserInterview  != null) {
+              // foreach ($UserInterview as $userInt) {
+                // $interviewCount = $userInt->status;
+                // if ($interviewCount == 'Interview Confirmed') {
+
+                  $rhtml =  $UserInterview->test_result;
+                  return $rhtml;
+
+                // }
+                // else  {
+                //   return 'Sent';
+                  
+                // }
+
+              // }
+            }
+            else{
+                $nan = '<span class = "text-danger"> None Available </span>';
+                return $nan;
+            }
+        }})
+
+
       ->addColumn('interview', function ($records) {
         if (isAdmin()){
             $rhtml = '<a class="btn btn-primary btn-sm far fa-edit" href="'.route('jobseekerInterviews',
@@ -817,7 +844,7 @@ class AdminJobsController extends Controller
       })
 
 
-      ->rawColumns(['profile', 'correspondance' ,'interview', 'action'])
+      ->rawColumns(['profile', 'correspondance', 'test' ,'interview', 'action'])
       ->toJson();
     }
 

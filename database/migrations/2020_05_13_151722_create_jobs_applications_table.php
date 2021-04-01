@@ -25,6 +25,10 @@ class CreateJobsApplicationsTable extends Migration
             $table->unsignedbigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->string('userOnlineTest_id');
+
+            
+
             $table->timestamps();
         });
     }

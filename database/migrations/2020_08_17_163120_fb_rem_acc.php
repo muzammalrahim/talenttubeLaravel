@@ -22,6 +22,8 @@ class FbRemAcc extends Migration
             $table->string('statusText')->nullable();
             $table->string('company')->nullable();
             $table->string('recentJob')->nullable();
+            $table->timestamps();
+            
         });
     }
 
