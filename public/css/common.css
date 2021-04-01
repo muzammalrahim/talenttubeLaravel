@@ -9,6 +9,7 @@
 .dtable{ display: table; }
 .dinline_block{ display: inline-block; }
 .d-contents{display: contents}
+.dflex{display: flex}
 .hide_it { display: none !important; }
 .hide_it2 { display: none ; } /* Removed !important */
 .not_visible { visibility: hidden !important; opacity: 0 !important; }
@@ -57,6 +58,7 @@
 .text_capital{text-transform: capitalize; }
 .relative{ position: relative;}
 .font13{font-size: 13px}
+.text-danger{color: #bd2130}
 button.btn.pink:hover {
     background: #e7495c;
     color: #FFFFFF;
@@ -332,3 +334,4 @@ body.register.step2>div.jquery-modal.blocker.current>div#jobApplyModal {
     transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
 
 .custom-btn:hover {background-color: #218838;border-color: #1e7e34;}
+.w800px{width: 800px;}

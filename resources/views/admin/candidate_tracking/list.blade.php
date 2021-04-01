@@ -7,16 +7,15 @@
 <div class="block row">
     <div class="col-md-2"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
 
-     <div class="block row col-md-10 text-white">
-
-
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
-      <div class="col-md-1.5 bulkButton"><a  class="btn btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary addCondidate" href="{{ route('addCandidate') }}" >Add Candidate</a></div>
-      {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
+    <div class="block row col-md-10 text-white">
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
+      <div class="col-md-1.5 bulkButton"><a  class="btn btn-sm btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary addCondidate" href="{{ route('addCandidate') }}" >Add Candidate</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary" onclick="bulkremoveButton()" >Bulk Remove</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary" onclick="bulkTestingButton()" >Bulk Testing</a></div>
     </div>
     {{-- testing --}}
 
@@ -51,9 +50,10 @@
             <th>Select Job</th>
             <th>Job Status</th>
             <th>Ref Check</th>
+            <th>Tests</th>
             <th>Interviews</th>
             <th>Admin's Notes</th>
-            <th>action</th>
+            {{-- <th>action</th> --}}
 
         </tr>
     </thead>
@@ -260,20 +260,40 @@
   </div>
 </div>
 
+
+{{-- ======================================================= Bulk remove from tracker ======================================================= --}}
+
+<div class="d-none">
+  <form method="GET" class="bulkRemoveUser" action="{{ route('users.removeTracker') }}">
+      @csrf
+    <div class="cbx_list">
+      </div>
+  </form>
+</div>
+
+{{-- ======================================================= Bulk testing  ======================================================= --}}
+
+<div class="d-none">
+  <form method="GET" class="bulkTesting" action="{{ route('bulk.bulkTesting') }}">
+      @csrf
+    <div class="cbx_list">
+      </div>
+  </form>
+</div>
+
 @stop
 
 
 @section('css')
 <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
 <style type="text/css">
-    .modal.showProcessing  .modalContentUser{ display: none;  }
-    .modal.showProcessing  .modelProcessingUser{ display: block !important; }
-    #delConfirmIdUser{ color:red; }
-    td{ text-align: center; }
-
- .bulkButton {margin-left: 7px;}
-.disableClick{pointer-events: none;}
-.adminNote{bottom: 12px;right: 3px;cursor: pointer;display: flex;position: relative;float: right;color: #dc3545;}
+  .modal.showProcessing  .modalContentUser{ display: none;  }
+  .modal.showProcessing  .modelProcessingUser{ display: block !important; }
+  #delConfirmIdUser{ color:red; }
+  td{ text-align: center; }
+  .bulkButton {margin-left: 7px;}
+  .disableClick{pointer-events: none;}
+  .adminNote{bottom: 12px;right: 3px;cursor: pointer;display: flex;position: relative;float: right;color: #dc3545;}
 
 </style>
 @stop
@@ -291,28 +311,29 @@
 </script>
 <script>
 
-function nextTabQuestion(jobPopId) {
-        console.log(jobPopId);
-        // $('#jobslist').hide();
-        // $('#question').tab('show');
-        $('#jobslist').removeClass("active");
-        $('#jobslist').addClass('fade');
-        $('#question').removeClass("fade");
-        $('#question').addClass('active');
-        // $('#jobslist').hide();
-        // $('#question').tab('show');
-        $('#jobslist-tab').removeClass("active");
-        $('#question-tab').addClass('active');
-        $.ajax({
-        type: 'GET',
-            url: base_url+'/admin/ajax/jobApplyInfoa/'+ jobPopId,
-            success: function(data){
-                console.log("apply for job call");
-                $('.modalcontent1').html(data);
-                // $('#modalJobApply').modal('hide');
 
-            }
-        });
+function nextTabQuestion(jobPopId) {
+  console.log(jobPopId);
+  // $('#jobslist').hide();
+  // $('#question').tab('show');
+  $('#jobslist').removeClass("active");
+  $('#jobslist').addClass('fade');
+  $('#question').removeClass("fade");
+  $('#question').addClass('active');
+  // $('#jobslist').hide();
+  // $('#question').tab('show');
+  $('#jobslist-tab').removeClass("active");
+  $('#question-tab').addClass('active');
+  $.ajax({
+  type: 'GET',
+      url: base_url+'/admin/ajax/jobApplyInfoa/'+ jobPopId,
+      success: function(data){
+          console.log("apply for job call");
+          $('.modalcontent1').html(data);
+          // $('#modalJobApply').modal('hide');
+
+      }
+  });
 }
 
 // $('.submitApplication').click(function(){
@@ -348,57 +369,58 @@ function nextTabQuestion(jobPopId) {
 // =================================================== iteration-8 datatable ===================================================
 
 jQuery(function() {
-    var table = jQuery('#dataTable').DataTable({
-        processing: true,
-        serverSide: true,
-        ajax: {
-          url: '{!! route('tracker.dataTable') !!}',
-          data: function (d) {
-                d.status = $('.filter_status').val()
-            }
-        },
-        // ajax: '{!! route('users.dataTable') !!}',
-        // data: function (d) {
-        //         d.status = $('.filter_status').val(),
-        // },
-        columns: [
-            // { data: 'select', name: 'select' },
-            { data: 'id', name: 'id' },
-            { data: 'name', name: 'name' },
-            // { data: 'city', name: 'city' },
-            { data: 'email', name: 'email' },
-            { data: 'phone', name: 'phone' },
-            // { data: 'created_at', name: 'created_at' },
-            { data: 'profile', name: 'profile' },
-            { data: 'select_job', name: 'select_job' },
-            { data: 'job_status', name: 'job_status' },
-            { data: 'ref_check', name: 'ref_check' },
-            { data: 'interviews', name: 'interviews' },
-            { data: 'notes', name: 'notes' },
-            { data: 'action', name: 'action' }
-        ],
-     columnDefs: [
-        {
-         'targets': 0,
-         'searchable':false,
-         'orderable':false,
-         'className': 'dt-body-center',
-         'render': function (data, type, full, meta){
-             return '<input type="checkbox" name="cbx[]" value="'+ $('<div/>').text(data).html() + '">';             
-         }
-
-        },
-        {className: "ob_balance",targets: [8]}
+  var table = jQuery('#dataTable').DataTable({
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: '{!! route('tracker.dataTable') !!}',
+        data: function (d) {
+              d.status = $('.filter_status').val()
+          }
+      },
+      // ajax: '{!! route('users.dataTable') !!}',
+      // data: function (d) {
+      //         d.status = $('.filter_status').val(),
+      // },
+      columns: [
+          // { data: 'select', name: 'select' },
+          { data: 'id', name: 'id' },
+          { data: 'name', name: 'name' },
+          // { data: 'city', name: 'city' },
+          { data: 'email', name: 'email' },
+          { data: 'phone', name: 'phone' },
+          // { data: 'created_at', name: 'created_at' },
+          { data: 'profile', name: 'profile' },
+          { data: 'select_job', name: 'select_job' },
+          { data: 'job_status', name: 'job_status' },
+          { data: 'ref_check', name: 'ref_check' },
+          { data: 'tests', name: 'tests' },
+          { data: 'interviews', name: 'interviews' },
+          { data: 'notes', name: 'notes' },
+          // { data: 'action', name: 'action' }
       ],
-    });
+   columnDefs: [
+      {
+       'targets': 0,
+       'searchable':false,
+       'orderable':false,
+       'className': 'dt-body-center',
+       'render': function (data, type, full, meta){
+           return '<input type="checkbox" name="cbx[]" value="'+ $('<div/>').text(data).html() + '">';             
+       }
+
+      },
+      {className: "ob_balance",targets: [8]}
+    ],
+  });
 
 
-   $('.filter_status').on('change', function(){
-      var filter_status = $(this).val();
-      // console.log('filter_status ', filter_status);
-      var newpath = '{!! route('users') !!}/'+filter_status;
-      window.location.href = newpath;
-   });
+$('.filter_status').on('change', function(){
+  var filter_status = $(this).val();
+  // console.log('filter_status ', filter_status);
+  var newpath = '{!! route('users') !!}/'+filter_status;
+  window.location.href = newpath;
+});
 
 
 
@@ -427,21 +449,21 @@ jQuery(function() {
 
 
 
-    // =============================================== iteration-8 Get job of JobSeeker Modal ===============================================
+// =============================================== iteration-8 Get job of JobSeeker Modal ===============================================
 
-    $(document).on('click', '.userJobsModal', function(){
-      var id = $(this).attr('user_id');
-      $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-      $.ajax({
-        type: 'GET',
-        url: '{!! route('users.getJobs') !!}',
-        data: {'id': id},
-        success: function(data) {
-          // console.log(' data ', data);
-          $('.applyJobModalHeader').html(data);
-        }
-      });
-    });
+$(document).on('click', '.userJobsModal', function(){
+  var id = $(this).attr('user_id');
+  $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+  $.ajax({
+    type: 'GET',
+    url: '{!! route('users.getJobs') !!}',
+    data: {'id': id},
+    success: function(data) {
+      // console.log(' data ', data);
+      $('.applyJobModalHeader').html(data);
+    }
+  });
+});
 
     // =============================================== iteration-8 Select job of JobSeeker Modal ===============================================
 
@@ -529,24 +551,7 @@ jQuery(function() {
 
     });
 
-    // =============================================== iteration-8 on Delete Candidata from tracker ===============================================
 
-    $(document).on('click' , '.deleteCandidate', function(){
-      var id = $(this).attr('data-id');
-      // console.log(id);
-      $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-      $.ajax({
-        type: 'POST',
-        url: '{!! route('users.removeTracker') !!}',
-        data: {'id': id},
-        success: function(data) {
-          // console.log(' data ', data);
-          // $('.applyJobModalHeader').html(data);
-           $('#dataTable').DataTable().ajax.reload();
-          
-        }
-      });
-    });
 
     // =============================================== iteration-8 notes ===============================================
 
@@ -844,10 +849,6 @@ $(document).on('click','.btnVerifyUser', function(){
       }
   });
 });
-
-
-
-
 
 //========================================================================//
 // Click on btnBulkApproved Button show confirmation popup.

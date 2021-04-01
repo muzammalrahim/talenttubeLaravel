@@ -1,10 +1,8 @@
 
 
- @if ($jobs && $jobs->count() > 0)
+@if ($jobs && $jobs->count() > 0)
 
- {{-- @dd($jobs) --}}
-
-        @foreach ($jobs as $job)
+    @foreach ($jobs as $job)
         <div class="job_row">
             @php
             $experience = json_decode($job->experience);
@@ -55,25 +53,24 @@
 
                 <div class="w_25p">
                     <div class="j_label bold">Job Experience</div>
-                    <div class="j_value">@if(!empty($experience))
+                    <div class="j_value">
+                        @if(!empty($experience))
                         @foreach($experience as $industry )
                             <div class="IndustrySelect">
-
-                                  <p>
+                                <p>
                                     <i class="fas fa-angle-right qualifiCationBullet"></i>
                                       {{getIndustryName($industry)}}
                                       <i class="fa fa-trash removeIndustry hide_it"></i></p>
                             </div>
                         @endforeach
-                    @endif</div>
+                        @endif
+                    </div>
                 </div>
 
                 <div class="w_25p">
                     <div class="j_label bold">Job Salary</div>
                     <div class="j_value">{{$job->salary}}</div>
                 </div>
-
-
 
             </div>
 
@@ -108,14 +105,11 @@
                     <div class="j_button fl_right"><a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Apply</a></div>
                     <div class="j_button fl_right"><a class="jobDetailBtn graybtn jbtn m5" href="{{route('jobDetail', ['id' => $job->id]) }}">Detail</a></div>
                 </div>
-
             </div>
-
-
         </div>
-        @endforeach
+    @endforeach
 
 
-         <div class="jobs_pagination cpagination">{!! $jobs->render() !!}</div>
+    <div class="jobs_pagination cpagination">{!! $jobs->render() !!}</div>
 
-        @endif
+@endif

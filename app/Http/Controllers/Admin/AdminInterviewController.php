@@ -507,7 +507,6 @@ class AdminInterviewController extends Controller
       // dd($request->cbx);
       if(!empty($request->cbx)){
 
-
         $userIDs = array();
         $jobApp_id = array();
 
@@ -518,13 +517,9 @@ class AdminInterviewController extends Controller
 
         }*/
 
-
         $jobApplications = JobsApplication::whereIn('id',$request->cbx)->get();
         // $jobApp_id[] = $jobApp->id;
         // dd($jobApp->id); 
-
-
-
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Bulk Interview';
@@ -542,13 +537,9 @@ class AdminInterviewController extends Controller
         // admin/job_applications/interviewTemplate/bulkInterview
 
         }
-
-
-
     }
 
-
-
+    // ============================================================ Bulk interview send ============================================================
 
     public function bulkInterviewSend(Request $request){
 
@@ -572,8 +563,7 @@ class AdminInterviewController extends Controller
             $history->save();
             $jsEmail = $UserInterview->js->email;
             $empName = $UserInterview->employer->name;
-            Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));
-                      
+            Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));       
         }
 
         return response()->json([
@@ -586,11 +576,9 @@ class AdminInterviewController extends Controller
 
 
 
-            // ======================================================= completedInterviews =======================================================
+    // ======================================================= completedInterviews =======================================================
 
     public function corresInterviewJobApplciation($user_id,$jobApp_id){
-
-
         $user = Auth::user();
         if (isAdmin($user)) {
             $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
@@ -602,18 +590,14 @@ class AdminInterviewController extends Controller
             $data['user'] = $user;
             $data['jobApp_id'] = $jobApp_id;
             $data['user_id'] = $user_id;
-
             return view('site.employer.interviewInvitation.jobAppCorrespondanceInter', $data);
             // site/employer/interviewInvitation/jobAppCorrespondanceInter
         }
-
-
     }
 
 
 
-        // ========================================= Interview Template =========================================
-
+    // ========================================= Interview Template =========================================
 
     public function adminInterviewTemplate(Request $request){
         // dd($request->templateSelect);
@@ -630,8 +614,6 @@ class AdminInterviewController extends Controller
                 if (isAdmin()) {
                     return view('admin.job_applications.interviewTemplate.template' , $data); 
                     // admin/job_applications/interviewTemplate/template
-                    
-
                 }
                 else{
                     return view('site.employer.interviewTemplate.template' , $data);
@@ -643,8 +625,6 @@ class AdminInterviewController extends Controller
         else{
             return false;
         }
-        
-
     }
 
 

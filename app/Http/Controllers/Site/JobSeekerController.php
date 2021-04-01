@@ -26,13 +26,13 @@ use App\crossreference;
 use App\ControlSession;
 use App\InterviewTempQuestion;
 use App\JobsApplication;
-
 use App\Interview;
 use App\Interviews_booking;
 use App\History;
 use App\Notes;
 use App\InterviewTemplate;
 use App\UserInterview;
+use App\UserOnlineTest;
 use App\Mail\referenceEmail;
 
 
@@ -219,7 +219,8 @@ class JobSeekerController extends Controller {
         $historyCreated = User::where('id',$jobSeeker->id)->first();
         $interviewTemplate = InterviewTemplate::get();
         $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$jobSeekerId)->get();
-
+        $UserOnlineTest = UserOnlineTest::where('user_id',$jobSeekerId)->orderBy('created_at', 'desc')->get();
+        $data['UserOnlineTest'] = $UserOnlineTest;
         $data['title']          = 'JobSeeker Info';
         $data['classes_body']   = 'jobSeekerInfo';
         $data['jobSeeker']       = $jobSeeker;

@@ -28,8 +28,6 @@ use URL;
 use App\Mail\conductInterviewEmail;
 use App\Mail\rejectInterviewInvitationEmail;
 use App\Mail\acceptInterviewInvitationEmail;
-
-
 use App\TagCategory;
 use App\Tags;
 use App\UserTags;
@@ -40,17 +38,20 @@ use App\InterviewTemplate;
 use App\InterviewTempQuestion;
 use App\UserInterview;
 use App\UserInterviewAnswers;
+use App\OnlineTest;
+use App\UserOnlineTest;
+
+
 
 // use App\Mail\conductInterview;
 
 
 class EmployerController extends Controller {
 
-			public $agent;
-
+	public $agent;
     public function __construct(){
-					$this->middleware('auth');
-					$this->agent = new Agent();
+		$this->middleware('auth');
+		$this->agent = new Agent();
     }
 
 
@@ -335,6 +336,10 @@ class EmployerController extends Controller {
         $data['controlsession'] = $controlsession;
         $data['jobType']     = getJobTypes();
         $data['salaryRange'] = getSalariesRange();
+        $onlineTest = OnlineTest::get();
+        $data['onlineTest'] = $onlineTest;
+        // dd($onlineTest);
+
         // $jobs =  Jobs::find(12);
         // dd( json_decode($jobs->questions()->first()->options, true) );
         // dd( $jobs->questions()->first()->options );
@@ -418,6 +423,19 @@ class EmployerController extends Controller {
             // $job->age =  $requestData['age'];
             $job->user_id =  $user->id;
             $job->expiration =  $requestData['expiration'].' 00:00:00';
+
+                // dd($requestData['test_id']);
+
+            if ($requestData['test_id'] != 0) {
+                $test = $requestData['test_id'];
+                $onlineTest = OnlineTest::get()->pluck('id')->toArray();
+                if (in_array($test, $onlineTest)) {
+                    // dd('Hi how are you');
+                    $job->onlineTest_id = $test;
+
+                }
+            }
+
             // $job->questions =  $requestData['questions'];
             $job->code =  Jobs::generateCode(); //
             if(!empty($request->industry_experience)){
@@ -477,7 +495,7 @@ class EmployerController extends Controller {
         $data['geo_countries'] = get_Geo_Country();
         $data['geo_states'] = get_Geo_State($job->country);
         $data['location'] = $job->city.' '.$job->country.' ,'.$job->country;
-        return view('site.employer.jobEdit', $data);
+        return view('site.employer.jobEdit', $data);  // site/employer/jobEdit
     }
 
 
@@ -493,6 +511,8 @@ class EmployerController extends Controller {
             // $data['applications'] = $applications;
             $data['job']   = $job;
             $data['user']   = $user;
+            $onlineTest = OnlineTest::get();
+            $data['onlineTest']   = $onlineTest;
             $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
             $data['controlsession'] = $controlsession;
             $data['title']  = 'Job Detail';
@@ -511,6 +531,9 @@ class EmployerController extends Controller {
         if(isEmployer($user)){
             $applications = new JobsApplication();
             $applications = $applications->getFilterApplication($request);
+
+            // $UserOnlineTest = UserOnlineTest::where('jobApp_id', $application->id)->first();
+            // dd($UserOnlineTest);
             $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
             $data['applications'] = $applications;
             $data['user']       = $user;
@@ -1174,6 +1197,24 @@ class EmployerController extends Controller {
         }
 
     }
+
+    //====================================================================================================================================//
+    // Advertise job index
+    //====================================================================================================================================//
+    function advertiseJob(Jobs $id){
+        // dd($id);
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Advertise Job';
+        $data['classes_body'] = 'advertiseJob';
+        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
+        $data['job'] = $id;
+        return view('site.jobs.advertiseJob', $data);
+        // site/jobs/advertiseJob
+    }
+
+
 
 
 

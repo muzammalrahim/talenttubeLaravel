@@ -61,22 +61,15 @@
                 </div>
             </div>
 
-
-
             <div class="job_salary form_field">
                 <span class="form_label">Salary :</span>
-
                 <div class="form_input">
                     {{ Form::select('salary', $salaryRange, ['placeholder' => 'Select Salary Range', 'onchange' => '', 'id' => 'salaryRangeFieldnew', 'class' => ' salaryRangeField']) }}
                     <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
                 </div>
-
-                                                
-
             </div>
 
-
-            <div class="job_age form_field margintop">
+            <div class="job_age form_field">
                 <span class="form_label">Expiration Date:</span>
                 <div class="form_input">
                     <input type="text" name="expiration" class="datepicker" />
@@ -84,7 +77,17 @@
                 </div>
             </div>
 
-
+            <div class="job_age form_field">
+                <span class="form_label">Online Test</span>
+                <div class="form_input">
+                   <select name="test_id">
+                       <option value="0">Select Test</option>
+                       @foreach ($onlineTest as $test)
+                           <option value="{{$test->id}}"> {{$test->name}} </option>
+                       @endforeach
+                   </select> 
+                </div>
+            </div> 
 
             <div class="form_field">
 
@@ -101,9 +104,6 @@
                     <a class="block jbtn hide_it buttonSaveIndustry"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
                 </div>
             </div>
-
-            
-
 
             <div class="job_country form_field geo_location_cont">
                 <span class="form_label">Location :</span>
@@ -174,8 +174,6 @@
                     <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn">Add+</a></div>
                 </div>
             </div>
-
-
 
             <div class="form_field">
                 <span class="form_label"></span>
@@ -250,6 +248,7 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 
 
+
 <style type="text/css">
 
 .jq_field_label {float: left;width: 10%;}
@@ -297,14 +296,6 @@ div.jq-selectbox__dropdown.drop_up>ul>li {font-size: 15px;}
 select{display: block;width: 100%;height: calc(2.75rem + 2px);padding: .375rem .75rem;
         font-size: 1.5rem;font-weight: 400;line-height: 1.5;color: #495057;margin: 5px 0px 5px 0px ;background-color: #fff;background-clip: padding-box;
         border: 1px solid #ced4da;border-radius: .25rem;box-shadow: inset 0 0 0 transparent;transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
-.QualificationSelect{font-size: 14px;}
-div.bl_list_info>ul.list_info.userProfileLocation>li#list_info_location {font-size: 12px;}
-.spinner.center{position: relative;opacity: 1;left: 0;right: 0;top: 0;bottom: 0;}
-.qualificationBox.editQualif .hide_it {display: block !important;}
-.title.IndusListBox.edit .hide_it {display: block !important;}
-div#basic_anchor_industry_experience,div.title.qualificationList>div#basic {margin-bottom: 13px;}
-div.title.IndusListBox>div#basic {margin-bottom: 13px;}
-.smallSpinner.SaveIndustrySpinner {font-size: 20px;}
 select.userQualification {width: 90%;display: inline-block;}
 div>div.jq-selectbox__dropdown.drop_up>ul {width: 189px;text-align: center;}
 div>div.jq-selectbox__dropdown.drop_down>ul {width: 189px;text-align: center;}
@@ -316,37 +307,17 @@ div.questionsOfUser>div>p {margin: 10px 0px 0;padding: 0px;}
 select.jobSeekerRegQuestion {width: auto;cursor: pointer;}
 div.smallSpinner.SaveQuestionsSpinner>.spinner.center {font-size: 20px;margin: 5px 0px 0px 10px;}
 div.IndusList>div.IndustrySelect>select {width: 40%;display: inline-block;}
-i.fa.fa-trash.removeIndustry {margin-top: 7px;}
-.rounded{border-top: 3px solid #142d69;border-radius: 3px;}
-.lineDivivder {width: 100%;text-align: center;border-bottom: 1px solid #000;line-height: 0.1em;margin: 10px 0 20px;}
-.lineDivivder span {background:#f3f5f9;padding:0 10px;}
-span.addTags.btn.btn-primary{display: block;margin-top: 15px;}
-div.col_left>div>div#basic {margin-bottom: 13px;}
-.userTag {margin-bottom: 7px;}
 select.userTags.userTagsSelect {width: 45%;display: inline-block;}
 .tab_photos>.col_left {float: none !important;}
-.savebuttonUsertags{text-align: center;margin-top:10px}
 .jobSeekerProfileUpdate,.signOutButtonHeader{color: white !important;}
-
 /*===================================================== Save Resume ===========================================*/
-
 button.btn.violet.save-resume-btn.valign-top {margin-bottom: 23px;}
-
 /*===================================================== Make Profile Icon ===========================================*/
 span.icon_image_profile {bottom: 42px;right: 5px;}
 div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{position: absolute !important;}
 .jq-selectbox__search {display: none;}
-.qualifiCationBullet {margin-right: 10px;}
-.qualifType{font-size: 16px;}
-.qualifTypeSpan{text-transform: capitalize;font-weight: bold;}
-.QuestionsKeyPTag{padding: 0px;}
 .jq-selectbox__dropdown.drop_down {width: 100% !important;}
-hr.rounded {margin: 20px 0px 20px 0px;}
 .saveIndus,.saveQualification{background: #28a745;text-align: center;height: 22px;padding-top: 6px;border-radius: 4px;opacity: 0.7;color: white;cursor: pointer;}
-.saveQuestionsButton {background: #28a745;text-align: center;border-radius: 4px;height: 22px;padding-top: 6px;opacity: 0.7;color: white;cursor: pointer;}
-.buttonGroup{margin-top: 10%;}
-.marginButton{margin-right: 1%;}
-.margintop{margin-top: 17px;}
 .block {display: inline-block;width: 88%;border: none;background-color: #4CAF50;color: white;padding: 10px 28px;font-size: 16px;cursor: pointer;text-align: center;margin-top:13px;}
 .block:hover {background-color: #ddd;color: black;}
 </style>
@@ -357,6 +328,8 @@ hr.rounded {margin: 20px 0px 20px 0px;}
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+
+
 
 <script type="text/javascript">
 

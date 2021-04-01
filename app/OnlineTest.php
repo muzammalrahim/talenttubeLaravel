@@ -12,4 +12,9 @@ class OnlineTest extends Model
     {
         return $this->hasMany('App\TestQuestion', 'test_id');
     }
+
+    public function nextQuestions($current)
+    {
+        return $this->hasMany('App\TestQuestion', 'test_id');
+    }
 }

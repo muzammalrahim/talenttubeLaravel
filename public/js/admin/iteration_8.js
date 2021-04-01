@@ -1,8 +1,5 @@
 
 $(document).ready(function(){
-
-	// console.log('Java Script ready');
-
 	$(document).on('click' , '.addjsInPool' , function(){
 	var user_id = $(this).attr('user_id');
 	var pool_id = $('.pool_id').attr('pool_id');
@@ -34,6 +31,16 @@ $(document).ready(function(){
 	        }
 	     });
 	});
+
+
+	// ==================================== iteration-9 bulk remove button ====================================
+
+
+	function bulkremoveButton(){
+		alert('hi bulk remove button');
+	}
+
+
 
 
 

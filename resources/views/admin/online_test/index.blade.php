@@ -8,30 +8,11 @@
     <div class="col-md-2"><h1 class="m-0 text-dark">{{$content_header}}</h1></div>
 
     {{-- @dd($content_header); --}}
-    {{-- testing --}}
-
-      {{-- <div class="col-md-2">
-        <select class="filter_status browser-default custom-select">
-            <option value="">Select Status</option>
-            <option value="verified" {!! ($filter_status == 'verified')?('selected'):'' !!}>Approved</option>
-            <option value="pending" {!! ($filter_status == 'pending')?('selected'):'' !!}>Pending</option>
-        </select>
-      </div> --}}
 
     <div class="block row col-md-8 text-white">
 
-
-      {{-- <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign Job</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCSVExport">Bulk Export CSV</a></div>
-      <div class="col-md-1.5 bulkButton"><a  class="btn btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
-      <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
-
-       --}}
-      {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
     </div>
-    {{-- testing --}}
-
+    
     <div class="col-md-2">
         <div class="float-right">
             <a href="{!! route('onlineTest.create') !!}" class="btn btn-block btn-success">Add New</a>

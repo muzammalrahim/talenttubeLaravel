@@ -70,6 +70,12 @@ class Jobs extends Model {
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    //  itertaion-9 online test
+
+    public function onlineTest(){
+        return $this->belongsTo('App\OnlineTest', 'onlineTest_id');
+    }
+
     function addJobQuestions($questions){
 
         if(!empty($questions)){

@@ -4,6 +4,8 @@
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+
 @stop
 
 @section('content')
@@ -68,7 +70,6 @@
             </div>
             {{-- industry selection --}}
         </div>
-
 
 
         <div class="searchField_location mb10">
@@ -155,6 +156,49 @@
 
 </div>
 
+
+
+{{-- Jquery pop up itertaion-9 --}}
+<div id="onlineTestModal" class="modal w100 p0">
+  <div class="testHeader">
+    <p>Send online Test</p>  
+  </div>
+  
+  <div class="testContent p10">
+        <form name="sendTestForm" class="sendTestForm">
+        {{-- @csrf --}}
+            <input type="hidden" name="jobApp_id" class="jobAppIdModal">
+            <div class="job_age form_field" style="height:120px;">
+                <span class="w20 dinline_block">Select Test</span>
+                    <div class="w70 dinline_block">
+                        <select name="test_id">
+                               @foreach ($onlineTest as $test)
+                                   <option value="{{$test->id}}"> {{$test->name}} </option>
+                               @endforeach
+                        </select> 
+                    </div>
+            </div> 
+
+            
+        </form>
+
+        <p class="errorsInFields text-danger"></p>
+
+
+        <div class="fomr_btn act_field center">
+                <button class="btn small turquoise sendTestButton">Send Test</button>
+        </div>
+        
+    </div>
+{{--   <div class="textFooter p10">
+    <a href="#" rel="modal:close">Close</a>      
+  </div> --}}
+</div>
+
+<!-- Link to open the modal -->
+{{-- <p><a href="#onlineTestModal" rel="modal:open">Open Modal</a></p> --}}
+
+
 @stop
 
 
@@ -164,26 +208,24 @@
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
 
+
 <script type="text/javascript">
 $(document).ready(function() {
 
 
 
     $(".reset-btn").click(function(){
-/// 	$("#jobSeeker_filter_form").trigger("reset");
+    /// 	$("#jobSeeker_filter_form").trigger("reset");
     jQuery('input[name="filter_location_status"]').styler();
 
     event.preventDefault();
     $('#paginate').val('');
-
     jQuery('input[name="filter_location_status"]').each(function() {
-
             if(this.checked){
             $(this).toggleClass('checked').trigger('refresh');
             this.checked = !this.checked;
             $(this).toggleClass('checked').trigger('refresh');
             (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
-
             }
         });
 
@@ -641,94 +683,42 @@ $('input[name="filter_location_status"]').change(function() {
 
     // by default show this location;
     geocode('Sydney New South Wales, Australia');
-
-
     jQuery('.filter_location_radius').on('change', function(){
         console.log(' filter_location_radius changed.  ');
         drawCircle(new google.maps.LatLng(jQuery("#location_lat").val(), jQuery("#location_long").val()));
     });
 
 
-
-
 });
 </script>
 @stop
 
-
-
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
-{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 <style type="text/css">
 button.ja_load_qa { background: #40c7db; }
-.job_app_qa_box {
-    padding: 10px;
-    border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 4px;
-    margin: 10px 0px;
-}
+.job_app_qa_box {padding: 10px;border: 1px solid rgba(0,0,0,0.1);border-radius: 4px;margin: 10px 0px;}
 .job_answers { margin-bottom: 6px; }
-.jqa_q {
-    margin: 2px 0px;
-    display: inline-block;
-}
-.jqa_a {
-    margin: 2px 0px;
-    display: inline-block;
-    font-weight: bold;
-    color: #eea11e;
-}
+.jqa_q {margin: 2px 0px;display: inline-block;}
+.jqa_a {margin: 2px 0px;display: inline-block;font-weight: bold;color: #eea11e;}
 .searchFieldLabel { min-width: 15%; }
 .searchField { display: inline-block; }
-
 .jobFilterQuestion {margin: 10px 0px;}
-.jobFilterQuestion .fjq_title {
-        display: inline-block;
-    float: left;
-    padding: 0px 8px;
-    background: rgb(0 0 0 / 3%);
-    border: 1px solid rgb(0 0 0 / 11%);
-    height: 33px;
-    line-height: 33px;
-}
-
-.jobFilterQuestion .fjq_counter {
-    float: left;
-    padding: 0px 8px;
-    border: 1px solid rgb(0 0 0 / 11%);
-    height: 33px;
-    line-height: 33px;
-    border-right: 0px;
-}
-
-.location_map {
-    height: 250px;
-    margin: 2px;
-    border-radius: 4px;
-}
-.jobApplicAction {
-    display: inline-block;
-    float: right;
-    margin: 10px 0px;
-}
+.jobFilterQuestion .fjq_title {display: inline-block;float: left;padding: 0px 8px;
+    background: rgb(0 0 0 / 3%);border: 1px solid rgb(0 0 0 / 11%);height: 33px;line-height: 33px;}
+.jobFilterQuestion .fjq_counter {float: left;padding: 0px 8px;
+    border: 1px solid rgb(0 0 0 / 11%);height: 33px;line-height: 33px;border-right: 0px;}
+.location_map {height: 250px;margin: 2px;border-radius: 4px;}
+.jobApplicAction {display: inline-block;float: right;margin: 10px 0px;}
 .jobApplicationStatusCont .jq-selectbox__select,
-.jobApplicationStatusCont .jq-selectbox__trigger {
-    height: 28px;
-    line-height: 28px;
-}
-.jobApplicationStatusResponse {
-    display: block;
-    position: absolute;
-    font-size: 11px;
-    margin: 6px;
-    color: #fba82f;
-}
-.sortByFieldLabel.dinline_block {
-    margin-right: 88px;
-}
+.jobApplicationStatusCont .jq-selectbox__trigger {height: 28px;line-height: 28px;}
+.jobApplicationStatusResponse {display: block;position: absolute;font-size: 11px;margin: 6px;color: #fba82f;}
+.sortByFieldLabel.dinline_block {margin-right: 88px;}
+
+/* ===================================== iteration-9 ===================================== */
+.pp_wrapper, .pp_shadow{position: inherit !important;}
+.jq-selectbox > .jq-selectbox__dropdown.drop_down > ul{height: 133px !important;overflow-y: scroll;z-index: 9999;width: fit-content !important;}
 </style>
 
 @stop

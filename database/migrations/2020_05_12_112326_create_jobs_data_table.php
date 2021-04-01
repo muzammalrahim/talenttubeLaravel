@@ -28,6 +28,7 @@ class CreateJobsDataTable extends Migration
             $table->text('age');
             $table->text('questions');
             $table->dateTime('expiration');
+            $table->integer('onlineTest_id');
             $table->string('code');
             $table->timestamps();
             $table->unsignedbigInteger('user_id');

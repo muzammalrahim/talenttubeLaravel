@@ -16,10 +16,18 @@ class CreateHistoriesTable extends Migration
         Schema::create('histories', function (Blueprint $table) {
             $table->id();
             $table->integer('user_id');
-            $table->integer('admin_id');
-            $table->integer('js_id'); 
             $table->string('type');
-            $table->string('text');
+            $table->string('new_salary');
+            $table->string('recentJob');
+            $table->integer('job_id');
+            $table->string('job_status');
+            $table->string('old_job_status');
+            $table->integer('reference_id');
+            $table->string('userGallery');
+            $table->integer('userinterview_id');
+            
+
+
             $table->timestamps();
         });
     }

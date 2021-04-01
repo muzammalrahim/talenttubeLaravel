@@ -1,12 +1,4 @@
-{{-- @extends('site.user.usertemplate') --}}
-{{-- 
-@if ($controlsession->count() > 0)
-<div class="adminControl">
-        <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
-</div>
 
-@endif
- --}}
 @extends('site.employer.employermaster')
 
 @section('custom_css')
@@ -72,7 +64,6 @@
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-
 
 {{-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script> --}}
 
@@ -167,12 +158,15 @@ $(".reset-btn").click(function(){
 
 
 var getDataCustom = function(){
-                var url = '{{route('jobsFilter')}}';
-                $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-                $.post(url, $('#filter_form').serialize(), function(data){
-                                $('.jobs_list').html(data);
-                });
+    var url = '{{route('jobsFilter')}}';
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    $.post(url, $('#filter_form').serialize(), function(data){
+        $('.jobs_list').html(data);
+    });
 }
+
+
+
 </script>
 @stop
 
