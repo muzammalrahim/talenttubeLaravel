@@ -23,7 +23,15 @@
             <div class="job_question form_field">
                  <input type="hidden" name="answer[{{$question['id']}}][question_id]" value="{{$question['id']}}" />
                 <div class="form_qstn">
-                    <span class="">{{$question['title']}}</span>
+
+
+                    @php
+
+                        $remSpecialCharQues = str_replace("\&#39;","'",$question['title']);
+
+                    @endphp
+
+                    <span class="">{{$remSpecialCharQues}}</span>
                 </div>
                 <div class="form_qstn_options">
                     @if(!empty($question->options))
@@ -67,6 +75,8 @@
     </div>
 
     <input type="hidden" name="job_id" value="{{$job->id}}" />
+    <input type="hidden" name="test_id" value="{{$job->onlineTest_id}}" />
+
 
 
     {{-- ========================================== If online test exists ========================================== --}}

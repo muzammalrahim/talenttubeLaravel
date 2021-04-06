@@ -43,10 +43,14 @@
 				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span> <b> {{$jobSeeker->name}} </b> Updated  {{$hist->type}} to <span class="bold"> {{$hist->recentJob}} </span> </p>
 			
 			@elseif ($hist->type == "Job Applied")
-				<p> <span>{{$hist->created_at->format('h:i:s')}} : </span> <b> {{$jobSeeker->name}} </b> applied for <b> {{$hist->jobs->title}} </b> 
-					<a class="jobDetailBtn graybtn jbtn viewJobDetail" target="_blank" href="{{route('jobDetail', ['id' => $hist->job_id]) }}" > View Job Detail
+
+				@if ($hist->jobs)
+					<p> <span>{{$hist->created_at->format('h:i:s')}} : </span> <b> {{$jobSeeker->name}} </b> applied for <b> {{$hist->jobs->title}} </b> 
+						<a class="jobDetailBtn graybtn jbtn viewJobDetail" target="_blank" href="{{route('jobDetail', ['id' => $hist->job_id]) }}" > View Job Detail
 					</a>
-				</p>
+					</p>
+				@endif
+				
 			@elseif($hist->type == "User_Gallery")
 				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span> <b> {{$jobSeeker->name}} </b> uploaded   new image </p>
 			

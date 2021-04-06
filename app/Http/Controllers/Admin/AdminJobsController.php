@@ -768,7 +768,6 @@ class AdminJobsController extends Controller
           return ($records->jobseeker)?($records->jobseeker->name.' '.$records->jobseeker->surname.' ('.$records->user_id.')'):'';
       })
 
-
       ->editColumn('job_id', function ($records) {
          return  ($records->job)?($records->job->title.' ('.$records->job_id.')'):'';
       })
@@ -805,22 +804,11 @@ class AdminJobsController extends Controller
       ->addColumn('test', function ($records) {
         if (isAdmin()){
             $UserInterview = $records->userOnlineTests;
-            // dump($UserInterview);
-            if ($UserInterview  != null) {
-              // foreach ($UserInterview as $userInt) {
-                // $interviewCount = $userInt->status;
-                // if ($interviewCount == 'Interview Confirmed') {
-
-                  $rhtml =  $UserInterview->test_result;
-                  return $rhtml;
-
-                // }
-                // else  {
-                //   return 'Sent';
-                  
-                // }
-
-              // }
+            if ($UserInterview->count() >  0 ) {
+              foreach ($UserInterview as $userInt) {
+                $rhtml =  $userInt->test_result;
+                return $rhtml;
+              }
             }
             else{
                 $nan = '<span class = "text-danger"> None Available </span>';

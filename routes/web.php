@@ -583,10 +583,8 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/saveQuestion/result/{time}', 'Site\OnlineTestController@saveTestAndResult')->name('saveTestAndResult');
     Route::get('ajax/jobApplication/proceed/{id}', 'Site\OnlineTestController@jobAppProceedTest')->name('jobAppProceedTest');
     Route::get('completed/onlineTests/{id}', 'Site\OnlineTestController@completedOnlineTests')->name('completedOnlineTests');
-
     Route::post('ajax/reject/test', 'Site\SiteUserController@rejectTest')->name('rejectTest');
-
-
+    Route::post('ajax/use-previous-result', 'Site\SiteUserController@userPreviousResult')->name('userPreviousResult');
 
 
 

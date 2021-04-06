@@ -136,6 +136,7 @@
               <option value="inreview">In Review</option>
               <option value="interview">Interview</option>
               <option value="unsuccessful">Unsuccessful</option>
+              <option value="pending">pending</option>
               <option value="all_candidates">All candidates</option>
             </select>
         </div>

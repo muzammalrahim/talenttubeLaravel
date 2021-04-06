@@ -1737,6 +1737,9 @@ class SiteUserController extends Controller
             $data['onlineTest'] = $onlineTest;
             $duration = $onlineTest->time;
             $data['duration'] = $duration;
+            $UserOnlineTest = UserOnlineTest::where('test_id' ,$job->onlineTest_id )->where('user_id' , $user->id)->first();
+            // dd($UserOnlineTest);
+            $data['UserOnlineTest'] = $UserOnlineTest;
 
         }
         // dd( $data['job']  );
@@ -2478,6 +2481,133 @@ class SiteUserController extends Controller
             $JobsApplication->userOnlineTest_id = $UserOnlineTest->id;
             $JobsApplication->save();
 
+
+            // =============================================== For useronlineTest end here  ===============================================
+
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->type = 'Job Applied'; 
+            $history->job_id = $job->id; 
+            $history->save();
+
+            // if jobApplication is succesfully added then add job answers.
+            if( $newJobApplication->id > 0 ){
+                if(isset($requestData['answer']) && !empty($requestData['answer'])){
+                    foreach ($requestData['answer'] as $ansK => $ansV) {
+                        $jobQuestion = JobsQuestions::find($ansV['question_id']);
+                        $goldstar = 0;
+                        $preffer = 0;
+                        // check if jqb question exist
+                        if(!empty($jobQuestion)){
+                        $key = array_search($ansV['option'], $jobQuestion->options);
+                        foreach ($jobQuestion->preffer as $preferQ) {
+                            if($preferQ == $key){
+                                $preffer +=1;
+                            }
+                        }
+                        foreach ($jobQuestion->goldstar as $goldstarQ) {
+                            if($goldstarQ == $key){
+                                $goldstar +=1;
+                            }
+                        }
+                            $jobAnswer              = new JobsAnswers();
+                            $jobAnswer->question_id = $ansV['question_id'];
+                            $jobAnswer->user_id     = $user->id;
+                            $jobAnswer->answer      = $ansV['option'];
+
+                            $newJobApplication->goldstar += $goldstar;
+                            $newJobApplication->preffer += $preffer;
+                            $goldstar = 0;
+                            $preffer = 0;
+                            $newJobApplication->save();
+                            $newJobApplication->answers()->save($jobAnswer);
+
+                        }
+
+                    }
+                }
+
+            }
+            $jobQuestion = JobsQuestions::find(164);
+            
+            $UserOnlineTest = $UserOnlineTest->id;
+
+            if ($newJobApplication) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'You Job Application has been submitted succesfully',
+                    'userTest_id' => $UserOnlineTest
+                ]);
+            }
+        }
+
+    }
+
+
+    //====================================================================================================================================//
+    // Ajax POST // Job Apply Submitted with reject test .
+    //====================================================================================================================================//
+    public function userPreviousResult(Request $request){ 
+        $user = Auth::user();
+        $requestData = $request->all();
+        // dd($requestData);
+        $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
+        if(isset($requestData['answer']) && !empty($requestData['answer'])){
+            foreach ($requestData['answer'] as $ansK => $ansV) {
+                $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']);
+                $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
+            }
+        }
+        $job = Jobs::find($requestData['job_id']);
+        // check to confirm job with id exist
+        if ($job == null){
+            return response()->json([
+                'status' => 0,
+                'error' => 'Job with id '.$requestData['job_id'].' does not exist'
+            ]);
+        }else{
+            // check if user has not submitted application already.
+            $jobApplication = JobsApplication::where('user_id',$user->id)->where('job_id',$requestData['job_id'])->first();
+            if (!empty($jobApplication)) {
+                return response()->json([
+                    'status' => 0,
+                    'error' => 'You already submit application for this job'
+                ]);
+            }
+            if(empty($request->application_description)){
+                 return response()->json([
+                    'status' => 0,
+                    'error' => 'Please answer all mandatory question.'
+                ]);
+            }
+
+            $newJobApplication = new JobsApplication();
+            $newJobApplication->user_id = $user->id;
+            $newJobApplication->job_id = $job->id;
+            $newJobApplication->status = 'applied';
+            $newJobApplication->description = $request->application_description;
+            $newJobApplication->save();
+
+
+            // dd($job->onlineTest->time);
+            // =============================================== For useronlineTest  ===============================================
+
+            $UserOnlineTestPrevios = UserOnlineTest::where('test_id' , $request->test_id)->where('user_id' , $user->id)->first();
+            // dd($UserOnlineTest);
+
+            $UserOnlineTest = new UserOnlineTest;
+            $UserOnlineTest->user_id = $user->id;
+            $UserOnlineTest->emp_id = $job->jobEmployer->id;
+            $UserOnlineTest->jobApp_id = $newJobApplication->id;
+            $UserOnlineTest->test_id = $UserOnlineTestPrevios->test_id;
+            $UserOnlineTest->status = 'complete';
+            $UserOnlineTest->rem_time = $UserOnlineTestPrevios->rem_time;
+            $UserOnlineTest->current_qid = $UserOnlineTestPrevios->current_qid;
+            $UserOnlineTest->test_result = $UserOnlineTestPrevios->test_result;
+            $UserOnlineTest->save();
+            $JobsApplication = JobsApplication::where('id', $newJobApplication->id)->first();
+            $JobsApplication->userOnlineTest_id = $UserOnlineTest->id;
+            $JobsApplication->save();
 
             // =============================================== For useronlineTest end here  ===============================================
 
