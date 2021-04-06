@@ -621,7 +621,7 @@ $(document).ready(function() {
                     // console.log(' reverseGeocode place ', place);
                     // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
                     updateLocationInputs(place.name,city,state,country);
-                    jQuery("#location_search").val(address);
+                    // jQuery("#location_search").val(address);   // Commented for preventing duplication of location
                     placeMarker(place.geometry.location);
 
             });

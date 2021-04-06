@@ -439,16 +439,6 @@ $(document).on('click','.proceedTest',function(){
     event.preventDefault();
     console.log(' submitApplication submit click ');
     $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
-
-
-    // console.log(base_url);return;
-    // var link = 1;
-
-     // var jobApp_id = '<a href = "'+base_url+'/proceed/test/'+link+'"> Go o this link  </a>';
-     // $('.onlineTestBox').html(jobApp_id);
-
-
-    // console.log(base_url);return;
     var applyFormData = $('#job_apply_form').serializeArray()
     $.ajax({
     type: 'POST',
@@ -492,8 +482,41 @@ $(document).on('click','.rejectTest',function(){
             if (data.status == 1){
                  $('#job_apply_form').html(data.message);
                  // $('.onlineTestBox').addClass('hide_it');
-
                  var jobApp_id = '<p class = "mt10" > Your application has been submitted, you can complete your test later </p';
+                 $('.onlineTestBox').html(jobApp_id);
+
+            }else {
+                 $('#job_apply_form').html(data.error);
+                 $('.onlineTestBox').addClass('hide_it');
+            }
+        }
+    });
+});
+
+
+// ================================================================================================
+//  User previous result of test while applying to job
+// =================================================================================================
+
+
+$(document).on('click','.usePreviousResult',function(){
+    event.preventDefault();
+    console.log(' use previous result clicked ');
+    // return;
+
+    $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
+    var applyFormData = $('#job_apply_form').serializeArray()
+    $.ajax({
+    type: 'POST',
+        url: base_url+'/ajax/use-previous-result/',
+        data: applyFormData,
+        success: function(data){
+            $('.submitApplication').html('Submit').prop('disabled',false);
+            console.log(' data ', data );
+            if (data.status == 1){
+                 $('#job_apply_form').html(data.message);
+                 // var link = parseInt(data.userTest_id);
+                 var jobApp_id = '<p class = "mt10"> Your test result has been submitted </p>';
                  $('.onlineTestBox').html(jobApp_id);
 
             }else {

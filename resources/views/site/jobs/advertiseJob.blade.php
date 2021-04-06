@@ -87,8 +87,6 @@
                     <div class="j_button"></div>
 
                 </div>
-
-
             </div>
 
           

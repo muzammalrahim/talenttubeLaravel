@@ -178,6 +178,8 @@ class JobsApplication extends Model{
                     $applications  = $applications->where('status','=','interview');
                 }else if($request->ja_filter_sortBy == 'unsuccessful'){
                     $applications  = $applications->where('status','=','unsuccessful');
+                }else if($request->ja_filter_sortBy == 'pending'){
+                    $applications  = $applications->where('status','=','pending');
                 }
             }else{
                 $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');

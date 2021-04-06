@@ -4,7 +4,7 @@
     @if ($applications->count() > 0)
     @foreach ($applications as $application)
 
-        @if ($application->status != 'pending')
+        {{-- @if ($application->status != 'pending') --}}
             {{-- expr --}}
             @php
                $js = $application->jobseeker;
@@ -31,6 +31,8 @@
 
 
                         <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" target="_blank" >View Profile</a>
+                        
+                        @if ($application->status != 'pending')
                         <div class="jobApplicationStatusCont dinline_block">
                             <select name="jobApplicStatus" class="select_aw jobApplicStatus" data-application_id="{{$application->id}}">
                                  @foreach (jobStatusArray() as $statusK => $statusV)
@@ -38,6 +40,11 @@
                                  @endforeach
                             </select>
                         </div>
+                        @else
+                            <span class="m5">Pending</span>
+                        @endif
+
+
                     </div>
                 </div>
 
@@ -46,7 +53,7 @@
                     <div class="job_app_qa_box" style="display: none;"></div>
                 </div>
             </div>
-        @endif
+        {{-- @endif --}}
 
     @endforeach
 
