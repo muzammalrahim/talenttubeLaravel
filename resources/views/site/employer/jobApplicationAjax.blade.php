@@ -16,6 +16,17 @@
 
                 <div class="jobSeeker_box relative dinline_block w100">
                     @include('site.layout.parts.jobSeekerProfileStar')
+
+                    @if ($application->userOnlineTests ->count() > 0 )
+                        @foreach ($application->userOnlineTests as $test)
+                            <span class="fl_right"> Test Result: <b> {{$test->test_result}} </b> </span>
+                        @endforeach
+                    @else
+                        <span class="fl_right"> No Test attempted </span>
+
+                    @endif
+
+
                     @include('site.layout.parts.jobSeekerProfilePhotoBox') {{-- site/layout/parts/jobSeekerProfilePhotoBox --}}
  
                     @include('site.layout.parts.jobSeekerInfoBox') {{-- site/layout/parts/jobSeekerInfoBox --}}

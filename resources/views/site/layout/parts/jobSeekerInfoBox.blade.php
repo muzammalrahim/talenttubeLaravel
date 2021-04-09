@@ -8,14 +8,10 @@
         <span class="js_label">Recent Job:</span>
         <span class="js_about_me"> {{$js->recentJob}}</span>
 
-        @if ($application->userOnlineTests ->count() > 0 )
-            @foreach ($application->userOnlineTests as $test)
-                <span class="fl_right"> Test Result: <b> {{$test->test_result}} </b> </span>
-            @endforeach
-        @else
-            <span class="fl_right"> No Test attempted </span>
+        
 
-        @endif
+        
+        
 
     </div>
 

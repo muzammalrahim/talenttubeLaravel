@@ -88,6 +88,8 @@
     <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-sm btn-primary btnBulkStatus ml-1 mt-1">Multi Bulk Status</a></div>
     <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-block btn-sm btn-primary bulkInterview">Bulk Interview</a></div>
     <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-block btn-sm btn-primary bulkPool">Bulk Pool</a></div>
+    <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-sm btn-block btn-primary" onclick="bulkTestingButtonJobApp()" >Bulk Testing</a></div>
+
     {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
   </div>
 {{-- </div> --}}
@@ -116,7 +118,8 @@
             <th>goldstar</th>
             {{-- <th>undesirable</th> --}}
             <th>correspondance</th>
-            <th>Test</th>
+            <th>Completed Tests</th>
+            <th>Mendatory Testing</th>
             <th>interview</th>
             <th>action</th>
         </tr>
@@ -152,22 +155,18 @@
 
   <div id="ModalBulkApprovedInfo" class="modal fade ModalBulkApprovedInfo" role="dialog">
     <div class="modal-dialog">
-      <!-- Modal content-->
       <div class="modal-content">
-           {{-- <div class="modal-header"><button type="button" class="close" data-dismiss="modal">&times;</button></div> --}}
-           <div class="modal-body p-3">
+        <div class="modal-body p-3">
               <div class="modalContentUser">
-
-
               </div>
            </div>
            <div class="modal-footer text-center margin_auto">
-                  {{-- <button type="button" class="btn btn-primary btn-md modelConfirmAction">Yes</button> --}}
-                  <button type="button" class="btn btn-default btn-md modelCancelAction" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default btn-md modelCancelAction" data-dismiss="modal">Cancel</button>
            </div>
-      </div>
+        </div>
     </div>
   </div>
+  
   {{-- Bulk Approved Pop Up End --}}
 
   <div id="divtemp" style="display: none;">
@@ -263,6 +262,14 @@
     </form>
 </div>
 
+<div class="d-none">
+  <form method="GET" class="bulkTestingJobApp" action="{{ route('bulk.bulkTestingJobApp') }}">
+      @csrf
+    <div class="cbx_list">
+      </div>
+  </form>
+</div>
+
 
 <div id="ModalBulkPool" class="modal fade ModalBulkPool" role="dialog">
   <div class="modal-dialog">
@@ -293,7 +300,25 @@
 </div>
 
 
-{{-- BulkCSV download end --}}
+{{-- ======================================================= Modal For getting tests ======================================================= --}}
+
+<div class="modal fade right" id="getTestsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header" style="background: #343a40">
+        <p class="heading lead text-white">Online Tests</p>
+        <button type="button" class="close modalCloseTopButton text-white" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+      </div>
+      <div class="modal-body p-0">
+        <div class="text-center applyJobModalHeader">           
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 @stop
 
@@ -321,34 +346,22 @@ function nextTabQuestion(jobPopId) {
 
         $('#jobslist-tab').removeClass("active");
         $('#question-tab').addClass('active');
-
-
-
-
         $.ajax({
         type: 'GET',
             url: base_url+'/admin/ajax/jobApplyInfoa/'+ jobPopId,
             success: function(data){
                 console.log("apply for job call");
                 $('.modalcontent1').html(data);
-                // $('#modalJobApply').modal('hide');
-
             }
         });
 }
 jQuery(function() {
-
-
   $(document).on('click','.btnBulkApproved', function(){
   console.log(' btnBulkApproved click ');
-
-
   var UserInfoId = parseInt($(this).attr('user-id'));
-
   console.log(UserInfoId);
   jQuery('input[name="cbx[]"]:checked').each(function(i,el){ console.log('i', i, 'el', $(el).val()); });
   var cbx = $('input[name="cbx[]"]:checked').map(function(){return $(this).val(); });
-
   if(cbx.length <= 0){
       alert('Please Select Checkboxes');
       return false;
@@ -366,13 +379,8 @@ jQuery(function() {
     ]
 });
 
-
-
-
 $('#ModalBulkApprovedInfo').modal('show');
-
 });
-
 
 $('#ModalBulkApprovedInfo').on('hidden.bs.modal', function (e) {
 
@@ -380,14 +388,10 @@ $('#ModalBulkApprovedInfo').on('hidden.bs.modal', function (e) {
     $('#jobslist-tab').addClass("active");
     $('#question-tab').removeClass('active');
     $('#dataTablejobs').DataTable().destroy();
-
     $('#jobslist').removeClass("fade");
     $('#jobslist').addClass('active');
     $('#question').removeClass("active");
     $('#question').addClass('fade');
-
-
-
 });
 
 $(document).on('click','.modelConfirmAction', function(){
@@ -396,7 +400,6 @@ $(document).on('click','.modelConfirmAction', function(){
   applyFormData[applyFormData.length] = { name: "cbx", value: cbx };
 //   applyFormData.push(cbx);
    console.log(' modelConfirmAction cbx ', applyFormData);
-
   $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
   $.ajax({
       type: 'POST',
@@ -422,20 +425,14 @@ $(document).on('click','.modelConfirmAction', function(){
 });
 
 
-
 $(document).on('click','.btnBulkStatus', function(){
-
     var cxx = $('input[name="cxx"]:checked').map(function(){return $(this).val(); }).toArray();
     var cyx = $('input[name="cyx"]:checked').map(function(){return $(this).val(); }).toArray();
     var czx = $('input[name="czx"]:checked').map(function(){return $(this).val(); }).toArray();
-
-
   if(cxx.length <= 0 && cyx.length <= 0 && czx.length <= 0 ){
       alert('Please Select Checkboxes');
       return false;
     }
-
-
   var applyFormData = $('#job_apply_form').serializeArray();
   applyFormData[applyFormData.length] = { name: "cxx", value: cxx };
   applyFormData[applyFormData.length] = { name: "cyx", value: cyx };
@@ -443,16 +440,13 @@ $(document).on('click','.btnBulkStatus', function(){
 
 //   applyFormData.push(cbx);
    console.log(' form data  ', applyFormData);
-
   $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
   $.ajax({
       type: 'POST',
       url: base_url+'/admin/ajax/massStatusChange',
       data: applyFormData,
       beforeSend: function(){
-
         $('#dataTable_processing').css("display", "block");
-
       },
       success: function(data) {
         if(data.status==1){
@@ -468,10 +462,6 @@ $(document).on('click','.btnBulkStatus', function(){
   });
 
 });
-
-
-
-
     var tableObj = jQuery('#dataTable').DataTable({
         processing: true,
         'language': {
@@ -497,6 +487,7 @@ $(document).on('click','.btnBulkStatus', function(){
             { data: 'goldstar', name: 'goldstar' },
             // { data: 'preffer', name: 'preffer' },
             { data: 'correspondance', name: 'correspondance' },
+            { data: 'select_test', name: 'select_test' },
             { data: 'test', name: 'test' },
             { data: 'interview', name: 'interview'},
             { data: 'action', name: 'action'},
@@ -660,13 +651,9 @@ $(document).on('click','.btnBulkCompileCV', function(){
 
 // ================================================== Bulk Pool Confirm ==================================================
 
-
-
 $(document).on('click', '.addInPoolConfirm', function(){
-
   var formdata = $('.addBulkJobSeekerInPool').serializeArray();
   console.log(formdata);
-
   $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
       $.ajax({
             type: 'POST',
@@ -681,17 +668,27 @@ $(document).on('click', '.addInPoolConfirm', function(){
                   setTimeout(function() { 
                       $('.usersAddedMessage').addClass('d-none');
                       $('.ModalBulkPool').modal('hide');
-                      
                   }, 3000);
-
               }
       });
-
-
-
 });
 
+// =============================================== iteration-8 Get job of JobSeeker Modal ===============================================
 
+$(document).on('click', '.userTestsModal', function(){
+  var id = $(this).attr('jobApp_id');
+  // console.log(id);return;
+  $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+  $.ajax({
+    type: 'GET',
+    url: '{!! route('getOnlineTestJobApplications') !!}',
+    data: {'id': id},
+    success: function(data) {
+      // console.log(' data ', data);
+      $('.applyJobModalHeader').html(data);
+    }
+  });
+});
 
 </script>
 @stop

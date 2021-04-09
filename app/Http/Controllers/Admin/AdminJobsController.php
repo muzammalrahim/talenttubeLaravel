@@ -801,6 +801,18 @@ class AdminJobsController extends Controller
         }})
 
 
+      ->addColumn('select_test', function ($records) {
+            if (isAdmin()){
+                $viewjob = '<span class = "ml-1">Job-<u><span><a class="pointer text-success " href="" target="_blank" >View</a>';
+                $jobStatusArray = jobStatusArray();
+                $jobHtml = '<button class = "btn btn-primary userTestsModal"  data-toggle ="modal" jobApp_id = '.$records->id.' data-target = "#getTestsModal"> Select Test </button>';
+                // $jobStatus  =  jobStatusArray();
+                return $jobHtml;       
+               
+            }})
+
+
+
       ->addColumn('test', function ($records) {
         if (isAdmin()){
             $UserInterview = $records->userOnlineTests;
@@ -832,7 +844,7 @@ class AdminJobsController extends Controller
       })
 
 
-      ->rawColumns(['profile', 'correspondance', 'test' ,'interview', 'action'])
+      ->rawColumns(['profile', 'correspondance', 'select_test', 'test' ,'interview', 'action'])
       ->toJson();
     }
 

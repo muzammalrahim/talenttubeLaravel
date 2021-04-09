@@ -14,6 +14,10 @@ use App\TestQuestion;
 use App\InterviewTemplate;
 
 use App\UserOnlineTest;
+use App\JobsApplication;
+use App\History;
+
+
 
 
 class AdminTestController extends Controller
@@ -344,6 +348,39 @@ class AdminTestController extends Controller
 
     }
 
+    // ============================================================ Bulk testing ============================================================
+
+    public function bulkTestingJobApp(Request $request){
+        
+      // dd($request->cbx);
+
+
+        if(!empty($request->cbx)){
+
+        $userIDs = array();
+        $jobApp_id = array();
+        $jobApplications = JobsApplication::whereIn('id',$request->cbx)->get();
+        $user = Auth::user();
+        $data['user'] = $user;
+        $data['title'] = 'Bulk Testing';
+        $data['content_header'] = 'Bulk Testing';
+        $data['classes_body'] = 'bulkTesting';
+        $data['record'] = null;
+        $data['user_ids'] = $userIDs;
+        $data['jobApplications'] = $jobApplications;
+        $onlineTestTemplate = OnlineTest::get();
+        $data['onlineTestTemplate'] = $onlineTestTemplate;
+        $data['jobSeekers'] = User::whereIn('id',$userIDs)->get();
+        return view('admin.candidate_tracking.bulkTesting.bulk_TestJobAppTemplate', $data);
+
+
+        }
+
+
+        // admin/candidate_tracking/bulkTesting/bulk_Testing
+
+    }
+
 
     // ============================================================ Bulk Interview Template ============================================================
 
@@ -395,12 +432,67 @@ class AdminTestController extends Controller
             $UserOnlineTest->rem_time = $OnlineTest->time;
             $UserOnlineTest->current_qid = 0;
             $UserOnlineTest->save();     
+
+            $history = new History;
+            $history->user_id = $UserOnlineTest->user_id; 
+            $history->type = 'onlineTest_sent'; 
+            $history->userOnlineTest_id = $UserOnlineTest->id; 
+            $history->save();
         }
 
         return response()->json([
             'status' => 1,
             'message' => 'Online Test Sent Successfully'
         ]); 
+
+    }
+
+    // ============================================================ Bulk interview send ============================================================
+
+    public function bulkTestJobAppSend(Request $request){
+
+        $user = Auth::user();
+
+        $data = $request->toArray();
+        // dd($data);
+        foreach ($data['jobApp_id'] as $key => $value) {
+            $OnlineTest = OnlineTest::where('id' , $data['test_id'])->first();
+            $UserOnlineTest = new UserOnlineTest;
+            $UserOnlineTest->user_id = $key;
+            $UserOnlineTest->emp_id = $user->id;
+            $UserOnlineTest->test_id = $data['test_id'];
+            $UserOnlineTest->status = 'pending';
+            $UserOnlineTest->rem_time = $OnlineTest->time;
+            $UserOnlineTest->current_qid = 0;
+            $UserOnlineTest->save();  
+
+            $history = new History;
+            $history->user_id = $UserOnlineTest->user_id; 
+            $history->type = 'onlineTest_sent'; 
+            $history->userOnlineTest_id = $UserOnlineTest->id; 
+            $history->save();   
+        }
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Online Test Sent Successfully'
+        ]); 
+
+    }
+
+
+     // ===================================================== Get Job Application for admin iteration-8 =====================================================
+
+    public function getOnlineTestJobApplications(Request $request){
+        // dd($request->id);
+        if (isAdmin()) {
+
+            $JobsApplication = JobsApplication::where('id' , $request->id)->first();
+            // dd($JobsApplication->user_id);
+            $UserOnlineTest = UserOnlineTest::where('user_id' , $JobsApplication->user_id)->where('status' , 'complete')->get();
+            $data['UserOnlineTest'] = $UserOnlineTest; 
+            return view('admin.job_applications.onlineTests.selectOnlineTest' , $data);  /* admin/job_applications/onlineTests/selectOnlineTest */
+        }
 
     }
 
