@@ -26,5 +26,10 @@ class History extends Model
         return $this->belongsTo('App\UserInterview', 'userinterview_id');
     }
 
+    public function userOnlineTestInHistory()
+    {
+        return $this->belongsTo('App\UserOnlineTest', 'userOnlineTest_id');
+    }
+
 
 }

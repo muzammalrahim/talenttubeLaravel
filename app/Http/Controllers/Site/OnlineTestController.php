@@ -13,6 +13,8 @@ use App\OnlineTest;
 use App\UserOnlineTest;
 use App\UserOnlineTestAnswers;
 use App\TestQuestion;
+use App\History;
+
 
 
 
@@ -51,6 +53,13 @@ class OnlineTestController extends Controller
         		$UserOnlineTest->rem_time = $OnlineTest->time;
         		$UserOnlineTest->current_qid = 0;
         		$UserOnlineTest->save();
+
+        		$history = new History;
+                $history->user_id = $UserOnlineTest->user_id; 
+                $history->type = 'onlineTest_sent'; 
+                $history->userOnlineTest_id = $UserOnlineTest->id; 
+                $history->save();
+
         		return response()->json([
         			'status' => 1,
         			'message'=> 'Online test request has been submitted'
@@ -138,13 +147,18 @@ class OnlineTestController extends Controller
 		$user = Auth::user();
 		$data = $request->all();
 	    $UserOnlineTest = UserOnlineTest::where('id', $data['userOnlineTest_id'])->first();
+	    // dd($UserOnlineTest);
 	    $UserOnlineTest->rem_time = $time;
 	    $UserOnlineTest->status = 'continue';
 	    $UserOnlineTest->current_qid = $UserOnlineTest->current_qid+1;
 	    $UserOnlineTest->save(); 
-	    $JobsApplication = JobsApplication::where('id' , $UserOnlineTest->jobApplication->id)->first();
-	    $JobsApplication->status = 'applied';
-	    $JobsApplication->save();
+	    if ($UserOnlineTest->job_id != null) {
+
+	    	$JobsApplication = JobsApplication::where('id' , $UserOnlineTest->jobApplication->id)->first();
+		    $JobsApplication->status = 'applied';
+		    $JobsApplication->save();
+	    }
+	    
 
 	    if ($UserOnlineTest->user_id == $user->id) {
 			$UserOnlineTestAnswers = new UserOnlineTestAnswers();
@@ -163,7 +177,7 @@ class OnlineTestController extends Controller
 			}
 			$UserOnlineTestAnswers->save();
 			$data['UserOnlineTest'] = $UserOnlineTest;
-    		return view('site.onlineTest.parts.oneQuestion' ,$data);
+    		return view('site.onlineTest.parts.oneQuestion' ,$data); // site/onlineTest/parts/oneQuestion
 	    }
 	    else{
 	    	dd('User is not authenticated');
@@ -211,6 +225,12 @@ class OnlineTestController extends Controller
 		$persetnages = ceil($right_count *100 / $count);
 	    $UserOnlineTest->test_result = $persetnages; 
 	    $UserOnlineTest->save();
+
+	    $history = new History;
+        $history->user_id = $UserOnlineTest->user_id; 
+        $history->type = 'onlineTest_comp'; 
+        $history->userOnlineTest_id = $UserOnlineTest->id; 
+        $history->save();
 
 
 	    return response()->json([

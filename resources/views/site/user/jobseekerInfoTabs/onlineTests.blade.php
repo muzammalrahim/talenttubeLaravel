@@ -15,6 +15,8 @@
         @endif
       </div>
 
+      <span class="bold font15"> {{ $test->updated_at ->format('d-m-Y')}} </span>
+
       <div class="fl_right">
           <div class="j_label bold">Status:</div>
           <div class="j_value text_capital">{{$test->status}}</div>

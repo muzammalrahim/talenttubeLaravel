@@ -1375,7 +1375,8 @@ class UserController extends Controller
     
     public function addCandidateDatatable(Request $request){
       $records = array();
-      $records = User::select(['id', 'name', 'email', 'phone', 'created_at'])->where('tracker', '0')
+      $records = User::select(['id', 'name', 'email', 'phone', 'created_at'])
+      ->where('tracker', '0')
         ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
         ->orderBy('created_at', 'desc');
       return datatables($records)

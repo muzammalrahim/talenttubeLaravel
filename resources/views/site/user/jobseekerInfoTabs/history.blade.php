@@ -85,6 +85,20 @@
 					{{-- <a class="jobDetailBtn graybtn jbtn" target="_blank" href="{{route('jobDetail',['id' => $hist->job_id])}}">See Job Detail</a> --}}
 				</p>
 				@endif
+
+			@elseif($hist->type == "onlineTest_sent")
+				
+				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span>  <b> {{$jobSeeker->name}} </b> has received <b> {{ $hist->userOnlineTestInHistory->onlineTest->name}}
+				</b>  Online Test at <b> {{$hist->created_at}}</b>
+					{{-- <a class="jobDetailBtn graybtn jbtn" target="_blank" href="{{route('jobDetail',['id' => $hist->job_id])}}">See Job Detail</a> --}}
+				</p>
+
+			@elseif($hist->type == "onlineTest_comp")
+				
+				<p>  <span>{{$hist->created_at->format('h:i:s')}} : </span>  <b> {{$jobSeeker->name}} </b> has completed <b> {{ $hist->userOnlineTestInHistory->onlineTest->name}}
+				</b>  Online Test at <b> {{$hist->created_at}}</b>
+					{{-- <a class="jobDetailBtn graybtn jbtn" target="_blank" href="{{route('jobDetail',['id' => $hist->job_id])}}">See Job Detail</a> --}}
+				</p>
 				
 			@else
 				<span>{{$hist->created_at->format('h:i:s')}} : </span> The user has not any activity	

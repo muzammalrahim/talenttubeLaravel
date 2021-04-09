@@ -367,7 +367,7 @@ this.bulkremoveButton = function(){
 }
 
 
-// ============================================ iteration-9 bulk tracker remove ============================================ 
+// ============================================ iteration-9 bulk testing live tracker ============================================ 
 
 this.bulkTestingButton = function(){
   console.log('bulk testing button');
@@ -381,6 +381,25 @@ this.bulkTestingButton = function(){
   cbx.forEach(function(id){ cbx_hidden += '<input type="hidden" name="cbx[]" value="'+id+'" />'  });
   $('.bulkTesting .cbx_list').html(cbx_hidden);
   $('.bulkTesting').submit();
+
+}
+
+
+
+// ============================================ iteration-9 bulk testing live tracker ============================================ 
+
+this.bulkTestingButtonJobApp = function(){
+  console.log('bulk testing button');
+  var cbx = $('input[name = "cbx[]"]:checked').map(function(){ return $(this).val();}).toArray();
+  console.log(cbx);
+  if (cbx.length <= 0) {
+    alert('please select checkbox first');
+    return false;
+  }
+  var cbx_hidden = '';
+  cbx.forEach(function(id){ cbx_hidden += '<input type="hidden" name="cbx[]" value="'+id+'" />'  });
+  $('.bulkTestingJobApp .cbx_list').html(cbx_hidden);
+  $('.bulkTestingJobApp').submit();
 
 }
 

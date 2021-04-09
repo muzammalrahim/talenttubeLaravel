@@ -58,6 +58,7 @@
 .text_capital{text-transform: capitalize; }
 .relative{ position: relative;}
 .font13{font-size: 13px}
+.font15{font-size: 15px}
 .text-danger{color: #bd2130}
 button.btn.pink:hover {
     background: #e7495c;

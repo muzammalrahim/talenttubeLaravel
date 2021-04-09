@@ -325,6 +325,15 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('ajax/online/bulkTest/send', 'Admin\AdminTestController@bulkTestSend')->name('bulkTestView.send');
 
 
+    Route::get('bulk/bulkTestingJobApp', 'Admin\AdminTestController@bulkTestingJobApp')->name('bulk.bulkTestingJobApp');
+    Route::post('ajax/online/bulkTestJobAppSend', 'Admin\AdminTestController@bulkTestJobAppSend')->name('bulkTestJobAppSend.send');
+
+    Route::get('jobApplications/onlineTests', 'Admin\AdminTestController@getOnlineTestJobApplications')->name('getOnlineTestJobApplications');
+
+
+
+
+
 
 
 
