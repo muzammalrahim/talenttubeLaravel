@@ -119,7 +119,7 @@
             {{-- <th>undesirable</th> --}}
             <th>correspondance</th>
             <th>Completed Tests</th>
-            <th>Mendatory Testing</th>
+            <th>Mandatory Testing</th>
             <th>interview</th>
             <th>action</th>
         </tr>

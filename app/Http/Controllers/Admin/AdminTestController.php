@@ -158,15 +158,11 @@ class AdminTestController extends Controller
         $question = TestQuestion::where('id' , $request->id)->where('test_id' , $request->test_id)->first();
         // dd($question);
         if ($question) {
-
             if (isset($question->image_path)) {
-
                 $imgPath = ('/public').'/onlineTEST/'.$question->image_name;
                 // dd($imgPath);
-
                 Storage::disk('media')->delete($imgPath);
                 // Storage::disk('media')->delete($imgPath);
-
             }
             $question->delete();
 

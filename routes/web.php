@@ -585,6 +585,7 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     // =============================================== Advertise job iteration-9  =============================================== 
 
     Route::get('advertise/job/{id}', 'Site\EmployerController@advertiseJob')->name('advertise');
+
     Route::post('ajax/sendOnlineTest/', 'Site\OnlineTestController@sendOnlineTest')->name('sendOnlineTest');
     Route::get('testing', 'Site\OnlineTestController@testing')->name('testing');
     Route::get('proceed/test/{id}', 'Site\OnlineTestController@proceedTesting')->name('proceedTesting');
@@ -644,6 +645,8 @@ Route::get('/js/lang.js', function () {
 
 Route::get('textLog', 'Site\HomeController@textLog')->name('textLog');
 Route::get('userinterviewconciergeloggedin/url', 'Site\InterviewController@userurl')->name('userinterviewconciergeloggedin.url');
+
+Route::get('advertise/indeed/{id}', 'Site\HomeController@advertiseOnIndeed')->name('advertiseOnIndeed');
 
 
 

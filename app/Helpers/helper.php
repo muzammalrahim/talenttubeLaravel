@@ -932,3 +932,58 @@ function getInterviewTemplateType(){
     );
     return $templatetype;
 }
+
+
+function calculate_distance($js, $user){
+    
+    $unit = "K";
+    $latitude = $js->location_lat;
+    $longitude = $js->location_long;
+    $js_latitude = $user->location_lat;
+    $js_long = $user->location_long;
+    $theta = $longitude - $js_long;
+    $dist = sin(deg2rad($latitude)) * sin(deg2rad($js_latitude)) +  cos(deg2rad($latitude)) * cos(deg2rad($js_latitude)) * cos(deg2rad($theta));
+    $dist = acos($dist);
+    $dist = rad2deg($dist);
+    $miles = $dist * 60 * 1.1515;
+    $unit = strtoupper($unit);
+    if ($unit == "K") {
+      return ($miles * 1.609344);
+    } else if ($unit == "N") {
+      return ($miles * 0.8684);
+    } else {
+      return $miles;
+    }
+}
+
+function cal_ind_exp($js, $user){
+    $js_indExp = $js->industry_experience;
+    $user_indExp = $user->industry_experience;
+    if (isset($js_indExp) && !empty($js_indExp)) {
+        $result = array_intersect($js_indExp, $user_indExp);
+        return $result;
+    }
+}
+
+function compatibility($js,$user){
+
+    $emp_questions = json_decode($js->questions , true);
+    $user_questions = json_decode($user->questions , true);
+    if ($emp_questions && $user_questions != null) {
+        $ques_result = array_intersect_assoc($emp_questions,$user_questions);
+        // dump($ques_result);
+        $comp_count = count($ques_result);
+        // dump($comp_count);
+        return $comp_count;
+    }
+}
+
+
+
+
+
+
+
+
+
+

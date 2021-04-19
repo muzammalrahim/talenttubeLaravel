@@ -31,27 +31,6 @@
             </div>
         </div>
 
-
-
-        <div class="job_experience form_field">
-
-            {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
-          <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
-          <div class="cl"></div> --}}
-          <span class="form_label">Industry Experience :<i class="editIndustry fas fa-edit"></i></span>
-              <p class="loader SaveindustryExperience"style="float: left;"></p>
-
-                  <div class="IndusList form_input">
-                    <div class="IndustrySelect">
-                        @include('site.layout.parts.newJobIndustryList')
-                    </div>
-                  </div>
-                  <div class="buttonGroup">
-                    <a class="addIndus graybtn jbtn hide_it marginButton" style = "cursor:pointer;">+ Add</a>
-                    <a class="greenbtn jbtn hide_it buttonSaveIndustry"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
-                  </div>
-        </div>
-
         <div class="job_type form_field">
             <span class="form_label">Type :</span>
             <div class="form_input">
@@ -67,10 +46,80 @@
         </div>
 
 
+        <div class="job_vacancies form_field">
+            <span class="form_label">Vacancies :</span>
+            <div class="form_input">
+                <input type="text" value="{{$job->vacancies}}" name="vacancies" class="">
+                <div id="vacancies_error" class="error field_error to_hide">&nbsp;</div>
+            </div>
+        </div>
+
+
+        <div class="job_salary form_field">
+            <span class="form_label">Salary :</span>
+            <div class="form_input">
+                {{ Form::select('salary', $salaryRange, $job->salary, ['placeholder' => 'Select Salary Range', 'onchange' => '', 'id' => 'salaryRangeFieldnew', 'class' => ' salaryRangeField']) }}
+                <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
+            </div>
+        </div>
+
+        <div class="job_age form_field">
+            <span class="form_label">Expiration Date:</span>
+            <div class="form_input">
+                @php
+                   $expiration = ($job->expiration)?(explode(' ', $job->expiration)):null;
+                   $expiration = (is_array($expiration))?($expiration[0]):null;
+
+                @endphp
+                <input type="text" name="expiration" value="{{$expiration}}" class="datepicker" />
+                <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
+            </div>
+        </div>
+
+        <div class="job_age form_field">
+                <span class="form_label">Online Test</span>
+                <div class="form_input">
+
+                   <select name="test_id">
+                        @if ($job->onlineTest_id == null)
+                       <option value="0">Select Test</option>
+
+                        @endif
+                       @foreach ($onlineTest as $test)
+                           <option value="{{$test->id}}" {{ $job->onlineTest_id == $test->id ? 'selected':'' }} > {{$test->name}} </option>
+                       @endforeach
+                   </select> 
+                </div>
+        </div>
+
+
+
+        <div class="job_experience form_field">
+
+            {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
+          <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
+          <div class="cl"></div> --}}
+          <span class="form_label2">Industry Experience :<i class="editIndustry fas fa-edit"></i></span>
+              <p class="loader SaveindustryExperience"style="float: left;"></p>
+
+              <div class="IndusList form_input">
+                <div class="IndustrySelect" style="width:80%;">
+                    @include('site.layout.parts.newJobIndustryList')
+                </div>
+              </div>
+              <div class="">
+                <a class="addIndus graybtn jbtn hide_it marginButton" style = "cursor:pointer;">+ Add</a>
+                <a class="greenbtn jbtn hide_it buttonSaveIndustry"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
+              </div>
+        </div>
+
+        
+
+
         <div class="job_country form_field geo_location_cont">
             <span class="form_label">Location :</span>
             <div class="location_search_cont">
-                <div class="location_input dtable w100">
+                <div class="location_input dtable form_input">
                     <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
                     <select class="dinline_block filter_location_radius select_aw" name="filter_location_radius" data-placeholder="Select Location Radius">
                          <option value="5">5km</option>
@@ -95,22 +144,7 @@
         </div>
 
 
-        <div class="job_vacancies form_field">
-            <span class="form_label">Vacancies :</span>
-            <div class="form_input">
-                <input type="text" value="{{$job->vacancies}}" name="vacancies" class="">
-                <div id="vacancies_error" class="error field_error to_hide">&nbsp;</div>
-            </div>
-        </div>
-
-
-        <div class="job_salary form_field">
-            <span class="form_label">Salary :</span>
-            <div class="form_input">
-                {{ Form::select('salary', $salaryRange, $job->salary, ['placeholder' => 'Select Salary Range', 'onchange' => '', 'id' => 'salaryRangeFieldnew', 'class' => ' salaryRangeField']) }}
-                <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
-            </div>
-        </div>
+        
 
         {{-- <div class="job_gender form_field">
             <span class="form_label">Gender :</span>
@@ -133,18 +167,7 @@
         </div> --}}
 
 
-        <div class="job_age form_field">
-            <span class="form_label">Expiration Date:</span>
-            <div class="form_input">
-                @php
-                   $expiration = ($job->expiration)?(explode(' ', $job->expiration)):null;
-                   $expiration = (is_array($expiration))?($expiration[0]):null;
-
-                @endphp
-                <input type="text" name="expiration" value="{{$expiration}}" class="datepicker" />
-                <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
-            </div>
-        </div>
+        
 
                    @php
                     $questions = json_decode($job->questions, true);

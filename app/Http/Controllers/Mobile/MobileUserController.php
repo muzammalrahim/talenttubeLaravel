@@ -1652,31 +1652,31 @@ class MobileUserController extends Controller
     // Get // layout for listing of jobSeekers on mobile.
     //====================================================================================================================================//
 
-        public function MjobSeekers(Request $request){
+    public function MjobSeekers(Request $request){
 
+		$user = Auth::user();
+		if (!isEmployer($user)){ return redirect(route('jobs')); }
+		$data['user']           = $user;
+		$data['title']          = 'Job Seekers';
+		$data['classes_body']   = 'jobSeekers';
+		$jobSeekersObj          = new User();
+		$jobSeekers             = $jobSeekersObj->getJobSeekersm($request, $user);
+		$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 
-									$user = Auth::user();
-									if (!isEmployer($user)){ return redirect(route('jobs')); }
-									$data['user']           = $user;
-									$data['title']          = 'Job Seekers';
-									$data['classes_body']   = 'jobSeekers';
-									$jobSeekersObj          = new User();
-									$jobSeekers             = $jobSeekersObj->getJobSeekersm($request, $user);
-									$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+		$data['likeUsers'] = $likeUsers;
+		//$data['jobSeekers'] = $jobSeekers; // $jobSeekers;
 
-									$data['likeUsers'] = $likeUsers;
-									//$data['jobSeekers'] = $jobSeekers; // $jobSeekers;
-
-									return view('mobile.employer.jobSeekers.index', $data);
-								 // mobile/employer/jobSeekers/index
-				}
+		return view('mobile.employer.jobSeekers.index', $data);
+	 	// mobile/employer/jobSeekers/index
+	}
 
 
 
 
 		public function jobSeekersFilter(Request $request){
 
-			  $user = Auth::user();
+
+		$user = Auth::user();
         if (!isEmployer($user)){
             return response()->json([
                 'status' => 0,
@@ -1776,7 +1776,7 @@ class MobileUserController extends Controller
             });
         }
 
-								// dd($query);
+		// dd($query);
 
         // DB::enableQueryLog();
         // print_r( $query->toSql() );exit;

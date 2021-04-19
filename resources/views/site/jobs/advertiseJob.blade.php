@@ -81,8 +81,8 @@
                     </div>
 
                     <div class="j_button mt20">
-                        <a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Advertise on indeed</a>
-                        <a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Advertise on Jura</a>
+                        <a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}" href="{{ route('advertiseOnIndeed', ['id' => $job->id]) }}">Advertise on indeed</a>
+                        <a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}" >Advertise on Jura</a>
                     </div>
                     <div class="j_button"></div>
 

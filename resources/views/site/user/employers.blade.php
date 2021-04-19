@@ -1,10 +1,4 @@
-{{-- @extends('site.user.usertemplate') --}}
-{{-- 
-@if ($controlsession->count() > 0)
-<div class="adminControl">
-        <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
-</div>
-@endif --}}
+
 
 @extends('site.user.usermaster')
 
@@ -13,32 +7,18 @@
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-{{-- <style>
-    .js_location {
-    font-size: 11px !important;
-    }
-</style> --}}
+
+
 @stop
 
 @section('content')
 <div class="">
     <div class="head icon_head_browse_matches">Employers List</div>
-
-
-
-				@include("site.user.employerfilter")
-
-
-				@include("site.spinner")
-				<div class="employers_list">
-					@include("site.user.employerslist")
-				</div>
-
-
-
-
-
-
+        @include("site.user.employerfilter")
+        @include("site.spinner")
+        <div class="employers_list">
+            @include("site.user.employerslist")  {{-- site/user/employerslist --}}
+        </div>
 </div>
 
 <div style="display:none;">
@@ -75,6 +55,9 @@
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+
+
+
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
@@ -108,11 +91,6 @@ $(document).on('click','.jobseeker_pagination .page-item .page-link',function(e)
     $('#paginate').val(page);
     getData();
 });
-
-
-
-
-
 
 
 });

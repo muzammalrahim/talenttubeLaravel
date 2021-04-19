@@ -483,6 +483,8 @@ class EmployerController extends Controller {
         $user = Auth::user();
         $job = Jobs::where('id',$id)->first();
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $onlineTest = OnlineTest::get();
+
         $data['controlsession'] = $controlsession;
         $data['user']   = $user;
         $data['job']    = $job;
@@ -495,6 +497,8 @@ class EmployerController extends Controller {
         $data['geo_countries'] = get_Geo_Country();
         $data['geo_states'] = get_Geo_State($job->country);
         $data['location'] = $job->city.' '.$job->country.' ,'.$job->country;
+        $data['onlineTest'] = $onlineTest;
+
         return view('site.employer.jobEdit', $data);  // site/employer/jobEdit
     }
 
@@ -611,6 +615,17 @@ class EmployerController extends Controller {
                 if(!empty($requestData['jq'])){
                 $job->addJobQuestions($requestData['jq']);
                 }
+
+                if ($requestData['test_id'] != 0) {
+                    $test = $requestData['test_id'];
+                    $onlineTest = OnlineTest::get()->pluck('id')->toArray();
+                    if (in_array($test, $onlineTest)) {
+                        // dd('Hi how are you');
+                        $job->onlineTest_id = $test;
+
+                    }
+                }
+
                 $job->save();
                 return response()->json([
                     'status' => 1,
@@ -824,7 +839,7 @@ class EmployerController extends Controller {
 
         // DB::enableQueryLog();
         // print_r( $query->toSql() );exit;
-        $jobSeekers =  $query->paginate(10);
+        $jobSeekers =  $query->paginate(2);
         // $jobSeekers =  $query->get();
 
 
@@ -1214,13 +1229,9 @@ class EmployerController extends Controller {
         // site/jobs/advertiseJob
     }
 
-
-
-
-
-
-
-
     
+
+
+
 
 }

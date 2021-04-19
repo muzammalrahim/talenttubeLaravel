@@ -104,7 +104,7 @@
         <div class="cl"></div>
     </div>
 
-    @include('site.user.profile.tabs')
+    @include('site.user.profile.tabs')  {{-- site/user/profile/tabs --}}
     <div class="cl"></div>
 
 
