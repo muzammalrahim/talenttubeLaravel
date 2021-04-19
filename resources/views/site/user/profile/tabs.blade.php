@@ -44,17 +44,12 @@
             <div class="title">
                 <div id="basic_anchor_about_me" class="title_icon_edit">About me
                     {{-- <span id="basic_pen_about_me" onclick="UProfile.showBasicFieldEditor('about_me');"></span> --}}
-
-
                     <i id="basic_pen_about_me" onclick="UProfile.showBasicFieldEditor('about_me');" class="fas fa-edit "></i>
-
-
                 </div>
                 <div class="cl"></div>
             </div>
             <textarea id="basic_editor_text_about_me" class="basic_textarea" maxlength="1000" disabled=""
                 style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 100px; opacity: 1;">{{$user->about_me}}</textarea>
-
             <div id="basic_editor_about_me" class="frm_edit">
                 <button id="basic_editor_save_about_me" class="btn small pink" onclick="UProfile.saveBasicFieldEditor('about_me'); return false;">Save</button>
                 <button id="basic_editor_cancel_about_me" class="btn small white_frame" onclick="UProfile.closeBasicFieldEditor('about_me'); return false;">Cancel</button>
@@ -64,7 +59,6 @@
         </div>
 
         {{-- ======================================== About Me End here ======================================= --}}
-
 
         <hr class="rounded">
         {{-- <div class="lineDivivder"><span>Interested In</span></div> --}}

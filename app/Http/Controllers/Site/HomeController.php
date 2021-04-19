@@ -31,11 +31,7 @@ use App\History;
 use App\UserInterview;
 use App\InterviewTempQuestion;
 use App\ControlSession;
-
-
-
-
-
+use App\Jobs;
 
 class HomeController extends Controller {
 
@@ -1214,6 +1210,25 @@ class HomeController extends Controller {
 
 
     // =============================================== Interview invitation login ===============================================
+
+
+    //====================================================================================================================================//
+    // Advertise job index
+    //====================================================================================================================================//
+    function advertiseOnIndeed($id){
+        // dd($id);
+        // $user = Auth::user();
+        $job = Jobs::find($id);
+        // dd($job);
+        // $data['user'] = $user;
+        $data['title'] = 'Advertise Job';
+        $data['classes_body'] = 'advertiseJob';
+        // $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        // $data['controlsession'] = $controlsession;
+        $data['job'] = $job;
+        return response()->view('site.jobs.adv_indeed', $data)->header('Content-Type', 'text/xml');
+        // site/jobs/adv_indeed
+    }
  
     
 
