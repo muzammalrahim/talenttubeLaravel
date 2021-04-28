@@ -2,76 +2,67 @@
 @if ($applications->count() > 0)
 @foreach ($applications as $application)
 	@php
-           $js = $application->jobseeker;
-           // dd($js);
+       $js = $application->jobseeker;
+        // dd($js);
     @endphp
 
     {{-- @dump($js) --}}
-<div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{$application->id}}">
+<div class="card mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{$application->id}}">
     <div class="card">
-        <div class="card-header jobInfoFont jobAppHeader p-2">Name:
+        {{-- <div class="card-header jobInfoFont jobAppHeader p-2">Name:
             <span class="jobInfoFont font-weight-normal">{{$js->name}} {{$js->surname}}</span>
                 <div class="jobInfoFont">Location:
                     <span class="font-weight-normal">{{$js->city}},  {{$js->state}}, {{$js->country}}</span>
                 </div>
-        </div>
+        </div> --}}
 				@php
-				$profile_image  = asset('images/site/icons/nophoto.jpg');
-				$profile_image_gallery    = $js->profileImage()->first();
+    				$profile_image  = asset('images/site/icons/nophoto.jpg');
+    				$profile_image_gallery    = $js->profileImage()->first();
 
-				// dump($profile_image_gallery);
+    				// dump($profile_image_gallery);
 
 					if ($profile_image_gallery) {
-								// $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
-
-								$profile_image   = assetGallery2($profile_image_gallery,'small');
-									// dump($profile_image);
-
+                        // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+                        $profile_image   = assetGallery2($profile_image_gallery,'small');
+                        // dump($profile_image);
 					}
 				@endphp
         {{-- ============================================ Card Body ============================================ --}}
-        <div class="card-body jobAppBody pt-2">
-
+        <div class="card-body pt-2">
             <div class="row jobInfo">
-
-                <div class="col-4 p-0">
-                    <img class="img-fluid z-depth-1" src="{{$profile_image}}" height="100px" width="100px">
-                  {{--   <div class="mt-2">
-                        <span class="jobInfoFont">Location:</span>
-                        {{($js->GeoCity)?($js->GeoCity->city_title):''}},  {{($js->GeoState)?($js->GeoState->state_title):''}}, {{($js->GeoCountry)?($js->GeoCountry->country_title):''}}
-                    </div> --}}
+                <div class="col-md-6 col-12 videoDiv">
+                    <div class="js_profile_video">
+                        <div class="js_video_thumb">
+                            <img class="js_profile_photo w100" id="pic_main_img" src="{{$profile_image}}">
+                        </div>
+                        <div class="videos_list">
+                            @foreach($js->vidoes as $video)
+                                <input type="hidden" name="user_video" value="{{$video->file}}">
+                            @endforeach
+                        </div>
+                    </div>
+                    @if($js->vidoes->count() > 0)
+                    <a onclick="profileVideoShow('{{assetVideo($js->vidoes->first())}}')" class="js_video_link" target="_blank">{!! generateVideoThumbsm($js->vidoes->first()) !!}</a>
+                    @endif
                 </div>
-                <div class="col p-0 pl-3">
-                    <div class="jobInfoFont">Recent Job</div><div>{{$js->recentJob}}</div>
-                    <div class="jobInfoFont mt-2">Salary Range</div><div>{{getSalariesRangeLavel($js->salaryRange)}}</div>
+
+                <div class="col-md-6 col-12">
+                  <span class="font-weight-bold m-0 float-left jobInfoFont"> {{$js->name}} {{$js->surname}} </span>
+                  <span class="float-right"> <span class="font-weight-normal"> Status : </span>  
+                    @if ($application->status == "inreview")
+                        <span class="statusUpdated text-capitalize"> In Review </span> 
+                    @else
+                        <span class="statusUpdated text-capitalize"> {{ $application->status }} </span> 
+                    @endif
+                  </span>
                 </div>
 
+                <div class="col-md-6 col-12">
+                    <p> <span class="jobInfoFont">  Recent Job: </span>  {{$js->recentJob}} </p> 
+                </div>
             </div>
 
-            <div class="row p-0">
-                <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Interested In</div>
-            </div>
-            <p class="card-text jobDetail row mb-1">{{$js->interested_in}}</p>
-
-
-            <div class="row p-0">
-                <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">About Me</div>
-            </div>
-            <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
-
-            <div class="row p-0">
-                <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Qualification</div>
-            </div>
-            @php
-             $qualification_names =  getQualificationNames($js->qualification)
-            @endphp
-             @if(!empty($qualification_names))
-                @foreach ($qualification_names as $qnKey => $qnValue)
-            <p class="card-text jobDetail row mb-1 qualification dblock">{{$qnValue}}</p>
-
-
-                @endforeach
-             @endif
+            
         </div>
 
 {{-- ============================================ Card Body end ============================================ --}}
@@ -80,35 +71,41 @@
 {{-- ============================================ Card Footer ============================================ --}}
 
         <div class="card-footer text-muted jobAppFooter p-1">
-                <div class="float-right">
-                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs my-3" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
-                    {{-- <a class="jsBlockButton btn btn-sm btn-danger mr-0 btn-xs" data-jsid ="{{$js->id}}">Block</a> --}}
-                    {{-- @if (in_array($js->id,$likeUsers)) --}}
-                        {{-- <a class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a> --}}
-                    {{-- @else --}}
-                    <a class="jsLikeButton btn btn-sm btn-primary mr-0 btn-xs my-3" data-jsid ="{{$js->id}}">Like</a>
-
-                    {{-- <a class="status btn btn-sm btn-primary mr-0 btn-xs" data-jsid ="{{$js->id}}">Status</a> --}}
-                    {{-- @endif --}}
-
-                    <div class="mx-2 float-right jobApplicationStatusCont">
-                        <select name="jobApplicStatus" class="mdb-select sm-form colorful-select dropdown-primary select_aw jobApplicStatus" data-application_id="{{$application->id}}">
-                          @foreach (jobStatusArray() as $statusK => $statusV)
-                                  <option value="{{$statusK}}" {{($application->status == $statusK )?'selected="selected"':''}} >{{$statusV}}</option>
-                             @endforeach
-                        </select>
-                    </div>
 
 
-
-      {{--               <div class="jobApplicationStatusCont dinline_block">
-                        <select name="jobApplicStatus" class="select_aw jobApplicStatus" data-application_id="{{$application->id}}">
-                             @foreach (jobStatusArray() as $statusK => $statusV)
-                                  <option value="{{$statusK}}" {{($application->status == $statusK )?'selected="selected"':''}} >{{$statusV}}</option>
-                             @endforeach
-                        </select>
-                    </div> --}}
+            <div class="row">
+                <div class="col-4">
+                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
                 </div>
+                <div class="col-4">
+                    <a class="m5 btn btn-sm btn-primary ml-0 btn-xs viewCvButton" onclick="viewCv()" data-jsId = "{{ $js->id }}" >View CV</a>
+                </div>
+                <div class="col-4">
+                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="tel:{{ $js->phone }}">Call Candidate</a>
+                </div>
+            </div>
+            <div class="float-right">
+
+                <a class="inreview btn btn-sm btn-primary ml-0 btn-xs my-3" onclick="inreview()" data-appId ="{{$application->id}}" data-status = "inreview">In Review</a>
+                <a class="interview btn btn-sm btn-primary mr-0 btn-xs my-3" onclick="interview()" data-appId ="{{$application->id}}" data-status = "interview" >Interview</a>
+                <a class="unsuccessful btn btn-sm btn-primary mr-0 btn-xs my-3" onclick="unsuccessful()" data-appId ="{{$application->id}}" data-status = "unsuccessful" >Unsuccessful</a>
+
+                <div class="mx-2 float-right jobApplicationStatusCont">
+                    <select name="jobApplicStatus" class="mdb-select sm-form colorful-select dropdown-primary select_aw jobApplicStatus" data-application_id="{{$application->id}}">
+                      @foreach (jobStatusArray() as $statusK => $statusV)
+                              <option value="{{$statusK}}" {{($application->status == $statusK )?'selected="selected"':''}} >{{$statusV}}</option>
+                         @endforeach
+                    </select>
+                </div>
+
+                {{-- <div class="jobApplicationStatusCont dinline_block">
+                    <select name="jobApplicStatus" class="select_aw jobApplicStatus" data-application_id="{{$application->id}}">
+                         @foreach (jobStatusArray() as $statusK => $statusV)
+                              <option value="{{$statusK}}" {{($application->status == $statusK )?'selected="selected"':''}} >{{$statusV}}</option>
+                         @endforeach
+                    </select>
+                </div> --}}
+            </div>
         </div>
 
         <div class="jobAppFooter jobAppChangeStatus" style="display: none">
@@ -150,4 +147,58 @@
  <h6 class="h6 jobAppH6">No Application found</h6>
 @endif
 
+<script type="text/javascript">
+    
+    // ============================================== Change Status to in review ============================================== 
 
+    this.inreview = function(){
+        var app_id = $('.inreview').attr('data-appId');
+        var status = $('.inreview').attr('data-status');
+        $.ajax({
+          type: 'POST',
+          url: base_url+'/m/ajax/application/status/inreview',
+          data: {id:app_id,status:status},
+            success: function(data){
+                if (data.status == 1) {
+                    $('.statusUpdated').html(data.jobStatus);
+                }
+            }   
+        });
+    }
+
+    // ============================================== Change Status to interview ============================================== 
+
+    this.interview = function(){
+        var app_id = $('.interview').attr('data-appId');
+        var status = $('.interview').attr('data-status');
+        $.ajax({
+          type: 'POST',
+          url: base_url+'/m/ajax/application/status/interview',
+          data: {id:app_id,status:status},
+            success: function(data){
+                if (data.status == 1) {
+                    $('.statusUpdated').html(data.jobStatus);
+                }
+            }
+        });
+    }
+
+    // ============================================== Change Status to unsuccessful ============================================== 
+
+    this.unsuccessful = function(){
+        var app_id = $('.unsuccessful').attr('data-appId');
+        var status = $('.unsuccessful').attr('data-status');
+        // console.log("Application Id" +app_id + "Application Status"+ status); 
+        $.ajax({
+          type: 'POST',
+          url: base_url+'/m/ajax/application/status/unsuccessful',
+          data: {id:app_id,status:status},
+            success: function(data){
+                if (data.status == 1) {
+                    $('.statusUpdated').html(data.jobStatus);
+                }
+            }   
+        });
+    }
+
+</script>

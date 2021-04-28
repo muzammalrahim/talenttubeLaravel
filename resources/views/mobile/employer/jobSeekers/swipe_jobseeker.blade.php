@@ -1,16 +1,17 @@
 @extends('mobile.user.usermaster') {{-- mobile/user/usermaster --}}
 @section('content')
 
-    <h6 class="h6 jobAppH6">Job Seekeers</h6>
+    {{-- <h6 class="h6 jobAppH6">Job Seekeers</h6> --}}
     <!-- =============================================================================================================================== -->
 
-    @include('mobile.employer.jobSeekers.filter') <!-- mobile/employer/jobSeekers/filter -->
+    @include('mobile.employer.jobSeekers.filter') 
+
+    <!-- mobile/employer/jobSeekers/filter -->
          @include('mobile.spinner')
-    
     <!-- =============================================================================================================================== -->
 
     <div class="jobSeekers_list">
-        @include('mobile.employer.jobSeekers.list') <!-- mobile/employer/jobSeekers/list -->
+        @include('mobile.employer.jobSeekers.swipe_jobseekerList') <!-- mobile/employer/jobSeekers/swipe_jobseekerList -->
     </div> 
 
 @stop
@@ -28,7 +29,7 @@ $(document).ready(function() {
 //====================================================================================================================================//
 // Block User Confirmed.
 //====================================================================================================================================//
- $(document).on('click','.confirm_JobSeekerBlock_ok',function(){
+$(document).on('click','.confirm_JobSeekerBlock_ok',function(){
     console.log(' confirm_JobSeekerBlock_ok ');
     var jobseeker_id = $('#jobSeekerBlockId').val();
 
@@ -64,10 +65,10 @@ $('#jobSeeker_filter_form').on('submit',function(event){
 
 // function to send ajax call for getting data throug filter/Pagination selection.
 var getData = function(){
-    var url = '{{route('MjobSeekersFilter')}}';
+    var url = '{{route('swipeJobSeekersFilter')}}';
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     var jqxhr = $.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
-								// console.log(' success data  ', data);
+        // console.log(' success data  ', data);
         $('.jobSeekers_list').html(data);
     });
 }
@@ -103,22 +104,18 @@ $('input[name="filter_by_questions"]').change(function() {
 });
 
 
-
-
-
-
 $(".reset-btn").click(function(){
-	$("#jobSeeker_filter_form").trigger("reset");
+    $("#jobSeeker_filter_form").trigger("reset");
     $("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
     $('.FilterQuestionBox').addClass("d-none");
     $('.FilterLocationBox').addClass("d-none");
     $('.FilterIndustryList').addClass("d-none");
     $('#paginate').val('');
-	getDataCustom();
+    getDataCustom();
 });
 //made custom function for global call to refresh the job seekers data on rest
 var getDataCustom = function(){
-    var url = '{{route('MjobSeekersFilter')}}';
+    var url = '{{route('swipeJobSeekersFilter')}}';
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
         // console.log(' success data  ', data);

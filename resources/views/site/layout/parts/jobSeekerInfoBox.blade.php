@@ -4,7 +4,7 @@
 
     {{-- ============================================= Pie Chart =============================================  --}}
             
-        @include('site.user.match_algo.match_algo')
+        @include('site.user.match_algo.match_algo') {{-- site/user/match_algo/match_algo --}}
             
     {{-- ============================================= Pie Chart =============================================  --}}
             

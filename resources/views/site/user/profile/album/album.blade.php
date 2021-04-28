@@ -9,7 +9,7 @@
 <div id="video" class="list_videos">
     <div id="list_videos_public" class="list_videos_public">
         <div id="photo_add_video" class="item add_photo add_video_public item_video">
-            <a class="add_photo" onclick="UProfile.SelectVideoFile(); return false;">
+            <a class="add_photo" onclick="UProfile.SelectVideoFile();">
                 <img id="video_upload_select" class="transparent is_video" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
             </a>
         </div>

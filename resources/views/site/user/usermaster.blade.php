@@ -10,9 +10,9 @@
     <!-- Favicons-->
     <link rel="icon" href="https://talenttube.tv/wp-content/themes/talenttube/favicon/apple-icon-57x57.png" />
     <link rel="apple-touch-icon-precomposed" href="http://creativedev22.xyz/images/site/logo_inner.png">
-    <link rel="icon" href="http://creativedev22.xyz/images/site/logo_inner.png" sizes="32x32">
-    <link rel="icon" type="image/png" sizes="16x16" href="http://creativedev22.xyz/images/site/logo_inner.png">
-    <link rel="shortcut icon" href="http://creativedev22.xyz/images/site/logo_inner.png" />
+    <link rel="icon" href="https://talenttube.org/images/site/logo_inner.png" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="https://talenttube.org/images/site/logo_inner.png">
+    <link rel="shortcut icon" href="https://talenttube.org/images/site/logo_inner.png" />
 
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
@@ -40,7 +40,7 @@
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-    
+
 </head>
 <body class="{{$classes_body}}">
 {{-- @yield('body') --}}

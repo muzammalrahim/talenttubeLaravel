@@ -633,9 +633,9 @@ function remove_spaces($string) {
 function assetGallery($access,$userId,$type,$file){
     $path = '';
     if ($access == 2){
-        $path .= 'media/private/';
+        $path .= 'public/media/private/';
     }else{
-        $path .= 'media/public/';
+        $path .= 'public/media/public/';
     }
     $path .= $userId.'/gallery/'.(($type)?($type.'/'):'').$file;
     // dd($path);
@@ -645,9 +645,9 @@ function assetGallery($access,$userId,$type,$file){
 function assetGallery2($gallery, $type){
     $path = '';
     if ($gallery->access == 2){
-        $path .= 'media/private/';
+        $path .= 'public/media/private/';
     }else{
-        $path .= 'media/public/';
+        $path .= 'public/media/public/';
     }
     $path .= $gallery->user_id.'/gallery/'.(($type)?($type.'/'):'').$gallery->image;
     return asset( $path );
@@ -969,16 +969,41 @@ function compatibility($js,$user){
 
     $emp_questions = json_decode($js->questions , true);
     $user_questions = json_decode($user->questions , true);
-    if ($emp_questions && $user_questions != null) {
-        $ques_result = array_intersect_assoc($emp_questions,$user_questions);
+    if ($emp_questions != null && $user_questions != null) {
+        // getting first five elements
+        $sliced_emp = array_slice($emp_questions, 0, 5, true);
+        // dump($sliced_emp);
+
+
+        $sliced_user = array_slice($user_questions, 0, 5, true);
+        // dump($sliced_user);
+
+        // excluding 6th question for returning value of math potential
+
+        // $emp_match = array_slice($emp_questions, 5, 6, true);
+        // $emp_resident = $emp_match['resident'];
+        // dump($emp_resident);
+        
+        // $user_match = array_slice($user_questions, 5, 6, true);
+        // dump($user_match);
+        // $user_resident = $user_match['resident'];
+        // dump($user_resident);
+
+
+        // comparing user and employer initial question
+        $ques_result = array_intersect_assoc($sliced_emp,$sliced_user);
         // dump($ques_result);
         $comp_count = count($ques_result);
-        // dump($comp_count);
         return $comp_count;
     }
 }
 
 
+function initial_last_question($js, $user){
+
+    
+
+}
 
 
 

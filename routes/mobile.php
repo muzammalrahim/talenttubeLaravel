@@ -41,27 +41,15 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
     Route::post('ajax/interview/template','Mobile\MobileEmployerController@MinterviewTemplate')->name('MinterviewTemplate');
     Route::post('ajax/conduct/Minterview','Mobile\MobileEmployerController@MconductInterview')->name('MconductInterview');
     Route::post('ajax/live/MliveInterview','Mobile\MobileEmployerController@MliveInterview')->name('MliveInterview');
-    
-
-
     Route::get('Intetview/Invitation/emp/',       'Mobile\MobileEmployerController@MintetviewInvitationEmp')->name('MintetviewInvitationEmp');
     Route::get('MinterviewInvitation/url','Mobile\MobileEmployerController@MinterviewInvitationUrl')->name('MinterviewInvitationUrl');
     Route::get('Intetview/Invitation',       'Mobile\MobileEmployerController@MintetviewInvitation')->name('MintetviewInvitation');
-
-
     Route::post('ajax/confirmInterInvitation/js',    'Mobile\InterviewController@MconfirmInterInvitationJs')->name('confirmInterInvitationJs');
-
-
     Route::post('ajax/accept/interview/Minvitation','Mobile\MobileEmployerController@MacceptInterviewInvitation')->name('MacceptInterviewInvitation');
     Route::post('ajax/reject/interview/Minvitation','Mobile\MobileEmployerController@MrejectInterviewInvitation')->name('MrejectInterviewInvitation');
     Route::post('ajax/MconfirmInterInvitation',    'Mobile\MobileEmployerController@MconfirmInterInvitation')->name('MconfirmInterInvitation');
-
     Route::post('ajax/userInterview/hide/js','Mobile\MobileEmployerController@MhideUserInterviewJs')->name('MhideUserInterviewJs');
     Route::get('Munhide/interviews',       'Mobile\MobileEmployerController@MunhideInterviews')->name('MunhideInterviews');
-
-
-
-
 
 
 	// ======================================== JOb Seeker's Profile ========================================
@@ -75,8 +63,12 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
 	// ======================================== Employer's Profile ========================================
 
-	Route::get('MjobSeekers',        'Mobile\MobileUserController@MjobSeekers')->name('MjobSeekers');
-	Route::post('MjobSeekersFilter', 'Mobile\MobileUserController@jobSeekersFilter')->name('MjobSeekersFilter');
+	Route::get('MjobSeekers',        'Mobile\MobileUserController@MjobSeekers')->name('MjobSeekers'); 
+	Route::post('MjobSeekersFilter', 'Mobile\MobileUserController@jobSeekersFilter')->name('MjobSeekersFilter'); 
+
+	Route::get('Swipe-jobseekers',        'Mobile\MobileUserController@mSwipeJobseekers')->name('Swipe-jobseekers'); 
+	Route::post('swipeJobSeekersFilter', 'Mobile\MobileUserController@swipeJobSeekersFilter')->name('swipeJobSeekersFilter'); 
+
 	Route::get('Memployer/jobs',    'Mobile\MobileUserController@MemployerJobs')->name('MemployerJobs');
 	Route::get('employer/Mjob/new',    'Mobile\MobileUserController@MnewJob')->name('MnewJob');
 	Route::post('ajax/job/mnew',    'Mobile\MobileUserController@addNewJob')->name('addMNewJob');
@@ -88,21 +80,19 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
 	Route::get('Mjobsedit/{id}', 'Mobile\MobileUserController@MemployerJobsedit')->name('Mjobedit');
 	Route::get('MjobSeekers/{id}', 'Mobile\MobileUserController@MjobSeekersInfo')->name('MjobSeekersInfo');
-
 	Route::get('Memployer/job/{id}/applications', 'Mobile\MobileUserController@MempJobApplications')->name('MempJobApplications');
 	Route::get('ajax/purchaseUserInfo/', 'Mobile\MobileUserController@purchaseUserInfo')->name('purchaseUserInfo');
-
  
     Route::get('MjobSeekerInfo/{id}', 'Mobile\MobileUserController@MjobSeekerInfo')->name('MjobSeekerInfo');
 
-// ============================================ Jobs ============================================
-// Job ApplyInfo Modal
+	// ============================================ Jobs ============================================
+	// Job ApplyInfo Modal
 
 	Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfo')->name('MjobApplyInfo');
 
 	Route::post('ajax/updateNewJobIndustryExperience', 'Mobile\MobileUserController@updateNewJobIndustryExperience')->name('updateNewJobIndustryExperience');
+	
 	// Route::get('ajax/MjobApplyInfo/{id}', 'Mobile\MobileUserController@MjobApplyInfoAjax')->name('MjobApplyInfoAjax');
-
 	// Job Application Submission
 	// Route::post('ajax/MjobApplySubmit', 'Mobile\MobileUserController@MjobApplySubmit')->name('MjobApplySubmit');
 
@@ -201,6 +191,18 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	Route::post('ajax/booking/Msendnotification',    'Mobile\InterviewController@Msendnotification')->name('MsendnotificationInterview');
 
 	Route::post('ajax/booking/MdeleteSlot',    'Mobile\MobileHomeController@MdeleteSlot')->name('MdeleteSlot');
+
+
+	// =============================================== Iteration-10\
+
+	Route::post('ajax/jobseeker/viewCv/{id}', 'Mobile\MobileUserController@ViewCv')->name('ViewCv/{id}');
+	Route::post('ajax/application/status/inreview/', 'Mobile\MobileUserController@changeToInReview')->name('changeToInReview');
+	Route::post('ajax/application/status/interview/', 'Mobile\MobileUserController@changeToInInterview')->name('changeToInInterview');
+	Route::post('ajax/application/status/unsuccessful/', 'Mobile\MobileUserController@changeToInUnsuccessfull')->name('changeToInUnsuccessfull');
+
+
+
+
 
 });
 

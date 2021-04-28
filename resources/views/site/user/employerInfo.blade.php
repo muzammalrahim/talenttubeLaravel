@@ -46,6 +46,13 @@
                    {{--  <div class="js_education js_field">
                         <span class="js_label">Education:</span>{{getEducationName($js->education)}}
                     </div> --}}
+
+                    {{-- ============================================= Pie Chart =============================================  --}}
+            
+                    @include('site.user.match_algo.match_algo')   {{-- site/user/match_algo/match_algo --}}
+                    
+                    {{-- ============================================= Pie Chart =============================================  --}}
+                    
                     <div class="js_about js_field">
                         <span class="js_label">About me:</span>
                         <p class="js_about_me"> {{$js->about_me}}</p>
@@ -57,6 +64,16 @@
 
                     <div class="js_location js_field"><span class="js_label">Location:</span>
                         <p class="js_location"> {{$js->city}},  {{$js->state}}, {{$js->country}} </p>
+                    </div>
+
+                    <div class="js_interested js_field"> 
+                        <span class="js_label">Industry Experience:</span> 
+                        @if(isset($js->industry_experience))
+                        @foreach ($js->industry_experience as $ind) 
+                             <div class="indsutrySelect"> <p style="margin-bottom: 0px;"><i class="fas fa-angle-right qualifiCationBullet"></i>{{getIndustryName($ind)}} </p> 
+                            </div> 
+                        @endforeach 
+                        @endif 
                     </div>
 
                 </div>
