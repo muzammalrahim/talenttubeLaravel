@@ -39,19 +39,13 @@
 
 
         <div class="card">
-            {{-- @dump($job) --}}
-            {{-- $job->type =  $requestData['type']; --}}
-
-
              <div class="card-header jobAppHeader p-2 jobInfoFont">
-
                 <button class="jobsTypeLablel float-right font-weight-normal" disabled> {{$jobType}} Job</button>
-
                 <a>{{$job->title}}</a>
                 <div>
                     <div class="row p-0 m-0">
                         <span class="jobInfoFont">Location : </span>
-                            <div class="jobDetail font-weight-normal"  style="margin: 0.2rem 0 0 0.2rem;">
+                            <div class="font11 font-weight-normal"  style="margin: 0.2rem 0 0 0.2rem;">
                              {{$job->city}},  {{$job->state}}, {{$job->country}}</div>
                     </div>
                 </div>
@@ -77,7 +71,7 @@
                      	<div>{{$job->experience}}</div>
                     </div> --}}
 
-                   	<div class="col px-1"><span class="jobInfojobInfo"> Job Salary</span>
+                   	<div class="col px-1"><span class="jobInfoFont"> Job Salary</span>
                      	<div>{{$job->salary}}</div>
                     </div>
 

@@ -194,62 +194,52 @@
       {{-- =================================================================== videos =================================================================== --}}
 
     <div class="video text-dark mt-3">
-    <div class="tabs_videos mb-2 font-weight-bold">Videos</div>
-        <div id="video" >
-            <div id="list_videos_public" class="list_videos_public">
-                <div id="photo_add_video" class="item add_photo add_video_public item_video">
-                    <a class="add_photo">
-                        <img id="video_upload_select" class="transparent is_video bg-primary" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
-                    </a>
-                </div>
-            </div>
+      <div class="tabs_videos mb-2 font-weight-bold">Videos</div>
+      <div id="video" >
+          <div id="list_videos_public" class="list_videos_public">
+              <div id="photo_add_video" class="item add_photo add_video_public item_video">
+                  <a class="add_photo">
+                      <img id="video_upload_select" class="transparent is_video bg-primary" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
+                  </a>
+              </div>
+          </div>
 
-
-            <div class="cl"></div>
-            <div class="list_videos">
-
-            <!-- Grid column -->
-
-
-        <div class="videos mt-2">
-            @if ($videos->count() > 0 )
-            @foreach ($videos as $video)
-                <div id="v_{{$video->id}}" class="video_box mb-2">
-                        <!-- Grid row -->
-                        <!--Modal: Name-->
-                        <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-lg" role="document">
-                            <!--Content-->
-                            <div class="modal-content">
-                            <!--Body-->
-                            <div class="modal-body mb-0 p-0">
-                                <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
-                                    <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
-                                    <source src="{{assetVideo($video)}}" type="video/mp4" />
-                                    </video>
-                                </div>
-                            </div>
-                            <!--Footer-->
-                            <div class="modal-footer justify-content-center">
-                                <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
-                            </div>
-                            </div>
-                            <!--/.Content-->
-                        </div>
-                        </div>
-                    <!--Modal: Name-->
-                    <a>{!! generateVideoThumbsm($video) !!}</a>
-                </div>
-            @endforeach
-            @endif
+        <div class="cl"></div>
+        <div class="list_videos">
+            <div class="videos mt-2">
+                  @if ($videos->count() > 0 )
+                  @foreach ($videos as $video)
+                      <div id="v_{{$video->id}}" class="video_box mb-2">
+                              <!-- Grid row -->
+                              <!--Modal: Name-->
+                              <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-lg" role="document">
+                                  <!--Content-->
+                                  <div class="modal-content">
+                                  <!--Body-->
+                                  <div class="modal-body mb-0 p-0">
+                                      <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
+                                          <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
+                                          <source src="{{assetVideo($video)}}" type="video/mp4" />
+                                          </video>
+                                      </div>
+                                  </div>
+                                  <!--Footer-->
+                                  <div class="modal-footer justify-content-center">
+                                      <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
+                                  </div>
+                                  </div>
+                                  <!--/.Content-->
+                              </div>
+                              </div>
+                          <!--Modal: Name-->
+                          <a>{!! generateVideoThumbsm($video) !!}</a>
+                      </div>
+                  @endforeach
+                  @endif
+              </div>
         </div>
-
-
-    <!-- Grid column -->
-
-
-        </div>
-        </div>
+      </div>
     </div>
   {{-- =================================================================== videos end =================================================================== --}}
 
@@ -261,24 +251,22 @@
 
 
     <div class="tab-pane fade" id="profile-just" role="tabpanel" aria-labelledby="profile-tab-just">
-
-        <div class="mb-3 bg-white rounded">
-            <h6 class="card-header h6">Questions<i class="fas fa-edit float-right editQuestions"></i></h6>
-              <div class="card-body p-2 cardBody text-dark">
-                    <p class="loader SaveQuestionsLoader"style="float: left;"></p>
-                      <div class="cl"></div>
-                        <div class="questionsOfUser">
-                                  @include('mobile.layout.parts.employerQuestions')  {{--  mobile/layout/parts/employerQuestions    --}}
-
-																								</div>
-																								<div class="col-md-12 text-center mt-3">
-																									<a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
-																					</div>
-                    <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
-                      <strong>Success!</strong> Questions have been updated successfully!
-                    </div>
-                </div>
-        </div>
+      <div class="mb-3 bg-white rounded">
+          <h6 class="card-header h6">Questions<i class="fas fa-edit float-right editQuestions"></i></h6>
+            <div class="card-body p-2 cardBody text-dark">
+                <p class="loader SaveQuestionsLoader"style="float: left;"></p>
+                  <div class="cl"></div>
+                  <div class="questionsOfUser">
+                      @include('mobile.layout.parts.employerQuestions')  {{--  mobile/layout/parts/employerQuestions    --}}
+									</div>
+									<div class="col-md-12 text-center mt-3">
+										  <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
+									</div>
+                  <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
+                    <strong>Success!</strong> Questions have been updated successfully!
+                  </div>
+              </div>
+      </div>
     </div>
 
   {{-- <div class="tab-pane fade" id="contact-just" role="tabpanel" aria-labelledby="contact-tab-just">

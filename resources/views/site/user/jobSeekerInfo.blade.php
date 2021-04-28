@@ -45,8 +45,15 @@
                 </div>
 
                 <div class="js_info w_70p w_box dblock fl_left">
-                    <div class="js_interested js_field"> <span class="js_label">Recent Job:</span> <p>{{$js->recentJob}}</p></div>
 
+                    {{-- ============================================= Pie Chart =============================================  --}}
+            
+                    @include('site.user.match_algo.match_algo')   {{-- site/user/match_algo/match_algo --}}
+                    
+                    {{-- ============================================= Pie Chart =============================================  --}}
+                    
+                    
+                    <div class="js_interested js_field"> <span class="js_label">Recent Job:</span> <p>{{$js->recentJob}}</p></div>
                     <div class="js_about js_field"> <span class="js_label">About me:</span><p class="js_about_me"> {{$js->about_me}}</p> </div>
                     <div class="js_interested js_field"><span class="js_label">Interested in:</span><p>{{$js->interested_in}}</p></div>
                     <div class="js_interested js_field"><span class="js_label">Expected Salary:</span><p>{{$js->salaryRange}}</p></div>
@@ -305,7 +312,7 @@
     <a id="tabs-3" class="tab_link tab_a"></a>
     <div class="tab_photos tab_cont">
         {{-- Added By Hassan --}}
-        @include('site.user.jobseekerInfoTabs.questions')
+        @include('site.user.jobseekerInfoTabs.questions')  {{-- site/user/jobseekerInfoTabs/questions --}}
     </div>
 
     <!-- =============================================== Tab Reference =============================================== -->

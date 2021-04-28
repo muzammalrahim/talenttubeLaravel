@@ -122,7 +122,7 @@ class SiteUserController extends Controller
                   if(isRequestAjax($request)){
                     // return view('mobile.user.profile.profile', $data);
                 }else{
-                    return view('mobile.employer.profile', $data);
+                    return view('mobile.employer.profile', $data); // mobile/employer/profile
                 }
 
                 }else{
@@ -1201,7 +1201,7 @@ class SiteUserController extends Controller
         $gallery_image = UserGallery::find($gallery_id);
         // dd( $gallery_image );
         if ($gallery_image) {
-            if ($gallery_image->user_id !== $user->id) {
+            if ($gallery_image->user_id != $user->id) {
                 $output = array(
                     'status' => '0',
                     'message' => 'Your are not allwoed to this image'
@@ -1307,7 +1307,7 @@ class SiteUserController extends Controller
         $user = Auth::user();
         $gallery_image = UserGallery::find($gallery_id);
         if ($gallery_image) {
-            if ($gallery_image->user_id !== $user->id) {
+            if ($gallery_image->user_id != $user->id) {
                 $output = array(
                     'status' => '0',
                     'message' => 'Your are not allwoed to this image'
@@ -1364,7 +1364,7 @@ class SiteUserController extends Controller
                 $attachment->save();
 
                 if ($attachment->type == "pdf") {
-                    $text = Pdf::getText('/var/www/laravel/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
+                    $text = Pdf::getText('/home/talenttu/public_html/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
                     $keywordExtractor = new KeywordExtractor();
                     $result = $keywordExtractor->run($text);
                     $arrayObj = array();
@@ -1392,7 +1392,7 @@ class SiteUserController extends Controller
                     $str = str_replace('/', '//', $attachment->file);
                     $copystr = str_replace(".docx",".pdf",$attachment->name);
                     $copystr = str_replace(".doc",".pdf",$copystr);
-                    $converter = new OfficeConverter('/var/www/laravel/storage/images/user/' .$str);
+                    $converter = new OfficeConverter('/home/talenttu/public_html/storage/images/user/' .$str);
                     $convertedFile = $converter->convertTo($copystr);
                     $text = Pdf::getText($convertedFile);
                     $keywordExtractor = new KeywordExtractor();
@@ -1456,7 +1456,7 @@ class SiteUserController extends Controller
 
         if (!empty($attachment_id)) {
             $attachment = Attachment::find($attachment_id);
-            if ($attachment->user_id === $user->id) {
+            if ($attachment->user_id == $user->id) {
                 $exists = Storage::disk('user')->exists($attachment->file);
                 if ($exists) {
                     Storage::disk('user')->delete($attachment->file);
@@ -1647,7 +1647,7 @@ class SiteUserController extends Controller
         $video_id = $request->video_id;
         if (!empty($video_id)) {
             $video = Video::find($video_id);
-            if ($video->user_id === $user->id) {
+            if ($video->user_id == $user->id) {
 
                 // $exists = Storage::disk('user')->exists($video->file);
                 // if ($exists) { Storage::disk('user')->delete($video->file); }
@@ -1688,7 +1688,7 @@ class SiteUserController extends Controller
     //  data = array();
 		if (!isEmployer($user)){
 						$jobs = Jobs::take(10)->get();
-						return view('site.jobs.step2Jobs', compact('jobs'));
+						return view('site.jobs.step2jobs', compact('jobs'));
 		}
 	}
 

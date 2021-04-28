@@ -113,7 +113,7 @@
               @if (!empty($question->image_name) )
               <div class="row form-group questionImage" >
                 <div class="col-md-2"> Question Image </div>
-                <img data-photo-id=""  id="photo" style="height:50px"   class="photo" data-src="" src="{{ asset('media/public/onlineTest/' . $question->image_name ) }}" >
+                <img data-photo-id=""  id="photo" style="height:50px"   class="photo" data-src="" src="{{ asset('public/media/public/onlineTest/' . $question->image_name ) }}" >
                   {{-- src="http://localhost/talenttube/public/media/public/onlineTest/1616073022.jpg" > --}}
                 {{-- <div class="col-md-10"> <input type="file" name="question[1][questionImage]"> </div> --}}
               </div>

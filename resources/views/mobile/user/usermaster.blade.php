@@ -29,7 +29,7 @@
 </head>
 <body class="hidden-sn grey-skin @yield('classes_body')" @yield('body_data')  >
 
- @include('mobile.header.header')
+ @include('mobile.header.header') {{-- mobile/header/header --}}
  @include('mobile.modals.jobsModal')
 
   <!--Main Layout-->

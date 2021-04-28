@@ -335,3 +335,32 @@ span.attach_title {color: white;display: block;/* margin: 4px; */padding: 6px 4p
 /*a.attach_btn {padding: 6px;display: inline-block;border-radius: 4px;background: rgba(109,143,255,1);color: white;font-size: 12px;margin: 2px;cursor: pointer;}*/
 
 .font11{font-size: 11px;}
+
+.videoDiv{
+    /*height: 250px;*/
+    margin: 20px 0px 20px 0px;
+}
+
+.js_profile_video {
+    position: absolute;
+    margin-left: 0px;
+    margin-top: 20px;
+    width: 55px;
+    border-radius: 4px;
+    padding: 4px;
+}
+
+.js_profile_photo {
+    box-shadow: 0 2px 4px -1px rgb(0 0 0 / 20%), 0 4px 5px 0 rgb(0 0 0 / 14%), 0 1px 10px 0 rgb(0 0 0 / 12%);
+    border-radius: 50%;
+    width: 55px !important;
+    height: 55px !important;
+}
+
+.video_thumb{
+    height: 180px;
+}
+
+video#player {
+    height: 180px;
+}

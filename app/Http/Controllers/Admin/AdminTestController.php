@@ -159,7 +159,7 @@ class AdminTestController extends Controller
         // dd($question);
         if ($question) {
             if (isset($question->image_path)) {
-                $imgPath = ('/public').'/onlineTEST/'.$question->image_name;
+                $imgPath = ('/public').'/onlineTest/'.$question->image_name;
                 // dd($imgPath);
                 Storage::disk('media')->delete($imgPath);
                 // Storage::disk('media')->delete($imgPath);
