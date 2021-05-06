@@ -47,6 +47,10 @@
 
 
 
+    
+
+
+
     <div class="searchField_salaryRange dblock mb10">
         <div class="searchFieldLabel dinline_block">Salary Range: </div>
         <select name="filter_salary" class="dinline_block select_aw" id="filter_salary" data-placeholder="Select Salary Range">

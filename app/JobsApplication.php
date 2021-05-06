@@ -43,7 +43,7 @@ class JobsApplication extends Model{
     // Function to filter jobApplication. // called from jobSeeker->job->applications layout.
     //====================================================================================================================================//
     public function getFilterApplication($request){
-        // dd($request);
+        // dd($request->toArray());
         $job_id = $request->job_id;
         $keyword = my_sanitize_string($request->ja_filter_keyword);
 
@@ -188,7 +188,7 @@ class JobsApplication extends Model{
 
         //    dd( $applications->toSql() );
 
-            $applications = $applications->paginate(1)->onEachSide(1);
+            $applications = $applications->get();
 
             return $applications;
     }

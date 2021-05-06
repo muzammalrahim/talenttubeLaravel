@@ -633,9 +633,9 @@ function remove_spaces($string) {
 function assetGallery($access,$userId,$type,$file){
     $path = '';
     if ($access == 2){
-        $path .= 'public/media/private/';
+        $path .= 'media/private/';
     }else{
-        $path .= 'public/media/public/';
+        $path .= 'media/public/';
     }
     $path .= $userId.'/gallery/'.(($type)?($type.'/'):'').$file;
     // dd($path);
@@ -645,9 +645,9 @@ function assetGallery($access,$userId,$type,$file){
 function assetGallery2($gallery, $type){
     $path = '';
     if ($gallery->access == 2){
-        $path .= 'public/media/private/';
+        $path .= 'media/private/';
     }else{
-        $path .= 'public/media/public/';
+        $path .= 'media/public/';
     }
     $path .= $gallery->user_id.'/gallery/'.(($type)?($type.'/'):'').$gallery->image;
     return asset( $path );

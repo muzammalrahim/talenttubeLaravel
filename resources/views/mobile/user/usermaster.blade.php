@@ -11,6 +11,10 @@
         var base_url = '{!! url('/') !!}';
     </script>
 
+      <link rel="stylesheet" href="{{ asset('css/minimal-carousel.css') }}">
+
+      <script type="text/javascript" src="{{ asset('js/minimal-carousel.js') }}"></script>
+
       <!-- MDB icon -->
       {{-- <link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon"> --}}
       <!-- Font Awesome -->
@@ -23,6 +27,10 @@
       <link rel="stylesheet" href="{{ asset('css/mobile/style.css') }}">
 
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+
+      <link rel="stylesheet"href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+      <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
       @yield('custom_css')
 

@@ -34,8 +34,13 @@
                     </div>
                     <div class="cl"></div>
                 </div>
+
+                @php
+                    $remSpecialChar = str_replace("\&#39;","'",$user->about_me);
+                @endphp
+
                 <textarea id="basic_editor_text_about_me" class="basic_textarea" maxlength="1000" disabled=""
-                    style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 100px; opacity: 1;">{{$user->about_me}}</textarea>
+                    style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 100px; opacity: 1;">{{$remSpecialChar}}</textarea>
 
                 <div id="basic_editor_about_me" class="frm_edit">
                     <button id="basic_editor_save_about_me" class="btn small pink" onclick="UProfile.saveBasicFieldEditor('about_me'); return false;">Save</button>

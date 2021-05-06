@@ -1,5 +1,14 @@
 
- {{-- @dd($jobSeekers); --}}
+ {{-- @dd($jobSeekers) --}}
+
+<div class="swiper-container mySwiper">
+    <div class="swiper-button-next swiperButton" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-3c6e55462a735cf8" aria-disabled="false"></div>
+    <div class="swiper-button-prev swiperButton" tabindex="0" role="button" aria-label="Prev slide" aria-controls="swiper-wrapper-3c6e55462a735cf8" aria-disabled="false"></div>
+
+  <div class="swiper-wrapper">
+
+
+
 
 @if(isset($jobSeekers))
 @if ($jobSeekers && $jobSeekers->count() > 0)
@@ -9,8 +18,11 @@
 
     {{-- @dump($js) --}}
 
-    <div class="card mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
+    <div class="card mb-3 swiper-slide shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
         <div class="card">
+
+            {{-- <div class="swiper-button-next"></div> --}}
+
             {{-- <div class="card-header jobInfoFont jobAppHeader p-2">Name:
                 <span class="jobInfoFont font-weight-normal">{{$js->name}} {{$js->surname}}</span>
                 <div class="jobInfoFont">Location:
@@ -27,6 +39,16 @@
                     $profile_image   = assetGallery2($profile_image_gallery,'small');
                     // dump($profile_image);
                 }
+
+
+                $profile_imageBig  = asset('images/site/icons/nophoto.jpg');
+                $profile_imageBig_gallery    = $js->profileImage()->first();
+                // dump($profile_imageBig_gallery);
+                if ($profile_imageBig_gallery) {
+                    // $profile_imageBig   = assetGallery($profile_imageBig_gallery->access,$js->id,'',$profile_imageBig_gallery->image);
+                    $profile_imageBig   = assetGallery2($profile_imageBig_gallery,'/');
+                    // dump($profile_imageBig);
+                }
             @endphp
 
             {{-- ============================================ Card Body ============================================ --}}
@@ -36,7 +58,11 @@
                     <div class="col-md-6 col-12 videoDiv">
                         <div class="js_profile_video">
                             <div class="js_video_thumb">
-                                <img class="js_profile_photo w100" id="pic_main_img" src="{{$profile_image}}">
+
+                                <a onclick="profileImage( '{{ $profile_imageBig }}')">  
+                                    <img class="js_profile_photo w100" id="pic_main_img" src="{{$profile_image}}">
+                                </a>
+                            
                             </div>
                             <div class="videos_list">
                                 @foreach($js->vidoes as $video)
@@ -62,7 +88,7 @@
 
                 <div class="row">
                     <div class="col-4">
-                        <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
+                        <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" target="_blank" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
                     </div>
                     <div class="col-4">
                         <a class="m5 btn btn-sm btn-primary ml-0 btn-xs viewCvButton" onclick="viewCv()" data-jsId = "{{ $js->id }}" >View CV</a>
@@ -100,25 +126,19 @@
     </div>
 
 @endforeach
-<div class="jobseeker_pagination cpagination">{!! $jobSeekers->links() !!}</div>
+{{-- <div class="jobseeker_pagination pagination pagination-sm">{!! $jobSeekers->links() !!}</div> --}}
 @endif
 
-<!-- Modal -->
-<div class="modal fade"id="videoShowModal"tabindex="-1"aria-labelledby="exampleModalLabel"aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-body videoBox"></div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="closeVideo()">
-          Close
-        </button>
-      </div>
-    </div>
-  </div>
+</div>
 </div>
 
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 <script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script>
+
+{{-- Icluded Common file here --}}
+@include('mobile.employer.jobSeekers.Swipe-jobseeker-common')
+
+
 <script type="text/javascript">
 
     $('.unlikeEmpButton').click(function(){
@@ -146,36 +166,6 @@
                 }
             });
      });
-
-    profileVideoShow =  function(video_url){
-        console.log(' showVideoModal ', video_url);
-        var videoElem  = '<video id="player" controls>';
-        videoElem     += '<source src="'+video_url+'" type="video/mp4">';
-        videoElem     += '</video>';
-        $('#videoShowModal .videoBox').html(videoElem);
-        $('#videoShowModal').modal('show'); 
-    }
-
-    closeVideo = function(){
-        $('#videoShowModal').modal('hide'); 
-
-    }
-
-    viewCv = function(){
-        var jsId = $('.viewCvButton').attr('data-jsid');
-        // console.log(jsId);
-
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-            $.ajax({
-                type: 'POST',
-                url: base_url+'/m/ajax/jobseeker/viewCv/'+jsId,
-                data: {'id': jsId},
-                success: function(data){
-                console.log(data)
-                location.href = data;
-                }
-            });
-    }
 
 
 </script>

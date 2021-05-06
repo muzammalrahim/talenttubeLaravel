@@ -15,10 +15,23 @@
 		$emp_questions = json_decode($js->questions , true);
         $user_questions = json_decode($user->questions , true);
 
+        // dump($emp_questions);
+
+
+
+
+        // {"resident":"no","relocation":"yes","fulltime":"yes","temporary_contract":"yes","part_time":"no","graduate_intern":"yes"}
+
+
+        // $checkLastQuestion = end($emp_questions);
+
+        // dump($checkLastQuestion);
+
+
         $emp_resident = '';
         $user_resident = '';
         
-        if ($emp_questions && $user_questions != null) {
+        if ($emp_questions != null && $user_questions != null) {
             $emp_match = array_slice($emp_questions, 5, 6, true);
             foreach ($emp_match as $key => $value) {
                 $emp_resident .= $value;
@@ -27,10 +40,13 @@
             foreach ($user_match as $key => $value) {
                 $user_resident .= $value;
             }
+
+
         }
 
 	@endphp
 
+		@dump($emp_resident)
 
 	@if ($emp_resident == 'no' && $user_resident == 'no')
 

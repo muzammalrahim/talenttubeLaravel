@@ -323,27 +323,14 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('bulk/bulkTesting', 'Admin\AdminTestController@bulkTesting')->name('bulk.bulkTesting');
     Route::post('ajax/online/bulkTest','Admin\AdminTestController@bulkTestView')->name('bulkTestView');
     Route::post('ajax/online/bulkTest/send', 'Admin\AdminTestController@bulkTestSend')->name('bulkTestView.send');
-
-
     Route::get('bulk/bulkTestingJobApp', 'Admin\AdminTestController@bulkTestingJobApp')->name('bulk.bulkTestingJobApp');
     Route::post('ajax/online/bulkTestJobAppSend', 'Admin\AdminTestController@bulkTestJobAppSend')->name('bulkTestJobAppSend.send');
-
     Route::get('jobApplications/onlineTests', 'Admin\AdminTestController@getOnlineTestJobApplications')->name('getOnlineTestJobApplications');
-
-
-
-
-
-
-
-
-
 
 
     // Route::get('users/pool', 'Admin\TalentPoolController@talentPool')->name('talentPool');
 
     
-
 });
 
     // Front End without Authentication
@@ -400,21 +387,15 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('useridforcontroling/{id}', 'Site\SiteUserController@useridforcontroling')->name('useridforcontroling');
     Route::get('employeridforcontroling/{id}', 'Site\SiteUserController@employeridforcontroling')->name('employeridforcontroling');
     Route::get('logoutRouteForAdmin', 'Site\SiteUserController@logoutRouteForAdmin')->name('logoutRouteForAdmin');
-
     // InterviewTemplateAddingAsEmployer
     Route::post('ajax/interview/template','Site\EmployerController@interviewTemplate')->name('interviewTemplate');
     Route::post('ajax/conduct/interview','Site\EmployerController@conductInterview')->name('conductInterview');
-
     Route::post('ajax/live/interview','Site\EmployerController@liveInterview')->name('liveInterview');
-
-
     Route::post('ajax/reject/interview/invitation','Site\EmployerController@rejectInterviewInvitation')->name('rejectInterviewInvitation');
     Route::post('ajax/accept/interview/invitation','Site\EmployerController@acceptInterviewInvitation')->name('acceptInterviewInvitation');
     Route::post('ajax/confirmInterInvitation',    'Site\InterviewController@confirmInterInvitation')->name('confirmInterInvitation');
     Route::post('ajax/confirmInterInvitation/js',    'Site\InterviewController@confirmInterInvitationJs')->name('confirmInterInvitationJs');
     
-
-
 
     Route::get('profile', function () { return redirect('user/'.Auth::user()->username); })->name('profile');
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
@@ -436,7 +417,6 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/updateQualification', 'Site\SiteUserController@updateQualification')->name('updateQualification');
     Route::post('ajax/updateQuestions', 'Site\SiteUserController@updateQuestions');
     Route::post('ajax/booking/deleteInterviewBooking',    'Site\SiteUserController@deleteInterviewBooking')->name('deleteInterviewBooking');
-
 
     // ========================== Update Employer Questions ===========================================
 
@@ -535,7 +515,6 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('paymentCancel', function () { return 'Payment has been canceled'; })->name('paymentCancel');
     Route::get('employer/{username}',   'Site\EmployerController@index');
 
-
     //Interview concierge
     Route::get('interviewconcierge',       'Site\InterviewController@index')->name('interviewconcierge');
     Route::get('interviewconcierge/new',       'Site\InterviewController@new')->name('interviewconcierge.new');
@@ -598,10 +577,6 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 
 
 
-
-
-
-
 });
 
 // Front End With Authentication except step2
@@ -642,14 +617,9 @@ Route::get('/js/lang.js', function () {
 })->name('assets.lang');
 
 
-
 Route::get('textLog', 'Site\HomeController@textLog')->name('textLog');
 Route::get('userinterviewconciergeloggedin/url', 'Site\InterviewController@userurl')->name('userinterviewconciergeloggedin.url');
-
 Route::get('advertise/indeed/{id}', 'Site\HomeController@advertiseOnIndeed')->name('advertiseOnIndeed');
-
-
-
 Route::get('phpinfo', function () {
 
     phpinfo();

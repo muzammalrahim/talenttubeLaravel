@@ -1651,6 +1651,7 @@ class MobileUserController extends Controller
 
 	public function jobSeekersFilter(Request $request){
 
+        // dd($request->toArray());
 		$user = Auth::user();
         if (!isEmployer($user)){
             return response()->json([
@@ -1659,48 +1660,69 @@ class MobileUserController extends Controller
             ]);
         }
 
-        $data['user']           = $user;
-        $jobSeekersObj          = new User();
-        $jobSeekers             = $jobSeekersObj->getJobSeekersm($request, $user);
+         $data['user']           = $user;
+
+        // $userJS = User::find(140);
+
+        // DB::enableQueryLog();
+        // // $cvDataTest = $userJS->cvDataTagsRelation()->get(); 
+
+        // dd(DB::getQueryLog());
+
+        // dd( $user->cvDataTagsRelation()->toSql()  );
+        // dd( $userJS->cvDataTagsRelation()->get() );
+
+        // $jobSeekersObj          = new User();
+        // $jobSeekers             = $jobSeekersObj->getJobSeekers($request, $user);
+        
+        // ================================================ Filter by Industry. ================================================
+
         $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
         $industries = $request->filter_industry;
-        $qualification_type = $request->ja_filter_qualification_type;
-        $qualifications = $request->ja_filter_qualification;
+        $qualification_type = $request->filter_qualification_type;
+        $qualifications = $request->qualification_trade;
+
         $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
-        $query = User::with('profileImage')->where('type','user');
+        $query = User::with('profileImage','user_tags')->where('type','user');
+        // $tagsQuery = Tags::get();
         if(!empty($block)){
             $query = $query->whereNotIn('id', $block);
         }
 
-        // Filter by salaryRange.
+        
+
+        // ================================================ Filter by salaryRange. ================================================
+
         if (isset($request->filter_salary) && !empty($request->filter_salary)){
             $query = $query->where('salaryRange', '>=', $request->filter_salary);
         }
 
-        // Filter by google map location radius.
-        // if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
-        //     if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
-        //         // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
-        //          $latitude = $request->location_lat;
-        //          $longitude = $request->location_long;
-        //          $radius = $request->filter_location_radius;
-        //          $radius_sign = ($radius <= 50)?'<':'>';
+        // ================================================ Filter by google map location radius.================================================
 
-        //          $query = $query->selectRaw("*,
-        //              ( 6371 * acos( cos(radians('".$latitude."'))
-        //              * cos( radians(location_lat))
-        //              * cos( radians(location_long) - radians('".$longitude."'))
-        //              + sin( radians('".$latitude."'))
-        //              * sin( radians( location_lat )))
-        //              ) AS distance")
-        //         ->having("distance", $radius_sign, $radius)
-        //         ->orderBy("distance",'asc');
+        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
+            if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
+                // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
+                 $latitude = $request->location_lat;
+                 $longitude = $request->location_long;
+                 $radius = $request->filter_location_radius;
+                 $radius_sign = ($radius <= 50)?'<':'>';
 
-        //     }
-        // }
+                 $query = $query->selectRaw("*,
+                     ( 6371 * acos( cos(radians('".$latitude."'))
+                     * cos( radians(location_lat))
+                     * cos( radians(location_long) - radians('".$longitude."'))
+                     + sin( radians('".$latitude."'))
+                     * sin( radians( location_lat )))
+                     ) AS distance")
+                ->having("distance", $radius_sign, $radius)
+                ->orderBy("distance",'asc');
 
-        // Filter by Keyword filter_keyword
+            }
+        }
+
+        // ================================================ Filter by Keyword filter_keyword ================================================
+
         if(varExist('filter_keyword', $request)){
             $keyword = $request->filter_keyword;
             $query = $query->where(function($q) use($keyword) {
@@ -1713,20 +1735,23 @@ class MobileUserController extends Controller
                 });
         }
 
-        // Filter by Keyword filter_keyword
+        // ================================================ Filter by Questions ================================================
+
         if(varExist('filter_qualification_type', $request)){
             $query = $query->where('qualificationType', '=', $request->filter_qualification_type);
         }
 
-        // Filter by Question
-        if(varExist('filter_question', $request) && varExist('filter_question_value', $request) ){
+        // ================================================ Filter by Question ================================================
+
+        if(varExist('filter_question', $request) &&varExist('filter_by_questions', $request)&& varExist('filter_question_value', $request) ){
             // SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
             $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';
             $query = $query->where('questions', 'LIKE', $question_like);
         }
 
 
-        //Filter by industry status.
+        // ================================================ Filter by industry status. ================================================
+
         if($industry_status && !empty($industries)){
             $query = $query->where(function($q) use($industries) {
                 $q->where('industry_experience','LIKE', "%{$industries[0]}%");
@@ -1740,7 +1765,8 @@ class MobileUserController extends Controller
         }
 
 
-        //Filter by qualification.
+        // ================================================ Filter by qualification. ================================================
+
         if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
         if(!empty($qualifications)){
             $query->whereHas('qualificationRelation', function($query2) use($qualifications) {
@@ -1751,17 +1777,57 @@ class MobileUserController extends Controller
             });
         }
 
-		// dd($query);
+        // ================================================ Filter by Tags. ================================================
+
+        $tags = $request->filter_tags;
+        if(!empty($tags)){
+            $query->whereHas('user_tags', function($query2) use($tags) {
+                $query2->whereIn('tags.id', $tags);
+                return $query2;
+            });
+        }
+
+        // ================================================ filter by cv keyword ================================================
+
+        $resume_filter = $request->filter_by_resume_value;
+        if(!empty($resume_filter)){
+            $query->whereHas('cvDataTagsRelation', function($query3) use($resume_filter) {
+                $query3->where('cv_data.data_text','like', '%'.$resume_filter.'%');
+                return $query3;
+            });
+        }
+
+        // ================================================ Filter by Tags ================================================
+
+        // $filter_tags = $request->filter_tags;
+        // // dd($filter_tags);
+        // if(!empty($filter_tags)){
+        //     $query->whereHas('tags', function($query3) use($filter_tags) {
+        //         $abcd = $query3->where('tags.id','like', '%'.$filter_tags.'%');
+        //         dd($abcd);
+        //         return $query3;
+        //     });
+        // }
+
+                
 
         // DB::enableQueryLog();
         // print_r( $query->toSql() );exit;
-        // $jobSeekers =  $query->paginate(2);
+        $jobSeekers =  $query->paginate(2);
         // $jobSeekers =  $query->get();
+
+
+         // dd(DB::getQueryLog());
+         
         // dd(DB::getQueryLog());
+
         // return $data;
+
+
+
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = $jobSeekers;
-		    return view('mobile.employer.jobSeekers.list', $data); // mobile/employer/jobSeekers/list
+		return view('mobile.employer.jobSeekers.list', $data); // mobile/employer/jobSeekers/list
 	}
 
 
@@ -1785,6 +1851,7 @@ class MobileUserController extends Controller
 		// dd($jobSeekers);
 		$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 		$data['likeUsers'] = $likeUsers;
+        // $data['jobSeekers'] = $jobSeekers;
 		//$data['jobSeekers'] = $jobSeekers; // $jobSeekers;
 		return view('mobile.employer.jobSeekers.swipe_jobseeker', $data);
 	 	// mobile/employer/jobSeekers/swipe_jobseeker
@@ -1800,6 +1867,8 @@ class MobileUserController extends Controller
 
 	public function swipeJobSeekersFilter(Request $request){
 
+        // dd($request->toArray());
+
 		$user = Auth::user();
         if (!isEmployer($user)){
             return response()->json([
@@ -1808,26 +1877,56 @@ class MobileUserController extends Controller
             ]);
         }
 
-        $data['user']           = $user;
-        $jobSeekersObj          = new User();
-        $jobSeekers             = $jobSeekersObj->swipeJobseeker($request, $user);
+         $data['user']           = $user;
+    
+        // ================================================ Filter by Industry. ================================================
+
         $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
         $industries = $request->filter_industry;
-        $qualification_type = $request->ja_filter_qualification_type;
-        $qualifications = $request->ja_filter_qualification;
+        $qualification_type = $request->filter_qualification_type; 
+        $qualifications = $request->qualification_trade;
+
         $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
-        $query = User::with('profileImage')->where('type','user');
+        $query = User::with('profileImage','user_tags')->where('type','user');
+        // $tagsQuery = Tags::get();
         if(!empty($block)){
             $query = $query->whereNotIn('id', $block);
         }
 
-        // Filter by salaryRange.
+        
+
+        // ================================================ Filter by salaryRange. ================================================
+
         if (isset($request->filter_salary) && !empty($request->filter_salary)){
             $query = $query->where('salaryRange', '>=', $request->filter_salary);
         }
 
-        // Filter by Keyword filter_keyword
+        // ================================================ Filter by google map location radius.================================================
+
+        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
+            if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
+                // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
+                 $latitude = $request->location_lat;
+                 $longitude = $request->location_long;
+                 $radius = $request->filter_location_radius;
+                 $radius_sign = ($radius <= 50)?'<':'>';
+
+                 $query = $query->selectRaw("*,
+                     ( 6371 * acos( cos(radians('".$latitude."'))
+                     * cos( radians(location_lat))
+                     * cos( radians(location_long) - radians('".$longitude."'))
+                     + sin( radians('".$latitude."'))
+                     * sin( radians( location_lat )))
+                     ) AS distance")
+                ->having("distance", $radius_sign, $radius)
+                ->orderBy("distance",'asc');
+
+            }
+        }
+
+        // ================================================ Filter by Keyword filter_keyword ================================================
+
         if(varExist('filter_keyword', $request)){
             $keyword = $request->filter_keyword;
             $query = $query->where(function($q) use($keyword) {
@@ -1839,18 +1938,24 @@ class MobileUserController extends Controller
                         ->orWhere('recentJob','LIKE', "%{$keyword}%");
                 });
         }
-        // Filter by Keyword filter_keyword
+
+        // ================================================ Filter by Questions ================================================
+
         if(varExist('filter_qualification_type', $request)){
             $query = $query->where('qualificationType', '=', $request->filter_qualification_type);
         }
-        // Filter by Question
-        if(varExist('filter_question', $request) && varExist('filter_question_value', $request) ){
+
+        // ================================================ Filter by Question ================================================
+
+        if(varExist('filter_question', $request) &&varExist('filter_by_questions', $request)&& varExist('filter_question_value', $request) ){
             // SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
             $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';
             $query = $query->where('questions', 'LIKE', $question_like);
         }
 
-        //Filter by industry status.
+
+        // ================================================ Filter by industry status. ================================================
+
         if($industry_status && !empty($industries)){
             $query = $query->where(function($q) use($industries) {
                 $q->where('industry_experience','LIKE', "%{$industries[0]}%");
@@ -1863,8 +1968,11 @@ class MobileUserController extends Controller
             });
         }
 
-        //Filter by qualification.
+
+        // ================================================ Filter by qualification. ================================================
+
         if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
+        // dd($qualifications);
         if(!empty($qualifications)){
             $query->whereHas('qualificationRelation', function($query2) use($qualifications) {
                 $query2->whereIn('qualifications.id', $qualifications);
@@ -1873,9 +1981,14 @@ class MobileUserController extends Controller
                 return $query2;
             });
         }
+
+            
+        // DB::enableQueryLog();
+        // print_r( $query->toSql() );exit;
+        $jobSeekers =  $query->get();
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = $jobSeekers;
-		    return view('mobile.employer.jobSeekers.swipe_jobseekerList', $data); // mobile/employer/jobSeekers/swipe_jobseekerList
+		return view('mobile.employer.jobSeekers.swipe_jobseekerList', $data); // mobile/employer/jobSeekers/swipe_jobseekerList
 	}
 
 
@@ -2789,7 +2902,7 @@ class MobileUserController extends Controller
         if(isEmployer($user)){
 
             $job =  Jobs::find($id);
-            $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id',$id)->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC')->paginate(2);
+            $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id',$id)->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');
            // $data['applications'] = $applications;
             $data['job']   = $job;
             $data['user']   = $user;

@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="qualification_trade d-none">
-                    <select class="white-text mdb-select md-form qualification_trade" multiple name="qualification_trade[]"  id="tradeSelect" data-placeholder="Select Trade">
+                    <select class="white-text mdb-select md-form qualification_trade " multiple name="qualification_trade[]"  id="tradeSelect" data-placeholder="Select Trade">
                         @foreach ($qualifications as $qualif)
                             @if($qualif['type']  !== 'degree')
                               <option value="{{$qualif['id']}}">{{$qualif['title']}}</option>
@@ -77,7 +77,7 @@
             {{-- Salary Range --}}
 
             <div class="FilterBox">
-                <select class="white-text mdb-select md-form colorful-select dropdown-primary filter_qualification_type" name="filter_salary" data-placeholder="Select Salary Range">
+                <select class="white-text mdb-select md-form colorful-select dropdown-primary" name="filter_salary" data-placeholder="Select Salary Range">
                 <option value="">Select Salary Range</option>
                 @foreach(getSalariesRange() as $sk => $salary)
                     <option value="{{$sk}}">{{$salary}}</option>

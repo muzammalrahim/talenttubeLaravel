@@ -10,8 +10,36 @@
          @include('mobile.spinner')
     <!-- =============================================================================================================================== -->
 
+
+
+
+    {{-- <div class="has-slider">
+            <div style="color: #fff;" class="prev">prev</div>
+            <div style="color: #fff;" class="next">next</div>
+            
+              <div class="slider mslider">
+
+            @foreach ($employer as $emp)
+
+                <div class="slider-panel">
+                    <a href="">
+
+                        {{ $emp->company }}
+
+                        <img src="https://images.pexels.com/photos/39811/pexels-photo-39811.jpeg?w=940&amp;h=650&amp;auto=compress&amp;cs=tinysrgb" alt="" />
+                    </a>
+                </div>
+
+            @endforeach
+              </div>
+            
+
+            <div class="slider-pagination"></div>
+    </div> --}}
+
     <div class="jobSeekers_list">
-        @include('mobile.employer.jobSeekers.swipe_jobseekerList') <!-- mobile/employer/jobSeekers/swipe_jobseekerList -->
+        @include('mobile.employer.jobSeekers.swipe_jobseekerList') 
+        <!-- mobile/employer/jobSeekers/swipe_jobseekerList -->
     </div> 
 
 @stop
@@ -20,6 +48,14 @@
 
 
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
+
+<link rel="stylesheet"href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+
+<style type="text/css">
+    
+</style>
 @section('custom_js')
 
 <script type="text/javascript">
