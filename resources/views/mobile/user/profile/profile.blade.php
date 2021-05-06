@@ -182,7 +182,7 @@
 	<div class="card-body p-2 cardBody">
 		<div class="title IndusListBox">
 
-		    {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
+		  {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
 		  <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
 		  <div class="cl"></div> --}}
 		      <p class="loader SaveindustryExperience"style="float: left;"></p>

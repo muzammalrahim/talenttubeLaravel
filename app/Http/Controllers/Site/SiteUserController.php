@@ -1364,7 +1364,7 @@ class SiteUserController extends Controller
                 $attachment->save();
 
                 if ($attachment->type == "pdf") {
-                    $text = Pdf::getText('/home/talenttu/public_html/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
+                    $text = Pdf::getText('/var/www/html/talenttube/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
                     $keywordExtractor = new KeywordExtractor();
                     $result = $keywordExtractor->run($text);
                     $arrayObj = array();
@@ -1392,7 +1392,7 @@ class SiteUserController extends Controller
                     $str = str_replace('/', '//', $attachment->file);
                     $copystr = str_replace(".docx",".pdf",$attachment->name);
                     $copystr = str_replace(".doc",".pdf",$copystr);
-                    $converter = new OfficeConverter('/home/talenttu/public_html/storage/images/user/' .$str);
+                    $converter = new OfficeConverter('/var/www/html/talenttube/storage/images/user/' .$str);
                     $convertedFile = $converter->convertTo($copystr);
                     $text = Pdf::getText($convertedFile);
                     $keywordExtractor = new KeywordExtractor();

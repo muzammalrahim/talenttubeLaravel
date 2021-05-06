@@ -28,6 +28,7 @@ var getData = function(){
     var url = '{{route('mjobAppFilter')}}';
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.post(url, $('#jobapp_filter_form').serialize(), function(data){
+        // console.log(data);
         $('.jobapp_list').html(data);
 
     });
@@ -91,10 +92,7 @@ $(document).on('click','.job_pagination .page-item .page-link',function(e){
     });
 
 
-$('.questionsAnswers').click(function(){
-    $('.application_qa').toggleClass('d-none');
 
-})
 </script>
 
 @stop

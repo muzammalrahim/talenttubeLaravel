@@ -156,8 +156,6 @@ class User extends Authenticatable
             $data->where('salaryRange', '>=', $request->filter_salary);
         }
 
-        
-
         // ====================================== Filter by google map location radius. ======================================
 
         if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
@@ -166,7 +164,7 @@ class User extends Authenticatable
         }
         // DB::enableQueryLog();
         // print_r( $data->toSql() );exit;
-        $data =  $data->paginate(1)->onEachSide(1);
+        // $data =  $data->paginate(1)->onEachSide(1);
         return $data;
     }
 

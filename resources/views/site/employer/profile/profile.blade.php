@@ -52,7 +52,7 @@
     </div>
 
 
-    @include('site.employer.profile.tabs')
+    @include('site.employer.profile.tabs')  {{-- site/employer/profile/tabs --}}
 
 <div class="cl"></div>
 </div>
