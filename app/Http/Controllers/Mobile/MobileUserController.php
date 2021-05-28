@@ -31,6 +31,10 @@ use App\History;
 use App\Interviews_booking;
 use App\UserInterview;
 use App\InterviewTemplate;
+use App\UserOnlineTest;
+use App\OnlineTest;
+
+
 
 use App\CvData;
 use PDFMerger;
@@ -1468,6 +1472,10 @@ class MobileUserController extends Controller
         $data['geo_state']      = get_Geo_State(default_Country_id());
         $data['geo_cities']     = get_Geo_City(default_Country_id(), default_State_id());
         $data['salaryRange'] = getSalariesRange();
+
+        $onlineTest = OnlineTest::get();
+        $data['onlineTest'] = $onlineTest;
+
         // $jobs =  Jobs::find(12);
         // dd( json_decode($jobs->questions()->first()->options, true) );
         // dd( $jobs->questions()->first()->options );
@@ -1608,6 +1616,19 @@ class MobileUserController extends Controller
 				// $job->age =  $requestData['age'];
 				$job->user_id =  $user->id;
 				$job->expiration =  $requestData['expiration'].' 00:00:00';
+
+
+                // dd($requestData['test_id']);
+
+                if ($requestData['test_id'] != 0) {
+                    $test = $requestData['test_id'];
+                    $onlineTest = OnlineTest::get()->pluck('id')->toArray();
+                    if (in_array($test, $onlineTest)) {
+                        // dd('Hi how are you');
+                        $job->onlineTest_id = $test;
+                    }
+                }
+
 				// $job->questions =  $requestData['questions'];
 				$job->code =  Jobs::generateCode(); //
                 $job->save();
@@ -1680,7 +1701,7 @@ class MobileUserController extends Controller
         $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
         $industries = $request->filter_industry;
         $qualification_type = $request->filter_qualification_type;
-        $qualifications = $request->qualification_trade;
+        $qualifications = $request->ja_filter_qualification;
 
         $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
@@ -2015,13 +2036,19 @@ class MobileUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'Job Edit';
         $data['salaryRange'] = getSalariesRange();
+        $onlineTest = OnlineTest::get();
+
         $data['classes_body'] = 'edit';
         $job = Jobs::where('id',$id)->first();
         $data['job'] = $job;
         $data['location'] = $job->city.' '.$job->state.' ,'.$job->country;
         $data['industriesList'] = getIndustries();
+
+
+        $data['onlineTest'] = $onlineTest;
+
         return view('mobile.jobs.edit', $data);   //  mobile
-        // mobile/employer/myjobs
+        // mobile/jobs/edit
     }
 
     public function updateJob($job_id, Request $request){
@@ -2081,6 +2108,17 @@ class MobileUserController extends Controller
                 if(!empty($requestData['jq'])){
                 $job->addJobQuestions($requestData['jq']);
                 }
+
+                if ($requestData['test_id'] != 0) {
+                    $test = $requestData['test_id'];
+                    $onlineTest = OnlineTest::get()->pluck('id')->toArray();
+                    if (in_array($test, $onlineTest)) {
+                        // dd('Hi how are you');
+                        $job->onlineTest_id = $test;
+
+                    }
+                }
+                
                 $job->save();
                 return response()->json([
                     'status' => 1,
@@ -2235,7 +2273,20 @@ class MobileUserController extends Controller
         // dd($job_id);
         $user = Auth::user();
         $data['user'] = $user;
-        $data['job'] = Jobs::with('questions')->find($job_id);
+        $job = Jobs::with('questions')->find($job_id);
+        $data['job'] = $job;
+
+        if ($job->onlineTest_id != null) {
+            $onlineTest = $job->onlineTest;
+            $data['onlineTest'] = $onlineTest;
+            $duration = $onlineTest->time;
+            $data['duration'] = $duration;
+            $UserOnlineTest = UserOnlineTest::where('test_id' ,$job->onlineTest_id )->where('user_id' , $user->id)->first();
+            // dd($UserOnlineTest);
+            $data['UserOnlineTest'] = $UserOnlineTest;
+
+        }
+
         return view('mobile.jobs.applyInfo', $data);
 
     }
@@ -2904,6 +2955,11 @@ class MobileUserController extends Controller
             $job =  Jobs::find($id);
             $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id',$id)->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');
            // $data['applications'] = $applications;
+
+            $UserOnlineTest = UserOnlineTest::where('user_id',$id)->orderBy('created_at', 'desc')->get();
+            $data['UserOnlineTest'] = $UserOnlineTest;
+            // dump($UserOnlineTest);
+
             $data['job']   = $job;
             $data['user']   = $user;
             $data['title']  = 'Job Detail';
@@ -2915,9 +2971,149 @@ class MobileUserController extends Controller
 
     function MempJobApplicationsFilter(Request $request){
         $user = Auth::user();
+        // dd($request->toArray());
+
         if(isEmployer($user)){
-            $applications = new JobsApplication();
-            $applications = $applications->getFilterApplication($request);
+        
+        $applications = new JobsApplication();
+            // $applications = $applications->getFilterApplication($request);
+
+        $job_id = $request->job_id;
+        $keyword = my_sanitize_string($request->ja_filter_keyword);
+        $qualification_type = $request->ja_filter_qualification_type;
+        $qualifications = $request->ja_filter_qualification;
+        $salaryRange = $request->ja_filter_salary;
+        $filter_location =  (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on'))?true:false;
+        $filter_location =  (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on'))?true:false;
+        $latitude = $request->location_lat;
+        $longitude = $request->location_long;
+        $radius = $request->filter_location_radius;
+        $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
+        $industries = $request->filter_industry;
+
+        $filer_testing = $request->filter_by_test;
+        // dd($filer_testing);
+        $applications    = $applications->with(['job','jobseeker']);
+
+         if(varExist('job_id', $request)){
+            $applications  = $applications->where('jobs_applications.job_id','=',$job_id);
+            // dd($applications);
+         }
+
+
+         if( $filter_location ||  !empty($qualification_type) || !empty($salaryRange) || !empty($keyword) || $industry_status ){
+                $applications = $applications->whereHas('jobseeker', function ($query) use($filter_location,$latitude,$longitude,$radius,$qualification_type,$salaryRange,$keyword, $qualifications, $industry_status, $industries){
+                    // if(!empty($country)){ $query->where('country', '=', $country);  }
+
+                    if(!empty($salaryRange)){ $query->where('salaryRange', '>=', $salaryRange); }
+                    if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
+                    if(!empty($keyword)){  $query->where('username', 'LIKE', "%{$keyword}%"); }
+                    // Filter by google map location radius.
+                    if($filter_location){
+                        if(isset($latitude) && isset($longitude)  && isset($radius)){
+                            $radius_sign = ($radius <= 50)?'<':'>';
+                            // $query = $query->selectRaw("*,
+                            $query = $query->selectRaw("
+                     ( 6371 * acos( cos(radians('".$latitude."'))
+                     * cos( radians(location_lat))
+                     * cos( radians(location_long) - radians('".$longitude."'))
+                     + sin( radians('".$latitude."'))
+                     * sin( radians( location_lat )))
+                     ) AS distance")
+                        ->having("distance", "<", $radius)
+                        ->orderBy("distance",'asc');
+                            //->orderBy("distance",'asc');
+                        }
+                    }
+
+                    // check if specific qualificaton is selected.
+                    if(!empty($qualifications)){
+                        $query->whereHas('qualificationRelation', function($query2) use($qualifications) {
+                            $query2->whereIn('qualifications.id', $qualifications);
+                            // $query->where('jobseeker.id', 1);
+                            // dd($query->toSql());
+                            return $query2;
+                        });
+                    }
+
+
+                    // check if industry filter is enabled.
+                    if($industry_status && !empty($industries)){
+                        $query = $query->where(function($q) use($industries) {
+                            $q->where('industry_experience','LIKE', "%{$industries[0]}%");
+                            if(count($industries) > 1){
+                                foreach ($industries as $indk =>  $industry) {
+                                    if($indk == 0) continue;
+                                    $q->orWhere('industry_experience','LIKE', "%{$industry}%");
+                                }
+                            }
+                        });
+                    }
+
+
+                    // dd($query->toSql());
+                    return $query;
+                });
+            }
+
+            //Filter by Question
+            if(varExist('filter_by_questions', $request) && ( $request->filter_by_questions == 'on')){
+              // dd( $request->filter_question );
+              foreach ($request->filter_question as $fqKey => $fqValue) {
+                    if(!empty($fqValue)){
+                         // dump($fqKey, $fqValue  );
+                        $applications = $applications->whereHas('answers', function($q) use($fqKey,$fqValue) {
+                            $q->where('question_id', '=',  $fqKey)->where('answer', '=',  $fqValue);
+                            return $q;
+                        });
+                    }
+                }
+            }
+
+
+            // $jobs_application = new JobsApplication;
+
+            
+            if(varExist('ja_filter_sortBy', $request)){
+                // dd($request->ja_filter_sortBy);
+                $filter_column = 'goldstar';
+                if($request->ja_filter_sortBy == 'all_candidates'){
+                    $applications = $applications->orderBy('created_at', 'DESC');
+                }else if($request->ja_filter_sortBy == 'goldstars'){
+                    $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');
+                }else if($request->ja_filter_sortBy == 'applied'){
+                    $applications  = $applications->where('status','=','applied');
+                }else if($request->ja_filter_sortBy == 'inreview'){
+                    $applications  = $applications->where('status','=','inreview');
+                }else if($request->ja_filter_sortBy == 'interview'){
+                    $applications  = $applications->where('status','=','interview');
+                }else if($request->ja_filter_sortBy == 'unsuccessful'){
+                    $applications  = $applications->where('status','=','unsuccessful');
+                }else if($request->ja_filter_sortBy == 'pending'){
+                    $applications  = $applications->where('status','=','pending');
+                }
+            }else{
+                $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');
+            }
+
+
+            // if($filer_testing && !empty($filer_testing)) {
+            //     $applications = $applications
+            //                     ->join('user_online_tests', 'user_online_tests.id', '=', 'jobs_applications.userOnlineTest_id'); 
+            //     $applications->orderBy('user_online_tests.test_result', 'DESC');
+            // }
+
+            if($filer_testing && !empty($filer_testing)) {
+                $applications = $applications->orderBy('test_result', 'DESC');
+            }
+
+
+            // dd($applications->toSql());
+            
+            $applications = $applications->get();
+
+
+    
             $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
             $data['applications'] = $applications;
             $data['user']       = $user;
@@ -2998,6 +3194,9 @@ class MobileUserController extends Controller
         $galleries    = UserGallery::Public()->Active()->where('user_id',$jobSeekerId)->get();
         $videos      = Video::where('user_id', $jobSeekerId)->get();
         $interview_booking = Interviews_booking::where('email',$jobSeeker->email)->get();
+        $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$jobSeekerId)->get();
+        $UserOnlineTest = UserOnlineTest::where('user_id',$jobSeekerId)->orderBy('created_at', 'desc')->get();
+        $data['UserOnlineTest'] = $UserOnlineTest;
         $data['title']          = 'JobSeeker Info';
         $data['classes_body']   = 'jobSeekerInfo';
         $data['jobSeeker']       = $jobSeeker;
@@ -3149,10 +3348,271 @@ class MobileUserController extends Controller
 	        	'message' => 'Job Application does not exist',
 
 	        ]);
+        } 
+    }
+
+
+    //====================================================================================================================================//
+    // Ajax POST // Job Apply Submitted with reject test .
+    //====================================================================================================================================//
+    public function mUserPreviousResult(Request $request){ 
+        $user = Auth::user();
+        $requestData = $request->all();
+        // dd($requestData);
+        $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
+        if(isset($requestData['answer']) && !empty($requestData['answer'])){
+            foreach ($requestData['answer'] as $ansK => $ansV) {
+                $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']);
+                $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
+            }
         }
-        
-        
-       
+        $job = Jobs::find($requestData['job_id']);
+        // check to confirm job with id exist
+        if ($job == null){
+            return response()->json([
+                'status' => 0,
+                'error' => 'Job with id '.$requestData['job_id'].' does not exist'
+            ]);
+        }else{
+            // check if user has not submitted application already.
+            $jobApplication = JobsApplication::where('user_id',$user->id)->where('job_id',$requestData['job_id'])->first();
+            if (!empty($jobApplication)) {
+                return response()->json([
+                    'status' => 0,
+                    'error' => 'You already submit application for this job'
+                ]);
+            }
+            if(empty($request->application_description)){
+                 return response()->json([
+                    'status' => 0,
+                    'error' => 'Please answer all mandatory question.'
+                ]);
+            }
+
+            $newJobApplication = new JobsApplication();
+            $newJobApplication->user_id = $user->id;
+            $newJobApplication->job_id = $job->id;
+            $newJobApplication->status = 'applied';
+            $newJobApplication->description = $request->application_description;
+            $newJobApplication->save();
+
+
+            // dd($job->onlineTest->time);
+            // =============================================== For useronlineTest  ===============================================
+
+            $UserOnlineTestPrevios = UserOnlineTest::where('test_id' , $request->test_id)->where('user_id' , $user->id)->first();
+            // dd($UserOnlineTest);
+
+            $UserOnlineTest = new UserOnlineTest;
+            $UserOnlineTest->user_id = $user->id;
+            $UserOnlineTest->emp_id = $job->jobEmployer->id;
+            $UserOnlineTest->jobApp_id = $newJobApplication->id;
+            $UserOnlineTest->test_id = $UserOnlineTestPrevios->test_id;
+            $UserOnlineTest->status = 'complete';
+            $UserOnlineTest->rem_time = $UserOnlineTestPrevios->rem_time;
+            $UserOnlineTest->current_qid = $UserOnlineTestPrevios->current_qid;
+            $UserOnlineTest->test_result = $UserOnlineTestPrevios->test_result;
+            $UserOnlineTest->save();
+            $JobsApplication = JobsApplication::where('id', $newJobApplication->id)->first();
+            $JobsApplication->userOnlineTest_id = $UserOnlineTest->id;
+            $JobsApplication->save();
+
+
+            if ($UserOnlineTest->jobApp_id != null) {
+                $JobsApplication = JobsApplication::where('id' , $UserOnlineTest->jobApplication->id)->first();
+                $JobsApplication->status = 'applied';
+                $JobsApplication->test_result = $UserOnlineTest->test_result;
+                $JobsApplication->save();
+            }
+
+            // =============================================== For useronlineTest end here  ===============================================
+
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->type = 'Job Applied'; 
+            $history->job_id = $job->id; 
+            $history->save();
+
+            // if jobApplication is succesfully added then add job answers.
+            if( $newJobApplication->id > 0 ){
+                if(isset($requestData['answer']) && !empty($requestData['answer'])){
+                    foreach ($requestData['answer'] as $ansK => $ansV) {
+                        $jobQuestion = JobsQuestions::find($ansV['question_id']);
+                        $goldstar = 0;
+                        $preffer = 0;
+                        // check if jqb question exist
+                        if(!empty($jobQuestion)){
+                        $key = array_search($ansV['option'], $jobQuestion->options);
+                        foreach ($jobQuestion->preffer as $preferQ) {
+                            if($preferQ == $key){
+                                $preffer +=1;
+                            }
+                        }
+                        foreach ($jobQuestion->goldstar as $goldstarQ) {
+                            if($goldstarQ == $key){
+                                $goldstar +=1;
+                            }
+                        }
+                            $jobAnswer              = new JobsAnswers();
+                            $jobAnswer->question_id = $ansV['question_id'];
+                            $jobAnswer->user_id     = $user->id;
+                            $jobAnswer->answer      = $ansV['option'];
+
+                            $newJobApplication->goldstar += $goldstar;
+                            $newJobApplication->preffer += $preffer;
+                            $goldstar = 0;
+                            $preffer = 0;
+                            $newJobApplication->save();
+                            $newJobApplication->answers()->save($jobAnswer);
+
+                        }
+
+                    }
+                }
+
+            }
+            $jobQuestion = JobsQuestions::find(164);
+            
+            $UserOnlineTest = $UserOnlineTest->id;
+
+            if ($newJobApplication) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'You Job Application has been submitted succesfully',
+                    'userTest_id' => $UserOnlineTest
+                ]);
+            }
+        }
+
+    }
+
+
+    //====================================================================================================================================//
+    // Ajax POST // Job Apply Submitted with reject test .
+    //====================================================================================================================================//
+    public function mRejectTest(Request $request){ 
+        $user = Auth::user();
+        $requestData = $request->all();
+        // dd($requestData);
+        $requestData['job_id'] = my_sanitize_number( $requestData['job_id'] );
+        if(isset($requestData['answer']) && !empty($requestData['answer'])){
+            foreach ($requestData['answer'] as $ansK => $ansV) {
+                $requestData['answer'][$ansK]['question_id'] = my_sanitize_number($ansV['question_id']);
+                $requestData['answer'][$ansK]['option'] = my_sanitize_string($ansV['option']);
+            }
+        }
+        $job = Jobs::find($requestData['job_id']);
+        // check to confirm job with id exist
+        if ($job == null){
+            return response()->json([
+                'status' => 0,
+                'error' => 'Job with id '.$requestData['job_id'].' does not exist'
+            ]);
+        }else{
+            // check if user has not submitted application already.
+            $jobApplication = JobsApplication::where('user_id',$user->id)->where('job_id',$requestData['job_id'])->first();
+            if (!empty($jobApplication)) {
+                return response()->json([
+                    'status' => 0,
+                    'error' => 'You already submit application for this job'
+                ]);
+            }
+            if(empty($request->application_description)){
+                 return response()->json([
+                    'status' => 0,
+                    'error' => 'Please answer all mandatory question.'
+                ]);
+            }
+
+            $newJobApplication = new JobsApplication();
+            $newJobApplication->user_id = $user->id;
+            $newJobApplication->job_id = $job->id;
+            $newJobApplication->status = 'pending';
+            $newJobApplication->description = $request->application_description;
+            $newJobApplication->save();
+
+
+            // dd($job->onlineTest->time);
+            // =============================================== For useronlineTest  ===============================================
+
+
+            $UserOnlineTest = new UserOnlineTest;
+            $UserOnlineTest->user_id = $user->id;
+            $UserOnlineTest->emp_id = $job->jobEmployer->id;
+            $UserOnlineTest->jobApp_id = $newJobApplication->id;
+            $UserOnlineTest->test_id = $job->onlineTest_id;
+            $UserOnlineTest->status = 'pending';
+            $UserOnlineTest->rem_time = $job->onlineTest->time;
+            $UserOnlineTest->current_qid = 0;
+            $UserOnlineTest->test_result = 0;
+
+            $UserOnlineTest->save();
+
+            $JobsApplication = JobsApplication::where('id', $newJobApplication->id)->first();
+            
+            $JobsApplication->userOnlineTest_id = $UserOnlineTest->id;
+            $JobsApplication->save();
+
+
+            // =============================================== For useronlineTest end here  ===============================================
+
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->type = 'Job Applied'; 
+            $history->job_id = $job->id; 
+            $history->save();
+
+            // if jobApplication is succesfully added then add job answers.
+            if( $newJobApplication->id > 0 ){
+                if(isset($requestData['answer']) && !empty($requestData['answer'])){
+                    foreach ($requestData['answer'] as $ansK => $ansV) {
+                        $jobQuestion = JobsQuestions::find($ansV['question_id']);
+                        $goldstar = 0;
+                        $preffer = 0;
+                        // check if jqb question exist
+                        if(!empty($jobQuestion)){
+                        $key = array_search($ansV['option'], $jobQuestion->options);
+                        foreach ($jobQuestion->preffer as $preferQ) {
+                            if($preferQ == $key){
+                                $preffer +=1;
+                            }
+                        }
+                        foreach ($jobQuestion->goldstar as $goldstarQ) {
+                            if($goldstarQ == $key){
+                                $goldstar +=1;
+                            }
+                        }
+                            $jobAnswer              = new JobsAnswers();
+                            $jobAnswer->question_id = $ansV['question_id'];
+                            $jobAnswer->user_id     = $user->id;
+                            $jobAnswer->answer      = $ansV['option'];
+
+                            $newJobApplication->goldstar += $goldstar;
+                            $newJobApplication->preffer += $preffer;
+                            $goldstar = 0;
+                            $preffer = 0;
+                            $newJobApplication->save();
+                            $newJobApplication->answers()->save($jobAnswer);
+
+                        }
+
+                    }
+                }
+
+            }
+            $jobQuestion = JobsQuestions::find(164);
+            
+            $UserOnlineTest = $UserOnlineTest->id;
+
+            if ($newJobApplication) {
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'You Job Application has been submitted succesfully',
+                    'userTest_id' => $UserOnlineTest
+                ]);
+            }
+        }
+
     }
 
 

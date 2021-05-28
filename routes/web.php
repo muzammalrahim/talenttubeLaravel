@@ -571,6 +571,7 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/saveQuestion/nextQuestion/{time}', 'Site\OnlineTestController@SaveandNextQuestion')->name('nextQuestion');
     Route::post('ajax/saveQuestion/result/{time}', 'Site\OnlineTestController@saveTestAndResult')->name('saveTestAndResult');
     Route::get('ajax/jobApplication/proceed/{id}', 'Site\OnlineTestController@jobAppProceedTest')->name('jobAppProceedTest');
+
     Route::get('completed/onlineTests/{id}', 'Site\OnlineTestController@completedOnlineTests')->name('completedOnlineTests');
     Route::post('ajax/reject/test', 'Site\SiteUserController@rejectTest')->name('rejectTest');
     Route::post('ajax/use-previous-result', 'Site\SiteUserController@userPreviousResult')->name('userPreviousResult');
@@ -620,6 +621,9 @@ Route::get('/js/lang.js', function () {
 Route::get('textLog', 'Site\HomeController@textLog')->name('textLog');
 Route::get('userinterviewconciergeloggedin/url', 'Site\InterviewController@userurl')->name('userinterviewconciergeloggedin.url');
 Route::get('advertise/indeed/{id}', 'Site\HomeController@advertiseOnIndeed')->name('advertiseOnIndeed');
+Route::get('advertise/jura/{id}', 'Site\HomeController@advertiseOnJura')->name('advertiseOnJura');
+
+
 Route::get('phpinfo', function () {
 
     phpinfo();

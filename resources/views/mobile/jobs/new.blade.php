@@ -3,13 +3,6 @@
 @section('content')
 
 
-{{-- <h6 class="h6 jobAppH6">Add New Job</h6> --}}
-
-
-
-
-    {{-- @dump($job) --}}
-
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 
 
@@ -25,13 +18,13 @@
                             <div class="jobDetail font-weight-normal"  style="margin: 0.2rem 0 0 0.2rem;">
                              {{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}</div>
                     </div> --}}
-                </div>
+            </div>
             </div>
 
 
-{{-- ============================================ Card Body ============================================ --}}
+            {{-- ============================================ Card Body ============================================ --}}
 
-        <div class="card-body jobAppBody pt-2">
+            <div class="card-body jobAppBody pt-2">
 
                  <form method="POST" name="new_job_form" class="new_job_form newJob job_validation">
 
@@ -55,16 +48,12 @@
 
 
                 <div class="title IndusListBox">
-
-
                     <div id="basic" class="title_icon_edit">Industry Experience <i class="editIndustry fas fa-edit "></i></div>
-                      <p class="loader SaveindustryExperience"style="float: left;"></p>
-                        <div class="cl"></div>
-                          <div class="IndusList mt-2">
-
-                          </div>
-                            <span class="addIndus btn btn-sm btn-primary hide_it2" style = "cursor:pointer;">+ Add</span>
-                            <a class="btn btn-sm btn-success hide_it2 saveIndus"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
+                    <p class="loader SaveindustryExperience"style="float: left;"></p>
+                    <div class="cl"></div>
+                    <div class="IndusList mt-2"></div>
+                    <span class="addIndus btn btn-sm btn-primary hide_it2" style = "cursor:pointer;">+ Add</span>
+                    <a class="btn btn-sm btn-success hide_it2 saveIndus"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
                 </div>
 
                 <div class="form-group row">
@@ -81,7 +70,7 @@
                     </div>
                 </div>
 
-            {{-- <div class="form-group">
+                {{-- <div class="form-group">
 
                         <div class="row">
                             <div class="col-sm-2">
@@ -106,33 +95,33 @@
                                 <div class="location_map_box dtable w100 hide_it">
                                                 <div class="location_map" id="location_map"></div>
                                 </div>
-            </div> --}}
-            <div class="form-group">
+                </div> --}}
+                <div class="form-group">
 
-                <div class="row">
-                    <div class="col-sm-2">
-                        <label for="staticEmail" class="col-form-label font-weight-bold">Location</label>
-                    </div>
-                    <div class="col-sm-7">
-                    <input type="text" name="location_search" id="location_search" placeholder="Type a location" class="form-control">
-                    </div>
-                    <div class="col-sm-2 ml-2">
-                                    <button type="button" id="location_search_load" class="btn btn-success btn-xs ">Search</button>
-                    </div>
-                    </div>
-                    <div class="location_latlong dtable w100 hide_it">
-                        <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
-                        <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+                    <div class="row">
+                        <div class="col-sm-2">
+                            <label for="staticEmail" class="col-form-label font-weight-bold">Location</label>
+                        </div>
+                        <div class="col-sm-7">
+                        <input type="text" name="location_search" id="location_search" placeholder="Type a location" class="form-control">
+                        </div>
+                        <div class="col-sm-2 ml-2">
+                                        <button type="button" id="location_search_load" class="btn btn-success btn-xs ">Search</button>
+                        </div>
+                        </div>
+                        <div class="location_latlong dtable w100 hide_it">
+                            <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+                            <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
 
-                        <input type="hidden" name="location_name" id="location_name"  value="">
-                        <input type="hidden" name="location_city" id="location_city"  value="">
-                        <input type="hidden" name="location_state" id="location_state"  value="">
-                        <input type="hidden" name="location_country" id="location_country"  value="">
-                        </div>
-                        <div class="location_map_box dtable w100 hide_it">
-                                        <div class="location_map" id="location_map"></div>
-                        </div>
-            </div>
+                            <input type="hidden" name="location_name" id="location_name"  value="">
+                            <input type="hidden" name="location_city" id="location_city"  value="">
+                            <input type="hidden" name="location_state" id="location_state"  value="">
+                            <input type="hidden" name="location_country" id="location_country"  value="">
+                            </div>
+                            <div class="location_map_box dtable w100 hide_it">
+                                            <div class="location_map" id="location_map"></div>
+                            </div>
+                </div>
 
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Vacancies </label>
@@ -154,72 +143,80 @@
                 <div class="form-group row">
                     <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Expiration Date</label>
                     <div class="col-sm-10">
-                                <input placeholder="Selected date" name="expirationtype=" id="datepicker" class="form-control datepicker">
-                                <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
+                        <input placeholder="Selected date" name="expirationtype=" id="datepicker" class="form-control datepicker">
+                        <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
                     </div>
                 </div>
 
-                <div class="questionstCard">
+                {{-- <div class="row"> --}}
+                    {{-- <span class="form_label">Online Test</span> --}}
+                    {{-- <div class="form_input"> --}}
+                       <select name="test_id" class="mdb-select md-form colorful-select dropdown-dark">
+                           <option value="0">Select Test</option>
+                           @foreach ($onlineTest as $test)
+                               <option value="{{$test->id}}"> {{$test->name}} </option>
+                           @endforeach
+                       </select> 
+                    {{-- </div> --}}
+                {{-- </div>  --}}
 
+                {{-- <label class="mdb-main-label">Blue select</label> --}}
+
+                <div class="questionstCard">
                 <div class="form-group text-center font-weight-bold">
                     Job Questions
                 </div>
 
 
 
-        <div class="jobQuestions">
-            <div class="jobQuestion q1">
-
-                <div class="form-group row">
-
-                    <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Title</label>
-
-                    <div class="col-sm-10">
-
-                            <input type="text" class="form-control" id="question-id" name="jq[0][title]">
-
-                    </div>
-                </div>
-
-                <div class="form-group row option">
-                                    <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Options</label>
-                                    <div class="col-sm-10 jq_field_questions">
-                                            <div class="option form-group">
-                                                        <input type="text" class="col-sm-3 form-control float-left mr-5" name="jq[0][option][0][text]" id="question-id">
-                                                        <div class="col-sm-3 custom-control custom-checkbox custom-control-inline mt-2">
-                                                                <input type="checkbox" class="custom-control-input" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar" >
-                                                                <label class="custom-control-label font-weight-bold" for="jq_0_option_0_goldstar">Gold Star</label>
-                                                        </div>
-                                                        <div class="col-sm-3 custom-control custom-checkbox custom-control-inline mt-2">
-                                                                <input type="checkbox" class="custom-control-input" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer">
-                                                                <label class="custom-control-label font-weight-bold" for="jq_0_option_0_preffer">Undiserable</label>
-                                                        </div>
-                                            </div>
-
-                                    </div>
-                                    <div class="form-group">
-                                            <label class="col-sm-2 col-form-label"></label>
-                                            <div class="col-sm-12">
-                                                <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn btn btn-sm btn-primary ml-2 btn-xs" data-qc="0">Add option</a></div>
-                                            </div>
-                                    </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col-sm-12">
-                                        <div class="jobApplyBtn graybtn jbtn btn btn-sm btn-secondary mr-0 btn-xs removeJobQuestion"><i class="fas fa-backspace close_icon "></i></div>
+                <div class="jobQuestions">
+                    <div class="jobQuestion q1">
+                        <div class="form-group row">
+                            <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Title</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="question-id" name="jq[0][title]">
+                            </div>
                         </div>
-            </div>
-                </div>
-        </div>
 
-                        <input type="hidden" name="questionCounter" id="questionCounter" value="0">
+                        <div class="form-group row option">
+                            <label for="staticEmail" class="col-sm-2 col-form-label font-weight-bold">Options</label>
+                                <div class="col-sm-10 jq_field_questions">
+                                    <div class="option form-group">
+                                        <input type="text" class="col-sm-3 form-control float-left mr-5" name="jq[0][option][0][text]" id="question-id">
+                                        <div class="col-sm-3 custom-control custom-checkbox custom-control-inline mt-2">
+                                            <input type="checkbox" class="custom-control-input" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar" >
+                                            <label class="custom-control-label font-weight-bold" for="jq_0_option_0_goldstar">Gold Star</label>
+                                        </div>
+                                        <div class="col-sm-3 custom-control custom-checkbox custom-control-inline mt-2">
+                                            <input type="checkbox" class="custom-control-input" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer">
+                                            <label class="custom-control-label font-weight-bold" for="jq_0_option_0_preffer">Undiserable</label>
+                                        </div>
+                                    </div>
 
-                        <div class="form-group row float-right">
+                                </div>
+                                <div class="form-group">
                                     <label class="col-sm-2 col-form-label"></label>
-                                    <div class="col-sm-10">
-                                                    <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-secondary mr-0 btn-xs addQuestion">Add+</a>
+                                    <div class="col-sm-12">
+                                        <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn btn btn-sm btn-primary ml-2 btn-xs" data-qc="0">Add option</a></div>
                                     </div>
+                                </div>
                         </div>
+                        <div class="form-group row">
+                            <div class="col-sm-12">
+                                <div class="jobApplyBtn graybtn jbtn btn btn-sm btn-secondary mr-0 btn-xs removeJobQuestion"><i class="fas fa-backspace close_icon "></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="hidden" name="questionCounter" id="questionCounter" value="0">
+
+                <div class="form-group row float-right">
+                    <label class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-10">
+                        <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-secondary mr-0 btn-xs addQuestion">Add+</a>
+                    </div>
+                </div>
 
 
 </div>

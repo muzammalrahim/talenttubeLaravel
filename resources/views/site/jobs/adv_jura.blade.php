@@ -1,12 +1,14 @@
 
 @php
     echo '<?xml version="1.0" encoding="UTF-8"?>';
-
+    // dd($job);
 @endphp
 
 <source>
-    <publisher>Talenttube</publisher>    
-    <publisherurl>http://www.talenttube.org</publisherurl>
+    <publisher>http://www.talenttube.org</publisher>    
+    {{-- <publisherurl>http://www.talenttube.org</publisherurl> --}}
+
+     <lastBuildDate>2018-12-04 00:00:00 UTC</lastBuildDate>
     {{-- <lastBuildDate>{{ $job->title }}</lastBuildDate> --}}
     <job>
         <title><![CDATA[{{ $job->title }}]]></title>
@@ -15,6 +17,15 @@
         <url>
             <![CDATA[http://talenttube.org/jobs/{{ $id }}]]>
         </url>
+
+        <listed_date>
+            <![CDATA[ {{ $job->created_at }} ]]>
+        </listed_date>
+
+        <closing_date>
+            <![CDATA[ {{ $job->expiration }} ]]>
+        </closing_date>
+
         <company><![CDATA[ {{ $job->jobEmployer->company }} ]]></company>
         {{-- <sourcename><![CDATA[ABC Medical Group]]></sourcename> --}}
         <city><![CDATA[ {{ $job->city }} ]]></city>

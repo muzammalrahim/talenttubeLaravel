@@ -44,17 +44,44 @@
 
         <input type="hidden" name="job_id" value="{{$job->id}}">
 
+        <input type="hidden" name="test_id" value="{{$job->onlineTest_id}}" />
 
-        <div class="modal-footer justify-content-center">
+
+
+        {{-- ========================================== If online test exists ========================================== --}}
+        
+        @if (!isset($onlineTest))
+
+        <div class="fomr_btn act_field text-center">
+            <button class="btn btn-sm btn-primary submitApplication">Submit</button>
+        </div>
+
+        @else
+            <div class="fomr_btn act_field center submitBuutonDiv hide_it">
+            </div>
+
+        @endif
+
+        </form>
+
+            {{-- ========================================== If online test exists ========================================== --}}
+        
+        @if (isset($onlineTest))
+            @include('mobile.jobs.onlineTest') {{-- mobile/jobs/onlineTest --}}
+        @endif
+
+        {{-- <div class="modal-footer justify-content-center">
 
         <a type="button" class="submitApplication btn btn-primary waves-effect waves-light">Submit
           <i class="fa fa-paper-plane ml-1"></i>
-        </a>
-        {{-- <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal">Cancel</a> --}}
+        </a> --}}
+
+
+
       </div>
 
    
-</form>
+{{-- </form> --}}
 
 
 
@@ -90,5 +117,94 @@
         });
 
   });
+
+
+  this.usePreviousResult = function (){
+    event.preventDefault();
+      console.log(' use previous result clicked ');
+      var applyFormData = $('#job_apply_form').serializeArray()
+      $.ajax({
+      type: 'POST',
+          url: base_url+'/m/ajax/use-mPrevious-result',
+          data: applyFormData,
+          success: function(data){
+              console.log(' data ', data );
+              if (data.status == 1){
+                   $('#job_apply_form').html(data.message);
+                   // var link = parseInt(data.userTest_id);
+                   var jobApp_id = '<p class = "mt10"> Your test result has been submitted </p>';
+                   $('.onlineTestBox').html(jobApp_id);
+
+              }else {
+                   $('#job_apply_form').html(data.error);
+                   $('.onlineTestBox').addClass('hide_it');
+              }
+          }
+      });
+  }
+  // $(document).on('click','.usePreviousResult',function(){
+      
+  // });
+
+
+  this.proceedtoTest = function(){
+    console.log(' submitApplication submit click ');
+    var applyFormData = $('#job_apply_form').serializeArray()
+    $.ajax({
+    type: 'POST',
+        url: base_url+'/m/ajax/reject/test',
+        data: applyFormData,
+        success: function(data){
+            // $('.submitApplication').html('Submit').prop('disabled',false);
+            console.log(' data ', data );
+            if (data.status == 1){
+                 $('#job_apply_form').html(data.message);
+                 var link = parseInt(data.userTest_id);
+                 var jobApp_id = '<a class = "mt10" href = "'+base_url+'/m/mProceed/test/'+link+'"> Click Here to Complete test  </a>';
+                 $('.onlineTestBox').html(jobApp_id);
+
+            }else {
+                 $('#job_apply_form').html(data.error);
+                 $('.onlineTestBox').addClass('hide_it');
+            }
+        }
+    });
+  }
+
+
+  this.rejectTest = function(){
+
+    event.preventDefault();
+    console.log(' submitApplication submit click ');
+    // $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
+    var applyFormData = $('#job_apply_form').serializeArray();
+    console.log(applyFormData);
+    $.ajax({
+    type: 'POST',
+        url: base_url+'/m/ajax/reject/test',
+        data: applyFormData,
+        success: function(data){
+            $('.submitApplication').html('Submit').prop('disabled',false);
+            console.log(' data ', data );
+            if (data.status == 1){
+                 $('#job_apply_form').html(data.message);
+                 // $('.onlineTestBox').addClass('hide_it');
+                 var jobApp_id = '<p class = "mt10" > Your application has been submitted, you can complete your test later </p';
+                 $('.onlineTestBox').html(jobApp_id);
+
+            }else {
+                 $('#job_apply_form').html(data.error);
+                 $('.onlineTestBox').addClass('hide_it');
+            }
+        }
+    });
+  }
+
+
+  // $(document).on('click','.rejectTest',function(){
+    
+// });
+
+
 
 </script>

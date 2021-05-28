@@ -1226,8 +1226,25 @@ class HomeController extends Controller {
         // $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         // $data['controlsession'] = $controlsession;
         $data['job'] = $job;
+        $data['id'] = $id;
         return response()->view('site.jobs.adv_indeed', $data)->header('Content-Type', 'text/xml');
         // site/jobs/adv_indeed
+    }
+
+    function advertiseOnJura($id){
+        // dd($id);
+        // $user = Auth::user();
+        $job = Jobs::find($id);
+        // dd($job);
+        // $data['user'] = $user;
+        $data['title'] = 'Advertise Job';
+        $data['classes_body'] = 'advertiseJob';
+        // $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        // $data['controlsession'] = $controlsession;
+        $data['job'] = $job;
+        $data['id'] = $id;
+        return response()->view('site.jobs.adv_jura', $data)->header('Content-Type', 'text/xml');
+        // site/jobs/adv_jura
     }
  
     

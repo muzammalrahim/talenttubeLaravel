@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use JustBetter\PaginationWithHavings\PaginationWithHavings;
+use DB;
 
 class JobsApplication extends Model{
     //
@@ -38,11 +39,271 @@ class JobsApplication extends Model{
         return $this->hasOne(UserInterview::class, 'user_id')->where('status' , 'Interview Confirmed')->selectRaw('user_id, count(*) as aggregate')->groupBy('user_id');        
     }*/
 
+    //=========================================================================
+    // iteration-9 relation with user's online test
+    //=========================================================================
+
+    public function userOnlineTests(){
+        return $this->hasMany('App\UserOnlineTest', 'jobApp_id');
+    }
+
+
+
+    // iteration-10
+
+    public function user_online_test_jobApp(){
+        return $this->belongsTo('App\UserOnlineTest', 'userOnlineTest_id');
+    }
+
 
     //====================================================================================================================================//
     // Function to filter jobApplication. // called from jobSeeker->job->applications layout.
     //====================================================================================================================================//
     public function getFilterApplication($request){
+        
+        // dd($request->toArray());
+
+        $job_id = $request->job_id;
+        $keyword = my_sanitize_string($request->ja_filter_keyword);
+        $qualification_type = $request->ja_filter_qualification_type;
+        $qualifications = $request->ja_filter_qualification;
+        $salaryRange = $request->ja_filter_salary;
+        $filter_location =  (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on'))?true:false;
+        $filter_location =  (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on'))?true:false;
+        $latitude = $request->location_lat;
+        $longitude = $request->location_long;
+        $radius = $request->filter_location_radius;
+        $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
+        $industries = $request->filter_industry;
+
+        $filer_testing = $request->filter_by_test;
+        // dd($filer_testing);
+
+
+
+
+
+        // $country = $request->ja_filter_country;
+
+        // select * from `users`
+        // where `users`.`id` in (90) and exists (select * from `qualifications` inner join `user_qualifications` on `qualifications`.`id` = `user_qualifications`.`qualification_id` where `users`.`id` = `user_qualifications`.`user_id` and `qualifications`.`id` IN (40) )
+
+
+        // if(!empty($qualifications)){
+        //      $applications    = $this::with(['job','jobseeker' => function($q) use($qualifications){
+        //         $q->whereHas('qualificationRelation', function($query) use($qualifications) {
+        //             $query->whereIn('qualifications.id', $qualifications);
+        //             // $query->where('jobseeker.id', 1);
+        //             // dd($query->toSql());
+        //         });
+        //      }]);
+        // }else{
+
+        $applications    = $this::with(['job','jobseeker']);
+        // dd($applications);
+
+        // dd($this->user_online_test_jobApp());
+
+        // }
+
+        // dd($applications->toSql() );
+
+        // Project::with(['tasks' => function($q) {
+        //     $q->whereHas('tags', function($query) {
+        //         $query->where('tag_id', 1);
+        //     });
+        // }])->get();
+
+         // Filter by job_id
+         if(varExist('job_id', $request)){
+            $applications  = $applications->where('job_id','=',$job_id);
+            // dd($applications);
+         }
+
+
+        // if(!empty($filer_testing)){
+        //         $applications1 = $applications->whereHas('user_online_test_jobApp', function($query) use($filer_testing){
+        //             if(!empty($filer_testing)){ $query->orderBy('test_result', 'DESC'); }
+        //         dd($applications1);
+        //         });
+        //         // dd($applications);
+        //         return $query2;
+        // }
+
+
+         if( $filter_location ||  !empty($qualification_type) || !empty($salaryRange) || !empty($keyword) || $industry_status ){
+                $applications = $applications->whereHas('jobseeker', function ($query) use($filter_location,$latitude,$longitude,$radius,$qualification_type,$salaryRange,$keyword, $qualifications, $industry_status, $industries){
+                    // if(!empty($country)){ $query->where('country', '=', $country);  }
+
+                    if(!empty($salaryRange)){ $query->where('salaryRange', '>=', $salaryRange); }
+                    if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
+                    if(!empty($keyword)){  $query->where('username', 'LIKE', "%{$keyword}%"); }
+                    // Filter by google map location radius.
+                    if($filter_location){
+                        if(isset($latitude) && isset($longitude)  && isset($radius)){
+                            $radius_sign = ($radius <= 50)?'<':'>';
+                            // $query = $query->selectRaw("*,
+                            $query = $query->selectRaw("
+                     ( 6371 * acos( cos(radians('".$latitude."'))
+                     * cos( radians(location_lat))
+                     * cos( radians(location_long) - radians('".$longitude."'))
+                     + sin( radians('".$latitude."'))
+                     * sin( radians( location_lat )))
+                     ) AS distance")
+                        ->having("distance", "<", $radius)
+                        ->orderBy("distance",'asc');
+                            //->orderBy("distance",'asc');
+                        }
+                    }
+
+                    // check if specific qualificaton is selected.
+                    if(!empty($qualifications)){
+                        $query->whereHas('qualificationRelation', function($query2) use($qualifications) {
+                            $query2->whereIn('qualifications.id', $qualifications);
+                            // $query->where('jobseeker.id', 1);
+                            // dd($query->toSql());
+                            return $query2;
+                        });
+                    }
+
+
+                    // check if industry filter is enabled.
+                    if($industry_status && !empty($industries)){
+                        $query = $query->where(function($q) use($industries) {
+                            $q->where('industry_experience','LIKE', "%{$industries[0]}%");
+                            if(count($industries) > 1){
+                                foreach ($industries as $indk =>  $industry) {
+                                    if($indk == 0) continue;
+                                    $q->orWhere('industry_experience','LIKE', "%{$industry}%");
+                                }
+                            }
+                        });
+                    }
+
+
+                    // dd($query->toSql());
+                    return $query;
+                });
+            }
+
+            //Filter by Question
+            if(varExist('filter_by_questions', $request) && ( $request->filter_by_questions == 'on')){
+              // dd( $request->filter_question );
+              foreach ($request->filter_question as $fqKey => $fqValue) {
+                    if(!empty($fqValue)){
+                         // dump($fqKey, $fqValue  );
+                        $applications = $applications->whereHas('answers', function($q) use($fqKey,$fqValue) {
+                            $q->where('question_id', '=',  $fqKey)->where('answer', '=',  $fqValue);
+                            return $q;
+                        });
+                    }
+                }
+            }
+
+
+
+            // $c = select('t.user_online_tests.*')
+            // ->join('user_online_tests', 'user_online_tests.jobApp_id', '=', 'jobs_applications.id')->get();
+            // // ->whereNull('user_online_tests.jobApp_id')->get();
+            // dump($c);
+            
+            // DB::enableQueryLog();
+            // $ces = UserOnlineTest::join('jobs_applications', 'jobs_applications.userOnlineTest_id', '=', 'user_online_tests.id')->orderBy('test_result', 'DESC');
+
+            // foreach ($applications as $application) {
+            //     $applications = ($application->user_online_test_jobApp->test_result)->orderBy('test_result', 'ASC');
+            //     // dump($applications);
+            // }
+
+            $user_online_test = new UserOnlineTest;
+
+            if($filer_testing && !empty($filer_testing)) {
+                $applications = $applications
+                                ->join('jobs_applications', 'user_online_tests.id', '=', 'jobs_applications.userOnlineTest_id'); 
+
+                                 // $applications = $applications->select('');
+                                
+            }
+
+
+
+
+            /*if($filer_testing && !empty($filer_testing)){
+                        $query = $query->where(function($q) use($filer_testing) {
+                      
+                                foreach ($applications as $application) {
+                                    $q->($application->user_online_test_jobApp->test_result)
+                               ->orderBy('test_result','DESC')
+                                }
+                        });
+                    }*/
+            // dd($c);
+
+            // $applications = $c;
+            // dump($c->count());
+
+           // dd(DB::getQueryLog());
+
+
+            // ja_filter_qualification
+
+
+
+            if(varExist('ja_filter_sortBy', $request)){
+                // dd($request->ja_filter_sortBy);
+                $filter_column = 'goldstar';
+                if($request->ja_filter_sortBy == 'all_candidates'){
+                    $applications = $applications->orderBy('created_at', 'DESC');
+                }else if($request->ja_filter_sortBy == 'goldstars'){
+                    $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');
+                }else if($request->ja_filter_sortBy == 'applied'){
+                    $applications  = $applications->where('status','=','applied');
+                }else if($request->ja_filter_sortBy == 'inreview'){
+                    $applications  = $applications->where('status','=','inreview');
+                }else if($request->ja_filter_sortBy == 'interview'){
+                    $applications  = $applications->where('status','=','interview');
+                }else if($request->ja_filter_sortBy == 'unsuccessful'){
+                    $applications  = $applications->where('status','=','unsuccessful');
+                }else if($request->ja_filter_sortBy == 'pending'){
+                    $applications  = $applications->where('status','=','pending');
+                }
+            }else{
+                $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');
+            }
+
+
+            // $resume_filter = $request->filter_by_resume_value;
+            // if(!empty($filer_testing)){
+            //     $applications->whereHas('user_online_test_jobApp', function($query3) use($filer_testing) {
+            //         $query3->orderBy('user_online_test_jobApp.test_result','DESC');
+            //         return $query3;
+            //     });
+            // }
+
+
+
+           dd( $applications->toSql() );
+
+            $applications = $applications->get();
+
+            return $applications;
+    }
+
+
+    public function userstestAndStatus(){
+        $id = $this->id;
+        // $user_id = $this->user_id;
+        // dd($user_id);
+        return $this->belongsTo(UserOnlineTest::class, $id);
+
+        // return $this->belongsTo('App\UserOnlineTest', $user_id)->where('jobApp_id' , $id)->first();
+    }
+
+
+    //====================================================================================================================================//
+    // Function to filter jobApplication. // called from jobSeeker->job->applications layout.
+    //====================================================================================================================================//
+    public function getFilterApplicationWihPagination($request){
         // dd($request->toArray());
         $job_id = $request->job_id;
         $keyword = my_sanitize_string($request->ja_filter_keyword);
@@ -188,27 +449,9 @@ class JobsApplication extends Model{
 
         //    dd( $applications->toSql() );
 
-            $applications = $applications->get();
+            $applications = $applications->paginate(2);
 
             return $applications;
-    }
-
-
-    //=========================================================================
-    // iteration-9 relation with user's online test
-    //=========================================================================
-
-    public function userOnlineTests(){
-        return $this->hasMany('App\UserOnlineTest', 'jobApp_id');
-    }
-
-    public function userstestAndStatus(){
-        $id = $this->id;
-        // $user_id = $this->user_id;
-        // dd($user_id);
-        return $this->belongsTo(UserOnlineTest::class, $id);
-
-        // return $this->belongsTo('App\UserOnlineTest', $user_id)->where('jobApp_id' , $id)->first();
     }
 
 

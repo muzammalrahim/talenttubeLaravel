@@ -35,7 +35,7 @@ class ReferenceController extends Controller
     
     public function sendEmailReferee(Request $request){
     	$data = $request->all();
-    	dd($data);	
+    	// dd($data);	
       $rules = array( "name" => "required|string|max:255", "mobile" => "required|digits:10|numeric", "email"  => "required|string", );
          $validator = Validator::make( $data , $rules);
         if ($validator->fails()){

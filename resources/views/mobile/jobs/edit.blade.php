@@ -167,6 +167,19 @@
                                 <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
                     </div>
                 </div>
+
+                
+
+                <select name="test_id" class="mdb-select md-form colorful-select dropdown-dark">
+                    @if ($job->onlineTest_id == null)
+                        <option value="0">Select Test</option>
+                    @endif
+                   @foreach ($onlineTest as $test)
+                       <option value="{{$test->id}}" {{ $job->onlineTest_id == $test->id ? 'selected':'' }} > {{$test->name}} </option>
+                   @endforeach
+               </select> 
+
+
                 @php
                 $questions = json_decode($job->questions, true);
                 $qnum = sizeof($questions)-1;

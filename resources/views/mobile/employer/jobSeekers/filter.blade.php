@@ -1,4 +1,24 @@
+<link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
 
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+
+<style>
+select {
+  width: 100%;
+}
+</style>
+
+<script>
+  $(function() {
+    $('.multiple-select').multipleSelect()
+  })
+
+  $(document).on('change' '.filter_qualification_type', function(){
+    // $(".qualifSelected").prop("selected", false);
+  });
+
+</script>
 
  <div class="mJSFilter mb-2">
   {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'jobSeeker_filter_form' )) }}
@@ -48,10 +68,10 @@
 
                 @if(!empty($qualifications))
                 <div class="qualification_degree d-none">
-                    <select class="white-text mdb-select md-form qualification_degree" multiple name="qualification_degree[]" id="degreeSelect" data-placeholder="Select a Degree">
+                    <select multiple="multiple" class="multiple-select" name="ja_filter_qualification[]" id="degreeSelect" data-placeholder="Select a Degree">
                         @foreach ($qualifications as $qualif)
                             @if($qualif['type']  == 'degree')
-                              <option value="{{$qualif['id']}}">{{$qualif['title']}}</option>
+                              <option class="qualifSelected" value="{{$qualif['id']}}">{{$qualif['title']}}</option>
                             @endif
                         @endforeach
                     </select>
@@ -59,10 +79,10 @@
                 </div>
 
                 <div class="qualification_trade d-none">
-                    <select class="white-text mdb-select md-form qualification_trade " multiple name="qualification_trade[]"  id="tradeSelect" data-placeholder="Select Trade">
+                    <select multiple="multiple" class="multiple-select" name="ja_filter_qualification[]"  id="tradeSelect" data-placeholder="Select Trade">
                         @foreach ($qualifications as $qualif)
                             @if($qualif['type']  !== 'degree')
-                              <option value="{{$qualif['id']}}">{{$qualif['title']}}</option>
+                              <option class="qualifSelected" value="{{$qualif['id']}}">{{$qualif['title']}}</option>
                             @endif
                         @endforeach
                     </select>
@@ -100,12 +120,12 @@
                 @endphp
                 @if(!empty($industries))
                     <div class="filter_industries_list ">
-																							@foreach ($industries as $indK => $indV)
-																							<div class="form-check">
-																											<input type="checkbox" class="form-check-input" id="industry_{{$indK}}" name="filter_industry[]" value="{{$indK}}">
-																											<label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
-																										</div>
-																						@endforeach
+												@foreach ($industries as $indK => $indV)
+												<div class="form-check">
+																	<input type="checkbox" class="form-check-input" id="industry_{{$indK}}" name="filter_industry[]" value="{{$indK}}">
+																	<label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
+																</div>
+												@endforeach
                     </div>
                 @endif
                 </div>

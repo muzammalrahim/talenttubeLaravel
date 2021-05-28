@@ -886,16 +886,47 @@ function userLocation($user){
     if($user->location)
         $location[] =  $user->location;
 
-    if($user->city)
-        $location[] =  $user->city;
-
-    if($user->state)
+    if ($user->location == $user->city) {
+        # code...
+        // dump("Miss you");
+        if($user->state)
         $location[] =  $user->state;
 
-    if($user->country)
-        $location[] =  $user->country;
+        if($user->country)
+            $location[] =  $user->country;
 
-    return implode(', ', $location);
+        return implode(', ', $location);
+    }
+
+    else{
+
+        if($user->city)
+        $location[] =  $user->city;
+
+        if($user->state)
+            $location[] =  $user->state;
+
+        if($user->country)
+            $location[] =  $user->country;
+
+        return implode(', ', $location);
+
+    }
+
+    // dump($user->location);
+    // dump($user->city);
+    // dump($user->state);
+
+    // if($user->city)
+    //     $location[] =  $user->city;
+
+    // if($user->state)
+    //     $location[] =  $user->state;
+
+    // if($user->country)
+    //     $location[] =  $user->country;
+
+    // return implode(', ', $location);
 
 }
 

@@ -193,16 +193,19 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	Route::post('ajax/booking/MdeleteSlot',    'Mobile\MobileHomeController@MdeleteSlot')->name('MdeleteSlot');
 
 
-	// =============================================== Iteration-10\
+	// =============================================== Iteration-10 ===================================================
 
 	Route::post('ajax/jobseeker/viewCv/{id}', 'Mobile\MobileUserController@ViewCv')->name('ViewCv/{id}');
 	Route::post('ajax/application/status/inreview/', 'Mobile\MobileUserController@changeToInReview')->name('changeToInReview');
 	Route::post('ajax/application/status/interview/', 'Mobile\MobileUserController@changeToInInterview')->name('changeToInInterview');
 	Route::post('ajax/application/status/unsuccessful/', 'Mobile\MobileUserController@changeToInUnsuccessfull')->name('changeToInUnsuccessfull');
-
-
-
-
+    Route::get('mTesting', 'Mobile\OnlineTestController@mTesting')->name('mTesting');
+    Route::get('mProceed/test/{id}', 'Mobile\OnlineTestController@mProceedTesting')->name('mProceedTesting');
+    Route::post('ajax/saveQuestion/nextQuestion/{time}', 'Mobile\OnlineTestController@mSaveandNextQuestion')->name('nextQuestion');
+    Route::post('ajax/mSaveQuestion/result/{time}', 'Mobile\OnlineTestController@mSaveTestAndResult')->name('saveTestAndResult');
+    Route::get('ajax/jobApplication/proceed/{id}', 'Mobile\OnlineTestController@mJobAppProceedTest')->name('jobAppProceedTest');
+    Route::post('ajax/use-mPrevious-result', 'Mobile\MobileUserController@mUserPreviousResult')->name('mUserPreviousResult');
+    Route::post('ajax/reject/test', 'Mobile\MobileUserController@mRejectTest')->name('mRejectTest');
 
 });
 

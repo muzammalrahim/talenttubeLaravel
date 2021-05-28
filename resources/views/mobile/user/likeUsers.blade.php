@@ -19,9 +19,21 @@
 
         <div class="card">
 
-            <div class="card-header jobInfoFont jobAppHeader p-2">Company :
-                <span class="jobInfoFont">{{$js->name}}</span>
-            </div>
+            @if (isEmployer($user))
+                {{-- expr --}}
+
+                <div class="card-header jobInfoFont jobAppHeader p-2">Name :
+                    <span class="jobInfoFont">{{$js->name}}</span>
+                </div>
+
+                @else
+
+                    <div class="card-header jobInfoFont jobAppHeader p-2">Company :
+                        <span class="jobInfoFont">{{$js->company}}</span>
+                    </div>
+            @endif
+
+            
 
 {{-- ============================================ Card Body ============================================ --}}
 
@@ -82,8 +94,8 @@
 
                 <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
 
-
-                <div class="row p-0">
+                @if (isEmployer($user))
+                    <div class="row p-0">
                     <span class="jobInfoFont">Qualification:</span>
                 </div>
                     <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
@@ -100,6 +112,9 @@
                                             </div>
                                 @endforeach
                     @endif
+                @endif
+
+                
 
 
 
@@ -136,6 +151,17 @@
 {{-- ============================================ Card Footer ============================================ --}}
 
             <div class="card-footer text-muted jobAppFooter p-1">
+
+                @if (isEmployer($user))
+
+                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
+              {{--   @else
+                    
+
+                <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MemployerInfo', ['id' => $js->id])}}">Detail</a> --}}
+                @endif
+
+
                     <div class="float-right">
                         <a class="btn btn-sm btn-primary mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>
                     </div>

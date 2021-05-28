@@ -386,7 +386,8 @@ $(".editIndustry").click(function(){
 $(document).ready(function() {
     console.log(' new job doc ready  ');
     $(".datepicker").datepicker({
-        dateFormat: "yy-mm-dd"
+        dateFormat: "yy-mm-dd",
+        minDate: 1
     });
 
     // ====================================================== add more question. ======================================================
@@ -426,7 +427,6 @@ $(document).ready(function() {
          $('input:checkbox').change(function() {
         	if ($(this).is(':checked')) {
                 $(this).closest('label').addClass('checked');
-
                 if($(this).attr('name').includes('preffer')){
                     var res = $(this).attr('name').replace("preffer", "goldstar");
                     var arrChkBox = $('[name="'+res+'"]');
@@ -438,7 +438,6 @@ $(document).ready(function() {
                     var arrChkBox = $('[name="'+res+'"]');
                     arrChkBox.prop('checked', false).trigger('refresh');
                 }
-
 
         	} else {
         		$(this).closest('label').removeClass('checked');

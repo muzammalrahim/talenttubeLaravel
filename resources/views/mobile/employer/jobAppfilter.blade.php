@@ -1,4 +1,26 @@
 
+<link href="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.css" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/jquery/dist/jquery.min.js"></script>
+<script src="https://unpkg.com/multiple-select@1.5.2/dist/multiple-select.min.js"></script>
+
+<style>
+select {
+  width: 100%;
+}
+</style>
+
+<script>
+  $(function() {
+    $('.multiple-select').multipleSelect()
+  })
+
+  $(document).on('change' '.filter_qualification_type', function(){
+    // $(".qualifSelected").prop("selected", false);
+  });
+
+</script>
+
 
  <div class="mJSFilter mb-2">
   {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'jobapp_filter_form' )) }}
@@ -48,7 +70,7 @@
 
                 @if(!empty($qualifications))
                 <div class="qualification_degree d-none">
-                    <select class="white-text mdb-select md-form qualification_degree" multiple name="qualification_degree[]" id="degreeSelect" data-placeholder="Select a Degree">
+                    <select multiple="multiple" class="multiple-select" multiple name="ja_filter_qualification[]" id="degreeSelect" data-placeholder="Select a Degree">
                         @foreach ($qualifications as $qualif)
                             @if($qualif['type']  == 'degree')
                               <option value="{{$qualif['id']}}">{{$qualif['title']}}</option>
@@ -59,7 +81,7 @@
                 </div>
 
                 <div class="qualification_trade d-none">
-                    <select class="white-text mdb-select md-form qualification_trade" multiple name="qualification_trade[]"  id="tradeSelect" data-placeholder="Select Trade">
+                    <select multiple="multiple" class="multiple-select" multiple name="ja_filter_qualification[]"  id="tradeSelect" data-placeholder="Select Trade">
                         @foreach ($qualifications as $qualif)
                             @if($qualif['type']  !== 'trade')
                               <option value="{{$qualif['id']}}">{{$qualif['title']}}</option>
@@ -72,9 +94,9 @@
 
             </div>
 
-												<div class="form-group md-form"> <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
-													<input type="text" name="ja_filter_keyword" class="form-control" style="color:white;" placeholder="Keyword">
-												</div>
+						<div class="form-group md-form"> <!-- left unspecified, .bmd-form-group will be automatically added (inspect the code) -->
+							<input type="text" name="ja_filter_keyword" class="form-control" style="color:white;" placeholder="Keyword">
+						</div>
 
             {{-- Salary Range --}}
 
@@ -86,11 +108,9 @@
                 @endforeach
                 </select>
             </div>
-            {{-- Salary Range --}}
 
 
-
-             {{-- Industry Experience --}}
+            {{-- Industry Experience --}}
             <div class="FilterBox FilterIndustry">
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input filter_showDetail" id="filter_industry_status" name="filter_industry_status" data-dc="FilterIndustryList">
@@ -102,20 +122,19 @@
                 @endphp
                 @if(!empty($industries))
                     <div class="filter_industries_list ">
-																							@foreach ($industries as $indK => $indV)
-																							<div class="form-check">
-																											<input type="checkbox" class="form-check-input" id="industry_{{$indK}}" name="filter_industry[]" value="{{$indK}}">
-																											<label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
-																										</div>
-																						@endforeach
+											@foreach ($industries as $indK => $indV)
+  											<div class="form-check">
+  												<input type="checkbox" class="form-check-input" id="industry_{{$indK}}" name="filter_industry[]" value="{{$indK}}">
+  												<label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
+  											</div>
+											@endforeach
                     </div>
                 @endif
                 </div>
             </div>
             {{-- Industry Experience --}}
 
-												<hr class="my-2" style="height: 0.1em;  background: rgb(41, 41, 41); ">
-
+            <hr class="my-2" style="height: 0.1em;  background: rgb(41, 41, 41); ">
 
             {{-- Location  --}}
             <div class="FilterBox FilterLocation">
@@ -150,56 +169,83 @@
                 {{-- bl_location --}}
                 </div>
             </div>
-            {{-- Location  --}}
+
+    		    <hr class="my-2" style="height: 0.07em;  background: rgb(41, 41, 41); ">
+              {{-- Question  --}}
+              <div class="FilterBox FilterLocation">
+                  <div class="form-check">
+                      <input type="checkbox" class="form-check-input filter_showDetail" id="filter_by_questions" name="filter_by_questions" data-dc="FilterQuestionBox">
+                      <label class="form-check-label" for="filter_by_questions">Filter by Question</label>
+                  </div>
+                  <div class="FilterQuestionBox d-none col">
+                       <div class="row">
+                       @if(varExist('questions', $job))
+                       @foreach ($job->questions as $qkey =>  $jq)
+                          <div class="col-12 p-0">
+                            <span class="fjq_counter">Question {{($qkey+1)}}: </span>
+                            <span class="fjq_title">{{$jq->title}}</span>
+
+                            @if($jq->options)
+                            <select class="white-text mdb-select md-form filter_question_value" name="filter_question[{{$jq->id}}]" >
+                                <option value="">Select</option>
+                                @foreach ($jq->options as $qk => $jqopt)
+                                    <option value="{{$jqopt}}">{{$jqopt}}</option>
+                                @endforeach
+                            </select>
+                            @endif
+
+                          </div>
+                       @endforeach
+                       @endif
+                       </div>
+                  </div>
+              </div>
 
 
-		    <hr class="my-2" style="height: 0.07em;  background: rgb(41, 41, 41); ">
-            {{-- Question  --}}
+              <div class="row">
+                {{-- <div class="searchField_sortBy dblock mb10"> --}}
+                  <div class="sortByFieldLabel dinline_block col-4 mt-4">Sort By: </div>
+                  <select name="ja_filter_sortBy" class="white-text mdb-select md-form col-8">
+                    <option value="goldstars">Gold Stars</option>
+                    <option value="applied">Applied</option>
+                    <option value="inreview">In Review</option>
+                    <option value="interview">Interview</option>
+                    <option value="unsuccessful">Unsuccessful</option>
+                    <option value="pending">pending</option>
+                    <option value="all_candidates">All candidates</option>
+                  </select>
+                {{-- </div> --}}
+              </div>
 
 
-
-                        <div class="FilterBox FilterLocation">
-                            <div class="form-check">
-                                <input type="checkbox" class="form-check-input filter_showDetail" id="filter_by_questions" name="filter_by_questions" data-dc="FilterQuestionBox">
-                                <label class="form-check-label" for="filter_by_questions">Filter by Question</label>
-                            </div>
-                            <div class="FilterQuestionBox d-none col">
-                                 <div class="row">
-                                 @if(varExist('questions', $job))
-                                 @foreach ($job->questions as $qkey =>  $jq)
-                                    <div class="col-12 p-0">
-                                        <span class="fjq_counter">Question {{($qkey+1)}}: </span>
-                                        <span class="fjq_title">{{$jq->title}}</span>
-
-                                            @if($jq->options)
-                                            <select class="white-text mdb-select md-form filter_question_value" name="filter_question[{{$jq->id}}]" >
-                                                <option value="">Select</option>
-                                                @foreach ($jq->options as $qk => $jqopt)
-                                                    <option value="{{$jqopt}}">{{$jqopt}}</option>
-                                                @endforeach
-                                            </select>
-                                            @endif
-
-                                    </div>
-                                 @endforeach
-                                 @endif
-                                 </div>
-                            </div>
+              <div class="FilterBox FilterIndustry">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input filter_showDetail" id="filter_testing" name="filter_by_test">
+                    <label class="form-check-label" for="filter_testing">Filter by Testing</label>
+                </div>
+                {{-- <div class="FilterIndustryList d-none"> --}}
+          {{--       @php
+                    $industries = getIndustries()
+                @endphp --}}
+           {{--      @if(!empty($industries))
+                    <div class="filter_industries_list ">
+                      @foreach ($industries as $indK => $indV)
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input" id="industry_{{$indK}}" name="filter_industry[]" value="{{$indK}}">
+                          <label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
                         </div>
+                      @endforeach
+                    </div>
+                @endif --}}
+                {{-- </div> --}}
+              </div>
 
-
-
-
-
-													<div class="FilterBox my-2">
-														<div class="text-center">
-															<button name="ResetForm" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
-															<button name="CreateConfig" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light " id="CreateConfig" type="submit">Submit</button>
-														</div>
-												</div>
-
-            {{-- Question  --}}
-
+    					<div class="FilterBox my-2">
+    						<div class="text-center">
+    							<button name="ResetForm" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
+    							<button name="CreateConfig" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light " id="CreateConfig" type="submit">Submit</button>
+    						</div>
+    				  </div>
 
           </div>
         </div>

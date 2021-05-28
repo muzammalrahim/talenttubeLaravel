@@ -116,7 +116,10 @@
                 <li><a href="{{route('Mcrossreference.user')}}" class="column_narrow_search_results {{(request()->is('m/Mcrossreference.user'))?'active':''}}"><span class="icon"></span>Cross Reference</a></li>
 
                 <li><a href="{{route('Mjobs')}}" class="column_narrow_search_results {{(request()->is('m/Mjobs'))?'active':''}}"><span class="icon"></span>Browse jobs</a></li>
+
                 <li><a href="{{route('Memployers')}}" class="column_narrow_search_results {{(request()->is('m/Memployers'))?'active':''}}"><span class="icon"></span>Employers</a></li>
+
+                <li><a href="{{route('mTesting')}}" class="column_narrow_search_results {{(request()->is('m/mTesting'))?'active':''}}"><span class="icon"></span>Testing</a></li>
 
 
                 

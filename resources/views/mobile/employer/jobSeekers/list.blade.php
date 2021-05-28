@@ -63,7 +63,7 @@
                 </div>
                 <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
 
-                <div class="row p-0">
+                {{-- <div class="row p-0">
                     <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Qualification</div>
                 </div>
 
@@ -73,11 +73,42 @@
 
                  @if(!empty($qualification_names))
                     @foreach ($qualification_names as $qnKey => $qnValue)
-                       {{-- <span class="qualification dblock">{{$qnValue}}</span> --}}
                         <p class="card-text jobDetail row mb-1 qualification dblock">{{$qnValue}}</p>
 
                     @endforeach
-                 @endif
+                 @endif --}}
+
+                 <div class="row p-0">
+                    <span class="jobInfoFont">Qualification:</span>
+                </div>
+                
+                <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
+                        <span class="qualifTypeSpan">{{$js->qualificationType}}</span>
+                </div>
+                    {{-- {{implode(', ', getQualificationNames($js->qualification))}} --}}
+                @php
+                    $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
+                @endphp
+                    @if(!empty($qualificationsData))
+                        @foreach($qualificationsData as $qualification)
+                            <div class="jobDetail">
+                                            <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
+                            </div>
+                        @endforeach
+                    @endif
+
+                <div class="row p-0">
+                <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Industry Expereience</div>
+            </div>
+            {{-- <div class="js_interested js_field"> --}}
+                {{-- <span class="js_label">Industry Experience:</span> --}}
+                    @if(isset($js->industry_experience))
+                    @foreach ($js->industry_experience as $ind)
+                         <p class="card-text jobDetail row mb-1 qualification dblock">{{getIndustryName($ind)}} </p>
+                    @endforeach
+                    @endif
+
+                    
 
             </div>
 
@@ -88,7 +119,7 @@
 
             <div class="card-footer text-muted jobAppFooter p-1">
                 <div class="float-right">
-                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
+                    <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" target ="_blank" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
                     <a class="jsBlockButton btn btn-sm btn-danger mr-0 btn-xs" data-jsid ="{{$js->id}}">Block</a>
                     @if (in_array($js->id,$likeUsers))
                         <a class="btn btn-sm btn-danger mr-0 btn-xs unlikeEmpButton" data-jsid="{{$js->id}}" data-toggle="modal" data-target="#unlikeEmpModal">UnLike</a>

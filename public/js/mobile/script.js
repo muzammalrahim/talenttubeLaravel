@@ -19,6 +19,7 @@ $(document).ready(function() {
 
 $('#degreeSelect').on('change', function() {
 	var values = $(this).val();
+    console.log(' degreeSelect ', $(this).val() );
 	// alert(values.length);
 	if(values.length==0){
 		$("#filter").html("Filters" +"<i class='fas fa-angle-down rotate-icon'></i>");
@@ -200,23 +201,46 @@ $('#degreeSelect').on('change', function() {
                         country = long_name;
                     }
                 }
+                
+                if (city == place.name) 
+                {
+                    // console.log("you are in");
+                    if((city) && (state) && (country))
+                        address = state + ", " + country;
+                    else if((city) && (state))
+                        address = city + ", " + state;
+                    else if((state) && (country))
+                        address = state + ", " + country;
+                    else if(country)
+                        address = country;
 
-                if((city) && (state) && (country))
-                    address = city + ", " + state + ", " + country;
-                else if((city) && (state))
-                    address = city + ", " + state;
-                else if((state) && (country))
-                    address = state + ", " + country;
-                else if(country)
-                    address = country;
+                     if((place) && (place.name))
+                        address = place.name + ',' + address;
+                }    
 
-                 if((place) && (place.name))
-                    address = place.name + ',' + address;
+                else{
+                    // console.log("You are out ");
+                    if((city) && (state) && (country))
+                        address = city + ", " + state + ", " + country;
+                    else if((city) && (state))
+                        address = city + ", " + state;
+                    else if((state) && (country))
+                        address = state + ", " + country;
+                    else if(country)
+                        address = country;
+
+                     if((place) && (place.name))
+                        address = place.name + ',' + address;
+                }                    
+                    
 
                     // console.log(' reverseGeocode place ', place);
                     // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );
                     updateLocationInputs(place.name,city,state,country);
                     jQuery("#location_search").val(address);
+
+                    // alert(place.name + city + state + country );
+
                     placeMarker(place.geometry.location);
 
             });

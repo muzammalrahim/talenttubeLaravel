@@ -10,8 +10,7 @@
     
     <div class="job_heading p10">
       <div class="w70 dinline_block">
-        <h3 class=" job_title"><a> <b>Online Test {{$loop->index+1}}: </b>  {{-- {{$test->jobApp_id}} --}} </a>
-        </h3>
+        <h3 class=" job_title"><a> <b>Online Test {{$loop->index+1}}: </b>  {{-- {{$test->jobApp_id}} --}} </a></h3>
         @if ($test->jobApplication != NULL)
           {{-- expr --}}
 
