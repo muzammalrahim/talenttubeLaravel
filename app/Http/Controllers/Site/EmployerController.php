@@ -534,7 +534,7 @@ class EmployerController extends Controller {
         $user = Auth::user();
         if(isEmployer($user)){
             $applications = new JobsApplication();
-            $applications = $applications->getFilterApplication($request);
+            $applications = $applications->getFilterApplicationWihPagination($request);
 
             // $UserOnlineTest = UserOnlineTest::where('jobApp_id', $application->id)->first();
             // dd($UserOnlineTest);

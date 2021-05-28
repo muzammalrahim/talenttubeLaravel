@@ -15,7 +15,9 @@
             <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
 
                 <div class="jobSeeker_box relative dinline_block w100">
-                    @include('site.layout.parts.jobSeekerProfileStar')
+
+                    {{-- goldstat questions --}}
+                    @include('site.layout.parts.jobSeekerProfileStar') {{-- site/layout/parts/jobSeekerProfileStar --}}
 
                     @if ($application->userOnlineTests ->count() > 0 )
                         @foreach ($application->userOnlineTests as $test)

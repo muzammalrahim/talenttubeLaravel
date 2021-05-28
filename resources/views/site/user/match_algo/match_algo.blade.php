@@ -46,7 +46,7 @@
 
 	@endphp
 
-		@dump($emp_resident)
+		{{-- @dump($emp_resident) --}}
 
 	@if ($emp_resident == 'no' && $user_resident == 'no')
 

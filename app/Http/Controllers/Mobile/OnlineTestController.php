@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Site;
+namespace App\Http\Controllers\Mobile;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -85,17 +85,18 @@ class OnlineTestController extends Controller
     // Send online Test
     //====================================================================================================================================//
 
-    public function testing(){
+    public function mTesting(){
 		$user = Auth::user();
+        // dd($user->id);
         $data['user'] = $user;
-        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
-        $UserOnlineTest = UserOnlineTest::where('user_id', $user->id)->orderBy('created_at' , 'desc')->get();
-        $data['controlsession'] = $controlsession;
+        // $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $UserOnlineTest = UserOnlineTest::where('user_id', $user->id)->orderBy('updated_at' , 'desc')->get();
+        // $data['controlsession'] = $controlsession;
         $data['UserOnlineTest'] = $UserOnlineTest;
         $data['title'] = 'Jobs';
         $data['classes_body'] = 'tests';
         $data['tests'] = null; //Jobs::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-        return view('site.onlineTest.index', $data); // site/onlineTest/index
+        return view('mobile.online_test.index', $data); // mobile/online_test/index
 
     }
 
@@ -103,16 +104,16 @@ class OnlineTestController extends Controller
     // Proceed to online Test 
     //===================================================================================================================================
 
-    public function proceedTesting($id){
+    public function mProceedTesting($id){
 		$user = Auth::user();
 		// dd($user->id);
         $data['user'] = $user;
         if (!isEmployer($user)) {
-        	$controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        	// $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
 	        $UserOnlineTest = UserOnlineTest::where('id', $id)->first();
 	        if ($UserOnlineTest->user_id == $user->id) {
 	        	if ($UserOnlineTest->status == 'pending' || $UserOnlineTest->status == 'continue' ) {
-	        		$data['controlsession'] = $controlsession;
+	        		// $data['controlsession'] = $controlsession;
 			        $data['UserOnlineTest'] = $UserOnlineTest;
 			        $data['title'] = 'Jobs';
 			        $data['classes_body'] = 'tests';
@@ -120,8 +121,14 @@ class OnlineTestController extends Controller
 
 			        // dd($UserOnlineTest->jobApplication->id);
 
+                    if(isMobile()){
+                        // dd("Good Morning");
+                        return view('mobile.online_test.proceedTest', $data); //  mobile/online_test/proceedTest
 
-			        return view('site.onlineTest.proceedTest', $data); //  site/onlineTest/proceedTest
+                    }
+                    else{
+                        return view('site.onlineTest.proceedTest', $data); //  site/onlineTest/proceedTest
+                    }
 	        	}
 	        	else{
 	        		return redirect(route('testing'));
@@ -143,7 +150,7 @@ class OnlineTestController extends Controller
     // Proceed to online Test
     //===================================================================================================================================
 
-	public function SaveandNextQuestion(Request $request, $time){
+	public function mSaveandNextQuestion(Request $request, $time){
 		$user = Auth::user();
 		$data = $request->all();
         // dd($data);
@@ -154,12 +161,11 @@ class OnlineTestController extends Controller
 	    $UserOnlineTest->current_qid = $UserOnlineTest->current_qid+1;
 	    $UserOnlineTest->save(); 
 	    // if ($UserOnlineTest->job_id != null) {
-
 	    // 	$JobsApplication = JobsApplication::where('id' , $UserOnlineTest->jobApplication->id)->first();
 		   //  $JobsApplication->status = 'applied';
 		   //  $JobsApplication->save();
 	    // }
-	    
+
 	    if ($UserOnlineTest->user_id == $user->id) {
 			$UserOnlineTestAnswers = new UserOnlineTestAnswers();
 	    	$UserOnlineTestAnswers->user_id = $user->id;
@@ -177,7 +183,7 @@ class OnlineTestController extends Controller
 			}
 			$UserOnlineTestAnswers->save();
 			$data['UserOnlineTest'] = $UserOnlineTest;
-    		return view('site.onlineTest.parts.oneQuestion' ,$data); // site/onlineTest/parts/oneQuestion
+    		return view('mobile.online_test.oneQuestion' ,$data); // mobile/onlineTest/parts/oneQuestion
 	    }
 	    else{
 	    	dd('User is not authenticated');
@@ -188,15 +194,13 @@ class OnlineTestController extends Controller
     // Proceed to online Test
     //===================================================================================================================================
 
-	public function saveTestAndResult(Request $request, $time){
+	public function mSaveTestAndResult(Request $request, $time){
 		$user = Auth::user();
 		$data = $request->all();
+        // dd($data);
 	    $UserOnlineTest = UserOnlineTest::where('id', $data['userOnlineTest_id'])->first();
 	    $UserOnlineTest->rem_time = $time;
 	    $UserOnlineTest->status = 'complete';
-
-        
-
 	    $UserOnlineTest->current_qid = $UserOnlineTest->current_qid+1;
 	    if ($UserOnlineTest->user_id == $user->id) {
 			$UserOnlineTestAnswers = new UserOnlineTestAnswers();
@@ -232,6 +236,7 @@ class OnlineTestController extends Controller
         if ($UserOnlineTest->jobApp_id != null) {
             $JobsApplication = JobsApplication::where('id' , $UserOnlineTest->jobApplication->id)->first();
             $JobsApplication->status = 'applied';
+            $JobsApplication->test_result = $UserOnlineTest->test_result;
             $JobsApplication->save();
         }
 
@@ -252,7 +257,7 @@ class OnlineTestController extends Controller
     // Proceed to online Test while applying to job
     //===================================================================================================================================
 
-    public function jobAppProceedTest($id){
+    public function mJobAppProceedTest($id){
 		$user = Auth::user();
         $data['user'] = $user;
         $job = Jobs::find($id);
@@ -285,7 +290,7 @@ class OnlineTestController extends Controller
 
     // ======================================================= completedInterviews =======================================================
 
-    public function completedOnlineTests($id){
+    public function mCompletedOnlineTests($id){
 
         $user = Auth::user();
     	

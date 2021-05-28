@@ -1,5 +1,5 @@
 
-@extends('mobile.user.usermaster')
+@extends('mobile.user.usermaster')  {{-- mobile/user/usermaster --}}
 @section('content')
     {{-- <div class="head icon_head_browse_matches">Job Seekers List</div> --}}
 
@@ -7,7 +7,7 @@
 <h6 class="h6 jobAppH6">Job's Applications</h6>
 
 <!-- =============================================================================================================================== -->
-@include('mobile.employer.jobAppfilter')
+@include('mobile.employer.jobAppfilter')        {{-- mobile/employer/jobAppfilter --}}
 @include('mobile.spinner')
 <div class="jobapp_list">
 

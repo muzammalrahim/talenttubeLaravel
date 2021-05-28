@@ -13,17 +13,50 @@
                 // dd($js);
             @endphp
 
-            {{-- @dump($js) --}}
 
             <div class="card mb-3 swiper-slide shadow mb-3 bg-white rounded job_row jobApp_{{$application->id}}">
                 <div class="card">
+
+
+            {{-- @dump($js); --}}
+
                     {{-- <div class="card-header jobInfoFont jobAppHeader p-2">Name:
                         <span class="jobInfoFont font-weight-normal">{{$js->name}} {{$js->surname}}</span>
                             <div class="jobInfoFont">Location:
                                 <span class="font-weight-normal">{{$js->city}},  {{$js->state}}, {{$js->country}}</span>
                             </div>
                     </div> --}}
+
+
+                    <div class="js_star position-absolute d-flex">
+                        @if($application->goldstar)
+                            <div class="goldstar d-flex">
+
+                                @for ($i = 0; $i < $application->goldstar && $i<=5; $i++)
+                                <div>
+                                    <img src="{{asset('images/site/gold_star_icon.png')}}" >
+                                </div>
+                                @endfor
+                            </div>
+                        @endif
+
+                        @if($application->preffer)
+                            <div class="silverstar d-flex">
+                                @for ($j = 0; $j < $application->preffer && $j<=5; $j++)
+                                    <div>
+                                    <img src="{{asset('images/site/silver_star_icon.png')}}" height="32px">
+                                </div>
+                                @endfor
+                            </div>
+                        @endif
+
+
+                    </div>
+
+
     				@php
+
+                        // dd($js)
         				$profile_image  = asset('images/site/icons/nophoto.jpg');
         				$profile_image_gallery    = $js->profileImage()->first();
 
@@ -70,20 +103,37 @@
                                 @endif
                             </div>
 
-                            <div class="col-md-6 col-12">
-                              <span class="font-weight-bold m-0 float-left jobInfoFont"> {{$js->name}} {{$js->surname}} </span>
-                              <span class="float-right"> <span class="font-weight-normal"> Status : </span>  
-                                @if ($application->status == "inreview")
-                                    <span class="statusUpdated text-capitalize"> In Review </span> 
-                                @else
-                                    <span class="statusUpdated text-capitalize"> {{ $application->status }} </span> 
-                                @endif
-                              </span>
-                            </div>
+                            {{-- <div class="xyz"> --}}
 
-                            <div class="col-md-6 col-12">
-                                <p> <span class="jobInfoFont">  Recent Job: </span>  {{$js->recentJob}} </p> 
-                            </div>
+                                <div class="m200"></div>
+                                <div class="col-md-6 col-12">
+                                  <span class="font-weight-bold m-0 float-left jobInfoFont"> {{$js->name}} {{$js->surname}} </span>
+                                  <span class="float-right"> <span class="font-weight-normal"> Status : </span>  
+                                    @if ($application->status == "inreview")
+                                        <span class="statusUpdated text-capitalize"> In Review </span> 
+                                    @else
+                                        <span class="statusUpdated text-capitalize"> {{ $application->status }} </span> 
+                                    @endif
+                                  </span>
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    <p class="m-0"> <span class="jobInfoFont">  Recent Job: </span>  {{$js->recentJob}} </p> 
+                                </div>
+
+                                <div class="col-md-6 col-12">
+                                    @if ($application->userOnlineTests ->count() > 0 )
+                                        @foreach ($application->userOnlineTests as $test)
+                                            <p class="m-0"> <span class="jobInfoFont"> Test Result: </span> {{$test->test_result}}  </p>
+                                        @endforeach
+                                    @else
+                                        <p class="m-0 jobInfoFont"> No Test attempted </p>
+
+                                    @endif
+                                </div>
+                            {{-- </div> --}}
+
+
                         </div>
                     </div>
 
@@ -175,3 +225,20 @@
 @include('mobile.employer.jobSeekers.Swipe-jobseeker-common')
 
 
+<style type="text/css">
+    .js_star{
+        z-index: 999;
+        right: 18px;
+        background: white;
+        top: 27px;
+        box-shadow: -webkit-box-shadow: 10px 10px 53px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: 10px 10px 53px 0px rgba(0,0,0,0.75);
+box-shadow: 10px 10px 53px 0px rgba(0,0,0,0.75);
+    }
+    .jobapp_list{
+        height: fit-content;
+    }
+    .m200{
+        margin-top: 200px;
+    }
+</style>

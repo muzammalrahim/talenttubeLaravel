@@ -47,8 +47,11 @@
                 <div class="js_info w_70p w_box dblock fl_left">
 
                     {{-- ============================================= Pie Chart =============================================  --}}
-            
+                    @if (!isAdmin($user))
+                        {{-- expr --}}
                     @include('site.user.match_algo.match_algo')   {{-- site/user/match_algo/match_algo --}}
+                        
+                    @endif
                     
                     {{-- ============================================= Pie Chart =============================================  --}}
                     

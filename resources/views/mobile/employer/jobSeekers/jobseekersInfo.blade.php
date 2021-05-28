@@ -6,6 +6,8 @@
 
 <h6 class="h6 jobAppH6">Job Seeker's Detail </h6>
 
+
+{{-- @dump($UserOnlineTest) --}}
 @php
 $js = $jobSeeker;
 @endphp
@@ -69,7 +71,7 @@ $js = $jobSeeker;
             </div>
             <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
 
-            <div class="row p-0">
+            {{-- <div class="row p-0">
                 <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Qualification</div>
             </div>
 
@@ -80,13 +82,29 @@ $js = $jobSeeker;
              @if(!empty($qualification_names))
                 @foreach ($qualification_names as $qnKey => $qnValue)
 
-                   {{-- <span class="qualification dblock">{{$qnValue}}</span> --}}
-
             <p class="card-text jobDetail row mb-1 qualification dblock">{{$qnValue}}</p>
 
 
                 @endforeach
-             @endif
+             @endif --}}
+
+             <div class="row p-0">
+                    <span class="jobInfoFont">Qualification:</span>
+                </div>
+                    <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
+                                    <span class="qualifTypeSpan">{{$js->qualificationType}}</span>
+                    </div>
+                    {{-- {{implode(', ', getQualificationNames($js->qualification))}} --}}
+                @php
+                            $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
+                @endphp
+                    @if(!empty($qualificationsData))
+                                @foreach($qualificationsData as $qualification)
+                                            <div class="jobDetail">
+                                                            <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
+                                            </div>
+                                @endforeach
+                    @endif
 
 
              <div class="row p-0">
