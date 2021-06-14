@@ -109,10 +109,13 @@
                 <span class="sign center">
                     <input id="agree" name="privacy_policy" value="1" type="checkbox"/>
                     <label for="agree">I agree to the</label>
-                    <a href="" onclick="infoOpen('terms'); return false;">Terms</a>
-                    <label for="agree">and</label>
+                    {{-- <a href="" onclick="infoOpen('terms'); return false;">Terms</a>  --}}
+
+                    <a href="{{ route('privacy') }}" target="_blank">Terms Privacy Policy</a> 
+
+                    {{-- <label for="agree">and</label>
                     <a href="" onclick="infoOpen('priv'); return false;">Privacy Policy</a>
-                    <span class="cl"></span>
+                    <span class="cl"></span> --}}
                 </span>
 
                 <button id="frm_register_submit" class="btn pink disabled" disabled>Next</button>

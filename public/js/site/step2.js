@@ -35,6 +35,8 @@ $(function(){
         var s3_validation = true;
         var about_me = $.trim($('#about_me').val());
         var interested_in = $.trim($jq('#interested_in').val());
+        // var organHeldTitle = $.trim($jq('#organHeldTitle').val());
+        // console.log(organHeldTitle);
 
         if ( about_me == ''){
             s3_validation = false;
@@ -48,6 +50,12 @@ $(function(){
             $jq('#interested_in').addClass('validation_error');
         }
 
+        // if (organHeldTitle == ''){
+        //     s3_validation = false;
+        //     $jq('#organHeldTitle_error').removeClass('to_hide').text('Required');
+        //     $jq('#organHeldTitle').addClass('validation_error');
+        // }
+
         if(!profile_img_selected){
             s3_validation = false;
             $jq('.part_photo .name_info').removeClass('to_hide').text('Required');
@@ -57,6 +65,7 @@ $(function(){
         if(s3_validation){
             step3_formData.append('about_me', about_me);
             step3_formData.append('interested_in', interested_in );
+            // step3_formData.append('organHeldTitle', organHeldTitle );
             userStep2Update(step3_formData, 3);
             showEmployStep4();
         }
@@ -77,6 +86,8 @@ $(function(){
         var about_me = $.trim($('#about_me').val());
         var interested_in = $.trim($jq('#interested_in').val());
         var recentJob = $.trim($jq('#recentJob').val());
+        var organHeldTitle = $.trim($jq('#organHeldTitle').val());
+        // console.log(organHeldTitle);
 
         if ( about_me == ''){
             s3_validation = false;
@@ -96,6 +107,12 @@ $(function(){
             $jq('#recentJob').addClass('validation_error');
         }
 
+        if (organHeldTitle == ''){
+            s3_validation = false;
+            $jq('#organHeldTitle_error').removeClass('to_hide').text('Required');
+            $jq('#organHeldTitle').addClass('validation_error');
+        }
+
         if(!profile_img_selected){
             s3_validation = false;
             $jq('.part_photo .name_info').removeClass('to_hide').text('Required');
@@ -106,6 +123,8 @@ $(function(){
             step3_formData.append('about_me', about_me);
             step3_formData.append('interested_in', interested_in );
             step3_formData.append('recentJob', recentJob );
+            step3_formData.append('organHeldTitle', organHeldTitle );
+            
             userStep2Update(step3_formData, 3);
             showUserStep4();
         }
@@ -507,9 +526,20 @@ $(function(){
 
     $jq('#user_step7_done').click(function(){
         // $jq('#join_slogan').text('Final Section');
+        
+        var check = $('.profile_photo_frame').hasClass('item_video'); 
+        if(!check){
+            alert('Please add video');
+        }
+        else{
+            userStep2Update(step6_formData, 7);
+        }
+
+
+        // userStep2Update(step6_formData, 7);
+
         // $jq('#join_step ul li').removeClass('selected');
         // $jq('#join_step ul li:eq(6)').addClass('selected').css('display','block');
-        userStep2Update(step6_formData, 7);
         // $jq('#full_step_7').fadeOut(400,function(){
         //     $jq('#full_step_8').fadeIn(400,function(){
         //     });
@@ -962,6 +992,8 @@ $(function(){
 
 
 
+
+
     $jq('.btn_question').click(function(){
         questionAnswer($(this).data('action'));
     })
@@ -970,23 +1002,19 @@ $(function(){
     function questionAnswer(action){
         console.log(' questionAnswer ', action, dataAnswerJoin);
         if(isAnswerSend)return;
-								isAnswerSend=true;
-								var $el=$('.card_question.first:not(.answer)');
-								var c=$('.card_question:not(.answer)').length-1;
+
+			isAnswerSend=true;
+			var $el=$('.card_question.first:not(.answer)');
+			var c=$('.card_question:not(.answer)').length-1;
+
         if($el[0]){
             dataAnswerJoin[$el.data('field')]=action?'yes':'no';
         }
-        // dev22 test
         if(!c){
             step2_formData.append('questions',JSON.stringify(dataAnswerJoin));
             userStep2Update(step2_formData, 2);
-
-            // $jq('#step_loader').fadeIn(400);
-            // $jq('#full_step_1').fadeOut(400,function(){
-            //     showUserStep3();
-            // })
-            // return;
         }
+
         var cl=action?'to_move_right':'to_move_left',
             cla=action?'yes':'no';
         $el.oneTransEnd(function(){
@@ -1001,6 +1029,58 @@ $(function(){
         },'transform').addClass(cl,0);
         $jq('#card_question_'+cla).toggleClass('hide show');
     }
+
+
+
+
+    $jq('.questionNaviateTo').click(function(){
+        questionNaviateTo($(this).data('action'));
+    })
+    function questionNaviateTo(action){
+        console.log(' questionNaviateTo ', action, dataAnswerJoin);
+         
+         if( action == 'next' ){
+            if(dataAnswerJoin.length <=0 ){
+                console.log(' --<< can not next  ');
+                return false; 
+            }
+
+         }
+        
+            
+        var $el =   $('.card_question.first:not(.answer)');
+        var c   =   $('.card_question:not(.answer)').length-1; // remaning questions
+
+        var cl = 'to_move_left'; 
+        var cla = action?'yes':'no';
+        
+        $el.oneTransEnd(function(){
+            $el.removeAttr('style');
+            $el.oneTransEnd(function(){
+                
+                //var $prev = $el.addClass('answer').prev('.card_question').addClass('first');
+                var $prev = $el.removeClass('first').next('.card_question').removeClass('answer').removeClass('to_hide').addClass(' hellow123 ');
+                    $prev.css('z-index',4);
+
+                $jq('#card_question_'+cla).oneTransEnd(function(){
+                    isAnswerSend=false;
+                    $prev.css('z-index',4);
+                }).toggleClass('show hide');
+
+            }, 'transform').toggleClass(cl+'  to_hide test123');
+
+        },'transform').addClass(cl,0);
+
+
+        $jq('#card_question_'+cla).toggleClass('hide show');
+
+
+    }
+
+
+    
+
+
     /* STEP 4 */
 
     function showErrorResponseForm(data, not, context){

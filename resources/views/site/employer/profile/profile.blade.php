@@ -1,5 +1,5 @@
 
-@extends('site.employer.employermaster')
+@extends('site.employer.employermaster')  {{-- site/employer/employermaster --}}
 
 @section('custom_css')
     <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">

@@ -36,7 +36,7 @@
     <thead>
         <tr style = "text-align: center">
             <th>Id</th>
-            <th>Name</th>
+            <th>Company</th>
             <th>Email</th>
             <th>Profile</th>
             <th>Created_at</th>
@@ -54,22 +54,18 @@
                  <button type="button" class="close" data-dismiss="modal">&times;</button>
              </div>
              <div class="modal-body">
-
                 <div class="modalContentEmp">
                     <p>Do you want to Delete <b><span id="delConfirmIdEmp"></span></b> Employer ?</p>
 
                 </div>
-
                 <div class="modelProcessingEmp" style="display: none;">
                         <h4>Deleting Employer...</h4>
                  </div>
-
              </div>
              <div class="modal-footer">
                  <button type="button" class="btn btn-danger" id="removeEmp" style="margin: 0 auto">Yes</button>
               <input type="hidden" name="deleteConfirmEmp" id="deleteConfirmEmp" value="">
              </div>
-
         </div>
     </div>
 </div>
@@ -91,30 +87,71 @@
 </div>
 {{-- User Info Pop Up End Here --}}
 
+{{-- ========================================== makePaid ========================================== --}}
+
+<div id="makePaid_modal" class="modal fade makePaid_modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+         <div class="modal-header bg-dark">
+            <h4> Make Employer Paid</h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button> 
+         </div>
+         <div class="modal-body">
+              {{-- <div class="">
+                  <p> Make the following employer</p>
+              </div> --}}
+              <div class="">
+                  <p>Select the expiration date of employer's paid status</p>
+                  <input type="hidden" name="empId" class="empId" value="">
+                  <input type="text" name="dates">
+               </div>
+          </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-success makePaid d-none">Confirm
+            </button> 
+           
+         </div>
+    </div>
+  </div>
+</div>
+
+
+{{-- ========================================== makePaid ========================================== --}}
+
+<div id="makeunPaid_modal" class="modal fade makeunPaid_modal" role="dialog">
+  <div class="modal-dialog">
+    <div class="modal-content">
+         <div class="modal-header bg-dark">
+            <h4> Cancel Subscription of Employer </h4>
+            <button type="button" class="close" data-dismiss="modal">&times;</button> 
+         </div>
+         <div class="modal-body">
+              <div class="">
+                  <p>Are you sure you wish to continue ?</p>
+                  <input type="hidden" name="empId" class="unpaidEmpId" value="">
+               </div>
+          </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-success makeUnPaid">Confirm
+            </button> 
+           
+         </div>
+    </div>
+  </div>
+</div>
 
 @stop
 
 @section('css')
     <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
-
+    {{-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" /> --}}
+      <link href="http://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="Stylesheet"
+        type="text/css" />
     <style type="text/css">
-
-        .modal.showProcessing  .modalContentEmp{
-         display: none;
-
-        }
-
-        .modal.showProcessing  .modelProcessingEmp{
-            display: block !important;
-        }
-
-        #delConfirmIdEmp{
-            color:red;
-        }
-
-        td{
-          text-align: center;
-        }
+        .modal.showProcessing  .modalContentEmp{display: none;}
+        .modal.showProcessing  .modelProcessingEmp{display: block !important;}
+        #delConfirmIdEmp{color:red;}
+        td{text-align: center;}
     </style>
 
 @stop
@@ -124,6 +161,13 @@
 @stop
 
 @section('js')
+
+{{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script> --}}
+{{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script> --}}
+{{-- <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script> --}}
+{{-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.2.min.js"></script> --}}
+
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
 <script type="text/javascript">
 	var APP_URL = {!! json_encode(url('/')) !!}
@@ -145,7 +189,7 @@ jQuery(function() {
         },
       columns: [
           { data: 'id', name: 'id' },
-          { data: 'name', name: 'name' },
+          { data: 'company', name: 'company' },
           { data: 'email', name: 'email' },
           { data: 'profile', name: 'profile' },
           { data: 'created_at', name: 'created_at' },
@@ -234,6 +278,97 @@ $('.ModaluserInfo').on('click','.profleVideos img', function(){
 $('.ModaluserInfo').on('hidden.bs.modal', function () {
   $('.ModaluserInfo  .modalContentUser').html(getLoader('smallSpinner'));
 })
+
+
+
+//========================================================================//
+// Making employer paid for specif time period
+//========================================================================//
+
+
+$(document).on('click', '.makePaidButton', function(){
+  var empId = $(this).attr('emp-id');
+  $('.empId').val(empId);
+  $('input[name="dates"]').datepicker({
+    // minDate: 0,
+    dateFormat: 'yy-mm-dd'
+  });
+
+});
+
+
+  //========================================================================//
+  // Ajax Making employer paid for specif time period
+  //========================================================================//
+
+  $(document).on('click', '.makePaid', function(){ 
+    var empId = $('.empId').val();
+    var date = $('input[name="dates"]').val();
+    // console.log(empId + ',' + date);
+    // return;
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+      $.ajax({
+          type: 'POST',
+          url:'{!! route('makeEmployerPaid') !!}',
+          data:{id:empId,date:date},
+          success: function(response){
+              if(response.status == 1){
+                  $('#dataTable').DataTable().ajax.reload();
+                  var message = response.message;   
+                  console.log(message);
+                  // $('.makePaid').addClass('d-none');
+                  $('#makePaid_modal').modal('hide');
+
+              }
+              else{
+                  var message = response.message;
+                  console.log(message);
+              }
+          }
+      });
+  });
+
+
+
+$(document).on('change', 'input[name="dates"]', function(){
+  $('.makePaid').removeClass('d-none');
+});
+
+
+
+// js of making employer unpaid
+$(document).on('click' , '.makingUnpaidbutton', function(){
+  var empId = $(this).attr('emp-id');
+  // console.log(empId);
+  $('.unpaidEmpId').val(empId);
+
+});
+
+$(document).on('click', '.makeUnPaid', function(){ 
+    var empId = $('.unpaidEmpId').val();
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+      $.ajax({
+          type: 'POST',
+          url:'{!! route('makeEmployerUnPaid') !!}',
+          data:{id:empId},
+          success: function(response){
+              if(response.status == 1){
+                  $('#dataTable').DataTable().ajax.reload();
+                  var message = response.message;   
+                  console.log(message);
+                  // $('.makePaid').addClass('d-none');
+                  $('#makeunPaid_modal').modal('hide');
+
+              }
+              else{
+                  var message = response.message;
+                  console.log(message);
+              }
+          }
+      });
+  });
+  
+
 
 
 

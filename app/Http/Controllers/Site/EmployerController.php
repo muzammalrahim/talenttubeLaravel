@@ -17,6 +17,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use DB;
+
+use PDF;
+use PDFMerger;
+
+use PhpOffice\PhpWord\IOFactory;
+
+use PhpOffice\PhpWord\Settings;
+
+use NcJoes\OfficeConverter\OfficeConverter;
+
+
+use App\Exports\JobSeekerExport;
+
+
 use Illuminate\Contracts\Queue\Job;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -60,6 +74,10 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function index(Request $request){
         $user = Auth::user();
+
+        if ($user->step2 < 3) {
+            return redirect(route('step2Employer'));
+        }
         if ( $request->username ===  $user->username ){
             $user_gallery    = UserGallery::where('user_id',$user->id)->where('status',1)->get();
             $profile_image   = UserGallery::where('user_id',$user->id)->where('status',1)->where('profile',1)->first();
@@ -839,7 +857,7 @@ class EmployerController extends Controller {
 
         // DB::enableQueryLog();
         // print_r( $query->toSql() );exit;
-        $jobSeekers =  $query->paginate(2);
+        $jobSeekers =  $query->paginate(10);
         // $jobSeekers =  $query->get();
 
 
@@ -1227,6 +1245,45 @@ class EmployerController extends Controller {
         $data['job'] = $id;
         return view('site.jobs.advertiseJob', $data);
         // site/jobs/advertiseJob
+    }
+
+    //====================================================================================================================================//
+    // Advertise job index
+    //====================================================================================================================================//
+
+
+    public function empGeneratePDF(Request $request){
+      // dd($request->cbx);
+      if(!empty($request->cbx)){
+        $data['title'] = 'Generate PDF';
+        $users = User::whereIn('id', $request->cbx)->get();
+        $data['users'] = $users;
+        if($request->test){
+          return view('admin.pdf.bulkJobSeeker', $data);
+        }else{
+          $pdf = PDF::loadView('admin.pdf.bulkJobSeeker', $data);
+          $pdf->setPaper('A4');
+          return $pdf->download('JobSeekers.pdf'); 
+          // admin/pdf/bulkJobSeeker
+        }
+      }
+    }
+
+    //====================================================================================================================================//
+    // Makeing employer paid.
+    //====================================================================================================================================//
+    public function premiumAccount(){
+        $user = Auth::user();
+        if(isEmployer($user)){
+
+            $data['title']  = 'Credit';
+            $data['user']   =  $user;
+            $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+
+            $data['classes_body'] = 'credit';
+            $data['controlsession'] = $controlsession;
+            return view('site.credit.premiumAccount', $data);
+        }
     }
 
     

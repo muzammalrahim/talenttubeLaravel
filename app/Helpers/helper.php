@@ -222,7 +222,8 @@ function getIndustries(){
         'engineering'                   => 'Engineering',
         'farming_animals_conservation'  => 'Farming, Animals and Conservation',
         'fast_food'                     => 'Fast Food',
-        'government_defence'            => 'Government and Defence',
+        'government_defence'            => 'Government and Public Service',
+        'armed_forces'                  => 'Defence and Armed Forces',
         'healthcare_medical'            => 'Healthcare and Medical',
         'tourism'                       => 'Tourism',
         'human_resources_recruitment'   => 'Human Resources and Recruitment',
@@ -242,7 +243,11 @@ function getIndustries(){
         'trades_services'               => 'Trades and Services',
         'transport_logistics'           => 'Transport and Logistics',
         'hospitality_hotels'            => 'Hospitality & Hotels' ,
-        'aviation'                      => 'Aviation'
+        'aviation'                      => 'Aviation',
+        'law_enforcement'               => 'Law enforcement and private security',
+        'fire_emergency'                => 'Fire and Emergency Services',
+
+
     );
 
     return  $industries_list;
@@ -314,12 +319,12 @@ function getQualificationsList(){
         array(
             'id' => '9',
             'type' => 'degree',
-            'title' => 'Engineering (Chemical & Biomedical'
+            'title' => 'Engineering (Chemical & Biomedical)'
         ),
         array(
             'id' => '10',
             'type' => 'degree',
-            'title' => 'Engineering (Civil & Structural)'
+            'title' => 'Engineering (Mechanical, Electrical & Mechatronics)'
         ),
         array(
             'id' => '11',
@@ -334,7 +339,7 @@ function getQualificationsList(){
         array(
             'id' => '13',
             'type' => 'degree',
-            'title' => 'Financial Services (Banking, Insurance, Planning & Advice'
+            'title' => 'Financial Services (Banking, Insurance, Planning & Advice)'
         ),
         array(
             'id' => '14',
@@ -452,15 +457,17 @@ function getQualificationsList(){
             'type' => 'trade',
             'title' => 'Building and Construction (carpenter, brick layer, plumber, cabinet maker etc)'
         ),
+        
         array(
             'id'    =>  '37',
             'type' => 'trade',
-            'title' => 'Design, Printing and Telco (screen printing, printing, and telecommunication networks)'
+            'title' => 'Design and Printing (printing mechanists & graphic arts production)'
         ),
+
         array(
             'id'    =>  '38',
             'type' => 'trade',
-            'title' => 'Food & Hospitality (Chef, Butcher, Baker etc)'
+            'title' => 'Food & Hospitality (chef, butcher, baker etc)'
         ),
         array(
             'id'    =>  '39',
@@ -475,7 +482,7 @@ function getQualificationsList(){
         array(
             'id'    =>  '41',
             'type' => 'trade',
-            'title' => 'Textiles (Clothing and footwear mechanic) '
+            'title' => 'Textiles (clothing and footwear mechanic) '
         ),
         array(
             'id'    =>  '42',
@@ -485,7 +492,7 @@ function getQualificationsList(){
         array(
             'id'    =>  '43',
             'type' => 'trade',
-            'title' => 'Engineering (electrical/fabrication and Mechanical)'
+            'title' => 'Engineering (electrical,fabrication and Mechanical)'
         ),
         array(
             'id'    =>  '44',
@@ -515,7 +522,19 @@ function getQualificationsList(){
         array(
             'id'    =>  '49',
             'type' => 'trade',
-            'title' => 'Utilities and Electro Technology (electrician, data/cabling, rail systems and communications'
+            'title' => 'Electro Technology (electrician, air con mechanic, elevator technician etc)'
+        ),
+
+        array(
+            'id'    =>  '50',
+            'type' => 'trade',
+            'title' => 'Communications (telco, data cabling, radio & wireless networks)'
+        ),
+
+        array(
+            'id'    =>  '51',
+            'type' => 'trade',
+            'title' => 'Utilities (gas, water, waste management, rail etc)'
         )
     );
 }
@@ -871,12 +890,12 @@ function getUserRegisterQuestions(){
 
 function getEmpRegisterQuestions(){
     $empquestion = array(
-        'graduate_intern' => 'Does your company hire Graduates or Intern?',
+        'graduate_intern' => 'Does your company hire Graduates or Interns?',
         'part_time' => 'Are you open to Part Time or Casual workers?',
         'temporary_contract' => 'Does you organisation offer temporary or contract type work?',
         'fulltime' => 'Are you looking for Full Time candidates?',
         'relocation' => 'Are you willing to repay relocation expenses for a strong candidate?',
-        'resident' => 'Does your organisation ever hire candidates who are not Permanent Resident or Citizen?',
+        'resident' => 'Does your organisation ever hire candidates who are not Permanent Residents or Citizens?',
     );
     return $empquestion;
 }

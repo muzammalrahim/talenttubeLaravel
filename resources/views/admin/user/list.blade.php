@@ -306,21 +306,14 @@ function nextTabQuestion(jobPopId) {
         console.log(jobPopId);
         // $('#jobslist').hide();
         // $('#question').tab('show');
-
         $('#jobslist').removeClass("active");
         $('#jobslist').addClass('fade');
         $('#question').removeClass("fade");
         $('#question').addClass('active');
-
         // $('#jobslist').hide();
         // $('#question').tab('show');
-
         $('#jobslist-tab').removeClass("active");
         $('#question-tab').addClass('active');
-
-
-
-
         $.ajax({
         type: 'GET',
             url: base_url+'/admin/ajax/jobApplyInfoa/'+ jobPopId,
@@ -364,10 +357,6 @@ function nextTabQuestion(jobPopId) {
 
 
 jQuery(function() {
-
-
-
-
     var table = jQuery('#dataTable').DataTable({
         processing: true,
         serverSide: true,
@@ -459,9 +448,7 @@ jQuery(function() {
 
 $(document).on('click', '.btnUserInfo', function() {
   var UserInfoId = parseInt($(this).attr('user-id'));
-
   console.log("UserInfoId"+UserInfoId);
-
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     $.ajax({
         type: 'GET',
@@ -552,8 +539,6 @@ $(document).on('click','.btnUserResumeInfo', function(){
 //========================================================================//
 $(document).on('click','.btnBulkApproved', function(){
   console.log(' btnBulkApproved click ');
-
-
   var UserInfoId = parseInt($(this).attr('user-id'));
   jQuery('input[name="cbx[]"]:checked').each(function(i,el){ console.log('i', i, 'el', $(el).val()); });
   var cbx = $('input[name="cbx[]"]:checked').map(function(){return $(this).val(); });
@@ -589,13 +574,10 @@ $('#ModalBulkApprovedInfo').on('hidden.bs.modal', function (e) {
     $('#jobslist-tab').addClass("active");
     $('#question-tab').removeClass('active');
     $('#dataTablejobs').DataTable().destroy();
-
     $('#jobslist').removeClass("fade");
     $('#jobslist').addClass('active');
     $('#question').removeClass("active");
     $('#question').addClass('fade');
-
-
 
 });
 
@@ -603,9 +585,8 @@ $(document).on('click','.modelConfirmAction', function(){
   var cbx = $('input[name="cbx[]"]:checked').map(function(){return $(this).val(); }).toArray();
   var applyFormData = $('#job_apply_form').serializeArray();
   applyFormData[applyFormData.length] = { name: "cbx", value: cbx };
-//   applyFormData.push(cbx);
+  //   applyFormData.push(cbx);
    console.log(' modelConfirmAction cbx ', applyFormData);
-
   $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
   $.ajax({
       type: 'POST',

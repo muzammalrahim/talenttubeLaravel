@@ -310,7 +310,7 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('correspondance/interviews/{user_id}/{jobApp_id}', 'Admin\AdminInterviewController@corresInterviewJobApplciation')->name('corresInterviewJobApplciation');
     Route::get('users/list', 'Admin\UserController@verifiedUsers')->name('userslist');
 
-    // ====================================== Admin Online Test iteration-9 ======================================
+    // ====================================== Admin Online Test iteration-9 ====================================== 
 
     Route::get('online/test', 'Admin\AdminTestController@onlinetest')->name('onlinetest');
     Route::get('online/test/getList', 'Admin\AdminTestController@onlineTestDataTable')->name('onlineTest.dataTable');
@@ -329,6 +329,13 @@ Route::get('media/private/{userid}/{any}', [
 
 
     // Route::get('users/pool', 'Admin\TalentPoolController@talentPool')->name('talentPool');
+
+    // ====================================== Admin iteration-10+ ====================================== admin/ajax/make-employer-paid
+
+    Route::post('ajax/make-employer-paid', 'Admin\AdminEmployerController@makeEmployerPaid')->name('makeEmployerPaid');
+    Route::post('ajax/make-employer-unpaid', 'Admin\AdminEmployerController@makeEmployerUnPaid')->name('makeEmployerUnPaid');
+
+
 
     
 });
@@ -363,6 +370,8 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('join', 'Site\HomeController@join')->name('join');
     Route::get('join', function () { return redirect('/'); });
 
+    Route::get('privacy-policy', 'Site\HomeController@privacy')->name('privacy');
+
 
     //Employer Registeration.
     // Route::post('register/employer', 'Site\HomeController@registerEmployer')->name('registerEmployer'); // user_register
@@ -396,6 +405,9 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/confirmInterInvitation',    'Site\InterviewController@confirmInterInvitation')->name('confirmInterInvitation');
     Route::post('ajax/confirmInterInvitation/js',    'Site\InterviewController@confirmInterInvitationJs')->name('confirmInterInvitationJs');
     
+    // ==========================================================================
+    // jobseekerprofile
+    // ==========================================================================
 
     Route::get('profile', function () { return redirect('user/'.Auth::user()->username); })->name('profile');
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
@@ -469,9 +481,11 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 	Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
 	Route::post('step2',      'Site\SiteUserController@Step2');
 
-    // Employer
 
+    // ==========================================================================
     // employerprofile
+    // ==========================================================================
+
     Route::get('employer/profile', function () { return redirect('employer/'.Auth::user()->username); })->name('employerProfile');
     Route::get('employer/step2',       'Site\EmployerController@step2Employer')->name('step2Employer');
     Route::post('employer/step2',      'Site\EmployerController@Step2');
@@ -514,6 +528,9 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('paymentStatus', 'Site\PaymentController@paymentInfo')->name('paymentStatus');
     Route::get('paymentCancel', function () { return 'Payment has been canceled'; })->name('paymentCancel');
     Route::get('employer/{username}',   'Site\EmployerController@index');
+
+    Route::get('premium-account',       'Site\EmployerController@premiumAccount')->name('premiumAccount');
+
 
     //Interview concierge
     Route::get('interviewconcierge',       'Site\InterviewController@index')->name('interviewconcierge');
@@ -564,17 +581,17 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     // =============================================== Advertise job iteration-9  =============================================== 
 
     Route::get('advertise/job/{id}', 'Site\EmployerController@advertiseJob')->name('advertise');
-
     Route::post('ajax/sendOnlineTest/', 'Site\OnlineTestController@sendOnlineTest')->name('sendOnlineTest');
     Route::get('testing', 'Site\OnlineTestController@testing')->name('testing');
     Route::get('proceed/test/{id}', 'Site\OnlineTestController@proceedTesting')->name('proceedTesting');
     Route::post('ajax/saveQuestion/nextQuestion/{time}', 'Site\OnlineTestController@SaveandNextQuestion')->name('nextQuestion');
     Route::post('ajax/saveQuestion/result/{time}', 'Site\OnlineTestController@saveTestAndResult')->name('saveTestAndResult');
     Route::get('ajax/jobApplication/proceed/{id}', 'Site\OnlineTestController@jobAppProceedTest')->name('jobAppProceedTest');
-
     Route::get('completed/onlineTests/{id}', 'Site\OnlineTestController@completedOnlineTests')->name('completedOnlineTests');
     Route::post('ajax/reject/test', 'Site\SiteUserController@rejectTest')->name('rejectTest');
     Route::post('ajax/use-previous-result', 'Site\SiteUserController@userPreviousResult')->name('userPreviousResult');
+    
+    Route::post('employer/bulk/generatePDF', 'Site\EmployerController@empGeneratePDF')->name('empBulk.GeneratePDF');
 
 
 

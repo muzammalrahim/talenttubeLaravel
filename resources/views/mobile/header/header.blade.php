@@ -1,4 +1,11 @@
   <!--Double navigation-->
+
+
+  @php
+    use Carbon\Carbon;
+  @endphp
+
+  
   <header>
     <!-- Sidebar navigation -->
     <div id="slide-out" class="side-nav sn-bg-4">
@@ -98,7 +105,41 @@
 
                 <li><a href="{{route('MjobSeekers')}}" class="column_narrow_search_results {{(request()->is('m/MjobSeekers'))?'active':''}}"><span class="icon"></span>Job Seekers</a></li>
 
-                <li><a href="{{route('Swipe-jobseekers')}}" class="column_narrow_search_results {{(request()->is('m/Swipe-jobseekers'))?'active':''}}"><span class="icon"></span>Swipe Job Seekers</a></li>
+
+                @php
+                  
+                  
+
+
+                //   =========================================== Paid employer viewing jobseeker ===========================================
+                  $isallowed = False;
+                  if ($user->employerStatus == 'paid') {
+                      $empExpDate = $user->emp_status_exp;
+                      $currentDate = Carbon::now();
+                      $datetime1 = new DateTime($empExpDate);
+                      $datetime2 = new DateTime($currentDate);
+                      // $interval = $datetime1->diff($datetime2);
+                      // dd($interval);
+                      if ($datetime1 >= $datetime2) {
+                          $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
+                          $isallowed = True;
+                          $data['attachments'] = $attachments;
+                      }
+                      else{
+                          $isallowed = False;
+                          $user->employerStatus = 'unpaid';
+                          $user->save();
+                      }
+
+                  }
+
+                // =========================================== Paid employer viewing jobseeker ===========================================
+                
+                @endphp
+                @if ($isallowed)
+                  <li><a href="{{route('Swipe-jobseekers')}}" class="column_narrow_search_results {{(request()->is('m/Swipe-jobseekers'))?'active':''}}"><span class="icon"></span>Swipe Job Seekers</a></li>
+                @endif
+                
 
                 <li><a href="{{route('Minterviewconcierge')}}" class="column_narrow_search_results {{(request()->is('m/Minterviewconcierge'))?'active':''}}"><span class="icon"></span>Interview Concierge</a></li>
 

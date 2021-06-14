@@ -37,7 +37,7 @@ $profile_image_gallery    = $js->profileImage()->first();
         @endif
     </div>
     <div class="js_info center">
-        <div class="js_name"><h4 class="bold">{{$js->name}} {{$js->surname}}</h4></div>
+        <div class="js_name"><h4 class="bold">{{$js->username}}</h4></div>
         <div class="js_status_label">{{$js->statusText}}</div>
         <div class="js_location">Location: {{userLocation($js)}}</div>
     </div>

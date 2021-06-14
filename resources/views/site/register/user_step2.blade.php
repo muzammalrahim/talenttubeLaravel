@@ -30,15 +30,15 @@
     <div class="header">
         <div id="join_step" class="step">
             <ul>
-                <li class="selected">1</li>
-                <li style="display:none;">2</li>
-                <li style="display:none;">3</li>
-                <li style="display:none;">4</li>
-                <li style="display:none;">5</li>
-                <li style="display:none;">6</li>
-                <li style="display:none;">7</li>
-                <li style="display:none;">8</li>
-                <li style="display:none;">9</li>
+                <li class="selected pointer pointToStep1">1</li>
+                <li class="pointer pointToStep2" style="display:none;">2</li>
+                <li class="pointer pointToStep3" style="display:none;">3</li>
+                <li class="pointer pointToStep4" style="display:none;">4</li>
+                <li class="pointer pointToStep5" style="display:none;">5</li>
+                <li class="pointer pointToStep6" style="display:none;">6</li>
+                <li class="pointer pointToStep7" style="display:none;">7</li>
+                <li class="pointer pointToStep8" style="display:none;">8</li>
+                <li class="pointer pointToStep9" style="display:none;">9</li>
             </ul>
 
         </div>
@@ -56,58 +56,65 @@
         <div class="full_step_error"></div>
         <div class="mw50 dtable margin_auto">
             <div id="full_step_1" class="bl_card_question" style="display:none;">
+
+                <div class="arrows initialPrevQuestion pointer questionNaviateTo"  data-action="previous" >
+                    <h1><i class="initial_arrow fas fa-arrow-left"></i></h1>
+                </div>
+                <div class="arrows initialNextQuestion pointer questionNaviateTo" data-action="next" >
+                    <h1><i class="initial_arrow fas fa-arrow-right"></i></h1>
+                </div>
+
+
                 <div class="card_question_cont">
                     <div id="card_question_no" class="card_question no hide answer">
                         <div class="question_vh">
-
                             {{-- <img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /> --}}
-
-                            <i class="fas fa-times"></i>
-
-                        
+                            <i class="fas fa-times"></i>                        
                             <span>No</span>
                         
                         </div>
                     </div>
                     <div id="card_question_yes" class="card_question yes hide answer">
                         <div class="question_vh">
-
                             {{-- <img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /> --}}
                             <i class="fas fa-check"></i>
-                            
-
                             <span>Yes</span>
                         </div>
                     </div>
 
-                    <div data-field="graduate_intern" class="card_question ">
+                    <div data-field="graduate_intern" class="card_question " data-id="graduate_intern">
                         <div class="count">6 of 6</div><div class="question_txt">Are you seeking a Graduate Program or Internship?</div>
                     </div>
 
-                    <div data-field="part_time" class="card_question ">
+                    <div data-field="part_time" class="card_question " data-id="part_time">
                         <div class="count">5 of 6</div><div class="question_txt">Are you open to Part Time or Casual work?</div>
                     </div>
 
-                    <div data-field="temporary_contract" class="card_question ">
+                    <div data-field="temporary_contract" class="card_question " data-id="temporary_contract">
                         <div class="count">4 of 6</div><div class="question_txt">Are you open to temporary and contract work?</div>
                     </div>
 
-                    <div data-field="fulltime" class="card_question ">
+                    <div data-field="fulltime" class="card_question " data-id="fulltime">
                         <div class="count">3 of 6</div><div class="question_txt">Are you looking for Full Time Employment?</div>
                     </div>
 
-                    <div data-field="relocation" class="card_question ">
+                    <div data-field="relocation" class="card_question" data-id="relocation">
                         <div class="count">2 of 6</div><div class="question_txt">Are you looking or willing to relocate for your next job opportunity?</div>
                     </div>
 
-                    <div data-field="resident" class="card_question first">
+                    <div data-field="resident" class="card_question first" data-id="resident">
                         <div class="count">1 of 6</div><div class="question_txt">Are you a Permanent Resident or Citizen of Australia or New Zealand?</div>
                     </div>
 
                     <div class="card_decor_left1"></div>
                     <div class="card_decor_left2"></div>
                     <div class="card_decor_right1"></div>
+
+
+
                 </div>
+
+
                 <div class="card_question_btn">
                     <button data-action="0" class="btn large pink fl_left btn_question">No</button>
                     <button data-action="1" class="btn large turquoise fl_right btn_question">Yes</button>
@@ -124,29 +131,20 @@
                         <div class="name"></div>
                         <div class="name_info error to_hide"></div>
                         <div class="recent_job m5 mt20 relative">
-                             <div class="title">Your current or most recent job title and employer</div>
+                             <div class="title"> Your current or most recent job title</div>
                              <input type="text" id="recentJob" name="recentJob" value="" />
                              <div id="recentJob_error" class="error to_hide">Required field!</div>
+                        </div>
+
+                        <div class="organisation m5 mt20 relative">
+                             <div class="title">The organisation you held the above title</div>
+                             <input type="text" id="organHeldTitle" name="organHeldTitle" value="" />
+                             <div id="organHeldTitle_error" class="error to_hide">Required field!</div>
                         </div>
 
                     </div>
 
                     <div id="frm_card_join" class="card_profile_info card_join">
-
-                        {{-- <div class="bl bl_basic">
-                        <div class="title">About me</div>
-                        <div id="about_me_error" class="error to_hide">Required field!</div>
-                        <textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="1000"></textarea>
-                        </div>
-
-                        <div class="bl bl_basic">
-                        <div class="title">Interested in</div>
-                        <div id="interested_in_error" class="error to_hide">Required field!</div>
-
-                        <textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="1000"></textarea>
-                        </div>
-
-                        <button id="user_step3_done" class="btn turquoise small btn_join_submit">Done</button> --}}
 
                         <div class="bl bl_basic">
 
@@ -186,7 +184,7 @@
             <div id="full_step_4" class="bl_card_qualification wauto"  style="display:none;">
                 <div class="ind_exp">
                     <div class="ind_exp_h">
-                        <p>Please select the highest level of tertiary studies you have completed or currently enrolled in and completing (You can only select 1 option)</p>
+                        <p>Please select the tertiary studies or qualification you have completed or currently completing </p>
                     </div>
 
                     <div class="qualification_selected_type mb20 center">
@@ -233,7 +231,8 @@
             <div id="full_step_5" class="bl_card_indExp"  style="display:none;">
                 <div class="ind_exp">
                     <div class="ind_exp_h">
-                        <p>Please select from the industries and role types below, that best describe the type of candidates you’d like to match with. You can select up to 5 and change these at any time
+                        <p>Please select from the industries below that you currently or previously have worked in. You can select up 5 industries 
+
                         </p>
                     </div>
 
@@ -296,9 +295,13 @@
             <div id="full_step_7" class="bl_card_indExp"  style="display:none;">
                 <div class="ind_exp">
                     <div class="ind_exp_h">
-                        <p>Well done candidates, you’re at the final stage. To complete your application, all you need to upload a 30-60 second video...</p>
+                        <p>
+                            Well done candidates, you’re nearly at the final stage. To complete your application, all you need to do is upload your ‘elevator pitch’, which is a short 30-60 second video...
+                        </p>
                         <div class="step2_uplod_info">
-                            <p> Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. </p>
+                            <p> 
+                                Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi and tell us about yourself. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. 
+                            </p>
                         </div>
                         <div class="userUpload">
                             <div class="userVideoCont">
@@ -329,18 +332,21 @@
                     <div class="ind_exp_h">
                         <p>Almost done candidates, you’re at the final stage. To complete your application, all you need to upload your resume...</p>
                         <div class="step2_uplod_info">
-                            <p>Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.</p>
+                            <p>
+                                Please upload your most current resume.If you prefer, we also encourage you to remove some of your personal details (such as your full name, address & contact details) for added privacy. 
 
-{{--                            <p>2. Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. </p>--}}
+                            </p>
+
+
                         </div>
 
-                        <p class="info">You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
+                        {{-- <p class="info">You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p> --}}
                     </div>
 
                     <div class="userUpload">
                        <div class="userResumeCont">
                         <div class="userResume">
-                         <div class="title_private_photos title_videos">Resume & Contact Details</div>
+                         <div class="title_private_photos title_videos">Resume</div>
                             <form id="frm_upload" class=" submit-document" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
                               {{csrf_field()}} <br>
                               <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">
@@ -380,9 +386,11 @@
             <div id="full_step_9" class="bl_card_final full_step_9" style="display: none">
                 <div class="ind_exp">
                     <div class="ind_exp_h" style="">
-                        <p class="tagging">Almost done, candidates! To help Employers connect with you, we’ve created a tagging system. This allows Employers to search for specific candidates via a search system. In the below section, we encourage you to create as many tags that best describe your key attributes as a Job Seeker.</p>
+                        <p class="tagging">
+                            Good news, you’ve completed your application profile. Now, to help employers find you easier, please add as many tags that best describe you.
+                        </p>
                         <div class="taging_h_info">
-                            <p> Be sure to tag the following:</p>
+                            {{-- <p> Be sure to tag the following:</p>
                             <p>*Names of organisations and companies you’ve worked for, including charities and not for profits</p>
                             <p>*Job Titles you have held</p>
                             <p>*Skills you have (eg; customer service, java Developer, sales, book keeping, etc)</p>
@@ -390,7 +398,7 @@
                             <p>*The names of courses you’re studying or have completed</p>
                             <p>*The name of qualifications you have (eg; RG146, RSA, etc)</p>
                             <p>*Languages you speak (other than English)</p>
-                            <p>*Hobbies and personal interests are fine as well</p>
+                            <p>*Hobbies and personal interests are fine as well</p> --}}
                         </div>
                     </div>
 
@@ -505,25 +513,52 @@
     });
 
     // Profile Image Upload End
+    // about me Character count for textarea start
 
-            // about me Character count for textarea start
+        var aboutMaxLength = 300;
+        $('#about_me').keyup(function() {
+            var textlen = aboutMaxLength - $(this).val().length;
+            $('#arChars').text(textlen);
+        });
+    // about me Character count for textarea end
 
-                var aboutMaxLength = 300;
-                $('#about_me').keyup(function() {
-                    var textlen = aboutMaxLength - $(this).val().length;
-                    $('#arChars').text(textlen);
-                });
-            // about me Character count for textarea end
+    // about me Character count for textarea start
 
-            // about me Character count for textarea start
+        var maxLength = 150;
+        $('#interested_in').keyup(function() {
+            var textlen = maxLength - $(this).val().length;
+            $('#irChars').text(textlen);
+        });
+    // about me Character count for textarea end
+    // User Step3 End
 
-                var maxLength = 150;
-                $('#interested_in').keyup(function() {
-                    var textlen = maxLength - $(this).val().length;
-                    $('#irChars').text(textlen);
-                });
-            // about me Character count for textarea end
-            // User Step3 End
+    //==================================================================================================================== 
+    // Allow Job Seekers to select the numbers above to be able to go back to that particular section of the process
+    //==================================================================================================================== 
+
+    $('#join_step ul li').click(function(){  
+        $('#join_step ul li').removeClass('selected');
+        $(this).addClass('selected');  
+        var steptext = $(this).text();
+        var stepcheck = parseInt(steptext);
+
+        if (stepcheck == 1) {
+            $('#full_step_'+stepcheck).css("display", "block");
+            $('#full_step_'+stepcheck).siblings().css("display", "none");
+        }
+        else{
+            var step = stepcheck+1;
+            console.log(step);
+            $('#full_step_'+step).css("display", "block");
+            $('#full_step_'+step).siblings().css("display", "none");
+        }
+        
+
+        
+    });
+
+
+
 
 </script>
 
@@ -578,5 +613,7 @@ a#more_jobs_step2{
 	width: 15%;
 text-align: center;
 }
+
 </style>
 @stop
+

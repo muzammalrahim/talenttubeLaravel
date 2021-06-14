@@ -1,10 +1,16 @@
 
-
-
+    <div class="dflex">
+        <div class="w70"></div>
+        <div class="w30">
+            <a class="graybtn jbtn btnBulkPDFGenerate">Bulk Snap Shot</a>
+        </div>
+    </div>
 
     @if ($jobSeekers && $jobSeekers->count() > 0)
 
     @foreach ($jobSeekers as $js)
+
+    <input type="checkbox" name="cbx[]" value="{{ $js->id }}">
 
     <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
         <div class="jobSeeker_box relative dinline_block w100">
@@ -89,6 +95,13 @@
     @endif
 
 
+<div class="d-none">
+  <form method="POST" class="bulkPDFExportForm" action="{{route('empBulk.GeneratePDF')}}">
+    @csrf
+    <div class="cbx_list">
+    </div>
+  </form>
+</di
 
 
 

@@ -126,7 +126,7 @@ class UserController extends Controller
     /** ================ This method returns the datatables data to view ================ */
     public function getEmployerDatatable(Request $request){
       $records = array();
-      $records = User::select(['id', 'name', 'email', 'created_at','verified'])
+      $records = User::select(['id', 'company', 'email', 'created_at','verified','employerStatus'])
         ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
         ->orderBy('created_at', 'desc');
 
@@ -146,6 +146,13 @@ class UserController extends Controller
 
             if(!$records->verified){
                  $rhtml .= '<button type="button" class="btn btn-danger btn-sm btnVerifyUser m-1" user-id='. $records->id.'">Verify</button>';
+            }
+
+            if($records->employerStatus == 'unpaid' && $records->verified == 1 ){
+                 $rhtml .= '<button type="button" class="btn btn-danger btn-sm makePaidButton m-1" data-toggle = "modal" data-target= "#makePaid_modal" emp-id="'. $records->id.'">Make Paid</button>';
+            }
+            if($records->employerStatus == 'paid' && $records->verified == 1 ){
+                $rhtml .= '<button type="button" class="btn btn-danger btn-sm m-1 makingUnpaidbutton" data-toggle = "modal" data-target= "#makeunPaid_modal" emp-id="'. $records->id.'">Make unPaid</button>';
             }
             return $rhtml;
         }
@@ -991,7 +998,7 @@ class UserController extends Controller
     //===============================================================================================================//
     public function confirmAccount(Request $request){
       onlyAdmin();
-      dd($request->cbx);
+      // dd($request->cbx);
       if(!empty($request->cbx) && is_array($request->cbx)){
         $result =  User::whereIn('id', $request->cbx)->update(array('verified' => 1, 'email_verified_at' => date("Y-m-d H:i:s")));
         if($result > 0){
