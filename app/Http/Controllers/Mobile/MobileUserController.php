@@ -1860,20 +1860,39 @@ class MobileUserController extends Controller
 
 		$user = Auth::user();
 		if (!isEmployer($user)){ return redirect(route('jobs')); }
+
+
+        // // =========================================== Paid employer viewing jobseeker ===========================================
+        // $isallowed = False;
+        // if ($user->employerStatus == 'paid') {
+        //     $empExpDate = $user->emp_status_exp;
+        //     $currentDate = Carbon::now();
+        //     $datetime1 = new DateTime($empExpDate);
+        //     $datetime2 = new DateTime($currentDate);
+        //     // $interval = $datetime1->diff($datetime2);
+        //     // dd($interval);
+        //     if ($datetime1 >= $datetime2) {
+        //         $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
+        //         $isallowed = True;
+        //         $data['attachments'] = $attachments;
+        //     }
+        //     else{
+        //         $isallowed = False;
+        //         $user->employerStatus = 'unpaid';
+        //         $user->save();
+        //     }
+
+        // }
+
+        // // =========================================== Paid employer viewing jobseeker ===========================================
+        // $data['isallowed'] = $isallowed;
 		$data['user']           = $user;
 		$data['title']          = 'Job Seekers';
 		$data['classes_body']   = 'jobSeekers';
-		// $swipeJs = User::where('type' , 'user')->first();
-		// dd($swipeJs);
-		// $data['js']      = $swipeJs;
-		// dd($js);
 		$jobSeekersObj          = new User();
 		$jobSeekers             = $jobSeekersObj->swipeJobseeker($request, $user);
-		// dd($jobSeekers);
 		$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 		$data['likeUsers'] = $likeUsers;
-        // $data['jobSeekers'] = $jobSeekers;
-		//$data['jobSeekers'] = $jobSeekers; // $jobSeekers;
 		return view('mobile.employer.jobSeekers.swipe_jobseeker', $data);
 	 	// mobile/employer/jobSeekers/swipe_jobseeker
 	}

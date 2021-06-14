@@ -177,24 +177,34 @@ var CProfile = function() {
 
     this.updateRecentJob = function(){
         var recentJobField = $('.recentJobField').val();
-        $('.recentJobValue').removeClass('hide_it').text(recentJobField);
-        $('.recentJobField').addClass('hide_it');
+        var organHeldTitleField  = $('.organHeldTitleField').val();
+        // console.log(organHeldTitleField);
         $('.recentJobEdit').after(getLoader('smallSpinner recentJobSpinner'));
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/updateRecentJob',
-            data: {'recentjob': recentJobField},
+            data: {'recentjob': recentJobField, 'organHeldTitle':organHeldTitleField},
             success: function(data){
-                if(data.status){
+                if(data.status == 1){
+                    // console.log(data);
+                    $('.organHeldTitleVal').removeClass('hide_it').text(data.organHeldTitle);
+                    $('.recentJobValue').removeClass('hide_it').text(data.recentjob);
+                    $('.recentJobField').addClass('hide_it');
+                    $('.organHeldTitleField').addClass('hide_it');
                     $('.recentJobSpinner').remove();
+                    $('.updateRecentJobButton').addClass('hide_it');
                 }
             }
         });
     }
 
     this.enableRecentJobEdit = function(){
-        $('.recentJobValue').addClass('hide_it');
+        $('.recentJobValue').addClass('hide_it');   
+        $('.organHeldTitleVal').addClass('hide_it');
         $('.recentJobField').removeClass('hide_it');
+        $('.organHeldTitleField').removeClass('hide_it');
+        $('.updateRecentJobButton').removeClass('hide_it');
+
     }
 
 
@@ -207,23 +217,21 @@ var CProfile = function() {
         var salaryRangeField = $('#salaryRangeFieldnew option:selected').val();
         // var salaryRangeField = this.val
         // console.log(salaryRangeField);
-        $('.salaryRangeValue').removeClass('hide_it').text(salaryRangeField);
         $('#salaryRangeFieldnew').addClass('hide_it');
-
-
-           $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+       $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/updateSalaryRange',
             data: {'salaryRange': salaryRangeField},
             success: function(data){
                 if(data.status){
+                    
+                    $('.salaryRangeValue').removeClass('hide_it').text(data.data);
+
                     $('.salaryRangeSpinner').remove();
                     $('.salaryRangeField').addClass('hide_it');
+                    $('.updateSalaryButton').addClass('hide_it');
+
                 }
             }
         });
@@ -232,6 +240,9 @@ var CProfile = function() {
     this.enableSalaryRangeEdit = function(){
         $('.salaryRangeValue').addClass('hide_it');
         $('.salaryRangeField').removeClass('hide_it');
+        $('.updateSalaryButton').removeClass('hide_it');
+
+
         // var  abc = $('');
         // console.log(abc);
     }

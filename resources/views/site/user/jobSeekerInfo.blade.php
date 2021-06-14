@@ -38,7 +38,7 @@
                         <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}">
                     </div>
                     <div class="js_info center">
-                        <div class="js_name"><h4 class="bold">{{$js->name}} {{$js->surname}}</h4></div>
+                        <div class="js_name"><h4 class="bold">{{$js->username}}</h4></div>
                         {{-- <div class="js_status_label">{{$js->statusText}}</div> --}}
                         <div class="js_location">Location: {{$js->city}},  {{$js->state}}, {{$js->country}} </div>
                     </div>
@@ -49,14 +49,14 @@
                     {{-- ============================================= Pie Chart =============================================  --}}
                     @if (!isAdmin($user))
                         {{-- expr --}}
-                    @include('site.user.match_algo.match_algo')   {{-- site/user/match_algo/match_algo --}}
+                        @include('site.user.match_algo.match_algo')   {{-- site/user/match_algo/match_algo --}}
                         
                     @endif
                     
                     {{-- ============================================= Pie Chart =============================================  --}}
                     
                     
-                    <div class="js_interested js_field"> <span class="js_label">Recent Job:</span> <p>{{$js->recentJob}}</p></div>
+                    <div class="js_interested js_field"> <span class="js_label">Recent Job:</span> <p><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b> </p></div>
                     <div class="js_about js_field"> <span class="js_label">About me:</span><p class="js_about_me"> {{$js->about_me}}</p> </div>
                     <div class="js_interested js_field"><span class="js_label">Interested in:</span><p>{{$js->interested_in}}</p></div>
                     <div class="js_interested js_field"><span class="js_label">Expected Salary:</span><p>{{$js->salaryRange}}</p></div>
@@ -193,7 +193,6 @@
 
         <div class="cl mb20"></div>
         @if($isallowed)
-        {{-- private area --}}
             <span class="prvate-section">
                 <div class="title_private_photos" style="margin-bottom: 5px;">
                     Resume &amp; Contact Details
@@ -201,13 +200,11 @@
                 <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
                     <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
                     <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
-                    {{-- <li> <a class="btn violet view-resume" target="_blank" style="" href="/talenttube/_files/resumeUpload/3687_Pimmys logo.pdf">View Resume</a></li> --}}
-                </ul>
+                     </ul>
             </span>
                 <br>
-                <div class="private_attachments">
+            <div class="private_attachments">
                     @foreach ($attachments as $attachment)
-                        {{-- {{asset('images/user/'.$attachment->file)}} --}}
                         <div class="attachment_{{$attachment->id}} attachment_file">
                             <div class="attachment"><img src="{{asset('images/site/icons/cv.png')}}" /></div>
                             <span class="attach_title">{{ $attachment->name }}</span>
@@ -222,11 +219,30 @@
                 <div class="title_private_photos" style="margin-bottom: 5px;">
                     Content Locked
                 </div>
-                <div class="attach_btns">
+
+                <p>
+                    Get premium account from
+                    <a class="credits_balans" id="credits_balans_header" href="{{route('premiumAccount')}}"> here</a>
+                    for contacting job seekers
+                </p>
+                
+
+                {{-- <div class="attach_btns">
                     <a class="attach_btn downloadAttachBtn"  onclick="UProfile.confirmPurchase({{$js->id}});" style="margin-bottom: 25px;">Unlock</a>
-                </div>
+                </div> --}}
+            
             </span>
         @endif
+
+        {{-- ======================== Paid employer viewing the jobseeker personal info ========================  --}}
+        
+        
+        
+
+
+        {{-- ======================== Paid employer viewing the jobseeker personal info ========================  --}}
+        
+
         <div class="cl mb20"></div>
         <div class="VideoCont">
             <div class="head2">Gallery Videos</div>

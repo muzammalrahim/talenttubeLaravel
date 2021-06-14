@@ -67,7 +67,7 @@
                     </div>
 
                     <div data-field="graduate_intern" class="card_question ">
-                        <div class="count">6 of 6</div><div class="question_txt">Does you company hire Graduates or Intern?</div>
+                        <div class="count">6 of 6</div><div class="question_txt">Does you company hire Graduates or Interns?</div>
                     </div>
 
                     <div data-field="part_time" class="card_question ">
@@ -87,7 +87,7 @@
                     </div>
 
                     <div data-field="resident" class="card_question first">
-                        <div class="count">1 of 6</div><div class="question_txt">Does your organisation ever hire candidates who are not Permanent Resident or Citizen?</div>
+                        <div class="count">1 of 6</div><div class="question_txt">Does your organisation ever hire candidates who are not Permanent Residents or Citizens?</div>
                     </div>
 
                     <div class="card_decor_left1"></div>

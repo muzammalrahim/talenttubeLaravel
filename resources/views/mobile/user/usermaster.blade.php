@@ -39,6 +39,8 @@
   <!--Main Layout-->
   <main class="p-0">
     <div class="container-fluid">
+
+      {{-- @dd($isallowed); --}}
      @yield('content')
   </main>
   <!--Main Layout-->

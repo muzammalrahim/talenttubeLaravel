@@ -82,21 +82,36 @@
                     <button class="btn small OrangeBtn saveNewLocation">Save</button>
                 </div>
             </div>
-            <div class="job">
+
+
+            {{-- <div class="job">
                 <span style="margin-right: 34px;">Recent Job:</span>
                 <input type="text" class="hide_it recentJobField" name="recentJobField" value="{{$user->recentJob}}"  onchange="UProfile.updateRecentJob()"/>
                 <span  class="recentJobValue">{{$user->recentJob}}</span>
                 <i class="fas fa-edit recentJobEdit" style="cursor: pointer;" onclick="UProfile.enableRecentJobEdit()"></i>
+            </div> --}}
+
+            <div class="job">
+                <span style="margin-right: 34px;">Recent Job:</span>
+                <input type="text" class="hide_it recentJobField" name="recentJobField" value="{{$user->recentJob}}" />
+                <span  class="recentJobValue bold">{{$user->recentJob}} </span>  at   <span class="organHeldTitleVal bold"> {{ $user->organHeldTitle }} </span>
+                <input type="text" class="hide_it organHeldTitleField" name="organHeldTitleField" value="{{$user->organHeldTitle}}">
+                <i class="fas fa-edit recentJobEdit" style="cursor: pointer;" onclick="UProfile.enableRecentJobEdit()"></i>
             </div>
+
+            <button class="btn small turquoise hide_it updateRecentJobButton" onclick="UProfile.updateRecentJob()" style="margin-left: 137px">Save</button>
 
             {{-- ========================================= Salary Range ========================================= --}}
 
-            <div class="job">
+            <div class="job mt15">
                 <span>Expecting Salary:</span>
-                {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, ['placeholder' => 'Select Salary Range', 'onchange' => 'UProfile.updateSalaryRange()', 'id' => 'salaryRangeFieldnew', 'class' => 'hide_it salaryRangeField']) }}
+                {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, ['placeholder' => 'Select Salary Range', 'id' => 'salaryRangeFieldnew', 'class' => 'hide_it salaryRangeField']) }}
                 <b> {{'AUD: '}}<span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
                 <i class="fas fa-edit salaryRangeEdit" onclick="UProfile.enableSalaryRangeEdit()"></i>
             </div>
+
+            <button class="btn small turquoise hide_it updateSalaryButton" onclick="UProfile.updateSalaryRange()" style="margin-left: 137px">Save</button>
+
 
             {{-- ========================================= Salary Range End Here ========================================= --}}
 

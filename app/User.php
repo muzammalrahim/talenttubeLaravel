@@ -327,7 +327,7 @@ class User extends Authenticatable
 			$query = $query->where('questions', 'LIKE', $question_like);
 			}
 		}
-        return $query->paginate(2)->onEachSide(1);
+        return $query->paginate(10)->onEachSide(1);
 	}
 
     function tags(){

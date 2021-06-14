@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
+use DateTime;
 use DB;
 use Illuminate\Contracts\Queue\Job;
 use Intervention\Image\Facades\Image;
@@ -192,6 +194,7 @@ class JobSeekerController extends Controller {
     public function jobSeekerInfo($jobSeekerId){
         $user = Auth::user();
         $data['user'] = $user;
+        // dd($user);
         if (!isEmployer($user) && (!isAdmin($user)) ){ return redirect(route('profile')); }
         $jobSeeker = User::JobSeeker()->where('id',$jobSeekerId)->first();
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
@@ -201,14 +204,41 @@ class JobSeekerController extends Controller {
         // dd($temp_id->temp_id);
         // $InterviewTempQuestion = InterviewTempQuestion::where('temp_id' ,$temp_id->temp_id)->get();
         $isallowed = False;
-        foreach($user->users as $us){
-            if($us->id == $jobSeeker->id){
+        // foreach($user->users as $us){
+        //     if($us->id == $jobSeeker->id){
+        //         $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
+        //         $isallowed = True;
+        //         $data['attachments'] = $attachments;
+        //     }
+
+        // }
+
+        // =========================================== Paid employer viewing jobseeker ===========================================
+
+        if ($user->employerStatus == 'paid') {
+            $empExpDate = $user->emp_status_exp;
+            $currentDate = Carbon::now();
+            $datetime1 = new DateTime($empExpDate);
+            $datetime2 = new DateTime($currentDate);
+            // $interval = $datetime1->diff($datetime2);
+            // dd($interval);
+            if ($datetime1 >= $datetime2) {
                 $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
                 $isallowed = True;
                 $data['attachments'] = $attachments;
             }
+            else{
+                $isallowed = False;
+                $user->employerStatus = 'unpaid';
+                $user->save();
+            }
 
         }
+   
+        // =========================================== Paid employer viewing jobseeker ===========================================
+        
+
+
         // check if jobseeker not exist then redirect to jobseeker list.
         if(empty($jobSeeker) || isEmployer($jobSeeker) ){ return redirect(route('jobSeekers')); }
         if(hasBlockYou($user, $jobSeeker)){ return view('unauthorized', $data); }
@@ -239,6 +269,13 @@ class JobSeekerController extends Controller {
         $data['interviewTemplate'] = $interviewTemplate;
         $data['UserInterview'] = $UserInterview;
         // $data['InterviewTempQuestion'] = $InterviewTempQuestion;
+        
+        
+        
+
+
+        // dd($days);
+
         return view('site.user.jobSeekerInfo', $data);      //  site/user/jobSeekerInfo
     }
 

@@ -32,6 +32,8 @@ use App\UserInterview;
 use App\InterviewTempQuestion;
 use App\ControlSession;
 use App\Jobs;
+use App\Mail\complete_account_steps;
+
 
 class HomeController extends Controller {
 
@@ -83,6 +85,17 @@ class HomeController extends Controller {
     }
 
 
+    //====================================================================================================================================//
+    // Get // layout for User/Employer Registeration.
+    //====================================================================================================================================//
+    public function privacy(Request $request){
+        $data['title'] = 'Privacy Policy';
+        return view('site.privacy.privacy', $data); // site/privacy/privacy
+
+    }
+
+
+
     public function loginUser(Request $request){
 
         $rules = array(
@@ -131,14 +144,18 @@ class HomeController extends Controller {
                     if (isEmployer()){
     					// check if employer has answer the initial question in step2.
     					if($agent->isMobile()){
-    						$redirect_url = ($user->step2)?(route('Memployers')):(route('mStep2Employer'));
+    						$redirect_url = ($user->step2 >3)?(route('Memployers')):(route('mStep2Employer'));
+                            Mail::to($user->email)->send(new complete_account_steps($user->name));
+                            
     						return array(
     							'status' => 1,
     							'message' => 'login succesfully',
     							'redirect' => $redirect_url
     						);
     					}
-                        $redirect_url = ($user->step2)?(route('employerProfile')):(route('step2Employer'));
+                        $redirect_url = ($user->step2 >3)?(route('employerProfile')):(route('step2Employer'));
+                        Mail::to($user->email)->send(new complete_account_steps($user->name));
+
                         return array(
                             'status'    => 1,
                             'message'   => 'login succesfully',
@@ -147,14 +164,21 @@ class HomeController extends Controller {
                     }else{
     					// check if user has answer the initial question in step2.
     					if($agent->isMobile()){
-    						$redirect_url = ($user->step2)?(route('mUsername', $user->username)):(route('mStep2User'));
+    						$redirect_url = ($user->step2 > 7)?(route('mUsername', $user->username)):(route('mStep2User'));
+                            
+                            Mail::to($user->email)->send(new complete_account_steps($user->name));
+
     						return array(
     							'status' => 1,
     							'message' => 'login succesfully',
     							'redirect' => $redirect_url
     						);
+
     					}
-                        $redirect_url = ($user->step2)?(route('username',$user->username)):(route('step2User'));
+                        $redirect_url = ($user->step2 > 7)?(route('username',$user->username)):(route('step2User'));
+                        Mail::to($user->email)->send(new complete_account_steps($user->name));
+
+                        // dd($redirect_url);
                         return array(
                             'status'    => 1,
                             'message'   => 'login succesfully',
@@ -425,6 +449,8 @@ class HomeController extends Controller {
             // $user->email_verified_at = date("Y-m-d H:i:s");
             $user->email_verification   = hash_hmac('sha256', str_random(40), 'creativeTalent');
             $user->type   = 'employer';
+            $user->employerStatus = 'unpaid';
+
 
             if( $user->save() ){
                 $user->roles()->attach([config('app.employer_role')]);
@@ -532,7 +558,7 @@ class HomeController extends Controller {
 
     function step2Employer(){
         $data['title'] = 'Registeration';
-        $view_name = 'site.register.employer_step2';
+        $view_name = 'site.register.employer_step2'; // site/register/employer_step2
         return view($view_name, $data);
     }
 

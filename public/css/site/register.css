@@ -345,7 +345,7 @@ ul.item_selected_ul li:hover:after { color: #ffa200; }*/
 }
 .bl_form_registration .part{ width: 500px;   }
 
-.recent_job input{
+.recent_job input, .organisation input {
     height: 34px;
     margin: 0;
     padding: 0 21px 0 11px;
@@ -353,12 +353,12 @@ ul.item_selected_ul li:hover:after { color: #ffa200; }*/
     border: 1px solid #ced1da;
     border-radius: 3px;
 }
-#recentJob_error {
+#recentJob_error , #organHeldTitle_error{
     bottom: -25px;
     margin-left: -5px;
     opacity: 1;
 }
-div#recentJob_error.to_hide {
+div#recentJob_error.to_hide, div#organHeldTitle_error.to_hide {
     opacity: 0;
 }
 

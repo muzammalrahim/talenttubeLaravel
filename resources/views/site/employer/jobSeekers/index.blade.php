@@ -576,14 +576,32 @@
 });
 
 
-	var getDataCustom = function(){
-            var url = '{{route('jobSeekersFilter')}}';
-            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-            $.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
-                // console.log(' success data  ', data);
-            $('.jobSeekers_list').html(data);
+var getDataCustom = function(){
+        var url = '{{route('jobSeekersFilter')}}';
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
+            // console.log(' success data  ', data);
+        $('.jobSeekers_list').html(data);
     });
-	}
+}
+
+
+$(document).on('click','.btnBulkPDFGenerate', function(){
+  console.log(' btnBulkPDFGenerate click ');
+  var cbx = $('input[name="cbx[]"]:checked').map(function(){return $(this).val(); }).toArray();
+  // console.log(cbx);
+
+    if(cbx.length <= 0){
+      alert('Please Select Checkboxes');
+      return false;
+    }
+    var cbx_hidden =  '';
+    cbx.forEach(function(id){ cbx_hidden += '<input type="hidden" name="cbx[]" value="'+id+'" />'  });
+    $('.bulkPDFExportForm .cbx_list').html(cbx_hidden);
+    $('.bulkPDFExportForm').submit();
+});
+
+
 </script>
 @stop
 
@@ -592,5 +610,5 @@
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">com
+<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 @stop

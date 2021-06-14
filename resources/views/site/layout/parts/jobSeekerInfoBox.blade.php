@@ -10,7 +10,7 @@
             
     <div class="js_about js_field">
         <span class="js_label">Recent Job:</span>
-        <span class="js_about_me"> {{$js->recentJob}}</span>
+        <span class="js_about_me"> <b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b> </span>
     </div>
 
     <div class="js_education js_field">

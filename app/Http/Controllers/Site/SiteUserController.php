@@ -64,6 +64,9 @@ class SiteUserController extends Controller
 
         // dd($request->ip());
         $user = Auth::user();
+        if ($user->step2 < 7) {
+            return redirect(route('step2User'));
+        }
         if ($request->username ===  $user->username) {
             $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
             $profile_image   = UserGallery::where('user_id', $user->id)->where('status', 1)->where('profile', 1)->first();
@@ -170,7 +173,7 @@ class SiteUserController extends Controller
     public function Step2(Request $request){
 
 
-//        dd( $request->toArray() );
+       // dd( $request->toArray() );
         $requestData = $request->all();
 //        $requestData['questions']       = json_decode($request->questions, true);
 //        $requestData['industry_experience'] = my_sanitize_array_string(json_decode(stripslashes($request->industry_experience),true));
@@ -231,7 +234,9 @@ class SiteUserController extends Controller
             }
             $user->about_me         = $requestData['about_me'];
             $user->interested_in    = $requestData['interested_in'];
-            $user->recentJob        = $requestData['recentJob'];
+            $user->recentJob        = $requestData['recentJob']; 
+            $user->organHeldTitle        = $requestData['organHeldTitle']; 
+            
             $user->step2 = $requestData['step'];
             $user->save();
             if(!empty($request->file('file'))){
@@ -306,7 +311,9 @@ class SiteUserController extends Controller
                 'message' => 'industry experience saved succesfully',
             ]);
         } elseif ($requestData['step'] == 6)
-        {
+        {   
+            // dd($request->all());
+            
             $requestData['salaryRange'] = my_sanitize_string($request->salaryRange);
             $rules = array(
                 'salaryRange'  => 'required'
@@ -326,7 +333,21 @@ class SiteUserController extends Controller
                 'message' => 'salary range saved succesfully',
             ]);
         } elseif ($requestData['step'] == 7)
-        {
+        {     
+            // dd($request->all());
+            // $rules = array(
+            //     'video'  => 'required'
+            // );
+            // $validator = Validator::make($requestData, $rules);
+            
+            // if ($validator->fails()){
+            //     return response()->json([
+            //         'status' => 0,
+            //         'validator' => $validator->getMessageBag()->toArray()
+            //     ]);
+            // }
+
+
             $user->step2 = $requestData['step'];
             $user->save();
             return response()->json([
@@ -626,13 +647,14 @@ class SiteUserController extends Controller
     // chagne JobSeeker recent job text.
     // Ajax / triggered from User profile page.
     //====================================================================================================================================//
-    public function updateRecentJob(Request $request)
-    {
-        $rules = array('recentjob' => 'string|max:100');
+    public function updateRecentJob(Request $request){
+        // dd($request->all());
+        $rules = array('recentjob' => 'string|max:100','organHeldTitle'=> 'string|max:100');
         $validator = Validator::make($request->all(), $rules);
         if (!$validator->fails()) {
             $user = Auth::user();
             $user->recentJob = $request->recentjob;
+            $user->organHeldTitle = $request->organHeldTitle;
             $user->save();
 
             $history = new History;
@@ -643,7 +665,8 @@ class SiteUserController extends Controller
 
             return response()->json([
                     'status' => 1,
-                    'data' => $user->recentJob
+                    'recentjob' => $user->recentJob,
+                    'organHeldTitle' => $user->organHeldTitle
             ]);
         }
     }
