@@ -57,12 +57,13 @@
         <div class="mw50 dtable margin_auto">
             <div id="full_step_1" class="bl_card_question" style="display:none;">
 
-                <div class="arrows initialPrevQuestion pointer questionNaviateTo"  data-action="previous" >
-                    <h1><i class="initial_arrow fas fa-arrow-left"></i></h1>
-                </div>
-                <div class="arrows initialNextQuestion pointer questionNaviateTo" data-action="next" >
+                {{-- <div class="arrows initialPrevQuestion pointer questionNaviateTo"  data-action="previous" >
+                        <h1><i class="initial_arrow fas fa-arrow-left"></i></h1>
+                </div> --}}
+
+                {{-- <div class="arrows initialNextQuestion pointer questionNaviateTo" data-action="next" >
                     <h1><i class="initial_arrow fas fa-arrow-right"></i></h1>
-                </div>
+                </div> --}}
 
 
                 <div class="card_question_cont">
@@ -82,27 +83,27 @@
                         </div>
                     </div>
 
-                    <div data-field="graduate_intern" class="card_question " data-id="graduate_intern">
+                    <div data-field="graduate_intern" id="graduate_intern" class="card_question" data-id="graduate_intern">
                         <div class="count">6 of 6</div><div class="question_txt">Are you seeking a Graduate Program or Internship?</div>
                     </div>
 
-                    <div data-field="part_time" class="card_question " data-id="part_time">
+                    <div data-field="part_time" id="part_time" class="card_question" data-id="part_time">
                         <div class="count">5 of 6</div><div class="question_txt">Are you open to Part Time or Casual work?</div>
                     </div>
 
-                    <div data-field="temporary_contract" class="card_question " data-id="temporary_contract">
+                    <div data-field="temporary_contract" id="temporary_contract" class="card_question" data-id="temporary_contract">
                         <div class="count">4 of 6</div><div class="question_txt">Are you open to temporary and contract work?</div>
                     </div>
 
-                    <div data-field="fulltime" class="card_question " data-id="fulltime">
+                    <div data-field="fulltime" id="fulltime" class="card_question" data-id="fulltime">
                         <div class="count">3 of 6</div><div class="question_txt">Are you looking for Full Time Employment?</div>
                     </div>
 
-                    <div data-field="relocation" class="card_question" data-id="relocation">
+                    <div data-field="relocation" id="relocation" class="card_question" data-id="relocation">
                         <div class="count">2 of 6</div><div class="question_txt">Are you looking or willing to relocate for your next job opportunity?</div>
                     </div>
 
-                    <div data-field="resident" class="card_question first" data-id="resident">
+                    <div data-field="resident" id="resident" class="card_question first active1"  data-id="resident">
                         <div class="count">1 of 6</div><div class="question_txt">Are you a Permanent Resident or Citizen of Australia or New Zealand?</div>
                     </div>
 
@@ -116,7 +117,11 @@
 
 
                 <div class="card_question_btn">
-                    <button data-action="0" class="btn large pink fl_left btn_question">No</button>
+                    <button class="arrows initialPrevQuestion pointer questionNaviateTo"  data-action="previous" >
+                        <h1><i class="initial_arrow fas fa-arrow-left"></i></h1>
+                    </button>
+                    
+                            <button data-action="0" class="btn large pink fl_left btn_question">No</button>
                     <button data-action="1" class="btn large turquoise fl_right btn_question">Yes</button>
                     <div class="cl"></div>
                 </div>
@@ -613,7 +618,9 @@ a#more_jobs_step2{
 	width: 15%;
 text-align: center;
 }
-
+.active1{
+    opacity: 1 !important;
+}
 </style>
 @stop
 
