@@ -341,7 +341,7 @@ body.register.step2>div.jquery-modal.blocker.current>div#jobApplyModal {
 .custom-btn:hover {background-color: #218838;border-color: #1e7e34;}
 .w800px{width: 800px;}
 .initialNextQuestion{position: absolute;right: 400px;top: 300px; }
-.initialPrevQuestion{position: absolute;left: 400px;top: 300px; }
+.initialPrevQuestion{position: absolute;left: 400px;}
 .arrows {background: #d5dce6;padding: 14px 40px 10px 40px;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
 .arrows:hover {background: #f1f1f1;}
 .arrows:hover .initial_arrow{color: black;font-weight: 800;}

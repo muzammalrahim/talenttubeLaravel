@@ -64,7 +64,7 @@ class SiteUserController extends Controller
 
         // dd($request->ip());
         $user = Auth::user();
-        if ($user->step2 < 7) {
+        if ($user->step2 < 8) {
             return redirect(route('step2User'));
         }
         if ($request->username ===  $user->username) {

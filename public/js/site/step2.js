@@ -1000,14 +1000,18 @@ $(function(){
 
     $('.card_question.first').css('z-index',4);
     function questionAnswer(action){
-        console.log(' questionAnswer ', action, dataAnswerJoin);
+        // console.log(' questionAnswer ', action, dataAnswerJoin);
         if(isAnswerSend)return;
 
 			isAnswerSend=true;
 			var $el=$('.card_question.first:not(.answer)');
 			var c=$('.card_question:not(.answer)').length-1;
 
+            // console.log(dataAnswerJoin[$el.data('field')]);
+
+
         if($el[0]){
+            // console.log($el[0]);
             dataAnswerJoin[$el.data('field')]=action?'yes':'no';
         }
         if(!c){
@@ -1020,7 +1024,10 @@ $(function(){
         $el.oneTransEnd(function(){
             $el.removeAttr('style');
             $el.oneTransEnd(function(){
-                var $prev=$el.addClass('answer').prev('.card_question').addClass('first');
+                
+                $el.removeClass('active1');
+
+                var $prev=$el.addClass('answer').prev('.card_question').addClass('first active1');
                 $jq('#card_question_'+cla).oneTransEnd(function(){
                     isAnswerSend=false;
                     $prev.css('z-index',4);
@@ -1030,54 +1037,116 @@ $(function(){
         $jq('#card_question_'+cla).toggleClass('hide show');
     }
 
+    // ======================== Next and previous question by clicking on button ======================== 
 
+    // $jq('.questionNaviateTo').click(function(){
+    //     questionNaviateTo($(this).data('action'));
+    // })
+    // function questionNaviateTo(action){
+    //     console.log(' questionNaviateTo ', action, dataAnswerJoin);
+         
+    //      if( action == 'next' ){
+    //         if(dataAnswerJoin.length <=0 ){
+    //             console.log(' --<< can not next  ');
+    //             return false; 
+    //         }
+    //      }
+
+    //     var $el =   $('.card_question.first:not(.answer)');
+    //     var c   =   $('.card_question:not(.answer)').length-1; // remaning questions
+    //     var cl = 'to_move_left'; 
+    //     var cla = action?'yes':'no';
+    //     $el.oneTransEnd(function(){
+    //         $el.removeAttr('style');
+    //         $el.oneTransEnd(function(){
+    //             // var $prev = $el.addClass('answer').prev('.card_question').addClass('first');
+    //             var $prev = $el.removeClass('first').next('.card_question').removeClass('to_hide').addClass(' first ');
+    //                 $prev.css('z-index',4);
+    //             $jq('#card_question_'+cla).oneTransEnd(function(){
+    //                 isAnswerSend=false;
+    //                 $prev.css('z-index',4);
+    //             }).toggleClass('show hide');
+
+    //         }, 'transform').toggleClass(cl+'  to_hide test123 first');
+    //     },'transform').addClass(cl,0);
+
+    //     $jq('#card_question_'+cla).toggleClass('hide show');
+
+    // }
+
+
+    // Second way Start here 16-06-2021
+
+    /*$jq('.questionNaviateTo').click(function(){
+        questionNavigateTo($(this).data('action'));
+    })
+    function questionNavigateTo(action){
+        if(action == 'next'){
+            var  firstButton = $('#graduate_intern').hasClass("active1");
+            console.log(firstButton);
+            if (!firstButton) {
+                $('.initialNextQuestion > h1 > i').removeAttr('disabled');
+                var $check = $('.card_question').siblings('.active1').removeClass('active1');
+                $check.removeAttr('style').prev('.card_question').addClass('active1').css('z-index',4);
+            }
+            else{
+                $('.initialNextQuestion > h1 > i').attr('disabled', 'disabled');
+            }
+        }
+        else{
+            var firstButton = $('#resident').hasClass("active1");
+            console.log(firstButton);
+            if (!firstButton) {
+                $('.initialPrevQuestion > h1 > i').removeAttr('disabled');
+                var $check = $('.card_question').siblings('.active1').removeClass('active1');
+                $check.removeAttr('style').next('.card_question').addClass('active1').css('z-index',4);
+            }
+            else{
+                $('.initialPrevQuestion > h1 > i').attr('disabled', 'disabled');
+            }
+        }
+
+    }*/
+
+    // Second way end here 16-06-2021
 
 
     $jq('.questionNaviateTo').click(function(){
-        questionNaviateTo($(this).data('action'));
+        questionNavigateTo($(this).data('action'));
     })
-    function questionNaviateTo(action){
-        console.log(' questionNaviateTo ', action, dataAnswerJoin);
-         
-         if( action == 'next' ){
-            if(dataAnswerJoin.length <=0 ){
-                console.log(' --<< can not next  ');
-                return false; 
+    function questionNavigateTo(action){
+        if(action == 'next'){
+            var  firstButton = $('#graduate_intern').hasClass("active1");
+            console.log(firstButton);
+            if (!firstButton) {
+                $('.initialNextQuestion > h1 > i').removeAttr('disabled');
+                var $check = $('.card_question').siblings('.active1').removeClass('active1');
+                $check.removeAttr('style').prev('.card_question').addClass('active1').css('z-index',4);
             }
-
-         }
-        
-            
-        var $el =   $('.card_question.first:not(.answer)');
-        var c   =   $('.card_question:not(.answer)').length-1; // remaning questions
-
-        var cl = 'to_move_left'; 
-        var cla = action?'yes':'no';
-        
-        $el.oneTransEnd(function(){
-            $el.removeAttr('style');
-            $el.oneTransEnd(function(){
-                
-                //var $prev = $el.addClass('answer').prev('.card_question').addClass('first');
-                var $prev = $el.removeClass('first').next('.card_question').removeClass('answer').removeClass('to_hide').addClass(' hellow123 ');
-                    $prev.css('z-index',4);
-
-                $jq('#card_question_'+cla).oneTransEnd(function(){
-                    isAnswerSend=false;
-                    $prev.css('z-index',4);
-                }).toggleClass('show hide');
-
-            }, 'transform').toggleClass(cl+'  to_hide test123');
-
-        },'transform').addClass(cl,0);
-
-
-        $jq('#card_question_'+cla).toggleClass('hide show');
-
+            else{
+                $('.initialNextQuestion > h1 > i').attr('disabled', 'disabled');
+            }
+        }
+        else{
+            var firstButton = $('#resident').hasClass("active1");
+            console.log(firstButton);
+            if (!firstButton) {
+                $('.initialPrevQuestion > h1 > i').removeAttr('disabled');
+                var $check = $('.card_question').siblings('.active1').removeClass('active1 first');
+                $check.removeAttr('style').next('.card_question').addClass('active1').toggleClass('answer to_hide').css('z-index',4);
+            }
+            else{
+                $('.initialPrevQuestion > h1 > i').attr('disabled', 'disabled');
+            }
+        }
 
     }
 
 
+
+    
+
+    // ======================== Next and previous question by clicking on button ======================== 
     
 
 
