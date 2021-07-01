@@ -1,12 +1,7 @@
 
-
     {{-- @dump($user->qualificationType);  --}}
-
-
  @php
-    // dd($user->qualification);
-      $qualificationsData =  ($user->qualification)?(getQualificationsData($user->qualification)):(array());
-    //   dd($qualificationsData);
+    $qualificationsData =  ($user->qualification)?(getQualificationsData($user->qualification)):(array());
   @endphp
     @if(!empty($qualificationsData))
        @foreach($qualificationsData as $qualification)
@@ -16,4 +11,12 @@
           </div>
        @endforeach
      @endif
+
+
+{{--   @foreach ($userQualification as $qualification)
+    <div class="QualificationSelect">
+        <p><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification->qualificationNames->title}} <i class="fa fa-trash removeQualification hide_it"></i></p>
+    </div>
+  @endforeach --}}
+
 

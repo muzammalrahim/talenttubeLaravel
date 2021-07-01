@@ -17,14 +17,10 @@
 <div class="main  ">
 	<div class="homeBg">
 			<div class="shadeBg">
-											
-							
-						<div class="wrapper">
-											@include('mobile.header.header1')
-						</div>
-						
-						@include('mobile.register.user_step1')
-
+                <div class="wrapper">
+                    @include('mobile.header.header1')
+				</div>
+				@include('mobile.register.user_step1')  {{-- mobile/register/user_step1 --}}
 			</div>
 			@include('mobile.home.loginPopup') 
 	</div>

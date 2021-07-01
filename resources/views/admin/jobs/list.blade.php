@@ -46,6 +46,7 @@
     <thead>
         <tr style = "text-align: center">
             <th>id.</th>
+            <th>company</th>
             <th>title</th>
             <th>country</th>
             <th>state</th>
@@ -109,7 +110,7 @@ jQuery('#dataTable').DataTable({
     columns: [
         { data: 'id', name: 'id' },
         { data: 'title', name: 'title' },
-        // { data: 'description', name: 'description' },
+        { data: 'user_id', name: 'user_id' },
         // { data: 'type', name: 'type' },
         { data: 'country', name: 'country' },
         { data: 'state', name: 'state' },

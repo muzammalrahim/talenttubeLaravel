@@ -255,7 +255,7 @@ class Jobs extends Model {
 
 
 
-        $jobsList = $query->paginate(2)->onEachSide(1);
+        $jobsList = $query->paginate(10)->onEachSide(1);
        // dd($jobsList);
         return $jobsList;
 

@@ -1057,8 +1057,60 @@ function initial_last_question($js, $user){
 
 
 
+// function array_push_assoc($indus, $key, $user_q1_count){
+//     $indus[$key] = $value;
+//    return $indus;
+// }
 
 
 
 
+function getIndustries_new(){
 
+    $industries_list_new = array(
+        0            => 'Accounting and Finance',
+        1 => 'Administration and Office support',
+        2        => 'Advertising, Arts and Media',
+        3                    => 'Automotive',
+        4    => 'Banking and Financial Services',
+        5  => 'Call Centre and Customer Service',
+        6        => 'CEO and General Management',
+        7=> 'Community Services and Development',
+        8             => 'Company Directors',
+        9                  => 'Construction',
+        10           => 'Consulting and Strategy',
+        11           => 'Design and Architecture',
+        12 => 'Disputes and Complaint Resolution',
+        13 => 'Entertainment & Event Management',
+        14            => 'Education and Training',
+        15                   => 'Engineering',
+        16  => 'Farming, Animals and Conservation',
+        17                     => 'Fast Food',
+        18            => 'Government and Public Service',
+        19                  => 'Defence and Armed Forces',
+        20            => 'Healthcare and Medical',
+        21                       => 'Tourism',
+        22   => 'Human Resources and Recruitment',
+        23        => 'Information Technology',
+        24                     => 'Insurance',
+        25                         => 'Legal',
+        26                 => 'Manufacturing',
+        27      => 'Marketing and Communications',
+        28       => 'Mining, Resources and Energy',
+        29          => 'Real Estate and Property',
+        30      => 'Retail and Consumer products',
+        31    => 'Sales and Business Development',
+        32            => 'Science and Technology',
+        33              => 'Sport and Recreation',
+        34 => 'Team Leader and People Management',
+        35            => 'Telecommunications',
+        36               => 'Trades and Services',
+        37           => 'Transport and Logistics',
+        38            => 'Hospitality & Hotels' ,
+        39                      => 'Aviation',
+        40               => 'Law enforcement and private security',
+        41                => 'Fire and Emergency Services',
+    );
+
+    return  $industries_list_new;
+}

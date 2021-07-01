@@ -189,7 +189,24 @@
             <div id="full_step_4" class="bl_card_qualification wauto"  style="display:none;">
                 <div class="ind_exp">
                     <div class="ind_exp_h">
-                        <p>Please select the tertiary studies or qualification you have completed or currently completing </p>
+                        <p>What year did you complete your final year of high school ? </p>
+                    </div>
+                    <div class="qualification_type_cont mb20 center ageCal">
+                        <select id="year" name="passing_year" class="w80">
+                            {{ $last= date('Y')-50 }}
+                            {{ $now = date('Y') }}
+
+                            @for ($i = $now; $i >= $last; $i--)
+                                <option value="{{ $i }}">{{ $i }}</option>
+                            @endfor
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="ind_exp">
+                    <div class="ind_exp_h">
+                        <p>Please select the highest or most relevant studies you have completed or currently studying</p>
                     </div>
 
                     <div class="qualification_selected_type mb20 center">
@@ -225,7 +242,7 @@
 
                     <div class="join_btn mt20 center">
                         <div class="join_industry_error"></div>
-                        <button id="user_step4_done" class="btn turquoise small btn_join_submit" disabled="true">Done</button>
+                        <button id="user_step4_done" class="btn turquoise small btn_join_submit">Done</button>
                     </div>
 
                 </div>
@@ -620,6 +637,11 @@ text-align: center;
 }
 .active1{
     opacity: 1 !important;
+}
+.ageCal>#year-styler > .jq-selectbox__dropdown.drop_down {
+    height: 200px !important;
+    width: 100% !important;
+    overflow: scroll;
 }
 </style>
 @stop

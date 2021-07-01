@@ -85,7 +85,7 @@ class AdminJobsController extends Controller
     // Ajax GET // Jobs list for dataTable
     //===============================================================================================================//
     function getDatatable(){
-         $records = Jobs::select(['id', 'title','country','state','city','salary','created_at'])
+         $records = Jobs::with(['jobEmployer'])
         ->orderBy('created_at', 'desc');
       return datatables($records)
       ->addColumn('action', function ($records) {
@@ -112,6 +112,14 @@ class AdminJobsController extends Controller
       ->editColumn('city', function ($records) {
          return  ($records->city);
       })
+      ->editColumn('user_id', function ($records) {
+         return  ($records->jobEmployer->company);
+      })
+
+      // ->addColumn('company', function ($records) {
+      //    return  ($records->jobEmployer->company);
+      // })
+
       ->toJson();
     }
 

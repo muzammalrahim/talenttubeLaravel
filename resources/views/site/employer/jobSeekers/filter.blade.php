@@ -19,6 +19,8 @@
         </select>
     </div> --}}
 
+    {{-- ============================================ Filter by Qualification ============================================ --}}
+
      <div class="searchField_qualification mb10">
         <div class="searchFieldLabel dinline_block">Qualification: </div>
         <select class="dinline_block filter_qualification_type js-select" name="filter_qualification_type" data-placeholder="Select Qalification & Trades">
@@ -45,11 +47,7 @@
         @endif
     </div>
 
-
-
-    
-
-
+    {{-- ============================================ Filter by Salary ============================================ --}}
 
     <div class="searchField_salaryRange dblock mb10">
         <div class="searchFieldLabel dinline_block">Salary Range: </div>
@@ -83,6 +81,7 @@
     </div>
 
 
+    {{-- ============================================ Filter by Location ============================================ --}}
 
 
     <div class="searchField_location mb10">
@@ -127,6 +126,7 @@
         {{-- bl_location --}}
     </div>
 
+    {{-- ============================================ Filter by Question ============================================ --}}
 
     <div class="searchField_questions mb10">
       <div class="searchFieldLabel dinline_block">Filter by Question: </div>
@@ -180,21 +180,57 @@
 
     {{-- ============================================ Filter by Keywords ============================================ --}}
 
-
-     <div class="searchField_keyword dblock mb10">
+    <div class="searchField_keyword dblock mb10">
         <div class="searchFieldLabel dinline_block">Filter by Keyword: </div>
         <input type="text" name="filter_keyword">
     </div>
 
-     {{-- ============================================ Filter by Tags ============================================ --}}
+    {{-- ============================================ Filter by Age Group ============================================ --}}
 
+    <div class="searchField_resume dwebkitbox mb10">
+        <div class="searchFieldLabel dinline_block">Filter by Age Group: </div>
+        <div class="toggleSwitchButton">
+            <label class="switch"><input type="checkbox" name="filter_by_age"></label>
+        </div>
+        <div class="filter_age_cont hide_it">
+            <select name="filter_by_age_val" id="filterAgeGroup">
+                <option value="">Select Age Group</option>
+                <option value="18-25">18-25</option>
+                <option value="25-30">25-30</option>
+                <option value="30-40">30-40</option>
+                <option value="40-54">40-54</option>
+                <option value="55+">55+</option>
+            </select>
+        </div>
+    </div>
+
+
+    {{-- ============================================ Filter by Gender ============================================ --}}
+
+    <div class="searchField_Age dwebkitbox mb10">
+        <div class="searchFieldLabel dinline_block">Filter by Gender: </div>
+        <div class="toggleSwitchButton">
+            <label class="switch"><input type="checkbox" name="filter_by_gender"></label>
+        </div>
+        <div class="filter_gender_cont hide_it">
+            <select name="filter_by_gender_val" id="filterAgeGroup">
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+    </div>
+
+
+
+
+    {{-- ============================================ Filter by Tags ============================================ --}}
 
     <div class="searchField_tags mb10">
         <div class="searchFieldLabel dinline_block">Filter by Tags: </div>
         <div class="toggleSwitchButton dinline_block"><label class="switch"><input type="checkbox" name="filter_tags_status" class="filter_tags_status"></label></div>
         {{-- industry selection --}}
         <div class="filter_tagList hide_it">
-            
             {{-- @if(!empty($industries)) --}}
             <div class="filter_tags_list">
                 <ul class="tags_ul item_ul dot_list">
@@ -208,16 +244,11 @@
         {{-- industry selection --}}
     </div>
 
-
-
-
-
-
     <div class="searchField_action">
         <div class="searchFieldLabel dinline_block"></div>
-                                <button class="btn small OrangeBtn">Submit</button>
-                                {{-- <input class="btn small OrangeBtn reset-btn" value="Reset" type="reset"> --}}
-								<button class="btn small OrangeBtn reset-btn" >Reset</button>
+            <button class="btn small OrangeBtn">Submit</button>
+            {{-- <input class="btn small OrangeBtn reset-btn" value="Reset" type="reset"> --}}
+    		<button class="btn small OrangeBtn reset-btn" >Reset</button>
     </div>
 
     {{ Form::close() }}

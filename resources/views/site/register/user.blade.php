@@ -38,7 +38,7 @@
             </div>
         </div>
 
-        @include('site.register.user_step1')
+        @include('site.register.user_step1') {{-- site/register/user_step1 --}}
 
     </div>
     <!-- header_cont_bl -->

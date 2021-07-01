@@ -1,12 +1,12 @@
 
     
-@extends('site.employer.referencemaster')
+@extends('site.user.reference.referencemaster')
 
 @section('content')
 
 <div class="container">
 	<div class="header text-center">
-		<h4 class="font-weight-bold">You have submitted your reference</h4>
+		<h4 class="font-weight-bold">You have submitted your reference</h4> {{-- sendPreferrredMaster --}}
 	</div> 
 
 	<div class="goHome text-center pb-3"> 
