@@ -190,7 +190,7 @@ $(document).ready(function(){
 		$('#join_done').click(function(){
 			console.log(' join_done ', dataAnswerJoin);
 			step4_formData.append('industry_experience', JSON.stringify(dataIndustryExp));
-   userStep2Update(step4_formData, 4);
+   			userStep2Update(step4_formData, 4);
 		});
 		// Employer Step 4 end
 
@@ -206,6 +206,8 @@ $(document).ready(function(){
 				var about_me = $.trim($('#about_me').val());
 				var interested_in = $.trim($('#interested_in').val());
 				var recentJob = $.trim($('#recentJob').val());
+				var organHeldTitle = $.trim($('#organHeldTitle').val());
+
 
 				if ( about_me == ''){
 					s3_validation = false;
@@ -217,6 +219,13 @@ $(document).ready(function(){
 						s3_validation = false;
 						$('#interested_in_error').removeClass('to_hide').text('Required');
 						$('#interested_in').addClass('validation_error');
+						}
+
+						if (organHeldTitle == ''){
+							console.log("hi how are you "+organHeldTitle);
+							s3_validation = false;
+							$('#organHeldTitle_error').removeClass('d-none').addClass('d-block');
+							$('#organHeldTitle').addClass('validation_error');
 						}
 
 						if (recentJob == ''){
@@ -234,6 +243,7 @@ $(document).ready(function(){
 							step3_formData.append('about_me', about_me);
 							step3_formData.append('interested_in', interested_in );
 							step3_formData.append('recentJob', recentJob );
+							step3_formData.append('organHeldTitle', organHeldTitle );
 							userStep2Update(step3_formData, 3);
 							showUserStep4();
 					}

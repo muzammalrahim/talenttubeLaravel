@@ -3,6 +3,7 @@
 
   @php
     use Carbon\Carbon;
+    use App\Attachment;
   @endphp
 
   
@@ -121,9 +122,9 @@
                       // $interval = $datetime1->diff($datetime2);
                       // dd($interval);
                       if ($datetime1 >= $datetime2) {
-                          $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
+                          // $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
                           $isallowed = True;
-                          $data['attachments'] = $attachments;
+                          // $data['attachments'] = $attachments;
                       }
                       else{
                           $isallowed = False;

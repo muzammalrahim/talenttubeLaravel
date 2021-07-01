@@ -246,6 +246,28 @@ return [
             'label_color' => 'success',
         ],
 
+        [   'header'      => 'Reporting'],
+        [
+            'text'        => 'Job Seekeers Report',
+            'url'         => 'admin/jobseekers/reports',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
+        [
+            'text'        => 'Employers Report',
+            'url'         => 'admin/employers/reports',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
+        [
+            'text'        => 'Job Reports',
+            'url'         => 'admin/job_reports',
+            'icon'        => 'far fa-fw fa-file',
+            'label_color' => 'success',
+        ],
+
         [   'header'      => 'Jobs'],
         [
             'text'        => 'Jobs',

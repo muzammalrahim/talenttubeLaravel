@@ -17,6 +17,8 @@ class CreateTalentPoolsTable extends Migration
             $table->id();
             $table->string('name');
             $table->timestamps();
+            $table->foreign('pool_id')->references('id')->on('user_pools')->onDelete('cascade');
+            
         });
     }
 

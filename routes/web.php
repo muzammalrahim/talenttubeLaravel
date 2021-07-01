@@ -51,6 +51,8 @@ Route::post('ajax/crossreference/declineReference/{id}','Site\ReferenceControlle
 Route::get('reference/completed','Site\ReferenceController@referenceCompleted')->name('reference.completed');
 Route::get('reference/declined','Site\ReferenceController@referenceDeclined')->name('reference.declined');
 Route::get('completed/reference/{id}/{name}','Site\ReferenceController@completedReferenceAll')->name('referencesForAll');
+Route::get('referece/terms','Site\ReferenceController@ref_terms')->name('ref_terms');
+
 
 // =========================================== Cross Reference for unauthenticated ===========================================
 
@@ -330,10 +332,24 @@ Route::get('media/private/{userid}/{any}', [
 
     // Route::get('users/pool', 'Admin\TalentPoolController@talentPool')->name('talentPool');
 
-    // ====================================== Admin iteration-10+ ====================================== admin/ajax/make-employer-paid
+    // ====================================== Admin iteration-10+ ======================================
 
     Route::post('ajax/make-employer-paid', 'Admin\AdminEmployerController@makeEmployerPaid')->name('makeEmployerPaid');
     Route::post('ajax/make-employer-unpaid', 'Admin\AdminEmployerController@makeEmployerUnPaid')->name('makeEmployerUnPaid');
+
+    // ====================================== Admin iteration-11 ====================================== admin/ajax/make-employer-paid
+
+    Route::get('jobseekers/reports', 'Admin\AdminReportsController@jobseeker_reports')->name('jobseekerreports');
+    Route::get('employers/reports', 'Admin\AdminReportsController@employer_reports')->name('employer_reports');
+    Route::get('job_reports', 'Admin\AdminReportsController@job_reports')->name('job_reports');
+    Route::get('job_report/getList', 'Admin\AdminReportsController@getDatatableReport')->name('jobsReport.dataTable');
+    Route::get('job_report/{id}', 'Admin\AdminReportsController@viewJobReport')->name('viewJobReport');
+
+
+    Route::post('ajax/delete/pool', 'Admin\TalentPoolController@deleteTalentPool')->name('deleteTalentPool');
+    Route::post('ajax/delete/onlineTest', 'Admin\AdminTestController@deleteOnlineTest')->name('deleteOnlineTest');
+
+
 
 
 

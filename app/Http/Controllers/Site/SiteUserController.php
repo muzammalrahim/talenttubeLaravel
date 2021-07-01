@@ -33,6 +33,9 @@ use App\Notes;
 use App\History;
 use App\OnlineTest;
 use App\UserOnlineTest;
+
+use App\UserQualification;
+
 use Jenssegers\Agent\Agent;
 use PDFMerger;
 use Spatie\PdfToText\Pdf;
@@ -84,6 +87,9 @@ class SiteUserController extends Controller
             $videos = Video::where('user_id', $user->id)->get();
             $tags = Tags::orderBy('usage', 'DESC')->limit(30)->get();
             $tagCategories = TagCategory::get();
+            $userQualification = UserQualification::where('user_id', $user->id)->get();
+
+            // dd($userQualification);
             $userTags = $user->tags;
             // dd($userTags);
             // dd( $tags );
@@ -106,6 +112,8 @@ class SiteUserController extends Controller
             $data['userTags'] = $userTags;
             $data['tags'] = $tags;
             $data['tagCategories'] = $tagCategories;
+
+
             //dd($tagCategories);
             // Getting Salaries
             $data['salaryRange'] = getSalariesRange();
@@ -114,6 +122,8 @@ class SiteUserController extends Controller
             $data['industriesList'] = getIndustries();
             $data['userquestion'] = getUserRegisterQuestions();
             $data['empquestion'] = getEmpRegisterQuestions();
+            $data['userQualification'] = $userQualification;
+
  
             $ip = $request->ip();
             // dd($ip);
@@ -175,6 +185,8 @@ class SiteUserController extends Controller
 
        // dd( $request->toArray() );
         $requestData = $request->all();
+
+        // dd($requestData);
 //        $requestData['questions']       = json_decode($request->questions, true);
 //        $requestData['industry_experience'] = my_sanitize_array_string(json_decode(stripslashes($request->industry_experience),true));
 //        $requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
@@ -187,9 +199,9 @@ class SiteUserController extends Controller
         // dump($requestData['tags']);
         // dump($requestData['industry_experience']);
         // dd( $request->toArray() );
-//        dd($request['questions']);
-//         dd( $request->all() );
-//        dd($requestData['step']);
+        //dd($request['questions']);
+        //dd( $request->all() );
+        //dd($requestData['step']);
 
         $user = Auth::user();
         if ($requestData['step'] == 2)
@@ -271,19 +283,29 @@ class SiteUserController extends Controller
         {
             $requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
             $requestData['qualification_type'] = my_sanitize_string($request->qualification_type);
-            $rules = array(
-                'qualification'  => 'required'
-            );
+            
+
+            // iteration-11 removed validation from qualificatio and removed 'disable ="true"' from step-4 blade file
+            /*$rules = array( 'qualification'  => 'required' );
             $validator = Validator::make($requestData, $rules);
             if ($validator->fails()){
                 return response()->json([
                     'status' => 0,
                     'validator' => $validator->getMessageBag()->toArray()
                 ]);
-            }
+            }*/
+
+            $data = date('Y');
+            $passing_year = $requestData['passing_year'];
+            $diff = $data - $passing_year;
+            $age = 18 + $diff;
+            // dd($age); 
             $user->qualification    = $requestData['qualification'];
             $user->qualificationType= $requestData['qualification_type'];
+            $user->passing_year = $passing_year;
             $user->step2 = $requestData['step'];
+            $user->age = $age;
+
             $user->save();
             $user->qualificationRelation()->sync($requestData['qualification']);
             return response()->json([
@@ -1710,8 +1732,8 @@ class SiteUserController extends Controller
 		$user = Auth::user();
     //  data = array();
 		if (!isEmployer($user)){
-						$jobs = Jobs::take(10)->get();
-						return view('site.jobs.step2jobs', compact('jobs'));
+            $jobs = Jobs::take(10)->get();
+            return view('site.jobs.step2jobs', compact('jobs'));
 		}
 	}
 

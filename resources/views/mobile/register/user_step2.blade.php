@@ -47,19 +47,14 @@
 					<div id="card_question_no" class="card_question no hide answer">
 
 						<div class="question_vh">
-
 							{{-- <img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /> --}}
-
 							<i class="fas fa-times"></i>
-
 							<span>No</span></div>
 					</div>
 					<div id="card_question_yes" class="card_question yes hide answer">
 						<div class="question_vh">
-
 							{{-- <img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /> --}}
 							<i class="fas fa-check"></i>
-
 							<span>Yes</span></div>
 					</div>
 
@@ -110,39 +105,46 @@
 						<div class="upload_file"><div class="upload"><div class="bl photo_add">Add a Photo</div></div></div>
 						<div class="name d-none"></div>
 						<div class="name_info d-none text-danger">Required field!</div>
+						
 						<div class="recent_job m5 mt20 relative">
-							<div class="title">Your current or most recent job title and employer</div>
+							<div class="title">Your current or most recent job title</div>
 							<input type="text" id="recentJob" name="recentJob" value="" />
 							<div id="recentJob_error" class="d-none text-danger">Required field!</div>
 						</div>
+
+
+						<div class="organisation m5 mt20 relative">
+                             <div class="title">The organisation you held the above title</div>
+                             <input type="text" id="organHeldTitle" name="organHeldTitle" value="" />
+                             <div id="organHeldTitle_error" class="text-danger d-none">Required field!</div>
+                        </div>
 
 					</div>
 
 					<div id="frm_card_join" class="card_profile_info card_join">
 
 						<div class="bl bl_basic">
-						<div class="title">About me</div>
-						<div id="about_me_error" class="error to_hide">Required field!</div>
-						<textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="300"></textarea>
-						<span id="arChars" class="rChars">300</span> Character(s) Remaining
+							<div class="title">About me</div>
+							<div id="about_me_error" class="error to_hide">Required field!</div>
+							<textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="300"></textarea>
+							<span id="arChars" class="rChars">300</span> Character(s) Remaining
 						</div>
+
+
 
 						<div class="bl bl_basic">
-						<div class="title">Interested in</div>
-						<div id="interested_in_error" class="error to_hide">Required field!</div>
-
-						<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
-						<span id="irChars" class="rChars">150</span> Character(s) Remaining
+							<div class="title">Interested in</div>
+							<div id="interested_in_error" class="error to_hide">Required field!</div>
+							<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
+							<span id="irChars" class="rChars">150</span> Character(s) Remaining
 						</div>
+
 						<div class="row text-center">
-
-
-						<div class="col">
-
-							<button id="user_step3_done" class="btn_join_submit btn btn-primary">Done</button>
+							<div class="col">
+								<button id="user_step3_done" class="btn_join_submit btn btn-primary">Done</button>
+							</div>
 						</div>
 
-						</div>
 					</div>
 				</div>
 			</div>
@@ -150,12 +152,33 @@
 	<!-- Step 3 End -->
 	<!-- Step 4 Start -->
 	<div id="full_step_4" class="row py-3" style="display: none">
+
+
+
 		<div class="col">
 			<div class="card wider">
+
+				{{-- for age calculation --}}
+
 				<div class="card-body text-center">
-					<p class="card-title text-center">
-						Please select the highest level of tertiary studies you have completed or currently enrolled in and completing <br>
-						<b>(You can only select 1 option)</b>
+                    
+                    <p>What year did you complete your final year of high school ? </p>
+                    {{-- <div class="qualification_type_cont mb20 center ageCal"> --}}
+                    <select id="year" name="passing_year" class="browser-default custom-select">
+                        {{ $last= date('Y')-50 }}
+                        {{ $now = date('Y') }}
+                        @for ($i = $now; $i >= $last; $i--)
+                            <option value="{{ $i }}">{{ $i }}</option>
+                        @endfor
+                    </select>
+
+                    {{-- </div> --}}
+
+				{{-- for age calculation --}}
+
+
+					<p class="card-title text-center mt-3">
+						Please select the highest or most relevant studies you have completed or currently studying</b>
 					</p>
 					<div class="qualification_selected_type mb20 center mb-2">
 						<div class="qualification_type_cont">
@@ -170,24 +193,24 @@
 					</div>
 					<div class="select_qualification_list" style="display: none;">
 						<div class="qualification_list">
-								<div class="qualification_ul_cont">
-										<ul class="qualification_ul item_ul list-group">
-											@php
-															$qualifications = getQualificationsList();
-											@endphp
+							<div class="qualification_ul_cont">
+								<ul class="qualification_ul item_ul list-group">
+									@php
+										$qualifications = getQualificationsList();
+									@endphp
 
-											@if (!empty($qualifications))
-													@foreach ($qualifications as $qkey => $quaf)
-															<li class="{{$quaf['type']}} list-group-item" data-id="{{$quaf['id']}}"> {{$quaf['title']}} </li>
-													@endforeach
-											@endif
-										</ul>
-								</div>
+									@if (!empty($qualifications))
+										@foreach ($qualifications as $qkey => $quaf)
+												<li class="{{$quaf['type']}} list-group-item" data-id="{{$quaf['id']}}"> {{$quaf['title']}} </li>
+										@endforeach
+									@endif
+								</ul>
+							</div>
 						</div>
 					</div>
 					<div class="join_btn mt20 center">
 						<div class="join_industry_error"></div>
-						<button id="user_step4_done" class="btn turquoise small btn_join_submit" disabled="true">Done</button>
+						<button id="user_step4_done" class="btn turquoise small btn_join_submit">Done</button>
 					</div>
 				</div>
 			</div>

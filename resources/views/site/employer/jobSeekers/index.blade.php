@@ -139,6 +139,7 @@
         $('#paginate').val('');
         getData();
     });
+
     //====================================================================================================================================//
     // function to send ajax call for getting data throug filter/Pagination selection
     //====================================================================================================================================//
@@ -198,6 +199,39 @@
         }
 
     });
+
+
+    //====================================================================================================================================//
+    // Enable/Disabled Filtering by Age Group.
+    //====================================================================================================================================//
+
+    $('input[name="filter_by_age"]').change(function() {
+        console.log(' filter_by_age ');
+        if(this.checked){
+            jQuery('.filter_age_cont').removeClass('hide_it');
+        }else{
+            jQuery('.filter_age_cont').addClass('hide_it');
+            jQuery('.filter_by_age_val').val("");
+        }
+
+    });
+
+    //====================================================================================================================================//
+    // Enable/Disabled Filtering by Gender.
+    //====================================================================================================================================//
+
+    $('input[name="filter_by_gender"]').change(function() {
+        console.log(' filter_by_gender ');
+        if(this.checked){
+            jQuery('.filter_gender_cont').removeClass('hide_it');
+        }else{
+            jQuery('.filter_gender_cont').addClass('hide_it');
+            jQuery('.filter_by_gender_val').val("");
+        }
+
+    });
+
+
 
     //====================================================================================================================================//
     // Filter by Tags
@@ -465,7 +499,6 @@
         }
         return false;
     }
-
     function updateLocationInputs(place,city,state,country){
         jQuery('#location_name').val(place);
         jQuery('#location_city').val(city);
@@ -475,8 +508,6 @@
 
     // by default show this location;
     geocode('Sydney New South Wales, Australia');
-
-
     jQuery('.filter_location_radius').on('change', function(){
         console.log(' filter_location_radius changed.  ');
         drawCircle(new google.maps.LatLng(jQuery("#location_lat").val(), jQuery("#location_long").val()));
@@ -523,18 +554,15 @@
     // ========================================================= Filter by resume Resume =========================================================
 
     $('input[name="filter_by_resume"]').each(function() {
-
         if(this.checked){
         jQuery('.filter_by_resume_value').val("");
         $(this).toggleClass('checked').trigger('refresh');
         this.checked = !this.checked;
         $(this).toggleClass('checked').trigger('refresh');
         (this.checked)?(jQuery('.filter_resume_cont').removeClass('hide_it')):(jQuery('.filter_resume_cont').addClass('hide_it'));
-
         }
 
     });
-
 
     // ========================================================= Filter by salary =========================================================
 
@@ -544,6 +572,31 @@
     //  ========================================================= Filter By keyword =========================================================
 
     jQuery('input[name="filter_keyword"]').val("");
+
+    // ========================================================= Filter by Age Group =========================================================
+
+    $('input[name="filter_by_age"]').each(function() {
+        if(this.checked){
+        $("#filterAgeGroup").prop("selectedIndex", 0);
+        $(this).toggleClass('checked').trigger('refresh');
+        this.checked = !this.checked;
+        $(this).toggleClass('checked').trigger('refresh');
+        (this.checked)?(jQuery('.filter_age_cont').removeClass('hide_it')):(jQuery('.filter_age_cont').addClass('hide_it'));
+        }
+    });
+
+
+    // ========================================================= Filter by Age Group =========================================================
+
+    $('input[name="filter_by_gender"]').each(function() {
+        if(this.checked){
+        $("#filterAgeGroup").prop("selectedIndex", 0);
+        $(this).toggleClass('checked').trigger('refresh');
+        this.checked = !this.checked;
+        $(this).toggleClass('checked').trigger('refresh');
+        (this.checked)?(jQuery('.filter_gender_cont').removeClass('hide_it')):(jQuery('.filter_gender_cont').addClass('hide_it'));
+        }
+    });
 
     //  ========================================================= Filter By tags =========================================================
     // jQuery('.filter_tagList').addClass('hide_it');

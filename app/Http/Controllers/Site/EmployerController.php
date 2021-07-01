@@ -695,7 +695,7 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function jobSeekersFilter(Request $request){
         // $data =  $request->toArray();
-        // dd($data);
+        // dd($request->all());
         $user = Auth::user();
         if (!isEmployer($user)){
             return response()->json([
@@ -734,13 +734,12 @@ class EmployerController extends Controller {
             $query = $query->whereNotIn('id', $block);
         }
 
-        
 
         // ================================================ Filter by salaryRange. ================================================
 
         if (isset($request->filter_salary) && !empty($request->filter_salary)){
             $query = $query->where('salaryRange', '>=', $request->filter_salary);
-        }
+          }
 
         // ================================================ Filter by google map location radius.================================================
 
@@ -791,6 +790,9 @@ class EmployerController extends Controller {
             // SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
             $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';
             $query = $query->where('questions', 'LIKE', $question_like);
+
+            // dump($request->all());
+            
         }
 
 
@@ -841,7 +843,48 @@ class EmployerController extends Controller {
             });
         }
 
+        // ================================================ Filter by Age Group. ================================================
+
+        if (isset($request->filter_by_age_val) && !empty($request->filter_by_age   == 'on')) {
+            $age = $request->filter_by_age_val;
+            // dd($age);
+            if ($age == '18-25') {
+                $query = $query->whereBetween('age',  [18,25]);
+                // dd($query->toSql());
+            }
+            elseif($age == '25-30'){
+                $query = $query->whereBetween('age',  [25,30]);
+            }
+            elseif($age == '30-40'){
+                $query = $query->whereBetween('age',  [30,40]);
+            }
+            elseif($age == '40-54'){
+                $query = $query->whereBetween('age',  [40,54]);
+            }
+            elseif($age == '55+'){
+                $query = $query->where('age', '>=', '55');
+            }
+            else{
+                return false;
+            }
+
+        }
+
+        // ================================================ Filter by Gender. ================================================
+
+        if (isset($request->filter_by_gender_val) && !empty($request->filter_by_gender)){
+            $gender = $request->filter_by_gender_val;
+            if ($gender == 'male') {
+                $query = $query->where('title' , '=', 'Mr');
+            }
+            else{
+                $query = $query->where('title' , '=', 'Mrs')->orWhere('title' , '=', 'Miss')->orWhere('title' , '=', 'Ms');
+            }
+        }
+
         // ================================================ Filter by Tags ================================================
+
+
 
         // $filter_tags = $request->filter_tags;
         // // dd($filter_tags);
@@ -957,7 +1000,7 @@ class EmployerController extends Controller {
 
             $data['classes_body'] = 'credit';
             $data['controlsession'] = $controlsession;
-            return view('site.credit.purchase', $data);
+            return view('site.credit.purchase', $data);  // site/credit/purchase
         }
     }
 
@@ -995,6 +1038,7 @@ class EmployerController extends Controller {
                         $jobAppStatusArray = jobStatusArray();
                         if(isset($jobAppStatusArray[$status])){
                             $jobsApplication->status =  $status;
+                            $jobsApplication->prev_status = $oldjobstatus;
                             $jobsApplication->save();
                             $history = new History;
                             $history->user_id = $jobsApplication->jobseeker->id; 

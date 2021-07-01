@@ -142,8 +142,13 @@ class HomeController extends Controller {
                      $user = Auth::user();
                     // check if its employee or user.
                     if (isEmployer()){
+
+
     					// check if employer has answer the initial question in step2.
     					if($agent->isMobile()){
+                            $date = date('Y-m-d H:i:s');
+                            $user->last_login = $date;
+                            $user->save();
     						$redirect_url = ($user->step2 >3)?(route('Memployers')):(route('mStep2Employer'));
                             Mail::to($user->email)->send(new complete_account_steps($user->name));
                             
@@ -153,6 +158,11 @@ class HomeController extends Controller {
     							'redirect' => $redirect_url
     						);
     					}
+
+                        $date = date('Y-m-d H:i:s');
+                        $user->last_login = $date;
+                        $user->save();
+
                         $redirect_url = ($user->step2 >3)?(route('employerProfile')):(route('step2Employer'));
                         Mail::to($user->email)->send(new complete_account_steps($user->name));
 
@@ -164,17 +174,22 @@ class HomeController extends Controller {
                     }else{
     					// check if user has answer the initial question in step2.
     					if($agent->isMobile()){
+                            $date = date('Y-m-d- H:i:s');
+                            // dd($date);
+                            $user->last_login = $date;
+                            $user->save();
     						$redirect_url = ($user->step2 > 7)?(route('mUsername', $user->username)):(route('mStep2User'));
-                            
                             Mail::to($user->email)->send(new complete_account_steps($user->name));
-
     						return array(
     							'status' => 1,
     							'message' => 'login succesfully',
     							'redirect' => $redirect_url
     						);
-
     					}
+                        $date = date('Y-m-d H:i:s');
+                        // dd($date);
+                        $user->last_login = $date;
+                        $user->save();
                         $redirect_url = ($user->step2 > 7)?(route('username',$user->username)):(route('step2User'));
                         Mail::to($user->email)->send(new complete_account_steps($user->name));
 
@@ -281,6 +296,7 @@ class HomeController extends Controller {
 
     public function register(Request $request){
 
+        // dd($request->all());
         // "_token" => "aoBTzArrllzmFQ8fw7zFhktY2lzW8jc1qbw2lH2T"
         // "firstname" => "Creative"
         // "surname" => "khan"
@@ -291,8 +307,8 @@ class HomeController extends Controller {
         // "phone" => "0123456"
         // "join_handle" => "creative"
         // "join_password" => "12345678"
-								// "privacy_policy" => "1"
-								// dd($request);
+		// "privacy_policy" => "1"
+		// dd($request);
 
         $rules = array(
             'firstname' => 'required',
@@ -302,6 +318,7 @@ class HomeController extends Controller {
             // 'location_city' => 'required',
             'email' => 'bail|required|email|unique:users,email',
             'phone' => 'required|min:10|max:10',
+            // 'title' => 'required|min:2|max:7',
             'username' => 'required|unique:users,username',
             'password' => 'required|confirmed|min:6',
             'password_confirmation' => 'required|min:6',
@@ -331,8 +348,17 @@ class HomeController extends Controller {
             // $user->email_verified_at = null;
             $user->email_verified_at = date("Y-m-d H:i:s");
             $user->email_verification   = hash_hmac('sha256', str_random(40), 'creativeTalent');
-												$user->type   = 'user';
-												$user->verified = 1;
+			$user->type   = 'user';
+			$user->verified = 1;
+
+            $user->title   = $request->title;
+            $user->tracker   = 0; 
+            if ($request->title == 'Mr') {
+                $user->gender = 'male';
+            }
+            else{
+                $user->gender = 'female';                
+            }
 
             if( $user->save() ){
 
@@ -566,7 +592,7 @@ class HomeController extends Controller {
     function step2(){
         $data['title'] = 'Registeration';
 
-        $view_name = 'site.register.user_step2';
+        $view_name = 'site.register.user_step2'; // site/register/user_step2
         return view($view_name, $data);
     }
 

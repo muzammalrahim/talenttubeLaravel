@@ -40,6 +40,35 @@
 </div>
 
 
+{{-- Delete Talent_Pool Modal --}}
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="deletePoolModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete Pool</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action can not be undone.<br>
+        Are you sure you wish to continue ?
+          <input type="hidden" class="pool_idModal"></input>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary conFirm_delete" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @stop
 
 
@@ -131,13 +160,44 @@ jQuery(function() {
       window.location.href = newpath;
    });
 
-
-
-
-
 });
 
 
+$(document).on('click', '.pool_id', function(){
+    var pool_id = $(this).attr('value');
+    $('.pool_idModal').val(pool_id);
+    // console.log(pool_id);
+});
+
+$(document).on('click', '.conFirm_delete', function(){
+    // var pool_id = $(this).val();
+    var pool_id = $('.pool_idModal').val();
+    console.log(pool_id);
+
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+
+        // $('.emailLoader').after(getLoader('smallSpinner SaveEmailSpinner'));
+
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/admin/ajax/delete/pool',
+            data: {'id': pool_id},
+            success: function(resp){
+                if(resp.status == 1){
+                    // console.log('call gone');
+                    $('#dataTable').DataTable().ajax.reload();
+                }
+                else{
+                }
+            }
+        });
+
+});
 
 </script>
 @stop
+
+
+php artisan make:migration indus_title --table="user_industries"
+
+artisan make:migration add_columns_to_user_industries_table

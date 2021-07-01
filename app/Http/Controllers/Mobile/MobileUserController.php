@@ -134,7 +134,7 @@ class MobileUserController extends Controller
     //Ajax Post from step2 layout  // Add user step2 data.
     //====================================================================================================================================//
     public function Step2(Request $request){
-    	// dd($request);
+    	// dd($request->all());
     	$requestData = $request->all();
     	$requestData['step'] = my_sanitize_number($request->step);
     	$user = Auth::user();
@@ -151,20 +151,20 @@ class MobileUserController extends Controller
     		);
     		$validator = Validator::make($requestData, $rules);
 			if ($validator->fails()){
-							return response()->json([
-											'status' => 0,
-											'validator' => $validator->getMessageBag()->toArray()
-							]);
-			} else {
-							$user->questions = $requestData['questions'];
-							$user->step2 = $requestData['step'];
-							$user->save();
-							return response()->json([
-											'status' => 1,
-											'message' => 'questions saved succesfully'
-							]);
+				return response()->json([
+					'status' => 0,
+					'validator' => $validator->getMessageBag()->toArray()
+				]);
+			}else{
+				$user->questions = $requestData['questions'];
+				$user->step2 = $requestData['step'];
+				$user->save();
+				return response()->json([
+					'status' => 1,
+					'message' => 'questions saved succesfully'
+				]);
 			}
-		} elseif ($requestData['step'] == 3) {
+		}elseif ($requestData['step'] == 3) {
 			$rules = array(
 				'about_me' => 'required|max:300',
 				'interested_in' => 'required|max:150',
@@ -173,31 +173,29 @@ class MobileUserController extends Controller
 			$validator = Validator::make($requestData, $rules);
 			if ($validator->fails()){
 				return response()->json([
-								'status' => 0,
-								'validator' => $validator->getMessageBag()->toArray()
+					'status' => 0,
+					'validator' => $validator->getMessageBag()->toArray()
 				]);
 			}
 			$user->about_me         = $requestData['about_me'];
 			$user->interested_in    = $requestData['interested_in'];
 			$user->recentJob        = $requestData['recentJob'];
+            $user->organHeldTitle        = $requestData['organHeldTitle']; 
+
 			$user->step2 = $requestData['step'];
 			$user->save();
 			if(!empty($request->file('file'))){
 				$image = $request->file('file');
 				$fileName   = time() . '.' . $image->getClientOriginalExtension();
-
 				$file_thumb  = $user->id.'/gallery/small/'.$fileName;
 				$file_path   = $user->id.'/gallery/'.$fileName;
-
 				$img = Image::make($image->getRealPath());
 				$img->resize(120, 120, function ($constraint) { $constraint->aspectRatio(); });
 				$img->stream();
 				Storage::disk('publicMedia')->put( $file_thumb , $img);
-
 				$img = Image::make($image->getRealPath());
 				$img->stream();
 				Storage::disk('publicMedia')->put($file_path, $img, 'public');
-
 				$userGallery = new UserGallery();
 				$userGallery->user_id = $user->id;
 				$userGallery->image = $fileName;
@@ -206,23 +204,23 @@ class MobileUserController extends Controller
 				$userGallery->save();
 			}
 			return response()->json([
-							'status' => 1,
-							'message' => 'about me saved succesfully'
+				'status' => 1,
+				'message' => 'about me saved succesfully'
 			]);
 		}
 		elseif ($requestData['step'] == 4){
 			$requestData['qualification'] = my_sanitize_array_number(json_decode(stripslashes($request->qualification),true));
 			$requestData['qualification_type'] = my_sanitize_string($request->qualification_type);
-			$rules = array(
-							'qualification'  => 'required'
+			/*$rules = array(
+				'qualification'  => 'required'
 			);
 			$validator = Validator::make($requestData, $rules);
 			if ($validator->fails()){
 				return response()->json([
-						'status' => 0,
-						'validator' => $validator->getMessageBag()->toArray()
+					'status' => 0,
+					'validator' => $validator->getMessageBag()->toArray()
 				]);
-			}
+			}*/
 			$user->qualification    = $requestData['qualification'];
 			$user->qualificationType= $requestData['qualification_type'];
 			$user->step2 = $requestData['step'];
@@ -240,8 +238,8 @@ class MobileUserController extends Controller
 			$validator = Validator::make($requestData, $rules);
 			if ($validator->fails()){
 				return response()->json([
-						'status' => 0,
-						'validator' => $validator->getMessageBag()->toArray()
+					'status' => 0,
+					'validator' => $validator->getMessageBag()->toArray()
 				]);
 			}
 			$user->industry_experience = $requestData['industry_experience'];

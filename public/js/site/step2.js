@@ -188,29 +188,6 @@ $(function(){
 
 
     // add the selected one to User Qualification selection list.
-    jQuery('.qualification_ul').on('click','li', function(){
-        $('.join_industry_error').removeClass('error').text('');
-        var qualification_id = jQuery(this).attr('data-id');
-        if ( userQualificationList.indexOf(qualification_id) == -1 ){
-            if(userQualificationList.length < 5 ){
-                userQualificationList.push(qualification_id);
-                jQuery(this).addClass('selected');
-            }
-        }else{
-            userQualificationList.splice(userQualificationList.indexOf(qualification_id),1);
-            jQuery(this).removeClass('selected');
-        }
-
-        if (userQualificationList.length > 0){
-            jQuery('#user_step4_done').prop('disabled',false);
-        }else{
-            jQuery('#user_step4_done').prop('disabled',true);
-        }
-        console.log('userQualificationList ', userQualificationList );
-    });
-
-
-    // add the selected one to User Qualification selection list.
     jQuery('.salary_ul').on('click','li', function(){
         var salary_id = jQuery(this).attr('data-id');
         jQuery('.salary_ul li.selected').removeClass('selected');
@@ -488,8 +465,12 @@ $(function(){
         // $jq('#join_slogan').text('Industry Experience');
         // $jq('#join_step ul li').removeClass('selected');
         // $jq('#join_step ul li:eq(3)').addClass('selected').css('display','block');
+        var year = jQuery('#year').val();
+        // console.log(year);return;
         step4_formData.append('qualification_type', jQuery('#qualification_type').val());
         step4_formData.append('qualification', JSON.stringify(userQualificationList));
+        step4_formData.append('passing_year', jQuery('#year').val());
+        // console.log(step4_formData);
         userStep2Update(step4_formData, 4);
         // $jq('#full_step_4').fadeOut(400,function(){
         //     $jq('#full_step_5').fadeIn(400,function(){
@@ -1352,7 +1333,7 @@ function showUserStep4(){
     });
 
     $jq('#qualification_type').on('change',function(){
-        console.log(' qualification_type ');
+        console.log(' qualification_type  ');
         userQualificationList = [];
         jQuery('.qualification_ul li.selected').removeClass('selected');
         var qualif_type = $jq(this).val();
@@ -1367,6 +1348,30 @@ function showUserStep4(){
 
     });
 }
+
+
+    // add the selected one to User Qualification selection list.
+    jQuery('.qualification_ul').on('click','li', function(){
+        $('.join_industry_error').removeClass('error').text('');
+        var qualification_id = jQuery(this).attr('data-id');
+        if ( userQualificationList.indexOf(qualification_id) == -1 ){
+            if(userQualificationList.length < 5 ){
+                userQualificationList.push(qualification_id);
+                jQuery(this).addClass('selected');
+            }
+        }else{
+            userQualificationList.splice(userQualificationList.indexOf(qualification_id),1);
+            jQuery(this).removeClass('selected');
+        }
+
+        if (userQualificationList.length > 0){
+            jQuery('#user_step4_done').prop('disabled',false);
+        }else{
+            jQuery('#user_step4_done').prop('disabled',true);
+        }
+        console.log('userQualificationList ', userQualificationList );
+    });
+
 
 function showUserStep5(){
     $jq('#join_slogan').text('Industry Experience');

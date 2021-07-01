@@ -237,8 +237,6 @@ class JobSeekerController extends Controller {
    
         // =========================================== Paid employer viewing jobseeker ===========================================
         
-
-
         // check if jobseeker not exist then redirect to jobseeker list.
         if(empty($jobSeeker) || isEmployer($jobSeeker) ){ return redirect(route('jobSeekers')); }
         if(hasBlockYou($user, $jobSeeker)){ return view('unauthorized', $data); }
@@ -269,10 +267,6 @@ class JobSeekerController extends Controller {
         $data['interviewTemplate'] = $interviewTemplate;
         $data['UserInterview'] = $UserInterview;
         // $data['InterviewTempQuestion'] = $InterviewTempQuestion;
-        
-        
-        
-
 
         // dd($days);
 

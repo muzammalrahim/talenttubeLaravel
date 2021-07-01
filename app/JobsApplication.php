@@ -21,6 +21,11 @@ class JobsApplication extends Model{
     }
 
 
+    public function jobseekerMale() {
+        return $this->belongsTo('App\User', 'user_id')->where('gender', 'male')->selectRaw('gender, count(*) as aggregate')->groupBy('gender');
+    }
+
+
     public function answers(){
         return $this->hasMany('App\JobsAnswers', 'application_id');
     }

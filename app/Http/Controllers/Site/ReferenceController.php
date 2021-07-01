@@ -439,9 +439,9 @@ class ReferenceController extends Controller
         $data['crossreference'] = $crossreference ;
         $data['classes_body'] = 'Interviews';
         return view('site.user.reference.index', $data);   // site/user/reference/index
-      }
+    }
 
-      public function declineReference($id){
+    public function declineReference($id){
         $crossreference = crossreference::where('id',$id)->first();
         // dd($crossreference->refEmail);
         $crossreference->refStatus = 'Referee Declined';
@@ -452,52 +452,40 @@ class ReferenceController extends Controller
             'message' => 'Reference Declined Status',
             // 'redirect' => route('')
         ]);
-      }
+    }
 
 
-      public function crossReferSubmitted(Request $request){
+    public function crossReferSubmitted(Request $request){
 
         // $referenceSession = session('referenceSession');
-        // session()->forget('referenceSession');
-       
+        // session()->forget('referenceSession');   
        return view('site.reference.referenceSubmitted');   // site/reference/referenceSubmitted
 
-      }
+    }
 
-      public function referenceCompleted(Request $request){
-          if(isMobile()){
-
+    public function referenceCompleted(Request $request){
+        if(isMobile()){
             return view('mobile.reference.submittedReference');   // mobile/user/reference/allCompletedReferences
+        }else{
+            return view('site.reference.referenceCompleted');   // site/reference/referenceCompleted
 
-          }
-          else{
-                return view('site.reference.referenceCompleted');   // site/reference/referenceCompleted
-
-          }
+        }
         // $referenceSession = session('referenceSession');
         // session()->forget('referenceSession');
-       
+    }
 
-      }
-
-      public function referenceDeclined(Request $request){
-
+    public function referenceDeclined(Request $request){
         // $referenceSession = session('referenceSession');
-        // session()->forget('referenceSession');
-       
+        // session()->forget('referenceSession');   
        return view('site.reference.referenceDeclined');   // site/reference/referenceCompleted
-
-      }
+    }
 
 
       //  All the completed references for all uses anyone can seee
     
-      public function completedReferenceAll($id,$name){
+    public function completedReferenceAll($id,$name){
         // dd($name);
         $crossreference = crossreference::where('refStatus','Reference Completed')->where('jobseekerId', $id)->get();
-        
-        // dd($crossreference);            
-      
         $data['title'] = 'Cross Reference';
         $data['crossreference'] = $crossreference ;
         $data['jsName'] = $name;
@@ -507,7 +495,13 @@ class ReferenceController extends Controller
         }else{
             return view('site.user.reference.allCompletedReferences', $data);   // site/user/reference/allCompletedReferences
         }
-      }
+    }
 
-       // 
+
+    public function ref_terms(Request $request){
+        $data['title'] = 'Reference Terms';
+        return view('site.privacy.ref_terms', $data); // site/privacy/ref_terms
+
+    }
+
 }

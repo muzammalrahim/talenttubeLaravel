@@ -21,6 +21,28 @@
                     <div class="cl"></div>
                 </div>
 
+
+                {{-- Add title iteration-11 --}}
+
+                <div class="bl bl_title">
+                    <label>Title</label>
+                       <div class="col-sm-12 dflex color_white">
+                            
+                            <input type="radio" value="Mr" name="checkTitle" class="radioClick mr20" checked> Mr<br>
+                            <input type="radio" value="Ms" name="checkTitle" class="radioClick mr20 ml20"> Ms<br>
+                            <input type="radio" value="Miss" name="checkTitle" class="radioClick mr20 ml20"> Miss<br>
+                            <input type="radio" value="Mrs" name="checkTitle" class="radioClick mr20 ml20"> Mrs<br>
+
+                        </div>
+
+                        <input type="hidden" name="title" class="user_title" value="Mr">
+
+                      
+
+                </div>
+
+                {{-- <input type="text" name="title"> --}}
+
                 {{-- bl_location --}}
                 <div class="bl bl_location">
                 <label>I am from</label>
@@ -111,7 +133,7 @@
                     <label for="agree">I agree to the</label>
                     {{-- <a href="" onclick="infoOpen('terms'); return false;">Terms</a>  --}}
 
-                    <a href="{{ route('privacy') }}" target="_blank">Terms Privacy Policy</a> 
+                    <a href="{{ route('privacy') }}" target="_blank">Terms Privacy Policy</a> and confirm I am at least 18 years of age or over
 
                     {{-- <label for="agree">and</label>
                     <a href="" onclick="infoOpen('priv'); return false;">Privacy Policy</a>
@@ -135,3 +157,4 @@
 </div>
 
 <div id="success-step-1" class="hide">
+

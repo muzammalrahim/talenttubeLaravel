@@ -29,7 +29,7 @@
                 @if ($job->code)
                      <div class="job_code">Code: {{$job->code}}</div>
                 @endif
-                <div class="job_employer">Employer: {{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</div>
+                <div class="job_employer">Employer: {{ $job->jobEmployer->company}}</div>
 
                 <div class="job_location">
                     <span>Location : </span>{{$job->city}},  {{$job->state}}, {{$job->country}}

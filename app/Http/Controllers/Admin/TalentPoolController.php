@@ -51,6 +51,8 @@ class TalentPoolController extends Controller
       ->addColumn('action', function ($records) {
         if (isAdmin()){
                 $rhtml = ' <a  href = " '.route('poolInfo',['id'=>$records->id , 'name'=>$records->name ]).'" value = "'.$records->id.'" class="btn btn-primary ViewPool" > View Pool</a>';
+                $rhtml .= ' <i value = "'.$records->id.'" class="fas fa-trash text-danger pointer ml-3 pool_id" data-toggle="modal" data-target="#deletePoolModal"></i>';
+
             return $rhtml;
         }
       })
@@ -361,6 +363,32 @@ class TalentPoolController extends Controller
    
         }
     }
+
+
+    // =================================================== Delete Talent Pool iteration-11 ===================================================
+
+    public function deleteTalentPool(Request $request){
+        $user = Auth::user();
+        if (isAdmin($user)) {
+            $talentPool = TalentPool::where('id', $request->id)->first();
+            $userPool = UserPool::where('pool_id',$request->id)->get();
+            foreach ($userPool as $pool) {
+                $pool->delete();
+            }
+            return response()->json([
+                'status' => 1,
+                'message' => 'Pool Deleted Successfully'
+            ]); 
+        }
+        else{
+            return false;
+        }
+        
+        
+    }
+
+
+
 
 
 

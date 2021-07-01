@@ -22,6 +22,35 @@
 </div>
 
 
+{{-- Delete Talent_Pool Modal --}}
+
+
+<!-- Button trigger modal -->
+
+
+<!-- Modal -->
+<div class="modal fade" id="deletePoolModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete Pool</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        This action can not be undone.<br>
+        Are you sure you wish to continue ?
+          <input type="hidden" class="test_idModal"></input>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary conFirm_delete" data-dismiss="modal">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 @stop
 
 
@@ -116,6 +145,41 @@ jQuery(function() {
 
 
 
+
+});
+
+
+
+
+$(document).on('click', '.test_id', function(){
+    var test_id = $(this).attr('value');
+    $('.test_idModal').val(test_id);
+    // console.log(pool_id);
+});
+
+$(document).on('click', '.conFirm_delete', function(){
+    // var pool_id = $(this).val();
+    var test_id = $('.test_idModal').val();
+    console.log(test_id);
+
+    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+
+        // $('.emailLoader').after(getLoader('smallSpinner SaveEmailSpinner'));
+
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/admin/ajax/delete/onlineTest',
+            data: {'id': test_id},
+            success: function(resp){
+                if(resp.status == 1){
+                    // console.log('call gone');
+                    $('#dataTable').DataTable().ajax.reload();
+                     $('#deletePoolModal').modal('toggle');
+                }
+                else{
+                }
+            }
+        });
 
 });
 

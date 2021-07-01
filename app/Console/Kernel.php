@@ -24,7 +24,7 @@ class Kernel extends ConsoleKernel
      * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
      * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule1(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
         $schedule->command('employer:status')
@@ -42,4 +42,25 @@ class Kernel extends ConsoleKernel
 
         require base_path('routes/console.php');
     }
+
+    // Scheduling for autobackup of full laravel application including the database.
+    protected function schedule(Schedule $schedule)
+    {
+       // $schedule->command('backup:clean')->daily()->at('01:00');
+
+       $schedule->command('backup:run')->daily();
+
+      //  $schedule
+      // ->command('backup:run')->daily()->at('17:07')
+      // ->onFailure(function () {
+        
+      // })
+
+
+      // ->onSuccess(function () {
+        
+      // });
+    }
+
+
 }

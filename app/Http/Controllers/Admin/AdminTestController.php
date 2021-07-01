@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use App\User;
 use App\OnlineTest;
 use App\TestQuestion;
+use App\UserOnlineTestAnswers;
+
 use App\InterviewTemplate;
 
 use App\UserOnlineTest;
@@ -57,6 +59,8 @@ class AdminTestController extends Controller
       ->addColumn('action', function ($records) {
         if (isAdmin()){
                 $rhtml = ' <a  href = " '.route('onlineTestEdit',['id'=>$records->id]).'" value = "'.$records->id.'" class="btn btn-primary ViewPool" > View Test</a>';
+
+                $rhtml .= ' <i value = "'.$records->id.'" class="fas fa-trash text-danger pointer ml-3 test_id" data-target="#deletePoolModal"></i>';
             return $rhtml;
         }
       })
@@ -489,6 +493,32 @@ class AdminTestController extends Controller
             $data['UserOnlineTest'] = $UserOnlineTest; 
             return view('admin.job_applications.onlineTests.selectOnlineTest' , $data);  /* admin/job_applications/onlineTests/selectOnlineTest */
         }
+
+    }
+
+
+    // ===================================================== Delete Online Test iteration-11 =====================================================
+
+    public function deleteOnlineTest(Request $request){
+        // dd($request->id);
+        if (isAdmin()) {
+            $OnlineTest = OnlineTest::where('id' , $request->id)->first();
+            $OnlineTest->delete();
+            $testQuestion = TestQuestion::where('test_id', $request->id)->get();
+            foreach ($testQuestion as $testQuest) {
+                $userOnlineTestAnswers = UserOnlineTestAnswers::where('question_id', $testQuest->id)->first();
+                $userOnlineTestAnswers->delete();
+                $testQuest->delete();
+            }
+            $UserOnlineTest = UserOnlineTest::where('test_id',$OnlineTest->id)->get();
+            foreach ($UserOnlineTest as $test) {
+                $test->delete();
+            }
+        }
+
+
+        
+    
 
     }
 

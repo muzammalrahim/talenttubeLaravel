@@ -105,7 +105,12 @@
                     <span class="qualifTypeSpan">{{$user->qualificationType}}</span>
                 </div>
                 <div class="jobSeekerQualificationList">
-                   @include('site.layout.parts.jobSeekerQualificationList')   {{--   site/layout/parts/jobSeekerQualificationList  --}}
+                  @include('site.layout.parts.jobSeekerQualificationList') {{-- site/layout/parts/jobSeekerQualificationList --}} 
+
+                  {{-- @foreach ($userQualification as $qualification)
+                    <span>{{$qualification->qualificationNames->title}}</span>
+                  @endforeach --}}
+                
                 </div>
             </div>
                  <a class="addQualification btn btn-sm btn-primary text-white hide_it"style = "cursor:pointer;">Add New</a>

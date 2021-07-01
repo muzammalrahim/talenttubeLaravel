@@ -15,7 +15,7 @@
         @if ($jobs->count() > 0)
         @foreach ($jobs as $job)
         <div class="job_row job_{{$job->id}}">
-
+            {{-- @dump($job->id) --}}
             @php
             $experience = json_decode($job->experience);
             $jobType = '';

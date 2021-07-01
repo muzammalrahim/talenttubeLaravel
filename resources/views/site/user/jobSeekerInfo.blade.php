@@ -153,6 +153,10 @@
                 <a href="#tabs-9" title=""><span>Online Tests</span></a>
             </li>
 
+            <li id="tabs-10_switch" class="switch_tab">
+                <a href="#tabs-10" title=""><span>Last Login</span></a>
+            </li>
+
             
 
            {{--  <li id="tabs-3_switch" class="switch_tab">
@@ -199,8 +203,10 @@
                 </div>
                 <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
                     <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
+                    <li><span class="basic_info">•</span><span id="info_looking_for_ages">First Name : {{$js->name}}</span></li>
+                    <li><span class="basic_info">•</span><span id="info_looking_for_ages">Last Name : {{$js->surname}}</span></li>
                     <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
-                     </ul>
+                </ul>
             </span>
                 <br>
             <div class="private_attachments">
@@ -383,6 +389,17 @@
     <div class="tab_onlineTest tab_cont pt30px">
         @include('site.user.jobseekerInfoTabs.onlineTests')
         {{--    site/user/jobseekerInfoTabs/onlineTests  --}}
+    </div>
+
+
+    <!-- =============================================== Tab Last Login =============================================== -->
+
+    <a id="tabs-10" class="tab_link tab_a"></a>
+    <div class="tab_lastLogin tab_cont pt30px">
+        {{-- @dump($jobSeeker->last_login); --}}
+        <p>
+            {{ $jobSeeker->last_login }}
+        </p>
     </div>
 
     <!-- =============================================== Tabs End here =============================================== -->

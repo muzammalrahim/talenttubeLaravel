@@ -79,7 +79,7 @@ class UserController extends Controller
       $records = array();
 
        // dd($request->toArray());
-      $records = User::select(['id', 'surname', 'city','email','phone','verified','created_at'])
+      $records = User::select(['id', 'name', 'surname', 'city','email','phone','verified','created_at'])
         ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
         ->orderBy('created_at', 'desc');
      if(isset($request->status) && !empty($request->status)){
@@ -933,9 +933,11 @@ class UserController extends Controller
 
     public function show($id){}
 
-    // Destroy User
+    // =================================================== Destroy User ===================================================
+
     public function destroyUser($id){
       $user = User::find($id);
+      // dd($user->id);
       if(!empty($user)){
         $user->delete();
           return response()->json([
@@ -944,10 +946,9 @@ class UserController extends Controller
           ]);
       }
     }
-    // Destroy User end here
 
+    // =================================================== Destroy Employer ===================================================
 
-    // Destroy Employer
     public function destroyemployers($id){
       $user = User::find($id);
       if(!empty($user)){
@@ -957,7 +958,10 @@ class UserController extends Controller
                 'message' => 'Job Succesfully Deleted',
           ]);
       }
-    }
+    }   
+
+    // =================================================== Profile ===================================================
+
 
     public function profilePopup(Request $request){
      $user = User::with(['Gallery','profileImage'])->where('id',$request->id)->first();

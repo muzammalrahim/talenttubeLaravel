@@ -73,10 +73,10 @@ $(function(){
     /* Email */
     $jq('#email').on('change propertychange input',validateEmail);
     function validateEmail(f){
-								var val=$.trim($jq('#email').val()),res=false,f=f||1;
+		var val=$.trim($jq('#email').val()),res=false,f=f||1;
         if(!checkEmail(val)){
-												var msg=isFrmSubmit?joinLangParts.incorrect_email:'&nbsp;';
-												console.log('check msg', msg)
+			var msg=isFrmSubmit?joinLangParts.incorrect_email:'&nbsp;';
+			console.log('check msg', msg)
             showError('email',msg)
         } else {
             hideError('email',false);
@@ -232,18 +232,9 @@ $(function(){
         if(setDisabledSubmitJoin(false,true,true)){  return false; }
         $jq('#frm_register_submit').html(getLoader('css_loader_btn', false, true)).prop('disabled',true);
         $jq('input:not([type="search"]), select', '#step-1.emp-step-1').each(function(){
-
             dataFrm[this.name]  = $.trim(this.value);
-
             var trim_value = $.trim(this.value);
             var is_required = ($(this).attr('required') == 'required')?true:false;
-
-            // console.log(' this.name ', this, this.name );
-            // console.log(' requied  ', $(this).attr('required') );
-            // console.log(' trim_value  ',  trim_value );
-            // console.log(' is_required  ',  is_required );
-
-
             if ( is_required && trim_value == '') {
                 console.log(' validation error  ');
                 var field_name = this.name;
@@ -926,6 +917,7 @@ function showEmployStep4(){
 
 
     $jq('#user_step4_done').click(function(){
+        // console.log('Come here');return;
         $jq('#join_slogan').text('Industry Experience');
         $jq('#join_step ul li').removeClass('selected');
         $jq('#join_step ul li:eq(3)').addClass('selected').css('display','block');
@@ -1473,7 +1465,7 @@ function validateBirthday(){
 
 function setDisabledSubmitJoin(context, setError, notSubmitDisabled){
 
-        // console.log(' setDisabledSubmitJoin ', context);
+        console.log(' setDisabledSubmitJoin ', context);
 
         notSubmitDisabled=notSubmitDisabled||0;
         context=context||'#step-1';
@@ -1482,10 +1474,14 @@ function setDisabledSubmitJoin(context, setError, notSubmitDisabled){
         $jq('input:not([type="hidden"]), select, textarea', context).not('.not_frm').each(function(){
             // console.log(' setDisabledSubmitJoin each element  ', jQuery(this));
             var val=$.trim(this.value);
+            // console.log(' val ', val, jQuery(this) );
+            
             if(this.id=='email'){
                 isError=!checkEmail(val);
             }else{
                 isError=(val==0||val=='');
+
+                // console.log(' isError ', isError);
             }
             /*if(isError&&setError){
                 var k=this.id;
@@ -1514,6 +1510,8 @@ function setDisabledSubmitJoin(context, setError, notSubmitDisabled){
             notSubmitDisabled=true;*/
         }
         !notSubmitDisabled&&$sb.prop('disabled',is);
+
+        // console.log(' is ', is);
         return is;
 }
 
@@ -1955,7 +1953,20 @@ jQuery(document).ready(function() {
 
 
 
+
+
+    jQuery('.radioClick').on('click', function(){
+    
+   var title = jQuery('input[name="checkTitle"]:checked').val()
+    console.log(title);
+    jQuery('.user_title').val(title);
+
 });
 
+    
+
+
+
+});
 
 
