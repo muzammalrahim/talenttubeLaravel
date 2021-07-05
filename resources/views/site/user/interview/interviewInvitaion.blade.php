@@ -12,6 +12,7 @@
 <div class="newJobCont">
   <div class="head icon_head_browse_matches">Received Interview Invitations <a href="{{ route('unhideInterviews') }}" class="unhideInterviews"> Click here to Un-Hide your interviews </a> </div>
   @if ($Interviews_booking->count() > 0)
+  
   @foreach ($Interviews_booking   as $Int_booking)
 
   {{-- @dd($Int_booking->template->template_name); --}}

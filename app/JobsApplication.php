@@ -52,6 +52,10 @@ class JobsApplication extends Model{
         return $this->hasMany('App\UserOnlineTest', 'jobApp_id');
     }
 
+    public function userOnlineTests_check(){
+        return $this->belongsTo('App\UserOnlineTest', 'jobApp_id')->where('status', 'complete');
+    }
+
 
 
     // iteration-10
@@ -454,7 +458,7 @@ class JobsApplication extends Model{
 
         //    dd( $applications->toSql() );
 
-            $applications = $applications->paginate(2);
+            $applications = $applications->paginate(10);
 
             return $applications;
     }

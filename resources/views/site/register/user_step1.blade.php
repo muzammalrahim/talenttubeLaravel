@@ -1,13 +1,7 @@
 
-
-
-
 <div id="step-1" class="hide1">
 <div class="slogan">Almost there! Just a little more to go.</div>
     <div class="bl_form_registration bl_form_registration_step_1">
-
-
-
             <form name="frm_date" method="post" action="{{route('register')}}" autocomplete="off">
             {{ csrf_field() }}
             <div id="bl_frm_register" class="part float_none margin_auto">
@@ -21,24 +15,17 @@
                     <div class="cl"></div>
                 </div>
 
-
                 {{-- Add title iteration-11 --}}
 
                 <div class="bl bl_title">
                     <label>Title</label>
-                       <div class="col-sm-12 dflex color_white">
-                            
+                       <div class="col-sm-12 dflex color_white">      
                             <input type="radio" value="Mr" name="checkTitle" class="radioClick mr20" checked> Mr<br>
                             <input type="radio" value="Ms" name="checkTitle" class="radioClick mr20 ml20"> Ms<br>
                             <input type="radio" value="Miss" name="checkTitle" class="radioClick mr20 ml20"> Miss<br>
                             <input type="radio" value="Mrs" name="checkTitle" class="radioClick mr20 ml20"> Mrs<br>
-
                         </div>
-
                         <input type="hidden" name="title" class="user_title" value="Mr">
-
-                      
-
                 </div>
 
                 {{-- <input type="text" name="title"> --}}
@@ -86,16 +73,8 @@
                 <div class="bl">
                     <label>Mobile Number</label>
                     <div class="bl_inp_pos">
-                        <input
-                            id="phone"
-                            name="phone"
-                            class="inp email placeholder w100"
-                            type="text"
-                            placeholder="Enter Phone Number"
-                            value=""
-                            maxlength="10"
-                            minlength="10"
-                            />
+                        <input id="phone" name="phone" class="inp email placeholder w100" type="text" 
+                        placeholder="Enter Phone Number" value="" maxlength="10" minlength="10"/>
                         <div id="phone_check" class="icon_check to_hide"></div>
                         <div id="phone_error" class="error to_hide">&nbsp;</div>
                     </div>
@@ -131,13 +110,7 @@
                 <span class="sign center">
                     <input id="agree" name="privacy_policy" value="1" type="checkbox"/>
                     <label for="agree">I agree to the</label>
-                    {{-- <a href="" onclick="infoOpen('terms'); return false;">Terms</a>  --}}
-
-                    <a href="{{ route('privacy') }}" target="_blank">Terms Privacy Policy</a> and confirm I am at least 18 years of age or over
-
-                    {{-- <label for="agree">and</label>
-                    <a href="" onclick="infoOpen('priv'); return false;">Privacy Policy</a>
-                    <span class="cl"></span> --}}
+                    <a href="{{ route('privacy') }}" target="_blank">terms, conditions & Privacy Policy  </a> and confirm I am at least 18 years of age or over
                 </span>
 
                 <button id="frm_register_submit" class="btn pink disabled" disabled>Next</button>

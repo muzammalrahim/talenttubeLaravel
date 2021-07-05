@@ -197,7 +197,3 @@ $(document).on('click', '.conFirm_delete', function(){
 </script>
 @stop
 
-
-php artisan make:migration indus_title --table="user_industries"
-
-artisan make:migration add_columns_to_user_industries_table

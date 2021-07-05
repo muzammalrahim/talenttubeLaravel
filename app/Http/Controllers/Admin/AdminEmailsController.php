@@ -223,6 +223,8 @@ class AdminEmailsController extends Controller {
     //===============================================================================================================//
     
     public function BulkGenerateCVPDF(Request $request) {
+
+      // dd($request->toArray());
       if(!empty($request->cbx)){
         $data['title'] = 'Generate PDF';
         $users = User::whereIn('id', $request->cbx)->get();
@@ -416,7 +418,7 @@ class AdminEmailsController extends Controller {
         if($request->test){
           return view('admin.pdf.bulkJobSeeker', $data);
         }else{
-          $pdf = PDF::loadView('admin.pdf.bulkJobSeeker', $data);
+          $pdf = PDF::loadView('admin.pdf.bulkJobSeeker', $data); // admin/pdf/bulkJobSeeker
           $pdf->setPaper('A4');
           return $pdf->download('JobSeekers.pdf');
           // admin/pdf/bulkJobSeeker

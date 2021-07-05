@@ -19,24 +19,9 @@
 
                         <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
                     </a>
-                    {{-- <div id="add_photo_main_profile" class="add_photo">
-                        <div class="file" id="add_photo_profile">
-                            <form>
-                                <button class="btn small violet"><img width="16" height="16" alt="" src="">Add a photo</button>
-                                <input title="" id="some_add_photo_main_public" type="file" multiple="" name="file_public[]">
-                                <input id="some_add_photo_main_public_reset" type="reset" value="">
-                            </form>
-                        </div>
-                    </div> --}}
                 </div>
-                   {{-- <div id="profile_status_online" title="On the site now!" class="status_online to_show"></div> --}}
             </div>
         </div>
-
-        {{-- @dump($user) --}}
-        {{-- @dump($user->GeoCountry)
-        @dump($user->GeoState)
-        @dump($user->GeoCity) --}}
 
         <div class="info">
             <div class="name"><a id="profile_name" style="cursor:default;" class="edit_main_title"  onclick="return false;">{{$user->name}} {{$user->surname}}</a></div>

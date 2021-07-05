@@ -15,11 +15,12 @@
 
 <div class="job_info row p10 dblock">
   <div class="IndustrySelect mb20">
+        {{-- @dump($UserInterview->template); --}}
         {{-- <p class="p0 qualifType"> Template Name: <b>  {{$UserInterview->template->template_name}} </b> </p> --}}
-        @if ($UserInterview->template->type = 'phone_screeen')
+        @if ($UserInterview->template->type == 'phone_screeen')
           <p class="p0 qualifType"> Interview Type: <b> Phone Screen</b> </p>
         @else
-          <p class="p0 qualifType"> Template Type: <b> {{$UserInterview->template->type}} </b> </p>
+          <p class="p0 qualifType"> Interview Type: <b> {{$UserInterview->template->type}} </b> </p>
         @endif
   </div>
 
@@ -60,6 +61,7 @@
         </div>
       </div>
 
+      {{-- @dd($UserInterview->template->type); --}}
       <div class="job_info row p10 dblock">
         <div class="timeTable">
           <div class="IndustrySelect">

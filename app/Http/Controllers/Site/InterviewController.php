@@ -440,7 +440,10 @@ class InterviewController extends Controller
         // site/employer/interview/unidigitEdit
     }
 
-    
+    //  ============================================================================== 
+    // Edit interview booking
+    //  ============================================================================== 
+
     public function editOneBooking($id){
         
         $user = Auth::user();
@@ -453,7 +456,7 @@ class InterviewController extends Controller
             $data['interview'] = $interview;
             $data['title'] = 'My Jobs';
             $data['classes_body'] = 'myJob';
-            return view('site.employer.interview.formedit', $data);
+            return view('site.employer.interview.formedit', $data); // site/employer/interview/formedit
         }else{
 
             return Redirect::route('homepage');
@@ -507,14 +510,10 @@ class InterviewController extends Controller
         // $interview = Interview::where('uniquedigits',"12340")->first();
         $bookingid = session('bookingid');
         // session()->forget('bookingid');
-
         if(!empty($bookingid)){
-
             $interview = Interview::where('id',$bookingid)->first();
-
         }
         else {
-
             return Redirect::route('interviewconcierge');
         }
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
@@ -647,9 +646,7 @@ class InterviewController extends Controller
     }
 
     public function manualsendnotification(Request $request){
-        // $data = $request->toArray();
-        // dd($request->positionname);
-        // dd($request->employerName);
+        $data = $request->toArray();
         // $details = ['email' => $user->email];
         // SendBulkEmailJob::dispatch($details);
         // $when = now()->addSeconds(2);
@@ -657,6 +654,7 @@ class InterviewController extends Controller
 
         return response()->json([
         'status' => 1,
+        'message' => 'Email Sent Successfully',
         ]);
 
     }

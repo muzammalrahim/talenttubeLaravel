@@ -29,11 +29,11 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="deletePoolModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{-- <div class="modal fade" id="deletTestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete Pool</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete Test</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -49,7 +49,39 @@
       </div>
     </div>
   </div>
-</div>
+</div> --}}
+
+
+ <!-- Central Modal Medium Danger -->
+ <div class="modal fade" id="deletTestModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog modal-notify modal-danger" role="document">
+     <!--Content-->
+     <div class="modal-content">
+       <!--Header-->
+       <div class="modal-header bg-danger">
+         <p class="heading lead">Confirm Delete Test</p>
+         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true" class="white-text">&times;</span>
+         </button>
+       </div>
+       <!--Body-->
+       <div class="modal-body">
+         <div class="text-center">
+           <p>This action cannot be undone. Are you sure you wish to continue </p>
+         </div>
+       </div>
+       <!--Footer-->
+       <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-danger text-white conFirm_delete" data-dismiss="modal">Delete </a>
+        <a type="button" class="btn btn-outline-danger waves-effect" data-dismiss="modal">Cancel</a>
+        <input type="hidden" val="" class="test_idModal"/>
+       </div>
+     </div>
+     <!--/.Content-->
+   </div>
+ </div>
+ <!-- Central Modal Medium Danger-->
 
 @stop
 
@@ -160,7 +192,7 @@ $(document).on('click', '.test_id', function(){
 $(document).on('click', '.conFirm_delete', function(){
     // var pool_id = $(this).val();
     var test_id = $('.test_idModal').val();
-    console.log(test_id);
+    // console.log(test_id);
 
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 
@@ -171,13 +203,13 @@ $(document).on('click', '.conFirm_delete', function(){
             url: base_url+'/admin/ajax/delete/onlineTest',
             data: {'id': test_id},
             success: function(resp){
-                if(resp.status == 1){
+                // if(resp.status == 1){
                     // console.log('call gone');
                     $('#dataTable').DataTable().ajax.reload();
-                     $('#deletePoolModal').modal('toggle');
-                }
-                else{
-                }
+                     // $('#deletTestModal').modal('toggle');
+                // }
+                // else{
+                // }
             }
         });
 

@@ -78,17 +78,17 @@
 <div class="row" style="margin-bottom: 15px;">
  --}}
 
-  <div class="block row col-md-9 text-white mb-3 margin_auto">
+  <div class="block row col-md-10 text-white mb-3 margin_auto">
 
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkApproved mt-1" style="margin-right:5px;">Bulk Assign</a></div>
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkPDFGenerate mt-1">Bulk Snapshot</a></div>
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnExportCSV mt-1">Bulk Export CSV</a></div>
-    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkEmail mt-1">Bulk Email</a></div>
-    <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-sm btn-primary btnBulkCompileCV mt-1">Bulk Compile CV</a></div>
-    <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-sm btn-primary btnBulkStatus ml-1 mt-1">Multi Bulk Status</a></div>
-    <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-block btn-sm btn-primary bulkInterview">Bulk Interview</a></div>
-    <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-block btn-sm btn-primary bulkPool">Bulk Pool</a></div>
-    <div class="col-md-1.5 bulkButton ml-2 mt-1"><a class="btn btn-sm btn-block btn-primary" onclick="bulkTestingButtonJobApp()" >Bulk Testing</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkApproved" style="margin-right:5px;">Bulk Assign</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnExportCSV">Bulk Export CSV</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkEmail">Bulk Email</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
+    <div class="col-md-1.5 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkStatus ml-1">Multi Bulk Status</a></div>
+    <div class="col-md-1.5 bulkButton ml-2"><a class="btn btn-block btn-sm btn-primary bulkInterview">Bulk Interview</a></div>
+    <div class="col-md-1.5 bulkButton ml-2"><a class="btn btn-block btn-sm btn-primary bulkPool">Bulk Pool</a></div>
+    <div class="col-md-1.5 bulkButton ml-2"><a class="btn btn-block btn-sm btn-primary" onclick="bulkTestingButtonJobApp()" >Bulk Testing</a></div>
 
     {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
   </div>
@@ -488,7 +488,7 @@ $(document).on('click','.btnBulkStatus', function(){
             // { data: 'preffer', name: 'preffer' },
             { data: 'correspondance', name: 'correspondance' },
             { data: 'select_test', name: 'select_test' },
-            { data: 'test', name: 'test' },
+            { data: 'test_result', name: 'test_result' },
             { data: 'interview', name: 'interview'},
             { data: 'action', name: 'action'},
         ],

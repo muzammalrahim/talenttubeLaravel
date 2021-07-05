@@ -119,19 +119,15 @@
 
             <div class="mb-2 bg-secondary text-white text-center"><b>Tags</b></div>
 
-        <div class="form-group row">
+        {{-- <div class="form-group row">
       
             {{ Form::label('language', null, ['class' => 'col-md-2 form-control-label']) }}
             <div class="col-md-10">
-             <!--  {{ Form::select('languages', $languages, null, ['placeholder' => 'Select Languages']) }} -->
+             {{ Form::select('languages', $languages, null, ['placeholder' => 'Select Languages']) }} 
             <div class="langList">
               @if(!empty($record->language))
                 @foreach( $record->language as $lang )
                     <div class="langSelect">
-                       <!--  <p style="display: block;">{{getLanguage($lang)}} 
-                            <input type="hidden" name="language[]" value="{{$lang}}">
-                            <span class="removeLang">Remove</span> 
-                        </p> -->
                         <select name="language[]">
                         @if(!empty($languages))
                         @foreach($languages as $lk=>$lv)
@@ -146,9 +142,9 @@
             </div> 
             <span class="addLang  btn btn-primary"style = "cursor:pointer;">+ Add</span> 
             </div> 
-        </div>
+        </div> --}}
 
-        <div class="form-group row">
+        {{-- <div class="form-group row">
             {{ Form::label('hobbies', null, ['class' => 'col-md-2 form-control-label']) }}
             <div class="col-md-10">
             <div class="hobbyList">
@@ -169,7 +165,7 @@
             </div> 
             <span class="addHobby  btn btn-primary"style = "cursor:pointer;">+ Add</span> 
             </div> 
-        </div>
+        </div> --}}
 
         <div class="form-group row">
             {{ Form::label('created_at', null, ['class' => 'col-md-2 form-control-label']) }}

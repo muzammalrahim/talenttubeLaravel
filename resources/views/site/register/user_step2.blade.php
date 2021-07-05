@@ -9,7 +9,7 @@
 
 
 @section('custom_css')
-				<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/register.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/card.css') }}">
     <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/>
@@ -372,10 +372,11 @@
                             <form id="frm_upload" class=" submit-document" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
                               {{csrf_field()}} <br>
                               <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">
-                              <a id="user_step8_done" class="btn turquoise violet save-resume-btn valign-top" name="submit">Done</a>
+                              <a id="user_step8_done" class="btn turquoise violet save-resume-btn valign-top" style="width:fit-content;" name="submit">Done</a>
                             </form>
                             <div class="private_attachments"></div>
                             <div class="upload_resume_error"></div>
+                            <p class="resumeErroe hide_it ">  </p>
                         </div>
                        </div>
 

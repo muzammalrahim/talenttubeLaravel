@@ -100,10 +100,10 @@
                         <div class="j_value">{{$job->salary}}</div>
                     </div>
 
-                    <div class="w_25p">
+                    {{-- <div class="w_25p">
                         <div class="j_label bold">Job Category</div>
                         <div class="j_value">Web & E-commerce Job</div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="job_detail p10">

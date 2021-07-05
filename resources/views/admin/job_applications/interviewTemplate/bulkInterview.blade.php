@@ -105,12 +105,11 @@
 	// =============================================== iteration-8 Interview Booking in job_applications page ===============================================
 
 	$('.interviewTemplate').on('change',function() {
-	  event.preventDefault();
-	  var formData = $('.interviewTemplate').serializeArray();
+	    event.preventDefault();
+	    var formData = $('.interviewTemplate').serializeArray();
+	    console.log(' formData ', formData);
+	    // return;
 
-	  // $('.interviewLoader').html(getLoader('pp_profile_edit_main_loader interviewTemplateLoader')).prop('disabled',true);
-	  console.log(' formData ', formData);
-	  // return;
 	    $('.general_error1').html('');
 	    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
 	      $.ajax({
@@ -118,7 +117,7 @@
 	          url: base_url+'/admin/ajax/interview/bulkInterviewTemplate',
 	          data: formData,
 	            success: function(data){
-	              $('.interviewLoader').prop('disabled',false);
+	              // $('.interviewLoader').prop('disabled',false);
 	                $('.templateData').html(data);
 	            }
 	      });
@@ -137,14 +136,9 @@
 
 
     $(document).on("click" , ".conductInterview123" , function(){
-        // var inttTempId = $('.conductInterview123').val();
-        // var inttTempId = $(this).attr('data-tempId');
-        // var user_id = $('.jsId').val();
-        // console.log(user_id);
-
+        $('.conductInterview123').html('Sending... <i class="fa fa-spinner fa-spin"></i>');
         var formData = $('.interviewTemplateSave').serializeArray();
         console.log(formData);
-        // $('.conductInterview123').html(getLoader('pp_profile_edit_main_loader conductInterviewLoader')).prop('disabled',true);
         $('.general_error1').html('');
         $.ajaxSetup({
         headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
@@ -159,13 +153,15 @@
                     $('.recordalreadExist').removeClass('d-none').text(message);
                     $('.conductInterviewLoader').addClass('d-none');
                     $('.interviewTemplateLoader').addClass('d-none');
+                    $('.conductInterview123').text('Sent');
+
                     // $('.conductInterview123').html('Interview Conducted').prop('disabled',false);
                     setTimeout(function(){
                     $('.recordalreadExist').addClass('d-none'); },
                     3000);  
-                    location.reload();
+                    // location.reload();
 
-                    // window.location.href = "{{ route('intetviewInvitationEmp')}}" ;
+                    window.location.href = "{{ route('job_applications')}}" ;
 
                 }
                 else{

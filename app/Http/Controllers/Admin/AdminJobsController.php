@@ -74,9 +74,6 @@ class AdminJobsController extends Controller
         $data['content_header'] = 'Jobs';
         $data['classes_body'] = 'jobs';
         $data['jobs'] = Jobs::with('applicationCount')->get();
-
-        // dd($data);
-
        return view('admin.jobs.list', $data);  // admin/jobs/list
     }
 
@@ -742,7 +739,7 @@ class AdminJobsController extends Controller
 
   // Getting Job Application DataTable Start
   public function getJobAppDatatable(Request $request){
-      $records =  JobsApplication::with(['jobseeker','job']);
+      $records =  JobsApplication::with(['jobseeker','job','userInterviewCount']);
 
       if(!empty($request->filter_job)){
         $records = $records->where('job_id',$request->filter_job);
@@ -785,9 +782,13 @@ class AdminJobsController extends Controller
 
       ->addColumn('correspondance', function ($records) {
         if (isAdmin()){
-            $UserInterview = UserInterview::where('interview_type', 'Correspondance')->where('jobApp_id', $records->id)->get();
+            // $UserInterview = UserInterview::where('interview_type', 'Correspondance')->where('jobApp_id', $records->id)->get();
+            $UserInterview = $records->userInterviewCount;
+            // dd($UserInterview);
+
             if ($UserInterview->count() > 0) {
               foreach ($UserInterview as $userInt) {
+                // dump($UserInterview);
                 $interviewCount = $userInt->status;
                 if ($interviewCount == 'Interview Confirmed') {
 
@@ -821,7 +822,7 @@ class AdminJobsController extends Controller
 
 
 
-      ->addColumn('test', function ($records) {
+      ->editColumn('test_result', function ($records) {
         if (isAdmin()){
             $UserInterview = $records->userOnlineTests;
             if ($UserInterview->count() >  0 ) {
@@ -852,7 +853,7 @@ class AdminJobsController extends Controller
       })
 
 
-      ->rawColumns(['profile', 'correspondance', 'select_test', 'test' ,'interview', 'action'])
+      ->rawColumns(['profile', 'correspondance', 'select_test', 'test_result' ,'interview', 'action'])
       ->toJson();
     }
 

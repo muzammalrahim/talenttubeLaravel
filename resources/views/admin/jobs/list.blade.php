@@ -45,15 +45,15 @@
 <table class="table table-bordered" id="dataTable">
     <thead>
         <tr style = "text-align: center">
-            <th>id.</th>
-            <th>company</th>
-            <th>title</th>
-            <th>country</th>
-            <th>state</th>
-            <th>city</th>
-            <th>created_at</th>
+            <th>Id.</th>
+            <th>Title</th>
+            <th>Company</th>
+            <th>Country</th>
+            <th>State</th>
+            <th>City</th>
+            <th>Created_at</th>
             {{-- <th>created_by</th> --}}
-            <th>action</th>
+            <th>Action</th>
         </tr>
     </thead>
   </table>

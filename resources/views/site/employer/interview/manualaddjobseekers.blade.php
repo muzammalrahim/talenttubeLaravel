@@ -46,7 +46,7 @@
 
         <input type="hidden" value="{{$interview->url}}" name="url" class="w20" required>
         <input type="hidden" value="{{$interview->positionname}}" name="positionname" class="w20" required>
-        <input type="hidden" value="{{$interview->employerData->name}}" name="employerName" class="w20" required>
+        <input type="hidden" value="{{$interview->employerData->company}}" name="employerName" class="w20" required>
 
         <div class="form_field">
             <span class="form_label"></span>
@@ -184,21 +184,6 @@
     margin-left: 5%;
 }
 
-.topMargin{
-    margin-top: 10px;
-}
-
-.textCenter{
-   margin-left: 40%;
-   padding-bottom: 10px !important;
-}
-
-.dynamicTextStyle{
-    margin-left: 5px;
-    margin-right: 5px;
-}
-
-
 .button {
   background-color: rgb(214, 90, 32);
   border-radius: 5px;
@@ -223,10 +208,6 @@
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
-
 <script type="text/javascript">
 
 $('.loginEditInterview1').on('click',function() {

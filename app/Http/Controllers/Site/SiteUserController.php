@@ -1733,7 +1733,7 @@ class SiteUserController extends Controller
     //  data = array();
 		if (!isEmployer($user)){
             $jobs = Jobs::take(10)->get();
-            return view('site.jobs.step2jobs', compact('jobs'));
+            return view('site.jobs.step2jobs', compact('jobs')); // site/jobs/step2jobs
 		}
 	}
 
@@ -1961,12 +1961,9 @@ class SiteUserController extends Controller
         $data['user'] = $user;
         $data['title'] = 'My job applications';
         $data['classes_body'] = 'jobApplications';
-
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         $data['controlsession'] = $controlsession;
-
         $data['applications'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
-
         return view('site.jobs.applied', $data);        //      site/jobs/applied
     }
 

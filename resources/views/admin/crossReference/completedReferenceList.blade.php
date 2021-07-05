@@ -44,8 +44,8 @@
           <th>Js Sytem</th>
 	        <th>Ref-Sytem</th>
 	        {{-- <th>Url</th> --}}
-	        <th>Created_at</th>
-	        {{-- <th>action</th> --}}
+	        {{-- <th>Created_at</th> --}}
+	        <th>action</th>
 
 	    </tr>
 	</thead>
@@ -101,8 +101,8 @@ jQuery('#dataTable').DataTable({
         { data: 'jsSysyem', name: 'jsSysyem' },
         { data: 'refSystem', name: 'refSystem' },
         // { data: 'refURL', name: 'refURL' },
-        { data: 'created_at', name: 'created_at' },
-        // { data: 'action', name: 'action'},
+        // { data: 'created_at', name: 'created_at' },
+        { data: 'action', name: 'action'},
     ]
 });
 
