@@ -1179,7 +1179,7 @@ class HomeController extends Controller {
                     }
                     else{ 
                         return view('site.user.interviewInvitation.acceptedInterviewInvitation', $data);
-                        // site/user/interviewInvitation/acceptedInterviewInvitation   
+                        // site/user/interviewInvitation/acceptedInterviewInvitation
                     }
                 }
             }

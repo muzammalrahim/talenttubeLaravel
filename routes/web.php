@@ -137,7 +137,7 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('users/create', 'Admin\UserController@create')->name('users.create');
     Route::get('users/edit/{id}', 'Admin\UserController@edit')->name('users.edit');
     Route::post('users/create', 'Admin\UserController@store')->name('users.store');
-    Route::patch('users/update/{id}', 'Admin\UserController@update')->name('users.update');
+    Route::patch('users/update/{id}', 'Admin\UserController@admin_userUpdate')->name('users.update');
     Route::get('users/getList', 'Admin\UserController@getDatatable')->name('users.dataTable');
     Route::get('users/pending', 'Admin\UserController@pendingUsers')->name('pendingUsers');
     Route::get('users/verified', 'Admin\UserController@verifiedUsers')->name('verifiedUsers');
@@ -238,8 +238,11 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('reference/completed/list', 'Admin\AdminReferenceController@completedReferenceList')->name('reference.list');
     Route::get('reference/getList', 'Admin\AdminReferenceController@getReferenceDatatable')->name('reference.dataTable');
     Route::get('compReference/getList', 'Admin\AdminReferenceController@getCompReferenceDatatable')->name('completedReference.dataTable');
+    Route::get('view/reference/{id}', 'Admin\AdminReferenceController@view_reference')->name('view_reference');
+
     Route::get('reference/create', 'Admin\AdminReferenceController@createInterview')->name('reference.create');
     Route::get('reference/edit/{id}', 'Admin\AdminReferenceController@referenceEdit')->name('reference.edit');
+
 
     // ====================================== Cross Reference End Here ======================================
 
@@ -543,10 +546,10 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('credit',       'Site\EmployerController@credit')->name('credit');
     Route::get('paymentStatus', 'Site\PaymentController@paymentInfo')->name('paymentStatus');
     Route::get('paymentCancel', function () { return 'Payment has been canceled'; })->name('paymentCancel');
+
+    // employerprofiler
     Route::get('employer/{username}',   'Site\EmployerController@index');
-
     Route::get('premium-account',       'Site\EmployerController@premiumAccount')->name('premiumAccount');
-
 
     //Interview concierge
     Route::get('interviewconcierge',       'Site\InterviewController@index')->name('interviewconcierge');

@@ -82,12 +82,12 @@ class AdminReportsController extends Controller
         // ======================================= Most Qualification =======================================
         
         $userQual = UserQualification::groupBy('qualification_id')->select(DB::raw('count(*) as qualif_count, qualification_id '))
-        ->orderByRaw('COUNT(*) DESC')->take(5)->get();
+        ->orderByRaw('COUNT(*) DESC')->get();
         $data['userQual'] = $userQual;
 
         // ======================================= Most popular location =======================================
         
-        $userLocation = User::where('type' ,'user')->whereNotNull('city')->groupBy('city')->select(DB::raw('count(*) as city_count, city'))->orderByRaw('COUNT(*) DESC')->take(5)->get();
+        $userLocation = User::where('type' ,'user')->whereNotNull('city')->groupBy('city')->select(DB::raw('count(*) as city_count, city'))->orderByRaw('COUNT(*) DESC')->take(10)->get();
         $data['userLocation'] = $userLocation;
         
         // ======================================= Industry Experience =======================================
@@ -145,7 +145,8 @@ class AdminReportsController extends Controller
       return datatables($records)
       ->addColumn('action', function ($records) {
         if (isAdmin()){
-            $rhtml = '<a href="'.route('viewJobReport',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-eye"> '.$records->applicationCount->aggregate.' </i></button></a>';
+            $job_aggregate = ($records->applicationCount)?($records->applicationCount->aggregate):0;
+            $rhtml = '<a href="'.route('viewJobReport',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-eye"> '.$job_aggregate.' </i></button></a>';
 
             // $rhtml .= '<button type="button" class="btn btn-danger btn-sm viewJobReport" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
 

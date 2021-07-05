@@ -60,7 +60,8 @@
                                 <p>
                                     <i class="fas fa-angle-right qualifiCationBullet"></i>
                                       {{getIndustryName($industry)}}
-                                      <i class="fa fa-trash removeIndustry hide_it"></i></p>
+                                      <i class="fa fa-trash removeIndustry hide_it"></i>
+                                </p>
                             </div>
                         @endforeach
                         @endif

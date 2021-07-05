@@ -20,7 +20,9 @@
       <h3> <b> {{$UserInterview->js->name}} </b> has not accepted your interview proposal yet. </h3>
     @else
 
-     @include('site.user.interviewInvitation.jsAccepInterview')
+      {{-- if jobseeker has not accepted the interview yet --}}
+     
+     @include('site.user.interviewInvitation.jsAccepInterview') {{-- site/user/interviewInvitation/jsAccepInterview --}}
 
     @endif
 

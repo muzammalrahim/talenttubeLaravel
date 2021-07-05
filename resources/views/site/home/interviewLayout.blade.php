@@ -8,12 +8,6 @@
 		<h4 class="font-weight-bold text-white">Interview Concierge Bookings</h4>
 	</div>
 
-  {{-- <div class="row ml-2">
-    <div class="successMsgDeleteBooking alert alert-success d-none" role="alert">
-    Your interview booking has been cancelled successfully.
-    </div>
-  </div> --}}
-
   <div class="row ml-2">
     <div class="successMsgUpdatingBooking alert alert-success d-none" role="alert">
     Your interview booking has been rescheduled successfully. 
@@ -346,11 +340,7 @@ $(document).ready(function(){
 }
 
 
-.overlayLoader{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-}
+.overlayLoader{ position: absolute;top: 50%;left: 50%;}
 </style>
 
 @stop

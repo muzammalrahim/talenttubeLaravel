@@ -4,7 +4,12 @@
         @foreach ($empquestion as $qk => $empq)
             <p>{{($empq)}}</p>
                 <b><p class="employerQuestionsPtag">
-                    {{$userQuestions[$qk]}}
+                    @if ($userQuestions[$qk] == 'no')
+                        No
+                    @else
+                        Yes
+                    @endif
+                    {{-- {{$userQuestions[$qk]}} --}}
                 </p></b>
                 <select name="{{$qk}}" class="EmployerRegQuestion hide_it">
                     <option value="yes"

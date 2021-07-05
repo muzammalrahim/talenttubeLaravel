@@ -103,19 +103,32 @@ class AdminReferenceController extends Controller
 
       return datatables($records)
       ->addColumn('action', function ($records) {
-        // if (isAdmin()){
-        //     $rhtml = '<a href="'.route('reference.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
+        $rhtml = ' <a  href = " '.route('view_reference',['id'=>$records->id]).'" value = "'.$records->id.'" class="btn btn-primary" target ="_blank"> 
+        <i class = "fa fa-eye"></i> </a>';
 
-        //     // ============================================= For Deleting =============================================
-        //     // $rhtml .= '<button type="button" class="btn btn-danger btn-sm deleteIntButton" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
-        //     // ============================================= For Deleting =============================================
-
-                    
-        //     return $rhtml;
-        // }
-
+              
+        return $rhtml;
       })
+
+      
+
       ->toJson();
+    }
+
+    // ==================================================== View Complete Reference as admin ====================================================
+    
+    public function view_reference(Request $request, $id){
+
+        $reference =  crossreference::where('id' , $id)->where('refStatus', 'Reference Completed')->first();
+        
+        // dd($reference);
+
+        $data['reference'] = $reference;
+        $data['title'] = 'Refenence Info';
+        $data['content_header'] = 'Refenence Info';
+        return view('admin.crossReference.reference_info', $data);  // admin/crossReference/reference_info
+
+        // dd($crossreference);
     }
 
 

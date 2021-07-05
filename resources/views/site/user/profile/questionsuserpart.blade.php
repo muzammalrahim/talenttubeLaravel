@@ -1,19 +1,24 @@
 
 @if(!empty($userquestion))
-        @foreach ($userquestion as $qk => $question)
-            <p class="m0 p0">{{($question)}}</p>
-                <b><p class="QuestionsKeyPTag">
-                    {{$userQuestions[$qk]}}
-                </p></b>
-                <select name="{{$qk}}" class="jobSeekerRegQuestion hide_it">
-                    <option value="yes"
-                    {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
-                    >Yes</option>
-                    <option value="no"
-                    {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'no'))?'selected':''}}
-                    >No</option>
-                </select>
-@endforeach
+    @foreach ($userquestion as $qk => $question)
+        <p class="m0 p0">{{($question)}}</p>
+            <b><p class="QuestionsKeyPTag">
+                {{-- {{$userQuestions[$qk]}} --}}
+                @if ($userQuestions[$qk] == 'yes')
+                    Yes
+                @else
+                    No
+                @endif
+            </p></b>
+            <select name="{{$qk}}" class="jobSeekerRegQuestion hide_it">
+                <option value="yes"
+                {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
+                >Yes</option>
+                <option value="no"
+                {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'no'))?'selected':''}}
+                >No</option>
+            </select>
+    @endforeach
 @endif
 
 

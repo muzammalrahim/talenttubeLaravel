@@ -62,7 +62,7 @@
     .btn-sm {font-size: 14px !important;padding: .375rem .75rem !important;}
     label {font-weight: 700;}
     body{
-        background-image: url(http://creativedev22.xyz/images/bg3new.jpg) !important;
+        background-image: url(http://talenttube.org/images/bg3new.jpg) !important;
         background-size: cover !important;
         background-position: right !important;
     }

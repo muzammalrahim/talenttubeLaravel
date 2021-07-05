@@ -24,57 +24,54 @@
             </div>
             <hr>
             <div class="row mt-4 mb-4">
-
-                    <div class="col">
+                <div class="col">
 
                     {{-- Adding Tab Start --}}
 
+                    <div class="col-12 col-sm-6 col-lg-12">
+                        <div class="card card-primary card-tabs">
 
-          <div class="col-12 col-sm-6 col-lg-12">
-            <div class="card card-primary card-tabs">
+                            <div class="card-header p-0 pt-1 tabColor"style="background: #6c757d;">
+                                <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
 
-              <div class="card-header p-0 pt-1 tabColor"style="background: #6c757d;">
-                <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+                                  <li class="nav-item col-lg-3">
+                                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true"><b>General</b></a>
+                                  </li>
 
-                  <li class="nav-item col-lg-3">
-                    <a class="nav-link active" id="custom-tabs-one-home-tab" data-toggle="pill" href="#custom-tabs-one-home" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true"><b>General</b></a>
-                  </li>
+                                  <li class="nav-item col-lg-3">
+                                    <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false"><b>User Information</b></a>
+                                  </li>
 
-                  <li class="nav-item col-lg-3">
-                    <a class="nav-link" id="custom-tabs-one-profile-tab" data-toggle="pill" href="#custom-tabs-one-profile" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false"><b>User Information</b></a>
-                  </li>
+                                  <li class="nav-item col-lg-3">
+                                    <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false"><b>Questions</b></a>
+                                  </li>
 
-                  <li class="nav-item col-lg-3">
-                    <a class="nav-link" id="custom-tabs-one-messages-tab" data-toggle="pill" href="#custom-tabs-one-messages" role="tab" aria-controls="custom-tabs-one-messages" aria-selected="false"><b>Questions</b></a>
-                  </li>
+                                  <li class="nav-item col-lg-3">
+                                    <a class="nav-link" id="custom-tabs-one-private-tab" data-toggle="pill" href="#custom-tabs-one-private" role="tab" aria-controls="custom-tabs-one-private" aria-selected="false"><b>Private Gallery</b></a>
+                                  </li>
 
-                  <li class="nav-item col-lg-3">
-                    <a class="nav-link" id="custom-tabs-one-private-tab" data-toggle="pill" href="#custom-tabs-one-private" role="tab" aria-controls="custom-tabs-one-private" aria-selected="false"><b>Private Gallery</b></a>
-                  </li>
+                                </ul>
+                            </div>
 
-                </ul>
-              </div>
+                            <div class="card-body">
 
-              <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-one-tabContent">
 
-                <div class="tab-content" id="custom-tabs-one-tabContent">
-
-                  @include('admin.user.tabs.tab1')
-                  @include('admin.user.tabs.tab2')
-                  @include('admin.user.tabs.tab3')
-                  @include('admin.user.tabs.tab4')
-
-
-                </div> <!-- tab-content end -->
-              </div>
-
-              <!-- /.card -->
-            </div>
-          </div>
-                    {{-- Adding Tab End --}}
+                                    @include('admin.user.tabs.tab1') {{-- admin/user/tabs/tab1 --}}
+                                    @include('admin.user.tabs.tab2')
+                                    @include('admin.user.tabs.tab3')
+                                    @include('admin.user.tabs.tab4')
 
 
+                                </div> <!-- tab-content end -->
+                            </div>
+
+                          <!-- /.card -->
+                        </div>
+                    </div>
+                            {{-- Adding Tab End --}}
                 </div><!--col-->
+
 
             </div><!--row-->
         </div><!--card-body-->

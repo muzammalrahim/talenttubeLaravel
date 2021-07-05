@@ -1,11 +1,4 @@
-{{-- @extends('site.user.usertemplate') --}}
-{{-- 
-@if ($controlsession->count() > 0)
-<div class="adminControl">
-        <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
-</div>
-@endif
- --}}
+
 @extends('site.employer.employermaster')
 
 @section('custom_css')
@@ -29,25 +22,39 @@
 
             @php
                 $job = $application->job;
-            $experience = json_decode($job->experience);
-            $jobType = '';
-            if($job->type == 'Contract')
-            {
-                $jobType = 'Contract';
-            }
-            elseif ($job->type == 'temporary') {
-                $jobType = 'Temporary';
-            }
-            elseif ($job->type == 'casual') {
-                $jobType = 'casual';
-            }
-            elseif ($job->type == 'full_time') {
-                $jobType = 'Full time';
-            }
-            elseif ($job->type == 'part_time') {
-                $jobType = 'Part time';
-            }
+                $experience = json_decode($job->experience);
+                $jobType = '';
+                if($job->type == 'Contract')
+                {
+                    $jobType = 'Contract';
+                }
+                elseif ($job->type == 'temporary') {
+                    $jobType = 'Temporary';
+                }
+                elseif ($job->type == 'casual') {
+                    $jobType = 'casual';
+                }
+                elseif ($job->type == 'full_time') {
+                    $jobType = 'Full time';
+                }
+                elseif ($job->type == 'part_time') {
+                    $jobType = 'Part time';
+                }
 
+                $status = '';
+                // $status = $application->status;
+                if ($application->status == 'applied') {
+                    $status = 'Applied';
+                }
+                elseif ($application->status == 'inreview') {
+                    $status = 'In Review';
+                }
+                elseif($application->status == 'interview'){
+                    $status = 'Interview';
+                }
+                else{
+                    $status = 'Unsuccessful';
+                }
 
 
             @endphp
@@ -62,9 +69,8 @@
 
                 <div class="fl_right">
                     <div class="j_label bold">Status</div>
-                    <div class="j_value text_capital">{{$application->status}}</div>
+                    <div class="j_value text_capital">{{$status}}</div>
                 </div>
-
             </div>
 
             <div class="job_info row p10 dblock">
@@ -78,11 +84,10 @@
                     <div class="j_value">@if(!empty($experience))
                         @foreach($experience as $industry )
                             <div class="IndustrySelect">
-
-                                  <p>
-                                    <i class="fas fa-angle-right qualifiCationBullet"></i>
+                                <p><i class="fas fa-angle-right qualifiCationBullet"></i>
                                       {{getIndustryName($industry)}}
-                                      <i class="fa fa-trash removeIndustry hide_it"></i></p>
+                                      <i class="fa fa-trash removeIndustry hide_it"></i>
+                                  </p>
                             </div>
                         @endforeach
                     @endif</div>
@@ -104,7 +109,6 @@
             <div class="job_footer p10 relative">
                 <div class="w_25p">
                     <div class="j_label bold">Submitted</div>
-                    {{-- @dump($applications->created_at->format('yy-mm-dd')) --}}
                     <div class="j_value">{{$application->created_at->format('yy-m-d')}}</div>
                 </div>
 

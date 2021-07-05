@@ -119,7 +119,7 @@
   $jobType = 'Temporary';
   }
   elseif ($job->type == 'casual') {
-  $jobType = 'casual';
+  $jobType = 'Casual';
   }
   elseif ($job->type == 'full_time') {
   $jobType = 'Full time';
@@ -127,7 +127,18 @@
   elseif ($job->type == 'part_time') {
   $jobType = 'Part time';
   }
+
+
+
+
+
+
+
+
   @endphp
+
+
+
 
 {{-- @dump($users) --}}
 {{-- @dump($job->jobEmployer) --}}
@@ -153,9 +164,14 @@
         <b style="margin-right: 50px;">Title:</b> {{$value = $job->title }}
         <br>
          {{-- @dump($job) --}}
-         <b>Description: </b> {{$value = $job->description }}
+
+          @php 
+              $remSpecialCharDesc = str_replace("\&#39;","'", $job->description);
+          @endphp
+
+         <b>Description: </b> {{$value = $remSpecialCharDesc }}
          <br>
-         <b style="margin-right: 15px;">Company: </b>{{$value = $job->jobEmployer->name }}
+         <b style="margin-right: 15px;">Company: </b>{{$value = $job->jobEmployer->company }}
 
          <br>
          <b style="margin-right: 17px;">Location: </b>{{$job->jobEmployer->country }}, {{$job->jobEmployer->state }}, {{$job->jobEmployer->city }}
@@ -201,6 +217,26 @@
 
 
     @foreach($applications as $application)
+
+
+
+
+    @php
+      $applicationStatus = '';
+  if ($application->status == 'applied') {
+    $applicationStatus = 'Applied';
+  }
+  elseif($application->status == 'inreview'){
+    $applicationStatus = 'In Review';
+  }
+
+  elseif($application->status == 'interview'){
+    $applicationStatus = 'Interview';
+  }else{
+    $applicationStatus = 'Unsuccessful';
+  }
+
+    @endphp
     <div class="page-break"></div>
       <div class="header" >
   <h1>Talent Tube Job Applicants</h1>
@@ -233,7 +269,7 @@
            <br>
          <b style="margin-right: 3px;">Expected Salary: </b>{{$application->jobseeker->salaryRange }}
          <br>
-         <b style="margin-right: 10px;">Job Status: </b> {{$application->status }}
+         <b style="margin-right: 10px;">Job Status: </b> {{$applicationStatus }}
          <br>
          <b style="margin-right: 1px;">Interested In: </b>{{$application->jobseeker->interested_in }}
          <br>

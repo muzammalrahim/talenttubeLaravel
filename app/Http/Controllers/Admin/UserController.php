@@ -516,35 +516,21 @@ class UserController extends Controller
         }else if($user->type == 'user'){
             $data['record']   = $user;
             $data['title']  = 'User';
-
             $data['content_header'] = 'Edit User';
             $data['countries'] = get_Geo_Country();
             $data['qualificationList'] = getQualificationsList();
             $data['languages'] = getLanguages();
             $data['hobbies'] = getHobbies();
-
-            // $data['familyType'] = getFamilyType();
-            // $data['eyeColor'] = getEyeColor();
-            // $data['Days'] = getDays();
-            // $data['Months'] = getMonths();
-            // $data['years'] = getYears();
-
-            // $data['countries'] = get_Geo_Country()->pluck('country_title','country_id')->toArray();
-            // $data['states'] = get_Geo_State($user->country)->pluck('state_title','state_id')->toArray();
-            // $data['cities'] = get_Geo_City($user->country,$user->state)->pluck('city_title','city_id')->toArray();
             $data['userquestion'] = getUserRegisterQuestions();
             $data['industriesList'] = getIndustries();
             $data['salaryRange'] = getSalariesRange();
             $data['questionsList'] = getIndustries();
-
             $data['user_gallery'] = $user_gallery;
             $data['videos'] = $videos;
             $data['attachments'] = $attachments;
-
-
-            return view('admin.user.edit', $data);
+            return view('admin.user.edit', $data); // admin/user/edit
         }
-        // admin/user/edit
+        
     }
 
     /** ================  ================ */
@@ -577,12 +563,14 @@ class UserController extends Controller
         return view('admin.employer.edit', $data);
     }
 
-    public function update(Request $request, $id){
+    public function admin_userUpdate(Request $request, $id){
 
         $user = User::find($id);
         if (!$user){
             return redirect(route('users'))->withErrors(['token' => 'User with id '.$id.' does not exist']);
         }
+
+        // dd($request->toArray());
 
         $this->validate($request, [
             'name' => 'required|max:255',
@@ -592,12 +580,12 @@ class UserController extends Controller
             'state' => 'max:50',
             'city' => 'max:50',
             'age' => 'max:15',
-            'bday' => 'max:2',
-            'bmonth' => 'max:2',
-            'byear' => 'max:4',
-            'statusText' => 'max:125',
+            // 'bday' => 'max:2',
+            // 'bmonth' => 'max:2',
+            // 'byear' => 'max:4',
+            // 'statusText' => 'max:125',
             'gender' => 'max:25',
-            'eye' => 'max:15',
+            // 'eye' => 'max:15',
             'family' => 'max:15',
             // 'educaion' => 'max:15',
             'language' => 'max:15',
@@ -615,19 +603,16 @@ class UserController extends Controller
         $user->country = $request->country;
         $user->state = $request->state;
         $user->city = $request->city;
-        $user->age = $request->age;
-        $user->bday = $request->bday;
-        $user->bmonth = $request->bmonth;
-        $user->byear = $request->byear;
-        $user->statusText = $request->statusText;
-        $user->gender = $request->gender;
-        $user->eye = $request->eye;
+        // $user->age = $request->age;
+        // $user->bday = $request->bday;
+        // $user->bmonth = $request->bmonth;
+        // $user->byear = $request->byear;
+        // $user->statusText = $request->statusText;
+        // $user->gender = $request->gender;
+        // $user->eye = $request->eye;
         $user->family = $request->family;
-
-        // $user->education = $request->education;
-
         $user->language = $request->language;
-        $user->hobbies = $request->hobbies;
+        // $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
         if(!empty($request->password)){
@@ -644,6 +629,18 @@ class UserController extends Controller
         $user->industry_experience = $request->industry_experience;
         $user->recentJob = $request->recentJob;
         $user->salaryRange = $request->salaryRange;
+        
+        // ======================= update passing year and age of user =======================
+        $user->passing_year = $request->passing_year; 
+        
+        $today_date = date('Y');
+        $passing_year = $request->passing_year;
+        $diff = $today_date - $passing_year;
+        $age = 18 + $diff;
+        $user->age = $age ;
+
+        // dd($age);
+
         if( $user->save() ){
             return redirect(route('users'))->withSuccess( __('admin.record_updated_successfully'));
         }
@@ -1206,11 +1203,6 @@ class UserController extends Controller
         }
         return datatables($records)
         
- 
-
-
-
-
         ->addColumn('profile', function ($records) {
             if (isAdmin()){
                 $rhtml = '<a class="btn btn-primary btn-sm" href="'.route('jobSeekerInfo',['id'=>$records->id]).'" target="_blank" >Info</a>';
@@ -1311,10 +1303,6 @@ class UserController extends Controller
                 $viewRef = '<span class = "ml-1">Complete-<u><span><a class="pointer text-success " 
                 href="'.route('completedInterviews',['id'=>$records->id]).'" target="_blank" >View</a>';
                 $refHtml = '<span class = "text-success "> '.$refCount.' '.$viewRef.' </u></span>';
-
-
-                // $userOnlineTestCount = ($records->userOnlineTestCount)?($records->userOnlineTestCount->aggregate):0;
-                // dd($userOnlineTestCount);
 
                 return $refHtml;
             }

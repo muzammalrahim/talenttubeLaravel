@@ -37,7 +37,8 @@
       </div>
 
       <div class="form-group row">
-        <div class="col-md-12">
+        {{ Form::label('Location', null, ['class' => 'col-md-2 form-control-label']) }}
+        <div class="col-md-10">
             <div id="accordion">
                 <div class="card">
                 <div class="card-header" id="headingOne">
@@ -59,11 +60,17 @@
 
                     <div class="location_latlong">
                     {{ Form::hidden('location_lat', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'location_lat','required'=> 'false', 'id' => 'location_lat')) }}
+                    
                     {{ Form::hidden('location_long', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'location_long','required'=> 'false', 'id' => 'location_long')) }}
+                    
                     {{ Form::hidden('location', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'location','required'=> 'false', 'id' => 'location_name')) }}
+                    
                     {{ Form::hidden('city', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'city','required'=> 'false', 'id' => 'location_city')) }}
+                    
                     {{ Form::hidden('state', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'state','required'=> 'false', 'id' => 'location_state')) }}
+                    
                     {{ Form::hidden('country', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'country','required'=> 'false', 'id' => 'location_country')) }}
+                    
                     <input type="hidden" name="user_id" id="user_id"  value="{{$record->id}}">
                     </div>
 
@@ -76,92 +83,35 @@
 
 
 
-
-
-
-       {{-- <div class="form-group row country_dd">
-          {{ Form::label('country', null, ['class' => 'col-md-2 form-control-label']) }}
-          <div class="col-md-10">
-          {{ Form::select('country', $countries, null, ['placeholder' => 'Select Country']) }}
-          </div>
-      </div>
-
-      <div class="form-group row state_dd">
-          {{ Form::label('state', null, ['class' => 'col-md-2 form-control-label']) }}
-          <div class="col-md-10">
-              {{ Form::select('state', $states, null, ['placeholder' => 'Select state']) }}
-          </div>
-      </div>
-
-      <div class="form-group row city_dd">
-          {{ Form::label('city', null, ['class' => 'col-md-2 form-control-label']) }}
-          <div class="col-md-10">
-          {{ Form::select('city', $cities, null, ['placeholder' => 'Select state']) }}
-          </div>
-      </div> --}}
-
-      <div class="form-group row">
+      {{-- <div class="form-group row">
           {{ Form::label('statusText', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
             {{ Form::text('statusText', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Status Text','required'=> 'false')) }}
           </div>
       </div>
-
-     {{--  <div class="form-group row">
-          {{ Form::label('age', null, ['class' => 'col-md-2 form-control-label']) }}
+ --}}
+      <div class="form-group row">
+          {{ Form::label('Passing Year', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
-            {{ Form::number('age', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Age','required'=> 'false')) }}
-          </div>
-      </div> --}}
+          
 
-    {{--        <div class="form-group row">
-          {{ Form::label('bday', null, ['class' => 'col-md-2 form-control-label']) }}
-          <div class="col-md-2">
-            {{ Form::select('bday', $Days, null, ['placeholder' => 'Select Day']) }}
-          </div> --}}
+            <select id="year" name="passing_year" class="form-control">
+                {{ $last= date('Y')-50 }}
+                {{ $now = date('Y') }}
 
+                @for ($i = $now; $i >= $last; $i--)
+                    <option value="{{ $i }}" {{ ($i == $record->passing_year ) ? 'selected': '' }}  >{{ $i }}</option>
+                @endfor
 
-      <!-- <div class="form-group row"> -->
+            </select>
 
-    {{--
-          {{ Form::label('bmonth', null, ['class' => 'col-md-1 form-control-label']) }}
-          <div class="col-md-2">
-            {{ Form::select('bmonth', $Months, null, ['placeholder' => 'Select Month']) }}
-          </div> --}}
-
-
-      {{-- </div> --}}
-
-      <!-- <div class="form-group row"> -->
-
-
-    {{--           {{ Form::label('byear', null, ['class' => 'col-md-1 form-control-label']) }}
-          <div class="col-md-2">
-            {{ Form::select('byear', $years, null, ['placeholder' => 'Select Year']) }}
-          </div>
-      </div> --}}
-
-    {{--
-       <div class="form-group row">
-          {{ Form::label('gender', null, ['class' => 'col-md-2 form-control-label']) }}
-          <div class="col-md-10">
-             {{ Form::select('gender', ['male' => 'Male', 'female' => 'Female'], null, ['placeholder' => 'Select Gender']) }}
+            {{-- {{ Form::number('passing_year', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Age','required'=> 'false')) }} --}}
+          
           </div>
       </div>
 
-       <div class="form-group row">
-          {{ Form::label('eye', null, ['class' => 'col-md-2 form-control-label']) }}
-          <div class="col-md-10">
-            {{ Form::select('eye', $eyeColor, null, ['placeholder' => 'Eye Color']) }}
-          </div>
-      </div>
 
-       <div class="form-group row">
-          {{ Form::label('family', null, ['class' => 'col-md-2 form-control-label']) }}
-          <div class="col-md-10">
-            {{ Form::select('family', $familyType, null, ['placeholder' => 'Family Type']) }}
-          </div>
-      </div> --}}
+     
 
 
        <a class="btn btn-primary btnNext text-white" style="float: right;" onclick="scrollToTop()">Next</a>

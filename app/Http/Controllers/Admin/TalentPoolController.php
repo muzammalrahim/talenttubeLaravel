@@ -371,6 +371,7 @@ class TalentPoolController extends Controller
         $user = Auth::user();
         if (isAdmin($user)) {
             $talentPool = TalentPool::where('id', $request->id)->first();
+            $talentPool->delete();
             $userPool = UserPool::where('pool_id',$request->id)->get();
             foreach ($userPool as $pool) {
                 $pool->delete();

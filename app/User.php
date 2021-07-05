@@ -382,7 +382,7 @@ class User extends Authenticatable
     // =================================== Cross Reference count for Admin in iteration-8 ===================================
 
     public function user_interviewsAccount(){
-        return $this->hasOne(UserInterview::class, 'user_id')->selectRaw('user_id, count(*) as aggregate')->groupBy('user_id');        
+        return $this->hasOne(UserInterview::class, 'user_id')->selectRaw('user_id, count(*) as aggregate')->groupBy('user_id')->where('status', 'Interview Confirmed');        
     }
 
     

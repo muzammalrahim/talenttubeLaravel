@@ -442,11 +442,18 @@ $(function(){
                 console.log(' jsonResponse ', res);
                 $('#v_'+item_id+' .v_progress').remove();
                 if(res.status == 1) {
+                    // $('.profile_photo_frame').addClass('item_video');
+
                     // $('#v_'+item_id+' .v_title').text(res.data.title);
                     // $('#v_'+item_id+' .video_link').attr('href', base_url+'/'+res.data.file);
                     $('#v_'+item_id).replaceWith(res.html);
+
+
+
                 }else {
                     console.log(' video error ');
+                    $('.profile_photo_frame').removeClass('item_video');
+
                     if(res.validator != undefined){
                         $('#v_'+item_id+' .error').removeClass('hide_it').addClass('to_show').text(res.validator['video'][0]);
                     }
@@ -540,37 +547,44 @@ $(function(){
             cache:false,
             contentType: false,
             processData: false,
-            // beforeSend:function(){
-            //     jQuery('.save-resume-btn').html('Saving... <i class="fa fa-spinner fa-spin"></i>');
-            // },
-            success:function(data){
-                jQuery('.save-resume-btn').html('Save');
-                console.log("success data ", data);
-                if(data && data.attachments) {
-                    var attachments = data.attachments;
-                    var attach_html = '';
-                    if( attachments.length > 0 ){
-                        for (let ai = 0; ai < attachments.length; ai++) {
-                            attach_html += '<div class="attachment_'+attachments[ai].id+' attachment_file">';
-                            attach_html +=   '<div class="attachment"><img src="'+base_url+'/images/site/icons/cv.png" /></div>';
-                            attach_html +=   '<span class="attach_title">'+attachments[ai].name+'</span>';
-                            attach_html +=   '<div class="attach_btns">';
-                            attach_html +=      '<a class="attach_btn downloadAttachBtn" href="'+base_url+'/'+attachments[ai].file+'">Download</a>';
-                            attach_html +=      '<a class="attach_btn removeAttachBtn" data-attachmentid="'+attachments[ai].id+'" onclick="UProfile.confirmAttachmentDelete('+attachments[ai].id+');">Remvoe</a>';
-                            attach_html +=    '</div>';
-                            attach_html +=  '</div>';
-                        }
-                    }
-                    jQuery('.private_attachments').html(attach_html);
-
-                    setTimeout(function(){ showUserStep9(); }, 1000);
-                }
-                console.log(data);
+            beforeSend:function(){
+                jQuery('.save-resume-btn').html('Saving... <i class="fa fa-spinner fa-spin"></i>');
             },
-            error: function(data){
-                console.log("error");
-                console.log(data);
+            success:function(data){
+                if (data.status == 1) {
+                    jQuery('.save-resume-btn').html('Save');
+                    console.log("success data ", data);
+                    if(data && data.attachments) {
+                        var attachments = data.attachments;
+                        var attach_html = '';
+                        if( attachments.length > 0 ){
+                            for (let ai = 0; ai < attachments.length; ai++) {
+                                attach_html += '<div class="attachment_'+attachments[ai].id+' attachment_file">';
+                                attach_html +=   '<div class="attachment"><img src="'+base_url+'/images/site/icons/cv.png" /></div>';
+                                attach_html +=   '<span class="attach_title">'+attachments[ai].name+'</span>';
+                                attach_html +=   '<div class="attach_btns">';
+                                attach_html +=      '<a class="attach_btn downloadAttachBtn" href="'+base_url+'/'+attachments[ai].file+'">Download</a>';
+                                attach_html +=      '<a class="attach_btn removeAttachBtn" data-attachmentid="'+attachments[ai].id+'" onclick="UProfile.confirmAttachmentDelete('+attachments[ai].id+');">Remvoe</a>';
+                                attach_html +=    '</div>';
+                                attach_html +=  '</div>';
+                            }
+                        }
+                        jQuery('.private_attachments').html(attach_html);
+                        setTimeout(function(){ showUserStep9(); }, 1000);
+                    }
+                }else{
+                    // console.log(data);
+                    jQuery('.save-resume-btn').html('Save');
+                    jQuery('.resumeErroe').removeClass('hide_it');
+                    var resumeError = data['validator']['resume'];
+                    var error = resumeError.toString(); 
+                    jQuery('.resumeErroe').text(error);
+                    // setTimeout(function(){
+                    //     jQuery('.resumeErroe').addClass('hide_it');
+                    // }, 3000);
+                }
             }
+            
         });
     }));
 
