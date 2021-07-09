@@ -25,31 +25,7 @@
 {{-- Delete Talent_Pool Modal --}}
 
 
-<!-- Button trigger modal -->
 
-
-<!-- Modal -->
-{{-- <div class="modal fade" id="deletTestModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Confirm Delete Test</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        This action can not be undone.<br>
-        Are you sure you wish to continue ?
-          <input type="hidden" class="test_idModal"></input>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary conFirm_delete" data-dismiss="modal">Save changes</button>
-      </div>
-    </div>
-  </div>
-</div> --}}
 
 
  <!-- Central Modal Medium Danger -->
@@ -108,7 +84,7 @@
             <th>Time</th>
             {{-- <th>Phone</th> --}}
             {{-- <th>Profile</th> --}}
-            <th>action</th>
+            <th>Action</th>
 
         </tr>
     </thead>

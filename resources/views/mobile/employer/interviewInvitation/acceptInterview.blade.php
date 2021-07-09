@@ -14,11 +14,22 @@
     <div class="questionBody">
       <div class="p10 dblock">
         <div class="IndustrySelect mb20">
-              @if ($UserInterview->template->type = 'phone_screeen')
-                <p class="p0 font11 m-0 mb-1"> Interview Type: <b> Phone Screen</b> </p>
-              @else
-                <p class="p0 font11 m-0 mb-1"> Template Type: <b> {{$UserInterview->template->type}} </b> </p>
+              {{-- @dump($UserInterview); --}}
+
+              {{-- <p class="p0 font11 m-0 mb-1"> Interview Type:  <b>  {{ $UserInterview->interview_type }}  </b> </p>  --}}
+
+              @if (isset($UserInterview->interview_type))
+                <p class="p0 font11 m-0 mb-1"> Interview Type: <b>  {{$UserInterview->interview_type}} </b> </p>
+                @else
+
+                  @if ($UserInterview->template->type == 'phone_screeen')
+                    <p class="p0 font11 m-0 mb-1"> Template Type: <b> Phone Screen</b> </p> 
+                  @else
+                    <p class="p0 font11 m-0 mb-1"> Template Type: <b> {{$UserInterview->template->type}} </b> </p>
+                  @endif
               @endif
+              
+
         </div>
       </div>
 

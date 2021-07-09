@@ -190,4 +190,12 @@ class MobileHomeController extends Controller {
              
     }
 
+
+    public function mPrivacy(){
+
+        $data['title'] = 'Privacy and Policy';
+        return view('mobile.home.privacy', $data); // mobile/home/privacy
+
+    }
+
 }

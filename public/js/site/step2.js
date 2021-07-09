@@ -994,19 +994,14 @@ $(function(){
     })
 
     $('.card_question.first').css('z-index',4);
-    function questionAnswer(action){
-        // console.log(' questionAnswer ', action, dataAnswerJoin);
-        if(isAnswerSend)return;
 
+    function questionAnswer(action){
+        if(isAnswerSend)return;
 			isAnswerSend=true;
 			var $el=$('.card_question.first:not(.answer)');
 			var c=$('.card_question:not(.answer)').length-1;
 
-            // console.log(dataAnswerJoin[$el.data('field')]);
-
-
         if($el[0]){
-            // console.log($el[0]);
             dataAnswerJoin[$el.data('field')]=action?'yes':'no';
         }
         if(!c){
@@ -1019,9 +1014,7 @@ $(function(){
         $el.oneTransEnd(function(){
             $el.removeAttr('style');
             $el.oneTransEnd(function(){
-                
                 $el.removeClass('active1');
-
                 var $prev=$el.addClass('answer').prev('.card_question').addClass('first active1');
                 $jq('#card_question_'+cla).oneTransEnd(function(){
                     isAnswerSend=false;

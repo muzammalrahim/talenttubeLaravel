@@ -103,9 +103,9 @@
                     </div>
 
                     
-                    <div class="j_button dinline_block fl_right m5">
+                    {{-- <div class="j_button dinline_block fl_right m5">
                         <a class="jobDetailBtn graybtn jbtn " href="{{route('advertise',['id' => $job->id])}}">Advertising</a>
-                    </div>
+                    </div> --}}
 
                 </div>
             </div>

@@ -65,41 +65,7 @@
 </div>
 
 
-{{-- <div class="card shadow mb-3 bg-white rounded">
 
-    <h6 class="card-header h6">Questions<i class="fas fa-edit float-right editQuestions"></i></h6>
-      <div class="card-body p-2 cardBody">
-            <p class="loader SaveQuestionsLoader"style="float: left;"></p>
-              <div class="cl"></div>
-                <div class="questionsOfUser">
-                    @php
-                        $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array());
-                    @endphp
-                      @if(!empty($empquestion))
-                          @foreach($empquestion as $qk => $question)
-                            <div>
-                              <p class="mb-1">{{$question}} </p>
-                               <p class="QuestionsKeyPTag mb-1"><b>{{$userQuestions[$qk]}}</b></p>
-                                <select name="{{$qk}}" class="jobSeekerRegQuestion custom-select custom-select hideme mb-2 d-none">
-                                    <option value="yes"
-                                    {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}
-                                    >Yes</option>
-                                    <option value="no"
-                                    {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'no'))?'selected':''}}
-                                    >No</option>
-                                </select>
-                            </div>
-                          @endforeach
-                      @endif
-                          <div class="col-md-12 text-center mt-3">
-                              <a class="btn btn-sm btn-success saveQuestionsButton d-none">Save</a>
-                          </div>
-                </div>
-            <div class="alert alert-success questionsAlert" role="alert" style="display:none;">
-              <strong>Success!</strong> Questions have been updated successfully!
-            </div>
-  </div>
-</div>  --}}
 
 {{-- ======================================================================================================================== --}}
 

@@ -35,6 +35,8 @@ use App\UserOnlineTest;
 use App\OnlineTest;
 
 
+use Carbon\Carbon;
+use DateTime;
 
 use App\CvData;
 use PDFMerger;
@@ -221,6 +223,18 @@ class MobileUserController extends Controller
 					'validator' => $validator->getMessageBag()->toArray()
 				]);
 			}*/
+
+			// dd($request->toArray());
+
+			$data = date('Y');
+            $passing_year = $requestData['passing_year'];
+            $diff = $data - $passing_year;
+            $age = 18 + $diff;
+
+            $user->age = $age;
+            $user->passing_year = $passing_year;
+
+
 			$user->qualification    = $requestData['qualification'];
 			$user->qualificationType= $requestData['qualification_type'];
 			$user->step2 = $requestData['step'];
@@ -530,6 +544,31 @@ class MobileUserController extends Controller
         $history->recentJob = $user->recentJob; 
         $history->type = 'Recent job'; 
         $history->save();
+
+        $data['user'] = User::find($user->id);
+        return response()->json([
+                'status' => 1,
+                'data' => $data
+        ]);
+  
+    }
+
+
+    //====================================================================================================================================//
+    // Ajax For updating Interested In.
+    // Called from JobSeeker Profile page.
+    //====================================================================================================================================//
+    public function MupdateOrganization(Request $request){
+    	// dd($request->toArray());
+        $user = Auth::user();
+        $user->organHeldTitle = $request->organHeldTitle;
+        $user->save();
+
+        // $history = new History;
+        // $history->user_id = $user->id; 
+        // $history->recentJob = $user->recentJob; 
+        // $history->type = 'Recent job'; 
+        // $history->save();
 
         $data['user'] = User::find($user->id);
         return response()->json([
@@ -1117,7 +1156,7 @@ class MobileUserController extends Controller
                 $attachment->save();
 
                 if ($attachment->type == "pdf") {
-                    $text = Pdf::getText('/var/www/laravel/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
+                    $text = Pdf::getText('/var/www/html/talenttube/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
                     $keywordExtractor = new KeywordExtractor();
                     $result = $keywordExtractor->run($text);
                     $arrayObj = array();
@@ -1145,7 +1184,7 @@ class MobileUserController extends Controller
                     $str = str_replace('/', '//', $attachment->file);
                     $copystr = str_replace(".docx",".pdf",$attachment->name);
                     $copystr = str_replace(".doc",".pdf",$copystr);
-                    $converter = new OfficeConverter('/var/www/laravel/storage/images/user/' .$str);
+                    $converter = new OfficeConverter('/var/www/html/talenttube/storage/images/user/' .$str);
                     $convertedFile = $converter->convertTo($copystr);
                     $text = Pdf::getText($convertedFile);
                     $keywordExtractor = new KeywordExtractor();
@@ -1407,6 +1446,34 @@ class MobileUserController extends Controller
         }
     }
 
+
+
+    //====================================================================================================================================//
+    // Delete user video.
+    // POST Ajax request submitted from profile video area.
+    //====================================================================================================================================//
+    public function mdeleteVideo(Request $request){
+        $user = Auth::user();
+        $video_id = $request->video_id;
+        // dd($video_id);
+        if (!empty($video_id)) {
+            $video = Video::find($video_id);
+            if ($video->user_id == $user->id) {
+
+                // $exists = Storage::disk('user')->exists($video->file);
+                // if ($exists) { Storage::disk('user')->delete($video->file); }
+                $video->deleteFiles();
+
+                $video->delete();
+                $output = array(
+                    'status' => '1',
+                    'message' => 'video Removed.'
+                );
+                return response()->json($output);
+            }
+        }
+    }
+
     //====================================================================================================================================//
     // GET // Job Search/Listing layout.
     //====================================================================================================================================//
@@ -1422,13 +1489,16 @@ class MobileUserController extends Controller
 		}
 
 
+	//====================================================================================================================================//
+    // GET // Job Search/Listing layout.
+    //====================================================================================================================================//
 
 	public function step2Jobs(){
 		$user = Auth::user();
 		//        $data = array();
 		if (!isEmployer($user)){
-						$jobs = Jobs::take(10)->get();
-						return view('mobile.jobs.jobsListstep2', compact('jobs'));
+			$jobs = Jobs::take(10)->get();
+			return view('mobile.jobs.jobsListstep2', compact('jobs'));  // mobile/jobs/jobsListstep2
 		}
 	}
 
@@ -1451,10 +1521,9 @@ class MobileUserController extends Controller
 			$jobs = $jobs->filterJobs($request);
 			// ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
 
-				$data['jobs'] = $jobs;
+			$data['jobs'] = $jobs;
 			//	dd($jobs);
-							return view('mobile.jobs.jobsList', $data);
-						// mobile/jobs/list
+			return view('mobile.jobs.jobsList', $data); // mobile/jobs/list
 		}
 	}
     //====================================================================================================================================//
@@ -1703,7 +1772,7 @@ class MobileUserController extends Controller
 
         $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
-        $query = User::with('profileImage','user_tags')->where('type','user');
+        $query = User::with('profileImage','user_tags')->where('type','user')->Where('step2' , '>=' , '7');
         // $tagsQuery = Tags::get();
         if(!empty($block)){
             $query = $query->whereNotIn('id', $block);
@@ -1714,7 +1783,7 @@ class MobileUserController extends Controller
         // ================================================ Filter by salaryRange. ================================================
 
         if (isset($request->filter_salary) && !empty($request->filter_salary)){
-            $query = $query->where('salaryRange', '>=', $request->filter_salary);
+            $query = $query->where('salaryRange', '=', $request->filter_salary);
         }
 
         // ================================================ Filter by google map location radius.================================================
@@ -1737,6 +1806,45 @@ class MobileUserController extends Controller
                 ->having("distance", $radius_sign, $radius)
                 ->orderBy("distance",'asc');
 
+            }
+        }
+
+        // ================================================ Filter by Age brackets.================================================
+
+        if (isset($request->filter_by_age)) {
+        	// dd(' Value  ');
+            $age = $request->filter_by_age;
+        	if ($age == '18-25') {
+                $query = $query->whereBetween('age',  [18,25]);
+                // dd($query->toSql());
+            }
+            elseif($age == '25-30'){
+                $query = $query->whereBetween('age',  [25,30]);
+            }
+            elseif($age == '30-40'){
+                $query = $query->whereBetween('age',  [30,40]);
+            }
+            elseif($age == '40-54'){
+                $query = $query->whereBetween('age',  [40,54]);
+            }
+            elseif($age == '55+'){
+                $query = $query->where('age', '>=', '55');
+            }
+        	// code...
+        }
+
+        // ================================================ Filter by Age gender.================================================
+
+
+        if (isset($request->filter_by_gender)) {
+        	$gender = $request->filter_by_gender;
+            if ($gender == 'male') {
+                $query = $query->where('title' , '=', 'Mr');
+            }
+            else{
+                $query = $query->whereIn('title' , array("Mrs","Miss","Ms"));
+
+                // $query = $query->where('title' , '=', 'Mrs')->orWhere('title' , '=', 'Miss')->orWhere('title' , '=', 'Ms');
             }
         }
 
@@ -1832,7 +1940,7 @@ class MobileUserController extends Controller
 
         // DB::enableQueryLog();
         // print_r( $query->toSql() );exit;
-        $jobSeekers =  $query->paginate(2);
+        $jobSeekers =  $query->paginate(10);
         // $jobSeekers =  $query->get();
 
 
@@ -1922,7 +2030,7 @@ class MobileUserController extends Controller
         $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
         $industries = $request->filter_industry;
         $qualification_type = $request->filter_qualification_type; 
-        $qualifications = $request->qualification_trade;
+        $qualifications = $request->ja_filter_qualification;
 
         $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
@@ -1932,12 +2040,11 @@ class MobileUserController extends Controller
             $query = $query->whereNotIn('id', $block);
         }
 
-        
 
         // ================================================ Filter by salaryRange. ================================================
 
         if (isset($request->filter_salary) && !empty($request->filter_salary)){
-            $query = $query->where('salaryRange', '>=', $request->filter_salary);
+            $query = $query->where('salaryRange', '=', $request->filter_salary);
         }
 
         // ================================================ Filter by google map location radius.================================================
@@ -1960,6 +2067,46 @@ class MobileUserController extends Controller
                 ->having("distance", $radius_sign, $radius)
                 ->orderBy("distance",'asc');
 
+            }
+        }
+
+
+        // ================================================ Filter by Age brackets.================================================
+
+        if (isset($request->filter_by_age)) {
+        	// dd(' Value  ');
+            $age = $request->filter_by_age;
+            // dd($age);
+        	if ($age == '18-25') {
+                $query = $query->whereBetween('age',  [18,25]);
+                // dd($query->toSql());
+            }
+            elseif($age == '25-30'){
+                $query = $query->whereBetween('age',  [25,30]);
+            }
+            elseif($age == '30-40'){
+                $query = $query->whereBetween('age',  [30,40]);
+            }
+            elseif($age == '40-54'){
+                $query = $query->whereBetween('age',  [40,54]);
+            }
+            else{
+                $query = $query->where('age', '>=', '55');
+            }
+        	// code...
+        }
+
+        // ================================================ Filter by Age gender.================================================
+
+
+        if (isset($request->filter_by_gender)) {
+        	$gender = $request->filter_by_gender;
+        	// dd($gender);
+            if ($gender == 'male') {
+                $query = $query->where('title' , '=', 'Mr');
+            }
+            else{
+                $query = $query->whereIn('title' , array("Mrs","Miss","Ms"));
             }
         }
 
@@ -2189,13 +2336,37 @@ class MobileUserController extends Controller
         $data['user'] = $user;
         $jobSeeker = User::JobSeeker()->where('id',$jobSeekerId)->first();
         $isallowed = False;
-        foreach($user->users as $us){
-            if($us->id == $jobSeeker->id){
+
+
+        // =========================================== Paid employer viewing jobseeker ===========================================
+
+        if ($user->employerStatus == 'paid') {
+            $empExpDate = $user->emp_status_exp;
+            $currentDate = Carbon::now();
+            $datetime1 = new DateTime($empExpDate);
+            $datetime2 = new DateTime($currentDate);
+            // $interval = $datetime1->diff($datetime2);
+            // dd($interval);
+            if ($datetime1 >= $datetime2) {
                 $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
                 $isallowed = True;
                 $data['attachments'] = $attachments;
             }
+            else{
+                $isallowed = False;
+                $user->employerStatus = 'unpaid';
+                $user->save();
+            }
+
         }
+        
+        // foreach($user->users as $us){
+        //     if($us->id == $jobSeeker->id){
+        //         $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
+        //         $isallowed = True;
+        //         $data['attachments'] = $attachments;
+        //     }
+        // }
 
         // check if jobseeker not exist then redirect to jobseeker list.
         if(empty($jobSeeker) || isEmployer($jobSeeker) ){ return redirect(route('jobSeekers')); }
@@ -2298,7 +2469,7 @@ class MobileUserController extends Controller
             $data['onlineTest'] = $onlineTest;
             $duration = $onlineTest->time;
             $data['duration'] = $duration;
-            $UserOnlineTest = UserOnlineTest::where('test_id' ,$job->onlineTest_id )->where('user_id' , $user->id)->first();
+            $UserOnlineTest = UserOnlineTest::where('test_id' ,$job->onlineTest_id )->where('user_id' , $user->id)->where('status','complete' )->first();
             // dd($UserOnlineTest);
             $data['UserOnlineTest'] = $UserOnlineTest;
 
@@ -2813,7 +2984,7 @@ class MobileUserController extends Controller
             $data['title']  = 'Credit';
             $data['user']   =  $user;
             $data['classes_body'] = 'credit';
-            return view('mobile.credit.purchase', $data);
+            return view('mobile.credit.purchase', $data); // mobile/credit/purchase
         }
     }
 
@@ -3630,6 +3801,72 @@ class MobileUserController extends Controller
             }
         }
 
+    }
+
+
+    //====================================================================================================================================//
+    // Making employer paid.
+    //====================================================================================================================================//
+    public function mPremiumAccount(){
+        $user = Auth::user();
+        if(isEmployer($user)){
+
+            $data['title']  = 'Premium Account';
+            $data['user']   =  $user;
+            // $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+
+            $data['classes_body'] = 'credit';
+            // $data['controlsession'] = $controlsession;
+            return view('mobile.credit.premium_account', $data); // premium_account/credit/premium_account
+        }
+    }
+
+    public function addNewLoaction(Request $request) {
+        $rules = array(
+            'location_name' => 'max:100',
+            'location_country' => 'max:100',
+            'location_state' => 'max:100',
+            'location_city' => 'max:100',
+            'location_lat' => 'max:50',
+            'location_long' => 'max:50',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 0,
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        } else {
+
+            $user = Auth::user();
+            $user->location_lat     = $request->location_lat;
+            $user->location_long    = $request->location_long;
+            if($request->location_name == $request->location_city){
+                $user->location = '';
+            }
+            else{
+                $user->location         = $request->location_name;
+            }
+            $user->country = $request->location_country;
+            $user->state = $request->location_state;
+            $user->city = $request->location_city;
+
+
+            try {
+                $user->save();
+                return response()->json([
+                    'status' => 1,
+                    'validator' => 'record Succesfully saved',
+                    'data' => userLocation($user)
+                ]);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 0,
+                    'error' => $e->errorInfo[2]
+                ]);
+            }
+        }
     }
 
 

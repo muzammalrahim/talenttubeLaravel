@@ -33,9 +33,7 @@ use App\Notes;
 use App\History;
 use App\OnlineTest;
 use App\UserOnlineTest;
-
 use App\UserQualification;
-
 use Jenssegers\Agent\Agent;
 use PDFMerger;
 use Spatie\PdfToText\Pdf;
@@ -67,9 +65,20 @@ class SiteUserController extends Controller
 
         // dd($request->ip());
         $user = Auth::user();
-        if ($user->step2 < 8) {
-            return redirect(route('step2User'));
+        if (!isEmployer()) {
+            
+            if ($user->step2 < 8) {
+                if (isMobile()) {
+                return redirect(route('mStep2User'));
+                
+              }
+              else{
+                return redirect(route('step2User'));
+                
+              }
+            }
         }
+        
         if ($request->username ===  $user->username) {
             $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
             $profile_image   = UserGallery::where('user_id', $user->id)->where('status', 1)->where('profile', 1)->first();
@@ -133,7 +142,7 @@ class SiteUserController extends Controller
             if(isMobile()){
                 if(isEmployer()){
                   if(isRequestAjax($request)){
-                    // return view('mobile.user.profile.profile', $data);
+                    return view('mobile.user.profile.profile', $data);
                 }else{
                     return view('mobile.employer.profile', $data); // mobile/employer/profile
                 }

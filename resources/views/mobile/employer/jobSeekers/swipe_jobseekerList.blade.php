@@ -16,7 +16,6 @@
 
     @foreach ($jobSeekers as $js)
 
-    {{-- @dump($js) --}}
 
     <div class="card mb-3 swiper-slide shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
         <div class="card">
@@ -55,7 +54,7 @@
 
             <div class="card-body pt-2">
                 <div class="row jobInfo">
-                    <div class="col-md-6 col-12 videoDiv">
+                    <div class="col-md-6 col-12 videoDiv text-center">
                         <div class="js_profile_video">
                             <div class="js_video_thumb">
 
@@ -83,6 +82,8 @@
 
                     <div class="col-md-6 col-12 text-center">
                         <p> <span class="jobInfoFont">  Recent Job: </span>  {{$js->recentJob}} </p> 
+                        {{-- @dump($js->age) --}}
+
                     </div>
                 </div>
 
@@ -171,3 +172,9 @@
 </script>
 @endif
 
+<style type="text/css">
+    img.img-fluid.imageSizeModal.z-depth-1 {
+    height: 300px;
+}
+.card{overflow: scroll;}
+</style>

@@ -111,17 +111,17 @@
 
             {{-- <th><label>Bulk Pool</label><input name="select_all" value="1" id="cbxp_all" type="checkbox" /></th> --}}
 
-            <th>status</th>
+            <th>Status</th>
             <th>JobSeeker</th>
             <th>Job</th>
             <th>Profile</th>
-            <th>goldstar</th>
+            <th>Goldstar</th>
             {{-- <th>undesirable</th> --}}
-            <th>correspondance</th>
+            <th>Correspondance</th>
             <th>Completed Tests</th>
             <th>Mandatory Testing</th>
-            <th>interview</th>
-            <th>action</th>
+            <th>Interview</th>
+            <th>Action</th>
         </tr>
     </thead>
   </table>

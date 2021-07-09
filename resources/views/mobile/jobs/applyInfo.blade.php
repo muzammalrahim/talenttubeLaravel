@@ -9,7 +9,10 @@
     </div>
 
     <div class="applyJobFormField mb-3">
-        <textarea type="text" id="form79textarea" name="application_description" class="md-textarea form-control" rows="3" placeholder="Answer"></textarea>
+        <textarea type="text" id="field" name="application_description" class="md-textarea form-control" rows="3" placeholder="Answer"></textarea>
+
+
+        <div id="charNum">  150 Character(s) Remaining  </div>
     </div>
 
         @if (!empty($job->questions))
@@ -53,7 +56,7 @@
         @if (!isset($onlineTest))
 
         <div class="fomr_btn act_field text-center">
-            <button class="btn btn-sm btn-primary submitApplication">Submit</button>
+            <a class="btn btn-sm btn-primary submitApplication">Submit</a>
         </div>
 
         @else
@@ -61,6 +64,8 @@
             </div>
 
         @endif
+
+            <div class="error_applyingJob text-danger d-none"></div>
 
         </form>
 
@@ -111,7 +116,14 @@
                      $('#job_apply_form').html(data.message);
 
                 }else {
-                     $('#job_apply_form').html(data.error);
+                    // $('#job_apply_form').html(data.error);
+
+                    $('.error_applyingJob').removeClass('d-none');
+                    $('.error_applyingJob').text(data.error);
+
+                    setTimeout(function(){
+                         $('.error_applyingJob').addClass('d-none');
+                    },5000 );
                 }
             }
         });
@@ -136,7 +148,15 @@
                    $('.onlineTestBox').html(jobApp_id);
 
               }else {
-                   $('#job_apply_form').html(data.error);
+
+                    $('.error_applyingJob').removeClass('d-none');
+                    $('.error_applyingJob').text(data.error);
+
+                    setTimeout(function(){
+                         $('.error_applyingJob').addClass('d-none');
+                    },5000 );
+                    
+                   // $('#job_apply_form').html(data.error);
                    $('.onlineTestBox').addClass('hide_it');
               }
           }
@@ -156,15 +176,26 @@
         data: applyFormData,
         success: function(data){
             // $('.submitApplication').html('Submit').prop('disabled',false);
-            console.log(' data ', data );
+            console.log(' data ', 'Hassaan is here' );
             if (data.status == 1){
                  $('#job_apply_form').html(data.message);
+                 // $('.error_applyingJob').html(data.message).fadeOut('3000');
+
                  var link = parseInt(data.userTest_id);
                  var jobApp_id = '<a class = "mt10" href = "'+base_url+'/m/mProceed/test/'+link+'"> Click Here to Complete test  </a>';
                  $('.onlineTestBox').html(jobApp_id);
 
             }else {
-                 $('#job_apply_form').html(data.error);
+                 // $('#job_apply_form').html(data.error);
+
+                 console.log(data.error);
+                 $('.error_applyingJob').removeClass('d-none');
+                 $('.error_applyingJob').text(data.error);
+
+                 setTimeout(function(){
+                     $('.error_applyingJob').addClass('d-none');
+                 },5000 );
+
                  $('.onlineTestBox').addClass('hide_it');
             }
         }
@@ -187,13 +218,18 @@
             $('.submitApplication').html('Submit').prop('disabled',false);
             console.log(' data ', data );
             if (data.status == 1){
-                 $('#job_apply_form').html(data.message);
-                 // $('.onlineTestBox').addClass('hide_it');
+                 // $('.error_applyingJob').html(data.message).fadeOut('3000');
+                 $('.onlineTestBox').addClass('hide_it');
                  var jobApp_id = '<p class = "mt10" > Your application has been submitted, you can complete your test later </p';
                  $('.onlineTestBox').html(jobApp_id);
 
             }else {
-                 $('#job_apply_form').html(data.error);
+                 $('.error_applyingJob').removeClass('d-none');
+                 $('.error_applyingJob').html(data.error);
+                 setTimeout(function(){
+                     $('.error_applyingJob').addClass('d-none');
+                 },5000 );
+
                  $('.onlineTestBox').addClass('hide_it');
             }
         }
@@ -205,6 +241,17 @@
     
 // });
 
+
+$('#field').keyup(function () {
+  var max = 150;
+  var len = $(this).val().length;
+  if (len >= max) {
+    $('#charNum').text(' you have reached the limit');
+  } else {
+    var char = max - len;
+    $('#charNum').text(char + ' characters left');
+  }
+});
 
 
 </script>

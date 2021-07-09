@@ -34,18 +34,16 @@
 					</select>
 				</div>
 
-
-
 				<!-- Last Name -->
 				{{-- bl_location --}}
-				{{-- <div class="md-form bgShad">
+				<div class="md-form bgShad">
 
 				<input type="text" class="form-control" name="location_search" id="location_search" placeholder="Type a location">
 				<div class="input-group-append">
 					<button id="location_search_load" class="btn btn-outline-secondary location_search_btn waves-effect waves-light btn-sm " type="button">Search</button>
 				</div>
-				<label for="location_search">Location</label>
 
+				<label for="location_search">Location</label>
 				<div class="location_latlong d-none w100">
 					<input type="text" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
 					<input type="text" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
@@ -55,7 +53,7 @@
 					<input type="hidden" name="location_state" id="location_state"  value="">
 					<input type="hidden" name="location_country" id="location_country"  value="">
 				</div>
-				</div> --}}
+				</div>
 				{{-- bl_location --}}
 
 
@@ -103,7 +101,9 @@
 				<div class="md-form">
 					<div class="form-check">
 						<input type="checkbox" name="privacy_policy" class="form-check-input" id="field_privacy_policy" required>
-						<label class="form-check-label" for="field_privacy_policy">I agree to the Terms and Privacy Policy and confirm I am at least 18 years of age </label>
+						<label class="form-check-label" for="field_privacy_policy">
+							I agree to the  <a href="{{ route('mPrivacy') }}" target="_blank">terms, conditions & Privacy Policy  </a> and confirm I am at least 18 years of age or over
+						</label>
 						<div class="invalid-feedback">You must agree before submitting.</div>
 					</div>
 				</div>

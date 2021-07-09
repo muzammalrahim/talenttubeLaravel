@@ -28,14 +28,11 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	// User
 	Route::get('step2', 'Mobile\MobileUserController@step2User')->name('mStep2User');
 	Route::post('step2', 'Mobile\MobileUserController@Step2');
-
 	// video user/employer
 	Route::post('ajax/uploadVideo', 'Mobile\MobileUserController@uploadVideo')->name('mUploadVideo');
 	Route::post('ajax/uploadUserGallery', 'Mobile\MobileUserController@uploadUserGallery');
 
-
 	// ========================================== Added by Hassan ==========================================
-    
 
     // InterviewInvitaionByEmployerToJobseeker
     Route::post('ajax/interview/template','Mobile\MobileEmployerController@MinterviewTemplate')->name('MinterviewTemplate');
@@ -76,7 +73,11 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	Route::get('Mlike',         'Mobile\MobileUserController@MlikeList')->name('MlikeList');
 	Route::get('Mmutual-likes',         'Mobile\MobileUserController@MmutualLikes')->name('MmutualLikes');
 	Route::get('MupdateUserPersonalSetting', 'Mobile\MobileUserController@MupdateUserPersonalSetting')->name('MupdateUserPersonalSetting');
-	Route::get('Mcredit',       'Mobile\MobileUserController@Mcredit')->name('Mcredit');
+	
+    Route::get('premium-account',       'Mobile\MobileUserController@mPremiumAccount')->name('mPremiumAccount');
+
+	// Route::get('Mcredit',       'Mobile\MobileUserController@Mcredit')->name('Mcredit');
+
 	Route::get('Mjobs/{id}', 'Mobile\MobileUserController@MjobDetail')->name('MjobDetail');
 	Route::get('Mjobsedit/{id}', 'Mobile\MobileUserController@MemployerJobsedit')->name('Mjobedit');
 	Route::get('MjobSeekers/{id}', 'Mobile\MobileUserController@MjobSeekersInfo')->name('MjobSeekersInfo');
@@ -99,11 +100,15 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	// ================================================= Job Seeker =================================================
 	Route::post('ajax/MupdateInterested_in', 'Mobile\MobileUserController@MupdateInterested_in')->name('MupdateInterested_in');
 	Route::post('ajax/MupdateRecentJob', 'Mobile\MobileUserController@MupdateRecentJob')->name('MupdateRecentJob');
+	Route::post('ajax/MupdateOrganization', 'Mobile\MobileUserController@MupdateOrganization')->name('MupdateOrganization');
 	Route::post('ajax/MupdateSalaryRange', 'Mobile\MobileUserController@MupdateSalaryRange')->name('MupdateSalaryRange');
 	Route::post('ajax/Mabout_me', 'Mobile\MobileUserController@Mabout_me')->name('Mabout_me');
 	Route::post('ajax/MupdateQualification', 'Mobile\MobileUserController@MupdateQualification')->name('MupdateQualification');
 	Route::post('ajax/MupdateIndustryExperience', 'Mobile\MobileUserController@MupdateIndustryExperience')->name('MupdateIndustryExperience');
 	Route::post('ajax/MupdateQuestions', 'Mobile\MobileUserController@MupdateQuestions');
+
+    Route::post('ajax/addNewLocation', 'Mobile\MobileUserController@addNewLoaction');
+	
 
 	//================================================= Ajax for liking/Blocking employer =================================================
 
@@ -117,6 +122,9 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	Route::post('ajax/MupdateInterested_inEmp', 'Mobile\MobileEmployerController@MupdateInterested_inEmp')->name('MupdateInterested_inEmp');
 	Route::post('ajax/Mabout_meEmp', 'Mobile\MobileEmployerController@Mabout_meEmp')->name('Mabout_meEmp');
 	Route::post('ajax/MupdateQuestionsEmp', 'Mobile\MobileEmployerController@MupdateQuestionsEmp');
+
+
+
 
 	//================================================= Ajax for liking/Blocking JS =================================================
 
@@ -183,8 +191,6 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 
     // =============================================== Cross Reference =============================================== 
 
-
-
 	// Send notification
 
 	Route::post('ajax/booking/Mmanualsendnotification',    'Mobile\InterviewController@Mmanualsendnotification')->name('Mmanualsendnotification');
@@ -236,6 +242,8 @@ Route::post('ajax/userUploadResume', 'Mobile\MobileUserController@userUploadResu
 Route::post('ajax/MUserUploadResume', 'Mobile\MobileUserController@MUserUploadResume')->name('MUserUploadResume');
 Route::get('ajax/MremoveAttachment', 'Mobile\MobileUserController@MremoveAttachment')->name('MremoveAttachment');
 
+Route::post('ajax/mdeleteVideo', 'Mobile\MobileUserController@mdeleteVideo')->name('mdeleteVideo');
+
 // Tags
 Route::get('ajax/getTags/{category}/{offset?}', 'Site\SiteUserController@getTags');
 Route::get('ajax/searchTags', 'Site\SiteUserController@searchTags')->name('mSearchTags');
@@ -256,6 +264,7 @@ Route::post('ajax/booking/MdeleteBooking',    'Mobile\MobileHomeController@Mdele
 Route::post('ajax/booking/MsendEmailEmployer',    'Mobile\MobileHomeController@MsendEmailEmployer')->name('MsendEmailEmployer');
 Route::post('ajax/MrescheduleSlot',    'Mobile\MobileHomeController@MrescheduleSlot')->name('MrescheduleSlot');
 
+Route::get('privacy-policy', 'Mobile\MobileHomeController@mPrivacy')->name('mPrivacy');
 
 
 });

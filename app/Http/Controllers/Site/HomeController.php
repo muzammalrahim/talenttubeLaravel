@@ -143,14 +143,28 @@ class HomeController extends Controller {
                     // check if its employee or user.
                     if (isEmployer()){
 
-
     					// check if employer has answer the initial question in step2.
     					if($agent->isMobile()){
+
                             $date = date('Y-m-d H:i:s');
                             $user->last_login = $date;
+                            // $user->step2 = 4;
                             $user->save();
-    						$redirect_url = ($user->step2 >3)?(route('Memployers')):(route('mStep2Employer'));
-                            Mail::to($user->email)->send(new complete_account_steps($user->name));
+    						// $redirect_url = ($user->step2 > 3)?(route('mEmployerProfile')):(route('mStep2Employer'));
+                            
+                            $redirect_url = '';
+                            if ($user->step2 > 3) {
+                                $redirect_url = route('mEmployerProfile');
+                            }
+                            else{
+                                $redirect_url = route('mStep2Employer');
+                                Mail::to($user->email)->send(new complete_account_steps($user->name));
+                                
+                            }
+
+                            // dd($redirect_url);
+
+                            // Mail::to($user->email)->send(new complete_account_steps($user->name));
                             
     						return array(
     							'status' => 1,
@@ -159,12 +173,24 @@ class HomeController extends Controller {
     						);
     					}
 
+                        // dd($user->step2);
                         $date = date('Y-m-d H:i:s');
                         $user->last_login = $date;
                         $user->save();
 
-                        $redirect_url = ($user->step2 >3)?(route('employerProfile')):(route('step2Employer'));
-                        Mail::to($user->email)->send(new complete_account_steps($user->name));
+                        // $redirect_url = ($user->step2 >3)?(route('employerProfile')):(route('step2Employer'));
+                        
+                        $redirect_url = '';
+                        if ($user->step2 >3) {
+                            $redirect_url = route('employerProfile');
+
+                        } 
+                        else{
+                            $redirect_url = route('step2Employer');
+                            //(route('employerProfile')):(route('step2Employer'));
+                            Mail::to($user->email)->send(new complete_account_steps($user->name));
+
+                        }
 
                         return array(
                             'status'    => 1,

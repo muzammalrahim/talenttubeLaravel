@@ -74,7 +74,11 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function index(Request $request){
         $user = Auth::user();
-
+        if (isMobile()) {
+            if ($user->step2 < 3) {
+                return redirect(route('mStep2Employer'));
+            }
+        }
         if ($user->step2 < 3) {
             return redirect(route('step2Employer'));
         }
@@ -130,7 +134,7 @@ class EmployerController extends Controller {
         $data['classes_body'] = 'empStep2';
 		// $data['content'] = 'this is page content';
 		if($this->agent->isMobile()){
-		  return view('mobile.register.employer_step2', $data);
+		  return view('mobile.register.employer_step2', $data);  // mobile/register/employer_step2
         }
         return view('site.register.employer_step2', $data);
 
@@ -675,7 +679,6 @@ class EmployerController extends Controller {
         // dd($tags);
         // $userTags = $user->tags;
 
-
         // dd($likeUsers);
         $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = null; // $jobSeekers;
@@ -728,7 +731,7 @@ class EmployerController extends Controller {
 
         $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
-        $query = User::with('profileImage','user_tags')->where('type','user');
+        $query = User::with('profileImage','user_tags')->where('type','user')->Where('step2' , '>=' , '7');
         // $tagsQuery = Tags::get();
         if(!empty($block)){
             $query = $query->whereNotIn('id', $block);
@@ -738,7 +741,7 @@ class EmployerController extends Controller {
         // ================================================ Filter by salaryRange. ================================================
 
         if (isset($request->filter_salary) && !empty($request->filter_salary)){
-            $query = $query->where('salaryRange', '>=', $request->filter_salary);
+            $query = $query->where('salaryRange', '=', $request->filter_salary);
           }
 
         // ================================================ Filter by google map location radius.================================================
@@ -878,7 +881,9 @@ class EmployerController extends Controller {
                 $query = $query->where('title' , '=', 'Mr');
             }
             else{
-                $query = $query->where('title' , '=', 'Mrs')->orWhere('title' , '=', 'Miss')->orWhere('title' , '=', 'Ms');
+                $query = $query->whereIn('title' , array("Mrs","Miss","Ms"));
+                
+                // $query = $query->where('title' , '=', 'Mrs')->orWhere('title' , '=', 'Miss')->orWhere('title' , '=', 'Ms');
             }
         }
 
@@ -1116,8 +1121,15 @@ class EmployerController extends Controller {
                 $UserInterview->status   = 'pending';
                 $UserInterview->hide   = 'no';
                 $UserInterview->url   = generateRandomString();
+
+                if (isAdmin($user)) {
+                    $UserInterview->interview_type = 'Correspondance';
+                    // code...
+                }
+                
                 $UserInterview->save();
 
+                
 
                 $history = new History;
                 $history->user_id = $UserInterview->user_id; 
@@ -1237,6 +1249,7 @@ class EmployerController extends Controller {
                 $UserInterview->user_id   = $data['user_id'];
                 $UserInterview->status   = 'Interview Confirmed';
                 $UserInterview->hide   = 'no';
+                
                 $UserInterview->url   = generateRandomString();
                 $UserInterview->save();
 
@@ -1326,7 +1339,7 @@ class EmployerController extends Controller {
 
             $data['classes_body'] = 'credit';
             $data['controlsession'] = $controlsession;
-            return view('site.credit.premiumAccount', $data);
+            return view('site.credit.premiumAccount', $data); // site/credit/premiumAccount
         }
     }
 

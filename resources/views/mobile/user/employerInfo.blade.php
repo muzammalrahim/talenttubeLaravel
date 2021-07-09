@@ -6,8 +6,8 @@
 
 <h6 class="h6 jobAppH6">Employer Detail Page</h6>
 
-{{-- @if ($employers->count() > 0) --}}
-{{-- @foreach ($employers as $jobs) --}}
+    {{-- @if ($employers->count() > 0) --}}
+    {{-- @foreach ($employers as $jobs) --}}
 
     {{-- @dump($empquestion) --}}
 
@@ -17,41 +17,33 @@
         <div class="card">
 
             <div class="card-header jobInfoFont jobAppHeader p-2">Company :
-                <span class="jobInfoFont">{{$employer->name}}</span>
+                <span class="jobInfoFont">{{$employer->company}}</span>
+                
+                <div class="row p-0 m-0">
+                        <span class="jobInfoFont">Location : </span>
+                    <div class="jobDetail ml-1 mt-1">{{$employer->city}},  {{$employer->state}}, {{$employer->country}}</div>
+                </div>
             </div>
 
-{{-- ============================================ Card Body ============================================ --}}
+
+            {{-- ============================================ Card Body ============================================ --}}
 
             <div class="card-body jobAppBody pt-2">
 
                 <div class="row jobInfo">
 
                     <div class="col-4 p-0">
-
-
-                        {{-- @dump($employer_video); --}}
-
-                   {{--      <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" height="100px" width="100px"> --}}
-
-
-                    @php
-                    $profile_image  = asset('images/site/icons/nophoto.jpg');
-                    $profile_image_gallery    = $employer->profileImage()->first();
-
-                    // dump($profile_image_gallery);
-
-                        if ($profile_image_gallery) {
-                                    // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
-
-                                    $profile_image   = assetGallery2($profile_image_gallery,'small');
-                                        // dump($profile_image);
-
-                        }
-                    @endphp
-
-                    <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}">
-
-
+                        @php
+                        $profile_image  = asset('images/site/icons/nophoto.jpg');
+                        $profile_image_gallery    = $employer->profileImage()->first();
+                        // dump($profile_image_gallery);
+                            if ($profile_image_gallery) {
+                                // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+                                $profile_image   = assetGallery2($profile_image_gallery,'small');
+                                            // dump($profile_image);
+                            }
+                        @endphp
+                        <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}">
                     </div>
 
                     <div class="col p-0 pl-3">
@@ -61,12 +53,7 @@
                         {{$employer->interested_in}}
                         </div>
 
-                        <div class="mt-3">
-                            <span class="jobInfoFont">Location</span>
-                        </div>
-                        {{-- <div>
-                        {{($employer->GeoCity->city_title)}}, {{($employer->GeoState->state_title)}},{{($employer->GeoCountry->country_title)}}
-                        </div> --}}
+                        
 
                     </div>
 
@@ -211,7 +198,7 @@ $jobType = 'Part time';
 
                     <div class="row p-0 m-0">
                         <span class="jobInfoFont">Employer : </span>
-                            <span class="jobDetail" style="margin: 0.2rem 0 0 0.2rem;"> {{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</span>
+                            <span class="jobDetail" style="margin: 0.2rem 0 0 0.2rem;"> {{ $job->jobEmployer->company}}</span>
                     </div>
 
             </div>
@@ -220,9 +207,16 @@ $jobType = 'Part time';
 
                 <div class="row jobInfo">
 
-                    <div class="col-4 p-0">
+                    <div class="col-4 p-0 mr-3">
 
-                       {{--  <img class="img-fluid z-depth-1" src="https://media-exp1.licdn.com/dms/image/C5103AQHK0mH7N_EvGg/profile-displayphoto-shrink_200_200/0?e=1601510400&v=beta&t=mxpoqv7XzDVLr_ACQKTkPsIKa5wSLg7JMke622gyR1U" style="height:110px;"> --}}
+                        <div class="companyLogo">
+                            @php
+                                $user_gallery  =  $job->jobEmployerLogo;
+                                $profile_image =  !empty($user_gallery)?(assetGallery2($user_gallery,'small')):(asset('images/site/icons/nophoto.jpg'));
+                            @endphp
+                            <img class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
+                        </div>
+
 
                     </div>
 
@@ -245,13 +239,6 @@ $jobType = 'Part time';
                                 </div>
                             @endforeach
                         @endif
-                        </div>
-                        <div class="mt-2">
-                            <span class="jobInfoFont">Job Type</span>
-                        </div>
-
-                        <div>
-                            {{$jobType}}
                         </div>
 
                     </div>
@@ -276,15 +263,16 @@ $jobType = 'Part time';
 
                     </div>
 
+                    <div class="p-0 float-right mr-2"><span>Job Type</span><br>
+                        {{$jobType}}
+                    </div>
+
                 </div>
                 <div class="card-footer row p-0 mt-3">
                     <div class="col p-0">
                         <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" href="{{route('MjobDetail', ['id' => $job->id]) }}">Detail</a>
                     </div>
                     <div class="float-right">
-
-                        {{-- <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}" data-toggle="modal" data-target="#modalJobApply" >Apply</a> --}}
-
                         <a class="jobApplyBtn graybtn jbtn btn btn-sm btn-primary mr-0 btn-xs" job-id ="{{$job->id}}" job-title="{{$job->title}}">Apply</a>
                     </div>
 
@@ -404,7 +392,16 @@ $jobType = 'Part time';
                       @foreach($empquestion as $qk => $question)
                         <div>
                           <p class="m-0">{{$question}} </p>
-                           <p class="QuestionsKeyPTag my-1"><b>{{$userQuestions[$qk]}}</b></p>
+                           <p class="QuestionsKeyPTag my-1">
+                                <b>
+                                    @if ($userQuestions[$qk] == 'yes')
+                                        Yes
+                                        @else
+                                        No
+                                    @endif
+                                    {{-- {{$userQuestions[$qk]}} --}}
+                                </b>
+                            </p>
                         </div>
                       @endforeach
                   @endif

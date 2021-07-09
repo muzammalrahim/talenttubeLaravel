@@ -10,7 +10,12 @@ $userQuestions = !empty($js->questions)?(json_decode($js->questions, true)):(arr
     {{($empq)}}
         <b><p>
             @if(!empty($userQuestions[$qk]))
-             {{$userQuestions[$qk]}}
+                @if ($userQuestions[$qk] == 'yes')
+                    yes
+                    @else
+                    No
+                @endif
+             {{-- {{$userQuestions[$qk]}} --}}
             @elseif(empty($userQuestions[$qk]))
                 {{'Not Answered'}}
             @endif
