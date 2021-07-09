@@ -1830,8 +1830,8 @@ jQuery(document).ready(function() {
                 else if(country)
                     address = country;
 
-                //  if((place) && (place.name))
-                //     address = place.name + ',' + address;
+                    //  if((place) && (place.name))
+                    //     address = place.name + ',' + address;
 
                     // console.log(' reverseGeocode place ', place);
                     // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country );

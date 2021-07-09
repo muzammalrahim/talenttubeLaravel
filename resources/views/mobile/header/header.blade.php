@@ -233,7 +233,7 @@
 
           {{-- <a class="nav-link"><i class="far fa-comments"></i> <span class="clearfix d-none d-sm-inline-block">Support</span></a> --}}
           @if (isEmployer($user))
-              <li class="credits_balans_li mr-2"><a class="credits_balans {{(request()->is('m/Mcredit'))?'active':''}}" id="credits_balans_header" href="{{route('Mcredit')}}">{{($user->credit)?($user->credit):0}} credits</a></li>
+              <li class="credits_balans_li mr-2"><a class="credits_balans {{(request()->is('m/premium-account'))?'active':''}}" id="credits_balans_header" href="{{route('mPremiumAccount')}}"> Premium Account</a></li>
               <li><a href="{{route('employerProfile')}} {{(request()->is('m/employerProfile'))?'active':''}}"><span>Profile</span></a></li>
           @else
               <li><a href="{{route('profile')}}"><span class="jobSeekerProfileHeader">Profile</span></a></li>

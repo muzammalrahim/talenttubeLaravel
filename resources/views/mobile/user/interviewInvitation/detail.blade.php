@@ -8,13 +8,6 @@
 
 @section('content')
 
-
-
-
-
-
-
-
 <div class="head icon_head_browse_matches">
 
   <h6 class="h6 jobAppH6">Respond to Interview</h6>
@@ -31,7 +24,7 @@
       <h3> <b> {{$UserInterview->js->name}} </b> has not accepted your interview proposal yet. </h3>
     @else
 
-    @include('mobile.employer.interviewInvitation.acceptInterview')
+    @include('mobile.employer.interviewInvitation.acceptInterview') {{-- mobile/employer/interviewInvitation/acceptInterview --}}
 
 
     @endif

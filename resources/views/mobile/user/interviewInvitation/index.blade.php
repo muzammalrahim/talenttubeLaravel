@@ -15,10 +15,12 @@
 
   <h6 class="h6 jobAppH6">Received Interview Invitations</h6>
 
-  <div class="font11 my-3"><a href="{{ route('MunhideInterviews') }}" class="unhideInterviews"> Click here to Un-Hide your hidden interviews </a> </div>
 
 
   @if ($Interviews_booking->count() > 0)
+
+  <div class="font11 my-3"><a href="{{ route('MunhideInterviews') }}" class="unhideInterviews"> Click here to Un-Hide your hidden interviews </a> </div>
+  
   @foreach ($Interviews_booking   as $Int_booking)
 
   <div class="card mb-3 interviewBookingsRow_{{$Int_booking->id}}">
@@ -73,7 +75,7 @@
 
 @endforeach  
 @else
-<h3> You have not received any interview invitation yet.</h3>
+<p> You have not received any interview invitation yet.</p>
 @endif
 
 <div class="cl"></div>

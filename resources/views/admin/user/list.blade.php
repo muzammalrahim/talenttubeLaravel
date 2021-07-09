@@ -57,14 +57,14 @@
             <th><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th>
             <th>First Name</th>
             <th>Last Name</th>
-            <th>city</th>
-            <th>email</th>
-            <th>phone</th>
-            <th>created_at</th>
-            <th>profile</th>
+            <th>City</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Created At</th>
+            <th>Profile</th>
             <th>Video</th>
             <th>Resume</th>
-            <th>action</th>
+            <th>Action</th>
 
         </tr>
     </thead>

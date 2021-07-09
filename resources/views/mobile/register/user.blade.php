@@ -16,13 +16,13 @@
 <!-- main -->
 <div class="main  ">
 	<div class="homeBg">
-			<div class="shadeBg">
-                <div class="wrapper">
-                    @include('mobile.header.header1')
-				</div>
-				@include('mobile.register.user_step1')  {{-- mobile/register/user_step1 --}}
+		<div class="shadeBg">
+            <div class="wrapper">
+                @include('mobile.header.header1')
 			</div>
-			@include('mobile.home.loginPopup') 
+			@include('mobile.register.user_step1')  {{-- mobile/register/user_step1 --}}
+		</div>
+		@include('mobile.home.loginPopup') 
 	</div>
 
 	{{-- @include('site.home.login') --}}
@@ -38,6 +38,8 @@
 
 @section('custom_js')
 <script type="text/javascript" src="{{ asset('js/mobile/mjoin.js') }}"></script>
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
+
 {{-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script> --}}
 <script type="text/javascript">
 //====================================================================================================================================//
@@ -142,17 +144,32 @@ jQuery(document).ready(function() {
                     }
                 }
             
-                if((city) && (state) && (country))
-                    address = city + ", " + state + ", " + country;
-                else if((city) && (state))
-                    address = city + ", " + state;
-                else if((state) && (country))
-                    address = state + ", " + country;
-                else if(country)
-                    address = country;
+                // if((city) && (state) && (country))
+                //     address = city + ", " + state + ", " + country;
+                // else if((city) && (state))
+                //     address = city + ", " + state;
+                // else if((state) && (country))
+                //     address = state + ", " + country;
+                // else if(country)
+                //     address = country;
 
-                 if((place) && (place.name))
-                    address = place.name + ',' + address;
+                //  if((place) && (place.name))
+                //     address = place.name + ',' + address;
+
+
+                if((city) && (state) && (country))
+                 address = city + ", " + state + ", " + country;
+             else if((city) && (state))
+                 address = city + ", " + state;
+             else if((state) && (country))
+                 address = state + ", " + country;
+             else if(country)
+                 address = country;
+
+              if((place) && (place.name) && (place.name != city))
+                 address = place.name + ',' + address;
+
+             
 
                     // console.log(' reverseGeocode place ', place); 
                     // console.log(' reverseGeocode city/state/country = ', city,'/',state,'/',country ); 

@@ -79,8 +79,6 @@ $(document).on('click','.jobs_pagination .page-item .page-link',function(e){
             }
         });
 
-
-
   });
 
 // ======================================== Apply For Job Js and Ajax end ========================================

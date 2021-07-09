@@ -31,21 +31,21 @@
 <table class="table table-bordered text-center cbxDataTable" id="dataTable">
 
 	<thead>
-	    <tr style = "text-align: center">
-	        <th>ID</th>
-          <th>Job Seeker</th>
-          <th>Ref-Type</th>
-          <th>Ref-Status</th>
+        <tr style = "text-align: center">
+            <th>ID</th>
+            <th>Job Seeker</th>
+            <th>Ref-Type</th>
+            <th>Ref-Status</th>
 	        <th>Ref-Email</th>
-          <th>Js-IP</th>
+            <th>Js-IP</th>
 	        <th>Ref-IP</th>
-          <th>JS Browser</th>
+            <th>JS Browser</th>
 	        <th>Referee Browser</th>
-          <th>Js Sytem</th>
+            <th>Js Sytem</th>
 	        <th>Ref-Sytem</th>
 	        {{-- <th>Url</th> --}}
 	        {{-- <th>Created_at</th> --}}
-	        <th>action</th>
+	        <th>Action</th>
 
 	    </tr>
 	</thead>

@@ -28,6 +28,9 @@
       <link rel="stylesheet"href="https://unpkg.com/swiper/swiper-bundle.min.css"/>
       <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
+      <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
+
+
       @yield('custom_css')
 
 </head>

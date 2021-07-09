@@ -451,8 +451,7 @@ class MobileEmployerController extends Controller
         $data['title'] = 'Interview Invitation';
         $data['Interviews_booking'] = $Interviews_booking ;
         $data['classes_body'] = 'Interviews';
-        return view('mobile.user.interviewInvitation.index', $data);
-        // mobile/user/interviewInvitation/index
+        return view('mobile.user.interviewInvitation.index', $data); // mobile/user/interviewInvitation/index
     }
 
 

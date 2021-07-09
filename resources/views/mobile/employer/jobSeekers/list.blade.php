@@ -38,7 +38,7 @@
 
                     <div class="col p-0 pl-3">
                         <div class="jobInfoFont">Recent Job</div>
-                        <div> {{$js->recentJob}} </div>
+                        <div><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}} </b> </div>
 
                         {{-- <div class="jobInfoFont mt-2">Interested In</div>
                         <div>

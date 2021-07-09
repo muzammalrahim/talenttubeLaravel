@@ -11,7 +11,7 @@
 		
 	</p>
 
-	Click <a href="{{ route('homepage') }}"> here </a> to complete profile.
+	Click <a href="{{ route('homepage') }}" target="_blank"> {{ route('homepage') }} </a> to complete profile.
 	<p> Regards,</p>
 	<p> <b>The Talent Tube Team</b></p>
 

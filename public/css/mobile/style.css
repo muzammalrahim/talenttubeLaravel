@@ -137,7 +137,7 @@ color: white;
 }
 .jobDetail{
 	font-size: 11px !important;
-	color: black !important;
+	/*color: black !important;*/
 }
 
 div.row.jobInfo>.col.jobInfo {
@@ -377,3 +377,9 @@ span.attach_title {color: white;display: block;/* margin: 4px; */padding: 6px 4p
     align-items: center;
     color: var(--swiper-navigation-color,var(--swiper-theme-color));
 }
+
+.about_me{
+    font-weight: bold;
+    color: black !important;
+}
+.text-underline{text-decoration: underline;}

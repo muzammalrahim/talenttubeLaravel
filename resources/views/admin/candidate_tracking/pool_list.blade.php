@@ -94,7 +94,7 @@
             {{-- <th>Email</th> --}}
             {{-- <th>Phone</th> --}}
             {{-- <th>Profile</th> --}}
-            <th>action</th>
+            <th>Action</th>
 
         </tr>
     </thead>

@@ -24,13 +24,12 @@ $js = $jobSeeker;
 		$profile_image  = asset('images/site/icons/nophoto.jpg');
 		$profile_image_gallery    = $js->profileImage()->first();
 
-		// dump($profile_image_gallery);
+		   // dump($profile_image_gallery);
 
 			if ($profile_image_gallery) {
-						// $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
-
-						$profile_image   = assetGallery2($profile_image_gallery,'small');
-							// dump($profile_image);
+				// $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+				$profile_image   = assetGallery2($profile_image_gallery,'small');
+				// dump($profile_image);
 			}
 		@endphp
 
@@ -49,9 +48,9 @@ $js = $jobSeeker;
                 </div>
                 <div class="col p-0 pl-3">
                     <div class="jobInfoFont">Recent Job</div>
-                    <div>
-                    {{$js->recentJob}}
-                    </div>
+                    {{-- <div>{{$js->recentJob}}</div> --}}
+                    <div><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}} </b> </div>
+                    
                     <div class="jobInfoFont mt-2">Salary Range</div>
                     <div>
                     {{getSalariesRangeLavel($js->salaryRange)}}
@@ -71,63 +70,45 @@ $js = $jobSeeker;
             </div>
             <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
 
-            {{-- <div class="row p-0">
-                <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Qualification</div>
-            </div>
-
-            @php
-             $qualification_names =  getQualificationNames($js->qualification)
-            @endphp
-
-             @if(!empty($qualification_names))
-                @foreach ($qualification_names as $qnKey => $qnValue)
-
-            <p class="card-text jobDetail row mb-1 qualification dblock">{{$qnValue}}</p>
-
-
-                @endforeach
-             @endif --}}
-
+    
              <div class="row p-0">
                     <span class="jobInfoFont">Qualification:</span>
                 </div>
-                    <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
-                                    <span class="qualifTypeSpan">{{$js->qualificationType}}</span>
-                    </div>
-                    {{-- {{implode(', ', getQualificationNames($js->qualification))}} --}}
+
+                <div class="jobDetail"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
+                    <span class="qualifTypeSpan">{{$js->qualificationType}}</span>
+                </div>
+                
                 @php
-                            $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
+                    $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
                 @endphp
                     @if(!empty($qualificationsData))
-                                @foreach($qualificationsData as $qualification)
-                                            <div class="jobDetail">
-                                                            <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
-                                            </div>
-                                @endforeach
+                        @foreach($qualificationsData as $qualification)
+                            <div class="jobDetail">
+                                <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
+                            </div>
+                        @endforeach
                     @endif
 
 
              <div class="row p-0">
                 <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Industry Expereience</div>
             </div>
-            {{-- <div class="js_interested js_field"> --}}
-                {{-- <span class="js_label">Industry Experience:</span> --}}
-                    @if(isset($js->industry_experience))
-                    @foreach ($js->industry_experience as $ind)
-                         <p class="card-text jobDetail row mb-1 qualification dblock">{{getIndustryName($ind)}} </p>
-                    @endforeach
-                    @endif
-            {{-- </div> --}}
 
-            {{-- <p class="card-text jobDetail row mb-1 qualification dblock">{{$qnValue}}</p> --}}
+            @if(isset($js->industry_experience))
+            @foreach ($js->industry_experience as $ind)
+                 <p class="card-text jobDetail row mb-1 qualification dblock">{{getIndustryName($ind)}} </p>
+            @endforeach
+            @endif
+
 
 
         </div>
 
-{{-- ============================================ Card Body end ============================================ --}}
+        {{-- ============================================ Card Body end ============================================ --}}
 
 
-{{-- ============================================ Card Footer ============================================ --}}
+        {{-- ============================================ Card Footer ============================================ --}}
 
         <div class="card-footer text-muted jobAppFooter p-1">
                 <div class="float-right">
@@ -147,7 +128,7 @@ $js = $jobSeeker;
                 </div>
         </div>
 
-{{-- ============================================ Card Footer end ============================================ --}}
+        {{-- ============================================ Card Footer end ============================================ --}}
 
 
     </div>
@@ -235,35 +216,33 @@ $js = $jobSeeker;
             {{-- New  --}}
             @if($isallowed)
 
-        {{-- private area --}}
+            {{-- private area --}}
             <span class="prvate-section text-dark">
                 <div class="title_private_photos" style="margin-bottom: 5px;">
                     Resume &amp; Contact Details
                 </div>
 
                 <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
-                    <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
-                    <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
+                    <li><span class="basic_info"></span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
+                    <li><span class="basic_info"></span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
+                    <li><span class="basic_info"></span><span id="info_looking_for_ages">First Name : {{$js->name}}</span></li>
+                    <li><span class="basic_info"></span><span id="info_looking_for_ages">Last Name : {{$js->surname}}</span></li>
                     {{-- <li> <a class="btn violet view-resume" target="_blank" style="" href="/talenttube/_files/resumeUpload/3687_Pimmys logo.pdf">View Resume</a></li> --}}
                 </ul>
             </span>
 
                 <br>
 
-                <div class="private_attachments text-dark display-flex">
-                    @foreach ($attachments as $attachment)
-
-                        {{-- {{asset('images/user/'.$attachment->file)}} --}}
-
-                        <div class="attachment_{{$attachment->id}} attachment_file float-left ml-2">
-                                <div class="attachment"><img src="{{asset('images/site/icons/cv.png')}}" style="    height: 100px;" /></div>
-                                <span class="attach_title ml-2">{{ $attachment->name }}</span>
-                                <div class="attach_btns">
-                                    <a class="attach_btn downloadAttachBtn" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
-                                </div>
-
+            <div class="private_attachments text-dark display-flex">
+                @foreach ($attachments as $attachment)
+                    <div class="attachment_{{$attachment->id}} attachment_file float-left ml-2">
+                        <div class="attachment"><img src="{{asset('images/site/icons/cv.png')}}" style="    height: 100px;" /></div>
+                        <span class="attach_title ml-2">{{ $attachment->name }}</span>
+                        <div class="attach_btns">
+                            <a class="attach_btn downloadAttachBtn" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
                         </div>
-                    @endforeach
+                    </div>
+                @endforeach
             </div>
             @else
 
@@ -272,9 +251,15 @@ $js = $jobSeeker;
                     Content Locked
                 </div>
 
-                <div class="attach_btns">
+                <p>
+                    Get premium account from
+                    <a class="text-uppercase text-underline" href="{{route('mPremiumAccount')}}" > here</a>
+                    for contacting job seekers
+                </p>
+
+                {{-- <div class="attach_btns">
                     <a class="attach_btn downloadAttachBtn btn btn-sm btn-primary m-0" onclick="UProfile.confirmPurchase({{$js->id}});">Unlock <i class="fas fa-unlock-alt ml-2"></i></a>
-                </div>
+                </div> --}}
             </span>
 
         @endif
@@ -401,8 +386,16 @@ $js = $jobSeeker;
                       @foreach($userquestion as $qk => $question)
                         <div>
 
-                          <p class="m-0">{{$question}} </p>
-                           <p class="QuestionsKeyPTag my-1 font-weight-bold">{{$userQuestions[$qk]}}</p>
+                        <p class="m-0">{{$question}} </p>
+                            <p class="QuestionsKeyPTag my-1 font-weight-bold">
+                                @if ($userQuestions[$qk] == 'yes')
+                                    Yes
+                                    @else
+
+                                    No
+                                @endif
+                                {{-- {{$userQuestions[$qk]}} --}}
+                            </p>
                         </div>
                       @endforeach
                   @endif

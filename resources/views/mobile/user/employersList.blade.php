@@ -11,11 +11,17 @@
             <div class="card-header jobInfoFont jobAppHeader p-2">Company :
                 <span class="jobInfoFont">{{$js->company}}</span>
                 {{-- @dump($js->id) --}}
+
+                <div class="row p-0 m-0">
+                    <span class="jobInfoFont">Location : </span>
+                        <div class="jobDetail" style="margin: 0.2rem 0 0 0.2rem;">
+                         {{$js->city}},  {{$js->state}}, {{$js->country}}</div>
+                </div>
             </div>
 
             {{-- ============================================ Card Body ============================================ --}}
 
-            <div class="card-body jobAppBody pt-2">
+            <div class="card-body jsAppBody pt-2">
                 <div class="row jobInfo">
                     <div class="col-4 p-0">
                         @php
@@ -35,10 +41,10 @@
                     <div class="col p-0 pl-3">
                         <div class="jobInfoFont">Interested In</div>
                         <div>{{$js->interested_in}} </div>
-                        <div class="mt-3">
+                        {{-- <div class="mt-3">
                             <span class="jobInfoFont">Location</span>
                         </div>
-                        <div> {{$js->city}},  {{$js->state}}, {{$js->country}} </div>
+                        <div> {{$js->city}},  {{$js->state}}, {{$js->country}} </div> --}}
                     </div>
                 </div>
                 <div class="row p-0">

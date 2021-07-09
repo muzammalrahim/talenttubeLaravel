@@ -26,13 +26,13 @@
             {{-- <th><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th> --}}
             <th>Surname</th>
             <th>city</th>
-            <th>email</th>
-            <th>phone</th>
-            <th>created_at</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Created_at</th>
             {{-- <th>profile</th> --}}
             {{-- <th>View Video</th> --}}
             {{-- <th>View Resume</th> --}}
-            <th>action</th>
+            <th>Action</th>
 
         </tr>
     </thead>
@@ -44,19 +44,10 @@
 
 @section('css')
 <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
+
 <style type="text/css">
-    .modal.showProcessing  .modalContentUser{ display: none;  }
-    .modal.showProcessing  .modelProcessingUser{ display: block !important; }
-    #delConfirmIdUser{ color:red; }
     td{ text-align: center; }
-
- .bulkButton {
-    margin-left: 7px;
-}
-
-.disableClick{
-    pointer-events: none;
-}
+    
 </style>
 @stop
 

@@ -14,8 +14,18 @@ use App\Video;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-
 use App\Notes;
+
+use App\UserIndustries;
+use App\UserInterview;
+use App\UserInterviewAnswers;
+use App\UserOnlineTest;
+use App\UserOnlineTestAnswers;
+use App\UserPool;
+use App\UserQualification;
+use App\UserTags;
+
+
 
 class UserController extends Controller
 {
@@ -930,16 +940,137 @@ class UserController extends Controller
 
     public function show($id){}
 
-    // =================================================== Destroy User ===================================================
+    // ========================================================================================= 
+    //Destroy User
+    // ========================================================================================= 
 
     public function destroyUser($id){
-      $user = User::find($id);
-      // dd($user->id);
+        $user = User::find($id);
+        // dd($user->id);
+        if(!empty($user)){
+            $UserTags = UserTags::where('user_id',$user->id)->get();
+            if (!empty($UserTags)) {
+                foreach ($UserTags as $tags) {
+                    $tags->delete();
+                }
+            }
+
+            // ====================================== Remove Videos ====================================== 
+
+            $Video = Video::where('user_id' , $user->id)->get();
+            if (!empty($Video)) {
+                // dd($Video);
+                foreach ($Video as $vid) {
+                    $vid->deleteFiles();
+                    $vid->delete();
+                }
+                
+            }
+
+            // ====================================== Remove galelery like profile pictures ====================================== 
+            $UserGallery = UserGallery::where('user_id',$user->id)->get();
+            if (!empty($UserGallery)) {
+                foreach ($UserGallery as $gallery_image) {
+                    if ($gallery_image->user_id == $user->id) {
+                        $g_path = (($gallery_image->access == 2)?('/private/'):('/public/')).$gallery_image->user_id.'/gallery/'.$gallery_image->image;
+                        $gt_path = (($gallery_image->access == 2)?('/private/'):('/public/')).$gallery_image->user_id.'/gallery/small/'.$gallery_image->image;
+                        Storage::disk('media')->delete($g_path);
+                        Storage::disk('media')->delete($gt_path);
+                    }
+                }
+
+            }
+
+
+            // ====================================== Remove Attachment ====================================== 
+
+            $Attachment = Attachment::where('user_id',$user->id)->get();
+            if (!empty($Attachment)) {
+                foreach ($Attachment as $Attach) {
+                    if ($Attach->user_id == $user->id) {
+                        $exists = Storage::disk('user')->exists($Attach->file);
+                        if ($exists) {
+                            Storage::disk('user')->delete($Attach->file);
+                        }
+                        $Attach->delete();
+                    }
+                
+                }
+            }
+
+            // ====================================== Remove Qualification ====================================== 
+
+            $UserQualification = UserQualification::where('user_id',$user->id)->get();
+            if (!empty($UserQualification)) {
+                // dd($UserQualification);
+                foreach ($UserQualification as $qualification) {
+                    $qualification->delete();
+                }
+            }
+
+            $UserIndustries = UserIndustries::where('user_id',$user->id)->get();
+            if (!empty($UserIndustries)) {
+                foreach ($UserIndustries as $industry) {
+                    $industry->delete();
+                }
+                // dd($UserIndustries);
+            }
+
+            $UserInterview = UserInterview::where('user_id',$user->id)->get();
+            if (!empty($UserInterview)) {
+                foreach ($UserInterview as $interview) {
+                    $interview->delete();
+                }
+            }
+
+
+            $UserOnlineTest = UserOnlineTest::where('user_id',$user->id)->get();
+            if (!empty($UserOnlineTest)) {
+                foreach ($UserOnlineTest as $test) {
+                    $test->delete();
+                }
+                // dd($UserOnlineTest);
+            }
+
+            $UserInterviewAnswers = UserInterviewAnswers::where('user_id',$user->id)->get();
+            if (!empty($UserInterviewAnswers)) {
+                foreach ($UserInterviewAnswers as $interview_answers) {
+                    $interview_answers->delete();
+                }
+                // dd($UserInterviewAnswers)
+            }
+
+            $UserOnlineTestAnswers = UserOnlineTestAnswers::where('user_id',$user->id)->get();
+            if (!empty($UserOnlineTestAnswers)) {
+                foreach ($UserOnlineTestAnswers as $onlineTest) {
+                    $onlineTest->delete();
+                }
+                // dd($UserOnlineTestAnswers);
+            }
+
+            $UserPool = UserPool::where('user_id',$user->id)->get();
+            if (!empty($UserPool)) {
+                foreach ($UserPool as $pool) {
+                    $pool->delete();
+                }
+                // dd($UserPool);
+            }
+
+        }
+
       if(!empty($user)){
+
+        /*        $g_path = '/private/'.$user->id;
+                $gt_path = '/public/'.$user->id;
+                // $gt_path = (($gallery_image->access == 2)?('/private/'):('/public/')).$user->id.'/gallery/small/'.$gallery_image->image;
+                dd($gt_path);
+                Storage::disk('media')->delete($g_path);
+                Storage::disk('media')->delete($gt_path);
+        */
         $user->delete();
           return response()->json([
                 'status' => 1,
-                'message' => 'Job Succesfully Deleted',
+                'message' => 'User Succesfully Deleted',
           ]);
       }
     }

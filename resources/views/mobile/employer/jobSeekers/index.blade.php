@@ -113,6 +113,17 @@ $(".reset-btn").click(function(){
     $('.FilterQuestionBox').addClass("d-none");
     $('.FilterLocationBox').addClass("d-none");
     $('.FilterIndustryList').addClass("d-none");
+
+    jQuery('#filter_salary').get(0).selectedIndex = 0;
+    jQuery('#filter_by_age').get(0).selectedIndex = 0;
+    jQuery('#filter_by_gender').get(0).selectedIndex = 0;
+
+
+    
+
+    // jQuery('#jobSeeker_filter_form').find('input, select').trigger('refresh');
+
+
     $('#paginate').val('');
 	getDataCustom();
 });

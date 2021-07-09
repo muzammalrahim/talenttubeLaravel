@@ -28,7 +28,10 @@
 		<div class="row">
 			<div id="join_step" class="step col">
 				<ul class="list-group">
-					<li class="list-group-item active text-white"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">1</span> Answer 6 questions to calculate your best matches.</li>
+					<li class="list-group-item active text-white">
+						<span class="rounded px-3 py-2 bg-dark mr-2 d-inline-block h3">1</span> 
+						Answer 6 questions to calculate your best matches.
+					</li>
 					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">2</span> Update your profile</li>
 					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">3</span> Qualification</li>
 					<li class="list-group-item d-none"><span class="rounded p-4 bg-dark mr-2 d-inline-block h3">4</span> Industry Experience</li>
@@ -43,42 +46,40 @@
 <!-- Step 1 Start -->
 	<div class="row py-3 bl_card_question" id="full_step_1" style="display:none;">
 		<div class="col">
-			<div class="card_question_cont">
+			<div class="card_question_cont" style="margin-bottom:10px !important;">
 					<div id="card_question_no" class="card_question no hide answer">
 
 						<div class="question_vh">
-							{{-- <img src="../images/icon_card_answer_no.png" width="224" height="224" alt="" /> --}}
 							<i class="fas fa-times"></i>
 							<span>No</span></div>
 					</div>
 					<div id="card_question_yes" class="card_question yes hide answer">
 						<div class="question_vh">
-							{{-- <img src="../images/icon_card_answer_yes.png" width="224" height="224" alt="" /> --}}
 							<i class="fas fa-check"></i>
 							<span>Yes</span></div>
 					</div>
 
-					<div data-field="graduate_intern" class="card_question card">
+					<div data-field="graduate_intern" id="graduate_intern" class="card_question card">
 						<div class="count">6 of 6</div><div class="question_txt">Are you seeking a Graduate Program or Internship?</div>
 					</div>
 
-					<div data-field="part_time" class="card_question card">
+					<div data-field="part_time" id="part_time" class="card_question card">
 						<div class="count">5 of 6</div><div class="question_txt">Are you open to Part Time or Casual work?</div>
 					</div>
 
-					<div data-field="temporary_contract" class="card_question card">
+					<div data-field="temporary_contract" id="temporary_contract" class="card_question card">
 							<div class="count">4 of 6</div><div class="question_txt">Are you open to temporary and contract work?</div>
 					</div>
 
-					<div data-field="fulltime" class="card_question card">
+					<div data-field="fulltime" id="fulltime" class="card_question card">
 						<div class="count">3 of 6</div><div class="question_txt">Are you looking for Full Time Employment?</div>
 					</div>
 
-					<div data-field="relocation" class="card_question card">
+					<div data-field="relocation" id="relocation" class="card_question card">
 						<div class="count">2 of 6</div><div class="question_txt">Are you looking or willing to relocate for your next job opportunity?</div>
 					</div>
 
-					<div data-field="resident" class="card_question first card">
+					<div data-field="resident" id="resident" class="card_question first card active1">
 						<div class="count">1 of 6</div><div class="question_txt">Are you a Permanent Resident or Citizen of Australia or New Zealand?</div>
 					</div>
 
@@ -87,56 +88,84 @@
 					<div class="card_decor_right1"></div>
 			</div>
 
-			<div class="card_question_btn">
-				<button data-action="0" class="btn large pink fl_left btn_question step2Css">No</button>
-				<button data-action="1" class="btn large turquoise fl_right btn_question step2Css" >Yes</button>
+			
+		</div>
+
+			<div class="card_question_btn p-0 ">
+				
+				<button class="btn btn-sm btn-info initialPrevQuestion questionNaviateTo"  data-action="previous" > 
+	                <h3><i class="initial_arrow fas fa-arrow-left text-white"></i></h3>
+	        	</button>
+
+				<button data-action="0" class="btn btn-sm btn-danger btn_question">No</button>
+				<button data-action="1" class="btn btn-sm btn-primary btn_question" >Yes</button>
+
 				<div class="cl"></div>
 			</div>
-		</div>
+
+			
 	</div>
 	<!-- Step 1 End -->
 
 	<!-- Step 3 Start -->
 		<div class="row py-3" id="full_step_3" style="display: none">
 			<div class="full_step_error"></div>
-			<div class="col">
+			<div class="col p-0">
 				<div class="card_profile">
 					<div class="part_photo">
 						<div class="upload_file"><div class="upload"><div class="bl photo_add">Add a Photo</div></div></div>
 						<div class="name d-none"></div>
 						<div class="name_info d-none text-danger">Required field!</div>
 						
-						<div class="recent_job m5 mt20 relative">
-							<div class="title">Your current or most recent job title</div>
-							<input type="text" id="recentJob" name="recentJob" value="" />
-							<div id="recentJob_error" class="d-none text-danger">Required field!</div>
-						</div>
-
-
-						<div class="organisation m5 mt20 relative">
-                             <div class="title">The organisation you held the above title</div>
-                             <input type="text" id="organHeldTitle" name="organHeldTitle" value="" />
-                             <div id="organHeldTitle_error" class="text-danger d-none">Required field!</div>
-                        </div>
+						
 
 					</div>
 
 					<div id="frm_card_join" class="card_profile_info card_join">
 
-						<div class="bl bl_basic">
-							<div class="title">About me</div>
-							<div id="about_me_error" class="error to_hide">Required field!</div>
-							<textarea id="about_me" class="placeholder_always fl_basic" name="about_me" placeholder="Summarise your career, studies & skills here" maxlength="300"></textarea>
+						<div class="recent_job form-outline mb-4">
+
+    						<label class="form-label" for="#recentJob">Your current or most recent job title</label>
+
+							<input type="text" name="recentJob" id="recentJob" class="form-control" />
+
+							{{-- <div class="title">Your current or most recent job title</div>
+							<input type="text" id="recentJob" name="recentJob" value="" /> --}}
+							<div id="recentJob_error" class="d-none text-danger">Required field!</div>
+						</div>
+
+
+						<div class="organisation m5 mt20 relative">
+                            {{-- <div class="title">The organisation you held the above title</div>
+                            <input type="text" id="organHeldTitle" name="organHeldTitle" value="" /> --}}
+
+                            <label class="form-label" for="#organHeldTitle">The organisation you held the above title</label>
+
+							<input type="text" name="organHeldTitle" id="organHeldTitle" class="form-control" />
+
+
+                            <div id="organHeldTitle_error" class="text-danger d-none">Required field!</div>
+                        </div>
+
+						<div class="bl bl_basic form-group">
+							{{-- <div class="title">About me</div> --}}
+							<label for="about_me" class="about_me text-dark">About me</label>
+							<textarea id="about_me" class="placeholder_always fl_basic form-control rounded-0" name="about_me" placeholder="Summarise your career, studies & skills here" rows="4" maxlength="300"></textarea>
 							<span id="arChars" class="rChars">300</span> Character(s) Remaining
+							<div id="about_me_error" class="error to_hide position-relative" style="top:18px !important" >Required field!</div>
 						</div>
 
 
 
-						<div class="bl bl_basic">
-							<div class="title">Interested in</div>
-							<div id="interested_in_error" class="error to_hide">Required field!</div>
-							<textarea id="interested_in" class="placeholder_always fl_basic" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
+						<div class="bl bl_basic form-group">
+							{{-- <div class="title">Interested in</div> --}}
+							<label for="interested_in" class="about_me text-dark">Interested in</label>
+
+							<textarea id="interested_in" class="placeholder_always fl_basic form-control rounded-0" name="interested_in" placeholder="What opportunities are you open to" maxlength="150"></textarea>
 							<span id="irChars" class="rChars">150</span> Character(s) Remaining
+
+							<div id="interested_in_error" class="error to_hide position-relative" style="top:18px !important">Required field!</div>
+
 						</div>
 
 						<div class="row text-center">
@@ -164,13 +193,15 @@
                     
                     <p>What year did you complete your final year of high school ? </p>
                     {{-- <div class="qualification_type_cont mb20 center ageCal"> --}}
-                    <select id="year" name="passing_year" class="browser-default custom-select">
+                    <select id="passing_year" name="passing_year" class="browser-default custom-select">
                         {{ $last= date('Y')-50 }}
                         {{ $now = date('Y') }}
                         @for ($i = $now; $i >= $last; $i--)
                             <option value="{{ $i }}">{{ $i }}</option>
                         @endfor
                     </select>
+
+                    {{-- <input type="hidden" name="year" value="2000"/>	 --}}
 
                     {{-- </div> --}}
 
@@ -292,7 +323,7 @@
 					Well done candidates, To complete your application, all you need to upload a <b>30-60 second video.</b>
 					</p>
 
-					<p class="">Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi, tell us about what you’ve done in your career, any key skills/studies/attributes you have, and very briefly the kind of opportunities you’re interested in. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit.</p>
+					<p class="">Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi and tell us about yourself. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit.</p>
 					<div class="userUpload">
 						<div class="userVideoCont">
 							<div class="userVideo">
@@ -325,12 +356,12 @@
 
 					<p class="text-left font-weight-bold">
 
-					Well done candidates, you’re at the final stage. To complete your application, all you need to do is 2 things:
+					Almost done candidates, you’re at the final stage. To complete your application, all you need to upload your resume...
 					</p>
-					<p class="text-left"><b>1.</b> Upload your most current resume. Please feel free to remove your full name, address and contact details if you prefer to keep this confidential form prospective employers.
+					<p class="text-left">Please upload your most current resume.If you prefer, we also encourage you to remove some of your personal details (such as your full name, address & contact details) for added privacy.
 					</p>
 
-					<p class="text-left"><b>2.</b> You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p>
+					{{-- <p class="text-left"><b>2.</b> You can chose to save and exit here, and return to upload your resume and video when you’re ready. Please note your application will only become active and viewable to prospective employers, after your video and resume are uploaded.</p> --}}
 					<div class="userUpload">
 						<div class="userResumeCont">
 							<div class="userResume">
@@ -367,9 +398,9 @@
 				<div class="card-body">
 					<div class="skillDiv">
 						<p class="mb-1">
-						Almost done, candidates! To help Employers connect with you, we’ve created a tagging system. This allows Employers to search for specific candidates via a search system. In the below section, we encourage you to create as many tags that best describe your key attributes as a Job Seeker.
+						Good news, you’ve completed your application profile. Now, to help employers find you easier, please add as many tags that best describe you.
 						</p>
-						<p class="font-weight-bold mb-1">Be sure to tag the following:</p>
+						{{-- <p class="font-weight-bold mb-1">Be sure to tag the following:</p>
 						<p class="mb-1">*Names of organisations and companies you’ve worked for, including charities and not for profits</p>
 						<p class="mb-1">*Job Titles you have held</p>
 						<p class="mb-1">*Skills you have (eg; customer service, java Developer, sales, book keeping, etc)</p>
@@ -377,14 +408,14 @@
 						<p class="mb-1">*The names of courses you’re studying or have completed</p>
 						<p class="mb-1">*The name of qualifications you have (eg; RG146, RSA, etc)</p>
 						<p class="mb-1">*Languages you speak (other than English)</p>
-						<p class="mb-1">*Hobbies and personal interests are fine as well</p>
+						<p class="mb-1">*Hobbies and personal interests are fine as well</p> --}}
 					</div>
 						<div class="user_tagging">
 							@include('mobile.layout.tagging')
 						</div>
 					<div class="join_btn mt20 text-center">
-									<button id="user_step9_done" class="btn turquoise small btn_join_submit " disabled="true">Save Tags</button>
-									<button id="tag_skip_btn" class="btn turquoise small btn_join_submit ">Skip</button>
+						<button id="user_step9_done" class="btn turquoise small btn_join_submit " disabled="true">Save Tags</button>
+						<button id="tag_skip_btn" class="btn turquoise small btn_join_submit ">Skip</button>
 					</div>
 				</div>
 			</div>
@@ -414,17 +445,17 @@
 		</div>
 		<div class="d-flex flex-row justify-content-center">
 			<div class="p-2">
-				<a href="{{ route('Mjobs') }}" id="step2_more_jobs" class="btn btn-rounded btn-amber btn-lg"><i class="fas fa-redo pr-2 text-white" aria-hidden="true"></i> Load More</a>
+				<a href="{{ route('Mjobs') }}" id="step2_more_jobs" class="btn btn-sm btn-rounded p-4 btn-amber"><i class="fas fa-redo pr-2 text-white" aria-hidden="true"></i> Load More</a>
 			</div>
 			<div class="p-2">
-				<button id="user_step10_done" class="btn btn-rounded btn-blue-grey btn-lg"><i class="fas fa-step-forward text-white" aria-hidden="true"></i> Skip For Now</button>
+				<button id="user_step10_done" class="btn btn-sm btn-rounded p-4 btn-blue-grey"><i class="fas fa-step-forward text-white" aria-hidden="true"></i> Skip For Now</button>
 			</div>
 		</div>
 		</div>
 	</div>
 	<!-- Step 10 End -->
 </div>
-@include('mobile.footer')
+@include('mobile.footer') {{-- mobile/footer --}}
 @stop
 
 @section('custom_footer_css')
@@ -441,13 +472,13 @@
     overflow-y: scroll;
 }
 
-.skillDiv{
+/*.skillDiv{
     height: 250px;
     overflow-y: auto;
     font-size: 12px;
     border: 1px solid #e0e0e0;
     padding: 10px;
-}
+}*/
 .qualification_list {
     height: 250px;
     overflow-y: auto;
@@ -458,6 +489,12 @@
 li.tag.tagItem {
     font-size: 12px;
 }
+.bl_card_question .card_question_btn .btn{
+	min-width: unset !important;
+    height: unset !important;
+    font-size: unset !important;
+}
+.active1{opacity: 1;}
 </style>
 @stop
 
@@ -469,9 +506,9 @@ li.tag.tagItem {
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 <script type="text/javascript">
     $(function(){
-								var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
+    	var currentStep = {{ !empty($user->step2)?($user->step2):'1'}};
         userStepReload(currentStep);
-				});
+	});
 </script>
 
 @stop

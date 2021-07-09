@@ -61,9 +61,8 @@ select {
                      <option value="post_degree">University Post Graduate (Masters or PHD)</option>
                 </select>
 
-
-                 @php
-                 $qualifications = getQualificationsList();
+                @php
+                $qualifications = getQualificationsList();
                 @endphp
 
                 @if(!empty($qualifications))
@@ -92,23 +91,49 @@ select {
 
             </div>
 
-
-
-            {{-- Salary Range --}}
+            {{-- ============================================= Salary Range ============================================= --}}
 
             <div class="FilterBox">
-                <select class="white-text mdb-select md-form colorful-select dropdown-primary" name="filter_salary" data-placeholder="Select Salary Range">
+                <select class="white-text mdb-select md-form colorful-select dropdown-primary" id="filter_salary" name="filter_salary" data-placeholder="Select Salary Range">
                 <option value="">Select Salary Range</option>
                 @foreach(getSalariesRange() as $sk => $salary)
                     <option value="{{$sk}}">{{$salary}}</option>
                 @endforeach
                 </select>
             </div>
-            {{-- Salary Range --}}
+
+            {{-- ============================================= Salary Range ============================================= --}}
 
 
+            {{-- ============================================ Filter by Age Group ============================================ --}}
 
-             {{-- Industry Experience --}}
+            <div class="FilterBox">
+                <select class="white-text mdb-select md-form colorful-select dropdown-primary" id="filter_by_age" name="filter_by_age" data-placeholder="Select Age Group">
+                        <option value="">Select Age Group</option>
+                        <option value="18-25">18-25</option>
+                        <option value="25-30">25-30</option>
+                        <option value="30-40">30-40</option>
+                        <option value="40-54">40-54</option>
+                        <option value="55+">55+</option>
+                </select>
+            </div>
+
+
+            {{-- ============================================ Filter by Gender ============================================ --}}
+
+            <div class="FilterBox">
+                <select class="white-text mdb-select md-form colorful-select dropdown-primary" id="filter_by_gender" name="filter_by_gender" data-placeholder="Select Gender">
+                    <option value="">Select Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+
+            {{-- ============================================ Filter by Age Group ============================================ --}}
+
+
+             {{-- ============================================= Industry Experience ============================================= --}}
+
             <div class="FilterBox FilterIndustry">
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input filter_showDetail" id="filter_industry_status" name="filter_industry_status" data-dc="FilterIndustryList">
@@ -120,22 +145,24 @@ select {
                 @endphp
                 @if(!empty($industries))
                     <div class="filter_industries_list ">
-												@foreach ($industries as $indK => $indV)
-												<div class="form-check">
-																	<input type="checkbox" class="form-check-input" id="industry_{{$indK}}" name="filter_industry[]" value="{{$indK}}">
-																	<label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
-																</div>
-												@endforeach
+						@foreach ($industries as $indK => $indV)
+						<div class="form-check">
+							<input type="checkbox" class="form-check-input" id="industry_{{$indK}}" name="filter_industry[]" value="{{$indK}}">
+							<label class="form-check-label" for="industry_{{$indK}}">{{$indV}}</label>
+						</div>
+						@endforeach
                     </div>
                 @endif
                 </div>
             </div>
-            {{-- Industry Experience --}}
 
-												<hr class="my-2" style="height: 0.1em;  background: rgb(41, 41, 41); ">
+            {{-- ============================================= Industry Experience ============================================= --}}
+
+			<hr class="my-2" style="height: 0.1em;  background: rgb(41, 41, 41); ">
 
 
-            {{-- Location  --}}
+            {{-- ============================================= Location  ============================================= --}}
+
             <div class="FilterBox FilterLocation">
                 <div class="form-check">
                     <input type="checkbox" class="form-check-input filter_showDetail" id="filter_location_status" name="filter_location_status" data-dc="FilterLocationBox">
@@ -168,12 +195,15 @@ select {
                 {{-- bl_location --}}
                 </div>
             </div>
-            {{-- Location  --}}
+
+            {{-- ============================================= Location ============================================= --}}
 
 
 		    <hr class="my-2" style="height: 0.07em;  background: rgb(41, 41, 41); ">
-            {{-- Question  --}}
-             <div class="FilterBox FilterLocation">
+
+            {{-- ============================================= Question ============================================= --}}
+
+            <div class="FilterBox FilterLocation">
                  <div class="form-check">
                     <input type="checkbox" class="form-check-input filter_showDetail" id="filter_by_questions" name="filter_by_questions" data-dc="FilterQuestionBox">
                     <label class="form-check-label" for="filter_by_questions">Filter by Question</label>
@@ -181,37 +211,35 @@ select {
                 <div class="FilterQuestionBox d-none col">
 
                     <div class="row">
-                @if(!empty(getUserRegisterQuestions()))
-
-                    <div class="col-12 p-0">
-                        <select class="white-text mdb-select md-form filter_question" name="filter_question">
-                            @foreach (getUserRegisterQuestions() as $qk => $question)
-                                <option value="{{$qk}}">{{$question}}</option>
-                            @endforeach
-                        </select>
+                        @if(!empty(getUserRegisterQuestions()))
+                        <div class="col-12 p-0">
+                            <select class="white-text mdb-select md-form filter_question" name="filter_question">
+                                @foreach (getUserRegisterQuestions() as $qk => $question)
+                                    <option value="{{$qk}}">{{$question}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-4 p-0">
+                            <select class="white-text mdb-select md-form filter_question_value"  name="filter_question_value">
+                                <option value="yes">Yes</option>
+                                <option value="no">No</option>
+                            </select>
+                        </div>
+                        @endif
                     </div>
-
-                    <div class="col-4 p-0">
-                        <select class="white-text mdb-select md-form filter_question_value"  name="filter_question_value">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
-                        </select>
-                    </div>
-
-
-                @endif
                 </div>
-                </div>
-             </div>
-													<div class="FilterBox my-2">
-														<div class="text-center">
-															<button name="ResetForm" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
-															<button name="CreateConfig" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light " id="CreateConfig" type="submit">Submit</button>
-														</div>
-												</div>
+            </div>
+			<div class="FilterBox my-2">
+				<div class="text-center">
+					<button name="ResetForm" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light reset-btn" id="ResetForm" type="button">Reset</button>
+					<button name="CreateConfig" data-toggle="collapse" data-target="#collapse1" class="btn waves-effect waves-light " id="CreateConfig" type="submit">Submit</button>
+				</div>
+		    </div>
 
-            {{-- Question  --}}
+            {{-- ============================================= Question ============================================= --}}
 
+
+            
 
           </div>
         </div>
