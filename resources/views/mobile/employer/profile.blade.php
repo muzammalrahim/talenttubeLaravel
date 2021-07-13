@@ -31,30 +31,22 @@
     <div class="personalInfo">{{$user->name}} {{$user->surname}}</div>
     <div class="personalInfo"><b>Email:</b> {{$user->email}}</div>
     <div class="personalInfo"><b>Phone:</b> {{$user->phone}}</div>
-    <div class="personalInfo"><b>Location: </b>{{userLocation($user)}}</div>
 
-    <div class="aboutMeSection"><b>Interested In: </b>
-            <div class="spinner-border spinner-border-sm text-primary IntsdInLoader ml-2" role="status" style="display:none;"></div>
-            <i class="fas fa-edit float-right intInSecButton"></i> <p class="interestedInSec">{{$user->interested_in}}</p>
-    </div>
+    {{-- ==================================================== Location ==================================================== --}}
 
-    <div class="col-md-12 text-center my-2"> <a class="btn btn-sm btn-success saveInterestedInButton d-none">Save</a> </div>
-    <div class="alert alert-success interestedInAlert" role="alert" style="display:none;">
-      <strong>Success!</strong> Interested In have been updated successfully!
-    </div>
+    @include('mobile.employer.tabs.location')   {{-- mobile/employer/tabs/location --}}
 
-    <div class="aboutMeSection"><b>About Me: </b>
-      <div class="spinner-border spinner-border-sm text-primary AboutMeLoader ml-2" role="status" style="display:none;"></div>
-        <i class="fas fa-edit float-right aboutMeSecButton"></i> <p class="aboutMeSec">{{$user->about_me}}</p>
-    </div>
 
-    <div class="col-md-12 text-center my-2">
-      <a class="btn btn-sm btn-success saveAboutMeButton d-none">Save</a>
-    </div>
+     {{-- ==================================================== interested_in ==================================================== --}}
 
-    <div class="alert alert-success AboutMeAlert" role="alert" style="display:none;">
-      <strong>Success!</strong> About Me have been updated successfully!
-    </div>
+    @include('mobile.employer.tabs.interested_in')   {{-- mobile/user/tabs/interested_in --}}
+
+
+    {{-- ==================================================== About Me ==================================================== --}}
+
+    @include('mobile.employer.tabs.about_me')   {{-- mobile/user/tabs/about_me --}}
+    
+
 
     <div class="cardContent"></div>
     <div class="cardEdit" style="display: none;"></div>
@@ -90,7 +82,7 @@
 <div class="tab-content card pt-5 pl-2" id="myTabContentJust">
   {{-- ============================================================= Album Tab Start here ============================================================= --}}
     <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-  {{-- =================================================================== Photos =================================================================== --}}
+    {{-- =================================================================== Photos =================================================================== --}}
     <div class="tabs_photos text-dark mb-2 font-weight-bold">Photos</div>
         <div class="list_photos_public d-flex">
             <div class="list_photos_trans">
@@ -106,8 +98,8 @@
                             >
                             <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="photo m-1 uploadedPhotos"
                             data-src="{{assetGallery($gallery->access,$user->id,'',$gallery->image)}}"
-                            src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}"{{--  alt="thumbnail" class="img-thumbnail"
-  style="width: 150px;height:150px;" --}}>
+                            src="{{assetGallery($gallery->access,$user->id,'small',$gallery->image)}}"
+                            {{--  alt="thumbnail" class="img-thumbnail" style="width: 150px;height:150px;" --}}>
                         </a>
                         <div class="gallery_action float-right">
                             {{-- <i class="fas fa-user"></i> --}}
@@ -134,80 +126,80 @@
 
             </div>
         </div>
-  {{-- =================================================================== Photos end =================================================================== --}}
+      {{-- =================================================================== Photos end =================================================================== --}}
 
-  <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <h5 class="modal-title" id="exampleModalLongTitle">Are you sure to delete the picture?</h5>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-primary" onclick="UProfile.deleteGallery(); return false;">OK</button>
-          <input type="hidden" name="deleteConfirmId" id="deleteConfirmId" value=""/>
+      <div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Delete confirmation</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h5 class="modal-title" id="exampleModalLongTitle">Are you sure to delete the picture?</h5>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" class="btn btn-primary" onclick="UProfile.deleteGallery(); return false;">OK</button>
+              <input type="hidden" name="deleteConfirmId" id="deleteConfirmId" value=""/>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
 
       {{-- =================================================================== videos =================================================================== --}}
 
-    <div class="video text-dark mt-3">
-      <div class="tabs_videos mb-2 font-weight-bold">Videos</div>
-      <div id="video" >
-          <div id="list_videos_public" class="list_videos_public">
-              <div id="photo_add_video" class="item add_photo add_video_public item_video">
-                  <a class="add_photo">
-                      <img id="video_upload_select" class="transparent is_video bg-primary" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
-                  </a>
-              </div>
-          </div>
+      <div class="video text-dark mt-3">
+        <div class="tabs_videos mb-2 font-weight-bold">Videos</div>
+        <div id="video" >
+            <div id="list_videos_public" class="list_videos_public">
+                <div id="photo_add_video" class="item add_photo add_video_public item_video">
+                    <a class="add_photo">
+                        <img id="video_upload_select" class="transparent is_video bg-primary" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
+                    </a>
+                </div>
+            </div>
 
-        <div class="cl"></div>
-        <div class="list_videos">
-            <div class="videos mt-2">
-                  @if ($videos->count() > 0 )
-                  @foreach ($videos as $video)
-                      <div id="v_{{$video->id}}" class="video_box mb-2">
-                              <!-- Grid row -->
-                              <!--Modal: Name-->
-                              <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                              <div class="modal-dialog modal-lg" role="document">
-                                  <!--Content-->
-                                  <div class="modal-content">
-                                  <!--Body-->
-                                  <div class="modal-body mb-0 p-0">
-                                      <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
-                                          <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
-                                          <source src="{{assetVideo($video)}}" type="video/mp4" />
-                                          </video>
-                                      </div>
-                                  </div>
-                                  <!--Footer-->
-                                  <div class="modal-footer justify-content-center">
-                                      <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
-                                  </div>
-                                  </div>
-                                  <!--/.Content-->
-                              </div>
-                              </div>
-                          <!--Modal: Name-->
-                          <a>{!! generateVideoThumbsm($video) !!}</a>
-                      </div>
-                  @endforeach
-                  @endif
-              </div>
+          <div class="cl"></div>
+          <div class="list_videos">
+              <div class="videos mt-2">
+                    @if ($videos->count() > 0 )
+                    @foreach ($videos as $video)
+                        <div id="v_{{$video->id}}" class="video_box mb-2">
+                                <!-- Grid row -->
+                                <!--Modal: Name-->
+                                <div class="modal fade" id="modal{{$video->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg" role="document">
+                                    <!--Content-->
+                                    <div class="modal-content">
+                                    <!--Body-->
+                                    <div class="modal-body mb-0 p-0">
+                                        <div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">
+                                            <video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">
+                                            <source src="{{assetVideo($video)}}" type="video/mp4" />
+                                            </video>
+                                        </div>
+                                    </div>
+                                    <!--Footer-->
+                                    <div class="modal-footer justify-content-center">
+                                        <button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </div>
+                                    <!--/.Content-->
+                                </div>
+                                </div>
+                            <!--Modal: Name-->
+                            <a>{!! generateVideoThumbsm($video) !!}</a>
+                        </div>
+                    @endforeach
+                    @endif
+                </div>
+          </div>
         </div>
       </div>
-    </div>
-  {{-- =================================================================== videos end =================================================================== --}}
+      {{-- =================================================================== videos end =================================================================== --}}
 
   </div>
 
@@ -447,89 +439,9 @@ input.click();
 
 
 
-// {{-- ==================================================== Edit Interested IN ==================================================== --}}
-
-$('.intInSecButton').click(function(){
-
-        $('.interestedInSec').attr("contentEditable", "true");
-        $('.interestedInSec').addClass('interestedInEditColor').css("border","2px solid #dc9f4a");
-        $('.interestedInSec').addClass('editable');
-    $('.saveInterestedInButton').removeClass('d-none');
 
 
-});
 
-$(".saveInterestedInButton").click(function(){
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-    var interestedIn = $('.interestedInSec').text();
-    console.log(interestedIn);
-        $('.IntsdInLoader').show();
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/m/ajax/MupdateInterested_inEmp',
-        data: {'interestedIn': interestedIn},
-        success: function(resp){
-            if(resp.status){
-                $('.IntsdInLoader').hide();
-                $('.saveInterestedInButton').addClass('d-none');
-                $('.interestedInSec').attr("contentEditable", "false");
-                $('.interestedInSec').removeClass('interestedInEditColor').css("border","none");
-                $('.interestedInAlert').show().delay(3000).fadeOut('slow');
-
-
-            }
-        }
-    });
-});
-
-// {{-- ==================================================== Edit Interested IN End ====================================================
-
---}}
-
-// {{-- ==================================================== Edit About Me  ==================================================== --}}
-
-$('.aboutMeSecButton').click(function(){
-
-        $('.aboutMeSec').attr("contentEditable", "true");
-        $('.aboutMeSec').addClass('interestedInEditColor').css("border","2px solid #dc9f4a");
-        $('.aboutMeSec').addClass('editable');
-        $('.saveAboutMeButton').removeClass('d-none');
-});
-
-$(".saveAboutMeButton").click(function(){
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        }
-    });
-
-    var aboutMe = $('.aboutMeSec').text();
-    console.log(aboutMe);
-    $('.AboutMeLoader').show();
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/m/ajax/Mabout_meEmp',
-        data: {'aboutMe': aboutMe},
-        success: function(resp){
-            if(resp.status){
-                $('.AboutMeLoader').hide();
-                $('.saveAboutMeButton').addClass('d-none');
-                $('.aboutMeSec').attr("contentEditable", "false");
-                $('.aboutMeSec').removeClass('interestedInEditColor').css("border","none");
-                $('.AboutMeAlert').show().delay(3000).fadeOut('slow');
-
-            }
-        }
-    });
-});
-
-// {{-- ==================================================== Edit About Me End ==================================================== --}}
 
 
 //===================================================== Employer Questions Edit =====================================================

@@ -89,7 +89,7 @@
                     <div class="col p-0 pl-3">
 
                         <div class="font11 float-left mr-1 font-weight-bold">Job Salary: </div>
-                            <div class="jobDetail"> {{$job->salary}}</div>
+                            <div class="jobDetail"> {{ getSalariesRangeLavel($job->salary) }}</div>
                         <div class="mt-2">
                             <span class="font11">Job Experience</span>
                         </div>

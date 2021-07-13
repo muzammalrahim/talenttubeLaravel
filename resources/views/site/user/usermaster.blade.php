@@ -65,7 +65,7 @@
         <div class="col_center">
             @yield('content')
         </div>
-        @include('site.layout.leftmenu')
+        @include('site.layout.leftmenu') {{-- site/layout/leftmenu --}}
         </div>
     </div>
     </div>

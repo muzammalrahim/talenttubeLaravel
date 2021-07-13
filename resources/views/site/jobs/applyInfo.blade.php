@@ -45,8 +45,11 @@
                          {{ jobApplicationMandatoryQuestion() }}
                     </div>
                     <div class="ja_descriptionAnswer">
-                        <textarea name="application_description" class="w100" title="Add a 250 character word minimum" style="height: 100px;"></textarea>
-                        <div class="characterCount"><span class="count">0</span> / 150 minimum character</div>
+                        <textarea name="application_description" id="application_description" maxlength="300" max class="w100" title="Add a 250 character word minimum" style="height: 100px;"></textarea>
+                        {{-- <div class="characterCount"><span class="count">0</span> / 300 minimum character</div> --}}
+
+                        <div id="charNum" class="mt10">  Maximum 300 Characters  </div> 
+
                     </div>
                 </div>
 
@@ -59,7 +62,7 @@
             
             @if (!isset($onlineTest))
                 <div class="fomr_btn act_field center">
-                    <button class="btn small turquoise submitApplication" disabled>Submit</button>
+                    <button class="btn small turquoise submitApplication">Submit</button>
                 </div>
             @else
                 <div class="fomr_btn act_field center submitBuutonDiv hide_it"> </div>
@@ -83,6 +86,62 @@
     $(document).on('click' , '.proceedTest', function(){
         $('.applyData').addClass('hide_it');
     }); 
+
+
+    // ===================================== Character count while applying for job =====================================
+
+    $('#application_description').keyup(function () {
+      var max = 300;
+      var len = $(this).val().length;
+      if (len >= max) {
+        $('#charNum').text(' 0 Character left');
+        // $('#charNum').css('disabled' , 'disabled');
+
+      } else {
+        var char = max - len;
+        $('#charNum').text(char + ' characters left');
+      }
+    });
+
+    // ===================================== Character count while applying for job =====================================
+
+
+
+    // ================================================================================================
+    //  User previous result of test while applying to job
+    // =================================================================================================
+
+
+    // $(document).on('click','.usePreviousResult',function(){
+        // event.preventDefault();
+
+    this.usePreviousResult = function($job_id){
+        console.log(' use previous result clicked ');
+        $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
+        var applyFormData = $('#job_apply_form').serializeArray()
+        $.ajax({
+        type: 'POST',
+            url: base_url+'/ajax/use-previous-result',
+            data: applyFormData,
+            success: function(data){
+                $('.submitApplication').html('Submit').prop('disabled',false);
+                console.log(' data ', data );
+                if (data.status == 1){
+                     $('#job_apply_form').html(data.message);
+                     // var link = parseInt(data.userTest_id);
+                     var jobApp_id = '<p class = "mt10"> Your test result has been submitted </p>';
+                     $('.onlineTestBox').html(jobApp_id);
+
+                }else {
+                     $('#job_apply_form').html(data.error);
+                     $('.onlineTestBox').addClass('hide_it');
+                }
+            }
+        });
+    }
+
+    // });
+
     </script>
 
 </div>

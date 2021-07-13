@@ -38,8 +38,7 @@
     </div> --}}
 
     <div class="jobSeekers_list">
-        @include('mobile.employer.jobSeekers.swipe_jobseekerList') 
-        <!-- mobile/employer/jobSeekers/swipe_jobseekerList -->
+        @include('mobile.employer.jobSeekers.swipe_jobseekerList')  <!-- mobile/employer/jobSeekers/swipe_jobseekerList -->
     </div> 
 
 @stop
