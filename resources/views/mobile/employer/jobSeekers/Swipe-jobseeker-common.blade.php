@@ -13,7 +13,26 @@
 </div>
 
 <script type="text/javascript">
-    
+
+    this.change_status = function(app_id, status){
+        console.log(app_id);
+        $.ajax({
+          type: 'POST',
+          url: base_url+'/m/ajax/application/status/update/'+app_id,
+          data: {status:status},
+            success: function(data){
+                if (data.status == 1) {
+                    if (data.jobStatus == 'inreview') {
+                        $('.statusUpdated_'+app_id).html('In Review');
+                    }
+                    else{
+                        $('.statusUpdated_'+app_id).html(data.jobStatus);    
+                    }
+                }
+            }   
+        });
+    }
+
     // ============================================== Change Status to in review ============================================== 
 
     this.inreview = function(){

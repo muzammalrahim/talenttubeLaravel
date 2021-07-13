@@ -110,9 +110,9 @@
                                   <span class="font-weight-bold m-0 float-left jobInfoFont"> {{$js->name}} {{$js->surname}} </span>
                                   <span class="float-right"> <span class="font-weight-normal"> Status : </span>  
                                     @if ($application->status == "inreview")
-                                        <span class="statusUpdated text-capitalize"> In Review </span> 
+                                        <span class="statusUpdated_{{ $application->id }} text-capitalize"> In Review </span> 
                                     @else
-                                        <span class="statusUpdated text-capitalize"> {{ $application->status }} </span> 
+                                        <span class="statusUpdated_{{ $application->id }} text-capitalize"> {{ $application->status }} </span> 
                                     @endif
                                   </span>
                                 </div>
@@ -158,9 +158,9 @@
                         </div>
                         <div class="float-right">
 
-                            <a class="inreview btn btn-sm btn-primary ml-0 btn-xs my-3" onclick="inreview()" data-appId ="{{$application->id}}" data-status = "inreview">In Review</a>
-                            <a class="interview btn btn-sm btn-primary mr-0 btn-xs my-3" onclick="interview()" data-appId ="{{$application->id}}" data-status = "interview" >Interview</a>
-                            <a class="unsuccessful btn btn-sm btn-primary mr-0 btn-xs my-3" onclick="unsuccessful()" data-appId ="{{$application->id}}" data-status = "unsuccessful" >Unsuccessful</a>
+                            <a class="inreview btn btn-sm btn-primary ml-0 btn-xs my-3" onclick="change_status({{$application->id}} , 'inreview')" data-appId ="{{$application->id}}" data-status = "inreview">In Review</a>
+                            <a class="interview btn btn-sm btn-primary mr-0 btn-xs my-3" onclick="change_status({{$application->id}} , 'interview')" data-appId ="{{$application->id}}" data-status = "interview" >Interview</a>
+                            <a class="unsuccessful btn btn-sm btn-primary mr-0 btn-xs my-3" onclick="change_status({{$application->id}} , 'unsuccessful')" data-appId ="{{$application->id}}" data-status = "unsuccessful" >Unsuccessful</a>
 
                             <div class="mx-2 float-right jobApplicationStatusCont">
                                 <select name="jobApplicStatus" class="mdb-select sm-form colorful-select dropdown-primary select_aw jobApplicStatus" data-application_id="{{$application->id}}">
@@ -222,7 +222,7 @@
     </div>
 </div>
 {{-- Icluded Common file here --}}
-@include('mobile.employer.jobSeekers.Swipe-jobseeker-common')
+@include('mobile.employer.jobSeekers.Swipe-jobseeker-common') {{-- mobile/employer/jobSeekers/Swipe-jobseeker-common --}}
 
 
 <style type="text/css">
@@ -242,3 +242,10 @@ box-shadow: 10px 10px 53px 0px rgba(0,0,0,0.75);
         margin-top: 200px;
     }
 </style>
+
+<script type="text/javascript">
+    
+
+    
+
+</script>

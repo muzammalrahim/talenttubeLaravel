@@ -152,9 +152,9 @@ class User extends Authenticatable
 
         // ====================================== Filter by salaryRange. ======================================
 
-        if (isset($request->filter_salary) && !empty($request->filter_salary)){
-            $data->where('salaryRange', '>=', $request->filter_salary);
-        }
+        // if (isset($request->filter_salary) && !empty($request->filter_salary)){
+        //     $data->where('salaryRange', '=', $request->filter_salary);
+        // }
 
         // ====================================== Filter by google map location radius. ======================================
 

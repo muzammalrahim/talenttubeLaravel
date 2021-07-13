@@ -205,6 +205,9 @@ Route::group(array('prefix' => 'm', 'middleware' => ['mobile']), function(){
 	Route::post('ajax/application/status/inreview/', 'Mobile\MobileUserController@changeToInReview')->name('changeToInReview');
 	Route::post('ajax/application/status/interview/', 'Mobile\MobileUserController@changeToInInterview')->name('changeToInInterview');
 	Route::post('ajax/application/status/unsuccessful/', 'Mobile\MobileUserController@changeToInUnsuccessfull')->name('changeToInUnsuccessfull');
+
+	Route::post('ajax/application/status/update/{id}', 'Mobile\MobileUserController@change_status')->name('change_status');
+
     Route::get('mTesting', 'Mobile\OnlineTestController@mTesting')->name('mTesting');
     Route::get('mProceed/test/{id}', 'Mobile\OnlineTestController@mProceedTesting')->name('mProceedTesting');
     Route::post('ajax/saveQuestion/nextQuestion/{time}', 'Mobile\OnlineTestController@mSaveandNextQuestion')->name('nextQuestion');

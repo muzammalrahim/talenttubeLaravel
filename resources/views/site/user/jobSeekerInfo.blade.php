@@ -59,7 +59,7 @@
                     <div class="js_interested js_field"> <span class="js_label">Recent Job:</span> <p><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b> </p></div>
                     <div class="js_about js_field"> <span class="js_label">About me:</span><p class="js_about_me"> {{$js->about_me}}</p> </div>
                     <div class="js_interested js_field"><span class="js_label">Interested in:</span><p>{{$js->interested_in}}</p></div>
-                    <div class="js_interested js_field"><span class="js_label">Expected Salary:</span><p>{{$js->salaryRange}}</p></div>
+                    <div class="js_interested js_field"><span class="js_label">Expected Salary:</span><p>{{getSalariesRangeLavel($js->salaryRange)}}</p></div>
 
                     <div class="js_education js_field">
                         <span class="js_label">Qualification:</span>

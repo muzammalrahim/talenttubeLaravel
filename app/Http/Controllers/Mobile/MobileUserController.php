@@ -1967,6 +1967,9 @@ class MobileUserController extends Controller
 		$user = Auth::user();
 		if (!isEmployer($user)){ return redirect(route('jobs')); }
 
+		if ($user->employerStatus != 'paid') {
+			return redirect(route('MjobSeekers'));
+		}
 
         // // =========================================== Paid employer viewing jobseeker ===========================================
         // $isallowed = False;
@@ -2034,7 +2037,7 @@ class MobileUserController extends Controller
 
         $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
-        $query = User::with('profileImage','user_tags')->where('type','user');
+        $query = User::with('profileImage','user_tags')->where('type','user')->Where('step2' , '>=' , '7');
         // $tagsQuery = Tags::get();
         if(!empty($block)){
             $query = $query->whereNotIn('id', $block);
@@ -2043,29 +2046,56 @@ class MobileUserController extends Controller
 
         // ================================================ Filter by salaryRange. ================================================
 
+        // dd($request->filter_salary);
         if (isset($request->filter_salary) && !empty($request->filter_salary)){
-            $query = $query->where('salaryRange', '=', $request->filter_salary);
+            $query = $query->where('salaryRange', $request->filter_salary);
         }
 
         // ================================================ Filter by google map location radius.================================================
 
         if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
-            if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
+            if( isset($request->location_lat) && isset($request->location_long)){
                 // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
-                 $latitude = $request->location_lat;
-                 $longitude = $request->location_long;
-                 $radius = $request->filter_location_radius;
-                 $radius_sign = ($radius <= 50)?'<':'>';
 
-                 $query = $query->selectRaw("*,
-                     ( 6371 * acos( cos(radians('".$latitude."'))
-                     * cos( radians(location_lat))
-                     * cos( radians(location_long) - radians('".$longitude."'))
-                     + sin( radians('".$latitude."'))
-                     * sin( radians( location_lat )))
-                     ) AS distance")
-                ->having("distance", $radius_sign, $radius)
-                ->orderBy("distance",'asc');
+            	// dd($request->location_lat);
+        		$latitude = $request->location_lat;
+	            $longitude = $request->location_long;
+            	if (isset($request->filter_location_radius)) {
+
+            		// dd(' Sab Kuch Selected');
+
+		            $radius = $request->filter_location_radius;
+		            $radius_sign = ($radius <= 50)?'<':'>';
+
+		            $query = $query->selectRaw("*,
+	                     ( 6371 * acos( cos(radians('".$latitude."'))
+	                     * cos( radians(location_lat))
+	                     * cos( radians(location_long) - radians('".$longitude."'))
+	                     + sin( radians('".$latitude."'))
+	                     * sin( radians( location_lat )))
+	                     ) AS distance")
+	                ->having("distance", $radius_sign, $radius)
+	                ->orderBy("distance",'asc');
+            		// code...
+            	}
+
+            	else{
+
+            		$query = $query->selectRaw("*,
+	                     ( 6371 * acos( cos(radians('".$latitude."'))
+	                     * cos( radians(location_lat))
+	                     * cos( radians(location_long) - radians('".$longitude."'))
+	                     + sin( radians('".$latitude."'))
+	                     * sin( radians( location_lat )))
+	                     ) AS distance")
+	                // ->having("distance", $radius_sign, $radius)
+	                ->orderBy("distance",'desc');
+
+            		// dd(' Km not selected ');
+            	}
+                
+
+
 
             }
         }
@@ -2103,7 +2133,7 @@ class MobileUserController extends Controller
         	$gender = $request->filter_by_gender;
         	// dd($gender);
             if ($gender == 'male') {
-                $query = $query->where('title' , '=', 'Mr');
+                $query = $query->where('title','Mr');
             }
             else{
                 $query = $query->whereIn('title' , array("Mrs","Miss","Ms"));
@@ -2475,7 +2505,7 @@ class MobileUserController extends Controller
 
         }
 
-        return view('mobile.jobs.applyInfo', $data);
+        return view('mobile.jobs.applyInfo', $data); // mobile/jobs/applyInfo
 
     }
 
@@ -3518,6 +3548,53 @@ class MobileUserController extends Controller
 		        	'status' => 1,
 		        	'message' => 'Status saved successfully',
 		        	'jobStatus' => 'Unsuccessful'
+
+		        ]);
+	        }
+	        else{
+
+	        	return response()->json([
+		        	'status' => 0,
+		        	'message' => 'User is not authenticated',
+
+	        	]);
+	        }
+        }
+        else{
+        	return response()->json([
+	        	'status' => 0,
+	        	'message' => 'Job Application does not exist',
+
+	        ]);
+        } 
+    }
+
+
+    // =============================================== Change Application's Status unsuccessful ===============================================
+
+    public function change_status(Request $request, $id){
+        $data = $request->toArray();
+        // dd($data);
+        $user = Auth::user();
+
+        // if ($data['status'] == 'inreview') {
+        // 	return response()->json([
+	       //  	'status' => 0,
+	       //  	'message' => 'Aisy tu ni hota',
+
+	       //  ]);
+        // }
+
+        $JobsApplication = JobsApplication::where('id', $id)->first();
+        // dd($JobsApplication);
+        if ($JobsApplication) {
+        	if($JobsApplication->job->jobEmployer->id == $user->id){
+	        	$JobsApplication->status = $data['status'];
+		        $JobsApplication->save();
+		        return response()->json([
+		        	'status' => 1,
+		        	'message' => 'Status saved successfully',
+		        	'jobStatus' => $JobsApplication->status
 
 		        ]);
 	        }

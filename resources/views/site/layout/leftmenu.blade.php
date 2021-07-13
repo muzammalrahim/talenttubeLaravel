@@ -71,11 +71,11 @@
                 </a>
             </li> --}}
 
-            {{-- <li>
-                <a id="narrow_menu_link_28" href="./hot_or_not" class="column_narrow_hot_or_not  ">
+            <li>
+                <a id="narrow_menu_link_28" href="" class="column_narrow_hot_or_not  ">
                     <span class="icon"></span>Talent Matcher
                 </a>
-            </li> --}}
+            </li>
 
            {{--  <li>
                 <a id="narrow_menu_link_35" href="chatroom.html" class="column_narrow_general_chat  ">

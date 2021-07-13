@@ -9,10 +9,10 @@
     </div>
 
     <div class="applyJobFormField mb-3">
-        <textarea type="text" id="field" name="application_description" class="md-textarea form-control" rows="3" placeholder="Answer"></textarea>
+        <textarea type="text" id="field" maxlength="300" name="application_description" class="md-textarea form-control" rows="3" placeholder="Answer"></textarea>
 
 
-        <div id="charNum">  150 Character(s) Remaining  </div>
+        <div id="charNum">  Maximum 300 Characters  </div>
     </div>
 
         @if (!empty($job->questions))
@@ -243,10 +243,12 @@
 
 
 $('#field').keyup(function () {
-  var max = 150;
+  var max = 300;
   var len = $(this).val().length;
   if (len >= max) {
-    $('#charNum').text(' you have reached the limit');
+    $('#charNum').text(' 0 Character left');
+    // $('#charNum').css('disabled' , 'disabled');
+
   } else {
     var char = max - len;
     $('#charNum').text(char + ' characters left');

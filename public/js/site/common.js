@@ -210,23 +210,23 @@ $(document).ready(function(){
 //========== jobSubmitApplyBtn clck end. ==========
 //====================================================================================================================================//
 
-    $(document).on('keyup','textarea[name="application_description"]',function(){
-         console.log(' application_description changed ');
-         var application_description = $.trim($('textarea[name="application_description"]').val());
-         $('.characterCount .count').text(application_description.length);
-         if(application_description.length < 150){
-            $('.submitApplication').prop('disabled', true);
-            $('.characterCount').removeClass('hide_it');
-            $('.onlineTestBox').addClass('hide_it');
+    // $(document).on('keyup','textarea[name="application_description"]',function(){
+    //      console.log(' application_description changed ');
+    //      var application_description = $.trim($('textarea[name="application_description"]').val());
+    //      $('.characterCount .count').text(application_description.length);
+    //      if(application_description.length < 150){
+    //         $('.submitApplication').prop('disabled', true);
+    //         $('.characterCount').removeClass('hide_it');
+    //         $('.onlineTestBox').addClass('hide_it');
 
-         }else{
-            $('.submitApplication').prop('disabled', false);
-            $('.characterCount').addClass('hide_it');
-            $('.onlineTestBox').removeClass('hide_it');
-         }
+    //      }else{
+    //         $('.submitApplication').prop('disabled', false);
+    //         $('.characterCount').addClass('hide_it');
+    //         $('.onlineTestBox').removeClass('hide_it');
+    //      }
 
-         console.log(' application_description ', application_description);
-    });
+    //      console.log(' application_description ', application_description);
+    // });
 
 //====================================================================================================================================//
 // Function to display sub qualification on base of qualification type.
@@ -494,35 +494,3 @@ $(document).on('click','.rejectTest',function(){
 });
 
 
-// ================================================================================================
-//  User previous result of test while applying to job
-// =================================================================================================
-
-
-$(document).on('click','.usePreviousResult',function(){
-    event.preventDefault();
-    console.log(' use previous result clicked ');
-    // return;
-
-    $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
-    var applyFormData = $('#job_apply_form').serializeArray()
-    $.ajax({
-    type: 'POST',
-        url: base_url+'/ajax/use-previous-result/',
-        data: applyFormData,
-        success: function(data){
-            $('.submitApplication').html('Submit').prop('disabled',false);
-            console.log(' data ', data );
-            if (data.status == 1){
-                 $('#job_apply_form').html(data.message);
-                 // var link = parseInt(data.userTest_id);
-                 var jobApp_id = '<p class = "mt10"> Your test result has been submitted </p>';
-                 $('.onlineTestBox').html(jobApp_id);
-
-            }else {
-                 $('#job_apply_form').html(data.error);
-                 $('.onlineTestBox').addClass('hide_it');
-            }
-        }
-    });
-});

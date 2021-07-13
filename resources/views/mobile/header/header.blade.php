@@ -172,6 +172,8 @@
                 {{-- Like User List --}}
 
                 <li><a href="{{route('MlikeList')}}" class="column_narrow_search_results {{(request()->is('m/Mlike'))?'active':''}}"><span class="icon"></span>Like Users</a></li>
+
+                <li><a href="" class="column_narrow_search_results {{(request()->is('m/talen-matcher'))?'active':''}}"><span class="icon"></span>Talent Matcher</a></li>
                 
 
               {{--   <li>
