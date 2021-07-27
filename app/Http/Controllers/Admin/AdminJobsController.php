@@ -655,7 +655,7 @@ class AdminJobsController extends Controller
 
     // deleting job
 
-  public function deleteJob(Request $request, $id){
+    public function deleteJob(Request $request, $id){
            $this->validate($request, [
             'title' => 'required|max:255',
             'country' => 'max:15',
@@ -686,8 +686,9 @@ class AdminJobsController extends Controller
     // deleting job ends
 
 
-  // Job Application Functions and dataTable
-  public function job_applications(Request $request){
+    // Job Application Functions and dataTable
+    
+    public function job_applications(Request $request){
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Job Applications';
@@ -698,90 +699,112 @@ class AdminJobsController extends Controller
         // dd($data);
         return view('admin.job_applications.list', $data);
         // admin/job_applications/list
-  }
+    }
 
-  // Job Application editting function
-  public function editJobApp($id) {
+    // Job Application editting function
+    public function editJobApp($id) {
+
         $records = JobsApplication::findOrFail($id);
-
         $data['content_header'] = 'Edit Job Application';
         $data['record'] = $records;
         $data['title']  = 'Job Application';
         $data['answers']  = !empty($records->answers)?($records->answers->keyBy('question_id')->toArray()):array();
         return view('admin.job_applications.edit', $data);
         // admin/job_applications/edit
-  }
+    }
 
 
 
-  //===============================================================================================================//
-  // .
-  //===============================================================================================================//
-  public function updateJobApp(Request $request, $id) {
+    //===============================================================================================================//
+    // .
+    //===============================================================================================================//
+    
+    public function updateJobApp(Request $request, $id) {
 
-      $jobApp = JobsApplication::find($id);
-      $jobApp->status = $request->status;
-      if( $jobApp->save() ){
-         if(!empty($request->user_answers)){
-            foreach ($request->user_answers as $akey => $anvalue) {
-              $JobsAnswers = JobsAnswers::find($akey);
-              if($JobsAnswers){
-                $JobsAnswers->answer = $anvalue;
-                $JobsAnswers->save();
-              }
+        // dd($request->toArray());
+        $jobApp = JobsApplication::find($id);
+        $jobApp->status = $request->status;
+        $jobApp->description = $request->description;
+
+        if( $jobApp->save() ){
+            if(!empty($request->user_answers)){
+                foreach ($request->user_answers as $akey => $anvalue) {
+                    $JobsAnswers = JobsAnswers::find($akey);
+                    if($JobsAnswers){
+                        $JobsAnswers->answer = $anvalue;
+                        $JobsAnswers->save();
+                    }
+                }
             }
-          }
-          return redirect(route('job_applications'))->withSuccess( __('admin.record_updated_successfully'));
-      }
-  }
+            return redirect(route('job_applications'))->withSuccess( __('admin.record_updated_successfully'));
+            // return redirect('admin/job_applications/edit/'.$id)->withSuccess( __('admin.record_updated_successfully'));
 
-// Job Application editting function End Here
-
-  // Getting Job Application DataTable Start
-  public function getJobAppDatatable(Request $request){
-      $records =  JobsApplication::with(['jobseeker','job','userInterviewCount']);
-
-      if(!empty($request->filter_job)){
-        $records = $records->where('job_id',$request->filter_job);
-      }
-
-      return datatables($records)
-      
-       ->editColumn('status', function ($records) {
-        if($records->status=='applied'){
-            return 'Applied';
         }
-        else if($records->status=='inreview'){
-            return 'In Review';
-        }
-        else if($records->status=='interview'){
-            return 'Interview';
-        }
-        else if($records->status=='unsuccessful'){
-            return 'Unsuccessful';
-        }
-      })
+    }
 
+    // Job Application editting function End Here
 
-      ->addColumn('profile', function ($records) {
-        if (isAdmin()){
-            $rhtml = '<a class="btn btn-primary btn-sm btnUserInfo" href="'.route('jobSeekerInfo',['id'=>$records->jobseeker->id]).'" target="_blank" >Info</a>';
+    // Getting Job Application DataTable Start
+    
+    public function getJobAppDatatable(Request $request){
+        $records =  JobsApplication::with(['jobseeker','job','userInterviewCount']);
+        if(!empty($request->filter_job)){
+            // dd($request->filter_job);
+            $records = $records->whereIn('job_id',$request->filter_job);
+        }
+        return datatables($records)
+
+        ->editColumn('status', function ($records) {
+            if($records->status=='applied'){
+                return 'Applied';
+            }
+            else if($records->status=='inreview'){
+                return 'In Review';
+            }
+            else if($records->status=='interview'){
+                return 'Interview';
+            }
+            else if($records->status=='unsuccessful'){
+                return 'Unsuccessful';
+            }
+        })
+
+        ->addColumn('profile', function ($records) {
+            if (isAdmin()){
+                $rhtml = '<a class="fas fa-user btn-sm btnUserInfo" href="'.route('jobSeekerInfo',['id'=>$records->jobseeker->id]).'" target="_blank" > </a>';
+                $rhtml .= '<i class="fas fa-video btn-sm btnUserVideoInfo pointer" user-id='. $records->jobseeker->id.' ></i>';
+
+                $rhtml .= '<a class = "btn-sm userTestsModal pointer" data-toggle ="modal" jobApp_id = '.$records->id.' data-target= "#getTestsModal"><img src="https://img.icons8.com/ios-filled/20/000000/test-results.png"/></a>';
+
+                $rhtml .= '<a class="btnUserResumeInfo pointer" user-id='. $records->jobseeker->id.' > <img src="https://img.icons8.com/nolan/20/parse-from-clipboard.png"/></a>'; 
+                return $rhtml;
+            }})
+        ->editColumn('user_id', function ($records) {
+            $jobseeker_name =  ($records->jobseeker)?($records->jobseeker->name.' '.$records->jobseeker->surname.' ('.$records->user_id.')'):'';
+            $rhtml = '<a>  '.$jobseeker_name.'</a>';
+            $user_question = australian_resident($records->jobseeker->id);
+            if ($user_question == 1) {
+                $rhtml .= '<i class="fa fa-home btn-sm"></i>';
+            }
             return $rhtml;
-        }})
+        })
 
-      ->editColumn('user_id', function ($records) {
-          return ($records->jobseeker)?($records->jobseeker->name.' '.$records->jobseeker->surname.' ('.$records->user_id.')'):'';
-      })
+        ->editColumn('goldstar', function ($records) {
+        
+            $rhtml = '<a class = "btn btn-sm btn-primary text-white" data-toggle ="modal" data-target= "#getTestsModal" onclick="getGoldStarAnswers('.$records->id.')" value = "'.$records->id.'">  '.$records->goldstar.'</a>';
+            return $rhtml;
+        })
 
-      ->editColumn('job_id', function ($records) {
-         return  ($records->job)?($records->job->title.' ('.$records->job_id.')'):'';
-      })
-      ->editColumn('city', function ($records) {
-         return ($records->city);
-      })
+        ->editColumn('job_id', function ($records) {
+            return  ($records->job)?($records->job->title.' ('.$records->job_id.')'):'';
+        })
 
-      ->addColumn('correspondance', function ($records) {
-        if (isAdmin()){
+        ->editColumn('city', function ($records) {
+            return ($records->city);
+        })
+
+        ->addColumn('correspondance', function ($records) {
+            if (isAdmin()){
             // $UserInterview = UserInterview::where('interview_type', 'Correspondance')->where('jobApp_id', $records->id)->get();
             $UserInterview = $records->userInterviewCount;
             // dd($UserInterview);
@@ -809,52 +832,43 @@ class AdminJobsController extends Controller
             }
         }})
 
-
-      ->addColumn('select_test', function ($records) {
+        ->addColumn('suburb', function ($records) {
             if (isAdmin()){
-                $viewjob = '<span class = "ml-1">Job-<u><span><a class="pointer text-success " href="" target="_blank" >View</a>';
-                $jobStatusArray = jobStatusArray();
-                $jobHtml = '<button class = "btn btn-primary userTestsModal"  data-toggle ="modal" jobApp_id = '.$records->id.' data-target = "#getTestsModal"> Select Test </button>';
+                
+            $rhtml = '<a class=""> '.$records->jobseeker->city.' </a>';
                 // $jobStatus  =  jobStatusArray();
-                return $jobHtml;       
-               
-            }})
+            return $rhtml;
+        }})
 
-
-
-      ->editColumn('test_result', function ($records) {
-        if (isAdmin()){
-            $UserInterview = $records->userOnlineTests;
-            if ($UserInterview->count() >  0 ) {
-              foreach ($UserInterview as $userInt) {
-                $rhtml =  $userInt->test_result;
-                return $rhtml;
-              }
-            }
+        ->editColumn('test_result', function ($records) {
+            if (isAdmin()){
+                $UserInterview = $records->userOnlineTests;
+                if ($UserInterview->count() >  0 ) {
+                  foreach ($UserInterview as $userInt) {
+                    $rhtml =  $userInt->test_result;
+                    return $rhtml;
+                  }
+                }
             else{
                 $nan = '<span class = "text-danger"> None Available </span>';
                 return $nan;
             }
         }})
-
-
-      ->addColumn('interview', function ($records) {
-        if (isAdmin()){
-            $rhtml = '<a class="btn btn-primary btn-sm far fa-edit" href="'.route('jobseekerInterviews',
+        ->addColumn('interview', function ($records) {
+            if (isAdmin()){
+                $rhtml = '<a class="btn btn-primary btn-sm far fa-edit" href="'.route('jobseekerInterviews',
               ['id'=>$records->jobseeker->id, 'jobApp_id'=>$records->id  ]).'" target="_blank" ></a>';
-            return $rhtml;
-        }})
+                return $rhtml;
+            }})
 
-      ->addColumn('action', function ($records) {
-        if (isAdmin()){
-            $rhtml = '<a href="'.route('job_applications.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
-              return $rhtml;
-        }
-      })
-
-
-      ->rawColumns(['profile', 'correspondance', 'select_test', 'test_result' ,'interview', 'action'])
-      ->toJson();
+        ->addColumn('action', function ($records) {
+            if (isAdmin()){
+                $rhtml = '<a href="'.route('job_applications.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
+                return $rhtml;
+            }
+        })
+        ->rawColumns(['profile', 'correspondance', 'suburb', 'user_id', 'goldstar' ,'test_result' ,'interview', 'action'])
+        ->toJson();
     }
 
 
@@ -1197,6 +1211,22 @@ class AdminJobsController extends Controller
             }*/
     }
 
+    // ============================================================ Application Answers ==============================================
+
+    public function application_answers(request $request){
+        $data = $request->all();
+        // dd($data);
+        $user = Auth::user();
+        if (isAdmin($user)) {
+            $JobsAnswers = JobsAnswers::Where('application_id' , $data['id'])->get();
+            $data['JobsAnswers'] = $JobsAnswers;
+            // dd($JobsAnswers);
+            return view('admin.job_applications.application_answers' , $data);
+
+        }
+
+
+    }
 
 
 

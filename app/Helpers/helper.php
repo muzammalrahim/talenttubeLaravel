@@ -3,6 +3,7 @@
 use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
 use App\UserGallery;
+use App\User;
 function checkRole($roles){
     echo "test helper working ";
 }
@@ -978,9 +979,9 @@ function generateRandomString($length = 10) {
 
 function getInterviewTemplateType(){
     $templatetype = array(
-        'Phone Screeen' => 'Phone Screen',
-        'Traditional' => 'Traditional',
-        'Correspondence' => 'Correspondence',
+        'phone_screen' => 'Phone Screen',
+        'traditional' => 'Traditional',
+        'correspondence' => 'Correspondence',
     );
     return $templatetype;
 }
@@ -1009,6 +1010,7 @@ function calculate_distance($js, $user){
 }
 
 function cal_ind_exp($js, $user){
+    // dd($js->industry_experience, $user->industry_experience);
     $js_indExp = $js->industry_experience;
     $user_indExp = $user->industry_experience;
     if (isset($js_indExp) && !empty($js_indExp)) {
@@ -1116,4 +1118,27 @@ function getIndustries_new(){
     );
 
     return  $industries_list_new;
+}
+
+
+// ========================================================================================================
+// Iteration-12
+// ========================================================================================================
+
+function australian_resident($user_id){
+    $user = User::where('id', $user_id)->first();
+    $user_questions = json_decode($user->questions, true);
+    if (!empty($user_questions)) {
+        if ( $user_questions['resident'] == 'no') {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+
+    }
+    else{
+        return 0;
+    }
+
 }

@@ -9,9 +9,9 @@
     </div>
 
     <div class="form-group row">
-      {{ Form::label('name', null, ['class' => 'col-md-2 form-control-label']) }}
+      {{ Form::label('username', null, ['class' => 'col-md-2 form-control-label']) }}
       <div class="col-md-10 row">
-        {{ Form::text('name', $value = $record->jobseeker->name, $attributes = array('class'=>'form-control', 'placeholder' => 'name','required'=> 'false')) }}
+        {{ Form::text('username', $value = $record->jobseeker->username, $attributes = array('class'=>'form-control', 'placeholder' => 'name','required'=> 'false')) }}
       </div>
     </div>
 

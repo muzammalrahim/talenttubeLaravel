@@ -34,11 +34,34 @@
           </div>
         </div>
 
+
+        <div class="form-group row">
+          {{ Form::label('employers instruction', null, ['class' => 'col-md-2 form-control-label']) }}
+          <div class="col-md-10">
+            {{ Form::text('employer_instruction', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Employers instruction' , 'required'=> 'false')) }}
+          </div>
+        </div>
+
+
+        <div class="form-group row">
+          {{ Form::label('employers video intro', null, ['class' => 'col-md-2 form-control-label']) }}
+          <div class="col-md-10 pointer">
+            <img src="https://img.icons8.com/material-two-tone/50/000000/video.png"/>
+          </div>
+        </div>
+
+
         <div class="form-group row">
           {{ Form::label('Question 1', null, ['class' => 'col-md-2 form-control-label']) }}
-          <div class="col-md-10">
-            {{ Form::text('question[]', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Question for interview','required'=> 'false')) }}
+          <div class="col-md-8">
+            {{ Form::text('questions[1][question]', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Question for interview','required'=> 'false')) }}
           </div>
+
+          <div class="col-md-2">
+            {{ Form::checkbox('questions[1][video_response]', $value = null , $attributes = array('class'=>'form-control col-md-1','required'=> 'false')) }} 
+            <span class="col-md-2">Video Reponse</span>
+          </div>
+
         </div>
         <div class="questionslist"></div>
 
@@ -119,23 +142,43 @@ $(document).ready(function(){
     $(this).closest('.questions').remove();
    });
 
+
+
   var i = 2;
    $(document).on('click','.addTemplateQuestion', function(){
     console.log(' Add Question ');
     if(i <= 10){
-      var newQuestionsList = '<div class="row questions t'+i+' ">';
-      newQuestionsList += '<div class="text col-md-2 font-weight-bold">Question '+i+'</div>';
-      newQuestionsList +='<input name="question[]" class="questionInput form-control col-md-7 mx-2">';
-      newQuestionsList += '</input>';
-      newQuestionsList += '<span class="removeQuestion btn btn-danger col-md-2">Remove</span>';
-      newQuestionsList += '</div>';
+
+
+      // var newQuestionsList = '<div class="row questions t'+i+' ">';
+      // newQuestionsList += '<div class="text col-md-2 font-weight-bold">Question '+i+'</div>';
+      // newQuestionsList +='<input name="question[]" class="questionInput form-control col-md-7 mx-2">';
+      // newQuestionsList += '</input>';
+      // newQuestionsList += '<span class="removeQuestion btn btn-danger col-md-2">Remove</span>';
+      // newQuestionsList += '</div>';
+
+
+      var newQuestionsList = '<div class="form-group row questions t'+i+' ">';
+      newQuestionsList    += '<label for="Question 1" class="col-md-2 form-control-label">Question '+i+' </label>';
+      newQuestionsList    += '<div class="col-md-8">';
+      newQuestionsList    += '<input class="form-control questionInput" placeholder="Question for interview" required="false" name="questions['+i+'][question]" type="text"></div>';
+      newQuestionsList    += '<div class="col-md-2">';
+      newQuestionsList    += '<input name="questions['+i+'][video_response]" type="checkbox">';
+      newQuestionsList    += '<span class="col-md-2">Video Reponse</span>'
+      newQuestionsList    += '<i class="fa fa-trash removeQuestion text-danger pointer"></i>';
+      newQuestionsList    += '</div>';
+      newQuestionsList    += '</div>';
+
+
+
+
       i++;  
     }
     else{
       return false;
     }
     
-    $('.questionslist').append(newQuestionsList);
+  $('.questionslist').append(newQuestionsList);
    });
 
 

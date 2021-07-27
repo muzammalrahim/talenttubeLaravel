@@ -26,7 +26,7 @@ Route::get('testEmail', function () {
 
 // Route::get('testEmail1','Site\ReferenceController@testEmail1')->name('testEmail1');
 
-Route::get('interviewInvitation/url','Site\HomeController@interviewInvitationUrl')->name('interviewInvitationUrl');
+Route::get('interview-invitation/{url}','Site\HomeController@interviewInvitationUrl')->name('interviewInvitationUrl');
 Route::get('userinterviewconcierge/url', 'Site\HomeController@userUniqueurl')->name('userinterviewconcierge.url');
 Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->name('publicuservideo');
 
@@ -272,6 +272,15 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('template/update/{id}', 'Admin\AdminInterviewController@templateUpdate')->name('template.update');
     Route::post('ajax/template/question/delete', 'Admin\AdminInterviewController@templateQuestionDelete')->name('templateQuestionDelete');
 
+
+
+
+    // ====================================== iteration-12 ======================================
+
+    // Route::post('ajax/interview-template/uploadVideo', 'Admin\AdminInterviewController@employer_video_intro')->name('employer_video_intro');
+
+
+
     // ====================================== iteration-8 ======================================
 
     Route::get('users/tracker', 'Admin\UserController@trackUsers')->name('trackUsers');
@@ -353,6 +362,10 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('ajax/delete/onlineTest', 'Admin\AdminTestController@deleteOnlineTest')->name('deleteOnlineTest');
 
 
+    // ====================================== Admin iteration-12 ====================================== admin/ajax/make-employer-paid
+
+
+    Route::get('jobApplications/application-answers','Admin\AdminJobsController@application_answers')->name('application_answers');
 
 
 
@@ -423,6 +436,10 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/accept/interview/invitation','Site\EmployerController@acceptInterviewInvitation')->name('acceptInterviewInvitation');
     Route::post('ajax/confirmInterInvitation',    'Site\InterviewController@confirmInterInvitation')->name('confirmInterInvitation');
     Route::post('ajax/confirmInterInvitation/js',    'Site\InterviewController@confirmInterInvitationJs')->name('confirmInterInvitationJs');
+
+
+    Route::post('/ajax/interview-response/uploadVideo','Site\InterviewController@interview_video_reponse')->name('interview_video_reponse');
+
     
     // ==========================================================================
     // jobseekerprofile
@@ -576,7 +593,7 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 
     // JobseekerInterviewInvitation
 
-    Route::get('Intetview/Invitation',       'Site\InterviewController@interviewInvitataion')->name('intetviewInvitation');
+    Route::get('intetview-invitations',       'Site\InterviewController@interviewInvitataion')->name('intetviewInvitation');
     Route::get('Intetview/Invitation/emp/',       'Site\InterviewController@intetviewInvitationEmp')->name('intetviewInvitationEmp');
     Route::get('unhide/interviews',       'Site\InterviewController@unhideInterviews')->name('unhideInterviews');
     Route::post('ajax/userInterview/hide','Site\InterviewController@hideUserInterview')->name('hideUserInterview');
@@ -609,8 +626,13 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('completed/onlineTests/{id}', 'Site\OnlineTestController@completedOnlineTests')->name('completedOnlineTests');
     Route::post('ajax/reject/test', 'Site\SiteUserController@rejectTest')->name('rejectTest');
     Route::post('ajax/use-previous-result', 'Site\SiteUserController@userPreviousResult')->name('userPreviousResult');
-    
     Route::post('employer/bulk/generatePDF', 'Site\EmployerController@empGeneratePDF')->name('empBulk.GeneratePDF');
+
+
+    // ================================================ itertaion-11 Talent Matcher ================================================
+
+    Route::get('talent-matcher', 'Site\TalentController@talent_matcher')->name('talent_matcher');
+    
 
 
 

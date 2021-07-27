@@ -1,17 +1,69 @@
+    
+    @php
+        $check = false;
+    @endphp
+    
+    @if ($query && $query->count() > 0)
 
-    <div class="dflex">
-        <div class="w70"></div>
-        <div class="w30">
-            <a class="graybtn jbtn btnBulkPDFGenerate">Bulk Snap Shot</a>
-        </div>
-    </div>
+    @foreach ($query as $js)
 
-    @if ($jobSeekers && $jobSeekers->count() > 0)
 
-    @foreach ($jobSeekers as $js)
+    <div class="dflex"> 
+    @php
+        $dist = calculate_distance($js, $user);
+        $ind_exp = cal_ind_exp($js,$user);
+        $compatibility = compatibility($js, $user); 
+        $user_compat = $compatibility*20;
 
-    <input type="checkbox" name="cbx[]" value="{{ $js->id }}">
+        // ========================= excluded 6th question ========================= 
+        
+        $emp_questions = json_decode($js->questions , true);
+        $user_questions = json_decode($user->questions , true);
 
+        $emp_resident = '';
+        $user_resident = '';
+        
+        if ($emp_questions != null && $user_questions != null) {
+            $emp_match = array_slice($emp_questions, 5, 6, true);
+            foreach ($emp_match as $key => $value) {
+                $emp_resident .= $value;
+            }
+            $user_match = array_slice($user_questions, 5, 6, true);
+            foreach ($user_match as $key => $value) {
+                $user_resident .= $value;
+            }
+        }
+
+    @endphp
+
+        {{-- @dump($emp_resident) --}}
+
+    {{-- @if ($emp_resident == 'no' && $user_resident == 'no') --}}
+        {{-- <div class="text-danger bold w50"> No Match Potential </div> --}}
+    {{-- @else --}}
+
+        @if ($dist < 50 && !empty($ind_exp))
+
+            @php
+                $check = true;
+            @endphp
+            
+        @endif
+
+
+    {{-- @endif --}}
+        
+</div>
+    
+
+
+    {{-- @include('site.talent_matcher.algo')  --}}
+
+    {{-- <input type="checkbox" name="cbx[]" value="{{ $js->id }}"> --}}
+
+    {{-- @dump($check) --}}
+    @if ($check)
+        {{-- expr --}}
     <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
         <div class="jobSeeker_box relative dinline_block w100">
             @include('site.layout.parts.jobSeekerProfilePhotoBox')   {{-- site/layout/parts/jobSeekerProfilePhotoBox --}}
@@ -87,10 +139,17 @@
 
     </div>
  --}}
+    @endif
+
+       @php
+        $check = false;
+    @endphp
+    
+
     @endforeach
 
 
-    <div class="jobseeker_pagination cpagination mb20">{!! $jobSeekers->render() !!}</div>
+    {{-- <div class="jobseeker_pagination cpagination mb20">{!! $query->onEachSide(0)->links() !!}</div> --}}
 
     @endif
 

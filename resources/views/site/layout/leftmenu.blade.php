@@ -35,7 +35,7 @@
 
                 <li><a href="{{route('interviewconcierg.user')}}" class="column_narrow_search_results {{(request()->is('interviewconcierge/user'))?'active':''}}"><span class="icon"></span>Interview Concierge</a></li>
 
-                <li><a href="{{route('intetviewInvitation')}}" class="column_narrow_search_results {{(request()->is('Intetview/Invitation'))?'active':''}}"><span class="icon"></span>Interview Invitations</a></li>
+                <li><a href="{{route('intetviewInvitation')}}" class="column_narrow_search_results {{(request()->is('intetview-invitations'))?'active':''}}"><span class="icon"></span>Interview Invitations</a></li>
 
                 <li><a href="{{route('crossreference.user')}}" class="column_narrow_search_results {{(request()->is('crossreference.user'))?'active':''}}"><span class="icon"></span>Cross Reference</a></li>
 
@@ -72,7 +72,7 @@
             </li> --}}
 
             <li>
-                <a id="narrow_menu_link_28" href="" class="column_narrow_hot_or_not  ">
+                <a id="narrow_menu_link_28" href="{{ route('talent_matcher') }}" class="column_narrow_hot_or_not  ">
                     <span class="icon"></span>Talent Matcher
                 </a>
             </li>

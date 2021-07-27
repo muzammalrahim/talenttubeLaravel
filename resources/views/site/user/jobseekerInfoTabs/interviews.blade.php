@@ -38,11 +38,7 @@
     
     <form method="POST" name="interviewTemplateSave" class="interviewTemplateSave newJob job_validation">
         <div class="templateData p10"></div>
-
         <input type="hidden" name="user_id" value="{{$jobSeeker->id}}" class="jsId">
-
-
-
         {{-- <button type="button"> Save response</button> --}}
     </form>
 
@@ -85,8 +81,9 @@
 
     $(document).on("click" , ".conductInterview123" , function(){
         var inttTempId = $('.conductInterview123').val();
+        var employers_instruction = $('.employers_instruction').val();
         var user_id = $('.jsId').val();
-        console.log(user_id);
+        // console.log(user_id);
         $('.conductInterview123').html(getLoader('pp_profile_edit_main_loader conductInterviewLoader')).prop('disabled',true);
         $('.general_error1').html('');
         $.ajaxSetup({
@@ -94,10 +91,9 @@
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/conduct/interview',
-            data: {inttTempId,user_id},
+            data: {inttTempId,user_id,employers_instruction},
             success: function(response){
                 if(response.status == 1){
-                    
                     var message = response.message;
                     $('.recordalreadExist').removeClass('hide_it').text(message);
                     $('.conductInterviewLoader').addClass('hide_it');
@@ -107,15 +103,24 @@
                     $('.recordalreadExist').addClass('hide_it'); },
                     3000);  
                     location.reload();
-
                     // window.location.href = "{{ route('intetviewInvitationEmp')}}" ;
-
                 }
-                else{
-
+                else if(response.status == 0){
+                    var inst_error = response.validator['employers_instruction'].toString();
+                    // var error = inst_error.toString();
+                    console.log(inst_error);
+                    $('.liveInterviewError').removeClass('hide_it');
+                    $('.liveInterviewError').text(inst_error);
+                    $('.conductInterview123').html('Correspondance Interview').prop('disabled',false);
+                    setTimeout(function(){
+                        $('.liveInterviewError').addClass('hide_it');
+                    }, 4000);
+                } 
+                else{ 
+ 
                     var message = response.message;
                     // var abc = response.messge
-                    $('.recordalreadExist').removeClass('hide_it').text(message);
+                    $('.recordalreadExist').removeClass('hide_it').text(message); 
                     $('.interviewTemplateLoader').addClass('hide_it');
                     $('.conductInterview123').html('Error Occured').prop('disabled',false);
                     setTimeout(function(){

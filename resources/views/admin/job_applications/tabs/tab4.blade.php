@@ -6,6 +6,20 @@
       <div class="col-md-10 row">
         {{ Form::text('id', $value = $record->job->user_id , $attributes = array('class'=>'form-control', 'placeholder' => 'id','required'=> 'false','disabled'=> true)) }}
       </div>
+
+     
+
+    </div>
+
+    <div class="form-group row">
+
+
+     {{ Form::label('Company', null, ['class' => 'col-md-2 form-control-label']) }}
+      <div class="col-md-10 row">
+        {{ Form::text('company', $value = $record->job->jobEmployer->company , $attributes = array('class'=>'form-control', 'placeholder' => 'id','required'=> 'false','disabled'=> true)) }}
+      </div>
+
+
     </div>
 
     

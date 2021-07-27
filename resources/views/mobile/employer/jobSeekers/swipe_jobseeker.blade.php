@@ -4,7 +4,7 @@
     {{-- <h6 class="h6 jobAppH6">Job Seekeers</h6> --}}
     <!-- =============================================================================================================================== -->
 
-    @include('mobile.employer.jobSeekers.filter') 
+    @include('mobile.employer.jobSeekers.filter') {{-- mobile/employer/jobSeekers/filter --}} 
 
     <!-- mobile/employer/jobSeekers/filter -->
          @include('mobile.spinner')

@@ -177,10 +177,10 @@ select {
 
                         </div>
                         <div class="col-2 p-0">
-                            <select class="white-text mdb-select md-form filter_location_radius" name="filter_location_radius" data-placeholder="Select Location Radius">
-                                 <option value="5" selected="selected">5km</option>
+                            <select class="white-text mdb-select md-form filter_location_radius" name="filter_location_radius" >
+                                 <option value="5">5km</option>
                                  <option value="10">10km</option>
-                                 <option value="25">25km</option>
+                                 <option value="25" selected="selected" >25km</option>
                                  <option value="50">50km</option>
                                  <option value="51">50km +</option>
                             </select>

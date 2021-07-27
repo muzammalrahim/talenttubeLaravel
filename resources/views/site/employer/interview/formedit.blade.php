@@ -219,69 +219,19 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 
 <style>
-.notbrak{
-    display: inline-block;
-}
-
-.leftMargin{
-    margin-left: 10px;
-}
-.leftMargin2{
-    margin-left: 10%;
-}
-.rightMargin{
-	 margin-right : 10px;
-}
-
-.topMargin{
-    margin-top: 10px;
-}
-
-.textCenter{
-   margin-left: 40%;
-   padding-bottom: 10px !important;
-}
-
-.textCenter2{
-  
-			padding-bottom: 10px !important;
-			font-weight: 600;
-}
-
-.dynamicTextStyle{
-    margin-left: 5px;
-    margin-right: 5px;
-}
-.interviewSlot {
-    border: 2px solid #142d69;
-    width: fit-content;
-    padding: 10px 10px;
-    color: #142d69;
-    border-radius: 5px;
-    opacity: 0.8;
-    font-weight: 600;
-    transition: all 0.5s ease;
-    cursor: pointer;
-}
+.notbrak{display: inline-block;}
+.leftMargin{margin-left: 10px;}
+.leftMargin2{margin-left: 10%;}
+.rightMargin{margin-right : 10px;}
+.topMargin{margin-top: 10px;}
+.textCenter{margin-left: 40%;padding-bottom: 10px !important;}
+.textCenter2{padding-bottom: 10px !important;font-weight: 600;}
+.dynamicTextStyle{margin-left: 5px;margin-right: 5px;}
+.interviewSlot {border: 2px solid #142d69;width: fit-content;padding: 10px 10px;color: #142d69;border-radius: 5px;opacity: 0.8;font-weight: 600;transition: all 0.5s ease;cursor: pointer;}
 .interviewSlot:hover{background: #142d69;color: white;}
-
-.interviewConcierge {
-    background: #254c8e !important;
-}
-
-
-.slot.m_rb20 {
-    display: block;
-    padding: 10px;
-    border: 1px solid #ced1da;
-    border-radius: 3px;
-    clear: both;
-    margin: 0px;
-}
-
-.selectInput>.jq-selectbox>.jq-selectbox__dropdown>ul , .selectedInput>.jq-selectbox__dropdown>ul {
-    height: 200px;
-}
+.interviewConcierge {background: #254c8e !important;}
+.slot.m_rb20 { display: block;padding: 10px;border: 1px solid #ced1da;border-radius: 3px;clear: both;margin: 0px;}
+.selectInput>.jq-selectbox>.jq-selectbox__dropdown>ul , .selectedInput>.jq-selectbox__dropdown>ul { height: 200px; }
 </style>
 @stop
 
@@ -290,15 +240,16 @@
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
-
 <script type="text/javascript">
+
+
+        // $('.datepicker').datepicker({ dateFormat: "yy-mm-dd", minDate: 0, });
 
 jQuery('.datepicker').datepicker({
       // minDate: +1, // this will disable today date and previous date
       minDate: 0, 
+      dateFormat: "yy-mm-dd", minDate: 0,
+
      
 });
 //   ============================================= Code commented for adding new slot on click function =============================================

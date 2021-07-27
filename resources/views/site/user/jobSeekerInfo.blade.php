@@ -379,6 +379,7 @@
 
     <a id="tabs-7" class="tab_link tab_a"></a>
     <div class="tab_interviews tab_cont pt30px">
+        {{-- @dd($UserInterview); --}}
         @include('site.user.jobseekerInfoTabs.interviews')
         {{--    site/user/jobseekerInfoTabs/interviews  --}}
     </div>

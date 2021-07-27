@@ -99,13 +99,13 @@
                             <div class="mb10">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot fl_right tk"></i></span></div>
                                 <div class="time">
                                 <div class="notbrak">Time</div>
-                                <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot[1][start]" size="8" required /></div>
+                                <div class="notbrak"><input type="text" class="timepicker pointer timepicker-without-dropdown text-center checkstatus" autocomplete="off" name="slot[1][start]" size="8" required /></div>
                                 <div class="notbrak">To</div>
-                                <div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatus1" autocomplete="off" name="slot[1][end]" size="8" required /></div>
+                                <div class="notbrak"><input type="text" class="timepicker pointer timepicker-without-dropdown text-center checkstatus1" autocomplete="off" name="slot[1][end]" size="8" required /></div>
                                 </div>
                             <div class="date topMargin">
                                 <span class="notbrak">Date</span>
-                                <input type="text" name="date[1]" class="datepicker notbrak checkstatusDate"  autocomplete="off" size="8" required />
+                                <input type="text" name="date[1]" class="datepicker pointer notbrak checkstatusDate"  autocomplete="off" size="8" required />
 							</div>																			
                               <div class="m_no_i">
                                 <label class="w50 notbrak my10" style="margin-right: 5px;">Maximum number of interviewees:</label>
@@ -295,22 +295,16 @@ $(".addSlot").bind('click', function(){
     var timeEndValue = $('.checkstatus1').val();
     var timeDateValue = $('.checkstatusDate').val();
     var checkstatusjq = $('.checkstatusjq').last().val();
-
-    // console.log("This is the vlaue" , timeValue);
-    // console.log("This is the vlaue" , timeEndValue);
-    // console.log("This is the vlaue" , timeDateValue);
-    // console.log("This is the vlaue" , checkstatusjq);
-
     var array = [timeValue,timeEndValue,timeDateValue];
     // const obj = Object.assign({}, array);
     console.log(array);
 
-if($.inArray(checkstatusjq, array)){
-    if(($('.ui-timepicker-viewport li a').text()) == timeValue ){
-        $(this).css('display', 'block');
-  
+    if($.inArray(checkstatusjq, array)){
+        if(($('.ui-timepicker-viewport li a').text()) == timeValue ){
+            $(this).css('display', 'block');
+      
+        }
     }
-}
     // if(timeValue != "" && timeEndValue != "" && timeDateValue != "")
     // {
 
@@ -323,13 +317,13 @@ if($.inArray(checkstatusjq, array)){
 				slot  += '</div>';																										
                 slot  += '<div class="time">';
                 slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center checkstatusjq" autocomplete="off" name="slot['+i+'][start]" size="8" required /></div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker pointer timepicker-without-dropdown text-center checkstatusjq" autocomplete="off" name="slot['+i+'][start]" size="8" required /></div>';
                 slot  += '<div class="notbrak dynamicTextStyle">To</div>';
-                slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end]" size="8" required /></div>';
+                slot  += '<div class="notbrak"><input type="text" class="timepicker pointer timepicker-without-dropdown text-center" autocomplete="off" name="slot['+i+'][end]" size="8" required /></div>';
                 slot  += '</div>';
                 slot  += '<div class="date topMargin">';
                 slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
-                slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" autocomplete="off" size="8" required />';
+                slot  += '<input type="text" name="date['+i+']" class="datepicker pointer notbrak" autocomplete="off" size="8" required />';
                 slot  += '</div>';
                 slot  += '<div class="m_no_i">';
                     slot  += '<label class="w50 notbrak my10" style="margin-left: 5px;">Maximum number of interviewees:</label>';
@@ -363,7 +357,11 @@ if($.inArray(checkstatusjq, array)){
                 slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
 																     i++;
         $('.slots').append(slot);
-        $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+        $(".datepicker").datepicker({ 
+            dateFormat: "yy-mm-dd" , minDate: 0, 
+
+        });
+        
         $('input.timepicker').timepicker({});
         $('#slotsCounter').val(this.value);
         $('input, select').styler();
@@ -412,52 +410,62 @@ $('i').click(function(){
 
 // ============================================= Deleting Slot FUnction end here =============================================
 
+jQuery('.datepicker').datepicker({
+      // minDate: +1, // this will disable today date and previous date
+      minDate: 0, 
+      dateFormat: "yy-mm-dd", minDate: 0,
+
+     
+});
+
 $(document).ready(function(){
     $('input.timepicker').timepicker({});
     $('input, select').styler();
     $('.saveNewBooking').on('click',function() {
-    event.preventDefault();
-    var formData = $('.new_booking_form').serializeArray();
-    $('.saveNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
-    console.log(' formData ', formData);
-    $('.general_error').html('');
-    $.ajax({
-    type: 'POST',
-    url: base_url+'/ajax/booking/new',
-    data: formData,
-    success: function(data){
-        console.log(' data ', data);
-        $('.saveNewBooking').html('Save').prop('disabled',false);
-        if( data.status == 1 ){
-            window.location.replace(data.route);
-        }else{
-            $('.general_error').html('<p>Fill all required fields</p>').removeClass('to_hide').addClass('to_show');
-            if(data.validator != undefined){
-                const keys = Object.keys(data.validator);
-                for (const key of keys) {
-                    if($('#'+key+'_error').length > 0){
-                        $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(data.validator[key][0]);
-                    }
-                }
-
-                setTimeout(() => {
-                    for (const key of keys) {
-                        if($('#'+key+'_error').length > 0){
-                            $('#'+key+'_error').removeClass('to_show').addClass('to_hide').text(data.validator[key][0]);
+        event.preventDefault();
+        var formData = $('.new_booking_form').serializeArray();
+        $('.saveNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+        console.log(' formData ', formData);
+        $('.general_error').html('');
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/booking/new',
+            data: formData,
+            success: function(data){
+                console.log(' data ', data);
+                $('.saveNewBooking').html('Save').prop('disabled',false);
+                if( data.status == 1 ){
+                    window.location.replace(data.route);
+                }else{
+                    $('.general_error').html('<p>Fill all required fields</p>').removeClass('to_hide').addClass('to_show');
+                    if(data.validator != undefined){
+                        const keys = Object.keys(data.validator);
+                        for (const key of keys) {
+                            if($('#'+key+'_error').length > 0){
+                                $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(data.validator[key][0]);
+                            }
                         }
-                    }
-                }
-                    ,3000);
-            }
-           if(data.error != undefined){
-             $('.general_error').append(data.error);
-           }
-           setTimeout(() => { $('.general_error').removeClass('to_show').addClass('to_hide').text(''); },3000);
-        }
 
-    }
-});
-});
+                        setTimeout(() => {
+                            for (const key of keys) {
+                                if($('#'+key+'_error').length > 0){
+                                    $('#'+key+'_error').removeClass('to_show').addClass('to_hide').text(data.validator[key][0]);
+                                }
+                            }
+                        }
+                            ,3000);
+                    }
+                   if(data.error != undefined){
+                     $('.general_error').append(data.error);
+                   }
+                   setTimeout(() => { $('.general_error').removeClass('to_show').addClass('to_hide').text(''); },3000);
+                }
+
+            }
+        });
+    });
+
+
 });
 
 </script>

@@ -2,26 +2,71 @@
  {{-- @dd($jobSeekers) --}}
 
 
-{{-- <div class="row">
-    <div class="col-6"></div>
-    <div class="col-6">
-        <a class="btn btn-sm btn-primary btnBulkPDFGenerate">Bulk Snap Shot</a>
-    </div>
-</div> --}}
+  @php
+        $check = false;
+    @endphp
 
-@if(isset($jobSeekers))
-@if ($jobSeekers && $jobSeekers->count() > 0)
+@if(isset($query))
+@if ($query && $query->count() > 0)
 
 
-    @foreach ($jobSeekers as $js)
+    @foreach ($query as $js)
 
-    {{-- @dump($js) --}}
+
+    <div class="dflex"> 
+    @php
+        $dist = calculate_distance($js, $user);
+        $ind_exp = cal_ind_exp($js,$user);
+        $compatibility = compatibility($js, $user); 
+        $user_compat = $compatibility*20;
+        // dump($user_compat);
+        // $resident = initial_last_question($js,$user);
+
+        // ========================= excluded 6th question ========================= 
+        
+        $emp_questions = json_decode($js->questions , true);
+        $user_questions = json_decode($user->questions , true);
+
+        $emp_resident = '';
+        $user_resident = '';
+        
+        if ($emp_questions != null && $user_questions != null) {
+            $emp_match = array_slice($emp_questions, 5, 6, true);
+            foreach ($emp_match as $key => $value) {
+                $emp_resident .= $value;
+            }
+            $user_match = array_slice($user_questions, 5, 6, true);
+            foreach ($user_match as $key => $value) {
+                $user_resident .= $value;
+            }
+        }
+
+    @endphp
+
+        {{-- @dump($emp_resident) --}}
+
+    {{-- @if ($emp_resident == 'no' && $user_resident == 'no') --}}
+        {{-- <div class="text-danger bold w50"> No Match Potential </div> --}}
+    {{-- @else --}}
+
+        @if ($dist < 50 && !empty($ind_exp))
+
+            @php
+                $check = true;
+            @endphp
+            
+        @endif
+
+
+    {{-- @endif --}}
+        
+</div>
     
-    {{-- <div class="form-check my-3">
-        <input type="checkbox"  class="form-check-input bulk_generatePdf" id="materialUnchecked_{{ $js->id }}" name="cbx[]" value="{{ $js->id }}">
-        <label class="form-check-label" for="materialUnchecked_{{ $js->id }}"></label>
-    </div> --}}
 
+
+@if ($check)
+    {{-- @dump($js) --}}
+    {{-- @dump($check) --}}
     <div class="card border-info mb-3 shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
 
         <div class="card">
@@ -47,6 +92,8 @@
 
             <div class="card-body jobAppBody pt-2">
                 <div class="row jobInfo">
+
+
                     <div class="col-4 p-0">
                         <img class="img-fluid z-depth-1" src="{{$profile_image}}" height="100px" width="100px">
                     </div>
@@ -54,12 +101,6 @@
                     <div class="col p-0 pl-3">
                         <div class="jobInfoFont">Recent Job</div>
                         <div><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}} </b> </div>
-
-                        {{-- <div class="jobInfoFont mt-2">Interested In</div>
-                        <div>
-                        {{$js->interested_in}}
-                        </div> --}}
-
                         <div class="jobInfoFont mt-2">Salary Range</div>
                         <div>{{getSalariesRangeLavel($js->salaryRange)}}</div>
 
@@ -67,31 +108,22 @@
 
                 </div>
 
-                <div class="row p-0">
+                <div class="row">	
+
+                	@include('mobile.talent_matcher.algo')  {{-- mobile/talent_matcher/algo --}}
+
+                </div>
+
+                {{-- <div class="row p-0">
                     <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Interested In</div>
                 </div>
-                <p class="card-text jobDetail row mb-1">{{$js->interested_in}}</p>
+                <p class="card-text jobDetail row mb-1">{{$js->interested_in}}</p> --}}
 
 
-                <div class="row p-0">
+                {{-- <div class="row p-0">
                     <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">About Me</div>
                 </div>
                 <p class="card-text jobDetail row mb-1">{{$js->about_me}}</p>
-
-                {{-- <div class="row p-0">
-                    <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Qualification</div>
-                </div>
-
-                @php
-                 $qualification_names =  getQualificationNames($js->qualification)
-                @endphp
-
-                 @if(!empty($qualification_names))
-                    @foreach ($qualification_names as $qnKey => $qnValue)
-                        <p class="card-text jobDetail row mb-1 qualification dblock">{{$qnValue}}</p>
-
-                    @endforeach
-                 @endif --}}
 
                  <div class="row p-0">
                     <span class="jobInfoFont">Qualification:</span>
@@ -100,28 +132,26 @@
                 <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
                         <span class="qualifTypeSpan">{{$js->qualificationType}}</span>
                 </div>
-                    {{-- {{implode(', ', getQualificationNames($js->qualification))}} --}}
                 @php
                     $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
                 @endphp
                     @if(!empty($qualificationsData))
                         @foreach($qualificationsData as $qualification)
                             <div class="jobDetail">
-                                            <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
+                                    <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
                             </div>
                         @endforeach
-                    @endif
+                    @endif --}}
 
                 <div class="row p-0">
-                <div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Industry Expereience</div>
-            </div>
-            {{-- <div class="js_interested js_field"> --}}
-                {{-- <span class="js_label">Industry Experience:</span> --}}
-                    @if(isset($js->industry_experience))
-                    @foreach ($js->industry_experience as $ind)
-                         <p class="card-text jobDetail row mb-1 qualification dblock">{{getIndustryName($ind)}} </p>
-                    @endforeach
-                    @endif
+                	<div class="card-title col p-0 mt-2 mb-0 jobInfoFont">Industry Expereience</div>
+            	</div>
+
+                @if(isset($js->industry_experience))
+                @foreach ($js->industry_experience as $ind)
+                     <p class="card-text jobDetail row mb-1 qualification dblock">{{getIndustryName($ind)}} </p>
+                @endforeach
+                @endif
 
                     
 
@@ -132,7 +162,7 @@
 
             {{-- ============================================ Card Footer ============================================ --}}
 
-            <div class="card-footer text-muted jobAppFooter p-1">
+            {{-- <div class="card-footer text-muted jobAppFooter p-1">
                 <div class="float-right">
                     <a class="jobDetailBtn graybtn jbtn m5 btn btn-sm btn-primary ml-0 btn-xs" target ="_blank" href="{{route('MjobSeekersInfo', ['id' => $js->id])}}">View Profile</a>
                     <a class="jsBlockButton btn btn-sm btn-danger mr-0 btn-xs" data-jsid ="{{$js->id}}">Block</a>
@@ -143,29 +173,32 @@
                     @endif
 
                 </div>
-            </div>
+            </div> --}}
 
             {{-- ============================================ Card Footer end ============================================ --}}
 
         </div>
 
     </div>
+@endif
 
+       @php
+        $check = false;
+    @endphp
+    
 @endforeach
-<div class="jobseeker_pagination cpagination">{!! $jobSeekers->links() !!}</div>
+
+{{-- <div class="jobseeker_pagination cpagination">{!! $query->onEachSide(0)->links() !!}</div> --}}
+
 @endif
 
 
-{{-- <div class="d-none">
-  <form method="POST" class="bulkPDFExportForm" action="{{route('empBulk.GeneratePDF')}}">
-    @csrf
-    <div class="cbx_list">
-    </div>
-  </form>
-</div> --}}
+
 
 {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> --}}
 <script type="text/javascript" src="{{ asset('js/mobile/likeUnlikeBlockUnblockJS.js') }}"></script>
+
+
 <script type="text/javascript">
 
     $('.unlikeEmpButton').click(function(){

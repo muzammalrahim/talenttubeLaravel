@@ -1,5 +1,8 @@
 <div class="tab-pane fade show active" id="custom-tabs-one-home" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
 
+
+	{{-- @if (isset($UserInterview)) --}}
+		{{-- expr --}}
 	@if ($UserInterview->count() > 0)
 		{{-- expr --}}
 	
@@ -52,6 +55,8 @@
 	@else 
 		<h5 class="font-weight-bold"> No interview yet </h5>
 	@endif
+	{{-- @endif --}}
+
 
     <a class="btn btn-primary btnNext text-white" style="float: right;"onclick="scrollToTop()">Next</a>
 
