@@ -36,9 +36,19 @@
         <div class="form-group row">
           {{ Form::label('type', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
-            {{ Form::text('type', $value = $record->type , $attributes = array('class'=>'form-control', 'required'=> 'false')) }}
+            {{ Form::select('type', $value = $type , $attributes = array('class'=>'form-control', 'required'=> 'false')) }}
           </div>
         </div>
+
+        <div class="form-group row">
+          {{ Form::label('employers instruction', null, ['class' => 'col-md-2 form-control-label']) }}
+          <div class="col-md-10">
+            {{ Form::text('employer_instruction', $value = $record->employer_instruction , $attributes = array('class'=>'form-control', 'placeholder' => 'Employers instruction' , 'required'=> 'false')) }}
+          </div>
+        </div>
+
+
+
 
         
 
@@ -47,24 +57,39 @@
         @endphp
         @foreach ($questions as $key => $question)
           
-
+          {{-- @dump($questions); --}}
 
           <div class="form-group row oldQuestion">
             
             {{-- <input type="hidden" name="oldQuestion[{{$key+1}}][id]" value="{{$question->id}}" /> --}}
 
             <label for="tempQuestions" class="col-sm-2 col-form-label">Question <span class="test">{{$key+1}}</span>  </label>
-            <div class="col-sm-9">
+            <div class="col-sm-8">
 
-              <input type="hidden" name="question[{{$key+1}}][id]" value="{{$question->id}}" />
-              <input type="text" class="form-control" name="question[{{$key+1}}][text] " id="tempQuestions" placeholder="Password" value=" {{$question->question}} " >
+              <input type="hidden" name="questions[{{$key+1}}][id]" value="{{$question->id}}" />
+              <input type="text" class="form-control" name="questions[{{$key+1}}][question] " id="tempQuestions" placeholder="Password" value=" {{$question->question}} " >
 
             </div>
 
-            <div class="col-md-1">
+            {{-- <div class="col-md-1">
               <span class="pointer removeOldQuestion btn btn-danger" value = "{{$question->id}}"> Remove</span>
               <input type="hidden" name="" class="tempLateId" value=" {{$record->id}} " >
+            </div> --}}
+
+
+
+            <div class="col-md-2">
+              <input name="questions[{{ $key+1 }}][video_response]" {{ ($question['video_response'] == 1)? 'checked':'' }} type="checkbox">
+              <span class="col-md-2">Video Reponse</span>
+              <i class="fa fa-trash removeOldQuestion text-danger pointer" value = "{{$question->id}}"></i>
+              <input type="hidden" name="" class="tempLateId" value=" {{$record->id}} " >
+
             </div>
+
+
+            
+
+
           </div>
 
         @endforeach
@@ -165,13 +190,30 @@ $(document).ready(function(){
    $(document).on('click','.addTemplateQuestion', function(){
     console.log(' Add Question ');
     if(i <= 10){
-      var newQuestionsList = '<div class="row questions t'+i+' ">';
-      newQuestionsList += '<div class="text col-md-2 font-weight-bold">Question '+i+'</div>';
-      newQuestionsList +='<input name="newquestion[][new]" class="questionInput form-control col-md-9">';
-      newQuestionsList += '</input>';
-      newQuestionsList += '<span class="removeQuestion btn btn-danger col-md-1">Remove</span>';
-      newQuestionsList += '</div>';
-      i++;  
+      
+
+      // var newQuestionsList = '<div class="row questions t'+i+' ">';
+      // newQuestionsList += '<div class="text col-md-2 font-weight-bold">Question '+i+'</div>';
+      // newQuestionsList +='<input name="newquestion[][new]" class="questionInput form-control col-md-9">';
+      // newQuestionsList += '</input>';
+      // newQuestionsList += '<span class="removeQuestion btn btn-danger col-md-1">Remove</span>';
+      // newQuestionsList += '</div>';
+      // i++;  
+
+
+      var newQuestionsList = '<div class="form-group row questions t'+i+' ">';
+      newQuestionsList    += '<label for="Question 1" class="col-md-2 form-control-label">Question '+i+' </label>';
+      newQuestionsList    += '<div class="col-md-8">';
+      newQuestionsList    += '<input class="form-control questionInput" placeholder="Question for interview" required="false" name="newquestions['+i+'][question]" type="text"></div>';
+      newQuestionsList    += '<div class="col-md-2">';
+      newQuestionsList    += '<input name="newquestions['+i+'][video_response]" type="checkbox">';
+      newQuestionsList    += '<span class="col-md-2">Video Reponse</span>'
+      newQuestionsList    += '<i class="fa fa-trash removeQuestion text-danger pointer"></i>';
+      newQuestionsList    += '</div>';
+      newQuestionsList    += '</div>';
+
+
+
     }
     else{
       return false;

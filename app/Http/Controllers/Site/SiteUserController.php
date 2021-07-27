@@ -545,9 +545,9 @@ class SiteUserController extends Controller
             $user->country = $request->country;
             $user->state = $request->state;
             $user->city =  $request->city;
-            $user->bday = $request->day;
-            $user->bmonth = $request->month;
-            $user->byear = $request->year;
+            // $user->bday = $request->day;
+            // $user->bmonth = $request->month;
+            // $user->byear = $request->year;
             $user->location_lat     = $request->location_lat;
             $user->location_long    = $request->location_long;
             // $user->location         = $request->location_name;

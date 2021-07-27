@@ -225,30 +225,44 @@ class InterviewController extends Controller
                 // echo " update  ".$single_slot['id']; 
                 // dd($single_slot['jsEmail']);
                 $slot = Slot::where('id',$single_slot['id'])->first();
+                // for sending email to jobseeker who booked interview on this slot
+                $interviewID = $data['interview_id'];
+                $positionNameInSlot = $data['positionnameInSlot'];
+                $companyNameInSlot = $data['companyname'];
+                $newStartTime = $single_slot['start'];
+                $newEndTime = $single_slot['end'];
+                $newdate = $single_slot['date'];
+                $userEmail = isset($single_slot['jsEmail'])?($single_slot['jsEmail']):(null);
+
+                if ($slot->starttime != $single_slot['start'] || $slot->endtime != $single_slot['end'] || $slot->date != $single_slot['date']) {
+                    // dd('Something Changed');
+                    if($userEmail){
+                        Mail::to($single_slot['jsEmail'])->send(new updateSlotToUserEmail($interviewID,$positionNameInSlot,$companyNameInSlot,$newStartTime,$newEndTime,$newdate));
+                    }
+                }
+
+
+                // dd('Nothing Changed');
+
                 // dd($data['companyname']);
                 $slot->date = $single_slot['date'];
                 $slot->starttime = $single_slot['start'];
                 $slot->endtime = $single_slot['end'];
                 $slot->interview_id = $data['interview_id'];
                 
+
+                // dd($slot->starttime , $single_slot['start']);
                 $slot->maximumnumberofinterviewees = $single_slot['maxNumberofInterviewees'];
                 $slot->numberofintervieweesbooked =0;
                 $slot->is_housefull = false;
 
-                $interviewID = $data['interview_id'];
-                $positionNameInSlot = $data['positionnameInSlot'];
-                $companyNameInSlot = $data['companyname'];
-                // dd($companyNameInSlot);
-                $newStartTime = $single_slot['start'];
-                $newEndTime = $single_slot['end'];
-                $newdate = $single_slot['date'];
-                
-                $userEmail = isset($single_slot['jsEmail'])?($single_slot['jsEmail']):(null);
+
+                // "hassaansaeed1@gmail.com"
+
+               
 
                 // dd($single_slot['jsEmail']);
-                if($userEmail){
-                     Mail::to($single_slot['jsEmail'])->send(new updateSlotToUserEmail($interviewID,$positionNameInSlot,$companyNameInSlot,$newStartTime,$newEndTime,$newdate));
-                }
+                
 
                 $slot->save();
 
@@ -918,6 +932,79 @@ class InterviewController extends Controller
                 dd("nothing here for u");
             }
         }    
+    }
+
+
+    // ================================================== Save Response As Jobseeker interview_video_reponse ==================================================
+
+    public function interview_video_reponse(Request $request){
+        // dd($request->toArray());
+        $user = Auth::user();
+        $video = $request->file('video');
+
+        // $rules = array('video.*' => 'required|file|max:20000');
+        $rules = array('video' => 'required|file|max:50000');
+        // $rules = array('video.*' => 'required|file|max:2');
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => '0',
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        }
+
+        $mime = $video->getMimeType();
+        if (
+            $mime == "video/x-flv"             || $mime == "video/mp4"             || $mime == "application/x-mpegURL" ||
+            $mime == "video/MP2T"             || $mime == "video/3gpp"             || $mime == "video/quicktime" ||
+            $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"
+        ) {
+            $fileOriginalName = $video->getClientOriginalName();
+            // $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
+            $fileName = $fileOriginalName;
+            $storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
+            // store video in private folder by default.
+            $storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
+            $video = new Video();
+            $video->title = $fileName;
+            $video->type = $mime;
+            $video->user_id = $user->id;
+            $video->status = 2;
+            // $video->file =  $user->id . '/private/videos/' . $fileName;
+            $video->file = $user->id.'/videos/'.$fileName;
+            $video->save();
+
+            $history = new History;
+            $history->user_id = $user->id; 
+            $history->userGallery = $video->title; 
+            $history->type = 'Video_upload'; 
+            $history->save();
+
+            // generate video thumbs.
+            $video->generateThumbs();
+            $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;">';
+            $html .=    '<a onclick="UProfile.showVideoModal(\''.assetVideo($video).'\')" class="video_link" target="_blank">';
+            $html .=        '<div class="v_title_shadow"><span class="v_title">'.$video->title.'</span></div>';
+            $html .=        generateVideoThumbs($video);
+            $html .=    '</a>';
+            $html .=    '<span title="Delete video" class="icon_delete" data-vid="12" onclick="UProfile.delteVideo('.$video->id.')">';
+            $html .=        '<span class="icon_delete_photo"></span>';
+            $html .=        '<span class="icon_delete_photo_hover"></span>';
+            $html .=    '</span>';
+            $html .=    '<div class="v_error error hide_it"></div>';
+            $html .=  '</div>';
+
+            return response()->json([
+                'status' => '1',
+                'data'   => $video,
+                'html'  =>  $html
+            ]);
+        } else {
+            return response()->json([
+                'status' => '0',
+                'validator' =>  $validator->errors()->add('video', 'Video MimeType not allowed')
+            ]);
+        }
     }
 
 

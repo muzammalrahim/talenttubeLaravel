@@ -323,15 +323,15 @@ class AdminInterviewController extends Controller
         $data = $request->all();
         // dd($data);
 
-        foreach($data['question'] as $key =>$value){
+        foreach($data['questions'] as $key =>$value){
 
-                if(in_array(null, $value, true))
-                {
-                    return response()->json([
-                        'status' => 0,
-                        'error' =>  "please complete question"
-                    ]);
-                }
+            if(in_array(null, $value, true))
+            {
+                return response()->json([
+                    'status' => 0,
+                    'error' =>  "please complete question"
+                ]);
+            }
         }
 
         $interviewTemplate = InterviewTemplate::where('id' , $id)->first();
@@ -343,31 +343,52 @@ class AdminInterviewController extends Controller
         //     'message' => 'Template updated Successfully'
         // ]);
 
-        foreach ($data['question'] as $question) {
+        foreach ($data['questions'] as $question) {
 
             if (isset($question['id'])) {
                 $tempQuestion = InterviewTempQuestion::where('id' , $question['id'])->get();
                 foreach ($tempQuestion as $tempQ) {
-                    $tempQ->question = $question['text'];
+                    // dd($tempQ);
+                    $tempQ->question = $question['question'];
+                    if (isset($question['video_response'])) {
+                    // dd($tempQ);
+                        $tempQ->video_response = 1;
+                    }
+                    else{  
+                        $tempQ->video_response = 0;
+                    }
                     $tempQ->save();
                 }
             }
 
             else{
                 
-                $tempQuestion = new InterviewTempQuestion;
-                $tempQuestion->temp_id = $id;
-                $tempQuestion->question = $data['new'];
-                $tempQuestion->save();
+                // $tempQuestion = new InterviewTempQuestion;
+                // $tempQuestion->temp_id = $id;
+                // $tempQuestion->question = $data['new'];
+                // $tempQuestion->save();
+                // dd('hi are you');
             }
         }
 
-        if (isset($data['newquestion'])) {
-            foreach ($data['newquestion'] as $newQuest) {
-            $tempQuestion = new InterviewTempQuestion;
-            $tempQuestion->temp_id = $id;
-            $tempQuestion->question = $newQuest['new'];
-            $tempQuestion->save();
+        if (isset($data['newquestions'])) {
+
+            // dd()
+            foreach ($data['newquestions'] as $new_quest) {
+            $new_question = new InterviewTempQuestion;
+            $new_question->temp_id = $id;
+            $new_question->question = $new_quest['question'];
+
+            if (isset($new_quest['video_response'])) {
+                // dd('hi are you');
+                
+                $new_question->video_response = 1;
+            }
+            else{
+                $new_question->video_response = 0;
+            }
+
+            $new_question->save();
             }
 
         }
@@ -390,10 +411,10 @@ class AdminInterviewController extends Controller
         // dd($data);
          $this->validate($request, [
             'template_name' => 'required|max:255',
-            'question' => 'required|max:255',
+            'questions.*.question' => 'required|max:255',
         ]);
         // dd($data['question']);
-        if(in_array(null, $data['question'], true))
+        if(in_array(null, $data['questions'], true))
             {
                 return response()->json([
                     'status' => 0,
@@ -406,10 +427,17 @@ class AdminInterviewController extends Controller
             $temp->template_name = $data['template_name'];
             $temp->type = $data['type'];
             $temp->save();
-            foreach ($data['question'] as $question) {
+            foreach ($data['questions'] as $key => $question) {
+                // dd($question);
                 $tempQuestion = new InterviewTempQuestion;
-                $tempQuestion->question =  $question; 
+                $tempQuestion->question =  $question['question']; 
                 $tempQuestion->temp_id =  $temp->id;
+                if (isset($question['video_response'])) {
+                    $tempQuestion->video_response = 1;
+                }
+                else{
+                    $tempQuestion->video_response = 0;
+                }
                 $temp->tempQuestions()->save($tempQuestion);
 
             }
@@ -612,12 +640,10 @@ class AdminInterviewController extends Controller
             $data['interviewTemplate'] = $interviewTemplate;
             $data['InterviewTempQuestion'] = $InterviewTempQuestion;
                 if (isAdmin()) {
-                    return view('admin.job_applications.interviewTemplate.template' , $data); 
-                    // admin/job_applications/interviewTemplate/template
+                    return view('admin.job_applications.interviewTemplate.template' , $data);  // admin/job_applications/interviewTemplate/template
                 }
                 else{
-                    return view('site.employer.interviewTemplate.template' , $data);
-                    // site/employer/interviewTemplate/template
+                    return view('site.employer.interviewTemplate.template' , $data); // site/employer/interviewTemplate/template
 
                 }
             }
@@ -626,6 +652,10 @@ class AdminInterviewController extends Controller
             return false;
         }
     }
+
+
+
+    
 
 
 }

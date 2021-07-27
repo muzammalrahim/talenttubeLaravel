@@ -234,6 +234,13 @@ class JobSeekerController extends Controller {
             }
 
         }
+
+        if (isAdmin($user)) {
+            $isallowed = True;
+            $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
+            $data['attachments'] = $attachments;
+
+        }
    
         // =========================================== Paid employer viewing jobseeker ===========================================
         

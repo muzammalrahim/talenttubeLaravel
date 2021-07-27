@@ -491,7 +491,8 @@ class AdminTestController extends Controller
             // dd($JobsApplication->user_id);
             $UserOnlineTest = UserOnlineTest::where('user_id' , $JobsApplication->user_id)->where('status' , 'complete')->get();
             $data['UserOnlineTest'] = $UserOnlineTest; 
-            return view('admin.job_applications.onlineTests.selectOnlineTest' , $data);  /* admin/job_applications/onlineTests/selectOnlineTest */
+            return view('admin.job_applications.onlineTests.selectOnlineTest' , $data);  
+            /* admin/job_applications/onlineTests/selectOnlineTest */
         }
 
     }

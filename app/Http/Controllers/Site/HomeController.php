@@ -1164,12 +1164,12 @@ class HomeController extends Controller {
 
     // =============================================== Interview invitation Url ===============================================
 
-    public function interviewInvitationUrl(Request $request){
+    public function interviewInvitationUrl(Request $request, $url){
 
         if (Auth::check()) {
             $data =  $request->all();
             $user = Auth::user();
-            $UserInterview = UserInterview::where('url', $data['url'])->first();
+            $UserInterview = UserInterview::where('url', $url)->first();
             if (!isset($UserInterview)) { return redirect(route('intetviewInvitation'));}
             $InterviewTempQuestion = InterviewTempQuestion::where('temp_id' , $UserInterview->temp_id)->get();
             $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
@@ -1196,11 +1196,10 @@ class HomeController extends Controller {
                     else{
                         return view('site.user.interviewInvitation.acceptedInterviewInvitation', $data);   
                         // site/user/interviewInvitation/acceptedInterviewInvitation
-
                     }
                 }
                 else{
-                    if  ($UserInterview->user_id != $user->id){
+                    if ($UserInterview->user_id != $user->id){
                         return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser  
                     }
                     else{ 

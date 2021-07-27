@@ -2,6 +2,15 @@
 
 @section('title',$title)
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+
 @section('content_header')
 
 
@@ -36,15 +45,16 @@
     {{-- <div class="dtHeader"> --}}
         {{-- <div class="dtFilter dtHead"> --}}
             <label class="dtFilterLabel col-sm-2 col-form-label">Select Job</label>
-            <select name="filter_job" id="filter_job" class="col-sm-3 form-control custom-select">
-                <option value="">Filter By Job</option>
-                @if(!empty($jobs))
-                    @foreach ($jobs as $job)
-                        <option value="{{$job->id}}"  {{($request->job_id && $request->job_id == $job->id)?'selected="selected"':''}}> {{$job->title}}  ({{ ($job->applicationCount)?($job->applicationCount->aggregate):0 }})</option>
-                    @endforeach
-                @endif
-            </select>
-
+            <div class="col-6"> 
+                <select name="filter_job[]" multiple="multiple" id="filter_job" placeholder = "Filter by Job" class="multi-select form-control custom-select">
+                    {{-- <option value="">Filter By Job</option> --}}
+                    @if(!empty($jobs))
+                        @foreach ($jobs as $job)
+                            <option value="{{$job->id}}"  {{($request->job_id && $request->job_id == $job->id)?'selected="selected"':''}}> {{$job->title}}  ({{ ($job->applicationCount)?($job->applicationCount->aggregate):0 }})</option>
+                        @endforeach
+                    @endif
+                </select>
+            </div>
         {{-- </div> --}}
       {{-- </div> --}}
   {{-- </div> --}}
@@ -114,108 +124,74 @@
             <th>Status</th>
             <th>JobSeeker</th>
             <th>Job</th>
-            <th>Profile</th>
+            <th>Detail</th>
             <th>Goldstar</th>
             {{-- <th>undesirable</th> --}}
             <th>Correspondance</th>
-            <th>Completed Tests</th>
+            <th> Suburb </th>
             <th>Mandatory Testing</th>
             <th>Interview</th>
             <th>Action</th>
         </tr>
     </thead>
-  </table>
+</table>
 
-{{-- <div id="deleteModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-             <div class="modal-header">
-                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-             </div>
-             <div class="modal-body">
+{{--  ================================ View video , resume by clicking on icons ================================ --}}
 
-                <div class="modalContent">
-                    <p>Do you want to Delete <b><span id="delConfirmId"></span></b> Job ?</p>
+@include('admin.job_applications.parts.view_video')
 
-                </div>
+{{--  ================================ View video , resume by clicking on icons ================================ --}}
 
-                <div class="modelProcessing" style="display: none;">
-                        <h4>Deleting job...</h4>
-                 </div>
-
-             </div>
-             <div class="modal-footer">
-                 <button type="button" class="btn btn-danger" id="removejob" style="margin: 0 auto">Yes</button>
-              <input type="hidden" name="deleteConfirm" id="deleteConfirm" value="">
-             </div>
-
-        </div>
-    </div>
-</div> --}}
-
-  <div id="ModalBulkApprovedInfo" class="modal fade ModalBulkApprovedInfo" role="dialog">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-body p-3">
-              <div class="modalContentUser">
-              </div>
-           </div>
-           <div class="modal-footer text-center margin_auto">
-                <button type="button" class="btn btn-default btn-md modelCancelAction" data-dismiss="modal">Cancel</button>
-           </div>
-        </div>
-    </div>
-  </div>
   
   {{-- Bulk Approved Pop Up End --}}
 
-  <div id="divtemp" style="display: none;">
-      <h3>You are bulk assigning a job to <span class="bulkCount"></span> JobSeekers.</h3>
-      <div class="col-12 col-sm-6 col-lg-12">
-          <div class="card card-primary card-tabs">
+<div id="divtemp" style="display: none;">
+    <h3>You are bulk assigning a job to <span class="bulkCount"></span> JobSeekers.</h3>
+    <div class="col-12 col-sm-6 col-lg-12">
+    <div class="card card-primary card-tabs">
 
-            <div class="card-header p-0 pt-1 tabColor"style="background: #6c757d;">
-              <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
+        <div class="card-header p-0 pt-1 tabColor"style="background: #6c757d;">
+          <ul class="nav nav-tabs" id="custom-tabs-one-tab" role="tablist">
 
-                <li class="nav-item col-lg-6">
-                  <a class="nav-link active disableClick" id="jobslist-tab" data-toggle="pill" disabled href="#jobslist" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true"><b>Select Job</b></a>
-                </li>
+            <li class="nav-item col-lg-6">
+              <a class="nav-link active disableClick" id="jobslist-tab" data-toggle="pill" disabled href="#jobslist" role="tab" aria-controls="custom-tabs-one-home" aria-selected="true"><b>Select Job</b></a>
+            </li>
 
-                <li class="nav-item col-lg-6">
-                  <a class="nav-link disableClick" id="question-tab" data-toggle="pill" disabled href="#question" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false"><b>Questions</b></a>
-                </li>
+            <li class="nav-item col-lg-6">
+              <a class="nav-link disableClick" id="question-tab" data-toggle="pill" disabled href="#question" role="tab" aria-controls="custom-tabs-one-profile" aria-selected="false"><b>Questions</b></a>
+            </li>
 
 
-              </ul>
-            </div>
-
-            <div class="card-body">
-
-              <div class="tab-content" id="custom-tabs-one-tabContent">
-                  <div class="tab-pane show active" id="jobslist" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
-                          <table class="table table-bordered" id="dataTablejobs">
-                              <thead>
-                                  <tr style="text-align: center">
-                                      <th>id.</th>
-                                      <th>title</th>
-                                      <th>action</th>
-                                  </tr>
-                              </thead>
-                          </table>
-                  </div>
-                  <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
-                      <div class="modalcontent1">
-
-                      </div>
-                  </div>
-              </div> <!-- tab-content end -->
-            </div>
-
-            <!-- /.card -->
-          </div>
+          </ul>
         </div>
 
-  </div>
+        <div class="card-body">
+
+          <div class="tab-content" id="custom-tabs-one-tabContent">
+              <div class="tab-pane show active" id="jobslist" role="tabpanel" aria-labelledby="custom-tabs-one-home-tab">
+                      <table class="table table-bordered" id="dataTablejobs">
+                          <thead>
+                              <tr style="text-align: center">
+                                  <th>id.</th>
+                                  <th>title</th>
+                                  <th>action</th>
+                              </tr>
+                          </thead>
+                      </table>
+              </div>
+              <div class="tab-pane fade" id="question" role="tabpanel" aria-labelledby="custom-tabs-one-profile-tab">
+                  <div class="modalcontent1">
+
+                  </div>
+              </div>
+          </div> <!-- tab-content end -->
+        </div>
+
+        <!-- /.card -->
+      </div>
+    </div>
+
+</div>
 
 
 {{-- BulkCSV download --}}
@@ -307,7 +283,7 @@
   <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
     <div class="modal-content">
       <div class="modal-header" style="background: #343a40">
-        <p class="heading lead text-white">Online Tests</p>
+        <p class="heading lead text-white onlineTests_header">Online Tests</p>
         <button type="button" class="close modalCloseTopButton text-white" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true" class="white-text">×</span>
         </button>
@@ -487,7 +463,7 @@ $(document).on('click','.btnBulkStatus', function(){
             { data: 'goldstar', name: 'goldstar' },
             // { data: 'preffer', name: 'preffer' },
             { data: 'correspondance', name: 'correspondance' },
-            { data: 'select_test', name: 'select_test' },
+            { data: 'suburb', name: 'suburb' },
             { data: 'test_result', name: 'test_result' },
             { data: 'interview', name: 'interview'},
             { data: 'action', name: 'action'},
@@ -685,10 +661,92 @@ $(document).on('click', '.userTestsModal', function(){
     data: {'id': id},
     success: function(data) {
       // console.log(' data ', data);
+      $('.onlineTests_header').text('Online Tests');
       $('.applyJobModalHeader').html(data);
     }
   });
 });
+
+// ==========================================================================================================
+// Iteration-12
+// ============================================== View Video ============================================== 
+
+$(document).on('click', '.btnUserVideoInfo', function() {
+  var UserInfoId = parseInt($(this).attr('user-id'));
+  $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+  $.ajax({
+      type: 'GET',
+      url: '{!! route('users.profileVideoPopup') !!}',
+      data: {'id': UserInfoId},
+      beforeSend: function(){
+         $('#ModaluserInfo').modal('show');
+      },
+      success: function(data) {
+        // console.log(' data ', data);
+        $('.ModaluserInfo  .modalContentUser').html(data);
+      }
+  });
+});
+
+// ============================================== View Resume ============================================== 
+
+
+$(document).on('click','.btnUserResumeInfo', function(){
+  console.log(' btnUserResumeInfo click ');
+  var UserInfoId = parseInt($(this).attr('user-id'));
+  $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+  $.ajax({
+      type: 'GET',
+      url: '{!! route('users.resumeData') !!}',
+      data: {'id': UserInfoId},
+      beforeSend: function(){
+         // $('#ModaluserInfo').modal('show');
+      },
+      success: function(data) {
+        console.log('data ', data);
+        if(data != ''){
+          window.open(data, '_blank')
+        }
+        // $('.ModaluserInfo  .modalContentUser').html(data);
+      }
+  });
+});
+
+
+// $('#filter_job').multiSelect();
+
+// =============================================== Get Gold Star questions and answers  ===============================================
+
+// $(document).on('click', '.userTestsModal', function(){
+    this.getGoldStarAnswers = function(jobApp_id){
+        console.log(jobApp_id);
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+          $.ajax({
+            type: 'GET',
+            url: '{!! route('application_answers') !!}',
+            data: {'id': jobApp_id},
+            success: function(data) {
+              // console.log(' data ', data);
+              $('.onlineTests_header').text('Application Answers');
+              $('.applyJobModalHeader').html(data);
+            }
+          });
+    }
+  // var id = $(this).attr('jobApp_id');
+  // console.log(id);return;
+/*  $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+  $.ajax({
+    type: 'GET',
+    url: '{!! route('getOnlineTestJobApplications') !!}',
+    data: {'id': id},
+    success: function(data) {
+      // console.log(' data ', data);
+      $('.onlineTests_header').text('Online Tests');
+      $('.applyJobModalHeader').html(data);
+    }
+  });*/
+// });
+
 
 </script>
 @stop
@@ -703,3 +761,14 @@ $(document).on('click', '.userTestsModal', function(){
 
 </style>
 @stop
+
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $('#filter_job').select2();
+    // allowClear: true,
+    placeholder: "Leave blank to ..."
+});
+
+</script>

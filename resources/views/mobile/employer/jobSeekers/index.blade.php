@@ -137,6 +137,27 @@ var getDataCustom = function(){
     });
 }
 });
+
+
+
+// =========================================================== Bulk Snapshot ===========================================================
+
+$(document).on('click','.btnBulkPDFGenerate', function(){
+  console.log(' btnBulkPDFGenerate click ');
+  var cbx = $('input[name="cbx[]"]:checked').map(function(){return $(this).val(); }).toArray();
+  console.log(cbx);
+
+    if(cbx.length <= 0){
+      alert('Please Select Checkboxes');
+      return false;
+    }
+    var cbx_hidden =  '';
+    cbx.forEach(function(id){ cbx_hidden += '<input type="hidden" name="cbx[]" value="'+id+'" />'  });
+    $('.bulkPDFExportForm .cbx_list').html(cbx_hidden);
+    $('.bulkPDFExportForm').submit();
+});
+
+
 </script>
 @stop
 

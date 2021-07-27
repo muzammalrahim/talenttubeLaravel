@@ -2061,9 +2061,6 @@ class MobileUserController extends Controller
         		$latitude = $request->location_lat;
 	            $longitude = $request->location_long;
             	if (isset($request->filter_location_radius)) {
-
-            		// dd(' Sab Kuch Selected');
-
 		            $radius = $request->filter_location_radius;
 		            $radius_sign = ($radius <= 50)?'<':'>';
 
@@ -2080,7 +2077,7 @@ class MobileUserController extends Controller
             	}
 
             	else{
-
+            		
             		$query = $query->selectRaw("*,
 	                     ( 6371 * acos( cos(radians('".$latitude."'))
 	                     * cos( radians(location_lat))
@@ -2088,10 +2085,7 @@ class MobileUserController extends Controller
 	                     + sin( radians('".$latitude."'))
 	                     * sin( radians( location_lat )))
 	                     ) AS distance")
-	                // ->having("distance", $radius_sign, $radius)
 	                ->orderBy("distance",'desc');
-
-            		// dd(' Km not selected ');
             	}
                 
 
@@ -3945,6 +3939,9 @@ class MobileUserController extends Controller
             }
         }
     }
+
+
+   
 
 
 

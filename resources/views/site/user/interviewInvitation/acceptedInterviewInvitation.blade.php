@@ -2,6 +2,12 @@
 
 @extends('site.employer.employermaster')
 
+
+@section('custom_js')
+
+<script src="{{ asset('js/site/userProfile.js') }}"></script>
+
+@stop
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
@@ -20,13 +26,13 @@
       <h3> <b> {{$UserInterview->js->name}} </b> has not accepted your interview proposal yet. </h3>
     @else
 
-      {{-- if jobseeker has not accepted the interview yet --}}
+    {{-- ========================================= if jobseeker has not accepted the interview yet ========================================= --}}
      
-     @include('site.user.interviewInvitation.jsAccepInterview') {{-- site/user/interviewInvitation/jsAccepInterview --}}
+    @include('site.user.interviewInvitation.jsAccepInterview') {{-- site/user/interviewInvitation/jsAccepInterview --}}
 
     @endif
 
-  @elseif ($UserInterview->status == 'Accepted')
+{{--   @elseif ($UserInterview->status == 'Accepted')
 
     @if (isEmployer())
      
@@ -36,7 +42,7 @@
 
      @include('site.user.interviewInvitation.userAddResponse')
     
-    @endif
+    @endif --}}
 
   
   @elseif($UserInterview->status == 'Interview Confirmed' )
@@ -58,7 +64,7 @@
 
         @else
 
-          @foreach ($tempQuestions as $question)
+          @foreach ($tempQuestions as $question) 
           <p class="qualifType p0"> <b>Question {{$loop->index+1}}:</b> {{$question->question}} </p>
           @php
             $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $UserInterview->id)->where('emp_id' ,$UserInterview->employer->id)->where('user_id' , $user->id)->first();   
@@ -147,35 +153,6 @@ $('.saveResponse').on('click',function() {
 // ============================================================== Save Response As Jobseeker ==============================================================
 
 
-$('.saveResponseAsJobseeker').on('click',function() {
-    event.preventDefault();
-    var formData = $('.saveInterviewResponse').serializeArray();
-    $('.saveResponseAsJobseeker').html(getLoader('pp_profile_edit_main_loader responseLoader')).prop('disabled',true);
-    $('.general_error1').html('');
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/ajax/confirmInterInvitation/js',
-        data:formData,
-        success: function(response){
-            console.log(' response ', response);
-            $('.saveResponseAsJobseeker').html('Response Saved').prop('disabled',false);
-            if( response.status == 1 ){
-                $('.errorsInFields').text('Response addedd successfully');
-                location.href = base_url + '/Intetview/Invitation';
-                setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
-                // window.location.href = "{{ route('intetviewInvitation')}}" ;
-            }
-            else{
-                $('.saveResponseAsJobseeker').html('Save Response');
-               setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
-               $('.errorsInFields').text(response.error);
-            }
-
-        }
-    });
-
-});
 
 </script>
 @stop

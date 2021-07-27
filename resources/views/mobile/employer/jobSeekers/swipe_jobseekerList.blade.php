@@ -78,6 +78,10 @@
                             <div class="col-md-6 col-12 text-center">
                                 <p> <span class="jobInfoFont">  Recent Job: </span>  {{$js->recentJob}} </p> 
                                 {{-- @dump(userLocation($js)) --}}
+                                {{-- @dump($js->age) --}}
+                                {{-- @dump($js->gender) --}}
+
+
 
                             </div>
                         </div>
@@ -123,6 +127,9 @@
 
         @endforeach
         {{-- <div class="jobseeker_pagination pagination pagination-sm">{!! $jobSeekers->links() !!}</div> --}}
+
+        @else 
+            <p> No Record Found </p>
         @endif
 
     </div>

@@ -17,20 +17,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use DB;
-
 use PDF;
 use PDFMerger;
-
 use PhpOffice\PhpWord\IOFactory;
-
 use PhpOffice\PhpWord\Settings;
-
 use NcJoes\OfficeConverter\OfficeConverter;
-
-
 use App\Exports\JobSeekerExport;
-
-
 use Illuminate\Contracts\Queue\Job;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
@@ -1080,7 +1072,7 @@ class EmployerController extends Controller {
             // dd($interviewTemplate->id);
             $data['interviewTemplate'] = $interviewTemplate;
             $data['InterviewTempQuestion'] = $InterviewTempQuestion;
-                    return view('site.employer.interviewTemplate.template' , $data);
+                    return view('site.employer.interviewTemplate.template' , $data); // site/employer/interviewTemplate/template
                 /*if (isAdmin()) {
                     return view('admin.job_applications.interviewTemplate.template' , $data); 
                     // admin/job_applications/interviewTemplate/template
@@ -1106,14 +1098,29 @@ class EmployerController extends Controller {
 
 
     public function conductInterview(Request $request){
-        $data =  $request->all();
+        $data =  $request->toArray();
         // dd($data);
         $user = Auth::user();
+
+        $rules = array(
+                'employers_instruction' => 'required|max:150',
+            );
+
+        $validator = Validator::make($data, $rules);
+        if ($validator->fails()){
+            return response()->json([
+                'status' => 0,
+                'validator' => $validator->getMessageBag()->toArray()
+            ]);
+        }
+
+
         $empName = $user->company;
+ 
+        // dd($empName);
         if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
             $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
             if(!$UserInterviewCheck){
-
                 $UserInterview = new UserInterview;
                 $UserInterview->temp_id = $data['inttTempId'];
                 $UserInterview->emp_id   = $user->id;
@@ -1121,16 +1128,12 @@ class EmployerController extends Controller {
                 $UserInterview->status   = 'pending';
                 $UserInterview->hide   = 'no';
                 $UserInterview->url   = generateRandomString();
+                $UserInterview->employers_instruction = my_sanitize_string($data['employers_instruction']);
 
                 if (isAdmin($user)) {
                     $UserInterview->interview_type = 'Correspondance';
-                    // code...
                 }
-                
                 $UserInterview->save();
-
-                
-
                 $history = new History;
                 $history->user_id = $UserInterview->user_id; 
                 $history->type = 'interview_sent'; 
@@ -1146,7 +1149,7 @@ class EmployerController extends Controller {
                     'message' => 'Interview conducted and Email sent to jobseeker successfully',
                 ]);
             }
-            else{
+            else{ 
 
                     return response()->json([
                     'status' => 0,
@@ -1156,16 +1159,7 @@ class EmployerController extends Controller {
     }
 
 
-
-
-
-    // Interview Link to jobseeker
-
-
-     
-
-
-    // Reject Interview
+    // ==================================================== Reject Interview ====================================================
 
     public function rejectInterviewInvitation(Request $request){
         $user = Auth::user();
@@ -1189,7 +1183,7 @@ class EmployerController extends Controller {
         }   
     }
 
-    // Accept Interview
+    // ==================================================== Accept Interview ====================================================
 
      public function acceptInterviewInvitation(Request $request){
         $user = Auth::user();

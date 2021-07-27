@@ -4,33 +4,9 @@
 @section('content')
 
 <div class="container">
-	<div class="initialQuestions">
-		<p class="row123 m-0">Hi <span class="font-weight-bold"> {{$crossreference->refName}} </span> </p>
-		<p class="row123"><b>{{$crossreference->userName}}</b> has provided your name as referee and <span class="font-weight-bold"> Talenttube </span> helps you complete the referencing process quickly and securely online. </p>
 
-		<div class="center1">
-
-			<p class="font-weight-bold mb-3 m-0 p-0"> You will be asked to: </p>
-			<p class="m-0 p-0"> <i class="fas fa-arrow-right arrowRight"></i> Confirm your details & relationship with the candidate</p>
-			<p class="m-0 p-0"> <i class="fas fa-arrow-right arrowRight"></i> Answer questions relating to your experience and interactions with the candidate </p>
-			{{-- <p class="m-0 p-0"> <i class="fas fa-arrow-right arrowRight"></i> Verify {{$crossreference->userName}}'s information </p> --}}
-			<p class="m-0 p-0"> <i class="fas fa-arrow-right arrowRight"></i> Provide a potential recommendation for {{$crossreference->userName}}, if you think they would be suitable for a role</p>
-		</div>
-
-		<div class="row123">
-				<button class="col-md-2 btn btn-outline-danger declineButton border border-danger text-danger" name="refID" value="{{$crossreference->id}}"> Decline</button>
-				<div class="col-md-1 text-center mt-3">
-					<div class="spinner-border declinedSpinner d-none text-center mt-3" role="status">
-					  <span class="sr-only">Loading...</span>
-					</div>
-				</div>
-			</div>
-		<div class="row123">
-				<button class="col-md-2 btn btn-sm btn-primary letsGoButton"> Let's Go</button>
-				
-		</div>
-
-	</div>
+	@include('mobile.reference.initial_question')
+	
 	<div class="workreference d-none">
 		<div class="header1">
 			<h4 class="pt-4 font-weight-bold">Cross Ref ({{$crossreference->refType}}) </h4>
