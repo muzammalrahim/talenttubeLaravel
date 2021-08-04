@@ -775,9 +775,9 @@ this.updateIndustryExperience = function(){
 								});
 
 
-								$('#videoShowModal').on($.modal.CLOSE, function(event, modal) {
-									$(this).find(".videoBox video").remove();
-							});
+				$('#videoShowModal').on($.modal.CLOSE, function(event, modal) {
+					$(this).find(".videoBox video").remove();
+			});
 
     }
 
@@ -1243,7 +1243,7 @@ $(document).ready(function() {
 
 
     // }).on('mouseleave',function(){
-    //     console.log(' mouseout >>  ');
+    //     console.log(' mouseout >>  '); 
     //     clearInterval(vloop);
     // });
 
@@ -1348,3 +1348,30 @@ $(document).ready(function() {
 //         }
 //     });
 // }
+
+
+// $(document).on('click','.video_link', function(){
+//     video_url = $('.v_title1').text();
+//     console.log(' showVideoModal Ali ', video_url);
+//         var videoElem  = '<video id="player" controls>';
+//         videoElem     += '<source src="/media/interview_bookings/'+video_url+'" type="video/mp4">';
+//         videoElem     += '</video>';
+//         $('#videoShowModal .videoBox').html(videoElem);
+//         $('#videoShowModal').modal({
+//             fadeDuration: 200,
+//             fadeDelay: 2.5,
+//             escapeClose: false,
+//             clickClose: false,
+//                 });
+
+
+//               //   $('#videoShowModal').on($.modal.CLOSE, function(event, modal) {
+//               //     $(this).find(".videoBox video").remove();
+//               // });
+
+
+// })
+
+this.show_video_modal = function(video_url){
+    
+}

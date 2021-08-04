@@ -65,6 +65,11 @@ return [
             'root' => storage_path('media'),
         ],
 
+        'interview_bookings' => [
+            'driver' => 'local',
+            'root' => storage_path('media/interview_bookings/'),
+        ],
+
         'publicMedia' => [
             'driver' => 'local',
             'root' => storage_path('media/public'),

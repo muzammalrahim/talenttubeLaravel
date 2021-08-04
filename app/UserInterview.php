@@ -16,7 +16,7 @@ class UserInterview extends Model
 
     public function questions()
     {
-        return $this->belongsTo('App\InterviewTempQuestion', 'temp_id');
+        return $this->belongsToMany('App\InterviewTempQuestion', 'user_interviews','temp_id');
     }
 
     public function employer()

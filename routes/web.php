@@ -277,7 +277,7 @@ Route::get('media/private/{userid}/{any}', [
 
     // ====================================== iteration-12 ======================================
 
-    // Route::post('ajax/interview-template/uploadVideo', 'Admin\AdminInterviewController@employer_video_intro')->name('employer_video_intro');
+    Route::post('/ajax/interview_template/uploadVideo', 'Admin\AdminInterviewController@employer_video_intro')->name('employer_video_intro');
 
 
 
@@ -439,6 +439,7 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 
 
     Route::post('/ajax/interview-response/uploadVideo','Site\InterviewController@interview_video_reponse')->name('interview_video_reponse');
+    Route::post('/ajax/interview-response/delete_video/{id}','Site\InterviewController@interview_delete_video')->name('interview_delete_video');
 
     
     // ==========================================================================
@@ -594,7 +595,7 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     // JobseekerInterviewInvitation
 
     Route::get('intetview-invitations',       'Site\InterviewController@interviewInvitataion')->name('intetviewInvitation');
-    Route::get('Intetview/Invitation/emp/',       'Site\InterviewController@intetviewInvitationEmp')->name('intetviewInvitationEmp');
+    Route::get('intetview-invitation/emp/',       'Site\InterviewController@intetviewInvitationEmp')->name('intetviewInvitationEmp');
     Route::get('unhide/interviews',       'Site\InterviewController@unhideInterviews')->name('unhideInterviews');
     Route::post('ajax/userInterview/hide','Site\InterviewController@hideUserInterview')->name('hideUserInterview');
     Route::post('ajax/userInterview/hide/js','Site\InterviewController@hideUserInterviewJs')->name('hideUserInterviewJs');

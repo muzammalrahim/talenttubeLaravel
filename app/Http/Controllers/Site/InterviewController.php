@@ -891,7 +891,7 @@ class InterviewController extends Controller
         }
         else
         {
-            $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('emp_id' , $data['emp_id'])->where('temp_id' ,$data['temp_id'])->first();
+            $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('user_id' , $user->id)->first();
             if ($UserInterview) {
                 // dd($UserInterview);
                 if ($UserInterview->status == 'pending') {
@@ -907,7 +907,7 @@ class InterviewController extends Controller
 
                     foreach ($data['answer'] as $key => $value) {
                         $answers = new UserInterviewAnswers;
-                        $answers->emp_id = $data['emp_id'];
+                        $answers->emp_id = $UserInterview->emp_id;
                         $answers->userInterview_id  = $data['userInterviewId'];
                         $answers->user_id  = $user->id;
                         $answers->question_id = $key;
@@ -940,10 +940,10 @@ class InterviewController extends Controller
     public function interview_video_reponse(Request $request){
         // dd($request->toArray());
         $user = Auth::user();
-        $video = $request->file('video');
-
+        $video = $request->file('file');
+        // dd($video);
         // $rules = array('video.*' => 'required|file|max:20000');
-        $rules = array('video' => 'required|file|max:50000');
+        $rules = array('file' => 'required|file|max:50000');
         // $rules = array('video.*' => 'required|file|max:2');
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -952,58 +952,53 @@ class InterviewController extends Controller
                 'validator' =>  $validator->getMessageBag()->toArray()
             ]);
         }
-
         $mime = $video->getMimeType();
         if (
             $mime == "video/x-flv"             || $mime == "video/mp4"             || $mime == "application/x-mpegURL" ||
             $mime == "video/MP2T"             || $mime == "video/3gpp"             || $mime == "video/quicktime" ||
             $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"
         ) {
+
+
+
             $fileOriginalName = $video->getClientOriginalName();
-            // $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
             $fileName = $fileOriginalName;
-            $storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
-            // store video in private folder by default.
-            $storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
-            $video = new Video();
-            $video->title = $fileName;
-            $video->type = $mime;
-            $video->user_id = $user->id;
-            $video->status = 2;
-            // $video->file =  $user->id . '/private/videos/' . $fileName;
-            $video->file = $user->id.'/videos/'.$fileName;
-            $video->save();
-
-            $history = new History;
-            $history->user_id = $user->id; 
-            $history->userGallery = $video->title; 
-            $history->type = 'Video_upload'; 
-            $history->save();
-
-            // generate video thumbs.
-            $video->generateThumbs();
-            $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;">';
-            $html .=    '<a onclick="UProfile.showVideoModal(\''.assetVideo($video).'\')" class="video_link" target="_blank">';
-            $html .=        '<div class="v_title_shadow"><span class="v_title">'.$video->title.'</span></div>';
-            $html .=        generateVideoThumbs($video);
-            $html .=    '</a>';
-            $html .=    '<span title="Delete video" class="icon_delete" data-vid="12" onclick="UProfile.delteVideo('.$video->id.')">';
-            $html .=        '<span class="icon_delete_photo"></span>';
-            $html .=        '<span class="icon_delete_photo_hover"></span>';
-            $html .=    '</span>';
-            $html .=    '<div class="v_error error hide_it"></div>';
-            $html .=  '</div>';
-
+            $storeStatus = Storage::disk('publicMedia')->put( 'interview_bookings/' .$user->id . '/User_interview_id('.$request->userInterviewId.')' . '/question_id('.$request->question_id.')' . '/video_response/' .  $fileName, file_get_contents($video));
+            $video_response_path = $user->id . '/User_interview_id('.$request->userInterviewId.')' . '/question_id('.$request->question_id.')' . '/video_response/' .  $fileName;
             return response()->json([
                 'status' => '1',
-                'data'   => $video,
-                'html'  =>  $html
+                'message'   => 'Video Uploaded Successfully',
+                'path'  =>  $video_response_path
             ]);
         } else {
             return response()->json([
                 'status' => '0',
                 'validator' =>  $validator->errors()->add('video', 'Video MimeType not allowed')
             ]);
+        }
+    }
+
+
+    // POST Ajax request submitted from profile video area.
+    //====================================================================================================================================//
+    public function interview_delete_video(Request $request, $id){
+        $data = $request->all();
+        // dd($data);
+        $user = Auth::user();
+        $question_id = $request->question_id;
+        
+        $video_url = $user->id . '/User_interview_id('.$data['userInterviewId'].')' .'/question_id('.$data['question_id'].')';
+        // dd($video_url);
+        if (!empty($video_url)) {
+
+            $exists = Storage::disk('interview_bookings')->exists( $video_url );
+            // dd($exists);
+            if ($exists) { Storage::disk('interview_bookings')->deleteDirectory($video_url); }
+            $output = array(
+                'status' => '1',
+                'message' => 'video Removed.'
+            );
+            return response()->json($output);
         }
     }
 

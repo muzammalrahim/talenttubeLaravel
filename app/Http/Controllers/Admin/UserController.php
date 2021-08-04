@@ -24,6 +24,8 @@ use App\UserOnlineTestAnswers;
 use App\UserPool;
 use App\UserQualification;
 use App\UserTags;
+use App\Interviews_booking;
+
 
 
 
@@ -947,7 +949,20 @@ class UserController extends Controller
     public function destroyUser($id){
         $user = User::find($id);
         // dd($user->id);
+
+        //  
         if(!empty($user)){
+
+            
+            $Interviews_booking = Interviews_booking::where('email',$user->email)->where('mobile' , $user->phone)->get();
+            if (!empty($Interviews_booking)) {
+                foreach ($Interviews_booking as $int_booking) {
+                    $int_booking->delete();
+                }
+            }
+
+
+
             $UserTags = UserTags::where('user_id',$user->id)->get();
             if (!empty($UserTags)) {
                 foreach ($UserTags as $tags) {
