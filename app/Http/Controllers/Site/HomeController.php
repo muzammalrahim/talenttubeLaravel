@@ -1194,8 +1194,8 @@ class HomeController extends Controller {
                         return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser
                     }
                     else{
-                        return view('site.user.interviewInvitation.acceptedInterviewInvitation', $data);   
-                        // site/user/interviewInvitation/acceptedInterviewInvitation
+                        return view('site.user.interviewInvitation.acceptedForEmployer', $data);   
+                        // site/user/interviewInvitation/acceptedForEmployer
                     }
                 }
                 else{
@@ -1203,7 +1203,7 @@ class HomeController extends Controller {
                         return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser  
                     }
                     else{ 
-                        return view('site.user.interviewInvitation.acceptedInterviewInvitation', $data);
+                        return view('site.user.interviewinvitation.detail', $data);
                         // site/user/interviewInvitation/acceptedInterviewInvitation
                     }
                 }

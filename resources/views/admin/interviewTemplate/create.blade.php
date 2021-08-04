@@ -45,9 +45,21 @@
 
         <div class="form-group row">
           {{ Form::label('employers video intro', null, ['class' => 'col-md-2 form-control-label']) }}
-          <div class="col-md-10 pointer">
+        {{--   <div class="col-md-10 pointer">
             <img src="https://img.icons8.com/material-two-tone/50/000000/video.png"/>
-          </div>
+          </div> --}}
+
+          {{-- <div id="list_videos_public" class="list_videos_public">
+              <div id="photo_add_video" class="item add_photo add_video_public item_video">
+                  <a class="add_photo" return false;">
+                      <img id="video_upload_select" class="transparent is_video bg-primary uploadedPhotos" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
+                  </a>
+              </div>
+          </div> --}}
+
+          <div class="col-md-10"> <input type="file" name="employer_video_intro"> </div>
+
+
         </div>
 
 
@@ -143,21 +155,10 @@ $(document).ready(function(){
    });
 
 
-
   var i = 2;
    $(document).on('click','.addTemplateQuestion', function(){
     console.log(' Add Question ');
     if(i <= 10){
-
-
-      // var newQuestionsList = '<div class="row questions t'+i+' ">';
-      // newQuestionsList += '<div class="text col-md-2 font-weight-bold">Question '+i+'</div>';
-      // newQuestionsList +='<input name="question[]" class="questionInput form-control col-md-7 mx-2">';
-      // newQuestionsList += '</input>';
-      // newQuestionsList += '<span class="removeQuestion btn btn-danger col-md-2">Remove</span>';
-      // newQuestionsList += '</div>';
-
-
       var newQuestionsList = '<div class="form-group row questions t'+i+' ">';
       newQuestionsList    += '<label for="Question 1" class="col-md-2 form-control-label">Question '+i+' </label>';
       newQuestionsList    += '<div class="col-md-8">';
@@ -169,9 +170,6 @@ $(document).ready(function(){
       newQuestionsList    += '</div>';
       newQuestionsList    += '</div>';
 
-
-
-
       i++;  
     }
     else{
@@ -181,6 +179,70 @@ $(document).ready(function(){
   $('.questionslist').append(newQuestionsList);
    });
 
+
+   // =================================================================== Add video ===================================================================
+
+   jQuery('#photo_add_video').on('click', function(){
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = e => {
+            var file = e.target.files[0];
+            console.log(' onchange file  ', file );
+            var formData = new FormData();
+            formData.append('video',file);
+            var that        = this;
+            var item_id     =  Math.floor((Math.random() * 1000) + 1);
+            var video_item = '';
+            video_item  += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">';
+            video_item  +=  '<a class="show_photo_gallery video_link" href="">';
+            video_item  +=  '</a>';
+            video_item  +=  '<span class="v_title">Video title</span>';
+            video_item  +=  '<span title="Delete video" class="icon_delete">';
+            video_item  +=      '<span class="icon_delete_photo"></span>';
+            video_item  +=      '<span class="icon_delete_photo_hover"></span>';
+            video_item  +=  '</span>';
+            video_item  +=  '<div class="v_error error hide_it"></div>';
+            video_item  +=  '<div class="v_progress"></div>';
+            video_item  += '</div>';
+
+            $('.list_videos').append(video_item);
+            var updateForm = document.querySelector('form');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var request = new XMLHttpRequest();
+            request.upload.addEventListener('progress', function(e){
+               var percent = Math.round((e.loaded / e.total) * 100);
+                 console.log(' progress-bar ', percent+'%' );
+                 $('#v_'+item_id+' .v_progress').css('width',  percent+'%');
+            }, false);
+            request.addEventListener('load', function(e){
+               console.log(' load e ', e);
+               var res = JSON.parse(e.target.responseText);
+               console.log(' jsonResponse ', res);
+               $('#v_'+item_id+' .v_progress').remove();
+                if(res.status == 1) {
+                    // $('#v_'+item_id+' .v_title').text(res.data.title);
+                    // $('#v_'+item_id+' .video_link').attr('href', base_url+'/'+res.data.file);
+                    $('#v_'+item_id).replaceWith(res.html);
+                }else {
+                    console.log(' video error ');
+                    if(res.validator != undefined){
+                        $('#v_'+item_id+' .error').removeClass('hide_it').addClass('to_show').text(res.validator['video'][0]);
+                    }
+                }
+            }, false);
+            request.open('post',base_url+'/admin/ajax/interview_template/uploadVideo');
+            request.send(formData);
+        }
+        input.click();
+
+
+    });
+
+   // =================================================================== Add video end here ===================================================================
 
 
 

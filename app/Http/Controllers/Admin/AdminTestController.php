@@ -7,20 +7,14 @@ use \Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Intervention\Image\Facades\Image;
 use Illuminate\Support\Facades\Storage;
-
 use App\User;
 use App\OnlineTest;
 use App\TestQuestion;
 use App\UserOnlineTestAnswers;
-
 use App\InterviewTemplate;
-
 use App\UserOnlineTest;
 use App\JobsApplication;
 use App\History;
-
-
-
 
 class AdminTestController extends Controller
 {
@@ -29,8 +23,6 @@ class AdminTestController extends Controller
     }
 
     // use AuthenticatesUsers;
-
-
 
     // ========================================= Iteration-9 Online Test =========================================
 

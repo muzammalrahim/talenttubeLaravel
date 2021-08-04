@@ -116,6 +116,18 @@
                         $('.liveInterviewError').addClass('hide_it');
                     }, 4000);
                 } 
+
+                else if(response.status == 2){ 
+                    var inst_error = response.message;
+                    // var error = inst_error.toString();
+                    console.log(inst_error); 
+                    $('.liveInterviewError').removeClass('hide_it');
+                    $('.liveInterviewError').text(inst_error);
+                    $('.conductInterview123').html('Correspondance Interview').prop('disabled',false);
+                    setTimeout(function(){
+                        $('.liveInterviewError').addClass('hide_it');
+                    }, 4000);
+                } 
                 else{ 
  
                     var message = response.message;

@@ -2,17 +2,6 @@
 
 @extends('site.employer.employermaster')
 
-
-@section('custom_js')
-
-<script src="{{ asset('js/site/userProfile.js') }}"></script>
-
-@stop
-@section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
-@stop
-
 @section('content')
   <div class="head icon_head_browse_matches">Interview Detail 
     @if (isEmployer())
@@ -24,32 +13,14 @@
 
     @if (isEmployer())
       <h3> <b> {{$UserInterview->js->name}} </b> has not accepted your interview proposal yet. </h3>
-    @else
-
-    {{-- ========================================= if jobseeker has not accepted the interview yet ========================================= --}}
-     
-    @include('site.user.interviewInvitation.jsAccepInterview') {{-- site/user/interviewInvitation/jsAccepInterview --}}
-
     @endif
-
-{{--   @elseif ($UserInterview->status == 'Accepted')
-
-    @if (isEmployer())
-     
-     @include('site.user.interviewInvitation.empAddResponse')
-
-    @else
-
-     @include('site.user.interviewInvitation.userAddResponse')
-    
-    @endif --}}
-
   
   @elseif($UserInterview->status == 'Interview Confirmed' )
     {{-- <h3> Interview has been confirmed. </h3> --}}
     @php
-      $temp_id = $UserInterview->temp_id;
-      $tempQuestions = App\InterviewTempQuestion::where('temp_id', $temp_id)->get();
+
+      $tempQuestions = App\InterviewTempQuestion::where('temp_id', $UserInterview->temp_id)->get();
+    
     @endphp
 
       @if (isEmployer())
@@ -59,17 +30,16 @@
           @php
             $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $UserInterview->id)->where('emp_id' ,$user->id)->where('user_id' , $UserInterview->js->id)->first();   
           @endphp
-            <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
-          @endforeach
 
-        @else
+            @if ($question->video_response == 1)
+            <div class="video_div pointer"  onclick="showVideoModal12('{{assetVideo_response($answers->answer)}}')"> 
+              <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
+            </div>
+            @else
 
-          @foreach ($tempQuestions as $question) 
-          <p class="qualifType p0"> <b>Question {{$loop->index+1}}:</b> {{$question->question}} </p>
-          @php
-            $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $UserInterview->id)->where('emp_id' ,$UserInterview->employer->id)->where('user_id' , $user->id)->first();   
-          @endphp
             <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
+            
+            @endif
           @endforeach
 
       @endif
@@ -81,6 +51,18 @@
   @endif
 
 <div class="cl"></div>
+
+<div style="display:none;">
+    <div id="videoShowModal" class="modal p0 videoShowModal">
+        <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+            <div class="cont">
+                <div class="videoBox"></div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 @stop
 
@@ -111,10 +93,20 @@
 
 @stop
 
+
+@section('custom_css')
+<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+<link rel="stylesheet" type="text/css" href="{{asset('js/dropzone/dist/min/dropzone.min.css')}}">
+
+@stop
+
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+
+<script src="{{ asset('js/site/userProfile.js') }}"></script>
 
 <script type="text/javascript">
 
@@ -151,6 +143,31 @@ $('.saveResponse').on('click',function() {
 
 
 // ============================================================== Save Response As Jobseeker ==============================================================
+
+
+this.showVideoModal12 = function(video_url){
+
+
+        console.log(' hassan here ', video_url);
+        var videoElem  = '<video id="player" controls>';
+        videoElem     += '<source src="'+video_url+'" type="video/mp4">';
+        videoElem     += '</video>';
+        $('#videoShowModal .videoBox').html(videoElem);
+        $('#videoShowModal').modal({
+            fadeDuration: 200,
+            fadeDelay: 2.5,
+            escapeClose: false,
+            clickClose: false,
+                });
+
+
+        $('#videoShowModal').on($.modal.CLOSE, function(event, modal) {
+          $(this).find(".videoBox video").remove();
+      });
+
+    }
+
+
 
 
 

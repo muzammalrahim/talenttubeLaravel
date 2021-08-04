@@ -60,6 +60,10 @@
           @else
             <p class="p0 qualifType"> Interview Type: <b> {{$Int_booking->template->type}} </b> </p>
           @endif
+
+            <p class="p0 qualifType"> Employer's Instructions: <b> {{$Int_booking->employers_instruction}} </b> </p>
+
+
            <div class="j_button pb20 mt20">
               @if ($Int_booking->status == "Interview Confirmed" )
                 <a class="jobApplyBtn graybtn jbtn seeDetailOfInterview" href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}">View my responses</a>

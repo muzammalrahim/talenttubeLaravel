@@ -47,6 +47,27 @@
           </div>
         </div>
 
+        <div class="form-group row">  
+          {{ Form::label('Employer Video Intro', null, ['class' => 'col-md-2 form-control-label']) }}
+
+          @if (isset($record->employer_video_intro))
+            
+            <div class="video_div pointer"  onclick="showVideoModal12('{{asset('/media/public/interview_bookings/employer/video_intro/'.$record->employer_video_intro)}}')"> 
+              <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
+            </div>
+
+            {{-- <a href="{{ asset('/public/media/interview_bookings/employer/'. $record->employer_video_intro) }}"></a> --}}
+            
+            @else
+
+          <div class="col-md-10"> <input type="file" name="employer_video_intro"> </div>
+
+
+          @endif
+          
+
+        </div>
+
 
 
 
@@ -71,24 +92,12 @@
 
             </div>
 
-            {{-- <div class="col-md-1">
-              <span class="pointer removeOldQuestion btn btn-danger" value = "{{$question->id}}"> Remove</span>
-              <input type="hidden" name="" class="tempLateId" value=" {{$record->id}} " >
-            </div> --}}
-
-
-
             <div class="col-md-2">
               <input name="questions[{{ $key+1 }}][video_response]" {{ ($question['video_response'] == 1)? 'checked':'' }} type="checkbox">
               <span class="col-md-2">Video Reponse</span>
               <i class="fa fa-trash removeOldQuestion text-danger pointer" value = "{{$question->id}}"></i>
               <input type="hidden" name="" class="tempLateId" value=" {{$record->id}} " >
-
             </div>
-
-
-            
-
 
           </div>
 
@@ -113,8 +122,32 @@
 
 </div>
 
-@stop
 
+
+<div class="modal fade" id="deleteNoteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog modal-notify modal-success" role="document">
+     <!--Content-->
+     <div class="modal-content">
+       <!--Header-->
+       <div class="modal-header bg-success">
+         <p class="heading lead">Video  </p>
+         <button type="button" class="close text-white" class="" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true" class="white-text">&times;</span>
+         </button>
+       </div>
+       <!--Body-->
+       <div class="modal-body video_inModal"> </div>
+       <!--Footer-->
+       <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-outline-success waves-effect" class="" data-dismiss="modal">Close</a>
+       </div>
+     </div>
+     <!--/.Content-->
+   </div>
+ </div>
+
+@stop
 
 @section('css')
     <link rel="stylesheet"  href="{{ asset('css/admin_custom.css') }}">
@@ -160,14 +193,9 @@ $(document).ready(function(){
             data:{id: id,temp_id:temp_id},
             success: function(data){
                 console.log(' data ', data);
-
                 if( data.status == 1 ){
 
                 $(this).closest('.oldQuestion').remove();
-
-                // $('#deleteSlotModal').close();
-
-                    // location.reload();
 
                 }else{
                    
@@ -190,16 +218,6 @@ $(document).ready(function(){
    $(document).on('click','.addTemplateQuestion', function(){
     console.log(' Add Question ');
     if(i <= 10){
-      
-
-      // var newQuestionsList = '<div class="row questions t'+i+' ">';
-      // newQuestionsList += '<div class="text col-md-2 font-weight-bold">Question '+i+'</div>';
-      // newQuestionsList +='<input name="newquestion[][new]" class="questionInput form-control col-md-9">';
-      // newQuestionsList += '</input>';
-      // newQuestionsList += '<span class="removeQuestion btn btn-danger col-md-1">Remove</span>';
-      // newQuestionsList += '</div>';
-      // i++;  
-
 
       var newQuestionsList = '<div class="form-group row questions t'+i+' ">';
       newQuestionsList    += '<label for="Question 1" class="col-md-2 form-control-label">Question '+i+' </label>';
@@ -211,8 +229,6 @@ $(document).ready(function(){
       newQuestionsList    += '<i class="fa fa-trash removeQuestion text-danger pointer"></i>';
       newQuestionsList    += '</div>';
       newQuestionsList    += '</div>';
-
-
 
     }
     else{
@@ -288,8 +304,20 @@ function scrollToTop() {
 
 // For Scrolling to top end
 
+this.showVideoModal12= function(video_url){
+  $("#deleteNoteModal").modal('show');
+  var videoElem  = '<video id="player" controls>';
+  videoElem     += '<source class = "video_src" src="'+video_url+'" type="video/mp4">';
+  videoElem     += '</video>';
+  $('.video_inModal').html(videoElem);
+
+}
 
 
+// $(document).click('.close_modal'  , function(){
+//   console.log('Modal clicked here');
+//   $('.video_src').attr('src' , '');
+// })
 
 </script>
 <!-- added by Hassan -->

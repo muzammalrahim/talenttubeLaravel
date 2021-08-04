@@ -19,7 +19,7 @@
                 
                 <li><a href="{{route('interviewconcierge')}}" class="column_narrow_search_results {{(request()->is('interviewconcierge*'))?'active':''}}"><span class="icon"></span>Interview Concierge</a></li>
 
-                <li><a href="{{route('intetviewInvitationEmp')}}" class="column_narrow_search_results {{(request()->is('Intetview/Invitation/emp'))?'active':''}}"><span class="icon"></span>Interview Invitations</a></li>
+                <li><a href="{{route('intetviewInvitationEmp')}}" class="column_narrow_search_results {{(request()->is('intetview-invitation/emp'))?'active':''}}"><span class="icon"></span>Interview Invitations</a></li>
                 
                 <li><a href="{{route('employerJobs')}}" class="column_narrow_search_results {{(request()->is('employer/jobs*'))?'active':''}}"><span class="icon"></span>My jobs</a></li>
 				<li><a href="{{route('newJob')}}" class="column_narrow_search_results {{(request()->is('employer/job/new'))?'active':''}}"><span class="icon"></span>Add New job</a></li>

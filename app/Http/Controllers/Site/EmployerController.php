@@ -1152,7 +1152,7 @@ class EmployerController extends Controller {
             else{ 
 
                     return response()->json([
-                    'status' => 0,
+                    'status' => 2,
                     'message' => 'You have already selected this template, please try another template'
                 ]);
             }

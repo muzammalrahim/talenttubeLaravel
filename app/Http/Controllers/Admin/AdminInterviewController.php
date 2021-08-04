@@ -25,6 +25,8 @@ use App\Mail\NotiEmailForQueuing;
 use App\Mail\updateSlotToUserEmail;
 use App\Mail\deleteSlotToUserEmail;
 use App\Mail\conductInterviewEmail;
+use Illuminate\Support\Facades\Storage;
+
 
 // use Illuminate\Support\Facades\Hash;
 use PDF;
@@ -426,9 +428,23 @@ class AdminInterviewController extends Controller
             $temp = new InterviewTemplate();
             $temp->template_name = $data['template_name'];
             $temp->type = $data['type'];
+
+            // ===================================== if employers video intro exist ===================================== 
+
+            if (isset($data['employer_video_intro'])) {
+                $user = Auth::user();
+                $video = $request->file('employer_video_intro');
+                $fileOriginalName = $video->getClientOriginalName();
+                $fileName = $fileOriginalName;
+                $storeStatus = Storage::disk('publicMedia')->put('/interview_bookings/employer/video_intro/'.$fileName, file_get_contents($video));
+                $path = $fileName;
+            }
+
+            // ===================================== if employers video intro exist end =====================================
+
+            $temp->employer_video_intro = $path;
             $temp->save();
             foreach ($data['questions'] as $key => $question) {
-                // dd($question);
                 $tempQuestion = new InterviewTempQuestion;
                 $tempQuestion->question =  $question['question']; 
                 $tempQuestion->temp_id =  $temp->id;
@@ -441,7 +457,6 @@ class AdminInterviewController extends Controller
                 $temp->tempQuestions()->save($tempQuestion);
 
             }
-            // $temp->questions = json_encode($request->questions);
             if( $temp->save() ){
                 return redirect(route('interviewTemplates'))->withSuccess( __('admin.record_added_successfully'));
             }
@@ -453,7 +468,16 @@ class AdminInterviewController extends Controller
      public function AdminDeleteTemplate(Request $request){
         $id = $request->id;
         $interviewTemplate = InterviewTemplate::find($id);
+
+        if ($interviewTemplate->employer_video_intro) {
+            
+            $imgPath = '/employer/video_intro/'. $interviewTemplate->employer_video_intro;
+            // dd($imgPath);
+            Storage::disk('publicMedia')->delete($imgPath);
+
+        }
         $interQuestion = InterviewTempQuestion::where('temp_id', $id)->get();
+
         if (!empty($interQuestion)) {
           foreach ($interQuestion as $Question) {
             if (isAdmin()) {
@@ -650,6 +674,87 @@ class AdminInterviewController extends Controller
         }
         else{
             return false;
+        }
+    }
+
+
+
+    // Employers video
+
+    public function employer_video_intro(Request $request){
+
+        // dd($request->all());
+        $user = User::find($request->userID);
+        $video = $request->file('video');
+        // $rules = array('video.*' => 'required|file|max:20000');
+        $rules = array('video' => 'required|file|max:50000');
+        // $rules = array('video.*' => 'required|file|max:2');
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => '0',
+                'validator' =>  $validator->getMessageBag()->toArray()
+            ]);
+        }
+
+        $mime = $video->getMimeType();
+        if (
+            $mime == "video/x-flv"             || $mime == "video/mp4"             || $mime == "application/x-mpegURL" ||
+            $mime == "video/MP2T"             || $mime == "video/3gpp"             || $mime == "video/quicktime" ||
+            $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"
+        ) {
+
+            $fileOriginalName = $video->getClientOriginalName();
+            // $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
+            $fileName = $fileOriginalName;
+            $storeStatus = Storage::disk('interview_bookings')->put($user->id . '/employer/video_intro/' . $fileName, file_get_contents($video), 'public');
+            // store video in private folder by default.
+            // $storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
+            $video = new Video();
+            $video->title = $fileName;
+            $video->type = $mime;
+            $video->user_id = $user->id;
+            $video->status = 2;
+            $video->file = $user->id.'/videos/'.$fileName;
+            $video->save();
+            // generate video thumbs.
+            $video->generateThumbs();
+            $html  =  '<div id="v_" class="showinline video_box mb-2">';
+            $html .=  ' <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">';
+            $html .=   '<div class="modal-dialog modal-lg" role="document">';
+            $html .=   '<div class="modal-content">';
+            $html .= '<div class="modal-body mb-0 p-0">';
+            $html .= '<div class="embed-responsive embed-responsive-16by9 z-depth-1-half videoBox">';
+            $html .= '<video id="player" playsinline controls data-poster="https://mdbootstrap.com/img/screens/yt/screen-video-1.jpg">';
+            $html .= '<source src="'.assetVideo_response($fileName).'" type="video/mp4" />';
+            $html .= '</video>';
+            $html .='</div>';
+            $html .= ' </div>';
+            $html .= ' <div class="modal-footer justify-content-center">';
+            $html .= '<button type="button" class="btn btn-outline-primary btn-rounded btn-md ml-4" data-dismiss="modal">Close</button>';
+            $html .= ' </div>';
+            $html .= ' </div>';
+            $html .= ' </div>';
+            $html .= ' </div>';
+            $html .= ' <a> <div class="text-center">'.generateVideoThumbsm($video).' <div class="img-overlay">
+            <button onclick="UProfile.deleteVideoConfirm('.$video->id.'); return false;" class="btn btn-sm btn-success">Delete</button>
+          </div>
+        </div></a>';
+            $html .= ' </div>';
+
+
+
+
+            return response()->json([
+                'status' => '1',
+                'data'   => $video,
+                'html'  =>  $html
+            ]);
+        } else {
+            return response()->json([
+                'status' => '0',
+                'validator' =>  $validator->errors()->add('video', 'Video MimeType not allowed')
+            ]);
         }
     }
 

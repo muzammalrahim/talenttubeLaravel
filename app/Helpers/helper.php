@@ -1142,3 +1142,11 @@ function australian_resident($user_id){
     }
 
 }
+
+
+function assetVideo_response($video){
+    $vPath  = '/media/public/interview_bookings/';
+    $vPath .= $video;
+    return asset( $vPath );
+}
+
