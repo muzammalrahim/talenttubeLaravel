@@ -1182,6 +1182,130 @@ class InterviewController extends Controller
     }
 
 
+        // ================================================== Save Response As Jobseeker ==================================================
+
+    public function save_jobSeeker_response_interview(Request $request){
+
+        $user = Auth::user();
+        $data = $request->all();
+        // dd($data);
+        // ================================================== Validation for answering the questions ==================================================
+     
+        if(in_array(null, $data['answer'], true))
+        {
+            return response()->json([
+                'status' => 0,
+                'error' =>  "Please answer all questions"
+            ]);
+        }
+        else{
+
+            // dd(' =========== hi =============== ');
+
+            $rules = array(
+            'answer*' => 'required|max:255',
+            'answer.*.img' => 'mimetypes:video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi', );
+            $validator = Validator::make( $data , $rules);
+            if ($validator->fails()){
+                return response()->json([
+                    'message' => 'Please upload a valid video format i.e video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi'
+                    // 'status' => 0,
+                    // 'validator' =>  $validator->getMessageBag()->toArray()
+                ]);
+            }
+
+            else{
+
+                // dd(' sab thek  ');
+
+                $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('user_id' , $user->id)->first();
+            if ($UserInterview) {
+
+                if ($UserInterview->status == 'pending') {
+                    $UserInterview->status =  'Interview Confirmed';
+                    $UserInterview->save();
+
+                    $history = new History;
+                    $history->user_id = $UserInterview->user_id; 
+                    $history->type = 'Interview Confirmed'; 
+                    $history->userinterview_id = $UserInterview->id; 
+
+                    $history->save();
+
+                    foreach ($data['answer'] as $key => $value) {
+
+                        // dump($key);
+
+                        if (isset($value['img'])) {
+
+                            // dd(' img hai ');
+
+                            $answers = new UserInterviewAnswers;
+                            $video = $value['img'];
+                            $fileOriginalName = $video->getClientOriginalName();
+                            $fileName = $fileOriginalName;
+                            $storeStatus = Storage::disk('publicMedia')->put( 'interview_bookings/' .$user->id . '/User_interview_id('.$request->userInterviewId.')' . '/question_id('.$key.')' . '/video_response/' .  $fileName, 
+                                file_get_contents($video));
+
+                            $video_response_path = $user->id . '/User_interview_id('.$data['userInterviewId'].')' .
+                             '/question_id('.$key.')' . '/video_response/' .  $fileName;
+   
+                            // $answers->video_url = $video_response_path;
+                            $answers->answer = $video_response_path;
+                            $answers->emp_id = $UserInterview->emp_id;
+                            $answers->userInterview_id  = $data['userInterviewId'];
+                            $answers->user_id  = $user->id;
+                            $answers->question_id = $key;
+                            // $answers->answer = $value;
+                            $answers->save();
+  
+                        }
+
+                        else{
+
+                            $answers = new UserInterviewAnswers;
+                            // dump(' img tu ni hai ');
+                            $answers->userInterview_id  = $data['userInterviewId'];
+                            $answers->emp_id = $UserInterview->emp_id;
+                            $answers->user_id  = $user->id;
+                            $answers->question_id = $key;
+                            $answers->answer = $value;
+                            $answers->save();
+
+                        }
+
+
+                        
+                    }
+
+                    return redirect()->route('intetviewInvitation');
+                    
+                }
+
+                else{
+                    return response()->json([
+                        'status' => 0,
+                        'error' => 'You have already added response'
+                    ]);
+                }
+
+            }
+
+            }
+
+            
+        }
+        // $validator = $this->validate($request, [
+        //     'answer*' => 'required|max:255',
+        //     'answer.*.img' => 'mimetypes:video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi',
+        // ]);
+
+        // dd($validator);
+
+        // }    
+    }
+
+
 
 
 

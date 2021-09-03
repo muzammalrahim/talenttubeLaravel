@@ -1,5 +1,5 @@
 
-
+@if ($jobsApplication->count() > 0)
 <div class="newJobCont">
     <div class="head icon_head_browse_matches jobsIApplied"> <b>{{$jobSeeker->name}}</b> have applied to below jobs </div>
 
@@ -78,13 +78,13 @@
 
                     <div class="w_25p">
                         <div class="j_label bold">Job Salary</div>
-                        <div class="j_value">{{$job->salary}}</div>
+                        <div class="j_value">{{getSalariesRangeLavel($job->salary)}}</div>
                     </div>
 
-                    <div class="w_25p">
+                    {{-- <div class="w_25p">
                         <div class="j_label bold">Job Category</div>
                         <div class="j_value">Web & E-commerce Job</div>
-                    </div>
+                    </div> --}}
                 </div>
 
                 <div class="job_detail p10">
@@ -114,6 +114,14 @@
     </div>
             <div class="cl"></div>
 </div>
+
+@else
+
+    <div class="head icon_head_browse_matches jobsIApplied"> <b>{{$jobSeeker->name}}</b> has not applied to any jobs </div>
+        
+
+@endif
+
 
 <div style="display:none;">
 <div id="confirmJobAppDeleteModal" class="modal cmodal p0 confirmJobAppDeleteModal wauto">
@@ -153,6 +161,7 @@
     </div>
 </div>
 </div>
+
 
 
 

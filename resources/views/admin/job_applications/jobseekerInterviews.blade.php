@@ -44,7 +44,7 @@
                           <div class="card-body">
                             <div class="tab-content" id="custom-tabs-one-tabContent">
                               @include('admin.job_applications.intTabs.tab1')
-                              @include('admin.job_applications.intTabs.tab2')
+                              @include('admin.job_applications.intTabs.tab2') {{-- admin/job_applications/intTabs/tab2 --}}
                             </div> <!-- tab-content end -->
                           </div>
                           
@@ -112,7 +112,19 @@
       $(this).parents('.employerResponseDiv').find('.employerResponse').slideToggle();
   });
 
-    </script>
+
+  this.showVideoModal12= function(video_url){
+
+  console.log(' =============== Admin video showing ================ ', video_url);
+  var videoElem  = '<video id="player" controls>';
+  videoElem     += '<source src="'+video_url+'" type="video/mp4">';
+  videoElem     += '</video>';
+  $('#deleteNoteModal .videoBox').html(videoElem);
+  $('#deleteNoteModal').modal('show')
+  
+}
+
+</script>
 @stop
 
 @section('plugins.Datatables')

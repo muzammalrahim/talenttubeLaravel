@@ -145,6 +145,20 @@
   
   {{-- Bulk Approved Pop Up End --}}
 
+  <div id="ModalBulkApprovedInfo" class="modal fade ModalBulkApprovedInfo" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body p-3">
+              <div class="modalContentUser">
+              </div>
+           </div>
+           <div class="modal-footer text-center margin_auto">
+                <button type="button" class="btn btn-default btn-md modelCancelAction" data-dismiss="modal">Cancel</button>
+           </div>
+        </div>
+    </div>
+  </div>
+  
 <div id="divtemp" style="display: none;">
     <h3>You are bulk assigning a job to <span class="bulkCount"></span> JobSeekers.</h3>
     <div class="col-12 col-sm-6 col-lg-12">

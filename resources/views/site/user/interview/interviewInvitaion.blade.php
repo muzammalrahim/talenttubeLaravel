@@ -54,14 +54,17 @@
     <div class="job_info row p10 dblock">
       {{-- <div class="timeTable"> --}}
         <div class="IndustrySelect">
-          <p class="p0 qualifType"> Template Name: <b> {{$Int_booking->template->template_name}} </b> </p>
+
+
+          {{-- @dd($Int_booking->temp_id) --}}
+          {{-- <p class="p0 qualifType"> Template Name: <b> {{$Int_booking->template->template_name}} </b> </p> --}}
           @if ($Int_booking->template->type == "phone_screeen")
             <p> Template Type: <b> Phone Screen</b> </p>
           @else
             <p class="p0 qualifType"> Interview Type: <b> {{$Int_booking->template->type}} </b> </p>
           @endif
 
-            <p class="p0 qualifType"> Employer's Instructions: <b> {{$Int_booking->employers_instruction}} </b> </p>
+            <p class="p0 qualifType"> Employer's Instructions: <b> {{$Int_booking->template->employers_instruction}} </b> </p>
 
 
            <div class="j_button pb20 mt20">

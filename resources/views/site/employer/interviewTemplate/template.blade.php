@@ -9,14 +9,16 @@
 					<b> Name </b> {{$template->template_name}} <b> Type: </b> {{$template->type}} </span> 
 		        </div>
 
-		        <div class="job_title form_field">
-		            <span class="form_label bold">Instruction</span>
-		            <div class="form_input">
-		                <input type="text" placeholder="Add instructions for jobseeker" class="w100 employers_instruction" required="">
-		                <div id="title_error" class="error field_error to_hide">&nbsp;</div>
-		            </div>
-		        </div>
-			</div>
+		        @if ($template->employers_instruction)
+		        	
+			        <div class="dflex">
+			            <div class="w20 bold">Instruction</div>
+			            <div class="w80">  {{ $template->employers_instruction }}  </div>    
+			        </div>
+
+		        @endif
+
+			</div>  
 		@endforeach
 
 	    <h3 class="center bold"> Questions </h3>
@@ -33,7 +35,7 @@
 			<input type="text" class="w100 mt10 hide_it answersInput" name="answer[{{$quest->id}}]">
 		@endforeach
 
-	    <input type="hidden" name="temp_id" value="{{$template->id}}">
+	    <input type="hidden" name="temp_id" value="{{$template->id}}"> 
 
 	    <div class="mt10">
 	    	<button class="btn small leftMargin turquoise conductInterview123" value="{{$template->id}}" >Correspondence Interview</button> 

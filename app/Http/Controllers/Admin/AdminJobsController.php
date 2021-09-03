@@ -1217,11 +1217,14 @@ class AdminJobsController extends Controller
         $data = $request->all();
         // dd($data);
         $user = Auth::user();
+        $JobsApplication = JobsApplication::find($data['id']);
+        $data['JobsApplication'] = $JobsApplication;
         if (isAdmin($user)) {
             $JobsAnswers = JobsAnswers::Where('application_id' , $data['id'])->get();
             $data['JobsAnswers'] = $JobsAnswers;
             // dd($JobsAnswers);
             return view('admin.job_applications.application_answers' , $data);
+            // admin/job_applications/application_answers
 
         }
 

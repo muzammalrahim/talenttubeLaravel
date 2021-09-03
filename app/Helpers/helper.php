@@ -1150,3 +1150,10 @@ function assetVideo_response($video){
     return asset( $vPath );
 }
 
+function template_video($video){
+    $vPath  = 'media/public';
+    $vPath .= $video;
+    // dump($vPath);
+    return asset( $vPath );
+}
+

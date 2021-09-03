@@ -15,7 +15,42 @@
      
     @include('site.user.interviewInvitation.jsAccepInterview') {{-- site/user/interviewInvitation/jsAccepInterview --}}
 
-  @elseif($UserInterview->status == 'Interview Confirmed' ) 
+
+
+  @elseif($UserInterview->status == 'Interview Confirmed' )
+
+
+    {{-- @include('site.user.interviewInvitation.confirmed_interview')  --}}
+    {{-- site/user/interviewInvitation/jsAccepInterview --}}
+
+    <div class="IndustrySelect">
+      <p class="p0 qualifType"> Template Name: <b>  {{$UserInterview->template->template_name}} </b> </p>
+      @if ($UserInterview->template->type == 'phone_screeen' )
+        <p class="p0 qualifType"> Template Type: <b> Phone Screen</b> </p>
+      @else
+        <p class="p0 qualifType text_capital"> Template Type: <b> {{$UserInterview->template->type}} </b> </p>
+        <p class="p0 qualifType"> Employer's Instructions: <b> {{$UserInterview->template->employers_instruction}} </b> </p>
+      @endif
+      <p class="p0 qualifType text_capital"> Interviewer Name: <b> {{$UserInterview->employer->company}} </b> </p>
+
+      @if ($UserInterview->template->employer_video_intro)
+        
+        <div class="dflex">
+            <div class="w20">
+              <p class="p0 qualifType text_capital"> Employer's Intro: </p>
+            </div>
+            <div class="w80">
+              <div class="video_div pointer"  onclick="showVideoModal12( '{{template_video($UserInterview->template->employer_video_intro)}}')"> 
+                <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
+              </div>      
+            </div>
+
+        </div>
+
+      @endif
+
+    </div>
+
     @php
       $tempQuestions = App\InterviewTempQuestion::where('temp_id', $UserInterview->temp_id)->get();
     @endphp
@@ -33,7 +68,7 @@
             </div>
 
           @else
-            <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
+            <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p> 
         @endif
         
       @endforeach
@@ -57,7 +92,10 @@
 </div>
 
 
+
+
 @stop
+
 
 
 @section('custom_css')
@@ -79,6 +117,7 @@
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
 <script src="{{ asset('js/site/userProfile.js') }}"></script>
+
 
 <script type="text/javascript">
 
@@ -119,7 +158,7 @@ $('.saveResponse').on('click',function() {
 
 this.showVideoModal12= function(video_url){
 
-  console.log(' hassan here ', video_url);
+  console.log(' =============== hassan here ================ ', video_url);
   var videoElem  = '<video id="player" controls>';
   videoElem     += '<source src="'+video_url+'" type="video/mp4">';
   videoElem     += '</video>';
@@ -135,6 +174,7 @@ this.showVideoModal12= function(video_url){
   });
 
 }
+
 
 
 

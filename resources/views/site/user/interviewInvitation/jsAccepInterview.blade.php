@@ -56,26 +56,39 @@
           @if ($UserInterview->template->type == 'phone_screeen' )
             <p class="p0 qualifType"> Template Type: <b> Phone Screen</b> </p>
           @else
-            <p class="p0 qualifType"> Template Type: <b> {{$UserInterview->template->type}} </b> </p>
-            <p class="p0 qualifType"> Employer's Instructions: <b> {{$UserInterview->employers_instruction}} </b> </p>
+            <p class="p0 qualifType text_capital"> Template Type: <b> {{$UserInterview->template->type}} </b> </p>
+            <p class="p0 qualifType"> Employer's Instructions: <b> {{$UserInterview->template->employers_instruction}} </b> </p>
           @endif
-          <p class="p0 qualifType"> Interviewer Name: <b> {{$UserInterview->employer->name}} </b> </p>
+          <p class="p0 qualifType text_capital"> Interviewer Name: <b> {{$UserInterview->employer->company}} </b> </p>
+
+          @if ($UserInterview->template->employer_video_intro)
+            
+            <div class="dflex">
+                <div class="w20">
+                  <p class="p0 qualifType text_capital"> Employer's Intro: </p>
+                </div>
+                <div class="w80">
+                  <div class="video_div pointer"  onclick="showVideoModal12( '{{template_video($UserInterview->template->employer_video_intro)}}')"> 
+                    <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
+                  </div>      
+                </div>
+
+            </div>
+
+          @endif
+
         </div>
       </div>
 
-      {{-- <input type="hidden" name="temp_id" value="{{$UserInterview->template->id}}"> --}}
-      {{-- <input type="hidden" name="emp_id" value="{{$UserInterview->employer->id}}"> --}}
       <div class="timeTable">
         <div class="IndustrySelect">
           <p class="p0 qualifType center bold"> Template Questions </p>
-            @foreach ($InterviewTempQuestion as  $quest)
+            {{-- @foreach ($InterviewTempQuestion as  $quest)
               <p class="p0 qualifType bold mt10" name = ""> <span> Question ({{$loop->index+1}}):   </span> {{$quest->question}} </p>
               @if ($quest->video_response == 1)
 
                   <div class="video_response"> 
                     <p> Upload video to answer this question </p> 
-
-                    {{-- <input type="hidden" class="vide_response_url_{{ $loop->index }}" data-question_id = "{{ $quest->id }}" name="answer[{{$quest->id}}]"> --}}
 
                     <form action="#" id ="dropzone_{{ $loop->index }}" class='dropzone'>
                       <input type="hidden" class="question_id" value="{{ $quest->id }}" name="question_id">
@@ -91,11 +104,42 @@
               @endif
             @endforeach
 
-            <input type="hidden" name="userInterviewId" value="{{$UserInterview->id}}">
+            <input type="hidden" name="userInterviewId" value="{{$UserInterview->id}}"> --}}
+
+
+            {{-- 2nd way of saving form data --}}
+
+              <form method="POST" action="{{ route('save_jobSeeker_response_interview') }}" enctype="multipart/form-data" name="saveInterviewResponse" class="saveInterviewResponse">
+                @csrf
+                @foreach ($InterviewTempQuestion as  $quest)
+                  <p class="p0 qualifType bold mt10" name = ""> <span> Question ({{$loop->index+1}}):   </span> {{$quest->question}} </p>
+                  @if ($quest->video_response == 1)
+                      <div class="video_response"> 
+                        <p> Upload video to answer this question </p> 
+                          <input type="file" class="question_id" name="answer[{{$quest->id}}][img]" accept="video/mp4,video/x-m4v,video/*">
+                      </div>
+                    @else
+                    <input type="text" class="w100 mt10 jobseekersAnswer_{{ $loop->index }}" name="answer[{{$quest->id}}]">
+                  @endif
+                @endforeach
+
+                <input type="hidden" name="userInterviewId" class="userInterviewId" value="{{$UserInterview->id}}"> 
+
+
+                
+                <p class="errorsInFields qualifType"></p>
+
+                <div class="actionButton mt20">
+                  <button class="jobApplyBtn graybtn jbtn" onclick="check_ansers()" >Save Reponse</button>
+                </div>
+              
+              </form>
+
+            {{-- 2nd way of saving form data end here --}}
 
             {{-- ==================================== For saving jobseekers all the answers in database ==================================== --}}
 
-            <form method="POST" name="saveInterviewResponse" class="saveInterviewResponse">
+            {{-- <form method="POST" name="saveInterviewResponse" class="saveInterviewResponse">
 
               @foreach ($InterviewTempQuestion as $quest)
                 
@@ -110,7 +154,7 @@
               </div>
               <p class="errorsInFields qualifType"></p>
             
-            </form>
+            </form> --}}
             
             {{-- ==================================== For saving jobseekers all the answers in database end here ==================================== --}}
 
@@ -122,16 +166,17 @@
   </div>
 {{-- </form> --}}
 
-{{-- <p class="errorsInFields"></p> --}}
+
 
 <script src="{{ asset('js/dropzone/dist/min/dropzone.min.js') }}"></script>
 
-@include('site.user.interviewInvitation.video_responseJs') 
-{{-- site/user/interviewInvitation/video_responseJs --}}
+@include('site.user.interviewInvitation.video_responseJs')   
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
 
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.min.js" ></script>
 <script type="text/javascript">
-
 
 
 $('.acceptButton').on('click',function() {
@@ -202,7 +247,9 @@ this.saveResponseAsJobseeker = function($url){
 }
 
 
+
 // });
+
 
 
 this.get_jobseekersAnswer = function(loop_index){
@@ -215,6 +262,25 @@ this.get_jobseekersAnswer = function(loop_index){
 }
 
 
+
+// this.check_ansers = function(){
+
+//   var data = new FormData();
+
+//   var response = $('.saveInterviewResponse').serializeArray();
+  
+  
+//   $( ".saveInterviewResponse" ).validate({
+//   rules: {
+//       answer: {
+//         required: true,
+//         accept: "video/*"
+//       }
+//     }
+//   });
+
+
+// }
 
 </script>
 

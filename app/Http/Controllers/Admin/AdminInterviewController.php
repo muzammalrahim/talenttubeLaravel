@@ -17,6 +17,8 @@ use App\InterviewTemplate;
 use App\InterviewTempQuestion;
 use App\JobsApplication;
 use App\UserInterview;
+use App\UserInterviewAnswers;
+
 use App\ControlSession;
 use App\History;
 
@@ -340,6 +342,8 @@ class AdminInterviewController extends Controller
         // dd($interviewTemplate);
         $interviewTemplate->template_name = $data['template_name'];
         $interviewTemplate->type = $data['type'];
+        $interviewTemplate->employers_instruction = $data['employers_instruction'];
+
         $interviewTemplate->save();
         // return response()->json([
         //     'message' => 'Template updated Successfully'
@@ -428,6 +432,9 @@ class AdminInterviewController extends Controller
             $temp = new InterviewTemplate();
             $temp->template_name = $data['template_name'];
             $temp->type = $data['type'];
+            $temp->employers_instruction = $data['employers_instruction'];
+            // dd($temp->id);
+            
 
             // ===================================== if employers video intro exist ===================================== 
 
@@ -436,14 +443,17 @@ class AdminInterviewController extends Controller
                 $video = $request->file('employer_video_intro');
                 $fileOriginalName = $video->getClientOriginalName();
                 $fileName = $fileOriginalName;
-                $storeStatus = Storage::disk('publicMedia')->put('/interview_bookings/employer/video_intro/'.$fileName, file_get_contents($video));
-                $path = $fileName;
+                $storeStatus = Storage::disk('publicMedia')->put('/template/employer_intro/'.$fileName, file_get_contents($video));
+                $path = '/template/employer_intro/' .$fileName;
+                $temp->employer_video_intro = $path;
+
             }
 
             // ===================================== if employers video intro exist end =====================================
 
-            $temp->employer_video_intro = $path;
             $temp->save();
+
+
             foreach ($data['questions'] as $key => $question) {
                 $tempQuestion = new InterviewTempQuestion;
                 $tempQuestion->question =  $question['question']; 
@@ -468,23 +478,49 @@ class AdminInterviewController extends Controller
      public function AdminDeleteTemplate(Request $request){
         $id = $request->id;
         $interviewTemplate = InterviewTemplate::find($id);
-
-        if ($interviewTemplate->employer_video_intro) {
-            
-            $imgPath = '/employer/video_intro/'. $interviewTemplate->employer_video_intro;
-            // dd($imgPath);
-            Storage::disk('publicMedia')->delete($imgPath);
-
+        
+        if (!empty($interviewTemplate)) {
+            if ($interviewTemplate->employer_video_intro) {
+                $imgPath =  $interviewTemplate->employer_video_intro;
+                // dd($imgPath);
+                Storage::disk('publicMedia')->delete($imgPath);
+            }
         }
+        
         $interQuestion = InterviewTempQuestion::where('temp_id', $id)->get();
-
         if (!empty($interQuestion)) {
           foreach ($interQuestion as $Question) {
             if (isAdmin()) {
-                $Question->delete();
-            }
+                    $UserInterviewAnswers = UserInterviewAnswers::where('question_id' , $Question->id)->first();
+                    if (!empty($UserInterviewAnswers)) {
+                        
+                        if ($Question->video_response == 1) {
+                        $imgPath = '/interview_bookings/' .$UserInterviewAnswers->answer;
+                        Storage::disk('publicMedia')->delete($imgPath);
+                        $UserInterviewAnswers->delete();
+                        }
+                        else{
+                            $UserInterviewAnswers->delete();
+                        }
+
+
+                    }
+                    
+                    $Question->delete();
+                }
             }
         }
+
+        // Deleting User's Interview 
+
+        $UserInterview = UserInterview::where('temp_id',  $id)->get();
+        if ($UserInterview->count() > 0) {
+            foreach ($UserInterview as $interview) {
+                $interview->delete();
+            }
+
+        }
+
         // dd('hi how are you');
         if(!empty($interviewTemplate)){
             if (isAdmin()) {

@@ -30,19 +30,33 @@
 
 	    <button class="btn btn-sm btn-primary seeEmployerResponse"> See Candidate's Response</button>
 
-	    @php
-	    	$temp_id = $int->temp_id;
+	   		@php
+	    			// $temp_id = $int->temp_id;
             $emp_id = $int->employer->id;
-            $tempQuestions = App\InterviewTempQuestion::where('temp_id', $temp_id)->get();
+            $tempQuestions = App\InterviewTempQuestion::where('temp_id', $int->temp_id)->get();
 
         @endphp
+
         <div class="employerResponse hide">
           @foreach ($tempQuestions as $question)
             <p class="qualifType p0"> <b>Question {{$loop->index+1}})</b> {{$question->question}} </p>
             @php
               $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('user_id', $user_id)->where('emp_id', $emp_id)->where('userInterview_id', $int->id)->first();   
             @endphp
-            <p class="qualifType p0 mb10"> <b>Candidate's Response:</b> {{$answers->answer}} </p>
+
+
+            @if ($question->video_response == 1)
+		            <div class="video_div pointer"  onclick="showVideoModal12( '{{assetVideo_response($answers->answer)}}')"> 
+		              <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
+		            </div>
+
+		          @else
+		            <p class="qualifType p0 mb10"> <b>Candidates Response:</b> {{$answers->answer}} </p> 
+		        @endif
+
+
+            {{-- <p class="qualifType p0 mb10"> <b>Candidate's Response:</b> {{$answers->answer}} </p> --}}
+
           @endforeach
         </div>
 
@@ -58,7 +72,35 @@
 	{{-- @endif --}}
 
 
+
     <a class="btn btn-primary btnNext text-white" style="float: right;"onclick="scrollToTop()">Next</a>
 
 </div>
 
+
+
+<div class="modal fade" id="deleteNoteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog modal-notify modal-success" role="document">
+     <!--Content-->
+     <div class="modal-content">
+       <!--Header-->
+       <div class="modal-header bg-success">
+         <p class="heading lead">Video Response</p>
+         <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+           <span aria-hidden="true" class="white-text">&times;</span>
+         </button>
+       </div>
+       <!--Body-->
+       <div class="modal-body videoBox">
+         
+       </div>
+       <!--Footer-->
+       <div class="modal-footer justify-content-center">
+       	<a type="button" class="btn btn-success text-white" data-dismiss="modal">Close</a>
+       	{{-- <a type="button" class="btn btn-outline-success waves-effect" data-dismiss="modal">Cancel</a> --}}
+       </div>
+     </div>
+     <!--/.Content-->
+   </div>
+ </div>

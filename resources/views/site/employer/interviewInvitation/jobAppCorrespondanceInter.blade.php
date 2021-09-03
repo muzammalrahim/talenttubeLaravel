@@ -35,6 +35,26 @@
           @else
             <p class="p0 qualifType"> Template Type: <b> {{$interview->template->type}} </b> </p>
           @endif
+
+
+          @if ($interview->template->employer_video_intro)
+
+            <div class="dflex">
+                <div class="w20">
+                  <p class="p0 qualifType text_capital"> Employer's Intro: </p>
+                </div>
+                <div class="w80">
+                  <div class="video_div pointer"  onclick="showVideoModal12( '{{template_video($interview->template->employer_video_intro)}}')"> 
+                    <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
+                  </div>      
+                </div>
+
+            </div>
+
+          @endif
+
+
+
           <div class="job_info employerResponseDiv row dblock mt10">
             <div class="j_button pb20">
                <a class="jobApplyBtn graybtn jbtn seeEmployerResponse">See Candidate's Response</a>
@@ -49,7 +69,19 @@
                 @php
                   $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $interview->id)->first();   
                 @endphp
-                <p class="qualifType p0 mb10"> <b>Candidate's Response:</b> {{$answers->answer}} </p>
+
+
+                 @if ($question->video_response == 1)
+                    <div class="video_div pointer"  onclick="showVideoModal12( '{{assetVideo_response($answers->answer)}}')"> 
+                      <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
+                    </div>
+
+                  @else
+                    <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
+                @endif
+
+
+                {{-- <p class="qualifType p0 mb10"> <b>Candidate's Response:</b> {{$answers->answer}} </p> --}}
               @endforeach
             </div>
           </div>
@@ -64,6 +96,18 @@
 @else
 <h3> This User has not any interview </h3>
 @endif
+
+
+<div style="display:none;">
+    <div id="videoShowModal" class="modal p0 videoShowModal">
+        <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+            <div class="cont">
+                <div class="videoBox"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div class="cl"></div>
 </div>
@@ -93,6 +137,24 @@
 <script type="text/javascript">
 
 
+this.showVideoModal12= function(video_url){
+
+  console.log(' hassan here ', video_url);
+  var videoElem  = '<video id="player" controls>';
+  videoElem     += '<source src="'+video_url+'" type="video/mp4">';
+  videoElem     += '</video>';
+  $('#videoShowModal .videoBox').html(videoElem);
+  $('#videoShowModal').modal({
+      fadeDuration: 200,
+      fadeDelay: 2.5,
+      escapeClose: false,
+      clickClose: false,
+          });
+  $('#videoShowModal').on($.modal.CLOSE, function(event, modal) {
+    $(this).find(".videoBox video").remove();
+  });
+
+}
 
 </script>
 

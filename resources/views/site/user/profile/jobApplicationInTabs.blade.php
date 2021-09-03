@@ -97,7 +97,7 @@
 
                     <div class="w_25p">
                         <div class="j_label bold">Job Salary</div>
-                        <div class="j_value">{{$job->salary}}</div>
+                        <div class="j_value">{{getSalariesRangeLavel($job->salary)}}</div>
                     </div>
 
                     {{-- <div class="w_25p">
