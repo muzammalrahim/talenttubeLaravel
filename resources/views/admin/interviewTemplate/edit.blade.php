@@ -36,14 +36,14 @@
         <div class="form-group row">
           {{ Form::label('type', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
-            {{ Form::select('type', $value = $type , $attributes = array('class'=>'form-control', 'required'=> 'false')) }}
+            {{ Form::select('type', $type , $attributes = array('class'=>'form-control', 'required'=> 'false')) }}
           </div>
         </div>
 
         <div class="form-group row">
           {{ Form::label('employers instruction', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
-            {{ Form::text('employer_instruction', $value = $record->employer_instruction , $attributes = array('class'=>'form-control', 'placeholder' => 'Employers instruction' , 'required'=> 'false')) }}
+            {{ Form::text('employers_instruction', $value = $record->employers_instruction , $attributes = array('class'=>'form-control', 'placeholder' => 'Employers instruction' , 'required'=> 'false')) }}
           </div>
         </div>
 
@@ -52,7 +52,7 @@
 
           @if (isset($record->employer_video_intro))
             
-            <div class="video_div pointer"  onclick="showVideoModal12('{{asset('/media/public/interview_bookings/employer/video_intro/'.$record->employer_video_intro)}}')"> 
+            <div class="video_div pointer"  onclick="showVideoModal12('{{template_video($record->employer_video_intro)}}')"> 
               <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
             </div>
 

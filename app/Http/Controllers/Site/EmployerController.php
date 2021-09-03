@@ -1102,17 +1102,17 @@ class EmployerController extends Controller {
         // dd($data);
         $user = Auth::user();
 
-        $rules = array(
-                'employers_instruction' => 'required|max:150',
-            );
+        // $rules = array(
+        //         'employers_instruction' => 'required|max:150',
+        //     );
 
-        $validator = Validator::make($data, $rules);
-        if ($validator->fails()){
-            return response()->json([
-                'status' => 0,
-                'validator' => $validator->getMessageBag()->toArray()
-            ]);
-        }
+        // $validator = Validator::make($data, $rules);
+        // if ($validator->fails()){
+        //     return response()->json([
+        //         'status' => 0,
+        //         'validator' => $validator->getMessageBag()->toArray()
+        //     ]);
+        // }
 
 
         $empName = $user->company;
@@ -1128,7 +1128,7 @@ class EmployerController extends Controller {
                 $UserInterview->status   = 'pending';
                 $UserInterview->hide   = 'no';
                 $UserInterview->url   = generateRandomString();
-                $UserInterview->employers_instruction = my_sanitize_string($data['employers_instruction']);
+                // $UserInterview->employers_instruction = my_sanitize_string($data['employers_instruction']);
 
                 if (isAdmin($user)) {
                     $UserInterview->interview_type = 'Correspondance';
@@ -1152,7 +1152,7 @@ class EmployerController extends Controller {
             else{ 
 
                     return response()->json([
-                    'status' => 2,
+                    'status' => 0,
                     'message' => 'You have already selected this template, please try another template'
                 ]);
             }

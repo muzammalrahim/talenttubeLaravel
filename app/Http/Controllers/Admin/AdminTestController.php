@@ -81,7 +81,7 @@ class AdminTestController extends Controller
         $data =  $request->toArray();
         $user = Auth::user();
         $data = $request->all();
-         $this->validate($request, [
+        $this->validate($request, [
             'name' => 'required|max:255',
             'time' => 'digits_between:2,5',
             'question.*.question' => 'required|max:255',

@@ -1204,7 +1204,7 @@ class HomeController extends Controller {
                     }
                     else{ 
                         return view('site.user.interviewinvitation.detail', $data);
-                        // site/user/interviewInvitation/acceptedInterviewInvitation
+                        // site/user/interviewInvitation/detail
                     }
                 }
             }

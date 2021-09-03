@@ -20,6 +20,17 @@
 			  	</div>
 			</div>
 		@endforeach
+
+		<div class="form-group row">
+			   <label for="staticTitle_{{$answer->id}}" class="col-sm-4 col-form-label">Description</label>
+		    <div class="col-sm-8">
+		    	<p>
+		    		 {{$JobsApplication->description}}
+		    	</p>
+		    </div>
+
+	  	</div>
+		
 	@endif
 {{-- </div> --}}
 

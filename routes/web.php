@@ -442,6 +442,8 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('/ajax/interview-response/delete_video/{id}','Site\InterviewController@interview_delete_video')->name('interview_delete_video');
 
     
+
+    Route::post('save/interview/invitation',    'Site\InterviewController@save_jobSeeker_response_interview')->name('save_jobSeeker_response_interview'); 
     // ==========================================================================
     // jobseekerprofile
     // ==========================================================================
@@ -688,6 +690,7 @@ Route::get('phpinfo', function () {
     phpinfo();
      
 });
+
 
 
 

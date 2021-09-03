@@ -38,27 +38,14 @@
         <div class="form-group row">
           {{ Form::label('employers instruction', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
-            {{ Form::text('employer_instruction', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Employers instruction' , 'required'=> 'false')) }}
+            {{ Form::text('employers_instruction', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'Employers instruction' , 'required'=> 'false')) }}
           </div>
         </div>
 
 
         <div class="form-group row">
           {{ Form::label('employers video intro', null, ['class' => 'col-md-2 form-control-label']) }}
-        {{--   <div class="col-md-10 pointer">
-            <img src="https://img.icons8.com/material-two-tone/50/000000/video.png"/>
-          </div> --}}
-
-          {{-- <div id="list_videos_public" class="list_videos_public">
-              <div id="photo_add_video" class="item add_photo add_video_public item_video">
-                  <a class="add_photo" return false;">
-                      <img id="video_upload_select" class="transparent is_video bg-primary uploadedPhotos" onload="$(this).fadeTo(100,1);" src="{{asset('images/site/icons/add_video160x120.png')}}" style="opacity: 1;">
-                  </a>
-              </div>
-          </div> --}}
-
-          <div class="col-md-10"> <input type="file" name="employer_video_intro"> </div>
-
+          <div class="col-md-10"> <input type="file" name="employer_video_intro" accept="video/mp4,video/x-m4v,video/*" > </div>
 
         </div>
 

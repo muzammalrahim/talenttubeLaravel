@@ -12,6 +12,8 @@
 
 {{-- @dump($UserInterview) --}}
 
+{{-- ========================================================== User Interviews ========================================================== --}}
+
 @include('site.user.jobseekerInfoTabs.userInterviewForJobseeker')   {{-- site/user/jobseekerInfoTabs/userInterviewForJobseeker --}}
 
     
@@ -105,7 +107,7 @@
                     location.reload();
                     // window.location.href = "{{ route('intetviewInvitationEmp')}}" ;
                 }
-                else if(response.status == 0){
+                /*else if(response.status == 2){
                     var inst_error = response.validator['employers_instruction'].toString();
                     // var error = inst_error.toString();
                     console.log(inst_error);
@@ -115,9 +117,9 @@
                     setTimeout(function(){
                         $('.liveInterviewError').addClass('hide_it');
                     }, 4000);
-                } 
+                } */
 
-                else if(response.status == 2){ 
+                else if(response.status == 0){ 
                     var inst_error = response.message;
                     // var error = inst_error.toString();
                     console.log(inst_error); 
