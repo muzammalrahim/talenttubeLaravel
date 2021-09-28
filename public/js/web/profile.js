@@ -89,6 +89,35 @@ $(document).ready(function(){
         });
     }
 
+
+
+    // ================================================ Update Questions ================================================
+
+    // this.updateRecentJob = function(){
+    //     var recentJobField = $('.questionsField').val();
+    //     // console.log(organHeldTitleField);
+    //     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: base_url+'/ajax/update/questions',
+    //         data: {'questions': questionsField},
+    //         success: function(data){
+    //             if(data.status == 1){
+    //                 $('.organizationSpan').text(data.organHeldTitle);
+    //                 $('.recentjobSpan').text(data.recentjob);
+    //                 $('.recentjob').removeClass('d-none');
+    //                 $('.sec_recentJob').addClass('d-none');
+    //                 $('.button_recentJob').addClass('d-none');
+    //                 $('.alert_recentJob').show().delay(3000).fadeOut('slow');
+
+
+    //             }
+    //         }
+    //     });
+    // }
+
+
+
     // ================================================ Edit and delete qualification ================================================
 
     this.showQualificationEditor = function(){
@@ -415,6 +444,54 @@ $(document).ready(function(){
         });
     }
 
+
+
+
+
+
+
+});
+// --------------------------------------------------------question tab --------------------------------------------------------
+//  ======================================= Edit User Questions Start =======================================
+
+    this.updateQuestions = function(){
+        var items = {};
+        $('select.jobSeekerRegQuestion').each(function(index,el){
+        // console.log(index, $(el).attr('name')  , $(el).val()   );
+            // items.push({name:  $(el).attr('name') , value: $(el).val()});
+            var elem_name = $(el).attr('name');
+            var elem_val = $(el).val();
+            items[elem_name] = elem_val;
+            // items.push({elem_name : elem_val });
+        });
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $('.SaveQuestionsLoader').after(getLoader('smallSpinner SaveQuestionsSpinner'));
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/updateQuestions',
+            data: {'questions': items},
+
+            success: function(data){
+                    $('.questionsAlert').show().delay(3000).fadeOut('slow');
+                    $('.saveQuestionsButton').css("display","none");
+                    $('.jobSeekerRegQuestion').addClass('hide_it');
+                    $('.QuestionsKeyPTag').removeClass('hide_it2');
+                    if(data.status==1){
+                        // $(".questionsOfUser").load(" .questionsOfUser");
+                        $(".SaveQuestionsSpinner").remove();
+                        $('.questionsOfUser').html(data.data);
+
+                }
+            }
+        });
+    }
+
+//  ======================================= Edit User Questions End  =======================================
+
     // ================================================ Upload Video ================================================
 
     this.SelectVideoFile = function(){
@@ -486,3 +563,4 @@ $(document).ready(function(){
 
 
 });
+

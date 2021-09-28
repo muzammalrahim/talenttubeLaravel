@@ -333,9 +333,8 @@ class HomeController extends Controller {
 
     public function register(Request $request){
 
-
-
         // dd($request->all());
+
         // "_token" => "aoBTzArrllzmFQ8fw7zFhktY2lzW8jc1qbw2lH2T"
         // "firstname" => "Creative"
         // "surname" => "khan"

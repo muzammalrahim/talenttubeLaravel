@@ -1,3 +1,4 @@
+
 @extends('web.user.usermaster') {{-- web/user/usermaster --}}
 
 @section('content')
@@ -31,7 +32,9 @@
 
 
                   <div class="location p-2">  
-                     <b> Location: <span class="userLocationSpan"> {{userLocation($user)}} </span> </b> 
+
+                     <b> Location: <span class="userLocationSpan" > {{userLocation($user)}} </span> </b> 
+
                      <button type="button" id="list_info_location" class="orange_btn float-right" onclick="showMap()">
                         <i class="fas fa-edit salaryRangeEdit"></i>
                      </button>
@@ -91,7 +94,9 @@
                </div>
             </div>
          </div>
+
          <div class="col-md-8 order-md-1 order-sm-2 first-tap-detail">
+
             <div class="profile profile-section">
                <ul class="nav nav-tabs" id="Profile-tab" role="tablist">
                   <span class="line-tab"></span>
@@ -258,6 +263,7 @@
                      <div class=" Gallery">
                         <h2>Video's</h2>
 
+
                            @include('web.user.profile.tabs.videos') 
 
                      </div>
@@ -267,10 +273,11 @@
                   <!-- ========================================== question tab ========================================== -->
                   
                   <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
+
                      <h2>Questions</h2>
                            @include('site.user.profile.questionsuserpart')
                   </div>
-                  
+
                   <!-- ========================================== tag tab ========================================== -->
 
                   @include('site.user.profile.tabs.tags')
@@ -304,6 +311,8 @@
 
 
 <script type="text/javascript">
+
+
 
 // {{-- ==================================================== Edit Qualification ==================================================== --}}
 
@@ -699,9 +708,17 @@ var base_url = {!! json_encode(url('/')) !!};
 
 @section('custom_css')
    <style type="text/css">
-      textarea{
+
+     
+
+     textarea{
          resize: none
       }
+      .userLocationSpan{
+        word-break: break-all;
+      }
+
+
 
       .uploaded-file-resume { 
         width: 250px;
@@ -712,7 +729,7 @@ var base_url = {!! json_encode(url('/')) !!};
         position: relative;
         padding-top: 100px;
       }
-      
+
       .resume-form{
         display: inline !important;
       }

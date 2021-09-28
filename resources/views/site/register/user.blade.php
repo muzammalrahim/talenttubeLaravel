@@ -14,14 +14,18 @@
 @section('classes_body', 'homepage')
 
 @section('body')
+
     <div class="container-fluid Content hide1" id="step-1">
+
       <a href="{{ route('homepage') }}" class="row logo">
         <img src="assests/images/talent-tube.png" alt="">
       </a>
 
       <div class="row cross-refrance-wrapper">
+
         <form name="frm_date" method="post" action="{{route('register')}}" autocomplete="on" >
           {{ csrf_field() }}
+
 
           <div class="row update-info">
             <h4>Almost There! Just a Little More To Go</h4>
@@ -29,10 +33,12 @@
               <label for="">First Name</label>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-circle"></i></span>
+
                 <input type="text" class="form-control" name="firstname" placeholder="First Name" required aria-label="Username" aria-describedby="basic-addon1">
               </div>
 
               <div id="birth_error" class="error to_hide">&nbsp;</div>
+
 
             </div>
 
@@ -40,6 +46,7 @@
               <label for="">Last Name</label>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-circle"></i></span>
+
                 <input type="text" class="form-control" name="surname" placeholder="Last Name" aria-label="Username" aria-describedby="basic-addon1">
               </div>
             </div>
@@ -202,12 +209,17 @@
 
 <div id="success-step-1" class="hide">
 
+
+    </div>
+  </div>
 @stop
 
 
 @section('custom_js')
 
+
 {{-- <script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script> --}} {{-- commented on 27-09-2021 --}}
+
 <script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/jquery.form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script>
@@ -215,6 +227,7 @@
 <script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+
 
 
 @stop
@@ -227,3 +240,4 @@
     opacity: 1;
   }
 </style>
+

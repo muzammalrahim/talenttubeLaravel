@@ -14,48 +14,64 @@
 @stop
 
 @section('content')
-<div class="newJobCont">
-    <div class="head icon_head_browse_matches">My Cross References</div>
+<section class="row">
+  <div class="col-md-12">
+    <div class="profile profile-section cross-ref">
+      <h2>Cross References</h2>
+                        <div class="row">
+        {{-- @dump($interview); --}}
+          @if ($crossreference->count() > 0)
+          @foreach ($crossreference as $reference)
+           <div class="col-sm-12 col-md-6">
+              <div class="job-box-info interview-box clearfix">
+                     <div class="box-head">
+                          <h4><span class="bold">Reference </span> <span> ({{ $loop->index+1 }})</span></h4>
+                           </div>
+                             <ul class="job-box-text clearfix">
+                                <li class="text-info-detail clearfix">
+                                  <label>Refered By:</label>
+                                  <span><span> {{ $reference->refName }} </span></span>
+                                 </li>
+                                   <li class="text-info-detail clearfix">
+                                   <label>Type:</label>
+                                   <span><span> {{ $reference->refType }} </span></span>
+                                                      </li>
+                                  @if ($reference->refStatus == "Reference Fraud")
+                                    <p> <span class="bold">Status: </span> <span> Awaiting Response</span></p>
+                                  @else
+                                        <li class="text-info-detail clearfix">
+                                              <label>Status:</label> <span> {{ $reference->refStatus }} </span>
+                                       </li>
+                                  @endif
+                               
+                                  <li class="text-info-detail clearfix">
+                                  <label>Phone:</label>
+                                  <span><span> {{ $reference->refPhone }} </span></span>
+                                  </li>
 
-    {{-- @dump($interview); --}}
-    <div class="add_new_job">
-      @if ($crossreference->count() > 0)
-      @foreach ($crossreference as $reference)
-        <div class="referees">
-
-          <p> <span class="bold">Reference </span> <span> ({{ $loop->index+1 }})</span></p>
-          <p> <span class="bold">Referee: </span> <span> {{ $reference->refName }} </span></p>
-          <p> <span class="bold">Type: </span> <span> {{ $reference->refType }} </span></p>
-          @if ($reference->refStatus == "Reference Fraud")
-            <p> <span class="bold">Status: </span> <span> Awaiting Response</span></p>
-          @else
-          <p> <span class="bold">Status: </span> <span> {{ $reference->refStatus }} </span></p>
-          @endif
-          <p> <span class="bold">Phone: </span> <span> {{ $reference->refPhone }} </span></p>
-          <p> <span class="bold">Email: </span> <span> {{ $reference->refEmail }} </span></p>
-          {{-- @dump($reference) --}}
-        </div>
-        {{-- expr --}}
-      @endforeach
-      @else
-      <div class="add_new_job">
-        <div class="job_row_heading jobs_filter"></div>
-        <h3>You have not added any reference yet</h3>
-    </div>
-    @endif
-        
-    </div>
-
-
-
-<div class="cl"></div>
-</div>
-
-
+                                   <li class="text-info-detail clearfix">
+                                  <label>Email:</label>
+                                  <span> <span> {{ $reference->refEmail }} </span></span>
+                                   </li>
+              {{-- @dump($reference) --}}
+                               </ul>
+                         </div>
+            {{-- expr --}}
+                      @endforeach
+                       @else
+                        <div class="add_new_job">
+                          <div class="job_row_heading jobs_filter"></div>
+                          <h3>You have not added any reference yet</h3>
+                      </div>
+                      @endif
+      
+                  </div>
+              </div>
+           </div>
+      </section>
 
 
 @stop
-
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">

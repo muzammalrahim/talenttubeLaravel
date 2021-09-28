@@ -1,3 +1,5 @@
+
+
 {{-- @extends('adminlte::master') --}}
 @extends('site.master')
 
@@ -16,7 +18,8 @@
 @section('body')
 
 
-<!-- main -->
+
+
 
 @include('site.header.header') {{-- site/header/header --}}
  
@@ -37,16 +40,20 @@
         <div class=" header-buttons ">
           <div class="dual-button">
             <a href="#" class="orange_btn interview-button"><img src="assests/images/Interview-icon.svg" alt="" class="interview-icon"> <img src="assests/images/interview_hover.svg" class="interview_hover_icon" alt="" style="display: none;"> Interview concierge</a>
-            <a href="dashboard.html" class="blue_btn"><i class="fas fa-th-large"></i> Dashboard</a>
+
+        {{--     <a href="dashboard.html" class="blue_btn"><i class="fas fa-th-large"></i> Dashboard</a> --}}
           </div>          
           
-          <ul class="btn-infomation">
+          <ul class="btn-infomation d-flex">
+
             <li><label>I am</label></li>
             
             <form id="frm_join_index_step_1" action="{{route('join')}}" method="POST">
               @csrf
 
+
               <li class="form-buttons">
+
                 <select id="bl_join_done_orientation" name="type" class="select_main select_index blue_btn" aria-label="">
                   <option value="user">Job Seeker</option>
                   <option value="employer">Employee</option>
@@ -74,8 +81,10 @@
 
 <div class="container-fluid">
   <!-- Body text portion starts here -->    
-   <h3 class="heading-first text-center">Lorem ipsum dolor, sit amet </h3>
-    <p class="text-secondary text-center fist-paragrah">Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores aperiam cum incidunt soluta ipsum, fugit ratione iure reiciendis ea rerum alias, laborum et ipsa dignissimos. Iure ipsa pariatur deleniti veritatis!</p>
+
+   <h3 class="heading-first text-center">Jump Start Your Career With Us </h3>
+    <p class="text-secondary text-center fist-paragrah">“The only way to do great work is to love what you do. If you haven’t found it yet, keep looking. Don’t settle.”<br>—Steve Jobs</p>
+
 </div>
 
   <!-- ========================Job wrapper's HTML Starts Here======================= -->
@@ -88,7 +97,9 @@
          </div>
          <div class="feature-text-wrap">
            <h2>Search a Job</h2>
-           <p>Lorem ipsum dolor sit amet amet amet amet consectetur adipisicing elit.</p>
+
+           <p>It’s the modern age. Your job hunt is no longer sneaker-powered. Talenttube is a right place for you.</p>
+
          </div>
         </a>
     </div>
@@ -99,6 +110,69 @@
         </div>
         <div class="feature-text-wrap">
           <h2>Apply for Job</h2>
+
+          <p>Find your dream job by browsing jobs in major companies in world on talenttube.org.</p>
+        </div>
+      </a>
+   </div>
+    <div class="col-md-4 col-lg-4 col-sm-12">
+      <a href="#" class="feature-wrap clearfix">
+        <div class="icon-wraper">
+          <img src="assests/images/icon3.png" alt="icon-1" />
+        </div>
+        <div class="feature-text-wrap">
+          <h2>Get your Job</h2>
+          <p>This website is one of the best websites for the job search along with simple procedures . </p>
+        </div>
+      </a>
+   </div>
+  </div>
+</div>
+
+
+<!-- ========================Job wrapper's HTML ends Here======================= -->
+
+<!-- =================== main Section starts here================================-->
+    
+<div class="container-fluid first-section">
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-6">  
+      <div class="feature-img-wrap">
+        <img src="assests/images/man.svg" alt="vector-img" />
+      </div>             
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-6">
+     <div class="article">
+        <h2>Tired of applying</h2>
+       <h3> with Countless employers</h3>
+      <p>uploading the same old documents and answering the same old question?</p>
+      <p>Create a Talent Tube account today and make Employers find you!</p>
+    </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid first-section">
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-6 order-md-2 order-sm-1">  
+      <div class="feature-img-wrap">
+        <img src="assests/images/women.svg" alt="vector-img" />
+      </div>             
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-6 order-md-1 order-sm-2">
+     <div class="article second-article">
+      <h2>Watch, compare &</h2>
+      <h3> then decides to get right one</h3>
+      <p>73% of all consumers are more likely to commit to a purchase after watching a video</p>
+      <p> Compare that to the 84% who will reject a resume due to lack of personalisation. At Talent Tube,</p>
+      <p> 
+       we believe in bridging the gap between a resume and a job application through video technology, 
+       to increase Job Seekers chances of success.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
           <p>Lorem ipsum dolor sit amet amet amet amet consectetur adipisicing elit.</p>
         </div>
       </a>
@@ -160,6 +234,7 @@
     </div>
   </div>
 </div>
+
 <div class="container-fluid first-section">
   <div class="row ">
     <div class="col-sm-12 col-md-6 col-lg-6">  
@@ -238,7 +313,7 @@
 
 
 {{-- </div> --}}
-<!-- /main -->
+
 
 
 @stop
@@ -254,8 +329,13 @@
 <script src="{{ asset('assests/bootstrap/js/bootstrap.js') }}"></script>
 <script src="{{ asset('assests/bootstrap/js/bootstrap.min.js')}}"></script>
 
+
+
+
 @stop
 
 @section('custom_footer_css')
-  
+
 @stop
+
+

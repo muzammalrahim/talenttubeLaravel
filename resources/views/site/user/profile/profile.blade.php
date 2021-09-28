@@ -238,7 +238,9 @@
                         <button type="button" class="edited-text"><i class="fas fa-edit"></i></button>
                         <ul class="qualification-li">
                            {{-- <li><i class="qualification-circle"></i><span> {{ auth()->user()->industry_experience }}</span></li> --}}
+
                             @include('site.layout.parts.jobSeekerIndustryList') 
+
                          </ul>
                   </div>
                 </div>
@@ -272,8 +274,10 @@
                      </div>
                      <div class=" Gallery">
                         <h2>Video's</h2>
+
                         
                             @include('web.user.profile.tabs.videos') 
+
 
                      </div>
                   </div>

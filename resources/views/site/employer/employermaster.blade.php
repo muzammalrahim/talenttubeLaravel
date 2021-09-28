@@ -67,7 +67,7 @@
     
 
 </head>
-<body class="{{$classes_body}}">
+<body class="{{-- {{$classes_body}} --}}">
 
 {{-- @yield('body') --}}
 
@@ -131,7 +131,7 @@
 <script src="{{ asset('js/site/impact_lib.js') }}"></script>
 <script src="{{ asset('js/site/lib.js') }}"></script>
 <script src="{{ asset('js/site/script.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script> --}}
 
 
 {{-- <script src="{{ asset('js/site/profile.js') }}"></script>  --}}
@@ -142,7 +142,7 @@
 <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 {{-- <script type="text/javascript" src="{{ asset('js/site/location_gmap.js') }}"></script> --}}
 
-@yield('custom_footer_css')
+{{-- @yield('custom_footer_css') --}}
 @yield('custom_js')
 
 </body>

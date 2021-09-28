@@ -13,11 +13,10 @@
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 @stop
 
-@section('content')
-<div class="newJobCont">
+
+{{-- <div class="newJobCont">
   <div class="head icon_head_browse_matches">Welcome to Interview Concierge</div>
-  @if ($Interviews_booking->count() > 0)
-  @foreach ($Interviews_booking   as $Int_booking)
+ 
   <div class="job_row interviewBookingsRow_{{$Int_booking->id}}">
     <div class="job_heading p10">
       <h3 class=" job_title"><a>{{$Int_booking->interview->positionname}}</a></h3>
@@ -34,7 +33,7 @@
           </p>
 
            <div class="j_button pb20"><a class="jobApplyBtn graybtn jbtn deleteInterviewButton1" data-jobid="{{$Int_booking->id}}">Click here to cancel your interview</a></div>
-          {{-- <div class="j_button pb20"><a class="jobDetailBtn graybtn jbtn" data-slotId = "{{$Int_booking->slot->id}}">Click here to reschedule you time slot</a></div> --}}
+          <div class="j_button pb20"><a class="jobDetailBtn graybtn jbtn" data-slotId = "{{$Int_booking->slot->id}}">Click here to reschedule you time slot</a></div>
 
         </div>
 
@@ -64,8 +63,74 @@
 
 <div class="cl"></div>
 </div>
+@include('site.user.interview.popup') --}}
+
+
+
+{{-- html for interview concerge --}}
+@section('content')
+<section class="row">
+                <div class="col-md-12">
+                  <div class="profile profile-section">
+                    <h2>Welcome To Interview Concierge</h2>
+                     <div class="row">
+                       @if ($Interviews_booking->count() > 0)
+                       @foreach ($Interviews_booking   as $Int_booking)
+                       <div class="col-sm-12 col-md-6">
+                        <div class="job-box-info concigerge-box clearfix">
+                          <div class="box-head">
+                            <h4>{{$Int_booking->interview->positionname}}</h4>                          
+                          </div>
+                          <p class="slot-para">Your slot for interview is with below timetable.</p>
+                             <ul class="job-box-text concigerge clearfix">
+                                <li class="text-info-detail clearfix">
+                                  <label>From:</label>
+                                  <span>{{ Form::text('Start Time', $value = $Int_booking->slot->starttime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}</span>
+                                </li>
+                                <li class="text-info-detail clearfix">
+                                 <label>Booking Title:</label>
+                                 <span> {{$Int_booking->interview->title}}</span>
+                                </li>
+                               <li class="text-info-detail clearfix">
+                                 <label>To:</label>
+                                 <span> {{ Form::text('Start Time', $value = $Int_booking->slot->endtime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}</span>
+                               </li>
+                               <li class="text-info-detail clearfix">
+                                 <label>Company:</label>
+                                 <span>{{$Int_booking->interview->companyname}}</span>
+                               </li>
+                               <li class="text-info-detail clearfix">
+                                <label>Date:</label>
+                                <span> {{ Form::text('date',Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d'), $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}</span>
+                              </li>
+                              <li class="text-info-detail clearfix">
+                                <label>Position:</label>
+                                <span>{{$Int_booking->interview->positionname}}</span>
+                              </li>
+                              <li class="text-info-detail clearfix">
+                                <label>Insructions:</label>
+                                <span>{{$Int_booking->interview->instruction}}</span>
+                              </li>
+                            </ul>
+                            <button type="button" class="click-here-tag">Click here To Cancel Your Interview</button>
+                       </div>
+                     </div> 
+                     @endforeach  
+                        @else
+                        <h6> You have not booked any interview yet</h6>
+                        @endif
+                  </div>
+                </div>
+              </section>
+         @stop
+
 @include('site.user.interview.popup')
-@stop
+
+
+
+{{-- html for interview invitations --}}
+
+ 
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
