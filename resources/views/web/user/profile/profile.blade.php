@@ -1,4 +1,5 @@
-@extends('web.user.usermaster') {{-- site/user/usermaster --}}
+
+@extends('web.user.usermaster') {{-- web/user/usermaster --}}
 
 @section('content')
 
@@ -31,7 +32,9 @@
 
 
                   <div class="location p-2">  
+
                      <b> Location: <span class="userLocationSpan" > {{userLocation($user)}} </span> </b> 
+
                      <button type="button" id="list_info_location" class="orange_btn float-right" onclick="showMap()">
                         <i class="fas fa-edit salaryRangeEdit"></i>
                      </button>
@@ -91,6 +94,8 @@
                </div>
             </div>
          </div>
+
+         <div class="col-md-8 order-md-1 order-sm-2 first-tap-detail">
 
             <div class="profile profile-section">
                <ul class="nav nav-tabs" id="Profile-tab" role="tablist">
@@ -257,19 +262,10 @@
 
                      <div class=" Gallery">
                         <h2>Video's</h2>
-                        <ul>
-                           <li class="">
-                              <!-- ============ upload images ============= -->
-                              <div class="album-upload-img field" align="left">
-                                 <div class="upload-file">
-                                    <i class="fas fa-images"></i>
-                                    <span>Upload-Video</span>
-                                 </div>
-                                 <input type="file" id="files" name="files[]" multiple />
-                              </div>
-                              <!-- =========== end ============== -->
-                           </li>
-                        </ul>
+
+
+                           @include('web.user.profile.tabs.videos') 
+
                      </div>
                   </div>
 
@@ -277,15 +273,11 @@
                   <!-- ========================================== question tab ========================================== -->
                   
                   <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
-                     <h2>Questions <button type="button" onclick="showFieldEditor('recentJob');" class="edited-text orange_btn float-right"><i class="fas fa-edit"></i></button> </h2>
+
+                     <h2>Questions</h2>
                            @include('site.user.profile.questionsuserpart')
-                 
-                      {{-- <div class="tab_photos tab_cont"> --}}
-     {{--  --}}
+                  </div>
 
-   {{--  </div> --}}
-
-                  </div> 
                   <!-- ========================================== tag tab ========================================== -->
 
                   @include('site.user.profile.tabs.tags')
@@ -319,16 +311,8 @@
 
 
 <script type="text/javascript">
-// ======================================================jquery for truncate text into three dots=====================================
 
-// $(".location span").text(function(index, currentText) {
-//   var maxLength = $(this).parent().attr('data-maxlength');
-//   if(currentText.length >= maxLength) {
-//     return currentText.substr(0, maxLength) + "...";
-//   } else {
-//     return currentText
-//   } 
-// });
+
 
 // {{-- ==================================================== Edit Qualification ==================================================== --}}
 
@@ -724,6 +708,7 @@ var base_url = {!! json_encode(url('/')) !!};
 
 @section('custom_css')
    <style type="text/css">
+
      
 
      textarea{
@@ -732,6 +717,8 @@ var base_url = {!! json_encode(url('/')) !!};
       .userLocationSpan{
         word-break: break-all;
       }
+
+
 
       .uploaded-file-resume { 
         width: 250px;

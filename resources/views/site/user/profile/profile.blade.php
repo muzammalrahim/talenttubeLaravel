@@ -238,7 +238,9 @@
                         <button type="button" class="edited-text"><i class="fas fa-edit"></i></button>
                         <ul class="qualification-li">
                            {{-- <li><i class="qualification-circle"></i><span> {{ auth()->user()->industry_experience }}</span></li> --}}
-                            @include('site.layout.parts.jobSeekerIndustryList')
+
+                            @include('site.layout.parts.jobSeekerIndustryList') 
+
                          </ul>
                   </div>
                 </div>
@@ -272,19 +274,11 @@
                      </div>
                      <div class=" Gallery">
                         <h2>Video's</h2>
-                        <ul>
-                           <li class="">
-                              <!-- ============ upload images ============= -->
-                              <div class="album-upload-img field" align="left">
-                                 <div class="upload-file">
-                                    <i class="fas fa-images"></i>
-                                    <span>Upload-Video</span>
-                                 </div>
-                                 <input type="file" id="files" name="files[]" multiple />
-                              </div>
-                              <!-- =========== end ============== -->
-                           </li>
-                        </ul>
+
+                        
+                            @include('web.user.profile.tabs.videos') 
+
+
                      </div>
                   </div>
 

@@ -12,8 +12,10 @@
 	<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/register.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/card.css') }}">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/>
-    <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/> --}}
+    {{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/common.css') }}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/master.css') }}"> --}}
 
 @stop
 
@@ -45,7 +47,7 @@
         <div class="slogan"><span id="join_slogan">Answer 6 questions to calculate your best matches.</span></div>
 
         <div class="logo">
-            <a href="./index"><img src="{{asset('/images/talenttube.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
+            <a href="./index"><img src="{{asset('/images/logo.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
         </div>
     </div>
     <!-- /header -->
@@ -192,7 +194,7 @@
                         <p>What year did you complete your final year of high school ? </p>
                     </div>
                     <div class="qualification_type_cont mb20 center ageCal">
-                        <select id="year" name="passing_year" class="w80">
+                        <select id="year" name="passing_year" class="form-control custom-select">
                             {{ $last= date('Y')-50 }}
                             {{ $now = date('Y') }}
 
@@ -211,7 +213,7 @@
 
                     <div class="qualification_selected_type mb20 center">
                         <div class="qualification_type_cont">
-                            <select class="qualification_type" id="qualification_type" name="qualification_type" data-placeholder="Select Qalification & Trades">
+                            <select class="qualification_type form-control custom-select" id="qualification_type" name="qualification_type" data-placeholder="Select Qalification & Trades">
                                  <option value="">Select Qalification & Trades</option>
                                  <option value="certificate">Certificate or Advanced Diploma</option>
                                  <option value="trade">Trade Certificate </option>
@@ -512,18 +514,18 @@
 
 
 @section('custom_js')
-<script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/jquery.form.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script> --}}
+{{-- <script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script> --}}
+{{-- <script type="text/javascript" src="{{ asset('js/site/jquery.form.js') }}"></script> --}}
 <script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script>
 
-<script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script> --}}
 {{--<script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>--}}
 <script type="text/javascript" src="{{ asset('js/site/step2.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script> --}}
 
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
 <script src="{{ asset('js/site/common.js') }}"></script>
 
 
@@ -588,7 +590,7 @@
 @stop
 
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
 
 

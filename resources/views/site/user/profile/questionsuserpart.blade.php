@@ -2,10 +2,12 @@
 @if(!empty($userquestion))
     @foreach ($userquestion as $qk => $question)
     <div class="question-ans">
+
          <h6  class="accordionone">{{($question)}}</h6>
           <div class="panel">
             <b><p class="QuestionsKeyPTag">
                 {{$userQuestions[$qk]}}
+
                 @if ($userQuestions[$qk] == 'yes')
                     Yes
                 @else

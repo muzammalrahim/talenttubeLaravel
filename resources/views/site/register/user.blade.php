@@ -14,15 +14,18 @@
 @section('classes_body', 'homepage')
 
 @section('body')
-    <div class="container-fluid Content">
+
+    <div class="container-fluid Content hide1" id="step-1">
+
       <a href="{{ route('homepage') }}" class="row logo">
         <img src="assests/images/talent-tube.png" alt="">
       </a>
 
       <div class="row cross-refrance-wrapper">
-        <form name="frm_date" method="post" action="{{route('register')}}" autocomplete="off" >
+
+        <form name="frm_date" method="post" action="{{route('register')}}" autocomplete="on" >
           {{ csrf_field() }}
-          {{-- @csrf --}}
+
 
           <div class="row update-info">
             <h4>Almost There! Just a Little More To Go</h4>
@@ -30,15 +33,21 @@
               <label for="">First Name</label>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-circle"></i></span>
-                <input type="text" class="form-control" name="firstname" placeholder="First Name" aria-label="Username" aria-describedby="basic-addon1">
+
+                <input type="text" class="form-control" name="firstname" placeholder="First Name" required aria-label="Username" aria-describedby="basic-addon1">
               </div>
+
+              <div id="birth_error" class="error to_hide">&nbsp;</div>
+
+
             </div>
 
             <div class="col-md-6">
               <label for="">Last Name</label>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-circle"></i></span>
-                <input type="text" class="form-control" name="surname"  placeholder="Last Name" aria-label="Username" aria-describedby="basic-addon1">
+
+                <input type="text" class="form-control" name="surname" placeholder="Last Name" aria-label="Username" aria-describedby="basic-addon1">
               </div>
             </div>
 
@@ -46,25 +55,25 @@
               <label for="">Title</label>
               <div class="input-group mb-3 seeker-title">
                 <div class="form-check form-check-inline ">
-                  <input class="form-check-input" value="Mr" type="radio" name="inlineRadioOptions" id="inlineRadio1">
+                  <input class="form-check-input" value="Mr" type="radio" name="title" id="inlineRadio1" checked>
                   <label class="form-check-label" for="inlineRadio1">Mr</label>
                 </div>
 
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Ms" type="radio" name="inlineRadioOptions" id="inlineRadio2">
+                  <input class="form-check-input" value="Ms" type="radio" name="title" id="inlineRadio2">
                   <label class="form-check-label" for="inlineRadio2">Ms</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Miss" type="radio" name="inlineRadioOptions" id="inlineRadio3">
+                  <input class="form-check-input" value="Miss" type="radio" name="title" id="inlineRadio3">
                   <label class="form-check-label" for="inlineRadio3">Miss</label>
                 </div>
 
                 <div class="form-check form-check-inline ">
-                  <input class="form-check-input" value="Mrs" type="radio" name="inlineRadioOptions" id="inlineRadio4">
+                  <input class="form-check-input" value="Mrs" type="radio" name="title" id="inlineRadio4">
                   <label class="form-check-label" for="inlineRadio4">Mrs</label>
                 </div>
               </div>
-              <input type="hidden" name="title" class="user_title" value="Mr">
+              {{-- <input type="hidden" name="title" class="user_title" value="Mr"> --}}
 
             </div>
 
@@ -102,30 +111,46 @@
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-mail-bulk"></i></span>
                 <input type="email" id="email" name="email" class="form-control" placeholder="e.g. example@site.com" value="" aria-label="Username" aria-describedby="basic-addon1">
               </div>
+
+              <div id="email_check" class="icon_check to_hide"></div>
+
+              <div id="email_error" class="error to_hide text-danger">&nbsp;</div>
+
             </div>
             
             <div class="col-md-6">
               <label for="">Phone Number</label>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-phone-alt"></i></span>
-                <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter Your Phone Number" value="" maxlength="10" minlength="10" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="text" id="phone" name="phone" class="form-control" placeholder="Enter Your Phone Number" value="" maxlength="10" minlength="10" aria-label="Username" aria-describedby="basic-addon1"/>
+
               </div>
+                <div id="phone_check" class="icon_check to_hide"></div>
+                <div id="phone_error" class="error to_hide text-danger">&nbsp;</div>
             </div>
 
             <div class="col-md-12 Search-portion">
               <label for="">Username</label>
               <div class="input-group mb-3">
                 <span class="input-group-text" ><i class="fas fa-user-circle"></i></span>
-                <input type="text" id="name" class="form-control" name="username" maxlength="20" placeholder="This will be public" aria-label="Username" >
+                <input type="text" id="name" class="form-control" name="username" maxlength="20" placeholder="This will be public" aria-label="Username" />
+             
               </div>
+
+                <div id="username_check" class="icon_check to_hide"></div>
+                <div id="username_error" class="error to_hide text-danger">&nbsp;</div>
             </div>
 
             <div class="col-md-6">
               <label for=""> Password</label>
               <div class="input-group mb-3">
                 <span class="input-group-text" id="basic-addon1"><i class="fas fa-key"></i></span>
-                <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" aria-label="Username" aria-describedby="basic-addon1">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" aria-label="Username" aria-describedby="basic-addon1"/>
+
               </div>
+
+                <div id="password_check" class="icon_check to_hide"></div>
+                <div id="password_error" class="error to_hide text-danger">&nbsp;</div>
             </div>
 
             <div class="col-md-6">
@@ -133,8 +158,12 @@
                 <label for="">Confirm Password</label>
                 <div class="input-group mb-3">
                   <span class="input-group-text" id="basic-addon1"><i class="fas fa-key"></i></span>
-                  <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Confirm Password" aria-label="Username" aria-describedby="basic-addon1" value="" required>
+                  <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" placeholder="Confirm Password" aria-label="Username" aria-describedby="basic-addon1" value="" required/>
+ 
                 </div>
+
+                  <div id="password_confirmation_check" class="icon_check to_hide"></div>
+                  <div id="password_confirmation_error" class="error to_hide text-danger">&nbsp;</div>
               </div>
             </div>
 
@@ -148,6 +177,10 @@
                 </label>
               </div>
             </div>
+
+            <span id="agree_error" class="error to_hide text-danger">You need to agree to the terms</span>
+
+
           </div>
 
           <div class="row update-info-buttons">
@@ -159,18 +192,23 @@
                 </li>
                 
                 <li  class="">
-                  <button class="btn btn-success" id="frm_register_submit"> <i class="fas fa-arrow-right"></i> Next </button>
+                  <button type="button" class="btn btn-success" disabled id="frm_register_submit"> <i class="fas fa-arrow-right"></i> Next </button>
                 </li>
               </ul>
             </div>
           </div>
 
           {{-- <button id="frm_register_submit" class="btn pink disabled" disabled>Next</button> --}}
-          {{-- <span id="agree_error" class="error to_hide">You need to agree to the terms</span> --}}
 
         </div>
 
       </form>
+
+    </div>
+  </div>
+
+<div id="success-step-1" class="hide">
+
 
     </div>
   </div>
@@ -179,7 +217,9 @@
 
 @section('custom_js')
 
-<script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script>
+
+{{-- <script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script> --}} {{-- commented on 27-09-2021 --}}
+
 <script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/jquery.form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script>
@@ -189,4 +229,15 @@
 <script src="{{ asset('js/site/common.js') }}"></script>
 
 
+
 @stop
+
+<style type="text/css">
+  .to_hide{
+    opacity: 0;
+  }
+  .to_show{
+    opacity: 1;
+  }
+</style>
+

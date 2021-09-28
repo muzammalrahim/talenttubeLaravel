@@ -90,6 +90,7 @@ $(document).ready(function(){
     }
 
 
+
     // ================================================ Update Questions ================================================
 
     // this.updateRecentJob = function(){
@@ -114,6 +115,7 @@ $(document).ready(function(){
     //         }
     //     });
     // }
+
 
 
     // ================================================ Edit and delete qualification ================================================
@@ -447,6 +449,7 @@ $(document).ready(function(){
 
 
 
+
 });
 // --------------------------------------------------------question tab --------------------------------------------------------
 //  ======================================= Edit User Questions Start =======================================
@@ -488,3 +491,76 @@ $(document).ready(function(){
     }
 
 //  ======================================= Edit User Questions End  =======================================
+
+    // ================================================ Upload Video ================================================
+
+    this.SelectVideoFile = function(){
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = e => {
+            var file = e.target.files[0];
+            console.log(' onchange file  ', file );
+            var formData = new FormData();
+            formData.append('video',file);
+            var that        = this;
+            var item_id     =  Math.floor((Math.random() * 1000) + 1);
+            var video_item = '';
+            video_item  += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">';
+            video_item  +=  '<a class="show_photo_gallery video_link" href="">';
+            // video_item  +=   '<img src="'+base_url+'/images/site/icons/cv.png" style="opacity: 1; display: inline;" title="vvtt11" class="photo" id="video_v_1" data-video-id="v_1">';
+            video_item  +=  '</a>';
+            video_item  +=  '<span class="v_title">Video title</span>';
+            video_item  +=  '<span title="Delete video" class="icon_delete">';
+            video_item  +=      '<span class="icon_delete_photo"></span>';
+            video_item  +=      '<span class="icon_delete_photo_hover"></span>';
+            video_item  +=  '</span>';
+            video_item  +=  '<div class="v_error error hide_it"></div>';
+            video_item  +=  '<div class="v_progress"></div>';
+            video_item  += '</div>';
+
+            $('.list_videos').append(video_item);
+            var updateForm = document.querySelector('form');
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            var request = new XMLHttpRequest();
+            request.upload.addEventListener('progress', function(e){
+               var percent = Math.round((e.loaded / e.total) * 100);
+                 console.log(' progress-bar ', percent+'%' );
+                 $('#v_'+item_id+' .v_progress').css('width',  percent+'%');
+            }, false);
+            request.addEventListener('load', function(e){
+               console.log(' load e ', e);
+               var res = JSON.parse(e.target.responseText);
+               console.log(' jsonResponse ', res);
+               $('#v_'+item_id+' .v_progress').remove();
+                if(res.status == 1) {
+                    // $('#v_'+item_id+' .v_title').text(res.data.title);
+                    // $('#v_'+item_id+' .video_link').attr('href', base_url+'/'+res.data.file);
+                    $('#v_'+item_id).replaceWith(res.html);
+                }else {
+                    console.log(' video error ');
+                    if(res.validator != undefined){
+                        $('#v_'+item_id+' .error').removeClass('hide_it').addClass('to_show').text(res.validator['video'][0]);
+                    }
+                }
+            }, false);
+            request.open('post',base_url+'/ajax/uploadVideo');
+            request.send(formData);
+        }
+        input.click();
+
+    }
+
+
+
+    // ================================================ Upload Video End Here ================================================
+
+
+
+
+
+});
+

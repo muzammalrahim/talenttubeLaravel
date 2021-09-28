@@ -61,21 +61,27 @@
       @if (isEmployer($user))
 
       <a href="{{ route('premiumAccount') }}">
+
          <button class="nav-link blue_btn p-0" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" 
+
          role="tab" aria-controls="nav-home" aria-selected="true"><i class="fas fa-user"></i>Premium Account</button>
       </a>
       
       @else
 
       <a href="{{ route('profile') }}">
+
          <button class="nav-link active orange_btn p-0" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" 
+
          type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="fas fa-user"></i> Profile</button>
       </a>
 
       @endif
 
       <a href="{{ route('updateUserPersonalSetting') }}">
+
          <button class="nav-link orange_btn p-0" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" 
+
          type="button" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fas fa-clipboard-list"></i> Update</button>
       </a>
    

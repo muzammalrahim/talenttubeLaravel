@@ -6,17 +6,22 @@
       
       @if (isEmployer($user))
 
+
          {{-- <li><a href="{{ route('employerProfile') }}" class="{{(request()->is('employer/'.$user->username))?'active':''}} sidebar-text-view"><i class="fas fa-user"></i><span> My Profile</span></a></li> --}}
+
 
          <li><a href="{{ route('employerProfile') }}" class="{{(request()->is('employer/'.$user->username))?'active':''}} sidebar-text-view">
             <i class="fas fa-user"></i><span> My Profile</span></a>
          </li>
 
+
          <li><a href="{{ route('interviewconcierge') }}" class="{{(request()->is('interviewconcierge*'))?'active':''}} sidebar-text-view"><i class="far fa-address-book"></i><span> Interview Concierge</span></a>
+
          </li>
 
          <li><a href="{{ route('intetviewInvitationEmp') }}" class="{{(request()->is('intetview-invitation/emp'))?'active':''}} sidebar-text-view"><i class="fas fa-envelope-open-text"></i><span>Interview Invitations</span></a>
          </li>
+
 
          <li><a href="{{ route('employerJobs') }}" class="{{(request()->is('employer/jobs*'))?'active':''}} sidebar-text-view"><i class="fas fa-briefcase"></i><span>My Jobs</span></a>
          </li>
@@ -25,10 +30,12 @@
          </li>
 
          <li><a href="{{ route('jobSeekers') }}" class="{{(request()->is('jobSeekers'))?'active':''}} sidebar-text-view"><i class="fas fa-user-tie"></i><span>Job Seekers</span></a>
+
          </li>
 
 
       @else
+
 
          <li><a href="{{ route('profile') }}" class="{{(request()->is('user/'.$user->username))?'active':''}} sidebar-text-view"><i class="fas fa-user"></i><span> My Profile</span></a></li>
 
@@ -49,6 +56,7 @@
          <li><a href="{{ route('blockList') }}" class="{{(request()->is('block'))?'active':''}} sidebar-text-view"><i class="fas fa-user-lock"></i><span>Block Users</span></a></li>
 
          <li><a href="{{ route('likeList') }}" class="{{(request()->is('like'))?'active':''}} sidebar-text-view"><i class="fas fa-thumbs-up"></i><span>Like Users</span></a></li>
+
 
          <li><a href="{{ route('talent_matcher') }}" class="{{(request()->is('talent_matcher'))?'active':''}} sidebar-text-view"><i class="fas fa-hand-holding-usd"></i><span>Talent Matcher</span></a></li>
    </ul>
