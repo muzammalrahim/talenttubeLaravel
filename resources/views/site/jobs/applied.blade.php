@@ -3,20 +3,20 @@
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 
-@section('content')
-<div class="newJobCont">
-    <div class="head icon_head_browse_matches">My Jobs Application</div>
+ @section('content')
 
-    <div class="add_new_job">
-        {{-- @dump($applications) --}}
-        <div class="job_row_heading jobs_filter">
 
-        </div>
 
-        @if ($applications->count() > 0)
+   <section class="row">
+                <div class="col-md-12">
+                  <div class="profile profile-section">
+                    <h2>Jobs I Have Applied</h2>
+
+                     <div class="row">
+                           @if ($applications->count() > 0)
         @foreach ($applications as $application)
         <div class="job_row jobApp_{{$application->id}}">
 
@@ -57,132 +57,93 @@
                 }
 
 
-            @endphp
-
-            <div class="job_heading p10">
-                <div class="w_80p">
-                    <h3 class=" job_title"><a>{{$job->title}}</a></h3>
-                    <div class="job_location">
-                        <span>Location : </span>{{$job->city}},  {{$job->state}}, {{$job->country}}
+@endphp
+<div class="col-sm-12 col-md-6">
+    <div class="job-box-info">
+        <div class="box-head">
+            <h4>{{$job->title}}</h4>
+            Location:<span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span></label>
+            <i data-toggle="modal" data-target="#myModal" class="close-box fa fa-times"></i>
+            </div>
+                 <div class="job-box-text clearfix">
+                      <div class="text-info-detail clearfix">
+                       <label>Job Type:</label>
+                       <span>{{$jobType}}</span>
                     </div>
-                </div>
+                 <div class="text-info-detail clearfix">
+            <label>Job Experience:</label>
+            <span>@if(!empty($experience))
+             @foreach($experience as $industry )
+                <div class="IndustrySelect">
+                <p><i class="fas fa-angle-right qualifiCationBullet"></i>
+                      {{getIndustryName($industry)}}
+                      <i class="fa fa-trash removeIndustry hide_it"></i>
+                  </p>
+                     </div>
+                            @endforeach
+                        @endif</span>
+                    </div>
 
-                <div class="fl_right">
-                    <div class="j_label bold">Status</div>
-                    <div class="j_value text_capital">{{$status}}</div>
-                </div>
+            <div class="text-info-detail clearfix">
+              <label>Job Salary:</label>
+              <span>{{$job->salary}}</span>
             </div>
-
-            <div class="job_info row p10 dblock">
-                <div class="w_25p">
-                    <div class="j_label bold">Job Type</div>
-                    <div class="j_value">{{$jobType}}</div>
-                </div>
-
-                <div class="w_25p">
-                    <div class="j_label bold">Job Experience</div>
-                    <div class="j_value">@if(!empty($experience))
-                        @foreach($experience as $industry )
-                            <div class="IndustrySelect">
-                                <p><i class="fas fa-angle-right qualifiCationBullet"></i>
-                                      {{getIndustryName($industry)}}
-                                      <i class="fa fa-trash removeIndustry hide_it"></i>
-                                  </p>
-                            </div>
-                        @endforeach
-                    @endif</div>
-                </div>
-
-                <div class="w_25p">
-                    <div class="j_label bold">Job Salary</div>
-                    <div class="j_value">{{$job->salary}}</div>
-                </div>
-
-
+            <div class="text-info-detail clearfix">
+              <label>Submitted:</label>
+              <span>{{$application->created_at->format('yy-m-d')}}</span>
             </div>
-
-            <div class="job_detail p10">
-                <div class="j_label bold">Job Detail</div>
-                <div>{{$job->description}}</div>
+            <div class="text-info-detail clearfix">
+              <label>Job Detailed:</label>
+              <p>{{$job->description}} </p>
             </div>
-
-            <div class="job_footer p10 relative">
-                <div class="w_25p">
-                    <div class="j_label bold">Submitted</div>
-                    <div class="j_value">{{$application->created_at->format('yy-m-d')}}</div>
-                </div>
-
-                <div class="js_actionBtn bottom_10">
-                    <button class="confirmJobAppRemoval redbtn jbtn" data-jobid="{{$application->id}}">Remove</button>
-                </div>
-            </div>
-
-
+            <span class="inreview-tag used-tag">{{$status}}</span>
+          </div>
         </div>
-        @endforeach
-            @else
-                <h3>You have not applied to any job yet</h3>
-        @endif
-
-    </div>
-
-<div class="cl"></div>
+       </div>
+       @endforeach
+        @else
+           <h3>You have not applied to any job yet</h3>
+         @endif
+     </div>
+  </div>
 </div>
+</section>
 
-
-
-<div style="display:none;">
-<div id="confirmJobAppDeleteModal" class="modal cmodal p0 confirmJobAppDeleteModal wauto">
-    <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-        <div class="cont">
-            <div class="title">Delete Job Application?</div>
-            <div class="spinner_loader">
-                <div class="spinner center">
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
-                    <div class="spinner-blade"></div>
+                         {{-- ----------------------------------------------------delete modal --------------------------------------------}}
+                <div class="modal fade" id="myModal" role="dialog">
+                <div class="modal-dialog delete-applications">
+                
+                  <!-- Modal content-->
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <i data-dismiss="modal" class="close-box fa fa-times"></i>                      
+                      <h1 class="modal-title"><i class="fa fa-trash trash-icon"></i>Delete Job Application</h1>
+                    </div>
+                    <div class="modal-body">
+                      <strong>Are you sure you wish to continue?</strong>
+                    </div>
+                    <div class="dual-footer-btn">
+                      <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+                      <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button>
+                    </div>
+                  </div>
+                  
                 </div>
-            </div>
-            <div class="apiMessage mt20"></div>
-            <div class="img_chat">
-                <div class="icon">
-                    <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
-                </div>
-                <div class="msg">Are you sure you wish to continue?</div>
-            </div>
-            <div class="double_btn">
-                <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
-                <button class="confirm_jobAppDelete_ok confirm_btn btn small marsh">OK</button>
-                <input type="hidden" name="deleteConfirmJobAppId" id="deleteConfirmJobAppId" value=""/>
-                <div class="cl"></div>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
+              </div>
 
 
 @stop
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 @stop
 
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
-<script type="text/javascript">
+{{-- <script type="text/javascript">
 $(document).ready(function() {
     console.log(' new job doc ready  ');
 
@@ -229,6 +190,6 @@ $(document).ready(function() {
     });
 
 });
-</script>
+</script> --}}
 @stop
 

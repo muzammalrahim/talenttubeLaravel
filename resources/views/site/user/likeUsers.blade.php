@@ -6,7 +6,7 @@
 </div>
 @endif
  --}}
-@extends('site.user.usermaster')
+@extends('web.user.usermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">

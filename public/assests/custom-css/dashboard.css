@@ -1,0 +1,2883 @@
+body{
+    overflow-y: hidden;
+}
+/* ----------------------body main-tab===================== */
+.top-nav-header {
+    padding: 20px 15px;
+    border-bottom: 1px solid #e6e6e6;
+    margin-bottom: 20px;
+}
+.body-tab-btn button {
+    margin: 0 20px 0 0;
+}
+.body-tab-btn button i{
+    margin: 0 10px 0 0;
+}
+.body-tab-btn{
+    border: none ;
+}
+.line-tab{
+    display: none;
+}
+.sign-btn{
+    text-align: right;  
+}
+.sign-btn i {
+    padding-right: 5px;
+}
+.main-content {
+    background-color: #F7F7F8;
+    padding-bottom: 80px;
+}
+.tab-circle-cross{
+    display: none;
+}
+.profile-data-info{
+      overflow-y: auto;
+         height: 90vh;
+}
+.profile-section{
+    background-color: #ffffff;
+    box-shadow: 4px 4px 8px #eee8e8;
+    padding-top: 20px !important;
+    padding-bottom: 50px !important;
+    overflow-y: auto;
+    height: 90vh;
+}
+
+.profile-section .nav-tabs{
+    border-bottom: 1px solid #00326F;
+    padding-top: 0;
+}
+.profile-section .nav-tabs .nav-item {
+    padding-top: 0px;
+}
+.profile-section .nav-tabs .nav-item.show .nav-link, .profile-section .nav-tabs .nav-link.active
+{
+    border: 1px solid #FF9400 !important;
+    border-bottom: transparent !important;
+    color: #FF9400 !important;
+}
+.nav-tabs .nav-link:focus, .nav-tabs .nav-link:hover {
+    border-color: #f48128 #f44336 #ffffff;
+}
+  .recent{
+    margin-top: 360px;
+
+    color: rgb(81, 82, 83);
+    font-weight: 600; 
+  }
+  .recent span{
+      padding-left: 23px;
+      color: #00326F;
+  }
+
+.Gallery{
+    padding-bottom: 37px;
+}
+ .Resume{
+     padding: 0 0 30px;
+ }
+ .Resume label {
+    font-size: 18px;
+    font-weight: 600;
+    color: #242424;
+}
+.Resume span {
+    margin-left: 30px;
+    font-size: 18px;
+    color: #00326f;
+}
+.profile-information {
+    position: relative;
+    margin-top: 120px;
+    padding: 100px 1px 20px;
+    /*text-align: center;*/
+    box-shadow: 4px 4px 8px #e8e8e8;
+    background: #ffffff !important;
+}
+.profile-img-wrapper {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1px solid #e6e6e6;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: -110px;
+}
+.profile-img-wrapper img{
+    width: 100%;
+    display: block;
+}
+.profile-detail h1 {
+    color: #00326F;
+    margin-bottom: 0;
+}
+.profile-detail h2 {
+    color: #00326f !important;
+    margin-bottom: 20px;
+}
+.recent-job label {
+    color: #202020;
+    font-size: 16px;
+    margin-right: 10px;
+}
+.recent-job span {
+    font-size: 16px;
+    color: #00326f !important;
+}
+.profile-detail .edit-btn {
+    width: 60%;
+    height: 45px !important;
+    margin: 10px 0 0;
+}
+.profile-detail .edit-btn i{
+    margin: 0 10px 0 0;
+}
+.profile {
+    padding: 0 20px;
+}
+.profile .nav-link {
+    font-size: 16px;
+    padding: 15px 20px;
+    color: #00326f;
+    font-weight: 600;
+}
+.profile-text-wrap{
+    padding: 30px 0;
+}
+.about-infomation {
+    position: relative;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #e6e6e6;
+}
+.about-infomation:last-child {
+    border-bottom:none;
+}
+.about-infomation .edited-text {
+    position: absolute;
+    right: 0;
+    top: -1px;
+    background: #FF9400;
+    border: 1px solid #FF9400;
+    padding: 5px ​2px 5px 5px;
+    font-size: 17px;
+    color: #ffffff;
+    transition: all 0.3s;
+    border-radius: 5px;
+}
+.about-infomation .edited-text i {
+    font-size: 17px;
+    color: #ffffff;
+    margin: 0;
+}
+.about-infomation .edited-text:hover, .about-infomation .edited-text i:hover , .about-infomation .edited-text:hover i {
+    color: #FF9400 !important;
+    background: #Ffffff;
+    transition: all 0.3s;
+}
+.qualification-circle {
+    width: 10px;
+    height: 10px;
+    background: #FF9400;
+    border-radius: 20px;
+    display: inline-block;
+    margin: 0 10px;
+}
+.qualification-li li {
+    margin-bottom: 10px;
+}
+.qualification-li li span {
+    font-size: 16px;
+}
+.album-section{
+    padding: 30px 0;
+}
+/* ========================== album-upload image=========== */
+.field {
+    position: relative;
+    padding: 10px 0 0;
+  }
+  .album-upload-img .imageThumb {
+    height: 180px;
+    border: none;
+    border-radius: 5px;
+    object-fit: scale-down;
+    padding: 1px;
+    width: 180px;
+    cursor: pointer;
+  }
+  .album-upload-img .pip {
+    display: inline-block;
+    margin: 0 10px 10px ;
+    vertical-align: bottom;
+    height: 200px;
+    width: 200px;
+    background: #ffffff;
+    margin-left: 15px;
+    position: relative;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #FF9400;
+}
+.album-upload-img .remove {
+    display: none;
+    background: #D11203;
+    border: 1px solid #D11203;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    right: 0;
+    width: 80%;
+    margin: auto;
+    font-size: 14px;
+    padding: 4px 0;
+    border-radius: 2px;
+    margin: 0 auto 0;
+}
+span.remove:before {
+    content: 'x';
+    color: #ffffff;
+    background: #D11203;
+    font-size: 12px;
+    padding: 0px 6px 3px;
+    border-radius: 30px;
+    margin: 0 4px 0 0;
+    display: inline-block;
+}
+.album-upload-img .pip:hover .remove, .album-upload-img .pip:hover .Profile-img, .album-upload-img .pip:hover .Private-img{
+     display: block !important;
+}
+  .field input {
+    width: 200px;
+    height: 200px;
+    font-size: 0;
+    background: transparent !important;
+    border: 1px dashed #f48128;
+    padding: 5px;
+    display: block;
+    position: absolute;
+    top: 10px;
+    cursor: pointer;
+    padding: 0;
+}
+.album-upload-img .upload-file {
+    height: 180px;
+    width: 180px;
+    padding: 50px 0;
+    text-align: center;
+    background: #e6e6e6;
+    margin: 10px 9px;
+    display: inline-block;
+    top: -50px !important;
+}
+.album-upload-img .upload-file i {
+    font-size: 58px;
+    display: block;
+    color: #cccccc;
+    margin-bottom: 5px;
+}
+
+.album-upload-img .Profile-img{
+    display: none;
+    background: #FF9400;
+    border: 1px solid #FF9400;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    top: 80px;
+    left: 0;
+    right: 0;
+    width: 80%;
+    margin: auto;
+    font-size: 14px;
+    padding: 4px 0;
+    border-radius: 2px;
+}
+.album-upload-img .Private-img{
+    display: none;
+    background: #02AC13;
+    border: 1px solid #02AC13;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+    top: 120px;
+    left: 0;
+    right: 0;
+    width: 80%;
+    margin: auto;
+    font-size: 14px;
+    padding: 4px 0;
+    border-radius: 2px;
+}
+
+/* ============= upload pdf file ================== */
+.file-uploader {
+    background-color: #dbefe9;
+    border-radius: 3px;
+    color: #242424;
+  }
+  
+  .file-uploader__message-area {
+    font-size: 18px;
+    /* padding: 1em; */
+    text-align: center;
+    color: #377a65;
+  }  
+  .file-list {
+    background-color: white;
+    font-size: 16px;
+  }  
+  .file-list__name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }  
+  .multiple-file-pdf .file-list li{
+    /* float: left; */
+    display: inline-block;
+}
+.multiple-file-pdf .file-list li a{
+    width: 250px;
+    float: left;
+    border: 1px dashed #003678;
+    background: #ffffff;
+    height: 150px;
+    position: relative;
+    margin: 0 20px 20px 0;
+    padding: 0 15px;
+}
+  
+.multiple-file-pdf .removal-button {
+    width: 30px !important;
+    border: none;
+    background-color: #ff0000;
+    color: #ffffff !important;
+    height: 30px !important;
+    border-radius: 50%;
+    padding: 6px 0;
+    position: absolute;
+    left: 10px;
+    top: 7px;
+}
+  .removal-button::before {
+    content: "X";
+  }
+  .removal-button:focus {
+    outline: 0;
+  }
+  .file-list__name {
+    max-width: 100%;
+    height: 100%;
+    display: block;
+    text-align: center;
+    background: url(../images/download-icon.svg) no-repeat;
+    background-size: 22% !important;
+    background-position: center 31px !important;
+    padding: 92px 0 0;
+    font-size: 20px;
+    color: #989898;
+}  
+  .file-chooser {
+    transition: background-color 1s, height 1s;
+    position: relative;
+  }
+  .file-chooser input {
+    padding: 9px 6px !important;
+    border-radius: 5px;
+    border: 1px solid #E5E5E5;
+    width: 80%;
+    float: left;
+    height: 45px;
+}
+.file-chooser .send-btn {
+    margin-left: 10px;
+    width: 15%;
+    height: 45px !important;
+}
+.file-chooser .send-btn i {
+    margin-right: 10px;
+}
+.file-chooser p {
+    font-size: 18px;
+    padding-top: 15px !important;
+    display: block;
+    width: 80%;
+    color: #ff0000 !important;
+    float: left;
+}  
+  .file-uploader {
+    max-width: 400px;
+    height: auto;
+    margin: 2em auto;
+  }
+  .file-uploader * {
+    display: block;
+  }
+  .file-uploader input[type=submit] {
+    margin-top: 2em;
+    float: right;
+  }  
+  .file-list {
+    margin: 30px auto 0;
+    max-width: 100%;
+}
+.file-list__name {
+    max-width: 100%;
+    height: 100%;
+    display: block;
+    text-align: center;
+    background: url(../images/download-icon.svg) no-repeat;
+}
+  .removal-button {
+    display: inline-block;
+    height: 100%;
+    /* float: right; */
+  }
+  .file-chooser__input {
+    margin: 0 auto;
+  }
+  
+  .file-uploader__submit-button {
+    width: 100%;
+    border: none;
+    font-size: 1.5em;
+    padding: 1em;
+    background-color: #72bfa7;
+    color: white;
+  }
+  .file-uploader__submit-button:hover {
+    background-color: #a7d7c8;
+  }
+  
+  .file-list li:after, .file-uploader:after {
+    content: "";
+    display: table;
+    clear: both;
+  }  
+  .hidden {
+    display: none;
+  }
+  .hidden input {
+    display: none;
+  } 
+
+
+  /*=======================================save pdf files css======================================= */
+  
+/*===========================question answer ========================*/
+.question-ans{
+    margin-bottom: 20px;
+}
+.questions-tab{
+    padding: 30px 0 ;
+}
+.question-ans .accordionone {
+    background:#00326f;
+    color: #ffffff;
+    cursor: pointer;
+    padding: 15px;
+    display: block;
+    border:1px solid #00326f;
+    font-size: 16px;
+    transition: 0.3s all;
+    margin: 0;
+    border-radius: 5px 5px 0 0;
+  }
+.question-ans .panel {
+    padding:15px;
+    display: none;
+    background: #EFEFEF;
+    overflow: hidden;
+    -webkit-border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    border-radius: 0 0 5px 5px;
+    border: 1px solid #e6e6e6;
+  }
+.question-ans .panel p{
+    color: #242424 !important;
+}
+.accordionone:after {
+    content: '+'; /* Unicode character for "plus" sign (+) */
+      font-size: 40px;
+      color: #ffffff;
+      float: right;
+      margin-left: 5px;
+      line-height: 18px;
+  }
+
+.accordionone.active:after {
+    content: "-" !important; /* Unicode character for "minus" sign (-) */
+  }
+  /*========================tag styling ==================*/
+  .tag-tab-info {
+    padding: 30px 0;
+}
+.add-skils input{
+    width: 80%;
+    float: left;
+    margin-right: 15px;
+}
+.add-skils .orange_btn {
+    padding: 5px 20px !important;
+    display: inline-block;
+}
+.add-skils .orange_btn i {
+    margin-right: 5px;
+}
+.add-skils.clearfix {
+    margin-bottom: 20px;
+}
+.skill-boxs {
+    background: #e6e6e6;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #cccccc;
+}
+.skill-boxs li{
+   display: inline-block;
+   background: #00326f;
+   padding: 5px;
+   border-radius: 2px;
+   margin:0 10px 15px 0;
+}
+.skill-boxs li span{
+    color: #ffffff;
+    font-size: 14px;
+ }
+ .skill-boxs li span i{
+    margin:0 5px 0 10px;
+    cursor: pointer;
+ } 
+/* ====================Additional-sidebar-css ============================== */
+.additional-sidebar-wrapper {
+    padding: 0px !important;
+    
+}
+.additional-sidebar{
+    background-color: #2672ab;
+    padding: 30px 0px;
+}
+.additional-sidebar button{
+    margin: 0px !important;
+    display: block;
+    background-color: transparent !important;
+    color: #ffffff !important;
+    text-align: start !important;
+    padding: 15px 15px ;
+    transition: 0.6s all;
+}
+.additional-sidebar button.active{
+    background-color: white !important;
+    color: #242424 !important;
+}
+
+.additional-sidebar button  i{
+    width: 20px;
+}
+.additional-sidebar button span {
+    padding-left: 5px;
+    font-weight: 500;
+    font-size: 15px;
+    float: left;
+    width: 80%;
+}
+.additional-sidebar button i {
+    width: 20px;
+    float: left;
+}
+.additional-sidebar button span:hover , .additional-sidebar button span:checked{
+   color: #242424;
+}
+.additional-sidebarbutton  .active , .additional-sidebar ul  .active a {
+    background-color: #ffffff;
+    color:#242424;
+}
+.additional-sidebar button a{
+    text-decoration: none;
+    color: #ffffff;
+    line-height: 40px;
+    font-size: 14px;
+}
+/* ===============================ends============================================== */
+.additional-content-area{
+    background-color: #eef4f8;
+    margin-right: 0px ;
+}
+.additional-content-area h2{
+    padding-top: 20px;
+    color: #242424;
+    
+}
+.additional-content-area .content{
+   padding-top: 20px;
+}
+.additional-content-area ul{
+    margin: 0px;
+    margin: auto;
+}
+.additional-content-area ul li {
+    padding: 5px 0;
+    text-align: center;
+}
+.additional-content-area ul li a {
+    color: #242424;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 500;
+    margin: auto;
+    display: block;
+    padding: 5px;
+    font-size: 18px;
+}
+.tag-tabactive .nav-link {
+    padding:5px;
+}
+.additional-content-area ul li a span{
+    color: #eef4f8;
+    padding-right: 5px;
+    font-weight: 500;
+}
+.additional-content-area ul li a span:hover ,  .additional-content-area ul li a:hover{
+    color: #ffffff;
+    background-color:#00326f ;
+    border-radius: 5px;
+    transition: 0.3s all;
+}
+
+/* ==================================================================================== */
+.accordion-item {
+    background-color: #eef4f8;
+    ;
+    border: transparent;
+}
+.additional-content-area h2{
+    padding-top: 20px;
+    color: #242424;
+    
+}
+.accordion-item ul{
+    margin: 0px;
+    padding: 20px 0px;
+    margin: auto;
+}
+.accordion-item ul li{
+    list-style: none;
+    padding: 5px 9px;
+   
+}
+.accordion-item ul li a{
+    color: #242424;
+    text-align: center;
+    text-decoration: none;
+    font-weight: 500;
+    margin: auto;
+    padding: 5px 30px 5px 10px;
+}
+.accordion-item ul li a span{
+    color: #eef4f8;
+}
+.accordion-item ul li a span{
+    padding-right: 5px;
+    font-weight: 500;
+}
+.accordion-item .accordion-body ul li a span:hover ,  .accordion-item .accordion-body ul li a:hover{
+    color: #ffffff;
+    background-color:#00326f ;
+    border-radius: 5px;
+    transition: 0.3s all;
+}
+
+.accordion-item button i{
+    width: 15px;
+}
+.accordion-item button span{
+    padding-left: 15px;
+}
+.accordion-button {
+    color: #fff;
+    background-color: #2672ab;
+}
+.accordion-button::after {
+    flex-shrink: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-left: auto;
+    content: "";
+    opacity: 0;
+    background-repeat: no-repeat;
+    background-size: 1.25rem;
+    transition: transform .2s ease-in-out;
+}
+.accordion-button:not(.collapsed) {
+    color: #212529;
+    background-color: #eef4f8;
+}
+.accordion-button:focus {
+    z-index: 3;
+    border-color: #86b7fe;
+    outline: 0;
+     box-shadow:none;
+}
+.tag-tabactive {
+    /* display: block!important; */
+    padding: 0 13px;
+    margin: 30px 0 0;
+}
+.tag-tabactive .nav-pills .nav-link {
+    border-radius: 0 !important;
+}
+.additional-sidebar button.active {
+    background-color: #ffffff !important;
+    color: #242424 !important;
+    border-left: 2px solid #2672ab;
+}
+.additional-sidebar button.active span{
+    color: #242424 !important;
+}
+
+.additional-sidebar button span{
+    color: #ffffff !important;
+}
+
+
+
+
+
+
+  /* ======================= job =============== */
+  .job-applied{
+      padding: 30px 0;
+  } 
+  .job-box-info {
+    border: 2px solid #2672ab;
+    margin-bottom: 20px;
+    background: #f8f8f8;
+    border-radius: 5px;
+}
+.box-head {
+    background: #2672AB;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    padding: 10px;
+    color: #ffffff;
+}
+.box-head h4{
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 5px;
+}
+.box-head label, .box-head span{
+    color: #ffffff !important;
+    margin-right: 5px;
+}
+.close-box {
+    background: #ff0000;
+    padding: 5px 8px;
+    border-radius: 50px;
+    position: absolute;
+    right: 7px;
+    top: 10px;
+    cursor: pointer;
+    line-height: 16px;
+    color: #ffffff;
+}
+.job-box-text{
+    padding: 20px;
+    background: #F8F8F8;
+}
+.text-info-detail label{
+    float: left;
+    width: 35%;
+    font-size: 14px;
+    font-weight: 600;
+}
+.text-info-detail span{
+    float: left;
+    font-size: 14px;
+    width: 65%;
+    color: #989797;
+}
+.job-detail-label{
+    width: 100% !important;
+}
+.text-info-detail{
+    margin-bottom: 10px;
+}
+.text-info-detail p {
+    overflow: auto;
+    width: 100%;
+    display: block;
+    float: left;
+    margin: 6px 0 0;
+    height: 50px;
+}
+.pending-interview-tag{
+    background-color: #339900;
+    color: #fff;
+}
+.interview-tag {
+    background: #339900;
+    border: 1px solid #339900 !important;
+}
+.pendinginterview-tag{
+    background: #6F2B60;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 20px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #5C5A5A;
+    border-radius: 20px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #FF9400;
+    border-radius: 20px;
+  }
+
+  /* ================= referance job============ */
+  .referance-tab{
+      padding: 30px 0;
+  }
+  .select-refeance{
+      position: relative;
+  }
+  .referance-tab label{
+      font-size: 16px;
+      font-weight: 600;
+  }
+  .select-caret {
+    position: absolute;
+    right: 20px;
+    top: 12px;
+}
+  /* ============================================================ */
+
+/* ========================= premium accounts ====================== */
+.account-links{
+    color: #2672AB;
+    text-decoration: underline;
+}
+.premiun-accounts {
+    padding: 30px 20px;
+}
+.premiun-accounts p{
+    color: #242424 !important;
+}
+/* ========================== update information ================= */
+.update-information {
+    padding: 30px 20px;
+}
+.update-information-area {
+    margin-bottom: 40px;
+}
+.update-information label {
+    font-size: 18px;
+    font-weight: 600;
+}
+.delete-btn{
+    font-size: 18px !important;
+    background: #dc3545 !important;
+    height: 35px !important;
+    border-radius: 5px !important;
+    color: #ffffff !important;
+    padding: 0 20px !important;
+    transition: all 0.3s;
+    border: 1px solid #dc3545 !important;
+}
+.update-account-info button i{
+   padding-right: 10px;
+}
+.delete-btn:hover{
+    background: #ffffff !important;
+    color: #dc3545 !important;
+    transition: all 0.3s;
+}
+
+
+/* ================job application page============ */
+.inreview-tag{
+    background: #B93D9E;
+}
+.interview-tag{
+    background: #00820D;
+    border: 1px solid #00820D;
+}
+.interview-tag a{
+    color: #fff;
+}
+.interview-btn-call .interview-tag {
+    color: #ffffff !important;
+    padding: 5px;
+    border: 1px solid #00820D;
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+.interview-btn-call .interview-tag:hover {
+    color: #00820D !important;
+    background: #ffffff;
+    transition: all 0.3s;
+}
+.fade:not(.show) {
+    opacity: 1;
+}
+.modal-dialog {
+    max-width: 500px;
+    margin: 150px auto;
+}
+.filter-industry-modal .modal-dialog {
+    max-width: 650px;
+    margin: 150px auto;
+}
+.delete-applications .modal-header {
+    background: #2672AB;
+    padding: 25px 130px;
+    text-align: center;
+}
+.delete-applications .modal-header .trash-icon{
+    display: block;
+    color: #ffffff;
+    font-size: 50px;
+}
+.delete-applications .modal-header h1 {
+    font-size: 37px;
+    font-weight: 600;
+    color: #ffffff;
+}
+.delete-applications .modal-body strong {
+    font-size: 21px;
+    display: block;
+    text-align: center;
+    padding: 20px 0;
+}
+.dual-footer-btn {
+    text-align: center !important;
+    padding: 0 0 40px;
+}
+.dual-footer-btn button{
+    margin-right: 15px;
+    width: 130px;
+}
+.dual-footer-btn button i{
+    margin-right: 5px;
+}
+.dual-footer-btn .black_btn {
+    margin-top: -5px;
+}
+/* ==============Modal for job button in employee page css========================== */
+.Apply-modal{
+    max-width: 65%;
+    margin: 69px auto;
+}
+.Apply-modal-header{
+    /* display: block !important; */
+    background-color: #00326F;
+    margin: 0;
+}
+
+.Apply-modal-title{
+    color:#fff ;
+    text-align: center !important;
+}
+.Apply-close-btn{
+    background-color:#D11203 !important ;
+    border-radius: 50%;
+    z-index: 20;
+    margin-right: 0 !important;
+    margin-top: 0 !important;
+    border: none !important;
+    padding: 5px !important;
+    opacity: 1 !important;
+    width: fit-content !important;
+}
+.Apply-close-btn span i{
+    color: #fff;
+    width: 25px;
+}
+.Apply-close-btn:checked{
+    border: transparent;
+}
+.Apply-modal-body{
+    display: block;
+    margin: 10px 20px;
+}
+.Apply-job-modal-form{
+   background-color: #f3f3f3; 
+   margin: 20px 0;
+   padding: 15px 15px 10px 15px;
+}
+
+/* ===================== concigerge ================== */
+.concigerge li {
+    display: inline-block;
+    width: 49%;
+    vertical-align: text-top;
+}
+.slot-para {
+    background: #f8f8f8;
+    margin: 0;
+    padding: 15px 15px 0;
+}
+.click-here-tag {
+    background: #F44336;
+    text-align: left;
+    float: left;
+    margin-left: 11px;
+    color: #ffffff !important;
+    border: 1px solid #F44336;
+    padding: 10px;
+    border-radius: 3px;
+    transition: all 0.3s;
+}
+.click-here-tag:hover {
+    color: #F44336 !important;
+    background: #ffffff;
+    transition: all 0.3s;
+}
+.concigerge-box {
+    background: #f8f8f8;
+    padding-bottom: 20px;
+}
+/* ======================================Block user page css ===================== */
+.Block-user-wrapper {
+    margin: 0;
+    padding: 10px 0;
+    margin-right: 5px;
+}
+.user-images{
+    display: block;
+}
+.block-user-img{
+    border: 1px solid #FFD6B6;
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    width: 100%;
+   
+}
+.block-user-img img{
+    display: block;
+    background-size: cover;
+    width: 100%;
+   border-radius: 5px;
+}
+.block-user-progress{
+    padding: 5px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    width: 100%;
+}
+.block-user-progress .progress-img{
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+   align-items: center;
+   width: 100%;
+}
+.block-user-progress h6{
+    font-weight: 500;
+    text-align: center;
+    padding: 10px 0px;
+}
+.user-details{
+    display: block;
+    width: 100%;
+}
+.user-details .blocked-user-about{
+    display: block;
+    border-bottom: 1px solid gray;
+    padding:0 5px 10px 0;
+}
+.user-details .blocked-user-about h6{
+  font-size: 16px;
+  margin: 0;
+  padding-top: 5px;
+}
+.user-details .blocked-user-about p{
+    font-size: 16px;
+    margin: 0;
+    padding:0;
+}
+.blocked-user-experience{
+    display: block;
+    padding:0 5px 10px 0;
+}
+.user-details .blocked-user-experience h6{
+    font-size: 16px;
+    margin: 0px;
+    padding-top: 5px;
+  }
+  .user-details .blocked-user-experience p{
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+  }
+  .block-box .box-footer{
+        background:  #bfc9d1;
+        border-radius: 2px 2px 0 0;
+        position: relative;
+        color: #ffffff;
+  }
+  .block-box .box-footer1{
+    background:  #bfc9d1;
+    border-radius: 2px 2px 0 0;
+    position: relative;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+}
+.block-box .box-footer .unblock-btn {
+    background-color: #E00f00;
+    color: #fff;
+    border: 1px solid #E00f00;
+    float: right;
+    padding: 5px 10px;
+    margin: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    height: 35px;
+}
+  .block-progrees-ratio{
+      display: block;
+      margin: auto 0;
+  }
+  .block-progrees-ratio1{
+    margin: auto 0;
+    width: 35% !important;
+}
+  .block-progrees-ratio ul li{
+     
+      list-style-type:none;
+      color: #242424;
+      float: left;
+      margin: 0 10px;
+      text-align: center;
+      padding-top: 20px;
+      font-size: 14px;
+  }
+  .block-progrees-ratio1 ul li{
+    display: inline-block;
+    list-style-type:none;
+    color: #242424;
+    float: none;
+    margin: 0 0 0 10px;
+    text-align: center;
+    padding: 0;
+    font-size: 14px;
+}
+  .block-progrees-ratio ul li span {
+      padding: 0 4px;
+  }
+  .block-progrees-ratio ul li .Progress-ratio-icon1 , .block-progrees-ratio1 ul li .Progress-ratio-icon1{
+      width: 12px ;
+      height: 14px;
+      border-radius: 2px;
+      background-color: #00326f;
+      color: #00326F;
+      padding: 1px 6px !important;
+  }
+  .block-progrees-ratio ul li .Progress-ratio-icon2 ,  .block-progrees-ratio1 ul li .Progress-ratio-icon2{
+    width: 14px ;
+    height: 14px;
+    border-radius: 2px;
+    background-color:  #f44336;
+    color: #f44336;
+    padding: 1px 6px !important;
+}
+.employe-btn-group{
+    width: 65% !important;
+    text-align: center;
+}
+/* ===============================Like users page css starts here ====================*/
+.block2-progrees-ratio ul li {
+    list-style-type:none;
+    color: #242424;
+    float: left;
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+    padding-top: 20px;
+    font-size: 12px ;
+    line-height: 14.4px;
+}
+.block2-progrees-ratio ul li span {
+    padding: 0 4px;
+}
+.block-box .box-footer .block-btn {
+    background-color:#E00f00 ;
+    color: #fff;
+    border: 1px solid #E00f00;
+   float: right;
+   padding: 5px 10px ;
+   margin: 10px 3px;
+   font-size: 16px;
+   border-radius: 5px;
+}
+.block-box .box-footer .detail-btn {
+    background-color:  #ff8614; 
+    color: #fff;
+    border: 1px solid #ff8614;
+   float: right;
+   padding: 5px 10px ;
+   margin: 10px 3px;
+   font-size: 16px;
+   border-radius: 5px;
+}
+.block-box .box-footer .detail-btn:hover{
+    background-color: #fff;
+    color: #F48128;
+}
+.block-box .box-footer .block-btn:hover , .block-box .box-footer .unblock-btn:hover {
+    background-color:#fff ;
+    color: #E00f00;
+}
+.block-box .box-footer .unlike-btn {
+    background-color: #009d10;
+    color: #fff;
+    border: 1px solid #009d10;
+    font-size: 16px;
+    float: right;
+    padding: 5px 12px;
+    margin: 10px 13px 0 3px;
+    border-radius: 5px;
+}
+.block-box .box-footer .like-btn {
+    background-color: #009d10;
+    color: #fff;
+    border: 1px solid #009d10;
+    font-size: 16px;
+    float: right;
+    padding: 5px 12px;
+    margin: 10px 3px 10px 3px;
+    border-radius: 5px;
+}
+.block-box .box-footer .unlike-btn:hover , .block-box .box-footer .like-btn:hover {
+    background-color: #fff;
+    color: #009d10;
+}
+.block-box .box-footer .Detail-btn {
+    background-color:  #f48128;
+    color: #fff;
+    border: 1px solid #f48128;
+   float: right;
+   padding: 5px 12px;
+   margin: 10px 3px 0 3px;
+   border-radius: 5px;
+}
+.block-box .box-footer .Detail-btn:hover {
+    background-color:  #fff;
+    color: #fff;
+}
+button i{
+    margin-right: 5px;
+}
+.b-card-btn .used-tag {
+    color: #ffffff;
+}
+/* button{
+    height: 40px !important;
+} */
+
+/* ======================interview============ */
+.dual-tags .interview-tag {
+    float: left;
+}
+.dual-tags{
+    margin:0 15px 20px;
+}
+.interview-box .text-info-detail label {
+    width: 40%;
+}
+.interview-box  .text-info-detail span {
+    width: 60%;
+
+}
+
+
+
+/* ================================= start Browse job ============================= */
+.filter-section {
+    background: #f8f8f8;
+    border: 1px solid #e6e6e6;
+    padding: 15px;
+    border-radius: 5px;
+}
+.browse-heading {
+    font-size: 16px;
+}
+.bj-tr-btn .used-tag{
+    float: unset;
+}
+.bj-tr-btn {
+    text-align: right;
+    margin: 20px 0;
+}
+.bj-tr-btn button {
+    margin: 0 5px !important;
+    vertical-align: bottom;
+}
+
+.bj-tr-btn .used-tag {
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: #ffffff;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px;
+    margin: 0;
+    height: 35px;
+    font-weight: 500;
+}
+.bj-tr-btn .used-tag i {
+    margin-right: 5px;
+}
+.bj-tr-btn .used-tag:hover {
+    background: #ffffff;
+    border: 1px solid #00820D !important;
+    color: #00820D !important;
+}
+.b-card-btn{
+    text-align: right;
+}
+.b-card-btn .orange_btn{
+    margin-right: 10px;
+}
+.orange_btn a {
+    cursor: pointer !important;
+}
+.bc-footer {
+    background: #BFC9D1;
+    padding: 10px; 
+}
+.bc-footer h4 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 8px 0 0;
+}
+.bc-footer span{
+    text-align: center;
+}
+.bc-footer .used-tag{
+    float: unset;
+    border: 1px solid #e6e6e6; 
+}
+.bc-footer .orange_btn{
+    padding: 6px 10px !important;
+    font-size: 16px;
+    height: 40px;
+}
+.bc-footer .used-tag {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    margin: 0 !important;
+    height: 35px;
+}
+.b-select {
+    width: 100%;
+    height: 40px !important;
+    border: 1px solid #ced4da !important;
+    background: #ffffff !important;
+}
+.b-card-btn .interview-tag.used-tag:hover {
+    color: #009d10 !important;
+    transition: all;
+    background-color: #ffffff !important;
+}
+
+
+
+/*-------------------------------checkboxes---------------------------- */
+.form-check{
+    display: flex;
+    align-items: center;
+}
+.custom-checkbox input[type='checkbox']{
+    appearance: none;
+    height: 15px;
+    width: 15px;
+    background: #ffffff !important;
+    border: 1px solid #F48128 !important;
+    cursor: pointer;
+    margin-top: 0px !important;
+}
+.custom-checkbox input[type='checkbox']:after{
+    content: "\2713";
+    font-family: "fontawesome";
+    display: none;
+    width: 10px;
+    color: #fff;
+    font-size: 11px;
+}
+.custom-checkbox input[type='checkbox']:hover{
+    background: #000;
+}
+.custom-checkbox input[type='checkbox']:checked:after{
+    display: flex;
+    background: #F48128 !important;
+    width: 13px;
+    height: 13px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+}
+.custom-checkbox label{
+    padding-left: 10px;
+    cursor: pointer;
+    font-size: 14px;
+}
+.filter-industry-modal {
+    max-width: 650px;
+    margin: 94px auto 0;
+}
+
+/*-------------------------------checkboxes---------------------------- */
+
+
+  .loc-icon img{
+      position: absolute;
+      right: 10px;
+      top: 12px;
+  }
+
+
+
+/* -----------------modal Job Filters--------------------- */
+.filter-modal-list li{
+    float: left !important;
+    width: 50%;
+}
+.bj-modal .modal-header{
+    background: #2672AB;
+}
+.modal-title img{
+    position: relative;
+    top: 5px;
+}
+.bj-modal .modal-header{
+    padding: 9px 0 3px 15px !important;
+    margin: 0 !important;
+}
+.bj-modal .modal-header h4 {
+    color: #ffffff;
+    font-size: 18px;
+    text-align: center !important;
+    padding: 10px 0;
+}
+.bj-modal .close{
+    opacity: 1;
+    margin: 7px 7px !important;
+    padding: 4px 5px !important;
+    color: #fff;
+}
+.bj-modal .close span i{
+    color: #fff;
+    z-index: 20;
+    font-size: 16px;
+}
+.bj-modal button:focus{
+    outline: none !important;
+}
+
+.modal-backdrop.fade{
+    opacity: 0.5 !important;
+}
+.bj-modal .modal.fade:not(.show) {
+opacity: 1 !important;
+}
+.bj-modal .modal-dialog{
+    top: 0 !important;
+} 
+.bj-modal .modal-footer .bs-btn{
+    background: #00326F;
+    font-size: 16px;
+    font-weight: 400;
+    border: 0;
+    display: flex;
+    align-items: center;
+    padding: 7px 20px;
+    border-radius: 2px;
+}
+.fb-text{
+    padding-left: 5px;
+    color: #ffffff;
+}
+
+.bj-modal .modal-footer .bs-btn img{
+    width: 13px;
+}
+.bj-modal .modal-footer{
+    border-top: 0 !important;
+}
+/* -----------------modal Job Filters--------------------- */
+
+/* -------------------location modal---------------------- */
+.main-input::placeholder{
+    color: #B2B2B2;
+    font-size: 14px;
+}
+.bs-img{
+    position: relative;
+    right: 30px;
+    top: 11px;
+    width: 20px;
+    height: 20px;
+}
+.loc-modal iframe{
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    height: 450px;
+}
+.location-filter-m input{
+    background: #f6f6f6;
+    border-radius: 5px;
+    border: 1px solid #e6e6e6;
+}
+.location-filter-m input::placeholder{
+    font-size: 14px;
+    color: #242424;
+    background: #f6f6f6;
+}
+.ls-m .select-selected{
+    font-size: 14px;
+    color: #242424;
+    background: #f6f6f6;
+}
+.loc-m-row{
+    padding-bottom: 20px;
+}
+.loc-modal .modal-dialog {
+    max-width: 60%;
+    margin: 100px auto 0;
+}
+.gl-btn{
+    background: #009D10;
+    border: none;
+}
+.gl-text{
+    color: #ffffff;
+}
+.employer-main input {
+    background: #ffffff !important;
+}
+.b-filter-row input {
+    background: #ffffff !important;
+}
+.main-browser-bg {
+    background: #f8f8f8;
+    padding: 15px 10px 25px;
+    border: 1px solid #e6e6e6;
+}
+.main-browser-bg h5 {
+    font-size: 16px;
+}
+/* -------------------location modal---------------------- */
+
+/* ================================= end Browse job ============================= */
+
+/* --------------------media Quries--------------------------- */
+
+
+/* ===================== employee ====================== */
+.input-employee label {
+    width: 133px;
+    float: left;
+    font-size: 16px;
+    margin: 7px 0 0;
+}
+.input-employee input {
+    width: 52%;
+    float: right;
+}
+.employer-main .loc-icon img {
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    width: 15px;
+    height: 15px;
+}
+.input-employee {
+    position: relative;
+}
+.search-employee-icon {
+    position: absolute;
+    right: 7px;
+    color: #989797;
+    top: 14px;
+}
+.input-employee input {
+    padding-right: 37px;
+}
+.row.b-filter-row .col-md-8 input {
+    width: 77%;
+}
+.question-radiobtn li {
+    display: inline-block;
+}
+.employee-wraper {
+    background: #f8f8f8;
+    padding: 20px 15px;
+    border: 1px solid #e6e6e6;
+}
+.top-filter-row .input-employee {
+    margin: 0 0 30px;
+}
+/* =============testing ===================== */
+.testing-tag{
+    margin-bottom: 0;
+}
+.testing-tag .proceed-test {
+    background: #F48128 !important;
+    float: left;
+    color: #ffffff;
+    border: 2px solid #f48128;
+    transition: all 0.3s;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 2px;
+    height: 35px;
+}
+.testing-tag .proceed-test:hover{
+   color: #F48128;
+   background: #ffffff !important;
+   transition: all 0.3s;
+ }
+.completed-tag{
+    background: #00326F;
+}
+
+/* ========================== start-test============== */
+.select-answer {
+    padding: 40px 0;
+}
+.test-img-wrap img{
+    width: 100%;
+}
+
+.test-img-wrap {
+    margin-bottom: 30px;
+}
+.select-answer label {
+    font-size: 18px;
+    color: #242424 !important;
+}
+.select-answer li {
+    margin-bottom: 10px;
+}
+.test-time h2 span{
+    float: right;
+}
+.hover-block{
+    display: none;
+}
+.unblock-btn:hover .hover-block {
+    display: inline-block !important;
+    width: 15px;
+    height: 15px;
+    border-radius: 0;
+}
+.unblock-btn:hover .icon-unblock {
+    display: none !important;
+}
+.employee-details-infomation .employer-main input {
+    background: transparent  !important;
+}
+.employee-tab-info .nav-link {
+    font-size: 18px !important;
+    padding: 5px 35px !important;
+    background: #ffffff00 !important;
+}
+.employee-tab-info .nav-link.active:focus {
+    border: 1px solid #FF9400 !important;
+    border-bottom: transparent !important;
+    color: #FF9400 !important;
+}
+.button-start {
+    text-align: right;
+}
+
+/* =========================== talent matchers ========================= */
+.collapse:not(.show) {
+    display: none;
+}
+
+.collapse.in:not(.show) {
+    display: block;
+}
+.talent-maker-nav {
+    float: right;
+    display: block;
+    width: 100%;
+    text-align: right;
+    padding: 5px 0 0;
+    position: absolute;
+    right: 16px;
+    top: 65px;
+}
+.talent-maker-nav .navbar-nav li {
+    text-align: left;
+}
+.talent-maker-nav .navbar-toggler {
+    background: #00326F;
+    width: 45px !important;
+}
+.talent-maker-nav .navbar-toggler-icon {
+    background-image: none;
+    width: 20px;
+    height: 2px;
+    background: #ffffff;
+    margin-bottom: 5px;
+    display: block;
+}
+.talent-maker-nav .navbar-nav .nav-link {
+    color: #ffffff;
+    font-size: 18px;
+}
+.talent-matcher-modal {
+    width: 90%;
+    margin: 120px auto 0;
+}
+.talent-maker-nav .navbar-collapse {
+    background: #00326f;
+    padding: 15px;
+    position: absolute;
+    width: 95%;
+    border-radius: 2px;
+    top: 53px;
+    z-index: 18;
+    left: 31px;
+}
+.talent-maker-nav .navbar-nav .nav-link i {
+    font-size: 12px;
+    margin: 0 11px 0 0;
+    display: inline-block;
+}
+.video-slider .carousel-inner img {
+    width: 100%;
+    height: 100%;
+  }
+  .video-slider .carousel-inner {
+    position: relative;
+    width: 90%;
+    padding: 140px 0 0;
+    margin: auto;
+}
+.video-slider .carousel-control-next, .carousel-control-prev {
+    position: absolute;
+    top: 0px;
+    width: 35px;
+    color: #fff;
+    opacity: 1;
+    background: #f48128;
+    border-radius: 2px;
+    height: 35px;
+}
+.video-slider .carousel-control-prev {
+    left: 25px;
+}
+.video-slider .carousel-control-next {
+    right: 25px;
+}
+.video-slider .text-wrap-slider {
+    position: absolute;
+    top: -134px;
+    text-align: center;
+    width: 100%;
+}
+/****** Style Star Rating Widget *****/
+.rating-star .rate {
+    height: 46px;
+    padding: 0 10px;
+}
+.rating-star .rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rating-star .rate:not(:checked) > label {
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rating-star .rate:not(:checked) > label:before {
+    content: '★';
+}
+.rating-star .rate > input:checked ~ label {
+    color: #F48128;    
+}
+.rating-star .rate:not(:checked) > label:hover,
+.rating-star .rate:not(:checked) > label:hover ~ label {
+    color: #F48128;  
+}
+.rating-star .rate > input:checked + label:hover,
+.rating-star .rate > input:checked + label:hover ~ label,
+.rating-star .rate > input:checked ~ label:hover,
+.rating-star .rate > input:checked ~ label:hover ~ label,
+.rating-star .rate > label:hover ~ input:checked ~ label {
+    color: #F48128;
+}
+.rating-star [type="radio"]:checked + label:before, .rating-star [type="radio"]:not(:checked) + label:before {
+    content: '★';
+    border: none;
+}
+.rating-star [type="radio"]:checked + label:after, .rating-star [type="radio"]:not(:checked) + label:after {
+    width: auto;
+}
+
+/* Modified from: https://github.com/mukulkant/Star-rating-using-pure-css */
+
+.talent-question .panel {
+    position: absolute;
+    z-index: 16;
+    width: 95%;
+}
+.talent-question .accordionone:after {
+    right: 8px;
+    top: 14px;
+}
+.talent-question .accordionone i {
+    margin-right: 10px;
+    font-size: 20px;
+}
+.talent-question .accordionone {
+    font-size: 20px;
+}
+.talent-question .panel {
+    background: #ffffff;
+}
+.filter-boxed .form-check-label {
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.rest-btn {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 20px;
+    background: #242424;
+    color: #ffffff;
+    border: 1px solid #242424;
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+.rest-btn:hover {
+   background: #ffffff;
+   color: #242424;
+    transition: all 0.3s;
+}
+.application-btn {
+    display: block;
+    width: 90% !important;
+    font-size: 18px;
+    background: #B93D9E;
+    color: #ffffff !important;
+    border: 1px solid #B93D9E;
+    border-radius: 2px;
+    transition: all 0.3s;
+    margin: 0 auto;
+}
+.application-btn:hover {
+   background: #ffffff;
+   color: #B93D9E;
+    transition: all 0.3s;
+}
+/* ==============================Interview Details page============= */
+.interview-details-page{
+    background-color: transparent !important;
+}
+.orange_btn_btn {
+    display: block;
+    width: 100%;
+    margin: 20px 0;
+    font-size: 20px;
+    background: #F48128;
+    color: #ffffff;
+    border: 1px solid #F48128;
+    border-radius: 2px;
+    transition: all 0.3s;
+}
+.orange_btn_btn:hover {
+   background: #Ffffff;
+   color: #F48128;
+    transition: all 0.3s;
+}
+.filter-row-select {
+    margin: 0 0 30px;
+}
+.filter-row-select label {
+    font-size: 20px;
+}
+.filter-boxed li {
+    margin: 15px 0;
+}
+.video-slider iframe {
+    width: 100%;
+    height: 450px;
+}
+.talent-maker-information{
+    display: none;
+}
+/* =========modal talent maker ========= */
+.talent-matcher-question {
+    background: #00326f;
+}
+.talent-matcher-question h4 {
+    color: #ffffff;
+    display: block;
+    width: 100%;
+}
+.talent-matcher-modal .modal-dialog {
+    max-width: 90%;
+    margin: 150px auto;
+}
+.talent-matcher-modal .question-ans .accordionone {
+    padding: 15px 30px 15px 15px;
+}
+.talent-matcher-modal .accordionone:after {
+    right: 6px;
+    top: 16px;
+}
+.talent-header{
+    display: none;
+}
+.update-information, .premiun-accounts {
+    padding: 30px 20px;
+    width: 100%;
+}
+
+
+
+
+
+
+
+/* ====================== media quries ========================= */
+@media (max-width:1200px){
+    .tag-tabactive .nav-pills .nav-link {
+        padding: 15px 0 15px 5px;
+    }
+   
+    .profile .nav-link {
+        padding: 15px 12px;
+    }
+    .profile-img-wrapper {
+        width: 200px;
+        height: 200px;
+        top: -100px;
+    }
+    .profile-information {
+        padding: 140px 10px 50px;
+    }
+    .recent-job label {
+        float: left;
+        font-size: 14px;
+    }
+    .recent-job span {
+        font-size: 14px;
+        float: left;
+    }
+    .file-chooser input {
+        width: 70%;
+    }
+    .file-chooser .send-btn {
+        margin-left: 10px;
+        width: 26%;
+        height: 45px !important;
+    }
+    .file-chooser .send-btn i {
+        margin-right: 10px;
+    }
+    .Resume span {
+        font-size: 16px;
+        display: block;
+        margin: 0;
+    }
+    .about-infomation .edited-text {
+        padding: 5px ​2px 5px 5px !important;
+    }
+    .multiple-file-pdf .file-list li a {
+        width: 225px;
+    }
+    .album-upload-img .upload-file {
+        height: 120px;
+        width: 120px;
+        padding: 30px 0 50px;
+    }
+    .field input {
+        width: 140px;
+        height: 140px;
+    }
+    .album-upload-img .pip {
+        height: 140px;
+        width: 140px;
+    }
+    .album-upload-img .imageThumb {
+        height: 120px;
+        width: 120px;
+    }
+    .album-upload-img .upload-file i {
+        font-size: 35px;
+    }
+    .profile {
+        padding: 0 15px;
+    }
+    .album-upload-img .remove {
+        top: 14px;
+    }
+    .album-upload-img .Profile-img {
+        top: 55px;
+    }
+    .album-upload-img .Private-img {
+        top: 95px;
+    }
+
+    /* ================== tags================ */
+    .add-skils input {
+        width: 75%;
+    }
+    .add-skils .orange_btn {
+        height: 43px !important;
+        padding: 7px 25px !important;
+    }
+
+    /* =================== job ================== */
+    .job-box-text {
+        padding: 20px 10px;
+    }
+    .text-info-detail label {
+        width: 50%;
+    }
+    .text-info-detail span {
+        width: 50%;
+    }
+    /* ============= head============= */
+    .orange_btn {
+        font-size: 14px !important;
+        padding: 0 10px !important;
+    }
+    .blue_btn {
+        font-size: 15px !important;
+        padding: 0 10px !important;
+    }
+    .additional-sidebar button span {
+        width: 78%;
+    }
+    .additional-content-area ul li a {
+        padding: 5px;
+        font-size: 15px;
+    }
+    .additional-sidebar .profile .nav-link {
+        padding: 15px 5px;
+    }
+    /* =======================================block page css================= */
+    .block-page-footer{
+        
+        position: absolute;
+        left: 10px !important;
+        top: 24px !important;
+    }
+    /* ============================like user page css========================== */
+    .block-progrees-ratio {
+        display: block;
+        margin: 0 0;
+        padding: 2px;
+        float: left;
+        /* position: absolute; */
+        /* left: auto; */
+        /* top: 4px; */
+    }
+    
+    .user-page-footer ul li{
+        float: none !important;
+        padding: 5px 0px !important;
+        margin: 0px;
+    }
+    /* ========================== employee========== */
+    .input-employee input {
+        width: 43%;
+    }
+    .row.b-filter-row .col-md-8 input {
+        width: 73%;
+    }
+    .input-employee label {
+        width: 127px;
+    }
+   
+    .block-box .box-footer1{
+        flex-direction: column;
+    }
+    .block-progrees-ratio1{
+        margin: auto;
+        width: 100% !important;
+        display: flex;
+        justify-content: center;
+        /* position: absolute; */
+        /* left: auto; */
+        /* top:24px ; */
+    }
+    .employe-btn-group{
+        width: 100% !important;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .block-progrees-ratio1 ul li{
+        float: left;
+        padding-left: 30px;
+  }
+  .loc-modal .modal-dialog {
+        max-width: 70%;
+    }
+    
+}
+@media (max-width: 991px){
+    body{
+        overflow: auto !important;
+    }
+    .profile-section {
+        height: auto !important;
+        padding-bottom: 30px !important;
+    }
+    .top-nav-header {
+      margin-bottom: 0;
+        border-bottom: none;
+    }
+   
+    .sign-btn i {
+        padding-right: 1px;
+    }
+    .profile .nav-link {
+        padding: 10px ;
+    }
+    .top-nav-header .blue_btn {
+        font-size: 16px !important;
+        padding: 0 10px !important;
+    }
+    .multiple-file-pdf .file-list li a {
+        width: 209px;
+    }
+    .recent-job label {
+        font-size: 18px;
+    }
+    .recent-job span {
+        font-size: 18px;
+    }
+    .additional-sidebar button span {
+        width: 76%;
+    }
+    .main-content {
+        margin-left: 0;
+    }
+
+    /* ========================concigerge============== */
+    .concigerge li {
+        display: block;
+        width: 100%;
+    }
+ /* =============================like user page css================================= */
+
+    .block-progrees-ratio ul li{
+        list-style-type:none;
+        color: #242424;
+        float: left;
+        margin-right: 3px;
+        margin-left:0px;
+        text-align: center;
+        font-size: 12px ;
+        line-height: 14.4px;
+    }
+    .block-progrees-ratio ul li span{
+    padding: 0px ;
+    }
+    .block-box .box-footer .unlike-btn {
+        margin: 10px 0 0 3px;
+    }
+    /* =================================  start Browse job ============================= */
+    .b-card-btn{
+        display: grid;
+        grid-template-columns: 50% 50%;
+        padding-top: 15px;
+    }
+    
+    .bj-tr-btn button{
+        margin-bottom: 0;
+    }
+    /* ================================= end Browse job ============================= */
+
+    /* =========================== employeee ===================== */
+    .input-employee input {
+        width: 38%;
+    }
+    .input-employee input {
+        padding-right: 24px;
+    }
+    .loc-modal .modal-dialog {
+        max-width: 80%;
+    }
+    .test-time h2 span {
+        float: unset;
+        display: block;
+        margin: 17px 0 0;
+    }
+}
+@media (max-width:767px){
+    .body-tab-btn {
+        float: left !important;
+        width: 70% !important;
+    }
+    .sign-btn {
+        float: left !important;
+        width: 30% !important;
+    }
+    .profile-information {
+        padding: 0 10px 50px;
+    }
+    .profile-information {
+        margin-top: 0;
+    }
+    .profile-img-wrapper {
+        width: 150px;
+        height: 150px;
+        position: static;
+        margin: 0 0;
+    }
+    .profile-information {
+        padding: 30px;
+        background: #00326f !important;
+    }
+    .profile-data-info{
+        padding: 0 !important;
+       
+    }
+    .profile-detail h1 {
+        color: #ffffff;
+        margin: 20px 0;
+        text-align: left;
+    }
+    .profile-detail p {
+        color: #ffffff !important;
+        text-align: left;
+        font-size: 20px;
+    }
+    .recent-job label {
+        color: #ffffff;
+    }
+    .recent-job span {
+        color: #ffffff !important;
+    }
+    .profile-detail h2 {
+        color: #ffffff !important;
+        margin-bottom: 20px;
+        text-align: left;
+    }
+    .profile-detail .edit-btn {
+        width: 150px;
+        margin: 20px 0 0;
+        float: left;
+        font-size: 18px !important;
+    }
+    .top-nav-header {
+        margin-bottom: 0;
+        border-bottom: none;
+    }
+    h2 {
+        font-size: 20px;
+    }
+    .body-tab-btn button i {
+        margin: 0 10px 0 0;
+        display: none !important;
+    }
+    .top-nav-header .blue_btn {
+        font-size: 14px !important;
+        padding: 0 10px !important;
+        margin-bottom: 10px;
+    }
+    .orange_btn {
+        font-size: 14px !important;
+        padding: 0 10px !important;
+    }
+    .signout i {
+        display: none;
+    }
+    .body-tab-btn button {
+        margin: 0 10px 0 0;
+    }
+
+    /* =======================steps button tap ====================== */
+    .first-tap-detail {
+        width: 80%;
+        margin-left: 20%;
+        margin-top: 30px;
+    }
+    .profile-section .nav-tabs {
+        position: absolute;
+        left: -20%;
+        width: 22%;
+        background: #f7f7f8;
+        padding-top: 0;
+    }
+    .profile-section .nav-tabs .nav-item {
+        display: block !important;
+        width: 100%;
+    }
+    .first-tap-detail .profile .nav-link {
+        margin: 0 0 20px;
+        background: #f7f7f8;
+        padding: 0px 0 10px;
+        position: relative;
+    }
+    .nav-link:after {
+        background: #000000;
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+        display: block;
+        margin: auto;
+    }
+    .tab-circle-cross{
+        display: block;
+        margin-bottom: 5px;
+    }
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+        background: #f7f7f8;
+        border: none !important;
+    }
+    .profile-section .nav-tabs .nav-item.show .nav-link, .profile-section .nav-tabs .nav-link.active {
+        border: none !important;
+    }
+    .profile-section .nav-tabs {
+        border-bottom: none;
+    }
+    .first-tap-detail .profile .nav-link {
+        margin: 0 auto 30px;
+    }
+    .profile-section .nav-tabs .nav-item:after {
+        border-left: 1px solid #000 !important;
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+    .line-tab {
+        width: 2px;
+        height: 404px;
+        display: block !important;
+        background: #e6e6e6;
+        position: absolute;
+        left: -5px;
+        right: 0;
+        margin: auto;
+    }
+    .recent-job {
+        margin-bottom: 0;
+    }
+    .Resume-email {
+        margin-bottom: 20px;
+    }
+    .multiple-file-pdf .file-list li a {
+        width: 155px;
+    }
+    .multiple-file-pdf .file-list li a {
+        margin: 0 10px 20px 0;
+    }
+    .question-ans .accordionone{
+        position: relative;
+    }
+    .accordionone:after {
+        font-size: 34px;
+        color: #ffffff;
+        position: absolute;
+        right: 4px;
+        top: 6px;
+    }
+    .add-skils input {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .add-skils .orange_btn {
+        width: 100%;
+        text-align: center;
+        font-size: 20px !important;
+    }
+    .referance-tab label {
+        font-size: 20px;
+        display: block;
+        margin-bottom: 10px;
+    }
+    .first-tap-detail .tab-content {
+        margin: 30px 0;
+    }
+    .tag-tabactive{
+        display: none !important;
+    }
+    .accordion-button.collapsed i,.accordion-button.collapsed span{
+        color: #242424 !important;
+    }
+    button.accordion-button.collapsed i, button.accordion-button.collapsed span {
+        color: #ffffff !important;
+    }
+    .accordion-item ul li a {
+        display: block;
+    }
+    .mobil-tab-view{
+        margin-top: 30px;
+    }
+    .accordion-item ul {
+        margin: 0;
+        padding: 0;
+    }
+    .tagcontent-list {
+        height: 150px;
+        overflow: auto;
+    }
+    .file-chooser input {
+        width: 100%;
+    }
+    .file-chooser .send-btn {
+        margin: 10px 0;
+        width: 100%;
+    }
+    .body-tab-btn {
+        float: left !important;
+        width: 70% !important;
+    }
+   /* =================================block user page css======================== */
+    .user-details .blocked-user-about {
+        padding: 10px 10px;
+    }
+    .user-details .blocked-user-experience {
+        padding: 10px 10px;
+    }
+    .user-images{
+        display: flex;
+        flex-direction: row;
+        padding: 0 0;
+    }
+    .block-user-img {
+        border: 1px solid #FFD6B6;
+        padding: 15px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 5px;
+        margin-right: 15px;
+        height: auto;
+        width: 50% !important;
+        float: left;
+    }
+    .block-user-img img{
+        width: 100%;
+        height: 100%;
+        overflow-y: hidden;
+        display: block;
+        padding: 0;
+    border-radius: 5px;
+    }
+    .block-user-progress {
+        border: 1px solid #FFD6B6;
+        padding: 5px;
+        border-radius: 5px;
+        /* height: 100%; */
+        width: 50%;
+    }
+    .block-user-progress .progress-img img{
+    width: 100%;
+        height: 100%;
+        display: block;
+    }
+    .block-user-progress .progress-img{
+        padding: 5px;
+        border-radius: 5px;
+    }
+    .block-user-progress h6{
+        font-weight: 500;
+        text-align: center;
+        padding: 10px 0;
+        font-size: 22px;
+    }
+    .block-progrees-ratio {
+        display: block;
+        margin: 10px 0 0 0;
+        /* padding-bottom: 30px; */
+        position: relative;
+        text-align: center;
+        width: 100%;
+    }
+    .block-progrees-ratio ul li{
+        float: none;
+        margin: 0;
+        padding: 0;
+        text-align: start;
+        line-height: 22.8px;
+        text-align: center;
+    }
+    .block-box .box-footer .unlike-btn {
+        margin: 10px 13px 0 3px;
+    }
+
+    /* ================================= start Browse job ============================= */
+    .browse-mp{
+        padding-bottom: 15px;
+    }
+    .i-modal-checks {
+        grid-template-columns: 33% 33% 33%;
+    }
+    .b-m-btn {
+        top: 0 !important;
+    }
+    /* ================================= end Browse job ============================= */
+    /* ========================== employeee=============== */
+    .input-employee input {
+        width: 65%;
+    }
+    .row.b-filter-row .col-md-8 input {
+        width: 65%;
+    }
+    .top-filter-row .input-employee {
+        margin: 0 0 30px;
+    }
+    .question-radiobtn {
+        margin-top: 20px;
+    }
+    .loc-modal .modal-dialog {
+        max-width:90%;
+    }
+    .loc-modal iframe {
+        height: 350px;
+    }
+    .employe-btn-group{
+        width: 100% !important;
+        text-align: center;
+    }
+    /* ==============================talent maker============== */
+    .talent-maker-information {
+        display: block;
+        margin: 86px 0 0;
+    }
+    .buttons-talentmaker {
+        margin: 20px 0;
+        text-align: center;
+    }
+    .buttons-talentmaker ul li {
+        display: inline-block;
+        margin: 0 2px;
+    }
+    .buttons-talentmaker ul li button {
+        font-size: 16px;
+        color: #ffffff;
+        border-radius: 5px;
+        margin-bottom: 15px;
+        padding: 0 10px;
+        height: 40px;
+    }
+    .view-profile-btn{
+        background: #2672AB;
+        border: 1px solid #2672AB !important;
+        transition: all 0.3s;
+    }
+    .view-profile-btn:hover{
+        color: #2672AB;
+        transition: all 0.3s;
+        background: #ffffff !important;
+    }
+    .cv-btn-view{
+        background: #009D10;
+        border: 1px solid #009D10 !important;
+        transition: all 0.3s;
+    }
+    .cv-btn-view:hover{
+        color: #009D10;
+        transition: all 0.3s;
+        background: #ffffff !important;
+    }
+    .call-btn{
+        background: #00326F;
+        border: 1px solid #00326F !important;
+        transition: all 0.3s;
+    }
+    .call-btn:hover{
+        color: #00326F;
+        transition: all 0.3s;
+        background: #ffffff !important;
+    }
+    .review-btn{
+        background: #F48128;
+        border: 1px solid #F48128 !important;
+        transition: all 0.3s;
+    }
+    .review-btn:hover{
+        color: #F48128;
+        transition: all 0.3s;
+        background: #ffffff !important;
+    }
+    .interview-btn{
+        background: #FCC600;
+        border: 1px solid #FCC600 !important;
+        transition: all 0.3s;
+    }
+    .interview-btn:hover{
+        color: #FCC600;
+        transition: all 0.3s;
+        background: #ffffff !important;
+    }
+    .successful-btn{
+        background: #F44336;
+        border: 1px solid #F44336 !important;
+        transition: all 0.3s;
+    }
+    .successful-btn:hover{
+        color: #F44336;
+        transition: all 0.3s;
+        background: #ffffff !important;
+    }
+    .talent-header{
+        display: block !important;
+    }
+    .done-btn-submit {
+        display: block;
+        height: 35px;
+        width: 100%;
+        background: #339900;
+        color: #ffffff;
+        font-size: 18px;
+        border: 1px solid #e6e6e6;
+        border-radius: 5px;
+        transition: all 0.3s;
+    }
+    .done-btn-submit:hover {
+        background: #ffffff;
+        color: #339900;
+        transition: all 0.3s;
+    }
+    .filter-talent-btn button {
+        height: 35px;
+    }
+    
+}
+
+@media (max-width:479px){
+    body{
+        overflow:auto !important;
+    }
+    .profile-section .nav-tabs {
+        left: -27%;
+    }
+    .about-infomation .edited-text {
+        width: 42px !important;
+        height: 36px;
+    }
+    .accordion-body .container {
+        padding: 0;
+    }
+    .accordion-item ul li a {
+        padding: 5px;
+        font-size: 18px;
+    }
+    .accordion-item ul li {
+        padding: 5px 0;
+    }
+    .tagcontent-list {
+        height: 250px;
+    }
+    .text-info-detail label {
+        width: 100%;
+        font-size: 16px;
+    }
+    .text-info-detail span {
+        width: 100%;
+        font-size: 16px;
+    }
+    .text-info-detail p {
+        height: auto;
+    }
+    .sign-btn {
+        width: 40% !important;
+    }
+    .body-tab-btn {
+        width: 60% !important;
+    }
+   
+    .album-upload-img .pip {
+        margin: 10px 0 !important;
+    }
+    .multiple-file-pdf .file-list li {
+        float: none;
+        display: block;
+    }
+    .multiple-file-pdf .file-list li a {
+        width: 100%;
+    }
+    .first-tap-detail {
+        width: 75%;
+        margin-left: 25%;
+    }
+    .profile-section .nav-tabs {
+        width: 28%;
+    }
+    .tagcontent-list .col-md-6.col-sm-12 {
+        padding: 0;
+    }
+    .accordion-button {
+        padding: 10px 5px;
+    }
+    .body-tab-btn .orange_btn {
+        margin-bottom: 7px;
+        width: 69px !important;
+        float: left;
+    }
+
+    /* =====================================Block User page css===================== */
+    .block-user-img {
+        padding: 5px;
+        margin-right: 10px;
+    }
+    .block-box .box-footer {
+        background: transparent;
+        border-radius: 2px 2px 0 0;
+        position: relative;
+        color: #ffffff;
+        margin: 0px 20px;
+        display: block;
+    }
+    .unlike-btn-group{
+        display: flex;
+        justify-content: space-between;
+        flex-direction: row-reverse;
+    }
+    .block-box .box-footer .unblock-btn {
+        margin: 10px 0px;
+    }
+    .block-box .box-footer .block-btn ,.block-box .box-footer .unlike-btn ,.block-box .box-footer .Detail-btn {
+        margin: 5px 5px;
+    }
+    .block-box .box-footer1{
+        display: block;
+        padding: 20px 0;
+    }
+    .employe-btn-group{
+        width: 100% !important;
+        text-align: center;
+        display: block;
+        padding: 20px 0 !important;
+    }
+    .employe-btn-group .like-btn{
+        margin-bottom: 30px;
+    }
+    /* ======================interview============ */
+    .interview-box .text-info-detail label {
+        width: 100% !important;
+    }
+    .interview-box  .text-info-detail span {
+        width: 100% !important;
+    }
+    /* ================================= start Browse job ============================= */
+    .loc-modal .modal-dialog {
+        max-width: 90% ;
+    }
+    .bj-modal .modal-header button{
+        width: unset !important;
+    }
+    .b-m-btn{
+        position: relative;
+        top: 13px;
+    }
+    .bj-modal .modal-footer .bs-btn {
+        justify-content: center;
+    }
+    .bc-footer .used-tag {
+        padding: 4px 27px;
+    }
+    .filter-modal-list li {
+        width: 100%;
+    }
+    /* ================================= start Browse job ============================= */
+    .Apply-modal{
+        max-width: 90%;
+        margin: 69px auto;
+    }
+    .Apply-modal-header{
+        /* display: block !important; */
+        background-color: #00326F;
+        margin: 0;
+    }
+    
+    .Apply-modal-title{
+        color:#fff ;
+        text-align: center !important;
+    }
+    .Apply-close-btn{
+        background-color:#D11203 !important ;
+        border-radius: 50%;
+        z-index: 20;
+        margin-right: 0 !important;
+        margin-top: 0 !important;
+        border: none !important;
+        padding: 5px !important;
+        opacity: 1 !important;
+        width: fit-content !important;
+    }
+    .Apply-close-btn span i{
+        color: #fff;
+        width: 25px;
+    }
+    .Apply-close-btn:checked{
+        border: transparent;
+    }
+    .Apply-modal-body{
+        display: block;
+        margin: 10px 0;
+    }
+    .Apply-modal-body .first-heading{
+        font-size: 20px;
+    }
+    .Apply-job-modal-form{
+       background-color: #f3f3f3; 
+       margin: 20px 0;
+       padding: 15px 15px 10px 15px;
+    }
+    /* ========================== employeee=============== */
+    .input-employee input {
+        width: 100%;
+    }
+    .row.b-filter-row .col-md-8 input {
+        width: 100%;
+    }
+    .search-employee-icon {
+        top: 46px;
+    }
+    .employer-main .loc-icon img {
+        top: 42px;
+    }
+    .used-tag {
+        padding: 7px 5px;
+        height: 35px;
+    }
+    .body-tab-btn {
+        z-index: 99;
+    }
+    .filter-industry-modal .modal-dialog {
+        width:90%;
+    }
+
+}

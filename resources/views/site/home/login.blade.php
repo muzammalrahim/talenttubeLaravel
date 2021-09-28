@@ -10,6 +10,7 @@
     </div>
     <div class="cont">
         <div class="bl">
+            
             <form id="form_login" class="form_login" method="post" autocomplete="on" action="{{route('login')}}">
                 {{ csrf_field() }}
                 {{-- <input type="hidden" name="ajax" class="ajax" value="1" /> --}}
@@ -27,6 +28,7 @@
                 <button id="form_login_submit" type="submit" class="btn pink">Sign in</button>
                 {{-- <div class="login_form_errors to_hide"></div> --}}
             </form>
+
             <a {{-- id="pp_forgot_pass_open" class="link"  --}} class ="forgetPassword" href="{{route('forgetPassword')}}">Forgot password?</a>
             <div class="line"></div>
             <div class="or"><span>or</span></div>

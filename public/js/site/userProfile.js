@@ -186,7 +186,7 @@ var CProfile = function() {
             data: {'recentjob': recentJobField, 'organHeldTitle':organHeldTitleField},
             success: function(data){
                 if(data.status == 1){
-                    // console.log(data);
+                    console.log(data);
                     $('.organHeldTitleVal').removeClass('hide_it').text(data.organHeldTitle);
                     $('.recentJobValue').removeClass('hide_it').text(data.recentjob);
                     $('.recentJobField').addClass('hide_it');
@@ -225,13 +225,12 @@ var CProfile = function() {
             data: {'salaryRange': salaryRangeField},
             success: function(data){
                 if(data.status){
-                    
                     $('.salaryRangeValue').removeClass('hide_it').text(data.data);
 
                     $('.salaryRangeSpinner').remove();
                     $('.salaryRangeField').addClass('hide_it');
                     $('.updateSalaryButton').addClass('hide_it');
-
+                    /*$('.sec_salaryRange').removeClass('d-none');*/
                 }
             }
         });
@@ -271,6 +270,7 @@ var CProfile = function() {
                     $('.SaveQualificationSpinner').remove();
                     $('.jobSeekerQualificationList').html(resp.data);
                     $('.qualificationBox').removeClass('editQualif');
+                    $('.button_qualification').addClass('d-none');
                     $('.QualifAlert').show().delay(3000).fadeOut('slow');
                     $('.userQualification').hide();
                     $('.removeQualification').hide();

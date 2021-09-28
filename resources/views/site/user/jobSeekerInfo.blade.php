@@ -1,7 +1,7 @@
 {{-- @extends('site.user.usertemplate') --}}
 
 
-@extends('site.user.usermaster')
+@extends('web.user.usermaster')
 
 @section('custom_css')
 

@@ -7,24 +7,34 @@
 @stop
 
 @section('content')
-<div class="newJobCont">
+{{-- <div class="newJobCont">
     <div class="head icon_head_browse_matches">Online Tests</div>
 
-    <div class="add_new_job">
+    <div class="add_new_job"> --}}
 
   
         <!-- =============================================================================================================================== -->
-         <div class="jobs_list">
-            @include('site.onlineTest.list') {{-- site/onlineTest/list --}}
-         </div>
+        {{--  <div class="jobs_list"> --}}
+         {{--    @include('site.onlineTest.list') --}} {{-- site/onlineTest/list --}}
+       {{--   </div> --}}
         <!-- =============================================================================================================================== -->
 
-    </div>
+{{--     </div>
 
     <div class="cl"></div>
-</div>
+</div> --}}
 
 
+{{-- html for testing --}}
+ <section class="row">
+                <div class="col-md-12">
+                  <div class="profile profile-section">
+                    <h2>Online Tests</h2>
+                     <div class="row">
+                           @include('site.onlineTest.list') {{-- site/onlineTest/list --}}     
+                  </div>
+                </div>
+              </secti
 
 
 @stop

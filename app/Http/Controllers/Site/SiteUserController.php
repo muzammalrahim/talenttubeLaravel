@@ -59,9 +59,8 @@ class SiteUserController extends Controller
     }
 
     public function index(Request $request) {
-
+        
         // $session11 = session()->get('adminControls');
-        // dd($session11);
 
         // dd($request->ip());
         $user = Auth::user();
@@ -101,7 +100,9 @@ class SiteUserController extends Controller
             // dd($userQualification);
             $userTags = $user->tags;
             // dd($userTags);
-            // dd( $tags );
+            // dd( $tags ); 
+            $data['userQuestions'] = !empty($user->questions)?(json_decode($user->questions, true)):(array());
+
             $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$user->id)->get();
             $data['employer'] = User::where('type','employer')->get();
             $data['user'] =  $user;
@@ -152,7 +153,7 @@ class SiteUserController extends Controller
                 }
             }
             else{
-                return view('site.user.profile.profile', $data);        // site/user/profile/profile
+                return view('web.user.profile.profile', $data);        // web/user/profile/profile
             }
         } else {
             return view('site.404');
@@ -679,7 +680,7 @@ class SiteUserController extends Controller
     // Ajax / triggered from User profile page.
     //====================================================================================================================================//
     public function updateRecentJob(Request $request){
-        // dd($request->all());
+        
         $rules = array('recentjob' => 'string|max:100','organHeldTitle'=> 'string|max:100');
         $validator = Validator::make($request->all(), $rules);
         if (!$validator->fails()) {
@@ -720,9 +721,12 @@ class SiteUserController extends Controller
             $history->new_salary = $user->salaryRange; 
             $history->type = 'Salary'; 
             $history->save();
+
+            $salary = getSalariesRangeLavel($user->salaryRange);
+
             return response()->json([
                     'status' => 1,
-                    'data' => $user->salaryRange
+                    'data' => $salary
             ]);
         }
     }
@@ -1025,13 +1029,14 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     public function updateAboutField(Request $request)
     {
+        // dd($request->all());
 
         if ($request->name == 'about_me') {
-            $rules = array('about_me' => 'string');
+            $rules = array('val' => 'string');
             $validator = Validator::make($request->all(), $rules);
             if (!$validator->fails()) {
                 $user = Auth::user();
-                $user->about_me = Str::limit(preg_replace("/[^A-Za-z0-9 ]/", '', $request->about_me), 500);
+                $user->about_me = Str::limit(preg_replace("/[^A-Za-z0-9 ]/", '', $request->val), 500);
                 $user->save();
 
                 $history = new History;
@@ -1050,11 +1055,69 @@ class SiteUserController extends Controller
                 ]);
             }
         } else if ($request->name == 'interested_in') {
-            $rules = array('interested_in' => 'string');
+            $rules = array('val' => 'string');
             $validator = Validator::make($request->all(), $rules);
             if (!$validator->fails()) {
                 $user = Auth::user();
-                $user->interested_in =  Str::limit(preg_replace("/[^A-Za-z0-9 ]/", '',  $request->interested_in), 500);
+                $user->interested_in =  Str::limit(preg_replace("/[^A-Za-z0-9 ]/", '',  $request->val), 500);
+                $user->save();
+
+                $history = new History;
+                $history->user_id = $user->id; 
+                $history->type = 'Interested in Updated'; 
+                $history->save();
+
+                return response()->json([
+                    'status' => 1,
+                    'data' => $user->interested_in
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 0,
+                    'error' => $validator->getMessageBag()->toArray()
+                ]);
+            }
+        }else if ($request->name == 'recentJob') {
+            $rules = array('val' => 'string');
+            $validator = Validator::make($request->all(), $rules);
+            if (!$validator->fails()) {
+                $user = Auth::user();
+                $user->recentJob =  Str::limit(preg_replace("/[^A-Za-z0-9 ]/", '',  $request->val), 500);
+                $user->save();
+
+                $history = new History;
+                $history->user_id = $user->id; 
+                $history->type = 'recentJob Updated'; 
+                $history->save();
+
+                return response()->json([
+                    'status' => 1,
+                    'data' => $user->recentJob
+                ]);
+            } else {
+                return response()->json([
+                    'status' => 0,
+                    'error' => $validator->getMessageBag()->toArray()
+                ]);
+            }
+        }
+
+    }
+   
+
+    // Update interested in
+
+
+    public function updateInterestedIn(Request $request)
+    {
+        // dd($request->all());
+
+        if ($request->name == 'interested_in') {
+            $rules = array('val' => 'string');
+            $validator = Validator::make($request->all(), $rules);
+            if (!$validator->fails()) {
+                $user = Auth::user();
+                $user->interested_in =  Str::limit(preg_replace("/[^A-Za-z0-9 ]/", '',  $request->val), 500);
                 $user->save();
 
                 $history = new History;
@@ -1074,7 +1137,8 @@ class SiteUserController extends Controller
             }
         }
     }
-
+     
+   
     //====================================================================================================================================//
     // Return User Personal Setting html.
     // Ajax request from profile page.
@@ -1206,30 +1270,16 @@ class SiteUserController extends Controller
         $history->type = 'User_Gallery'; 
         $history->save();
 
-        $html  = '<div id="'.$userGallery->id.'" class="item profile_photo_frame gallery_'.$userGallery->id.'">';
 
-
-        // $html .=    '<a data-offset-id="'.$userGallery->id.'" class="show_photo_gallery" href="'.asset('images/user/'.$user->id.'/gallery/'.$userGallery->image).'" data-lcl-thumb="'.asset('images/user/'.$user->id.'/gallery/small/'.$userGallery->image).'" >';
-        // $html .=       '<img data-photo-id="'.$userGallery->id.'"  id="photo_'.$userGallery->id.'"   class="photo" data-src="'.asset('images/user/'.$user->id.'/gallery/'.$userGallery->image).'" src="'.asset('images/user/'.$user->id.'/gallery/small/'.$userGallery->image).'">';
-        // $html .=    '<a/>';
-
-        $html .=    '<a data-offset-id="'.$userGallery->id.'" class="show_photo_gallery" href="'.assetGallery(1,$user->id,'',$userGallery->image).'" data-lcl-thumb="'.assetGallery(1,$user->id,'small',$userGallery->image).'" >';
-        $html .=       '<img data-photo-id="'.$userGallery->id.'"  id="photo_'.$userGallery->id.'"   class="photo" data-src="'.assetGallery(1,$user->id,'',$userGallery->image).'" src="'.assetGallery(1,$user->id,'small',$userGallery->image).'">';
-        $html .=    '<a/>';
-
-        $html .=    '<span onclick="UProfile.confirmPhotoDelete('.$userGallery->id.');" title="Delete photo" class="icon_delete">';
-        $html .=        '<span class="icon_delete_photo"></span>';
-        $html .=        '<span class="icon_delete_photo_hover"></span>';
-        $html .=    '</span>';
-
-        $html .=    '<span onclick="UProfile.setPrivateAccess('.$userGallery->id.')"  title="Make private" class="icon_private">';
-        $html .=        '<span class="icon_private_photo"></span>';
-        $html .=        '<span class="icon_private_photo_hover"></span>';
-        $html .=    '</span>';
-
-        $html .=    '<span onclick="UProfile.setAsProfile('.$userGallery->id.')" title="Make Profile" class="icon_image_profile"><span class=""></span></span>';
-
-        $html .= '</div>';
+        $html  = '<span class="pip imgContainer_'.$userGallery->id.'">';
+        $html  .= '<img data-photo-id="'.$userGallery->id.'" id="photo_'.$userGallery->id.'" class="photo imageThumb" data-src="'.assetGallery(1,$user->id,'',$userGallery->image).'" src="'.assetGallery(1,$user->id,'small',$userGallery->image).'">';
+        $html  .= '<br>';
+        $html  .= '<span class="remove" onclick="deletePhotoPopUp('.$userGallery->id.')" data-toggle="modal" data-target="#deletePhotModal">Delete</span>';
+        $html  .= '<br>';
+        $html  .= '<span class="Profile-img" onclick="setProfilePicture('.$userGallery->id.')">Profile Image</span>';
+        $html  .= '<br>';
+        $html  .= '<span class="Private-img" onclick="makePhotoPrivate('.$userGallery->id.')">Private Image</span>';
+        $html  .= '</span>';
 
 
         $output = array(
@@ -1418,25 +1468,25 @@ class SiteUserController extends Controller
                 $attachment->save();
 
                 if ($attachment->type == "pdf") {
-                    $text = Pdf::getText('/var/www/html/talenttube/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
-                    $keywordExtractor = new KeywordExtractor();
-                    $result = $keywordExtractor->run($text);
-                    $arrayObj = array();
-                    // dd($arrayObj);
-                    $varObj = '';
-                    foreach ($result as $key => $results) {
-                        $varObj = mb_convert_encoding($key, 'UTF-8', 'UTF-8');
-                        array_push($arrayObj, $varObj);
-                    }
-                    $test_var = '';
-                    foreach ($arrayObj as $array) {
-                        $test_var .= $array." ";
-                    }
-                    $cvdata = new CvData();
-                    $cvdata->user_id = $user->id;
-                    $cvdata->jsname = $user->name;
-                    $cvdata->data_text = $test_var;
-                    $cvdata->save();
+                    // $text = Pdf::getText('/var/www/html/talenttube/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
+                    // $keywordExtractor = new KeywordExtractor();
+                    // $result = $keywordExtractor->run($text);
+                    // $arrayObj = array();
+                    // // dd($arrayObj);
+                    // $varObj = '';
+                    // foreach ($result as $key => $results) {
+                    //     $varObj = mb_convert_encoding($key, 'UTF-8', 'UTF-8');
+                    //     array_push($arrayObj, $varObj);
+                    // }
+                    // $test_var = '';
+                    // foreach ($arrayObj as $array) {
+                    //     $test_var .= $array." ";
+                    // }
+                    // $cvdata = new CvData();
+                    // $cvdata->user_id = $user->id;
+                    // $cvdata->jsname = $user->name;
+                    // $cvdata->data_text = $test_var;
+                    // $cvdata->save();
                 }
 
 

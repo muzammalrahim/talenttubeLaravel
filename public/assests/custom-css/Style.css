@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+
+*{
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Lato', sans-serif;
+}
+.Content{
+    background-image: url("../images/Signin-bg.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    min-height: 100vh;
+   
+}
+
+.Content .logo{
+    padding: 60px 0px;
+    justify-content: center;
+    align-items: center;
+}
+.Content .logo img{
+    width: 215px;
+    height: 87px;
+    
+}
+.Content .signin-wrapper{
+    justify-content: center;
+    align-items: center;
+}
+.Content .signin{
+    background-color: #fff;
+    width: 400px;
+    border-radius: 5px;
+}
+.Content .signin h2{
+    padding: 15px 0px;
+}
+.input-group-text {
+    color:  rgba(136, 136, 136, 1);
+    ;
+}
+.password a{
+ position: relative;
+ margin-left: 240px;
+ color: #2672ab;
+}
+.form-check-input{
+    border: 1px solid rgb(244 129 40);
+}
+.form-check-input:checked {
+    background-color: rgb(244 129 40);
+    border-color: rgb(244 129 40);
+}
+.submit button{
+    display: block;
+    margin: auto;
+    padding: 4px 70px;
+    border: transparent;
+    background-color: #f48128;
+    color: #fff;
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+.optional{
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23.4px;
+}
+.registration-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    color: #2672ab;
+}
+.registration-link a{
+    color: #2672ab;
+}
+@media screen and (max-width:450px){
+    .Content .logo img{
+        width: 150px;
+        height: 50px;  
+    }
+    .Content .logo{
+        padding: 30px 0px;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .Content .signin{
+        background-color: #fff;
+        width: 80%;
+        margin: auto;
+    }
+    .password a{
+        padding: 0px;
+        margin: auto;
+        float: right;
+        font-size: 12px;
+       }
+       .form-check{
+           margin-top: 20px;
+       }
+}
