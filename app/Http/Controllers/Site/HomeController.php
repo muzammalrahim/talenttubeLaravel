@@ -53,6 +53,16 @@ class HomeController extends Controller {
     }
 
 
+    public function signIn(){
+        // dd('Sign in Page');
+        $data['title'] = 'Signin Page';
+        $data['content_header'] = 'Sign In';
+        $data['content'] = 'this is page content';
+        $view_name = 'site.home.signin';   // site/home/signin
+        return view($view_name, $data);
+    }
+
+
     public function create() { }
     public function store(Request $request){ }
     public function show(Home $home){ }
@@ -74,6 +84,7 @@ class HomeController extends Controller {
         $data['geo_cities']     = get_Geo_City(default_Country_id(), default_State_id());
 
         if ( $request->get('type') === 'user' ){
+            // dd( $request->get('type') );
             $data['title'] = 'Registeration';
             $view_name = 'site.register.user'; // site/register/user
             return view($view_name, $data);
@@ -322,6 +333,8 @@ class HomeController extends Controller {
 
     public function register(Request $request){
 
+
+
         // dd($request->all());
         // "_token" => "aoBTzArrllzmFQ8fw7zFhktY2lzW8jc1qbw2lH2T"
         // "firstname" => "Creative"
@@ -453,6 +466,15 @@ class HomeController extends Controller {
                 ]);
             }
         }
+    }
+
+    public function showRegisterPage()
+    {
+        $title = 'Register Page';
+
+        return view('site.home.register',[
+            'title' => $title,
+        ]);
     }
 
 

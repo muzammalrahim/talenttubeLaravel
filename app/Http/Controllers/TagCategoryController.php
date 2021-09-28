@@ -14,7 +14,7 @@ class TagCategoryController extends Controller
      */
     public function index()
     {
-        //
+        dd('com');
     }
 
     /**

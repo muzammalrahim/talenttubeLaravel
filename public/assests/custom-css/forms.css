@@ -1,0 +1,483 @@
+
+.Content{
+    background-image: url("../images/Signin-bg.svg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    min-height: 100vh;
+   
+}
+
+.Content .logo{
+    padding: 60px 0px;
+    justify-content: center;
+    align-items: center;
+}
+.Content .logo img{
+    width: 215px;
+    
+}
+.Content .signin-wrapper{
+    justify-content: center;
+    align-items: center;
+}
+.Content .signin {
+    background-color: #fff;
+    width: 500px;
+    border-radius: 5px;
+    padding: 0 25px;
+}
+.Content .signin h2 {
+    padding: 25px 0px 0;
+}
+.input-group-text {
+    color:  rgba(136, 136, 136, 1);
+    
+}
+.password a {
+    position: relative;
+    color: #2672ab;
+    float: right;
+}
+.Content .signin .form-check-input{
+    border: 1px solid rgb(244 129 40) !important;
+}
+.Content .signin .form-check-input:checked {
+    background-color: rgb(244 129 40) ;
+    border-color: #fff !important;
+}
+/* =========================================checkbox================================= */
+.custom-checkbox input[type='checkbox']{
+    appearance: none;
+    height: 15px;
+    width: 15px;
+    background: #ffffff !important;
+    border: 1px solid #F48128 !important;
+    cursor: pointer;
+    margin-top: 5px !important;
+}
+.custom-checkbox input[type='checkbox']:after{
+    content: "\2713" !important;
+    font-family: "fontawesome";
+    display: none;
+    width: 10px;
+    color: #fff;
+    font-size: 11px;
+}
+.custom-checkbox input[type='checkbox']:hover{
+    background: #000;
+}
+.custom-checkbox input[type='checkbox']:checked:after{
+    display: flex;
+    background: #F48128 !important;
+    width: 13px;
+    height: 13px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 3px;
+}
+.custom-checkbox label{
+    cursor: pointer;
+}
+/* ====================================checkbox end=============================== */
+/* ==================================================== */
+.signin label {
+    font-size: 16px;
+    font-weight: 500;
+}
+.submit button {
+    width: 300px;
+    display: block;
+    margin: auto;
+    font-size: 18px !important;
+}
+.submit button:hover{
+    background-color: #fff;
+    color: #f48128;
+    transition: 0.3s all;
+}
+.optional{
+    margin-top:16px ;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 23.4px;
+}
+.registration-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+    color: #2672ab;
+}
+.registration-link a {
+    color: #2672ab;
+    font-size: 20px;
+    text-decoration: underline;
+}
+/* ======================Cross Refrance page css starts here=============================== */
+.Content .cross-refrance-wrapper {
+    width: 70%;
+    margin: auto;
+    background-color: #ffffff;
+    padding: 0;
+}
+.update-info label {
+    font-size: 16px;
+}
+.update-info {
+    margin: 0;
+}
+.seeker-title .form-check-inline {
+    padding: 0;
+}
+.custom-checkbox {
+    padding: 0;
+}
+.cross-refrance-2 {
+    margin: 0 0 10px !important;
+}
+.cross-refrance-form{
+    padding: 5px 30px;
+}
+.cross-refrance-heading{
+    padding-top:20px ;
+    font-weight: 600;
+}
+.Verification-portion {
+    margin-bottom: 30px;
+    border-bottom: 1px solid #989797;
+    padding: 20px 0px 0;
+}
+.work-related-heading {
+    margin-bottom: 10px !important;
+}
+
+.Verification-portion label {
+    font-weight: 500;
+    padding: 0;
+    margin: 0 0 5px;
+    font-size: 16px;
+}
+.custom-checkbox label {
+    font-size: 16px;
+    margin-left: 20px;
+}
+.Verification-portion input{
+    padding: 8px ;
+}
+.Verification-portion .col-md-6 {
+    margin: 0 0 30px;
+}
+.Verification-portion input::placeholder{
+    font-size: 14px !important;
+    
+}
+.work-questions{
+    margin: 0px;
+    padding: 0px;
+}
+.Work-related-question-portion {
+    margin-bottom: 20px;
+    border-bottom: 1px solid #989797;
+    padding: 0 0 20px;
+}
+.work-questions label {
+    font-weight: 500;
+    padding: 0 0 0 10px;
+    margin: 0;
+    font-size: 16px;
+}
+.work-questions .col-md-6 {
+    margin: 0 0 20px;
+}
+.work-questions label{
+    font-weight: 400;
+    padding: 8px 10px;
+    font-size: 16px;
+}
+.work-input{
+    padding-right: 5px;
+}
+.work-questions input::placeholder , .work-questions select{
+    font-size: 14px !important;
+    padding-left: 0px;
+    color: #989797;
+}
+.work-questions select {
+    padding: 8px;
+}
+.row.Final-Question-portion .col-md-6 {
+    margin: 0 0 20px;
+    /* display: block; */
+}
+.work-questions select, .work-questions input {
+    margin-top: 7px;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #ced4da;
+}
+.Final-Question-portion{
+    justify-content: center;
+    align-items: center;
+}
+.Final-Question-portion label {
+    font-size: 16px;
+    font-weight: 500;
+}
+.Final-Question-portion .would-label {
+    min-height: 61px;
+}
+.send-refrance{
+    float: right;
+    margin-right: 2px;
+}
+.send-refrance a{
+    margin: 25px 0 !important;
+    padding:4px 30px !important;
+}
+
+.send-refrance a i{
+    padding-right: 10px !important;
+}
+.final-question-heading {
+    padding-top: 15px;
+}
+/* ===============================Refrance1 page css starts here========================== */
+.cross-refrance-alert{
+    background-color: #009D10;
+    width: 60%;
+    padding: 90px 30px;
+    margin:10% auto;
+}
+.cross-refrance-alert .alert-content{
+    width: 60%;
+    margin: auto;
+}
+.cross-refrance-alert h2{
+    text-align: center;
+    color: #fff;
+    
+}
+.cross-refrance-alert .refrance-link{
+    text-align: center;
+    color: #fff;
+    font-size: 18px;
+    display: block;
+    justify-content: center;
+}
+/* ================================update-info page css starts here======================= */
+.update-info-buttons{
+    display: flex;
+    justify-content:flex-end;
+}
+.update-info h4 {
+    padding-top: 25px;
+    font-weight: 600;
+    margin: 0 0 30px;
+}
+.update-info-buttons .buttons-group{
+
+    float: right;
+}
+.update-info-buttons .buttons-group li{
+    list-style: none;
+    float: left;
+    margin:5px 5px ;
+    text-align: center;
+    border-radius: 5px;
+    padding: 7px 0px;
+}
+
+.update-info-buttons .buttons-group .btn-first{
+    background-color: #00326f;
+    border:1px solid #00326f;
+}
+.update-info-buttons .buttons-group .btn-first:hover {
+    background-color: #fff;
+}
+.update-info-buttons .buttons-group .btn-first:hover a{
+    color:#00326f ;
+}
+.update-info-buttons .buttons-group .btn-second{
+    background-color: #f48128;
+    border: 1px solid #f48128;
+}
+.update-info-buttons .buttons-group .btn-second:hover {
+    background-color: #fff;
+}
+.update-info-buttons .buttons-group .btn-second:hover a{
+    color:#f48128 ;
+}
+.update-info-buttons .buttons-group .btn-first a , .update-info-buttons .buttons-group .btn-second a , .update-info-buttons .buttons-group .btn-third a ,.update-info-buttons .buttons-group .btn-four a{
+    color: #fff;
+    text-decoration: none;
+    padding: 15px 15px;
+    font-size: 16px;
+}
+.update-info-buttons .buttons-group .btn-third{
+    background-color:#e20000;
+    border:1px solid #e20000 ;
+}
+.update-info-buttons .buttons-group .btn-third:hover {
+    background-color: #fff;
+}
+.update-info-buttons .buttons-group .btn-third:hover a{
+    color:#e20000 ;
+}
+
+/* =======================Employee Seeker form css starts here========================= */
+.Search-portion{
+    position: relative;
+    border-radius: 5px;
+}
+.Search-portion input:checked{
+    border: transparent !important;
+}
+.Search-btn{
+    position: absolute;
+    width: 100px !important;
+    right: 0;
+    height: 37px;
+    border-radius:0 3px 3px 0 !important;
+    background-color: #009D10;
+    color: #fff;
+    white-space: nowrap;
+    z-index: 10;
+}
+.Search-btn i{
+    padding: 0px 7px 0px 0px;
+}
+.update-info-buttons .buttons-group .btn-four{
+    background-color: #242424;
+    border: 1px solid #242424;
+}
+.update-info-buttons .buttons-group .btn-four:hover {
+    background-color: #fff;
+}
+.update-info-buttons .buttons-group .btn-four:hover a{
+    color:#242424 ;
+}
+/* ===================================job application form css============================= */
+.seeker-title{
+    /* display: block; */
+    justify-content: space-between;
+    align-items: center;
+}
+.age-limit{
+    color: #f48128;
+}
+.form-check {
+    /* width: 100%; */
+    float: left;
+    margin: 0 0 10px;
+}
+
+@media (max-width: 991px) {
+    .Content .cross-refrance-wrapper {
+        width: 95%;
+    }
+}
+@media (max-width: 767px) {
+  
+    .Content .signin {
+        background-color: #fff;
+        width: 80%;
+        margin: 40px auto;
+    }
+}
+
+
+@media screen and (max-width:479px){
+    .Content .logo img{
+        width: 150px;
+        height: 50px;  
+    }
+    .Content .logo{
+        padding: 30px 0px;
+        justify-content: center;
+        align-items: center;
+    }
+    .seeker-title .form-check {
+        width: 48%;
+        float: left;
+        margin: 0 0 10px;
+    }
+       /* ====================================== Cross Refrance page css starts here======= */
+       .cross-refrance-form{
+        padding: 0px;
+    }
+       .cross-refrance-heading{
+    text-align: center;
+    }
+    .cross-refrance-2{
+        text-align: center;
+    }
+    .cross-refrance-3{
+        text-align: center;
+    }
+    .work-questions label{
+        padding: 0px;
+    }
+    .work-input{
+        margin: 0px;
+        padding: 0px;
+    }
+    .final-question-heading {
+        padding-top: 20px;
+    }
+    /* ========================================Refrance1 page css starts here============ */
+    .cross-refrance-alert{
+        background-color: #009D10;
+        width: 90%;
+        padding: 90px 30px;
+        margin:10% auto;
+    }
+    .cross-refrance-alert .alert-content{
+        width: 100%;
+        margin: auto;
+    }
+    /* =================================update info page css========================= */
+    .update-info{
+        margin: 0px;
+    }
+    .update-info h4{
+        text-align: center;
+    }
+    .update-info-buttons{
+        padding-right: 0px !important;
+    }
+    .update-info-buttons .buttons-group{
+        margin-left: 0px;
+        padding-left: 0px;
+        float: none;
+    }
+    .update-info-buttons .buttons-group li{
+        list-style: none;
+        float: none;
+        margin:5px 5px ;
+        text-align: center;
+        border-radius: 5px;
+        display: block;
+        padding: 8px 0px;
+    }
+    .update-buttons-2{
+        padding: 0px;
+    }
+    /* ====================================employee form css starts here================ */
+    .Search-portion{
+        position: relative;
+        border-radius: 5px;
+    }
+    .Search-btn{
+        position: initial;
+        width: 100% !important;
+        right: 0;
+        border-radius: 5px !important;
+        display: block;
+        background-color: #009D10;
+        margin: 16px 0px 0px;
+        color: #fff;
+    }
+ 
+}

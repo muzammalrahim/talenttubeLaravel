@@ -1,0 +1,699 @@
+/* ============================ font-added ==================== */
+
+/* css for mobile portion sidebar */
+/* ======================================================================================= */
+/* .sidebarMenu4{ */
+    /* padding: 0px !important; */
+/* } */
+.mobile-sidebar{
+    padding-left: 0px !important;
+}
+#sidebarMenu{
+    height: 100%;
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    width: 250px;
+    background: #FFFFFF !important;
+    transform: translateX(-250px);
+    transition: transform 250ms ease-in-out;
+}
+#opensidebarmenu{
+    background-color: transparent;
+    opacity: 0;
+}
+#sidebarMenu ul li {
+    border-bottom: transparent;
+}
+#sidebarMenu ul li a {
+    color: #545452;
+    font-size: 13px !important;
+}
+#opensidebarmenu:checked ~ #sidebarMenu{
+    transform: translateX(0px);
+}
+.menu{
+    list-style: none;
+    padding: 10px 14px;
+    background-color: #ff9400;
+    margin-bottom: 0px;
+}
+.menu2 {
+    background-color: #fff;
+    list-style: none;
+    padding: 10px 14px;
+}
+.menu2 ul li{
+    padding: 11px 24px !important ;
+}
+.menu2 ul li a{
+    color: #545452 !important;
+    padding: 19px 14px  ;
+} 
+.menu li a{
+    color: #fff !important;
+    display: block;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12px;
+}
+.menu li a i{
+    padding-right: 14px;
+}
+.menu2 li a{
+    color: rgba(84, 84, 82, 1);
+    display: block;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 12px;
+}
+.sidebaricontoggle{
+    width: 42px;
+    height: 32px;
+    position:  absolute;
+    z-index: 20;
+    top: 18px;
+    right: 20px;
+    cursor: pointer;
+}
+.spinner{
+    margin-bottom: 7px;
+    height: 3px;
+    background: #ff9400;
+    transition: all 0.3s;
+}
+.spinner.middle , .spinner.bottom{
+    margin-top: 3px;
+}
+#opensidebarmenu:checked ~ .sidebaricontoggle >.spinner.middle{
+    opacity: 0;
+}
+#opensidebarmenu:checked ~ .sidebaricontoggle >.spinner.top{
+    transform: rotate(135deg);
+    margin-top: 18px;
+}
+#opensidebarmenu:checked ~ .sidebaricontoggle >.spinner.bottom{
+    transform: rotate(-135deg);
+    margin-top: -19px;
+}
+/*  */
+/* Mobile Sidebar portion end here */
+
+/* ========================================================================================= */
+
+
+/* =================================Header css starts here============================= */
+.navigation-bar{
+    padding-top: 20px;
+}
+.navigation-bar .logo {
+    width: 164px;
+}
+.header-content .img img{
+    width: 380px;
+    padding-top: 90px;
+}
+.navigation-bar ul{
+    padding-left:13.6rem;
+}
+.navigation-bar ul li{
+font-style: normal;
+font-weight: bold;
+font-size: 14px;
+line-height: 20px;
+}
+.Account{
+font-size: 12px;
+text-transform: uppercase;
+color: #FFFFFF !important;
+margin-right: 15px;
+}
+.header-section{
+    background: transparent;
+    position: absolute;
+    height: 100px;
+    display: block;
+    z-index: 9;
+}
+.header-signin-btn{
+    float: left;
+}
+.account-have{
+    float: right;
+}
+
+.header-section-nav{
+    display: block !important;
+    text-align: left !important;
+    float: right;
+}
+.window-header .orange_btn {
+    padding: 5px 20px !important;
+    font-size: 14px !important;
+}
+/* ================================= Header css ends here================================ */
+/* ===========================Banner section starts here================================ */
+.banner-info-text h1 {
+    font-size: 45px;
+    font-weight: 400;
+    margin-bottom: 10px !important;
+}
+.banner-info-text h2 {
+    font-size: 42px;
+    font-weight: 900;
+    text-align: left;
+}
+.banner-info-text h2 span {
+    display: block;
+    font-size: 34px;
+}
+.banner-info-text h2 strong {
+    margin-left: 10px;
+    font-size: 62px;
+}
+.dual-button a {
+    margin-right: 15px;
+    display: inline-block;
+    height: auto !important;
+    padding: 10px 15px;
+    font-size: 18px !important;
+}
+
+.banner-icon-div{
+    background-image: url('../images/home-background.png');
+    background-repeat: no-repeat;
+    background-position: right top;
+    background-size:  100%;
+}
+.btn-infomation .blue_btn {
+    height: auto !important;
+    padding: 9px 28px;
+    font-size: 18px !important;
+}
+.banner-icon {
+    width: 40%;
+    margin: auto;
+    display: block;
+    margin-top: 170px;
+}
+.banner-info-text {
+    float: right;
+}
+.headings{
+   margin-top: 180px;
+   padding-left: 50px;
+}
+.interview-button{
+    position: relative;
+}
+
+.interview-button:hover .interview_hover_icon{
+ display: inline-block !important;
+}
+.interview-button:hover .interview-icon{
+    display: none !important;
+   }
+.interview-button:hover .interview_icon{
+    display: none;
+}
+.btn-infomation {
+    margin-top: 20px;
+}
+
+.btn-infomation li{
+    display: inline-block;
+    margin-right: 15px;
+}
+.btn-infomation label {
+    font-size: 20px;
+}
+.article h2 {
+    margin: 0 0 10px;
+    font-weight: 500 !important;
+}
+.article h3 {
+    font-weight: 900 !important;
+    font-size: 31px;
+    margin: 0 0 20px;
+}
+
+/* ===========================Body Starts Here================================ */
+
+/* ============================First Text-Portion Starts============================= */
+.heading-first{
+font-size: 34px;
+font-style: normal;
+font-weight: 700;
+text-align: left;
+padding-top: 55px;
+}
+.fist-paragrah{
+    width: 60%;
+    margin: auto;
+    padding-top: 23px;
+    font-size: 16px;
+    font-weight: 400;
+    padding-bottom: 58px;
+}
+/* ============================First Text-Portion ends============================= */
+
+/* ===============================Job Wrappers Portion starts here=================== */
+
+.feature-wrap{
+    border:2px solid #ff9400;
+    border-radius: 10px; 
+    margin-bottom: 10px;
+    display: block;
+    transition: 0.3s all;
+}
+.feature-wrap:hover{
+    transition: 0.3s all;
+    box-shadow: 5px 5px 10px -3px rgba(113,113,113,0.63);
+}
+.icon-wraper {
+    text-align: center;
+    float: left;
+    padding-right: 20px;
+    margin-top: 10px;
+    width: 30%;
+}
+.icon-wraper img{
+    width: 80%;
+}
+.feature-text-wrap {
+    padding: 3px;
+    text-align: center;
+    float: left;
+    width: 70%;
+}
+.feature-text-wrap h2 {
+    font-weight: 500;
+    padding-top: 8px;
+    font-size: 18px;
+    text-align: center;
+    color: rgba(244, 129, 40, 1);
+    margin: 0 0 10px;
+}
+.feature-text-wrap p{
+    color: rgba(84, 84, 82, 1);
+    font-size: 14px;
+}
+
+/* ================================Job wrapper portion ends here====================== */
+
+/* =================================Main Section CSS starts here======================== */
+.first-section {
+    margin: 30px 0 0;
+}
+.feature-img-wrap img {
+    width: 100%;
+    display: block;
+    height: 640px;
+}
+.first-section .article {
+    width: 75%;
+    padding: 200px 0 0;
+}
+.second-article{
+    float: right;
+}
+/* =================================Main Section CSS Ends here======================== */
+/* =============================Footer Css starts here================================ */
+.footer-logo-2{
+    text-decoration: none;
+    text-align: center;
+    padding-top: 20px;
+}
+.footer-logo-2 img{
+    width: 125px;
+    
+}
+.footer-nav ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(156, 158, 160, 1);
+}
+.footer-nav ul li{
+    list-style: none;
+    font-size: 14px;
+    float: left;
+    padding:45px 35px;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.footer-nav ul li a {
+    text-decoration: none;
+    color: #9C9EA0;
+    font-size: 16px;
+}
+.footer-nav ul li a img{
+    width: 141.5px;
+}
+.footer-icon li {
+    display: inline-block;
+}
+
+.footer-icon{
+   text-align: center;
+   padding-top: 20px;
+   padding-bottom: 50px;
+}
+.footer-icon a{
+    width: 100px;
+    padding:10px 12px;
+    margin-left: 15px;
+    background-color: rgba(255, 148, 0, 1);
+    border-radius: 50%;
+    color: #FFFFFF;
+    width: 14px;
+    
+}
+footer {
+    margin-top: 100px;
+}
+.CopyRight{
+    font-size: 18px;
+    color:  #242424;
+    text-align: center;
+}
+/* =============================Footer Css ends here================================ */
+
+
+
+
+/* =============================Media Queries Starts Here========================= */
+@media screen and (max-width: 1200px){
+    
+    .headings{
+        padding-top:0;
+    }
+    .banner-info-text h2 {
+        font-size: 35px;
+    }
+    .banner-info-text h2 strong {
+        margin-left: 10px;
+        font-size: 54px;
+    }
+
+    .navigation-bar ul {
+        padding-left: 6.8rem;
+    }
+   
+    .header-buttons {
+        padding-top: 40px;
+    }
+    .banner-form {
+    padding-top: 30px;
+}
+        .btn-infomation li {
+            margin-right: 4px;
+        }
+    .banner-form .form-buttons select {
+        padding: 7.5px 4px;
+        font-size: 18px;
+    }
+    .banner-form .form-buttons button {
+        padding: 5px 20px;
+        font-size: 18px;
+    }
+    .first-section {
+        margin: 80px 0 0;
+    }
+    .headings {
+        margin-top: 150px;
+        padding: 0 0 0 50px;
+    }
+    .icon-wraper {
+        margin-top: 28px;
+    }
+    .feature-img-wrap img {
+        height: auto;
+    }
+    .first-section .article {
+        padding: 90px 0;
+    }
+    .bg-light {
+        margin-top: 100px;
+    }
+    .header-section-nav li a {
+        background: #00326f;
+    }
+    .dual-button a {
+        margin-right: 2px;
+    }
+    .banner-info-text h1 {
+        font-size: 40px;
+    }
+   
+}
+/* ===============================media query for 990px starts here=================== */
+
+@media screen and (max-width: 991px){
+    .header img{
+        width: 130px;
+    }
+    .headings {
+        margin-top: 100px;
+    }
+    .tallent-heading {
+        font-size: 20px !important;
+    }
+    .header-buttons {
+        padding-top: 0;
+    }
+    .dual-button .dashboard-button {
+        margin-left: 0;
+        width: 100%;
+    }
+    .banner-form ul li {
+        display: block;
+        width: 100%;
+        margin-bottom: 9px;
+        text-align: center;
+    }
+    .icon-wraper {
+        width: 30%;
+        margin: 40px auto !important;
+    }
+    .first-section .article {
+        width: 86%;
+        padding: 0 !important;
+    }
+    .banner-form {
+        padding-top: 10px;
+    }
+    .header {
+        margin-top: 15px;
+    }
+    .banner-info-text {
+        margin-top: 50px;
+    }
+    .banner-info-text h2 {
+        font-size: 28px;
+    }
+    .banner-info-text h2 strong {
+        font-size: 45px;
+    }
+    .banner-info-text h1 {
+        font-size: 34px;
+        margin-bottom: 10px;
+    }
+    .headings {
+        padding: 0 15px;
+    }
+    .btn-infomation .blue_btn {
+        height: auto !important;
+        padding: 6px 10px;
+        font-size: 14px !important;
+    }
+    .dual-button a {
+        margin-right: 6px;
+        padding: 8px 10px;
+        font-size: 14px !important;
+    }
+  
+  .dual-button .blue_btn{
+      font-size: 13px !important;
+  }
+  .dual-button .orange_btn{
+    font-size: 13px !important;
+}
+}
+@media screen and (max-width: 767px){
+    .banner-icon-div{
+        background-image: url(../images/bg-img.png);
+        background-repeat: no-repeat;
+    }
+    .banner-info-text h2 {
+        font-size: 40px;
+    }
+    .header img{
+        width: 130px;
+    }
+    .banner-info-text {
+        float: none;
+    }
+    .banner-info-text h1 {
+        font-size: 34px;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .dual-button {
+        text-align: center;
+    }
+    .btn-infomation {
+        text-align: center;
+    }
+    .heading-first {
+        font-size: 28px;
+    }
+    .fist-paragrah {
+        width: 100%;
+        padding-top: 0;
+    }
+    .banner-info-text h2 {
+        text-align: center;
+    }
+    .headings {
+        padding: 0 15px;
+    }
+    .icon-wraper {
+        width: 100%;
+        margin: 40px auto !important;
+    }
+    .icon-wraper img {
+        width: 20%;
+    }
+    .banner-icon {
+        width: 50%;
+        padding-top: 0;
+        height: auto;
+    }
+    .headings {
+        margin-top: 40px;
+    }
+    .feature-text-wrap {
+        width: 100%;
+    }
+    .icon-wraper {
+        width: 100%;
+        margin: 15px auto !important;
+        padding: 0;
+    }
+    .first-section .article {
+        width: 80%;
+        padding: 0 !important;
+        text-align: center;
+        margin:60px auto 0;
+    }
+    .feature-img-wrap img {
+        width: 75%;
+        margin: auto;
+    }
+    .second-article {
+        float: none !important;
+    }
+    .footer-nav ul li {
+        font-size: 10px;
+        float: left;
+        padding: 50px 11px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .footer-nav ul li a img {
+        width: 127.5px;
+    }
+    .footer-icon a {
+        width: 100px;
+        padding: 10px 12px;
+        margin-left: 4px;
+        width: 14px;
+    }
+    .banner-info-text {
+        margin-top: 0;
+    }
+    .banner-info-text h2 {
+        font-size: 39px;
+    }
+    .banner-info-text h2 strong {
+        font-size: 51px;
+    }
+}
+@media screen and (max-width: 479px){
+    .banner-icon {
+        width: 50%;
+        margin-top: 150px;
+    }
+    .banner-info-text h2 {
+        font-size: 30px;
+    }
+    .banner-info-text h2 strong {
+        font-size: 40px;
+    }
+    .banner-form .form-buttons {
+        margin-left: 0;
+    }
+    .heading-first {
+        font-size: 20px;
+    }
+    .article h3{
+        color: #242424;
+    }
+    .fist-paragrah {
+        width: 100%;
+        padding-top: 12px;
+        font-size: 14px;
+        padding-bottom: 58px;
+    }
+    .feature-img-wrap img {
+        width: 100%;
+    }
+    .first-section .article {
+        width: 100%;
+        margin: 30px auto 0;
+    }
+    .first-section .article h3 {
+        font-size: 22px;
+        margin-bottom: 20px;
+    }
+    .footer-nav ul li{
+        padding: 30px 15px;
+    }
+    .header img {
+        width: 40%;
+    }
+    .dual-button a {
+        width: 100%;
+        font-size: 16px !important;
+        margin-bottom: 10px;
+    }
+    .dual-button a:last-child {
+        margin-bottom:0;
+    }
+    .btn-infomation li {
+        display: block;
+        margin-bottom: 10px;
+    }
+    .btn-infomation li .blue_btn {
+        font-size: 14px !important;
+        padding: 6px 10px !important;
+        width: 100%;
+        font-size: 16px !important;
+        text-align: center;
+    }
+    .btn-infomation .form-buttons li .h-continue{
+        padding: 4px 10px !important;
+    }
+    .btn-infomation .blue_btn{
+        text-align-last:center;
+        padding-right: 29px !important;
+        direction:unset;
+    }
+    
+}

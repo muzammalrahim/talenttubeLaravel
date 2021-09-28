@@ -87,7 +87,7 @@ $(function () {
         $frmLoginUser.val($.trim($frmLoginUser.val()));
         $(this).ajaxSubmit({success: loginResponse});
         $frmLoginInput.prop('disabled', true);
-        $frmLoginSubmit.html(getLoader('css_loader_login_form',false,true));
+        // $frmLoginSubmit.html(getLoader('css_loader_login_form',false,true));
         return false;
     });
 

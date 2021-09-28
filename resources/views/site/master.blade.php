@@ -6,37 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
        <!-- Favicons-->
-    <link rel="icon" href="https://talenttube.tv/wp-content/themes/talenttube/favicon/apple-icon-57x57.png" type="image/x-icon" />
-    <link rel="apple-touch-icon-precomposed" href="https://talenttube.tv/wp-content/themes/talenttube/images/talenttube.png">
-    <link rel="icon" href="https://talenttube.tv/wp-content/themes/talenttube/images/talenttube.png" sizes="32x32">
-    <link rel="icon" type="image/png" sizes="16x16" href="https://talenttube.tv/wp-content/themes/talenttube/images/talenttube.png">
-    <link rel="shortcut icon" href="https://talenttube.tv/wp-content/themes/talenttube/images/talenttube.png" />
+    <link rel="icon" href="{{ asset('images/favi-icon.svg') }}" type="image/x-icon" />
+    <link rel="apple-touch-icon-precomposed" href="{{ asset('images/favi-icon.svg') }}">
+    <link rel="icon" href="{{ asset('images/favi-icon.svg') }}" sizes="32x32">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('images/favi-icon.svg') }}">
+    <link rel="shortcut icon" href="{{ asset('images/favi-icon.svg') }}" />
   
+
+    {{-- ============================= New Code ============================= --}}
+    <link rel="stylesheet" href="{{ asset('assests/bootstrap/css/bootstrap.css') }}" >
+    <link rel="stylesheet" href="{{ asset('assests/bootstrap/css/bootstrap.min.css') }}" >
+    <!-- font-awesome cdn -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+   <!-- =============== custom files -->
+
+
 
 
     <meta name="csrf-token" content="{{csrf_token()}}">
     <title>@yield('title')</title>
 
-    @if(! config('adminlte.enabled_laravel_mix'))
+    {{-- @if(! config('adminlte.enabled_laravel_mix'))
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
 
-    {{--
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    --}}
-    {{-- <link rel="stylesheet" href="//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css"> --}}
-    {{-- @include('adminlte::plugins', ['type' => 'css']) --}}
-    {{-- @yield('adminlte_css_pre') --}}
-    {{-- <link rel="stylesheet" href="{{ asset('vendor/adminlte/dist/css/adminlte.min.css') }}"> --}}
-    {{-- @yield('adminlte_css') --}}
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('css/master.css') }}">
     @else
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
-    @endif
+    @endif --}}
 
     @yield('meta_tags')
 

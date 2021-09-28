@@ -1,12 +1,7 @@
 
-@if ($controlsession->count() > 0)
-<div class="adminControl">
-        <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
-</div>
 
-@endif
 
-@extends('site.user.usermaster')
+@extends('web.user.usermaster')
 
 @section('content')
 <div class="cont bl_profile">
@@ -186,7 +181,6 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 @stop
 
 @section('custom_js')

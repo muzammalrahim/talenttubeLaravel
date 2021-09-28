@@ -1,142 +1,411 @@
-
-@extends('site.user.usermaster')
+@extends('web.user.usermaster') {{-- site/user/usermaster --}}
 
 @section('content')
-<div class="cont bl_profile">
-    <div class="bl_pic_info my_profile">
 
-        {{-- @dump($profileImage) --}}
-        {{-- @dump($profileImage['imagepath']) --}}
-        {{-- @dump( $user_profile->image ) --}}
-        {{-- @dump($profile_image) --}}
+<div class="tab-content" id="nav-tabContent">
+   
+   <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+      <section class="row">
+         <div class="col-md-4 order-md-2 order-sm-1 profile-data-info">
+            <div class="profile-information">
+               <div class="profile-img-wrapper">
+                  <img src="{{ asset('assests/images/user.png') }}" width="150" alt="profile">
+               </div>
+               <div class="profile-detail clearfix">
 
-        {{-- @dump($controlsession) --}}
+                  {{-- <div class="row m-0">  
+                     <input type="text" class="form-control col-10 bg-white border-0 sec_username text-center" 
+                        value="{{$user->name}}" readonly />
+                        <button type="button" onclick="showFieldEditor('username');" class="orange_btn col-2">
+                           <i class="fas fa-edit"></i>
+                        </button>
+                        <div class="float-right button_username d-none">
+                           <button class="btn btn-sm btn-danger" onclick="hideFieldEditor('username');">Cancel</button>
+                           <button class="orange_btn mt-2">Save</button> 
+                        </div>
+                  </div> --}}
 
-        <div class="bl_pic">
-            <div class="pic">
-                <div class="profile_pic_one to_show">
-                    <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
+                  <h2 class="text-center"> {{$user->name}} </h2>
 
-                        <img  class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
-                    </a>
+
+                  <div class="location p-2">  
+                     <b> Location </b> 
+                     <button type="button" onclick="showFieldEditor('location');" class="orange_btn float-right">
+                        <i class="fas fa-edit"></i>
+                     </button>
+                     <input type="text" class="form-control p-0 bg-white border-0 sec_location" 
+                        value="{{ $user->state }} , {{ $user->country }}" readonly />
+
+                     <div class="row">
+                        <div class="col-12">
+                           <div class="float-right button_location d-none">
+                              <button class="btn btn-sm btn-danger" onclick="hideFieldEditor('location');">Cancel</button>
+                              <button class="orange_btn mt-2">Save</button> 
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+
+                  {{-- <h2>Job Seekers</h2> --}}
+                  
+
+                  <div class="salaryRange p-2">
+                     <b>Expecting Salary:</b>
+                     <button type="button" onclick="showFieldEditor('salaryRange');" class="orange_btn float-right">
+                        <i class="fas fa-edit"></i>
+                     </button>
+                     <input type="text" class="form-control p-0 bg-white border-0 sec_salaryRange" 
+                        value="{{ $user->salaryRange }}" readonly />
+                       
+                        <div class="newSalary my-2 d-none">
+                          {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, 
+                          ['placeholder' => 'Select Salary Range', 'id' => 'salaryRangeFieldnew',  'class' => 'form-control custom-select']) }}
+                        </div>
+
+                     <div class="row">
+                        <div class="col-12">
+                           <div class="float-right button_salaryRange d-none">
+                              <button class="btn btn-sm btn-danger" onclick="hideFieldEditor('salaryRange');">Cancel</button>
+                              <button class="orange_btn mt-2">Save</button> 
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+
+               </div>
+            </div>
+         </div>
+         <div class="col-md-8 order-md-1 order-sm-2 first-tap-detail">
+            <div class="profile profile-section">
+               <ul class="nav nav-tabs" id="Profile-tab" role="tablist">
+                  <span class="line-tab"></span>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                        type="button" role="tab" aria-controls="home" aria-selected="true">
+                     <i class="fa fa-circle tab-circle-cross"></i>Profile</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
+                        type="button" role="tab" aria-controls="profile" aria-selected="false">
+                     <i class="fa fa-circle tab-circle-cross"></i>Album</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                        type="button" role="tab" aria-controls="contact" aria-selected="false">
+                     <i class="fa fa-circle tab-circle-cross"></i>Questions</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link" id="tag-tab" data-bs-toggle="tab" data-bs-target="#tag"
+                        type="button" role="tab" aria-controls="tag" aria-selected="false">
+                     <i class="fa fa-circle tab-circle-cross"></i>Tags</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
+                        type="button" role="tab" aria-controls="job" aria-selected="false">
+                     <i class="fa fa-circle tab-circle-cross"></i>Job</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link" id="refrance-tab" data-bs-toggle="tab" data-bs-target="#refrance"
+                        type="button" role="tab" aria-controls="refrance" aria-selected="false">
+                     <i class="fa fa-circle tab-circle-cross"></i>Refrences</button>
+                  </li>
+               </ul>
+               <div class="tab-content" id="myTabContent">
+                  <!--==================== profile tab-->
+                  <div class="profile-text-wrap tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="Profile-tab">
+                     
+
+                     {{-- Google map --}}
+
+                     <div class="bl_list_info">
+                         <ul class="list_info userProfileLocation"><br>
+                             {{-- <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li> --}}
+                             <li id="list_info_location">{{userLocation($user)}}<i class="fas fa-edit salaryRangeEdit" onclick="showMap()"></i></li>
+                             <li><span id="list_info_gender">Job Seeker</span></li>
+                         </ul>
+                         {{-- <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div> --}}
+                     </div>
+
+                     <div class="location_search_cont hide_it">
+                      <div class="location_input dtable w100">
+                          <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
+                          <select class="dinline_block filter_location_radius select_aw hide_it" name="filter_location_radius" data-placeholder="Select Location Radius">
+                               <option value="5">5km</option>
+                               <option value="10">10km</option>
+                               <option value="25">25km</option>
+                               <option value="50">50km</option>
+                               <option value="51">50km +</option>
+                          </select>
+                      </div>
+                      <div class="location_latlong dtable w100">
+                          <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+                          <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+                          <input type="hidden" name="location_name" id="location_name"  value="">
+                          <input type="hidden" name="location_city" id="location_city"  value="">
+                          <input type="hidden" name="location_state" id="location_state"  value="">
+                          <input type="hidden" name="location_country" id="location_country"  value="">
+                      </div>
+
+                      <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
+                      <div class="searchField_action">
+                          <div class="searchFieldLabel dinline_block"></div>
+                          <button class="btn small OrangeBtn saveNewLocation">Save</button>
+                      </div>
+                  </div>
+
+                     {{-- Google map --}}
+                     <div class="about-infomation">
+                        <h2>Recent Job</h2>
+                        <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text"><i class="fas fa-edit"></i></button>
+                        
+                        <div class="recentjob">
+                           <span class="recentjobSpan"> {{$user->recentJob}} </span>
+                              <b class="mx-2">at</b>
+                           <span class="recentjobSpan"> {{$user->organHeldTitle}} </span>
+                        </div>
+
+                        <div class="row sec_recentJob d-none">
+                           <div class="col-5">
+                              <input type="text" name="" class="form-control" value="{{$user->recentJob}}">
+                           </div>
+
+                           <div class="col-1"> <span> at </span> </div>
+                           <div class="col-6">
+                              <input type="text" name="" class="form-control" value="{{$user->organHeldTitle}}">
+                           </div>
+                        </div>
+                           
+                                       
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="float-right button_recentJob d-none">
+                                 <button class="btn btn-sm btn-danger" onclick="hideFieldEditor('recentJob');">Cancel</button>
+                                 <button class="orange_btn mt-2">Save</button> 
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="about-infomation">
+                        <h2>About me</h2>
+                        <button type="button"id="showeditbox" onclick="showFieldEditor('about_me');" class="edited-text"><i class="fas fa-edit"></i></button>
+                        <textarea class="form-control bg-white border-0 sec_about_me" rows="3" cols="3" readonly > {{$user->about_me}}</textarea>
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="float-right button_about_me d-none">
+                                 <button class="btn btn-sm btn-danger" onclick="hideFieldEditor('about_me');">Cancel</button>
+                                 <button class="orange_btn mt-2">Save</button> 
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="about-infomation">
+                        <h2>Interested In</h2>
+                        <button type="button"  onclick="showFieldEditor('interested_in');" class="edited-text"><i class="fas fa-edit"></i></button>
+                     
+                        <textarea class="form-control bg-white border-0 sec_interested_in" rows="3" cols="3" readonly > {{$user->interested_in}}</textarea>
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="float-right button_interested_in d-none">
+                                 <button class="btn btn-sm btn-danger" onclick="hideFieldEditor('interested_in');">Cancel</button>
+                                 <button class="orange_btn mt-2">Save</button> 
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+
+                     <div class="about-infomation">
+                        <h2>Qualification</h2>
+                        <button type="button" class="edited-text" onclick="showFieldEditor('qualification');"><i class="fas fa-edit"></i></button>
+                        <ul class="qualification-li">
+                            <li><i class="qualification-circle"></i><span> Type: {{ ucfirst($user->qualificationType) }}</span></li>
+                            @include('site.layout.parts.jobSeekerQualificationList') {{-- site/layout/parts/jobSeekerQualificationList --}} 
+                            <div class="float-right button_qualification d-none">
+                                 <button class="btn btn-block btn-danger savequalification" onclick="hideFieldEditor('qualification');">Cancel</button>
+                                 <button class="orange_btn btn-sm mt-2 savequalification">Save</button> 
+                              </div>
+                        </ul>
+                     </div>
+                     <div class="about-infomation">
+                        <h2>Industry Experience</h2>
+                        <button type="button" class="edited-text"><i class="fas fa-edit"></i></button>
+                        <ul class="qualification-li">
+                           {{-- <li><i class="qualification-circle"></i><span> {{ auth()->user()->industry_experience }}</span></li> --}}
+                            @include('site.layout.parts.jobSeekerIndustryList') 
+                         </ul>
+                  </div>
                 </div>
+               
+                  <!-- ========================================== album-tab ========================================== -->
+                  
+
+                  <div class="album-section tab-pane fade Photos " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                     @include('site.user.profile.tabs.album')
+                 
+                     <div class="row Resume">
+                        <h2>Resume & Contact Details</h2>
+                        <div class="col-md-6 Resume-email"><label>Email:<span>{{  $user->email }}</span></label></div>
+                        <div class="col-md-6 Resume-contact"><label>Contact#:<span>{{ $user->phone }}</span></label></div>
+                     </div>
+                     <div class="Gallery clearfix">
+                        <ul>
+                           <li>
+                              <section class="multiple-file-pdf" id="mupload5" > 
+                                 <div class="file-chooser clearfix">
+                                    <input type="file" class="file-chooser__input " id="file5" name="file5[]">
+                                    <button type="button" class="send-btn orange_btn"><i class="fa fa-save"></i>Save</button>
+                                 </div>
+                                 {{-- <div class="file-uploader__message-area">
+                                    <p>Select a file</p> 
+                                 </div> --}}
+                              </section>
+                           </li>
+                        </ul>
+                     </div>
+                     <div class=" Gallery">
+                        <h2>Video's</h2>
+                        
+                            @include('web.user.profile.tabs.videos') 
+
+                     </div>
+                  </div>
+
+
+                  <!-- ========================================== question tab ========================================== -->
+                  
+                  <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
+                     <h2>Questions</h2>
+                           @include('site.user.profile.questionsuserpart')
+                  </div>
+                  
+                  <!-- ========================================== tag tab ========================================== -->
+
+                  @include('site.user.profile.tabs.tags')
+
+                  <!--=================job tab ============================ -->
+                  
+                  @include('site.user.profile.tabs.jobs')
+                  
+                  <!--=================referance tab=====================-->
+                  
+                  @include('site.user.profile.tabs.reference')
+                  
+                  <!--========================end all tabs-->
+               
+               </div>
             </div>
-        </div>
-
-        <div class="info">
-            <div class="name"><a id="profile_name" style="cursor:default;" class="edit_main_title"  onclick="return false;">{{$user->name}} {{$user->surname}}</a></div>
-            <div class="bl_list_info">
-                <ul class="list_info userProfileLocation"><br>
-                    {{-- <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li> --}}
-                    <li id="list_info_location">{{userLocation($user)}}<i class="fas fa-edit salaryRangeEdit" onclick="showMap()"></i></li>
-                    <li><span id="list_info_gender">Job Seeker</span></li>
-                </ul>
-                {{-- <div class="icon_edit"><span onclick="UProfile.showMainEditor();"></span></div> --}}
+         </div>
+      </section>
+   </div>
+   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+      <div class="profile-section update-information">
+         <div class="row update-information-area">
+            <div class="col-sm-12">
+               <h2>Update Email Address</h2>
+               <div class="row">
+                  <div class="col-sm-3">
+                     <label>Email</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <input class="form-control" type="email" placeholder="Example@domain.com"/>
+                  </div>
+               </div>
             </div>
-            <div class="location_search_cont hide_it">
-                <div class="location_input dtable w100">
-                    <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
-                    <select class="dinline_block filter_location_radius select_aw hide_it" name="filter_location_radius" data-placeholder="Select Location Radius">
-                         <option value="5">5km</option>
-                         <option value="10">10km</option>
-                         <option value="25">25km</option>
-                         <option value="50">50km</option>
-                         <option value="51">50km +</option>
-                    </select>
-                </div>
-                <div class="location_latlong dtable w100">
-                    <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
-                    <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
-                    <input type="hidden" name="location_name" id="location_name"  value="">
-                    <input type="hidden" name="location_city" id="location_city"  value="">
-                    <input type="hidden" name="location_state" id="location_state"  value="">
-                    <input type="hidden" name="location_country" id="location_country"  value="">
-                </div>
-
-                <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
-                <div class="searchField_action">
-                    <div class="searchFieldLabel dinline_block"></div>
-                    <button class="btn small OrangeBtn saveNewLocation">Save</button>
-                </div>
+         </div>
+         <div class="row update-information-area">
+            <div class="col-sm-12">
+               <h2>Update Phone Number</h2>
+               <div class="row">
+                  <div class="col-sm-3">
+                     <label>Phone</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <input class="form-control" type="number" placeholder="Example@domain.com"/>
+                  </div>
+               </div>
             </div>
-
-
-            {{-- <div class="job">
-                <span style="margin-right: 34px;">Recent Job:</span>
-                <input type="text" class="hide_it recentJobField" name="recentJobField" value="{{$user->recentJob}}"  onchange="UProfile.updateRecentJob()"/>
-                <span  class="recentJobValue">{{$user->recentJob}}</span>
-                <i class="fas fa-edit recentJobEdit" style="cursor: pointer;" onclick="UProfile.enableRecentJobEdit()"></i>
-            </div> --}}
-
-            <div class="job">
-                <span style="margin-right: 34px;">Recent Job:</span>
-                <input type="text" class="hide_it recentJobField" name="recentJobField" value="{{$user->recentJob}}" />
-                <span  class="recentJobValue bold">{{$user->recentJob}} </span>  at   <span class="organHeldTitleVal bold"> {{ $user->organHeldTitle }} </span>
-                <input type="text" class="hide_it organHeldTitleField" name="organHeldTitleField" value="{{$user->organHeldTitle}}">
-                <i class="fas fa-edit recentJobEdit" style="cursor: pointer;" onclick="UProfile.enableRecentJobEdit()"></i>
+         </div>
+         <div class="row update-information-area">
+            <div class="col-sm-12">
+               <h2>Update Password</h2>
+               <div class="row mb-3">
+                  <div class="col-sm-3">
+                     <label>Current Password</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <input class="form-control" type="number" placeholder="Example@domain.com"/>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-sm-3">
+                     <label>New Password</label>
+                  </div>
+                  <div class="col-sm-6">
+                     <input class="form-control" type="number" placeholder="Example@domain.com"/>
+                  </div>
+               </div>
             </div>
-
-            <button class="btn small turquoise hide_it updateRecentJobButton" onclick="UProfile.updateRecentJob()" style="margin-left: 137px">Save</button>
-
-            {{-- ========================================= Salary Range ========================================= --}}
-
-            <div class="job mt15">
-                <span>Expecting Salary:</span>
-                {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, ['placeholder' => 'Select Salary Range', 'id' => 'salaryRangeFieldnew', 'class' => 'hide_it salaryRangeField']) }}
-                <b> {{'AUD: '}}<span  class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
-                <i class="fas fa-edit salaryRangeEdit" onclick="UProfile.enableSalaryRangeEdit()"></i>
-            </div>
-
-            <button class="btn small turquoise hide_it updateSalaryButton" onclick="UProfile.updateSalaryRange()" style="margin-left: 137px">Save</button>
-
-
-            {{-- ========================================= Salary Range End Here ========================================= --}}
-
-        </div>
-        <div class="cl"></div>
-    </div>
-
-    @include('site.user.profile.tabs')  {{-- site/user/profile/tabs --}}
-    <div class="cl"></div>
-
-
-    
-
+         </div>
+         <div class="update-account-info">
+            <button class="update-btn orange_btn" type="button"><i class="fas fa-retweet"></i>Update All</button>
+            <button class="delete-btn" type="button"><i class="fa fa-trash"></i>Delete Account</button>
+         </div>
+      </div>
+   </div>
 </div>
-
-
-
-@include('site.user.profile.profileEditPopup')
-@include('site.user.profile.profilePersonalInfo')
-
-
-@stop
-
-
-@section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
-<link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/tagSystem.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jsprofile.css') }}">
-
-
-
-<style>
-
-</style>
 @stop
 
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
-<script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
-<script src="{{ asset('js/site/tagSystem.js') }}"></script>
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 
-<script>
+
+<script src="{{ asset('js/site/profile.js') }}"></script> 
+
+<script src="{{ asset('js/site/userProfile.js') }}"></script>
+
+
+<script type="text/javascript">
+   this.showFieldEditor = function(field){
+      console.log('.save'+field+'button');
+      if (field == 'salaryRange') {
+         $('.sec_salaryRange').addClass('d-none');
+         $('.newSalary').removeClass('d-none');
+      }
+      if (field =='recentJob') {
+         $('.recentjob').addClass('d-none');
+         $('.sec_recentJob').removeClass('d-none');
+      }
+      $('.sec_'+field).removeAttr('readonly');
+      $('.sec_'+field).focus();
+      $('.sec_'+field).removeClass('bg-white border-0');
+      $('.button_'+field).removeClass('d-none');
+   }
+
+   this.hideFieldEditor = function(field){
+      console.log('.save'+field+'button');
+      $('.sec_'+field).attr('readonly', 'true');
+      $('.sec_'+field).blur();
+      $('.sec_'+field).addClass('bg-white border-0');
+      $('.button_'+field).addClass('d-none');
+      if (field == 'salaryRange') {
+         $('.sec_salaryRange').removeClass('d-none');
+         $('.newSalary').addClass('d-none');
+      }
+      if (field =='recentJob') {
+         $('.recentjob').removeClass('d-none');
+         $('.sec_recentJob').addClass('d-none');
+      }
+
+   }
+
+
 var toggle = true;
 $('input[name="filter_location_status"]').change(function() {
     console.log(' filter_location_status ');
@@ -435,253 +704,15 @@ geocode(data);
  });
 
 
- var base_url = {!! json_encode(url('/')) !!};
-
- $('.saveNewLocation').on('click',function() {
-        showMap();
-        event.preventDefault();
-        var formData = $('.location_latlong :input').serializeArray();
-        console.log(' formData ', formData);
-        $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-        $.ajax({
-            type: 'POST',
-            url: base_url+'/ajax/addNewLocation',
-            data: formData,
-            success: function(data){
-                console.log(' data ', data);
-                $('.saveNewJob').html('Save').prop('disabled',false);
-                if( data.status == 1 ){
-                    // that.hideMainEditor();
-                    $("#list_info_location").html(data.data+'<i class="fas fa-edit salaryRangeEdit" onclick="showMap()"></i>');
-                }else{
-
-
-                }
-
-            }
-        });
-    })
 
 </script>
-
-<script type="text/javascript">
-
-
-// {{-- ==================================================== Edit Qualification ==================================================== --}}
-
-
-  $(document).ready(function(){
-
-  $(".editQualification").click(function(){
-        $(this).closest('.qualificationBox').addClass('editQualif');
-        $('.removeQualification').removeClass('hide_it2');
-        $('.addQualification').removeClass('hide_it2');
-        $('.qualificationSaveButton').removeClass('hide_it2');
-        console.log('Testing Qualification');
-
-  });
-
-   $('.qualificationBox').on('click','.removeQualification', function(){
-      console.log('removeQualification');
-     $(this).closest('.QualificationSelect').remove();
-   });
-
- })
-   $(document).on('click','.addQualification', function(){
-    console.log(' addQualification ');
-    var newQualificationHtml = '<div class="QualificationSelect"><select name="qualification[]" class="userQualification">';
-    @if(!empty($qualificationList))
-        @foreach($qualificationList as $lk=>$qualification)
-            newQualificationHtml += '<option value="{{$qualification['id']}}">{{$qualification['title']}}</option>';
-        @endforeach
-    @endif
-    newQualificationHtml += '</select>';
-    newQualificationHtml += '<i class="fa fa-trash removeQualification"></i>';
-    newQualificationHtml += '</div>';
-    $('.jobSeekerQualificationList').append(newQualificationHtml);
-   });
-
-
-
-// ====================================================== Edit Qualification Ajax ======================================================
-
-//     $(".qualificationSaveButton").click(function(){
-//         console.log('hi qualification');
-//         $.ajaxSetup({
-//             headers: {
-//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             }
-//         });
-//         var qualification = jQuery('.userQualification').map(function(){ return $(this).val()}).get();
-//         $('.qualifExpLoader').show();           //indusExpLoader
-//         // $('.SaveQualification').after(getLoader('smallSpinner SaveQualificationSpinner'));
-
-//         $.ajax({
-//             type: 'POST',
-//             url: base_url+'/ajax/updateQualification',
-//             data: {'qualification': qualification},
-//             success: function(resp){
-//                 if(resp.status){
-//                     $('.removeQualification ').addClass('hide_it2');
-//                     $('.addQualification').addClass('hide_it2');
-//                     $('.qualificationSaveButton').addClass('hide_it2');
-//                     $('.qualifExpLoader').hide();
-//                     $('.jobSeekerQualificationList').html(resp.data);
-
-//                     // location.reload();
-//                 }
-//             }
-//         });
-// })
-
-
-// ====================================================== End Qualification Ajax end here ======================================================
-
-
-
-
-//===================================================== add remove industry ===================================================
-
- $(".editIndustry").click(function(){
-    $(this).closest('.IndusListBox').addClass('edit');
-    $('input, select').styler();
-    $('.removeIndustry').removeClass('hide_it2');
-    $('.addIndus').removeClass('hide_it2');
-    $('.buttonSaveIndustry').removeClass('hide_it2');
-
-    // console.log('welcome');
-  });
-
-// add and remove Industry code
-$(document).ready(function(){
-   $(document).on('click','.removeIndustry', function(){
-    $(this).closest('.IndustrySelect').remove();
-   });
-
-   $(document).on('click','.addIndus', function(){
-    console.log(' addIndus ');
-    var newIndusHtml = '<div class="IndustrySelect"><select name="industry_experience[]" class="industry_experience userIndustryExperience">';
-    @if(!empty($industriesList))
-        @foreach($industriesList as $lk=>$lv)
-            newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>';
-        @endforeach
-    @endif
-    newIndusHtml += '</select>';
-    newIndusHtml += '<i class="fa fa-trash removeIndustry"></i>';
-    newIndusHtml += '</div>';
-
-    $('.IndusList').append(newIndusHtml);
-   });
-});
-
-// ======================== Edit Industry Experience for Ajax ========================
-
-// $(".saveIndus").click(function(){
-//     // console.log('hi industry');
-//     $.ajaxSetup({
-//             headers: {
-//                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//             }
-//         });
-//         var industry_experience = jQuery('.industry_experience').map(function(){ return $(this).val()}).get();
-
-//          // $('.indusExpLoader').after(getLoader('smallSpinner indusExpLoader'));
-//         $('.indusExpLoader').show();           //indusExpLoader
-
-
-//         $.ajax({
-//             type: 'POST',
-//             url: base_url+'/ajax/updateIndustryExperience',
-//             data: {'industry_experience': industry_experience},
-//             // $('.IndusAlert').hide();
-
-
-//             success: function(resp){
-//                 if(resp.status){
-//                     // $('.IndusListBox').removeClass('edit');
-//                     $('.IndusAlert').show().delay(3000).fadeOut('slow');
-//                     // $('.SaveIndustrySpinner').remove();
-
-//                     $('.IndusList').html(resp.data);
-//                     $('.removeIndustry').addClass('hide_it2');
-//                     $('.addIndus').addClass('hide_it2');
-//                     $('.buttonSaveIndustry').addClass('hide_it2');
-//                     $('.indusExpLoader').hide();
-
-
-//                     }
-//             }
-//     });
-//  });
-
-// ======================================= Edit Industry Experience For Ajax End Here =======================================
-
-
-//===================================================== add remove industry end  =====================================================
-
-//===================================================== User Questions Edit =====================================================
-
- $(".editQuestions").click(function(){
-     // $('.hideme').show();
-     $('.saveQuestionsButton').css("display","block");
-     $('.QuestionsKeyPTag').addClass('hide_it');
-     $('.jobSeekerRegQuestion').removeClass('hide_it');
-
-});
-
-//  ======================================= User Questions Ajax saveQuestionsButton =======================================
-
-    // $(".saveQuestionsButton").click(function(){
-    //     var items = {};
-    //     $('select.jobSeekerRegQuestion').each(function(index,el){
-    //     // console.log(index, $(el).attr('name')  , $(el).val()   );
-    //         // items.push({name:  $(el).attr('name') , value: $(el).val()});
-    //         var elem_name = $(el).attr('name');
-    //         var elem_val = $(el).val();
-    //         items[elem_name] = elem_val;
-    //         // items.push({elem_name : elem_val });
-    //     $('.userQuesLoader').show();
-
-    //     });
-    //      $.ajaxSetup({
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         }
-    //     });
-    //     $('.SaveQuestionsLoader').after(getLoader('smallSpinner SaveQuestionsSpinner'));
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: base_url+'/m/ajax/MupdateQuestions',
-    //         data: {'questions': items},
-
-    //         success: function(data){
-    //                 $('.questionsAlert').show().delay(3000).fadeOut('slow');
-    //  $('.saveQuestionsButton').addClass('hide_it2');
-
-    //                 // $('.saveQuestionsButton').addClass('hide_it2');
-    //                 $('.userQuesLoader').hide();
-    //                 $('.QuestionsKeyPTag').removeClass('hide_it2');
-    //                 $(".SaveQuestionsSpinner").remove();
-    //                 $('.jobSeekerRegQuestion').addClass('hide_it');
-
-
-
-    //                 if(data){
-    //                     // $(".questionsOfUser").load(" .questionsOfUser");
-    //                     // $(".SaveQuestionsSpinner").remove();
-
-    //             }
-    //         }
-    //     });
-    // });
-
-//  ======================================= User Questions Ajax End  =======================================
-</script>
-
 
 @stop
 
+@section('custom_css')
+   <style type="text/css">
+      textarea{
+         resize: none
+      }
+   </style>
+@stop
