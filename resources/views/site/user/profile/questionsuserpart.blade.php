@@ -1,8 +1,10 @@
 
 @if(!empty($userquestion))
     @foreach ($userquestion as $qk => $question)
-        <p class="m0 p0">{{($question)}}</p>
-            <b><p class="QuestionsKeyPTag">
+    <div class="question-ans">
+         <h4 {{-- class="accordionone" --}}>{{($question)}}</h4>
+          <div {{-- class="panel" --}}>
+            <b><p {{-- class="QuestionsKeyPTag" --}}>
                 {{-- {{$userQuestions[$qk]}} --}}
                 @if ($userQuestions[$qk] == 'yes')
                     Yes
@@ -10,6 +12,9 @@
                     No
                 @endif
             </p></b>
+        </div>
+    </div>
+
             <select name="{{$qk}}" class="jobSeekerRegQuestion hide_it">
                 <option value="yes"
                 {{( isset($userQuestions[$qk]) && ($userQuestions[$qk] == 'yes'))?'selected':''}}

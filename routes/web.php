@@ -395,7 +395,10 @@ Route::get('media/private/{userid}/{any}', [
 
     // Desktop layout only.
     Route::group(array('middleware' => ['devicecheck']), function(){
-    Route::get('/', 'Site\HomeController@index')->name('homepage');
+    Route::get('/', 'Site\HomeController@index')->name('homepage'); 
+    Route::get('sign-in', 'Site\HomeController@signIn')->name('signIn'); 
+    Route::get('register', 'Site\HomeController@showRegisterPage')->name('register'); 
+
 
 	// Login.
 	Route::get('login', function () { return redirect('/'); });
@@ -457,7 +460,13 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
 
     Route::get('updateUserPersonalSetting', 'Site\SiteUserController@updateUserPersonalSetting')->name('updateUserPersonalSetting');
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
-    Route::post('ajax/updateRecentJob', 'Site\SiteUserController@updateRecentJob');
+
+    Route::post('ajax/update/about_me', 'Site\SiteUserController@updateAboutField');
+    Route::post('ajax/update/interested_in', 'Site\SiteUserController@updateInterestedIn');
+
+
+
+    Route::post('ajax/update/recentJob', 'Site\SiteUserController@updateRecentJob');
 
     // Added by ALi
     Route::post('ajax/addNewLocation', 'Site\SiteUserController@addNewLoaction');
@@ -485,7 +494,6 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     // Added by Hassan
 
     Route::get('ajax/getUserPersonalInfo', 'Site\SiteUserController@getUserPersonalInfo');
-    Route::post('ajax/update_about_field', 'Site\SiteUserController@updateAboutField');
     Route::post('ajax/uploadUserGallery', 'Site\SiteUserController@uploadUserGallery');
     Route::post('ajax/deleteGallery/{id}', 'Site\SiteUserController@deleteGallery');
     Route::post('ajax/setGalleryPrivateAccess/{id}', 'Site\SiteUserController@setGalleryPrivateAccess');
