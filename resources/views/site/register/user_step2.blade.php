@@ -1,5 +1,7 @@
 {{-- @extends('adminlte::master') --}}
-@extends('site.master')
+@extends('web.register.registerMaster')
+{{-- @extends('adminlte::master') --}}
+
 
 @section('title', $title)
 
@@ -9,13 +11,11 @@
 
 
 @section('custom_css')
-	<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/register.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/card.css') }}">
-    {{-- <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/> --}}
-    {{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
-    <link rel="stylesheet" href="{{ asset('css/common.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('css/master.css') }}"> --}}
+    <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/>
+    <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 
 @stop
 
@@ -194,7 +194,7 @@
                         <p>What year did you complete your final year of high school ? </p>
                     </div>
                     <div class="qualification_type_cont mb20 center ageCal">
-                        <select id="year" name="passing_year" class="form-control custom-select">
+                        <select id="year" name="passing_year" class="w80">
                             {{ $last= date('Y')-50 }}
                             {{ $now = date('Y') }}
 
@@ -213,7 +213,7 @@
 
                     <div class="qualification_selected_type mb20 center">
                         <div class="qualification_type_cont">
-                            <select class="qualification_type form-control custom-select" id="qualification_type" name="qualification_type" data-placeholder="Select Qalification & Trades">
+                            <select class="qualification_type" id="qualification_type" name="qualification_type" data-placeholder="Select Qalification & Trades">
                                  <option value="">Select Qalification & Trades</option>
                                  <option value="certificate">Certificate or Advanced Diploma</option>
                                  <option value="trade">Trade Certificate </option>
@@ -444,22 +444,22 @@
                     <div class="ind_exp_h">
                         <p class="center" style="display: none">Browse Jobs</p>
                         <div class="jobs_list">
-							<div class="css_loader">
-								<div class="spinner center">
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-									<div class="spinner-blade"></div>
-								</div>
-							</div>
+                            <div class="css_loader">
+                                <div class="spinner center">
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                    <div class="spinner-blade"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="join_btn mt20 center">
@@ -469,8 +469,8 @@
             </div>
 
         </div>
-				</div>
-				
+                </div>
+                
 
 
 
@@ -480,10 +480,10 @@
 <!-- /main -->
 
 <div style="display: none;">
-	<div id="jobApplyModal" class="modal p0 jobApplyModal wauto">
-		<div id="job_apply_modal" class="w100 pp_edit_info pp_cont m0">
-			<div class="frame">
-				{{-- <a class="icon_close" href="#close"><span class="close_hover"></span></a> --}}
+    <div id="jobApplyModal" class="modal p0 jobApplyModal wauto">
+        <div id="job_apply_modal" class="w100 pp_edit_info pp_cont m0">
+            <div class="frame">
+                {{-- <a class="icon_close" href="#close"><span class="close_hover"></span></a> --}}
                 <div class="head m0">Submit Proposal</div>
                     <input type="hidden" value="" name="openModalJobId" id="openModalJobId" />
                     <div class="cont">
@@ -514,18 +514,18 @@
 
 
 @section('custom_js')
-{{-- <script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script> --}}
-{{-- <script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script> --}}
-{{-- <script type="text/javascript" src="{{ asset('js/site/jquery.form.js') }}"></script> --}}
+<script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/site/jquery.form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script>
 
-{{-- <script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script> --}}
+<script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
 {{--<script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>--}}
 <script type="text/javascript" src="{{ asset('js/site/step2.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script>
 
-{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
-{{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
+<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
 
 
@@ -590,7 +590,7 @@
 @stop
 
 @section('custom_footer_css')
-{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
+<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 {{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
 
 
@@ -635,7 +635,7 @@ a#user_step8_done, a#more_jobs_step2  {
     margin-top: 10px;
 }
 a#more_jobs_step2{
-	width: 15%;
+    width: 15%;
 text-align: center;
 }
 .active1{
