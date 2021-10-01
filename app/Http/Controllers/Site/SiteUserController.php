@@ -64,19 +64,19 @@ class SiteUserController extends Controller
 
         // dd($request->ip());
         $user = Auth::user();
-        if (!isEmployer()) {
-            
-            if ($user->step2 < 8) {
-                if (isMobile()) {
-                return redirect(route('mStep2User'));
+            if (!isEmployer()) {
                 
-              }
-              else{
-                return redirect(route('step2User'));
-                
-              }
+                if ($user->step2 < 8) {
+                    if (isMobile()) {
+                    return redirect(route('mStep2User'));
+                    
+                  }
+                  else{
+                    return redirect(route('step2User'));
+                    
+                  }
+                }
             }
-        }
         
         if ($request->username ===  $user->username) {
             $user_gallery = UserGallery::where('user_id', $user->id)->where('status', 1)->get();
@@ -169,6 +169,7 @@ class SiteUserController extends Controller
     public function step2User(){
         // dd(' step2Employer ');
         $user = Auth::user();
+        // dd($user->id);
         $data['user'] = $user;
         $data['title'] = 'User';
         $data['classes_body'] = 'userStep2';
@@ -1815,10 +1816,10 @@ class SiteUserController extends Controller
 
             // ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
 
-             $data['jobs'] = $jobs;
+            $data['jobs'] = $jobs;
 
-            return view('site.jobs.list', $data);
-            // site/jobs/list
+            return view('web.jobs.list', $data);
+            // web/jobs/list
         }
     }
 
@@ -2125,14 +2126,13 @@ class SiteUserController extends Controller
 
         if(isEmployer()){
 
-            return view('site.employer.likeUsers', $data);
-              // return view('mobile.user.profile.profile', $data);
+            return view('site.employer.likeUsers', $data); // site/employer/likeUsers
           }
 
           else{
-            return view('site.user.likeUsers', $data);
+            return view('site.user.likeUsers', $data); // site/user/likeUsers
           }
-               //   site/user/likeUsers
+               
     }
 
     //====================================================================================================================================//

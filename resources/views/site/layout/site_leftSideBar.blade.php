@@ -26,7 +26,7 @@
          <li><a href="{{ route('employerJobs') }}" class="{{(request()->is('employer/jobs*'))?'active':''}} sidebar-text-view"><i class="fas fa-briefcase"></i><span>My Jobs</span></a>
          </li>
 
-         <li><a href="{{ route('newJob') }}" class="{{(request()->is('employer/job/new'))?'active':''}} sidebar-text-view"><i class="fas fa-business-time"></i><span>Add New JOb</span></a>
+         <li><a href="{{ route('newJob') }}" class="{{(request()->is('employer/job/new'))?'active':''}} sidebar-text-view"><i class="fas fa-business-time"></i><span>Add New Job</span></a>
          </li>
 
          <li><a href="{{ route('jobSeekers') }}" class="{{(request()->is('jobSeekers'))?'active':''}} sidebar-text-view"><i class="fas fa-user-tie"></i><span>Job Seekers</span></a>
@@ -58,6 +58,6 @@
          <li><a href="{{ route('likeList') }}" class="{{(request()->is('like'))?'active':''}} sidebar-text-view"><i class="fas fa-thumbs-up"></i><span>Like Users</span></a></li>
 
 
-         <li><a href="{{ route('talent_matcher') }}" class="{{(request()->is('talent_matcher'))?'active':''}} sidebar-text-view"><i class="fas fa-hand-holding-usd"></i><span>Talent Matcher</span></a></li>
+         <li><a href="{{ route('talent_matcher') }}" class="{{(request()->is('talent-matcher'))?'active':''}} sidebar-text-view"><i class="fas fa-hand-holding-usd"></i><span>Talent Matcher</span></a></li>
    </ul>
 </div>

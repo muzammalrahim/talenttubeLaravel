@@ -118,7 +118,7 @@
                      
 
                      {{-- Google map --}}
-
+ <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text"><i class="fas fa-edit"></i></button>
                      <div class="bl_list_info">
                          <ul class="list_info userProfileLocation"><br>
                              {{-- <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li> --}}
@@ -287,6 +287,8 @@
                   
                   <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
                      <h2>Questions</h2>
+                           <button type="button"  class="orange_btn" onclick="showFieldEditor('recentJob');" class="edited-text"><i class="fas fa-edit"></i></button>
+
                            @include('site.user.profile.questionsuserpart')
                   </div>
                   

@@ -1,22 +1,7 @@
-{{-- @extends('site.user.usertemplate') --}}
-{{-- 
-@if ($controlsession->count() > 0)
-<div class="adminControl">
-        <p>You are in control of <span class="bold">{{$user->name}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
-</div>
 
-@endif
- --}}
-@extends('site.employer.employermaster')
-
-@section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+@extends('web.employer.employermaster')
 
 
-
-@stop
 
 @section('content')
 <div class="newJobCont">
@@ -77,8 +62,8 @@
 @stop
 
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 <style>
@@ -120,7 +105,6 @@ table.dataTable thead .sorting_desc_disabled:before {
 
 tbody {
  border:1px solid black;
-  /*border-radius: 5px;*/
 }
 
 </style>
@@ -128,9 +112,9 @@ tbody {
 @stop
 
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/common.js') }}"></script> --}}
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}

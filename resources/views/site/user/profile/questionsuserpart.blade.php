@@ -61,7 +61,6 @@
                           <strong>Success!</strong> Recent Job has been updated successfully!
                         </div>
         </div> --}}
-
                      @php  
     $userQuestions = !empty($user->questions)?(json_decode($user->questions, true)):(array()); 
 @endphp

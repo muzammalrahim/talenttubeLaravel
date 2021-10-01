@@ -62,7 +62,7 @@
 
       <a href="{{ route('premiumAccount') }}">
 
-         <button class="nav-link blue_btn p-0" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" 
+         <button class="nav-link blue_btn py-0 px-2" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" 
 
          role="tab" aria-controls="nav-home" aria-selected="true"><i class="fas fa-user"></i>Premium Account</button>
       </a>
@@ -71,7 +71,7 @@
 
       <a href="{{ route('profile') }}">
 
-         <button class="nav-link active orange_btn p-0" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" 
+         <button class="nav-link active orange_btn py-0 px-2" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" 
 
          type="button" role="tab" aria-controls="nav-profile" aria-selected="false"><i class="fas fa-user"></i> Profile</button>
       </a>
@@ -80,7 +80,7 @@
 
       <a href="{{ route('updateUserPersonalSetting') }}">
 
-         <button class="nav-link orange_btn p-0" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" 
+         <button class="nav-link orange_btn py-0 px-2" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" 
 
          type="button" role="tab" aria-controls="nav-contact" aria-selected="false"><i class="fas fa-clipboard-list"></i> Update</button>
       </a>
@@ -88,7 +88,7 @@
    </div>
    <div class="col-md-2 sign-btn">
     <a href="{{ route('logout') }}">
-      <button class="orange_btn signout"  type="button"><i class="fas fa-sign-out-alt"></i>Sign Out</button>
+      <button class="orange_btn signout py-0 px-2"  type="button"><i class="fas fa-sign-out-alt"></i>Sign Out</button>
     </a>
    </div>
 </nav>

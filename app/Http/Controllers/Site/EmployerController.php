@@ -106,7 +106,7 @@ class EmployerController extends Controller {
             $data['industriesList'] = getIndustries();
             $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
             $data['controlsession'] = $controlsession;
-			$view_name = 'site.employer.profile.profile'; // site/employer/profile/profile
+			$view_name = 'web.employer.profile.profile'; // web/employer/profile/profile
             return view($view_name, $data);
         }else{
             return view('site.404');

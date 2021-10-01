@@ -1,67 +1,11 @@
 
-@extends('site.employer.employermaster')  {{-- site/employer/employermaster --}}
+@extends('web.employer.employermaster')  {{-- site/employer/employermaster --}}
 
 @section('custom_css')
     <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 @stop
 
-{{-- @section('content') --}}
 
-{{-- <div class="cont bl_profile"> --}}
- {{--    <div class="bl_pic_info  my_profile">
-
-        <div class="bl_pic">
-            <div class="pic">
-                <div class="profile_pic_one to_show">
-                    <a class="show_photo_gallery" href="{{$profile_image}}" data-lcl-thumb="{{$profile_image}}" >
-                        <img  data-offset-id="23" class="photo" id="pic_main_img" src="{{$profile_image}}" title="">
-                    </a>
-                </div>
-            </div>
-        </div>
-
-        <div class="info">
-            <div class="name"><a id="profile_name" style="cursor:default;" class="edit_main_title"  onclick="return false;">
-                {{($user->company)?($user->company):($user->name.' '.$user->surname)}}</a></div>
-            <div class="bl_list_info">
-                <ul class="list_info userProfileLocation">
-                    <li><span id="list_info_age">{{$user->age}}</span><span class="basic_info">•</span></li>
-                    <li id="list_info_location">{{userLocation($user)}}</li>
-                    <li><span class="basic_info">•</span><span id="list_info_gender">Employer</span></li>
-                </ul>
-                <div class="icon_edit">
-                    <i onclick="UProfile.showMainEditor();" class=" fas fa-edit"></i>
-                </div>
-            </div>
-
-        </div>
-        <div class="cl"></div>
-    </div>
- --}}
-
-  {{--   @include('site.employer.profile.tabs')  --}} {{-- site/employer/profile/tabs --}}
-
-    {{-- <div class="cl"></div> --}}
-{{-- </div> --}}
-
-
-
-{{-- @include('site.employer.profile.profileEditPopup') {{-- site/employer/profile/profileEditPopup --}} 
-{{-- @include('site.employer.profile.profilePersonalInfo') {{-- site/employer/profile/profilePersonalInfo --}} 
-
-
-{{-- @stop --}}
-
-
-{{-- @section('custom_footer_css')
-
-
-<link rel="stylesheet" href="{{ asset('css/site/employer/profile.css') }}"> 
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-<link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/plyr.css') }}">
-
-@stop --}}
 
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
@@ -128,17 +72,7 @@ $(".editIndustry").click(function(){
                </div>
                <div class="profile-detail clearfix">
 
-                  {{-- <div class="row m-0">  
-                     <input type="text" class="form-control col-10 bg-white border-0 sec_username text-center" 
-                        value="{{$user->name}}" readonly />
-                        <button type="button" onclick="showFieldEditor('username');" class="orange_btn col-2">
-                           <i class="fas fa-edit"></i>
-                        </button>
-                        <div class="float-right button_username d-none">
-                           <button class="btn btn-sm btn-danger" onclick="hideFieldEditor('username');">Cancel</button>
-                           <button class="orange_btn mt-2">Save</button> 
-                        </div>
-                  </div> --}}
+
 
                   <h2 class="text-center"> <a id="profile_name" style="cursor:default;" class="edit_main_title"  onclick="return false;">
                 {{($user->company)?($user->company):($user->name.' '.$user->surname)}}</a> </h2>
@@ -162,140 +96,29 @@ $(".editIndustry").click(function(){
                      </div>
                   </div>
 
-                  {{-- <h2>Job Seekers</h2> --}}
-                  
-{{-- 
-                  <div class="salaryRange p-2">
-                     <b>Expecting Salary:</b>
-                     <button type="button" onclick="showFieldEditor('salaryRange');" class="orange_btn float-right">
-                        <i class="fas fa-edit"></i>
-                     </button>
-                     <input type="text" class="form-control p-0 bg-white border-0 sec_salaryRange" 
-                        value="{{ $user->salaryRange }}" readonly />
-                       
-                        <div class="newSalary my-2 d-none">
-                          {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, 
-                          ['placeholder' => 'Select Salary Range', 'id' => 'salaryRangeFieldnew',  'class' => 'form-control custom-select']) }}
-                        </div>
-
-                     <div class="row">
-                        <div class="col-12">
-                           <div class="float-right button_salaryRange d-none">
-                              <button class="btn btn-sm btn-danger" onclick="hideFieldEditor('salaryRange');">Cancel</button>
-                              <button class="orange_btn mt-2">Save</button> 
-                           </div>
-                        </div>
-                     </div>
-
-                  </div> --}}
 
                </div>
             </div>
          </div>
         
-           @include('site.employer.profile.tabs')  {{-- site/employer/profile/tabs --}}
+          @include('web.employer.profile.tabs')  {{-- site/employer/profile/tabs --}}
          
       </section>
    </div>
-   <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-      <div class="profile-section update-information">
-         <div class="row update-information-area">
-            <div class="col-sm-12">
-               <h2>Update Email Address</h2>
-               <div class="row">
-                  <div class="col-sm-3">
-                     <label>Email</label>
-                  </div>
-                  <div class="col-sm-6">
-                     <input class="form-control" type="email" placeholder="Example@domain.com"/>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="row update-information-area">
-            <div class="col-sm-12">
-               <h2>Update Phone Number</h2>
-               <div class="row">
-                  <div class="col-sm-3">
-                     <label>Phone</label>
-                  </div>
-                  <div class="col-sm-6">
-                     <input class="form-control" type="number" placeholder="Example@domain.com"/>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="row update-information-area">
-            <div class="col-sm-12">
-               <h2>Update Password</h2>
-               <div class="row mb-3">
-                  <div class="col-sm-3">
-                     <label>Current Password</label>
-                  </div>
-                  <div class="col-sm-6">
-                     <input class="form-control" type="number" placeholder="Example@domain.com"/>
-                  </div>
-               </div>
-               <div class="row">
-                  <div class="col-sm-3">
-                     <label>New Password</label>
-                  </div>
-                  <div class="col-sm-6">
-                     <input class="form-control" type="number" placeholder="Example@domain.com"/>
-                  </div>
-               </div>
-            </div>
-         </div>
-         <div class="update-account-info">
-            <button class="update-btn orange_btn" type="button"><i class="fas fa-retweet"></i>Update All</button>
-            <button class="delete-btn" type="button"><i class="fa fa-trash"></i>Delete Account</button>
-         </div>
-      </div>
-   </div>
+   
 </div>
 @stop
 
 @section('custom_js')
 
 
-<script src="{{ asset('js/site/profile.js') }}"></script> 
+<script src="{{ asset('js/web/profile.js') }}"></script> 
 
-<script src="{{ asset('js/site/userProfile.js') }}"></script>
+
 
 
 <script type="text/javascript">
-   this.showFieldEditor = function(field){
-      console.log('.save'+field+'button');
-      if (field == 'salaryRange') {
-         $('.sec_salaryRange').addClass('d-none');
-         $('.newSalary').removeClass('d-none');
-      }
-      if (field =='recentJob') {
-         $('.recentjob').addClass('d-none');
-         $('.sec_recentJob').removeClass('d-none');
-      }
-      $('.sec_'+field).removeAttr('readonly');
-      $('.sec_'+field).focus();
-      $('.sec_'+field).removeClass('bg-white border-0');
-      $('.button_'+field).removeClass('d-none');
-   }
 
-   this.hideFieldEditor = function(field){
-      console.log('.save'+field+'button');
-      $('.sec_'+field).attr('readonly', 'true');
-      $('.sec_'+field).blur();
-      $('.sec_'+field).addClass('bg-white border-0');
-      $('.button_'+field).addClass('d-none');
-      if (field == 'salaryRange') {
-         $('.sec_salaryRange').removeClass('d-none');
-         $('.newSalary').addClass('d-none');
-      }
-      if (field =='recentJob') {
-         $('.recentjob').removeClass('d-none');
-         $('.sec_recentJob').addClass('d-none');
-      }
-
-   }
 
 
 var toggle = true;

@@ -2,8 +2,8 @@
 @extends('site.employer.employermaster')
 
 @section('custom_css')
-{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
-{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
+<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
+<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 @stop
 
 @section('content')
@@ -59,253 +59,25 @@
 </div> --}}
 
 {{-- ============================================================html for browse jobs================================================ --}}
-  <section class="row">
-                <div class="col-md-12 browse-job-main">
-                  <div class="profile profile-section">
-                    <h2>Browse Jobs</h2>
+<section class="row">
+  <div class="col-md-12 browse-job-main">
+    <div class="profile profile-section">
+      <h2>Browse Jobs</h2>
 
-                    <div class="bj-main">
-                      <!-- Top Filter Row -->
+     @include('site.jobs.filter')
 
-                      <div class="filter-section">
-                        <div class="row b-filter-row" style="align-items: center;">
+      <!-- Job Detail Area -->
 
-                          <div class="col-md-4">
-                            <div class="row browse-mp" style="align-items: center;">
-                              <div class="col-lg-4 col-md-12 col-sm-12">
-                                <h5 class="browse-heading">Keyword:</h5>
-                              </div>
-                              <div class="col-lg-8 col-md-12 col-sm-12">
-                                <div class="input-group">
-                                  <input type="text" class="form-control" placeholder=""
-                                    aria-label="Recipient's username">
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-  
-  
-                          <div class="col-md-4">
-                            <div class="row browse-mp" style="align-items: center;">
-                              <div class="col-lg-4 col-md-12 col-sm-12">
-                                <h5 class="browse-heading">Salary Range:</h5>
-                              </div>
-                              <div class="col-lg-8 col-md-12 col-sm-12">
-                                <form action="">
-                                  <div class="form-group">
-                                    <select class="form-select b-select" aria-label="Default select example">
-                                      <option selected>please select salary range</option>
-                                      <option value="1">One</option>
-                                      <option value="2">Two</option>
-                                      <option value="3">Three</option>
-                                    </select>
-  
-                                  </div>
-                                </form>
-                              </div>
-  
-                            </div>
-                          </div>
-  
-                          <div class="col-md-4">
-                            <div class="row browse-mp" style="align-items: center;">
-                              <div class="col-lg-4 col-md-12 col-sm-12">
-                                <h5 class="browse-heading">Job Type:</h5>
-                              </div>
-                              <div class="col-lg-8 col-md-12 col-sm-12">
-                                <form action="">
-                                  <div class="form-group">
-                                    <select class="form-select b-select" aria-label="Default select example">
-                                      <option selected> Please select job type</option>
-                                      <option value="1">One</option>
-                                      <option value="2">Two</option>
-                                      <option value="3">Three</option>
-                                    </select>
-                                  </div>
-                                </form>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <!-- Top Filter Row -->
-  
-  
-                        <!-- Adress + Location -->
-                        <div class="row b-filter-row mt-3" style="align-items: center;">
-                          <div class="col-md-6 browse-mp">
-                            <div class="row" style="align-items: center;">
-                              <div class="col-md-3 col-sm-12">
-                                <h5 class="browse-heading">Filter by Industry:</h5>
-                              </div>
-                              <div class="col-md-9 col-sm-12">
-                                <!-- Button trigger modal -->
-                                <a data-toggle="modal" data-target="#myModal">
-                                  <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="">
-                                    <div class="input-group-append">
-                                      <img class="bs-img" src="assests/images/l-search.png" alt="img">
-                                    </div>
-                                  </div>
-                                </a>
-                                <!-- Button trigger modal -->
-  
-                               
-                              </div>
-                            </div>
-  
-                          </div>
-                          <div class="col-md-6">
-                            <div class="row" style="align-items: center;">
-                              <div class="col-md-3 col-sm-12 b-mob-pad">
-                                <h5 class="browse-heading">Filter by Location:</h5>
-                              </div>
-                              <div class="col-md-9 col-sm-12">
-                                <!-- Button trigger modal -->
-                                <a data-toggle="modal" data-target="#myModal2">
-                                  <div class="input-group location-filter" style="position: relative;">
-                                    <input type="text" class="form-control main-input"
-                                      placeholder="Sydney, New South Wales, Australia">
-                                    <div class="loc-icon">
-                                      <img src="assests/images/location.png" alt="">
-  
-                                    </div>
-                                  </div>
-                                </a>
-                                <!-- Button trigger modal -->
-  
-                                
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <!-- Adress + Location -->
+      <div class="jobs_list">
+          @include('web.jobs.list')
+        
+      </div>
 
-                      <!-- buttons -->
-                      <div class="bj-tr-btn">
-                        <button class="orange_btn" type="reset"><i class="fas fa-redo"></i> Reset</button>
-                        <button class="interview-tag used-tag"><i class="fas fa-paper-plane"></i>Submit</button>
-                      </div>
-                      <!-- buttons -->
-                    </div>
+      <!-- Job Detail Area -->
+    </div>
+  </div>
 
-                    <!-- Job Detail Area -->
-
-                    <div class="row">
-                      <div class="col-sm-12 col-md-6">
-
-                        <div class="job-box-info">
-                          <div class="box-head">
-                            <h4>
-                              Social Media Officer (remote role)
-                            </h4>
-                            <!-- <label>Location:<span> Alexandria, New South Wales, Australia</span></label> -->
-                            <i class="close-box fa fa-times"></i>
-                          </div>
-                          <div class="job-box-text clearfix">
-
-                            <div class="text-info-detail clearfix">
-                              <label>Job Type:</label>
-                              <span>Senior Designer</span>
-                            </div>
-                            <div class="text-info-detail clearfix">
-                              <label>Job Experience:</label>
-                              <span>3 year</span>
-                            </div>
-                            <div class="text-info-detail clearfix">
-                              <label>Job Salary:</label>
-                              <span>$500/-</span>
-                            </div>
-                            <div class="text-info-detail clearfix">
-                              <label>Submitted:</label>
-                              <span>20-12-2012</span>
-                            </div>
-                            <div class="text-info-detail clearfix">
-                              <label>Job Detailed:</label>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the
-                                printing and typesetting industry. and typesetting industry. </p>
-                            </div>
-                          </div>
-                          <div class="bc-footer">
-                            <div class="row">
-                              <div class="col-lg-4 col-md-12 col-sm-12 col-12">
-                                <div class="b-heading">
-                                  <h4> Code: 941813</h4>
-                                </div>
-                              </div>
-
-                              <div class="col-lg-8 col-md-12 col-sm-12 col-12">
-                                <div class="b-card-btn">
-                                  <button type="button" class="orange_btn"> <i class="fas fa-file-alt"></i> Detail</button>
-                                  <button data-toggle="modal" data-target="#myModal9" class="interview-tag used-tag"><i class="far fa-check-circle"></i> Apply </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                      </div>
-                      <div class="col-sm-12 col-md-6">
-                        <div class="job-box-info">
-                          <div class="box-head">
-                            <h4>
-                              Social Media Officer (remote role)
-                            </h4>
-
-                            <!-- <label>Location:<span> Alexandria, New South Wales, Australia</span></label> -->
-                            <i class="close-box fa fa-times"></i>
-                          </div>
-                          <div class="job-box-text clearfix">
-
-                            <div class="text-info-detail clearfix">
-                              <label>Job Type:</label>
-                              <span>Senior Designer</span>
-                            </div>
-                            <div class="text-info-detail clearfix">
-                              <label>Job Experience:</label>
-                              <span>3 year</span>
-                            </div>
-                            <div class="text-info-detail clearfix">
-                              <label>Job Salary:</label>
-                              <span>$500/-</span>
-                            </div>
-                            <div class="text-info-detail clearfix">
-                              <label>Submitted:</label>
-                              <span>20-12-2012</span>
-                            </div>
-
-                            <div class="text-info-detail clearfix">
-                              <label>Job Detailed:</label>
-                              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the
-                                printing and typesetting industry. and typesetting industry. </p>
-                            </div>
-                          </div>
-                          <div class="bc-footer">
-                            <div class="row">
-                              <div class="col-lg-4 col-md-12 col-sm-12 col-12">
-                                <div class="b-heading">
-                                  <h4> Code: 941813</h4>
-                                </div>
-                              </div>
-                              <div class="col-lg-8 col-md-12 col-sm-12 col-12">
-                                <div class="b-card-btn">
-                                  <button type="button" class="orange_btn"> <i class="fas fa-file-alt"></i> Detail</button>
-                                  <button data-toggle="modal" data-target="#myModal9" class="interview-tag used-tag"><i class="far fa-check-circle"></i> Apply </button>
-                                </div>
-
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Job Detail Area -->
-                  </div>
-                </div>
-
-              </section>
+</section>
 
 
 
@@ -486,439 +258,22 @@
                   </div>
                   <div class="modal-body">
                     <div class="i-modal-checks">
-                     <ul class="filter-modal-list">
-
-                      <li>
-                        <div class="m-inner-main ">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked1" checked>
-                          <label class="form-check-label" for="flexCheckChecked1"></label>
-                           Aviation
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                     
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked2" >
-                          <label class="form-check-label" for="flexCheckChecked2">
-                            Government and Public Services
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked3" >
-                          <label class="form-check-label" for="flexCheckChecked3">
-                           Accounting and Finance
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked4" >
-                          <label class="form-check-label" for="flexCheckChecked4">
-                            Healthcare and Medical
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked5" >
-                          <label class="form-check-label" for="flexCheckChecked5">
-                            Administration and Office support
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value=""5 id="flexCheckChecked6" checked>
-                          <label class="form-check-label" for="flexCheckChecked6">
-                            Hospitality and Hotels
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked7" >
-                          <label class="form-check-label" for="flexCheckChecked7">
-                            Advertising Arts and Media
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value=""7 id="flexCheckChecked8" >
-                          <label class="form-check-label" for="flexCheckChecked8">
-                            Health and Safety
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value=""8 id="flexCheckChecked9" >
-                          <label class="form-check-label" for="flexCheckChecked9">
-                            Automotive
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked10" >
-                          <label class="form-check-label" for="flexCheckChecked10">
-                            Tourism
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked11" >
-                          <label class="form-check-label" for="flexCheckChecked11">
-                            Banking and Financial Services
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value=""  id="flexCheckChecked12" >
-                          <label class="form-check-label" for="flexCheckChecked12">
-                            Human Resources and Recruitment
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked13" >
-                          <label class="form-check-label" for="flexCheckChecked13">
-                            Call center and Customer Services
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked14" checked>
-                          <label class="form-check-label" for="flexCheckChecked14">
-                            Government and Public Services
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked15" >
-                          <label class="form-check-label" for="flexCheckChecked15">
-                            Information Technalogy
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked16" >
-                          <label class="form-check-label" for="flexCheckChecked16">
-                            CEO and General Management
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked17" checked>
-                          <label class="form-check-label" for="flexCheckChecked17">
-                            Insurance
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked18" >
-                          <label class="form-check-label" for="flexCheckChecked18">
-                            Comunity Services and Development
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked19" >
-                          <label class="form-check-label" for="flexCheckChecked19">
-                            Legal
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked20" >
-                          <label class="form-check-label" for="flexCheckChecked20">
-                            Company Directors
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked21" >
-                          <label class="form-check-label" for="flexCheckChecked21">
-                            Law enforement and private Security
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked22" checked>
-                          <label class="form-check-label" for="flexCheckChecked22">
-                            Construction
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked23" >
-                          <label class="form-check-label" for="flexCheckChecked23">
-                            Manufacturing
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked24" >
-                          <label class="form-check-label" for="flexCheckChecked24">
-                           Consulting and Strategy
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked25" checked>
-                          <label class="form-check-label" for="flexCheckChecked25">
-                            Marketing and comunication
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked26" >
-                          <label class="form-check-label" for="flexCheckChecked26">
-                            Design and Architecture
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked27" >
-                          <label class="form-check-label" for="flexCheckChecked27">
-                            Mining , Resources and Energy
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked28" >
-                          <label class="form-check-label" for="flexCheckChecked28">
-                            Disputes and Complaint Resolution
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked29" >
-                          <label class="form-check-label" for="flexCheckChecked29">
-                            Real Estate and Property
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked30" >
-                          <label class="form-check-label" for="flexCheckChecked30">
-                            Defence and Armed forces
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked40" >
-                          <label class="form-check-label" for="flexCheckChecked40">
-                            Retail and Consumer Products
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked41" >
-                          <label class="form-check-label" for="flexCheckChecked41">
-                            Entertainment and Event Management
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked42" >
-                          <label class="form-check-label" for="flexCheckChecked42">
-                            Sales and Bussiness Development
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked43" >
-                          <label class="form-check-label" for="flexCheckChecked43">
-                            Education and training
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked44" checked>
-                          <label class="form-check-label" for="flexCheckChecked44">
-                            Science and Technalogy
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li><div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked45" >
-                          <label class="form-check-label" for="flexCheckChecked45">
-                            Engineering
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked46" >
-                          <label class="form-check-label" for="flexCheckChecked46">
-                            Support and Recreation
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked47" >
-                          <label class="form-check-label" for="flexCheckChecked47">
-                            Farming Animals and Conservation
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value=""  id="flexCheckChecked48" >
-                          <label class="form-check-label" for="flexCheckChecked48">
-                            Team Leader and People Management
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked49" >
-                          <label class="form-check-label" for="flexCheckChecked49">
-                            Fast food
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked50" >
-                          <label class="form-check-label" for="flexCheckChecked50">
-                            Telecomunication
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked51" >
-                          <label class="form-check-label" for="flexCheckChecked51">
-                            Fire and Emergency Services
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                      <li>
-                        <div class="">
-                        <div class="form-check custom-checkbox">
-                          <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked52" >
-                          <label class="form-check-label" for="flexCheckChecked52">
-                            Trades and Services
-                          </label>
-                        </div>
-                      </div>
-                    </li>
-                    </ul>
+                     {{-- industry selection --}}
+         <div class="filter_industryList {{-- hide_it --}}">
+            @php
+            $industries = getIndustries()
+            @endphp
+            @if(!empty($industries))
+            <div class="filter_industries_list ">
+               <ul class="industries_ul item_ul dot_list">
+                  @foreach ($industries as $indK => $indV)
+                  <li class="" data-id="{{$indK}}" data-type="filter_industry[]"><span>{{$indV}}</span></li>
+                  @endforeach
+               </ul>
+            </div>
+            @endif
+         </div>
+         {{-- industry selection --}}
                     </div>
 
                   </div>
@@ -954,58 +309,27 @@
                         <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
                       </h4>
                     </div>
-                    
-
-
                   </div>
                   <div class="modal-body">
-                    <div class="m-inner-main">
-                      <div class="loc-m-row">
-                        <div class="row">
-                          <div class="col-sm-9 browse-mp">
-                            <div class="input-group location-filter-m" style="position: relative;">
-
-                              <input type="text" class="form-control"
-                                placeholder="Sydney, New South Wales, Australia">
-                              <div class="loc-icon">
-                                <img src="assests/images/l-search.png" alt="">
-
-                              </div>
-                            </div>
-                          </div>
-                          <div class="col-sm-3">
-                            <div class="location-filter ls-m" style="position: relative;">
-                              <form action="">
-                                <div class="form-group">
-
-                                  <select class="selectpicker form-control">
-                                    <option>1</option>
-                                    <option>2</option>
-                                  </select>
-                                </div>
-                              </form>
-
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-
-                      <div style="width: 100%">
-                        <iframe width="100%" height="600" frameborder="0" scrolling="no"
-                          marginheight="0" marginwidth="0"
-
-                          src="https://maps.google.com/maps?width=100%25&amp;height=600&amp;hl=en&amp;q=1%20Grafton%20Street,%20Dublin,%20Ireland+(My%20Business%20Name)&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed">
-                        </iframe>
-                        <a href="https://www.maps.ie/draw-radius-circle-map/"></a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-primary gl-btn">
-                      <i class="fas fa-paper-plane"></i>
-                      <span class="gl-text">Done </span>
-                    </button>
+                    <div class="location_search_cont {{-- hide_it --}}">
+            <div class="location_input dtable w100">
+               <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
+               <select class="dinline_block filter_location_radius select_aw" name="filter_location_radius" data-placeholder="Select Location Radius">
+                  <option value="5">5km</option>
+                  <option value="10">10km</option>
+                  <option value="25">25km</option>
+                  <option value="50">50km</option>
+                  <option value="51">50km +</option>
+               </select>
+            </div>
+            <div class="location_latlong dtable w100">
+               <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+               <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+            </div>
+            <div class="location_map_box dtable w100">
+               <div class="location_map" id="location_map"></div>
+            </div>
+         </div>
                   </div>
                 </div>
               </div>
@@ -1019,23 +343,23 @@
 @stop
 
 @section('custom_footer_css')
-{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
+<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 
-{{-- <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script> --}}
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 
 @stop
 
 @section('custom_js')
-{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
-{{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
-{{-- <script src="{{ asset('js/site/common.js') }}"></script> --}}
-{{-- <script src="{{ asset('js/site/location_gmap.js') }}"></script> --}}
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script> 
+<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
+<script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/site/location_gmap.js') }}"></script>
+<script src="{{ asset('js/site/profile_photo.js') }}"></script> 
 <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script> 
-<script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
+<script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
 
-{{-- <script type="text/javascript">
+<script type="text/javascript">
 $(document).ready(function() {
 
 //====================================================================================================================================//
@@ -1124,6 +448,6 @@ var getDataCustom = function(){
 
 
 
-</script> --}}
+</script>
 @stop
 

@@ -70,9 +70,16 @@
                      <label>Test Duration:</label>
                      <span><b> {{$test->onlineTest->time}} Minutes </b></span>
                     </li>
+                      @if ($test->status == 'complete')
+                  <li class="text-info-detail clearfix">
+                    <label>Your Score:</label>
+                   <span><b> {{$test->test_result}} % </b></span>
+                  </li>
                 </ul>
                 <div class="dual-tags testing-tag clearfix">
+                    @else
                   <a href="{{ route('proceedTesting' , ['id' => $test->id] ) }}" class="proceed-test used-tag">Proceed To Test</a>
+                   @endif
                   <span class="pendinginterview-tag used-tag">{{$test->status}}</span>
                 </div>
                  @endif
