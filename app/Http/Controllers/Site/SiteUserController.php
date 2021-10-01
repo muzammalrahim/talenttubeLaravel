@@ -1469,25 +1469,25 @@ class SiteUserController extends Controller
                 $attachment->save();
 
                 if ($attachment->type == "pdf") {
-                    // $text = Pdf::getText('/var/www/html/talenttube/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
-                    // $keywordExtractor = new KeywordExtractor();
-                    // $result = $keywordExtractor->run($text);
-                    // $arrayObj = array();
-                    // // dd($arrayObj);
-                    // $varObj = '';
-                    // foreach ($result as $key => $results) {
-                    //     $varObj = mb_convert_encoding($key, 'UTF-8', 'UTF-8');
-                    //     array_push($arrayObj, $varObj);
-                    // }
-                    // $test_var = '';
-                    // foreach ($arrayObj as $array) {
-                    //     $test_var .= $array." ";
-                    // }
-                    // $cvdata = new CvData();
-                    // $cvdata->user_id = $user->id;
-                    // $cvdata->jsname = $user->name;
-                    // $cvdata->data_text = $test_var;
-                    // $cvdata->save();
+                    $text = Pdf::getText('/var/www/html/talenttube/storage/images/user/'. $user->id. '/private/'. $attachment->name); 
+                    $keywordExtractor = new KeywordExtractor();
+                    $result = $keywordExtractor->run($text);
+                    $arrayObj = array();
+                    // dd($arrayObj);
+                    $varObj = '';
+                    foreach ($result as $key => $results) {
+                        $varObj = mb_convert_encoding($key, 'UTF-8', 'UTF-8');
+                        array_push($arrayObj, $varObj);
+                    }
+                    $test_var = '';
+                    foreach ($arrayObj as $array) {
+                        $test_var .= $array." ";
+                    }
+                    $cvdata = new CvData();
+                    $cvdata->user_id = $user->id;
+                    $cvdata->jsname = $user->name;
+                    $cvdata->data_text = $test_var;
+                    $cvdata->save();
                 }
 
 
