@@ -26,43 +26,8 @@
                   <!--==================== profile tab-->
                   <div class="profile-text-wrap tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="Profile-tab">
                      
-                     {{-- ==================================== Recent job ==================================== --}}
 
-                     <div class="about-infomation">
-                        <h2>Recent Job</h2>
-                            <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text"><i class="fas fa-edit"></i></button>
-                        
-                        <div class="recentjob">
-                           <span class="recentjobSpan"> {{$user->recentJob}} </span>
-                              <b class="mx-2">at</b>
-                           <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
-                        </div>
-
-                        <div class="row sec_recentJob d-none">
-                           <div class="col-5">
-                              <input type="text" name="recentJobField" class="form-control recentJobField" value="{{$user->recentJob}}">
-                           </div>
-                           <div class="col-1">  <span> at </span>  </div>
-                           <div class="col-6">
-                              <input type="text" name="organHeldTitleField" class="form-control organHeldTitleField" value="{{$user->organHeldTitle}}" onclick="showFieldEditor()">
-                           </div>
-                        </div>           
-
-                        <div class="row">
-                           <div class="col-md-12">
-                              <div class="float-right button_recentJob d-none">
-                                 <button class="cancel-button" onclick="hideFieldEditor('recentJob');">Cancel</button>
-                                 <button class="orange_btn mt-2" onclick="updateRecentJob()">Save</button> 
-                              </div>
-                           </div>
-                        </div>
-
-                        <div class="alert alert-success alert_recentJob hide_me" role="alert">
-                          <strong>Success!</strong> Recent Job has been updated successfully!
-                        </div>
-                     </div>
-
-                     {{-- ==================================== About me ==================================== --}}
+                     {{-- ==================================== About us ==================================== --}}
 
                      <div class="about-infomation">
                         <h2>About Us</h2>
@@ -140,7 +105,7 @@
                                     <i class="fas fa-images"></i>
                                     <span>Upload-Video</span>
                                  </div>
-                                 <input type="file" id="files" name="files[]" multiple />
+
                               </div>
                               <!-- =========== end ============== -->
                            </li>
@@ -154,24 +119,8 @@
                   <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
                      <h2>Questions <button type="button" onclick="showFieldEditor('recentJob');" class="edited-text orange_btn float-right"><i class="fas fa-edit"></i></button> </h2>
                             @include('site.employer.profile.tabs.questions')
-                 
-                      {{-- <div class="tab_photos tab_cont"> --}}
-     {{--  --}}
-
-   {{--  </div> --}}
-
                   </div> 
-                  <!-- ========================================== tag tab ========================================== -->
 
-                  {{-- @include('site.user.profile.tabs.tags') --}}
-
-                  <!--=================job tab ============================ -->
-                  
-                  {{-- @include('site.user.profile.tabs.jobs') --}}
-                  
-                  <!--=================referance tab=====================-->
-                  
-                  {{-- @include('site.user.profile.tabs.reference') --}}
                   
                   <!--========================end all tabs-->
                

@@ -1,6 +1,6 @@
 
 {{-- @dump($UserInterview) --}}
-@extends('web.user.usermaster')
+@extends('web.employer.employermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
@@ -14,7 +14,7 @@
   @if ($UserInterview->count() > 0)
   @foreach ($UserInterview   as $interview)
 
-  {{-- @dd($interview->template->template_name); --}}
+  @dd($interview->template->template_name)
   <div class="job_row interviewBookingsRow_{{$interview->id}}">
     
     <div class="job_heading p10">

@@ -1,35 +1,35 @@
 $(document).ready(function(){
 
     this.showFieldEditor = function(field){
-    	console.log('.save'+field+'button');
-    	if (field == 'salaryRange') {
-    		$('#salaryRangeFieldnew').removeClass('d-none');
-    		$('.salaryRangeValue').addClass('d-none');
-    	}
-    	if (field =='recentJob') {
-    		$('.recentjob').addClass('d-none');
-    		$('.sec_recentJob').removeClass('d-none');
-    	}
-    	$('.sec_'+field).removeAttr('readonly');
-    	$('.sec_'+field).focus();
-    	$('.sec_'+field).removeClass('bg-white border-0');
-    	$('.button_'+field).removeClass('d-none');
+        console.log('.save'+field+'button');
+        if (field == 'salaryRange') {
+            $('#salaryRangeFieldnew').removeClass('d-none');
+            $('.salaryRangeValue').addClass('d-none');
+        }
+        if (field =='recentJob') {
+            $('.recentjob').addClass('d-none');
+            $('.sec_recentJob').removeClass('d-none');
+        }
+        $('.sec_'+field).removeAttr('readonly');
+        $('.sec_'+field).focus();
+        $('.sec_'+field).removeClass('bg-white border-0');
+        $('.button_'+field).removeClass('d-none');
     }
 
     this.hideFieldEditor = function(field){
-    	console.log('.save'+field+'button');
-    	$('.sec_'+field).attr('readonly', 'true');
-    	$('.sec_'+field).blur();
-    	$('.sec_'+field).addClass('bg-white border-0');
-    	$('.button_'+field).addClass('d-none');
-    	if (field == 'salaryRange') {
-    		$('.sec_salaryRange').removeClass('d-none');
-    		$('.newSalary').addClass('d-none');
-    	}
-    	if (field =='recentJob') {
-    		$('.recentjob').removeClass('d-none');
-    		$('.sec_recentJob').addClass('d-none');
-    	}
+        console.log('.save'+field+'button');
+        $('.sec_'+field).attr('readonly', 'true');
+        $('.sec_'+field).blur();
+        $('.sec_'+field).addClass('bg-white border-0');
+        $('.button_'+field).addClass('d-none');
+        if (field == 'salaryRange') {
+            $('.sec_salaryRange').removeClass('d-none');
+            $('.newSalary').addClass('d-none');
+        }
+        if (field =='recentJob') {
+            $('.recentjob').removeClass('d-none');
+            $('.sec_recentJob').addClass('d-none');
+        }
     }
 
     // ======================================== Update About me, Interested in and salary ========================================
@@ -89,42 +89,13 @@ $(document).ready(function(){
         });
     }
 
-
-
-    // ================================================ Update Questions ================================================
-
-    // this.updateRecentJob = function(){
-    //     var recentJobField = $('.questionsField').val();
-    //     // console.log(organHeldTitleField);
-    //     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: base_url+'/ajax/update/questions',
-    //         data: {'questions': questionsField},
-    //         success: function(data){
-    //             if(data.status == 1){
-    //                 $('.organizationSpan').text(data.organHeldTitle);
-    //                 $('.recentjobSpan').text(data.recentjob);
-    //                 $('.recentjob').removeClass('d-none');
-    //                 $('.sec_recentJob').addClass('d-none');
-    //                 $('.button_recentJob').addClass('d-none');
-    //                 $('.alert_recentJob').show().delay(3000).fadeOut('slow');
-
-
-    //             }
-    //         }
-    //     });
-    // }
-
-
-
     // ================================================ Edit and delete qualification ================================================
 
     this.showQualificationEditor = function(){
         $(this).closest('.qualificationBox').addClass('editQualif');
         $('.removeQualification').removeClass('d-none');
         $('.button_qualification').removeClass('d-none');
-  	}
+    }
 
    $('.qualificationBox').on('click','.removeQualification', function(){
       console.log('removeQualification');
@@ -383,21 +354,9 @@ $(document).ready(function(){
                 $('.save-resume-btn').html('Save');
                 console.log("success data ", data);
                 if(data && data.attachments) {
-                    // data = JSON.parse(data);
-                    // $('.view-resume').attr('href', '/talenttube/_files/resumeUpload/'+data['attachment']).show();
                     var attachments = data.attachments;
                     console.log("Hassaan doing this job : " + attachments );
-                    // var attach_html = '';
-                    // attach_html += '<li class="attachment_'+attachments.id+' uploaded-file-resume">';
-                    // attach_html +=   '<span class="attach_title">'+attachments.name+'</span>';
-                    // attach_html +=   '<div class="attach_btns">';
-                    // attach_html +=      '<a class="attach_btn downloadAttachBtn" href="'+data.file+'">Download</a>';
-                    // attach_html +=      '<a class="attach_btn removeAttachBtn" data-attachmentid="'+attachments.id+'" onclick="removeAttachmentModal('+attachments.id+');">Remvoe</a>';
-                    // attach_html +=    '</div>';
-                    // attach_html +=  '</li>';
-
                     var attach_html = '';
-
                     attach_html += '<li class="attachment_'+attachments.id+' uploaded-file-resume">';
                     attach_html += '<span class="attach_title">Talent Tube Video Iteration bugs 11.08B (2) (1).docx</span>';
                     attach_html += '<div class="attach_btns">';
@@ -450,117 +409,8 @@ $(document).ready(function(){
 
 
 
-});
-// --------------------------------------------------------question tab --------------------------------------------------------
-//  ======================================= Edit User Questions Start =======================================
-
-    this.updateQuestions = function(){
-        var items = {};
-        $('select.jobSeekerRegQuestion').each(function(index,el){
-        // console.log(index, $(el).attr('name')  , $(el).val()   );
-            // items.push({name:  $(el).attr('name') , value: $(el).val()});
-            var elem_name = $(el).attr('name');
-            var elem_val = $(el).val();
-            items[elem_name] = elem_val;
-            // items.push({elem_name : elem_val });
-        });
-         $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $('.SaveQuestionsLoader').after(getLoader('smallSpinner SaveQuestionsSpinner'));
-        $.ajax({
-            type: 'POST',
-            url: base_url+'/ajax/updateQuestions',
-            data: {'questions': items},
-
-            success: function(data){
-                    $('.questionsAlert').show().delay(3000).fadeOut('slow');
-                    $('.saveQuestionsButton').css("display","none");
-                    $('.jobSeekerRegQuestion').addClass('hide_it');
-                    $('.QuestionsKeyPTag').removeClass('hide_it2');
-                    if(data.status==1){
-                        // $(".questionsOfUser").load(" .questionsOfUser");
-                        $(".SaveQuestionsSpinner").remove();
-                        $('.questionsOfUser').html(data.data);
-
-                }
-            }
-        });
-    }
-
-//  ======================================= Edit User Questions End  =======================================
-
-    // ================================================ Upload Video ================================================
-
-    this.SelectVideoFile = function(){
-        var input = document.createElement('input');
-        input.type = 'file';
-        input.onchange = e => {
-            var file = e.target.files[0];
-            console.log(' onchange file  ', file );
-            var formData = new FormData();
-            formData.append('video',file);
-            var that        = this;
-            var item_id     =  Math.floor((Math.random() * 1000) + 1);
-            var video_item = '';
-            video_item  += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">';
-            video_item  +=  '<a class="show_photo_gallery video_link" href="">';
-            // video_item  +=   '<img src="'+base_url+'/images/site/icons/cv.png" style="opacity: 1; display: inline;" title="vvtt11" class="photo" id="video_v_1" data-video-id="v_1">';
-            video_item  +=  '</a>';
-            video_item  +=  '<span class="v_title">Video title</span>';
-            video_item  +=  '<span title="Delete video" class="icon_delete">';
-            video_item  +=      '<span class="icon_delete_photo"></span>';
-            video_item  +=      '<span class="icon_delete_photo_hover"></span>';
-            video_item  +=  '</span>';
-            video_item  +=  '<div class="v_error error hide_it"></div>';
-            video_item  +=  '<div class="v_progress"></div>';
-            video_item  += '</div>';
-
-            $('.list_videos').append(video_item);
-            var updateForm = document.querySelector('form');
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            var request = new XMLHttpRequest();
-            request.upload.addEventListener('progress', function(e){
-               var percent = Math.round((e.loaded / e.total) * 100);
-                 console.log(' progress-bar ', percent+'%' );
-                 $('#v_'+item_id+' .v_progress').css('width',  percent+'%');
-            }, false);
-            request.addEventListener('load', function(e){
-               console.log(' load e ', e);
-               var res = JSON.parse(e.target.responseText);
-               console.log(' jsonResponse ', res);
-               $('#v_'+item_id+' .v_progress').remove();
-                if(res.status == 1) {
-                    // $('#v_'+item_id+' .v_title').text(res.data.title);
-                    // $('#v_'+item_id+' .video_link').attr('href', base_url+'/'+res.data.file);
-                    $('#v_'+item_id).replaceWith(res.html);
-                }else {
-                    console.log(' video error ');
-                    if(res.validator != undefined){
-                        $('#v_'+item_id+' .error').removeClass('hide_it').addClass('to_show').text(res.validator['video'][0]);
-                    }
-                }
-            }, false);
-            request.open('post',base_url+'/ajax/uploadVideo');
-            request.send(formData);
-        }
-        input.click();
-
-    }
-
-
-
-    // ================================================ Upload Video End Here ================================================
-
 
 
 
 
 });
-

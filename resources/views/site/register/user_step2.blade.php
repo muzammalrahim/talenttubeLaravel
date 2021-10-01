@@ -522,7 +522,7 @@
 {{-- <script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script> --}}
 {{--<script type="text/javascript" src="{{ asset('js/site/join.js') }}"></script>--}}
 <script type="text/javascript" src="{{ asset('js/site/step2.js') }}"></script>
-{{-- <script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script> --}}
+<script type="text/javascript" src="{{ asset('js/site/modernizr.js') }}"></script>
 
 {{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 {{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}

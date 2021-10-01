@@ -1,5 +1,5 @@
 
-@extends('web.user.usermaster') {{-- web/user/usermaster --}}
+@extends('web.employer.employermaster') {{-- web/employer/employermaster --}}
 
 @section('content')
 
@@ -63,17 +63,7 @@
 
                   {{-- ========================================= Salary Range ========================================= --}}
 
-                  <div class="px-2 mt-2">
-
-                      <span ><b>Expecting Salary:</b></span>
-                      
-                      <button type="button" onclick="showFieldEditor('salaryRange');" class="orange_btn float-right"><i class="fas fa-edit"></i></button>
-
-                       <b> {{'AUD: '}}<span class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
-                        
-                      {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, ['placeholder' => 'Select Salary Range', 'id' => 'salaryRangeFieldnew', 'class' => 'd-none form-control ']) }}
-                       <button class="btn-block orange_btn button_salaryRange d-none my-2" onclick="updateSalaryRangeValue()" >Save</button>
-                  </div>
+                  
 
                  
 
@@ -104,21 +94,7 @@
                         type="button" role="tab" aria-controls="contact" aria-selected="false">
                      <i class="fa fa-circle tab-circle-cross"></i>Questions</button>
                   </li>
-                  <li class="nav-item" role="presentation">
-                     <button class="nav-link" id="tag-tab" data-bs-toggle="tab" data-bs-target="#tag"
-                        type="button" role="tab" aria-controls="tag" aria-selected="false">
-                     <i class="fa fa-circle tab-circle-cross"></i>Tags</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                     <button class="nav-link" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
-                        type="button" role="tab" aria-controls="job" aria-selected="false">
-                     <i class="fa fa-circle tab-circle-cross"></i>Job</button>
-                  </li>
-                  <li class="nav-item" role="presentation">
-                     <button class="nav-link" id="refrance-tab" data-bs-toggle="tab" data-bs-target="#refrance"
-                        type="button" role="tab" aria-controls="refrance" aria-selected="false">
-                     <i class="fa fa-circle tab-circle-cross"></i>Refrences</button>
-                  </li>
+                  
                </ul>
                <div class="tab-content" id="myTabContent">
                   <!--==================== profile tab-->
@@ -126,44 +102,12 @@
                      
                      {{-- ==================================== Recent job ==================================== --}}
 
-                     <div class="about-infomation">
-                        <h2>Recent Job</h2>
-                            <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text"><i class="fas fa-edit"></i></button>
-                        
-                        <div class="recentjob">
-                           <span class="recentjobSpan"> {{$user->recentJob}} </span>
-                              <b class="mx-2">at</b>
-                           <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
-                        </div>
-
-                        <div class="row sec_recentJob d-none">
-                           <div class="col-5">
-                              <input type="text" name="recentJobField" class="form-control recentJobField" value="{{$user->recentJob}}">
-                           </div>
-                           <div class="col-1">  <span> at </span>  </div>
-                           <div class="col-6">
-                              <input type="text" name="organHeldTitleField" class="form-control organHeldTitleField" value="{{$user->organHeldTitle}}" onclick="showFieldEditor()">
-                           </div>
-                        </div>           
-
-                        <div class="row">
-                           <div class="col-md-12">
-                              <div class="float-right button_recentJob d-none">
-                                 <button class="cancel-button" onclick="hideFieldEditor('recentJob');">Cancel</button>
-                                 <button class="orange_btn mt-2" onclick="updateRecentJob()">Save</button> 
-                              </div>
-                           </div>
-                        </div>
-
-                        <div class="alert alert-success alert_recentJob hide_me" role="alert">
-                          <strong>Success!</strong> Recent Job has been updated successfully!
-                        </div>
-                     </div>
+                     
 
                      {{-- ==================================== About me ==================================== --}}
 
                      <div class="about-infomation">
-                        <h2>About me</h2>
+                        <h2>About Us</h2>
                         <button type="button"id="showeditbox" onclick="showFieldEditor('about_me');" class="edited-text"><i class="fas fa-edit"></i></button>
                         <textarea class="form-control bg-white border-0 sec_about_me" rows="3" cols="3" readonly > {{$user->about_me}}</textarea>
 
@@ -201,24 +145,7 @@
 
 
                     
-                    <div class="about-infomation bl qualificationBox">
-                        <h2>Qualification</h2>
-                        <button type="button" class="edited-text" onclick="showQualificationEditor();"><i class="fas fa-edit editQualification"></i></button>
-                        <p class="loader SaveQualification"style="float: left;"></p>
-                              <div class="cl"></div>
-                        <ul class="qualification-li">
-                            <li><i class="qualification-circle"></i><span> Type: {{ ucfirst($user->qualificationType) }}</span></li>
-                            <div class="">
-                            @include('site.layout.parts.jobSeekerQualificationList') {{-- site/layout/parts/jobSeekerQualificationList --}}  </div>
-                            <div class="button_qualification d-none "> 
-                                <button class="btn-info btn-block rounded py-2 btn-sm m-0 addQualification" onclick="addQualification()" >Add New</button> 
-                                 <button class="savequalification btn-block orange_btn rounded py-2 " onclick="updateQualification()">Save</button>
-                              </div>
-                              <div class="alert alert-success QualifAlert hide_me" role="alert">
-                                <strong>Success!</strong> Qualification have been updated successfully!
-                              </div>
-                        </ul>
-                     </div> 
+                    
                     
 
                     <div class="about-infomation IndusListBox">
@@ -245,9 +172,6 @@
                   <div class="album-section tab-pane fade Photos " id="profile" role="tabpanel" aria-labelledby="profile-tab">
 
                      @include('site.user.profile.tabs.album')  {{-- site/user/profile/tabs/album --}}
-                     
-
-                     @include('web.user.profile.tabs.resume')  {{-- web/user/profile/tabs/resume --}}
 
                      <div class=" Gallery">
                         <h2>Video's</h2>
@@ -268,20 +192,6 @@
                         @include('site.user.profile.questionsuserpart')
                   </div>
 
-                  <!-- ========================================== tag tab ========================================== -->
-
-                  @include('site.user.profile.tabs.tags')
-
-                  <!--=================job tab ============================ -->
-                  
-                  @include('site.user.profile.tabs.jobs')
-                  
-                  <!--=================referance tab=====================-->
-                  
-                  @include('site.user.profile.tabs.reference')
-                  
-                  <!--========================end all tabs-->
-               
                </div>
             </div>
          </div>
@@ -298,29 +208,6 @@
 
 
 <script type="text/javascript">
-
-
-
-// {{-- ==================================================== Edit Qualification ==================================================== --}}
-
-  this.addQualification = function(){
-    console.log('Add Qualification Button profile');
-
-    var newQualificationHtml = '<div class="QualificationSelect row ml-0 my-2"> <select name="qualification[]" class="userQualification form-control col-10">';
-    @if(!empty($qualificationList))
-        @foreach($qualificationList as $lk=>$qualification)
-            newQualificationHtml += '<option value="{{$qualification['id']}}">{{$qualification['title']}}</option>';
-        @endforeach
-    @endif
-    newQualificationHtml += '</select>';
-    newQualificationHtml += '<div class = "col-2">';
-    newQualificationHtml += '<i class="fa fa-trash removeQualification float-right"></i></div>';
-    newQualificationHtml += '</div>';
-    newQualificationHtml += '</div>';
-    $('.jobSeekerQualificationList').append(newQualificationHtml);
-
-  }
-
 
 // ===================================================== add remove industry ===================================================
 

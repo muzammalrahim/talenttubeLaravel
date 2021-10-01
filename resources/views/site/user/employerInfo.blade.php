@@ -180,6 +180,322 @@
     </div>
 </div>
 
+<section class="row">
+                <div class="col-md-12">
+                     @php
+                        $js = $employer;
+                    @endphp
+                  <div class="profile profile-section">
+                      <h2>Employers Detail</h2>
+                                          
+                    <!-- Top Filter Row -->
+                      <div class="row">
+                        <div class="col-sm-12 col-md-12">
+                         <div class="job-box-info employee-details-info block-box clearfix">
+                           <div class="box-head">
+                             <h4>No Match potential</h4>                          
+                           </div>
+                           <div class="row Block-user-wrapper">
+                             <div class="col-md-2 user-images">
+                               <div class="block-user-img ">
+                                  @php
+                                    $profile_image  = asset('images/site/icons/nophoto.jpg');
+                                    $profile_image_gallery    = $js->profileImage()->first();
+
+                                    // dump($profile_image_gallery);
+
+                                    if ($profile_image_gallery) {
+                                    // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+
+                                    $profile_image   = assetGallery2($profile_image_gallery,'small');
+                                    // dump($profile_image);
+
+                                    }
+                                    @endphp
+                                 <img src="{{$profile_image}}" alt="">
+                               </div>
+                               <div class="block-user-progress ">
+                                 <h6>{{$js->name}} {{$js->surname}}</h6>
+                                <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
+                                <div class="block-progrees-ratio d-block d-md-none">
+                                   <ul>
+                                 <li><span class="Progress-ratio-icon1">.</span> <span>60%</span> Match </li>
+                                 <li><span class="Progress-ratio-icon2">.</span> <span>40%</span> UnMatch</li>
+                               </ul>
+                             </div>
+                               </div>
+                             </div>
+                             <div class="col-md-10 user-details">
+                               <div class="row blocked-user-about">
+                                 <h6>About me:</h6>
+                                 <p>Offering quality and personalised Merchandise/Garment printing, as well as affordable photobooth and jukebox hire across Sydney.</p>
+                               </div>
+                               <div class="row blocked-user-about">
+                                 <h6>Intrested In:</h6>
+                                 <p>Screen Printers, entertainment hire attendants and sales people - WE WANT YOU, AND YOUR FRIENDS</p>
+                               </div>
+                               <div class="row blocked-user-about">
+                                 <h6>Location:</h6>
+                                 <p>Offering quality and personalised Merchandise/Garment printing, as well as affordable photobooth and jukebox hire across Sydney.</p>
+                               </div>
+                               <div class="row blocked-user-experience">
+                                 <h6>Industory Experience:</h6>
+                                 <p>Trades and Services</p>
+                                 <p>Retail and Consumer products</p>
+                                 <p>Entertainment and event management</p>
+                               </div>
+             
+                             </div>
+                           </div>
+                           <div class="box-footer clearfix">
+                             <div class="block-progrees-ratio d-none d-md-block">
+                               <ul>
+                                 <li><span class="Progress-ratio-icon1">.</span> <span>60%</span> Match </li>
+                                 <li><span class="Progress-ratio-icon2">.</span> <span>40%</span> UnMatch</li>
+                               </ul>
+                             </div>
+                             <button class="unblock-btn">
+                              <img class="icon-unblock" src="assests/images/UnBlock-icon.png" alt="">
+                              <img class="hover-block" src="assests/images/hover-block.svg" alt="">
+                             UnBlock</button>                          
+                           </div>
+                        </div>
+                      </div> 
+
+                   </div>
+                   <div class="profile">
+                      <ul class="nav nav-tabs employee-tab-info" id="Profile-tab" role="tablist">
+                      <span class="line-tab"></span>
+                      <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
+                                type="button" role="tab" aria-controls="job" aria-selected="false">
+                                <i class="fa fa-circle tab-circle-cross"></i>Job</button>
+                      </li>
+                        <li class="nav-item" role="presentation">
+                          <button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
+                                  type="button" role="tab" aria-controls="profile" aria-selected="false">
+                                  <i class="fa fa-circle tab-circle-cross"></i>Album</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                                    type="button" role="tab" aria-controls="contact" aria-selected="false">
+                                    <i class="fa fa-circle tab-circle-cross"></i>Questions</button>
+                          </li>
+                         
+                      </ul>
+                      <div class="tab-content employee-details-infomation" id="myTabContent">
+                                  <!--=================job tab ============================ -->
+                            <div class="tab-pane fade show active job-applied" id="job"  role="tabpanel" aria-labelledby="job-tab">
+                              <h2>Jobs I Have Applied</h2>
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-12">
+                                      <div class="job-box-info">
+                                        <div class="box-head">
+                                          <h4>This is test</h4>
+                                          <label>Location:<span> Alexandria, New South Wales, Australia</span></label>
+                                          <i class="close-box fa fa-times"></i>
+                                        </div>
+                                        <div class="job-box-text clearfix">
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Type:</label>
+                                            <span>Senior Designer</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Experience:</label>
+                                            <span>3 year</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Salary:</label>
+                                            <span>$500/-</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Submitted:</label>
+                                            <span>20-12-2012</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Detailed:</label>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                                          </div>
+                                          <span class="interview-tag used-tag">Interview</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                      <div class="job-box-info">
+                                        <div class="box-head">
+                                          <h4>This is test</h4>
+                                          <label>Location:<span> Alexandria, New South Wales, Australia</span></label>
+                                          <i class="close-box fa fa-times"></i>
+                                        </div>
+                                        <div class="job-box-text clearfix">
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Type:</label>
+                                            <span>Senior Designer</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Experience:</label>
+                                            <span>3 year</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Salary:</label>
+                                            <span>$500/-</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Submitted:</label>
+                                            <span>20-12-2012</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Detailed:</label>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. </p>
+                                          </div>
+                                          <span class="interview-tag used-tag">Interview</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                      <div class="job-box-info">
+                                        <div class="box-head">
+                                          <h4>This is test</h4>
+                                          <label>Location:<span> Alexandria, New South Wales, Australia</span></label>
+                                          <i class="close-box fa fa-times"></i>
+                                        </div>
+                                        <div class="job-box-text clearfix">
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Type:</label>
+                                            <span>Senior Designer</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Experience:</label>
+                                            <span>3 year</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Salary:</label>
+                                            <span>$500/-</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Submitted:</label>
+                                            <span>20-12-2012</span>
+                                          </div>
+                                          <div class="text-info-detail clearfix">
+                                            <label>Job Detailed:</label>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                              Lorem Ipsum is simply dummy text of the printing Lorem Ipsum is simply dummy text of the printing and typesetting industry. and typesetting industry. </p>
+                                          </div>
+                                          <span class="pendinginterview-tag used-tag">Pending Interview</span>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                  
+                                
+                          </div>
+                        <!--================== album-tab-->
+
+                        <div class="album-section tab-pane fade Photos " id="profile" role="tabpanel"
+                            aria-labelledby="profile-tab">
+                            <div class=" Gallery">
+                              <h2>Photos</h2>
+                              <ul>
+                                <li class="">
+                                  <!-- ============ upload images ============= -->
+                                  <div class="album-upload-img field" align="left">
+                                    <div class="upload-file">
+                                      <i class="fas fa-images"></i>
+                                      <span>Upload-photo</span>
+                                    </div>
+                                    <input type="file" id="files" name="files[]" multiple />
+                                  </div>
+
+                                  <!-- =========== end ============== -->
+                                </li>
+                              </ul>
+                            </div>
+                        <div class="row Resume">
+                            <h2>Resume & Contact Details</h2>
+                            <div class="col-md-6 Resume-email"><label>Email:<span>hkhan5028@gmail.com</span></label></div>
+                            <div class="col-md-6 Resume-contact"><label>Contact#:<span>+92 337 1234567</span></label></div>
+                        </div>
+
+                      <div class="Gallery clearfix">
+                        <ul>
+                          <li>
+                            <section class="multiple-file-pdf" id="mupload5">
+                              <div class="file-chooser clearfix">
+                                <input type="file" class="file-chooser__input" id="file5" name="file5[]">
+                                <button type="button" class="send-btn orange_btn"><i class="fa fa-save"></i>Save</button>
+                              </div>
+                              <div class="file-uploader__message-area">
+                                <!-- <p>Select a file</p> -->
+
+                              </div>
+
+                            </section>
+                          </li>
+                        </ul>
+                    </div>
+                    <div class=" Gallery">
+                      <h2>Video's</h2>
+                      <ul>
+                        <li class="">
+                          <!-- ============ upload images ============= -->
+                          <div class="album-upload-img field" align="left">
+                            <div class="upload-file">
+                              <i class="fas fa-images"></i>
+                              <span>Upload-Video</span>
+                            </div>
+                            <input type="file" id="files" name="files[]" multiple />
+                          </div>
+
+                          <!-- =========== end ============== -->
+                        </li>
+                      </ul>
+                    </div>
+                        </div>
+
+                        <!--====================== question tab===========================-->
+                        <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
+
+                            <h2>Questions</h2>
+                              <div class="question-ans">
+                                <h4 class="accordionone">Are you seeking a graduate programe or internship</h4>
+                                <div class="panel">
+                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                </div>
+                              </div>
+                          <div class="question-ans">
+                            <h4 class="accordionone">Are you seeking a graduate programe or internship</h4>
+                            <div class="panel">
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            </div>
+                          </div>
+                          <div class="question-ans">
+                            <h4 class="accordionone">Are you seeking a graduate programe or internship</h4>
+                            <div class="panel">
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            </div>
+                          </div>
+                          <div class="question-ans">
+                            <h4 class="accordionone">Are you seeking a graduate programe or internship</h4>
+                            <div class="panel">
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            </div>
+                          </div>
+                          <div class="question-ans">
+                            <h4 class="accordionone">Are you seeking a graduate programe or internship</h4>
+                            <div class="panel">
+                              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                            </div>
+                          </div>
+
+
+                        </div>
+                        <!--========================end all tabs-->
+                      </div>
+                   </div>
+                   
+                </div>
+              </section>
+
 @stop
 
 @section('custom_footer_css')
