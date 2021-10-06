@@ -263,8 +263,8 @@
                   
                   <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
 
-                     <h2>Questions</h2>
-                      <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text"><i class="fas fa-edit"></i></button>
+                     <h2>Questions  <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text orange_btn float-right"><i class="fas fa-edit"></i></button></h2>
+                     
                         @include('site.user.profile.questionsuserpart')
                   </div>
 

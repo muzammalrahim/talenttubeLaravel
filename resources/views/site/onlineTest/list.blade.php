@@ -52,40 +52,68 @@
 
 
 {{-- html for testing --}}
-   @if ($UserOnlineTest->count() > 0)
-  @foreach ($UserOnlineTest   as $test)
-           <div class="col-sm-12 col-md-6">
-            <div class="job-box-info concigerge-box clearfix">
-              <div class="box-head">
-                <h4><b>Online Test {{$loop->index+1}}: </b></h4>                          
-              </div>
-               @if ($test->jobApplication != NULL)
+
+<div class="row">
+
+  @if ($UserOnlineTest->count() > 0)
+    @foreach ($UserOnlineTest   as $test)
+      <div class="col-sm-12 col-md-6 col-6 testing1234">
+        <div class="job-box-info concigerge-box clearfix">
+            <div class="box-head">
+              <h4 class="text-white"><b>Online Test {{$loop->index+1}}: </b></h4>                          
+            </div>
+            @if ($test->jobApplication != NULL)
+              
               <p class="slot-para">Online Test against your "job application" <b> {{$test->jobApplication->job->title}} </b></p>
-                 <ul class="job-box-text concigerge clearfix">
-                    <li class="text-info-detail clearfix">
-                      <label>Test Name: </label>
-                      <span><b> {{$test->onlineTest->name}} </b></span>
-                    </li>
-                    <li class="text-info-detail clearfix">
-                     <label>Test Duration:</label>
-                     <span><b> {{$test->onlineTest->time}} Minutes </b></span>
-                    </li>
-                      @if ($test->status == 'complete')
+
+              <ul class="job-box-text concigerge clearfix">
+                <li class="text-info-detail clearfix">
+                  <label>Test Name: </label>
+                  <span><b> {{$test->onlineTest->name}} </b></span>
+                </li>
+
+                <li class="text-info-detail clearfix">
+                 <label>Test Duration:</label>
+                 <span><b> {{$test->onlineTest->time}} Minutes </b></span>
+                </li>
+
+                @if ($test->status == 'complete')
                   <li class="text-info-detail clearfix">
                     <label>Your Score:</label>
                    <span><b> {{$test->test_result}} % </b></span>
                   </li>
-                </ul>
-                <div class="dual-tags testing-tag clearfix">
-                    @else
-                  <a href="{{ route('proceedTesting' , ['id' => $test->id] ) }}" class="proceed-test used-tag">Proceed To Test</a>
-                   @endif
+                  <div class="dual-tags testing-tag clearfix"></div>
+                @else
+                  <a href="{{ route('proceedTesting' , ['id' => $test->id] ) }}" class="proceed-test used-tag " >Proceed To Test</a>
+                @endif
+
                   <span class="pendinginterview-tag used-tag">{{$test->status}}</span>
-                </div>
-                 @endif
-           </div>
-         </div>   
+
+
+              </ul>
+            @endif
+
+        </div>
+              
+      </div>   
     @endforeach  
-@else
-<h3> You have not received any test yet.</h3>
-@endif
+  @else
+  <h3> You have not received any test yet.</h3>
+  @endif
+</div>
+
+
+<style type="text/css">
+  .proceed-test{
+    background:#FF9400; 
+    float: left;
+   color: white;
+  border-radius: 5px;
+  border:1px solid #FF9400;
+  }
+  .proceed-test:hover{
+    background-color: white;
+    border-radius: 1px solid #FF9400;
+    color: #FF9400;
+    }
+</style>

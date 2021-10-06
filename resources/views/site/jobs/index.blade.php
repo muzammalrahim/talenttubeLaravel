@@ -69,7 +69,7 @@
       <!-- Job Detail Area -->
 
       <div class="jobs_list">
-          @include('web.jobs.list')
+          @include('web.jobs.list') {{-- web/jobs/list --}}
         
       </div>
 
@@ -109,7 +109,7 @@
                               for 8 hours?</label>
                             <ul class="question-radiobtn">
                               <li>
-                                <div class="form-check emp-redio">
+                                <div class="form-check emp-redio d-block">
                                   <input type="radio" id="test1" name="radio-group1" checked>
                                   <label for="test1"> Yes to both</label>
                                 </div>

@@ -54,12 +54,26 @@ class HomeController extends Controller {
 
 
     public function signIn(){
-        // dd('Sign in Page');
-        $data['title'] = 'Signin Page';
-        $data['content_header'] = 'Sign In';
-        $data['content'] = 'this is page content';
-        $view_name = 'site.home.signin';   // site/home/signin
-        return view($view_name, $data);
+        if (Auth::check()) {
+            if (isEmployer()) {
+                return redirect('employerProfile');
+            }
+            else if(isAdmin()){
+                return redirect('adminDashboard');
+            }
+            else{
+                return redirect('profile');
+            }
+
+        }
+        else{
+            $data['title'] = 'Signin Page';
+            $data['content_header'] = 'Sign In';
+            $data['content'] = 'this is page content';
+            $view_name = 'site.home.signin';   // site/home/signin
+            return view($view_name, $data);
+        }
+        
     }
 
 
@@ -1031,6 +1045,11 @@ class HomeController extends Controller {
                     'status'    => 1,
                     'redirect'   => route('interviewCon')
                 );
+            }
+            else{
+                return response()->json([
+                    'message'=> 'Account is not registered with any booking'
+                ]);
             }
         }
     }

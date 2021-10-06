@@ -329,7 +329,7 @@ body.register.step2>div.jquery-modal.blocker.current>div#jobApplyModal {
 }
 
 .declineButton:hover{
-  color: white !important;  
+  color: white !important;
 }
 .arrowRight{position: relative;bottom: 1px;font-size: 10px}
 /* ============================================= Cross Reference ============================================= */

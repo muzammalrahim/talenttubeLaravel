@@ -59,6 +59,64 @@
 
 {{-- @include('site.home.deleteSlotPop') --}}
 
+
+
+
+{{-- html for interview page --}}
+
+<section class="row">
+  <div class="col-md-12">
+    <div class="profile profile-section">
+      <h2>Welcome to Interview Concierge</h2>
+        <div class="add_new_job">
+        <div class="job_row_heading jobs_filter d-flex" style="color: ">
+        <a  class="w50 " href="{{route('interviewconcierge.new')}}">Click here to create a new Booking Schedule</a> <br>
+        <a  class="w50" href="{{route('interviewconcierge.edit')}}">Click here to edit an existing Booking Schedule</a>
+    </div>
+    </div>
+       <div class="row">
+    <h4 class="text-center py-2 font-weight-normal"> My Booked Interviews</h4>
+         <table class="table table-striped table-hover">
+          <thead class=" text-white" style="background:#2672AB;">
+           <tr><th>Company</th>
+            <th>Booking Id</th>
+            <th>Position</th>
+            <th>Managers</th>
+            <th>Booking</th>
+            <th>Actions</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+            <td>Creative Tech</td>
+            <td>16517</td>
+            <td>Laravel Developer</td>
+            <td>no</td>
+            <td>0</td>
+            <td><i class="fas fa-edit text-white p-2" style="background: #F48128; border-radius: 5px;"></i></td>
+            </tr>
+            <tr>
+            <td>Creative Tech</td>
+            <td>16517</td>
+            <td>Laravel Developer</td>
+            <td>no</td>
+            <td>0</td>
+            <td><i class="fas fa-edit text-white p-2" style="background: #F48128; border-radius: 5px;"></i></td>
+            </tr>
+            <tr>
+            <td>Creative Tech</td>
+            <td>16517</td>
+            <td>Laravel Developer</td>
+            <td>no</td>
+            <td>0</td>
+            <td><i class="fas fa-edit text-white p-2" style="background: #F48128; border-radius: 5px; "></i></td>
+            </tr>
+          </tbody>
+        </table>
+       </div>
+    </div>
+  </div>
+</section>
+
 @stop
 
 @section('custom_footer_css')

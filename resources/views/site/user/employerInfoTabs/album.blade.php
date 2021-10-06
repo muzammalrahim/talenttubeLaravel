@@ -1,11 +1,11 @@
-<div class="tab_photos tab_cont">
+{{-- <div > --}}
 
-        <div class="galleryCont">
+       {{--  <div class="galleryCont">
             <div class="head2">Gallery Photos</div>
             <div class="photos">
             @if ($galleries)
             @foreach ($galleries as $gallery)
-                <div id="{{$gallery->id}}" class="emp_profile_photo_frame fl_left gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}}">
+                <div id="{{$gallery->id}}" class="emp_profile_photo_frame fl_left gallery_{{$gallery->id}} {{($gallery->access == 2)?'private':'public'}} pip">
                     <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
                         href="{{assetGallery($gallery->access,$employer->id,'',$gallery->image)}}"
                         data-lcl-thumb="{{assetGallery($gallery->access,$employer->id,'small',$gallery->image)}}"
@@ -18,6 +18,30 @@
             @endforeach
             @endif
             </div>
+        </div> --}}
+
+        {{-- html for photos --}}
+<div class="row">
+           <div class=" Gallery">
+          <h2>Photos</h2>
+          <ul>
+            @if ($galleries)
+             @foreach ($galleries as $gallery)
+            <li class=" float-left">
+              <!-- ============ upload images ============= -->
+              <div class="album-upload-img field" align="left">
+               <div class="pip" id="{{$gallery->id}}" >
+                   <a  data-offset-id="{{$gallery->id}}" {{-- class="show_photo_gallery" --}} href="{{assetGallery($gallery->access,$employer->id,'',$gallery->image)}}"
+                data-lcl-thumb="{{assetGallery($gallery->access,$employer->id,'small',$gallery->image)}}" >
+                    <img src="{{assetGallery($gallery->access,$employer->id,'small',$gallery->image)}}" class="imageThumb">
+                    </a>
+                 </div>
+                </div>
+            </li>
+            @endforeach
+            @endif
+          </ul>
+        </div>
         </div>
         <!-- /photos -->
         <div style="display:none;">
@@ -32,23 +56,35 @@
         </div>
         <div class="cl mb20"></div>
 
-        <div class="VideoCont">
-            <div class="head2">Gallery Videos</div>
-            <div class="videos">
-                @if ($videos->count() > 0 )
-                @foreach ($videos as $video)
-                    <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-                        <a onclick="UProfile.showVideoModal('{{assetVideo($video)}}')" class="video_link" target="_blank">
-                            <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
+  
+
+        {{-- html for videos  --}}
+<div class="row">
+          <div class=" Gallery">
+                      <h2>Gallery Video's</h2>
+                      <ul>
+                          @if ($videos->count() > 0 )
+                         @foreach ($videos as $video)
+                        <li class="float-left">
+                          <!-- ============ upload images ============= -->
+                          <div class="album-upload-img field" align="left">
+                            <div class="upload-file">
+                            <div class="pip">
+                                <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" ">
+                        <a onclick="UProfile.showVideoModal('{{assetVideo($video)}}')" class="video_link " target="_blank">
+                            <div class="v_title_shadow imageThumb"><span class="v_title">{{$video->title}}</span></div>
                            {!! generateVideoThumbs($video) !!}
                         </a>
                     </div>
-                @endforeach
-            @endif
-            </div>
-            {{-- @dump($employer->questions) --}}
-
-        </div>
+                            </div>
+                            </div>
+                          </div>
+                        </li>
+                         @endforeach
+                         @endif
+                      </ul>
+                    </div>
+                    </div>
         <!-- /videos -->
 
-    </div>
+    {{-- </div> --}}

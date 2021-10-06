@@ -2881,3 +2881,67 @@ opacity: 1 !important;
     }
 
 }
+
+
+/*resume tab of profile page in job seeker section css here*/
+  .userLocationSpan{
+        word-break: break-all;
+      }
+
+
+
+      .uploaded-file-resume { 
+        width: 250px;
+        margin: 20px 30px;
+        word-break: break-all;
+        border: 1px dashed #003678;
+        display: inline-block;
+        position: relative;
+        padding-top: 100px;
+      }
+
+      .resume-form{
+        display: inline !important;
+      }
+      .removeAttachBtn{
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        background: red;
+        padding:0 6px;
+        width: 22px;
+        border-radius: 50%;
+        color: #fff;
+        cursor: pointer;
+      }
+        .removeAttachBtn:hover{
+        color: #fff;
+        cursor: pointer;
+      }
+      .downloadAttachBtn{
+        color:#7496a3 !important;
+        font-size: 40px;
+        position: absolute;
+        right: 50%;
+        left: 40%;
+        top: 30%;
+      }
+      .attach_title{
+         color:#989898;
+        font-size: 20px;
+      }
+      .save-resume-btn{
+        height: 41px;
+        margin-left: 10px;
+        background-color: #f48128;
+        color: #fff;
+        border: 1px solid #f48128;
+        border-radius: 10px;
+        padding: 0px 10px;
+    }
+    .save-resume-btn:hover{
+      background-color: #fff;
+      color: #f48128;
+      border: 1px solid #f48128;
+    }
+  
