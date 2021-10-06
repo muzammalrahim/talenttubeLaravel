@@ -28,7 +28,7 @@
     <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('vendor/overlayScrollbars/css/OverlayScrollbars.min.css') }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-    <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/>
+    {{-- <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/> --}}
     <link rel="stylesheet" href="{{ asset('css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('css/site/style.css') }}">
 
@@ -41,6 +41,7 @@
     <!-- =========== custome-file css =================================== -->
     <link rel="stylesheet" href="{{ asset('assests/custom-css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('assests/custom-css/dashboard.css') }}">
+    
 
     
 
@@ -126,12 +127,12 @@
 
 <script src="{{asset('/js/lang.js')}}"></script>
 
-<script src="{{ asset('js/site/modernizr.js') }}"></script>
-<script src="{{ asset('js/site/jquery.popup.js') }}"></script>
-<script src="{{ asset('js/site/impact_lib.js') }}"></script>
-<script src="{{ asset('js/site/lib.js') }}"></script>
-<script src="{{ asset('js/site/script.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script>
+{{-- <script src="{{ asset('js/site/modernizr.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/jquery.popup.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/impact_lib.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/lib.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/script.js') }}"></script> --}}
+{{-- <script type="text/javascript" src="{{ asset('js/site/jquery.formstyler.js') }}"></script> --}}
 
 
 <script src="{{ asset('js/site/profile.js') }}"></script> 

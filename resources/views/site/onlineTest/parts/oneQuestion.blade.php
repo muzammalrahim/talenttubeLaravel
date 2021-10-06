@@ -1,15 +1,10 @@
-<div class="add_new_job">
+{{-- <div class="add_new_job">
   		@php
   			$q = $UserOnlineTest->nextQuestion();
   			$count = $UserOnlineTest->onlineTest->testquestions->count();
-  			// dd($count);
-  			// dd($q->question);	
   		@endphp
-		{{-- @dump($UserOnlineTest->rem_time) --}}
         <input type="hidden" name="remaining_time" class="timedb" value="{{$UserOnlineTest->rem_time}}">
 			<form class="usersAnswer" name="usersAnswer">
-				{{-- <p> {{$q->question}} </p> --}}
-
 				<div class="job_heading dflex">
 	                <div class="w_80p p10">
 	                    <h3 class=" job_title"><a>{{$q->question}}</a></h3>
@@ -17,7 +12,7 @@
 	                <div class="w_20p">
 	                    @if (!empty($q->image_name) )
 			            <div class="row form-group questionImage">
-			                <img data-photo-id=""  id="photo" style="height:108px"   class="photo" data-src="" 
+			                <img data-photo-id=""  id="photo" style="height:108px"   class="photo" data-src=""
 			                src="{{ asset('media/public/onlineTest/' . $q->image_name ) }}" >
 			            </div>
 			            @endif
@@ -39,5 +34,78 @@
                 @endif
 
 			</form>
-</div>
+</div> --}}
 
+
+<section class="row">
+                <div class="col-md-12">
+
+                		@php
+				  			$q = $UserOnlineTest->nextQuestion();
+				  			// dd($q);
+				  			$count = $UserOnlineTest->onlineTest->testquestions->count();
+				  			// dd($count);
+				  			// dd($q->question);
+				  		@endphp
+                  <div class="profile profile-section test-time clearfix">
+                  	<div class="head icon_head_browse_matches"> <h2>{{$UserOnlineTest->onlineTest->name}}</h2><div class="countdown fl_right fw-bold fs-2"> </div>  </div>
+                    <h2>Questions <span> <input type="hidden" name="remaining_time" class="timedb" value="{{$UserOnlineTest->rem_time}}"></span></h2>
+                    <form class="usersAnswer" name="usersAnswer">
+                     <div class="row">
+                     	 @if (!empty($q->image_name) )
+                     <div class="col-sm-12 col-md-5 order-md-2 order-sm-1">
+                        <div class="test-img-wrap" >
+                           <img src="{{ asset('media/public/onlineTest/' . $q->image_name ) }}" height="281px" alt="img" />
+                        </div>
+                   </div>
+                     @endif  
+                   <div class="col-sm-12 col-md-6 order-md-1 order-sm-2">
+                   	<input type="hidden" name="qid" value="{{$q->id}}">
+                    <div class="job-box-info block-box clearfix">
+                      <div class="box-head">
+                        <h4 class="text-white">{{$q->question}}</h4>                          
+                      </div>
+                         <ul class="select-answer">
+                          <li>
+                            <div class="form-check emp-redio">
+                             <input type="radio" value="1"  id="test1" name="users_answer" checked>
+                             <label for="test1">{{$q->option1}}</label>
+                           </div>
+                         
+                        </li>
+                        <li>
+                         <div class="form-check emp-redio">
+                           <input type="radio"  value="2" id="test2" name="users_answer">
+                            <label for="test2">{{$q->option2}}</label>
+                         </div>
+                        </li>
+                        <li>
+                          <div class="form-check emp-redio">
+                           <input type="radio" value="3"  id="test3" name="users_answer" >
+                           <label for="test3">{{$q->option3}}</label>
+                         </div>
+                       
+                      </li>
+                      <li>
+                       <div class="form-check emp-redio">
+                         <input type="radio"  value="4" id="test4" name="users_answer">
+                          <label for="test4">{{$q->option4}}</label>
+                       </div>
+                      </li>
+                         </ul>
+                          <input type="hidden" name="userOnlineTest_id" value="{{$UserOnlineTest->id}}">
+                   </div>
+                 </div>
+                   
+                  </div>
+                   <div class="button-start">
+                  	 @if ($UserOnlineTest->current_qid == $count-1)
+                    <button type="button" class="orange_btn start-btn jbtn saveTestAndResult"><i class="fas fa-angle-right"></i> Save Test</button>
+                     @else
+                    <button type="button" class="orange_btn start-btn jbtn nextQuestion"><i class="fas fa-angle-right"></i> Next Question</button>
+                    @endif
+                  </div>
+                </form>
+                </div>
+                
+              </section>

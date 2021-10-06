@@ -39,7 +39,7 @@
         <h2>TALENT MATCHER<span >in the<strong>world.</strong></span></h2>        
         <div class=" header-buttons ">
           <div class="dual-button">
-            <a href="#" class="orange_btn interview-button"><img src="assests/images/Interview-icon.svg" alt="" class="interview-icon"> <img src="assests/images/interview_hover.svg" class="interview_hover_icon" alt="" style="display: none;"> Interview concierge</a>
+            <a href="#" data-toggle="modal" data-target="#interviewConciergeModal" class="orange_btn interview-button"><img src="assests/images/Interview-icon.svg" alt="" class="interview-icon"> <img src="assests/images/interview_hover.svg" class="interview_hover_icon" alt="" style="display: none;"> Interview concierge</a>
 
         {{--     <a href="dashboard.html" class="blue_btn"><i class="fas fa-th-large"></i> Dashboard</a> --}}
           </div>          
@@ -132,67 +132,7 @@
 
 <!-- ========================Job wrapper's HTML ends Here======================= -->
 
-<!-- =================== main Section starts here================================-->
-    
-<div class="container-fluid first-section">
-  <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-6">  
-      <div class="feature-img-wrap">
-        <img src="assests/images/man.svg" alt="vector-img" />
-      </div>             
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-6">
-     <div class="article">
-        <h2>Tired of applying</h2>
-       <h3> with Countless employers</h3>
-      <p>uploading the same old documents and answering the same old question?</p>
-      <p>Create a Talent Tube account today and make Employers find you!</p>
-    </div>
-    </div>
-  </div>
-</div>
 
-<div class="container-fluid first-section">
-  <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-6 order-md-2 order-sm-1">  
-      <div class="feature-img-wrap">
-        <img src="assests/images/women.svg" alt="vector-img" />
-      </div>             
-    </div>
-    <div class="col-sm-12 col-md-6 col-lg-6 order-md-1 order-sm-2">
-     <div class="article second-article">
-      <h2>Watch, compare &</h2>
-      <h3> then decides to get right one</h3>
-      <p>73% of all consumers are more likely to commit to a purchase after watching a video</p>
-      <p> Compare that to the 84% who will reject a resume due to lack of personalisation. At Talent Tube,</p>
-      <p> 
-       we believe in bridging the gap between a resume and a job application through video technology, 
-       to increase Job Seekers chances of success.</p>
-      </div>
-    </div>
-  </div>
-</div>
-
-          <p>Lorem ipsum dolor sit amet amet amet amet consectetur adipisicing elit.</p>
-        </div>
-      </a>
-   </div>
-    <div class="col-md-4 col-lg-4 col-sm-12">
-      <a href="#" class="feature-wrap clearfix">
-        <div class="icon-wraper">
-          <img src="assests/images/icon3.png" alt="icon-1" />
-        </div>
-        <div class="feature-text-wrap">
-          <h2>Get your Job</h2>
-          <p>Lorem ipsum dolor sit amet amet amet amet consectetur adipisicing elit.</p>
-        </div>
-      </a>
-   </div>
-  </div>
-</div>
-
-
-<!-- ========================Job wrapper's HTML ends Here======================= -->
 
 <!-- =================== main Section starts here================================-->
     
@@ -304,16 +244,17 @@
    <!-- /wrapper -->
 
 
-@include('site.home.login')
+{{-- @include('site.home.login') --}}
 
-@include('site.home.interviewLogin')
+{{-- @include('site.home.interviewLogin') --}}
 
-@include('site.footer')
+{{-- @include('site.footer') --}}
 
 
 
 {{-- </div> --}}
 
+@include('web.home.interviewConcierge.signin')
 
 
 @stop
@@ -335,6 +276,10 @@
 @stop
 
 @section('custom_footer_css')
+
+<style type="text/css">
+  
+</style>
 
 @stop
 

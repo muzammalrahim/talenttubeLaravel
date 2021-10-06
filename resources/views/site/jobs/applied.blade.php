@@ -61,7 +61,7 @@
 <div class="col-sm-12 col-md-6">
     <div class="job-box-info">
         <div class="box-head">
-            <h4>{{$job->title}}</h4>
+            <h4 class="text-white">{{$job->title}}</h4>
             Location:<span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span></label>
             <i data-toggle="modal" data-target="#myModal" class="close-box fa fa-times"></i>
             </div>

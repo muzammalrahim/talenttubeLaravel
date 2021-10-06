@@ -57,6 +57,8 @@
                                </ul>
                          </div>
             {{-- expr --}}
+      
+                  </div>
                       @endforeach
                        @else
                         <div class="add_new_job">
@@ -64,8 +66,6 @@
                           <h3>You have not added any reference yet</h3>
                       </div>
                       @endif
-      
-                  </div>
               </div>
            </div>
       </section>

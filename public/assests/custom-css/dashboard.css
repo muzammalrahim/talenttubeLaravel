@@ -2882,6 +2882,7 @@ opacity: 1 !important;
 
 }
 
+
 .userLocationSpan{
     word-break: break-all;
 }
@@ -2943,42 +2944,6 @@ opacity: 1 !important;
 .pointer{
     cursor: pointer;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /*=== upload video ===== */
@@ -3043,3 +3008,4 @@ span.v_title {
     height: 10px;
     display: inline-block;
 }
+

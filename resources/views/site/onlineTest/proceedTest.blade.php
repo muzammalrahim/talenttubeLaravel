@@ -8,7 +8,7 @@
 
 @section('content')
 <div class="newJobCont">
-    <div class="head icon_head_browse_matches"> {{$UserOnlineTest->onlineTest->name}} <div class="countdown fl_right"> </div> </div>
+    
 
     	<div class="questionData">
     		@include('site.onlineTest.parts.oneQuestion')  {{-- site/onlineTest/parts/oneQuestion --}}
@@ -37,7 +37,7 @@ $(document).ready(function(){
 
 	var timedb = $('.timedb').val();
 
-	// console.log(timedb);
+	console.log(timedb);
 	var timer2 = timedb;
 	// var timer2 = "5:01";
 	var interval = setInterval(function() {
