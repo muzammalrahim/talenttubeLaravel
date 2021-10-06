@@ -19,12 +19,12 @@
 
 @section('body')
 
-<div class="container-fluid Content">
+<div class="container-fluid Content emp-step-1" id="step-1">
             <a href="{{ route('homepage') }}" class="row logo">
                 <img src="assests/images/talent-tube.png" alt="">
           </a>
         <div class="row cross-refrance-wrapper">
-             <form name="frm_date" method="post" action="{{route('register')}}" autocomplete="off" >
+             <form name="frm_date" method="post" action="{{route('registerEmployer')}}" autocomplete="off" >
           {{ csrf_field() }}
                 <div class="row update-info">
                  <h4>Almost There! Just a Little More To Go</h4>
@@ -32,7 +32,7 @@
                        <label for="">Company Name</label>
                     <div class="input-group mb-3">
                         <span class="input-group-text" id="basic-addon1"><img src="assests/images/company-icon.png" alt=""></span>
-                        <input type="text" class="form-control" maxlength="20" value="" placeholder="This will be public" aria-label="Username" aria-describedby="basic-addon1" required>
+                        <input type="text" name="companyname"  class="form-control" maxlength="20" value="" placeholder="This will be public" aria-label="Username" aria-describedby="basic-addon1" required>
                             <div id="companyname_check" class="icon_check to_hide"></div>
                             <div id="companyname_error" class="error to_hide">&nbsp;</div>
                       </div>

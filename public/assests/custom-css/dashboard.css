@@ -224,7 +224,7 @@ body{
     border-radius: 5px;
     border: 1px solid #FF9400;
 }
-.album-upload-img .remove {
+.album-upload-img .remove , .deleteVideoSpan{
     display: none;
     background: #D11203;
     border: 1px solid #D11203;
@@ -2883,65 +2883,129 @@ opacity: 1 !important;
 }
 
 
-/*resume tab of profile page in job seeker section css here*/
-  .userLocationSpan{
-        word-break: break-all;
-      }
+.userLocationSpan{
+    word-break: break-all;
+}
+
+.uploaded-file-resume { 
+    width: 250px;
+    margin: 20px 30px;
+    word-break: break-all;
+    border: 1px dashed #003678;
+    display: inline-block;
+    position: relative;
+    padding-top: 100px;
+}
+
+.resume-form{
+    display: inline !important;
+}
+.removeAttachBtn{
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: red;
+    padding:0 6px;
+    width: 22px;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+}
+.removeAttachBtn:hover{
+    color: #fff;
+    cursor: pointer;
+}
+.downloadAttachBtn{
+    color:#7496a3 !important;
+    font-size: 40px;
+    position: absolute;
+    right: 50%;
+    left: 40%;
+    top: 30%;
+}
+.attach_title{
+    color:#989898;
+    font-size: 20px;
+}
+.save-resume-btn{
+    height: 41px;
+    margin-left: 10px;
+    background-color: #f48128;
+    color: #fff;
+    border: 1px solid #f48128;
+    border-radius: 10px;
+    padding: 0px 10px;
+}
+.save-resume-btn:hover{
+    background-color: #fff;
+    color: #f48128;
+    border: 1px solid #f48128;
+}
+.pointer{
+    cursor: pointer;
+}
 
 
+/*=== upload video ===== */
+#video_upload_select{ background: #FF5722;  }
+.item_video{ background: #e8542b; }
 
-      .uploaded-file-resume { 
-        width: 250px;
-        margin: 20px 30px;
-        word-break: break-all;
-        border: 1px dashed #003678;
-        display: inline-block;
-        position: relative;
-        padding-top: 100px;
-      }
+.v_title_shadow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.1);
+}
+span.v_title {
+    text-align: center;
+    color: white;
+    display: block;
+    position: absolute;
+    top: 32%;
+    width: 100%;
+}
 
-      .resume-form{
-        display: inline !important;
-      }
-      .removeAttachBtn{
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        background: red;
-        padding:0 6px;
-        width: 22px;
-        border-radius: 50%;
-        color: #fff;
-        cursor: pointer;
-      }
-        .removeAttachBtn:hover{
-        color: #fff;
-        cursor: pointer;
-      }
-      .downloadAttachBtn{
-        color:#7496a3 !important;
-        font-size: 40px;
-        position: absolute;
-        right: 50%;
-        left: 40%;
-        top: 30%;
-      }
-      .attach_title{
-         color:#989898;
-        font-size: 20px;
-      }
-      .save-resume-btn{
-        height: 41px;
-        margin-left: 10px;
-        background-color: #f48128;
-        color: #fff;
-        border: 1px solid #f48128;
-        border-radius: 10px;
-        padding: 0px 10px;
-    }
-    .save-resume-btn:hover{
-      background-color: #fff;
-      color: #f48128;
-      border: 1px solid #f48128;
-    }
-  
+.error.v_error {
+    text-align: center;
+    color: white;
+    display: block;
+    position: absolute;
+    bottom: 0;
+    background: black;
+    padding: 4px;
+    width: 100%;
+    line-height: 16px;
+}
+.v_progress{
+    position: absolute;
+    bottom: 0;
+    background: black;
+    padding: 6px;
+ }
+
+ .videoShowModal .pp_info_start{ width: auto; }
+.item_video .video_link {
+    border: 1px solid white;
+    display: inline-block;
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.item_video:hover .v_title_shadow { display:none; }
+.item_video:hover .deleteVideoSpan { display:block !important; }
+
+.item_video:hover .video_link {
+    border-bottom: 3px solid red;
+}
+
+
+.smallSpinner.recentJobSpinner {
+    position: relative;
+    width: 20px;
+    height: 10px;
+    display: inline-block;
+}
+

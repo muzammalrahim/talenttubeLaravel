@@ -252,8 +252,7 @@
                      <div class=" Gallery">
                         <h2>Video's</h2>
 
-
-                           @include('web.user.profile.tabs.videos') 
+                           @include('web.user.profile.tabs.videos') {{-- web/user/profile/tabs/videos --}}
 
                      </div>
                   </div>
