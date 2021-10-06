@@ -180,16 +180,20 @@
 	                <h6>Sallary Range:</h6>
 	                <p>{{getSalariesRangeLavel($js->salaryRange)}}</p>
 	              </div>
-	                  <div class="row blocked-user-experience">
-	                    <h6>Industory Experience:</h6>
-	                   @if(isset($js->industry_experience))
-				        @foreach ($js->industry_experience as $ind)
-				            <ul class="indsutrySelect">
-				                <li> <span>{{getIndustryName($ind)}}</span></li>
-				            </ul>
-				        @endforeach
-				        @endif
-	                  </div>
+	              @if (isEmployer())
+	              	{{-- expr --}}
+                  <div class="row blocked-user-experience">
+                    <h6>Industory Experience:</h6>
+                   @if(isset($js->industry_experience))
+			        @foreach ($js->industry_experience as $ind)
+			            <ul class="indsutrySelect">
+			                <li> <span>{{getIndustryName($ind)}}</span></li>
+			            </ul>
+			        @endforeach
+			        @endif
+                  </div>
+	              @endif
+                  
 
 	            </div>
 	          </div>

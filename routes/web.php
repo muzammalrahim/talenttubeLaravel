@@ -639,7 +639,6 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/use-previous-result', 'Site\SiteUserController@userPreviousResult')->name('userPreviousResult');
     Route::post('employer/bulk/generatePDF', 'Site\EmployerController@empGeneratePDF')->name('empBulk.GeneratePDF');
 
-
     // ================================================ itertaion-11 Talent Matcher ================================================
 
     Route::get('talent-matcher', 'Site\TalentController@talent_matcher')->name('talent_matcher');
