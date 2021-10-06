@@ -108,68 +108,69 @@
 <h3> You have not received any interview invitation yet.</h3>
 @endif
   --}}
- @section('content')
+@section('content')
 <section class="row">
-                <div class="col-md-12">
-                  <div class="profile profile-section">
-                    <h2>Received Interview Invitations</h2>
-                     <div class="row">
-                    @if ($Interviews_booking->count() > 0)
-                    @foreach ($Interviews_booking   as $Int_booking)
-                       <div class="col-sm-12 col-md-6">
-                        <div class="job-box-info interview-box clearfix">
-                          <div class="box-head">
-                            <h4>{{$Int_booking->id}}: Interview from {{$Int_booking->employer->company}}</h4>                          
-                          </div>
-                             <ul class="job-box-text clearfix">
-                                <li class="text-info-detail clearfix">
-                                  <label>Select Status:</label>
-                                  <span>
-                                    <form class="statusOfInterview d-contents" name="statusOfInterview">  
-                                       @csrf
-                                      <select class="form-control" name="hide" style="background: #fff !important;">
-                                         <option value= "0"> Select Status   </option> 
-                                          <option value= "yes"> Hide Interview </option> 
-                                          @if ($Int_booking->status == 'pending')
-                                            <option value= "decline"> Decline Interview </option> 
-                                          @endif
-                                      </select>
-                                       <input type="hidden" class="interview_id" name="interview_id" value="{{$Int_booking->id}}">
-                                     </form>
-                                  </span>
-                                </li>
-                                @if ($Int_booking->template->type == "phone_screeen")
-                                <li class="text-info-detail clearfix">
-                                     <label>Template Name:</label>
-                                 <span><b> Phone Screen</b></span>
-                                </li>
-                                  @else
-                                      <li class="text-info-detail clearfix">
-                                 <label>Interview Type:</label>
-                                 <span><b> {{$Int_booking->template->type}} </b></span>
-                               </li>
-                                  @endif
-
-                                    <li><span>  Instructions:</span><span> <b> {{$Int_booking->template->employers_instruction}} </b></span>
-                                     </li>
-                            </ul>
-                         <div class="dual-tags interview-btn-call clearfix">
-                              <a  href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button" class="interview-tag">Respond Interview</a>
-                              <span class="pendinginterview-tag used-tag pull-right">{{$Int_booking->status}}</span>
-                            </div>
-                       </div>
-                     </div>  
-                          @php
-                        $question = $Int_booking->tempQuestions;
-                      @endphp
-                  @endforeach  
-                      @else
-                      <h3> You have not received any interview invitation yet.</h3>
+  <div class="col-md-12">
+    <div class="profile profile-section">
+      <h2>Received Interview Invitations</h2>
+      <div class="row">
+      @if ($Interviews_booking->count() > 0)
+      @foreach ($Interviews_booking   as $Int_booking)
+        <div class="col-sm-12 col-md-6">
+          <div class="job-box-info interview-box clearfix">
+            <div class="box-head">
+              <h4>{{$loop->index+1}}: Interview from {{$Int_booking->employer->company}}</h4>                          
+            </div>
+            <ul class="job-box-text clearfix">
+              <li class="text-info-detail clearfix">
+                <label>Select Status:</label>
+                <span>
+                  <form class="statusOfInterview d-contents" name="statusOfInterview">  
+                    @csrf
+                    <select class="form-control" name="hide" style="background: #fff !important;">
+                      <option value= "0"> Select Status   </option> 
+                      <option value= "yes"> Hide Interview </option> 
+                      @if ($Int_booking->status == 'pending')
+                        <option value= "decline"> Decline Interview </option> 
                       @endif
-                     </div>
-                  </div>
-                </div>
-              </section>
+                    </select>
+                    <input type="hidden" class="interview_id" name="interview_id" value="{{$Int_booking->id}}">
+                  </form>
+                </span>
+              </li>
+              @if ($Int_booking->template->type == "phone_screeen")
+              <li class="text-info-detail clearfix">
+                <label>Template Name:</label>
+                <span><b> Phone Screen</b></span>
+              </li>
+              @else
+              <li class="text-info-detail clearfix">
+                <label>Interview Type:</label>
+                <span><b> {{$Int_booking->template->type}} </b></span>
+              </li>
+              @endif
+              <li>
+                <span>  Instructions:</span><span> <b> {{$Int_booking->template->employers_instruction}} </b></span>
+              </li>
+            </ul>
+            <div class="dual-tags interview-btn-call clearfix">
+              <a  href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
+                class="interview-tag">Respond Interview</a>
+                <span class="pendinginterview-tag used-tag pull-right">{{$Int_booking->status}}</span>
+              </div>
+            </div>
+          </div>  
+          @php
+          $question = $Int_booking->tempQuestions;
+          @endphp
+          @endforeach  
+          @else
+          <h3> You have not received any interview invitation yet.</h3>
+          @endif
+      </div>
+    </div>
+  </div>
+</section>
 
 @include('site.user.interview.popup')
 @stop
