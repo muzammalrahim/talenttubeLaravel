@@ -156,6 +156,8 @@
  --}}
 
 {{-- html for emloyers job section --}}
+  <div class="row profile profile-section">
+    <h2>My Jobs</h2>
    <div class="row">
                  @if ($jobs->count() > 0)
                  @foreach ($jobs as $job)
@@ -217,16 +219,14 @@
                                 <label>Expired On:</label>
                                 <span>{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</span>
                               </li>
-                                 <a href="{{route('empJobApplications',['id' => $job->id])}}">
-                                <button type="button">
-                                <div class="j_label bold">Applications</div>
-                                <div class="j_value" style="font-weight:700;"><u>{{($job->applicationCount)?($job->applicationCount->aggregate):0}}<u/></div></button>
+                                 <a href="{{route('empJobApplications',['id' => $job->id])}}" class="blue_btn py-2">
+                                Applications: <u>{{($job->applicationCount)?($job->applicationCount->aggregate):0}}<u/></span>
                                 </a>
                             </ul>
                          
                          </div>
                          <div class="box-footer1 box-footer  clearfix">
-                           <div class=" employe-btn-group " style="float: right !important;">
+                           <div class=" employe-btn-group " style="float: right !important; width: 100%!important;">
                            <button class="block-btn" data-toggle="modal" data-target="#myModal"><i class="fas fa-trash" ></i> Delete</button>
                           <a href="{{route('jobDetail',['id' => $job->id])}}"> <button class="detail-btn" ><i class="fas fa-file-alt"></i> Detail</button></a>
                            <a href="{{route('employerJobEdit',['id' => $job->id])}}"><button class="like-btn"><i class="fas fa-thumbs-up"></i> Edit</button></a>
@@ -241,7 +241,7 @@
                             <h3>You have not posted any job yet</h3>
                     @endif
                    </div>
-
+</div>
 
 
 

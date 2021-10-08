@@ -4,7 +4,7 @@
 
 
 @section('content')
-<div class="newJobCont">
+{{-- <div class="newJobCont">
 
     <div class="head icon_head_browse_matches">Welcome to Interview Concierge</div>
     <div class="add_new_job">
@@ -13,12 +13,12 @@
         <a  class="w50" href="{{route('interviewconcierge.edit')}}">Click here to edit an existing Booking Schedule</a>
     </div>
 
-    <h4 class="text-center py-2 font-weight-normal"> My Booked Interviews</h4>
+    <h4 class="text-center py-2 font-weight-normal"> My Booked Interviews</h4> --}}
 
     {{-- @dump($interview) --}}
 
-      <div class="row font-weight-bold p-2">
-        {{-- <div class="col-md-2">Sr#</div> --}}
+{{--       <div class="row font-weight-bold p-2">
+        <div class="col-md-2">Sr#</div>
         <div class="col-md-2 center">Company</div>
         <div class="col-md-2 center">Booking ID</div>
         <div class="col-md-2 center">Position</div>
@@ -30,11 +30,11 @@
    @foreach ($interview as $int)
 
       <div class="row p-2">
-     {{--    @for($x = 1; $x <=$interview->count(); $x++)
+        @for($x = 1; $x <=$interview->count(); $x++)
          
-        @endfor --}}
+        @endfor
         
-        {{-- <div class="col-md-2">{{$x}}</div> --}}
+        <div class="col-md-2">{{$x}}</div>
         <div class="col-md-2 center">{{$int->companyname}}</div>
         <div class="col-md-2 center">{{$int->uniquedigits}}</div>
         <div class="col-md-2 center">{{$int->positionname}}</div>
@@ -49,7 +49,7 @@
     
 
 <div class="cl"></div>
-</div>
+</div> --}}
 
 
 {{-- <a   class = "interviewConciergeRoute" >
@@ -58,26 +58,23 @@
 
 
 {{-- @include('site.home.deleteSlotPop') --}}
-
-
-
-
 {{-- html for interview page --}}
 
 <section class="row">
   <div class="col-md-12">
     <div class="profile profile-section">
-      <h2>Welcome to Interview Concierge</h2>
-        <div class="add_new_job">
-        <div class="job_row_heading jobs_filter d-flex" style="color: ">
-        <a  class="w50 " href="{{route('interviewconcierge.new')}}">Click here to create a new Booking Schedule</a> <br>
-        <a  class="w50" href="{{route('interviewconcierge.edit')}}">Click here to edit an existing Booking Schedule</a>
+      
+        <div class="row filter-section py-2 mb-5" >
+          <h2>Welcome to Interview Concierge</h2>
+        <div class="job_row_heading jobs_filter d-flex pb-2" style="color: ">
+        <a  class=" blue_btn mx-3 text-center py-1" href="{{route('interviewconcierge.new')}}">Click here to create a new Booking Schedule</a> <br>
+        <a  class=" orange_btn mx-3 text-center py-1" href="{{route('interviewconcierge.edit')}}">Click here to edit an existing Booking Schedule</a>
     </div>
     </div>
        <div class="row">
-    <h4 class="text-center py-2 font-weight-normal"> My Booked Interviews</h4>
-         <table class="table table-striped table-hover">
-          <thead class=" text-white" style="background:#2672AB;">
+    <h4 class=" py-2 font-weight-bold"> My Booked Interviews</h4>
+         <table class="table table-striped table-hover table-bordered">
+          <thead class=" text-white " style="background:#2672AB;">
            <tr><th>Company</th>
             <th>Booking Id</th>
             <th>Position</th>
@@ -86,30 +83,16 @@
             <th>Actions</th></tr>
           </thead>
           <tbody>
+             @foreach ($interview as $int)
             <tr>
-            <td>Creative Tech</td>
-            <td>16517</td>
-            <td>Laravel Developer</td>
-            <td>no</td>
-            <td>0</td>
-            <td><i class="fas fa-edit text-white p-2" style="background: #F48128; border-radius: 5px;"></i></td>
+            <td>{{$int->companyname}}</td>
+            <td>{{$int->uniquedigits}}</td>
+            <td>{{$int->positionname}}</td>
+            <td>{{$int->additionalmanagers}}</td>
+            <td>{{($int->interviewBookings)?($int->interviewBookings->aggregate):0}}</td>
+            <td><a href="{{route('interviewconciergeEdit',['id' => $int->id])}}"><i class="fas fa-edit text-white p-2" style="background: #F48128; border-radius: 5px;"></i></a></td>
             </tr>
-            <tr>
-            <td>Creative Tech</td>
-            <td>16517</td>
-            <td>Laravel Developer</td>
-            <td>no</td>
-            <td>0</td>
-            <td><i class="fas fa-edit text-white p-2" style="background: #F48128; border-radius: 5px;"></i></td>
-            </tr>
-            <tr>
-            <td>Creative Tech</td>
-            <td>16517</td>
-            <td>Laravel Developer</td>
-            <td>no</td>
-            <td>0</td>
-            <td><i class="fas fa-edit text-white p-2" style="background: #F48128; border-radius: 5px; "></i></td>
-            </tr>
+             @endforeach
           </tbody>
         </table>
        </div>

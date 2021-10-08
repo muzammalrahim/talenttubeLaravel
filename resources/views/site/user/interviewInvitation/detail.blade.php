@@ -22,7 +22,7 @@
 
     {{-- @include('site.user.interviewInvitation.confirmed_interview')  --}}
     {{-- site/user/interviewInvitation/jsAccepInterview --}}
-
+{{-- 
     <div class="IndustrySelect">
       <p class="p0 qualifType"> Template Name: <b>  {{$UserInterview->template->template_name}} </b> </p>
       @if ($UserInterview->template->type == 'phone_screeen' )
@@ -71,7 +71,80 @@
             <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p> 
         @endif
         
-      @endforeach
+      @endforeach --}}
+
+
+
+      {{-- html for interview detail page --}}
+
+<section class="row">
+                <div class="col-md-12 ">
+                  <div class="profile profile-section interview-details-page">
+                    <h2>Interview Detail</h2>
+                    <hr>
+                     <div class="row">
+                       <div class="col-sm-12 col-md-6">
+                           <p class="text-dark">Template Name: <b>{{$UserInterview->template->template_name}}</b></p>
+                           </div>
+                           <div class="col-sm-12 col-md-6">
+                             @if ($UserInterview->template->type == 'phone_screeen' )
+                             <p class="text-dark"> Template Type: <b> Phone Screen</b> </p>
+                             @else
+                           <p class="text-dark">Template Type: <b>{{$UserInterview->template->type}}</b></p>
+
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                           <p class="text-dark">Employer Instructions: <b>{{$UserInterview->template->employers_instruction}}</b></p>
+                        </div>
+                       @endif
+                        <div class="col-sm-12 col-md-6">
+                           <p class="text-dark">Interviewer Name: <b>{{$UserInterview->employer->company}}</b> </p>
+                        </div>
+                          @if ($UserInterview->template->employer_video_intro)
+                         <div class="col-sm-12 col-md-6">
+                           <p class="text-dark">Employr's Intro: <h1 data-toggle="modal" data-target="#exampleModalCenter1"><i class="fas fa-photo-video"></i></h1> </p>
+                        </div>
+                        @endif
+                        </div>
+                       <div class="row">
+                        <div class="col-md-12">
+                           @php
+                            $tempQuestions = App\InterviewTempQuestion::where('temp_id', $UserInterview->temp_id)->get();
+                          @endphp
+                           @foreach ($tempQuestions as $question)
+                          <div class="question-ans">
+                              <p class="accordionone text-light"><b>Question {{$loop->index+1}}:</b>{{$question->question}}</p>
+                               @php
+                                  $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $UserInterview->id)->
+                                  where('user_id' , $user->id)->first();   
+                                @endphp
+                              <div class="panel">
+                                 @if ($question->video_response == 1)
+                                <p><h1 data-toggle="modal" data-target="#exampleModalCenter"><i class="fas fa-photo-video"></i></h1></p>
+                                @else
+                                 <p class="text-dark"><b>Your Response:</b> {{$answers->answer}} </p>
+                                 @endif
+                              </div>
+                            </div>
+                            @endforeach
+                            <div class="question-ans">
+                              <p class="accordionone text-light"><b>Question 2:</b> Are You aware median house price in Sydney is over 1 million dollars? </p>
+                              <div class="panel">
+                                  <p class="text-dark"><b>Your Response:</b> dsdofsdbkfjsfb </p>
+                              </div>
+                            </div>
+                           
+                            <div class="question-ans">
+                              <p class="accordionone text-light"><b>Question 3:</b> Are You aware this question is not timed? </p>
+                              <div class="panel">
+                                  <p class="text-dark"><b>Your Response:</b> dsdofsdbkfjsfb </p>
+                              </div>
+                            </div>
+                          </div>
+                       </div>
+                  </div>
+                </div>
+              </section>
 
     @else
 
@@ -92,6 +165,42 @@
 </div>
 
 
+<!-- ================================Modal for video=================================== -->
+<!-- Button trigger modal -->
+
+  
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <!-- <div class="modal-header"> -->
+       <!--  -->
+        <!-- </div> -->
+      <div class="modal-body">
+        <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
+        <iframe width="100%" height="215" src="https://www.youtube-nocookie.com/embed/nknwAOtmtDk" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <!-- <div class="modal-header"> -->
+       <!--  -->
+        <!-- </div> -->
+      <div class="modal-body">
+        <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
+        <iframe width="100%" height="215" src="https://www.youtube-nocookie.com/embed/nknwAOtmtDk" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ================================Modal for video ends=================================== -->
 
 
 @stop
@@ -108,7 +217,7 @@
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 
 @stop
 

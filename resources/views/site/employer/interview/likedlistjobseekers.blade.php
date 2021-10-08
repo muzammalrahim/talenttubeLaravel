@@ -1,5 +1,5 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster')
+@extends('web.employer.employermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
@@ -54,7 +54,7 @@
 @stop
 
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
@@ -63,10 +63,6 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 
 <style>
-
-.d-none{
-    display: none;
-}
 
 .notbrak{
     display: inline-block;
@@ -181,7 +177,7 @@ $('.notificationForm .cbx_list').html(cbx_hidden);
 
 var formData = $('.notificationForm').serializeArray();
 
-$('.sendNotification').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+// $('.sendNotification').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
 $('.general_error').html('');
 
 $.ajax({

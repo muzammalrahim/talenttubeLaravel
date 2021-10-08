@@ -1,23 +1,13 @@
 
 
 @extends('mobile.user.usermaster')
-
-
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 @stop
-
 @section('content')
-
 <div class="newJobCont">
-  {{-- <div class="head icon_head_browse_matches">Received Interview Invitations</div> --}}
-
   <h6 class="h6 jobAppH6">Hidden Interview Invitations</h6>
-
-  {{-- <div class="font11 my-3"><a href="{{ route('MunhideInterviews') }}" class="unhideInterviews"> Click here to Un-Hide your interviews </a> </div> --}}
-
-
   @if ($UserInterview->count() > 0)
   @foreach ($UserInterview   as $Int_booking)
 
@@ -48,7 +38,6 @@
           <a class="btn btn-sm btn-primary seeDetailOfInterview" href="{{ route('MinterviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}">Click here to respond</a>
         </div>
       @endif
-
       <div class="font11 float-right mt-1">
         <form class="statusOfInterview" name="statusOfInterview">  
           @csrf
@@ -75,10 +64,9 @@
 @else
 <h3> You have not received any interview invitation yet.</h3>
 @endif
-
 <div class="cl"></div>
 </div>
-{{-- @include('site.user.interview.popup') --}}
+
 @stop
 
 @section('custom_footer_css')
