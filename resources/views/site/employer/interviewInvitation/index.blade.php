@@ -8,21 +8,15 @@
 @stop
 
 @section('content')
-
-<div class="newJobCont">
+{{-- <div class="newJobCont">
   <div class="head icon_head_browse_matches">Interview Invitations <a href="{{ route('unhideInterviews') }}" class="unhideInterviews"> Click here to Un-Hide your interviews </a> </div>
   @if ($UserInterview->count() > 0)
   @foreach ($UserInterview   as $interview)
-
-  @dd($interview->template->template_name)
-  <div class="job_row interviewBookingsRow_{{$interview->id}}">
-    
+  <div class="job_row interviewBookingsRow_{{$interview->id}}">    
     <div class="job_heading p10">
       <div class="w70 dinline_block">
         <h3 class=" job_title"><a> <b>Invitation {{$loop->index+1}}: </b> Interview with {{$interview->js->name}}</a></h3>
       </div>
-
-
       <div class="w10 selectStatus d-contents">
 
         <form class="statusOfInterview d-contents" name="statusOfInterview">  
@@ -36,15 +30,12 @@
           </select>
           <input type="hidden" class="interview_id" name="interview_id" value="{{$interview->id}}">
         </form>
-
       </div>
-
       <div class="fl_right">
         <div class="j_label bold">Status:</div>
           <div class="j_value text_capital">{{$interview->status}}</div>
       </div>
     </div>
-
     <div class="job_info row p10 dblock">
       <div class="timeTable">
         <div class="IndustrySelect">
@@ -59,19 +50,76 @@
            </div>
         </div>
       </div>
-
-
     </div>
   </div>
-
 @endforeach  
 @else
 <h3> You have not booked any interview yet</h3>
 @endif
-
 <div class="cl"></div>
-</div>
-{{-- @include('site.user.interview.popup') --}}
+</div> --}}
+
+
+{{-- html for interview page --}}
+
+   <section class="row">
+                <div class="col-md-12">
+                  <div class="profile profile-section">
+                     <a href="{{ route('unhideInterviews') }}" class="unhideInterviews blue_btn float-right py-1"> Click here to Un-Hide your interviews </a>
+                    <h2> Interview Invitations</h2>
+                   
+                     <div class="row">
+                        @if ($UserInterview->count() > 0)
+                         @foreach ($UserInterview   as $interview)
+                       <div class="col-sm-12 col-md-6">
+                        <div class="job-box-info interview-box clearfix">
+                          <div class="box-head">
+                            <h4>Invitation {{$loop->index+1}}: Interview with {{$interview->js->name}}</h4>                          
+                          </div>
+                             <ul class="job-box-text clearfix">
+                                <li class="text-info-detail clearfix">
+                                  <label>Select Status:</label>
+                                  <span>
+                                     
+                                      <form class="statusOfInterview d-contents" name="statusOfInterview">  
+                                        @csrf
+                                        <select name="hide" class="form-control" style="background: #fff !important;">
+                                          <option value= "0"> Select Status   </option> 
+                                          <option value= "yes"> Hide Interview </option> 
+                                          @if ($interview->status == 'pending')
+                                            <option value= "decline"> Decline Interview </option> 
+                                          @endif
+                                        </select>
+                                        <input type="hidden" class="interview_id" name="interview_id" value="{{$interview->id}}">
+                                      </form>
+                                  </span>
+                                </li>
+                                <li class="text-info-detail clearfix">
+                                 <label>Template Name:</label>
+                                 <span>{{$interview->template->template_name}}</span>
+                                </li>
+                               <li class="text-info-detail clearfix">
+                                 <label>Interview Type:</label>
+                                  @if ($interview->template->type == "phone_screeen")
+                                    <span> <b> Phone Screen</b> </span>
+                                  @else
+                                    <span class="p0 qualifType m5">  <b> {{$interview->template->type}} </b> </span>
+                                  @endif
+                               </li>
+                            </ul>
+                            <div class="dual-tags interview-btn-call clearfix">
+                              <a href="{{ route('interviewInvitationUrl',['url' =>$interview->url]) }}" data-jobid="{{$interview->id}}" type="button" class="interview-tag">Respond Interview</a>
+                              <span class="pendinginterview-tag used-tag pull-right">{{$interview->status}}</span>
+                            </div>
+                       </div>
+                     </div>
+                     @endforeach  
+                      @else
+                      <h3> You have not booked any interview yet</h3>
+                      @endif
+                  </div>
+                </div>
+              </section>
 @stop
 
 @section('custom_footer_css')

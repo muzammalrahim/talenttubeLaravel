@@ -113,6 +113,7 @@
   <div class="col-md-12">
     <div class="profile profile-section">
       <h2>Received Interview Invitations</h2>
+      <div class="head icon_head_browse_matches float-right  "> <a href="{{ route('unhideInterviews') }}" class="unhideInterviews blue_btn py-1">Click here to Un-Hide your interviews </a> </div>
       <div class="row">
       @if ($Interviews_booking->count() > 0)
       @foreach ($Interviews_booking   as $Int_booking)

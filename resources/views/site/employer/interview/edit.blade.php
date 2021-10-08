@@ -7,17 +7,18 @@
 @stop
 
 @section('content')
-<div class="newJobCont">
-    <div class="head icon_head_browse_matches">Editing a Booking Schedule</div>
+<div class="newJobCont profile profile-section">
+    <h2 class="head icon_head_browse_matches">Editing a Booking Schedule</h2>
     <div class="add_new_job">
 
         <form method="POST" name="login_booking_form" class="login_booking_form newJob job_validation">
             @csrf
-            <div class="job_title form_field">
-                <span class="form_label">Booking ID :</span>
+            <div class="job_title form_field filter-section">
+                <span class="form_label fw-bold fs-5">Booking ID :</span>
                 <div class="form_input">
-                    <input type="text" value="" name="bookingid" class="w20" required>
+                    <input type="text" value="" name="bookingid" class="w30 bg-white" placeholder="Please enter the booking Id" required>
                     <div id="bookingid_error" class="error field_error to_hide">&nbsp;</div>
+                     <button class="btn small turquoise loginEditInterview orange_btn " style="height: 43px !important;">Login</button>
                 </div>
             </div>
 
@@ -58,7 +59,7 @@
             <div class="fomr_btn act_field">
                 <span class="form_label"></span>
                 {{-- <input type="type" value="academic" /> --}}
-                <button class="btn small turquoise loginEditInterview">Login</button>
+               
             </div>
 
         </form>

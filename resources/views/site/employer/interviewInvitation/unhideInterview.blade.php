@@ -9,20 +9,15 @@
 
 @section('content')
 
-<div class="newJobCont">
+{{-- <div class="newJobCont">
   <div class="head icon_head_browse_matches">Hidden Interviews  </div>
   @if ($UserInterview->count() > 0)
   @foreach ($UserInterview   as $interview)
-
-  {{-- @dd($interview->template->template_name); --}}
   <div class="job_row interviewBookingsRow_{{$interview->id}}">
-    
-    <div class="job_heading p10">
+     <div class="job_heading p10">
       <div class="w70 dinline_block">
         <h3 class=" job_title"><a> <b>Invitation {{$loop->index+1}}: </b> Interview of {{$interview->js->name}}</a></h3>
       </div>
-
-
         <div class="w10" style="display: contents;">
 
           <form class="statusOfInterviewHidden d-contents" name="statusOfInterviewHidden">  
@@ -79,8 +74,69 @@
 @endif
 
 <div class="cl"></div>
-</div>
+</div> --}}
 {{-- @include('site.user.interview.popup') --}}
+
+
+{{-- html for unhide interview page --}}
+<section class="row">
+                <div class="col-md-12">
+                  <div class="profile profile-section">
+                    <h2>Hidden Interviews</h2>
+                     <div class="row">
+                        @if ($UserInterview->count() > 0)
+                        @foreach ($UserInterview   as $interview)
+                       <div class="col-sm-12 col-md-6">
+                        <div class="job-box-info interview-box clearfix">
+                          <div class="box-head">
+                            <h4>Invitation {{$loop->index+1}}: Interview of {{$interview->js->name}}</h4>                          
+                          </div>
+                             <ul class="job-box-text clearfix">
+                                <li class="text-info-detail clearfix">
+                                  <label>Select Status:</label>
+                                  <span>
+                                        <form class="statusOfInterviewHidden d-contents" name="statusOfInterviewHidden">  
+                                          @csrf
+                                          <select name="unhide" class=" form-control" style="background: #fff !important;">
+                                            <option value= "select"> Select Status   </option> 
+                                            <option value= "yes"> Un-Hide Interview </option> 
+                                            
+                                            @if ($interview->status == 'pending')
+                                              <option value= "decline"> Decline Interview </option> 
+                                            @endif
+                                          </select>
+                                          <input type="hidden" class="interview_id" name="interview_id" value="{{$interview->id}}">
+                                        </form>
+                                  </span>
+                                </li>
+                                <li class="text-info-detail clearfix">
+                                 <label>Template Name:</label>
+                                 <span>{{$interview->template->template_name}} </b> </span>
+                                </li>
+                               <li class="text-info-detail clearfix">
+                                   @if ($interview->template->type == "phone_screeen")
+                                <label>Template Type:</label>
+                                 <span>Phone Screen</span>
+                                 @else
+                                 <label>Interview Type:</label>
+                                 <span><b> {{$interview->template->type}} </b></span>
+                                  @endif
+                               </li>
+                            </ul>
+                            <div class="dual-tags interview-btn-call clearfix">
+                              <a href="{{ route('interviewInvitationUrl',['url' =>$interview->url]) }}" type="button" class="interview-tag"  data-jobid="{{$interview->id}}">Invitation Details</a>
+                              <span class="pendinginterview-tag used-tag pull-right">{{$interview->status}}</span>
+                            </div>
+                       </div>
+                     </div>
+                     @endforeach  
+                      @else
+                      <h3> You have not any hidden interview</h3>
+                      @endif
+                  </div>
+                </div>
+              </div>
+            </section>
 @stop
 
 @section('custom_footer_css')

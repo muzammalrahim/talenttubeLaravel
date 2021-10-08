@@ -233,12 +233,10 @@
                            @php
                             $user = Auth::user();
                             @endphp
-                          <div class="box-footer unlike-btn-group clearfix">
-                            {{-- <div class="block-progrees-ratio d-none d-md-block user-page-footer"> --}}
+                          <div class="box-footer unlike-btn-group clearfix py-4">
                                   @if ($job->code)
-                                     <span class="position-absolute mt-3 ml-2"><strong>Code:</strong> {{$job->code}}</span>
+                                     <span class="  ml-2 py-3 px-4"><strong>Code:</strong> {{$job->code}}</span>
                                  @endif
-                            {{-- </div> --}}
                              @if(!isEmployer($user))
                             <button class="unlike-btn mb-2" data-toggle="modal" data-target="#myModal9"> Apply</button> 
                                @endif                    
