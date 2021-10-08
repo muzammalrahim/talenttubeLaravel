@@ -556,6 +556,7 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('employer/job/{id}/applications', 'Site\EmployerController@empJobApplications')->name('empJobApplications');
     Route::post('employer/jobAppFilter', 'Site\EmployerController@jobAppFilter')->name('jobAppFilter');
     Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
+    // jobslisting
     Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
     Route::get('step2Jobs', 'Site\SiteUserController@step2Jobs')->name('step2Jobs');
     Route::post('jobsFilter', 'Site\SiteUserController@jobsFilter')->name('jobsFilter');

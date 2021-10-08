@@ -19,3 +19,4 @@ storage/media/.*
 /storage/media/.*
 .idea/*
 .htaccess
+changelog.text

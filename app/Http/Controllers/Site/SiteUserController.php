@@ -1810,14 +1810,10 @@ class SiteUserController extends Controller
             // $applications = new JobsApplication();
             // $applications = $applications->getFilterApplication($request);
             // $likeUsers    = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
-
             $jobs = new Jobs();
             $jobs = $jobs->filterJobs($request);
-
             // ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
-
             $data['jobs'] = $jobs;
-
             return view('web.jobs.list', $data);
             // web/jobs/list
         }

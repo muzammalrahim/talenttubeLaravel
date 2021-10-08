@@ -142,13 +142,18 @@
       </div>
       <!-- Top Filter Row -->
       <!-- Adress + Location -->
-      <div class="row b-filter-row mt-3" style="align-items: center;">
-         <div class="col-md-6 browse-mp">
-            <div class="row" style="align-items: center;">
+      <div class="row b-filter-row mt-3">
+         <div class="col-md-12 browse-mp">
+            <div class="row">
                <div class="col-md-3 col-sm-12">
                   <h5 class="browse-heading">Filter by Industry:</h5>
                </div>
-               <div class="col-md-9 col-sm-12">
+
+               <div class="col-md-1 col-sm-2 col-2 custom-checkbox">
+                  <input type="checkbox" name="filter_industry_status" class="">
+               </div>
+
+               <div class="col-md-8 col-sm-12">
                   <!-- Button trigger modal -->
                   <a data-toggle="modal" data-target="#myModal">
                      <div class="input-group">
@@ -162,24 +167,42 @@
                </div>
             </div>
          </div>
-         <div class="col-md-6">
-            <div class="row" style="align-items: center;">
+      </div>
+      
+      <div class="row b-filter-row mt-3">
+         <div class="col-md-12">
+            <div class="row">
                <div class="col-md-3 col-sm-12 b-mob-pad">
                   <h5 class="browse-heading">Filter by Location:</h5>
                </div>
-               <div class="col-md-9 col-sm-12">
-                  <!-- Button trigger modal -->
-                  <a data-toggle="modal" data-target="#myModal2">
-                     <div class="input-group location-filter" style="position: relative;">
-                        <input type="text" class="form-control main-input"
-                           placeholder="Sydney, New South Wales, Australia">
-                        <div class="loc-icon">
-                           <img src="assests/images/location.png" alt="">
+               
+               <div class="FilterLocationBox col">
+                  {{-- bl_location --}}
+                    <div class="location_search_cont row">
+                        <div class="col-10 md-form form-sm">
+                          {{-- <input type="text" name="location_search" class="inp" id="location_search" value="" aria-invalid="false"> --}}
+                          <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
+
                         </div>
-                     </div>
-                  </a>
-                  <!-- Button trigger modal -->
-               </div>
+                        <div class="col-2">
+                            <select class="white-text mdb-select md-form filter_location_radius custom-select" name="filter_location_radius" data-placeholder="Select Location Radius">
+                                 <option value="5" selected="selected">5km</option>
+                                 <option value="10">10km</option>
+                                 <option value="25">25km</option>
+                                 <option value="50">50km</option>
+                                 <option value="51">50km +</option>
+                            </select>
+                        </div>
+
+                    <div class="location_latlong d-none w100">
+                        <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+                        <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+                    </div>
+                    <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
+                    </div>
+                {{-- bl_location --}}
+                </div>
+
             </div>
          </div>
       </div>

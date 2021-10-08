@@ -24,6 +24,7 @@
             <li><a href="#">Services</a></li>
             <li><a href="#">Blog</a></li>
           </ul>
+
         </div>
       </div>
     </div>
@@ -56,7 +57,14 @@
                 <a class="nav-link text-white" href="#">Blog </a>
               </li>
             </ul>
+
+            <div class="dual-button">
+              <a href="#" data-toggle="modal" data-target="#interviewConciergeModal" class="orange_btn interview-button"><img src="assests/images/Interview-icon.svg" alt="" class="interview-icon"> <img src="assests/images/interview_hover.svg" class="interview_hover_icon" alt="" style="display: none;"> Interview concierge</a>
+            </div> 
+
           </div>
+
+
         </div>
         <div class="col-md-4 header-signin-btn" clearfix>
           

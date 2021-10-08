@@ -38,11 +38,7 @@
         <h1>Join The Best</h1>
         <h2>TALENT MATCHER<span >in the<strong>world.</strong></span></h2>        
         <div class=" header-buttons ">
-          <div class="dual-button">
-            <a href="#" data-toggle="modal" data-target="#interviewConciergeModal" class="orange_btn interview-button"><img src="assests/images/Interview-icon.svg" alt="" class="interview-icon"> <img src="assests/images/interview_hover.svg" class="interview_hover_icon" alt="" style="display: none;"> Interview concierge</a>
-
-        {{--     <a href="dashboard.html" class="blue_btn"><i class="fas fa-th-large"></i> Dashboard</a> --}}
-          </div>          
+                   
           
           <ul class="btn-infomation d-flex">
 
@@ -213,11 +209,12 @@
         </div>
         <div class="col-md-10 footer-icon ">
           <ul>
-            <li><a href="#"  ><i class="fab fa-instagram" ></i></a></li>
-            <li> <a href="#" ><i class="fab fa-twitter" ></i></a> </li>
+            {{-- <li><a href="#"  ><i class="fab fa-instagram" ></i></a></li> --}}
+            {{-- <li> <a href="#" ><i class="fab fa-twitter" ></i></a> </li> --}}
             <li><a href="#" ><i class="fab fa-youtube" ></i></a> </li>
             <li><a href="#" ><i class="fab fa-facebook"></i></a></li>
-             <li> <a href="#" ><i class="fab fa-pinterest"></i></a></li>
+            <li><a href="#" ><i class="fab fa-linkedin"></i></a></li>
+             {{-- <li> <a href="#" ><i class="fab fa-pinterest"></i></a></li> --}}
           </ul>
       </div>
       <div class="col-md-12 CopyRight"><p>CopyRight 2021</p></div>

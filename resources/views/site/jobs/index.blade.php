@@ -1,9 +1,9 @@
 
-@extends('site.employer.employermaster')
+@extends('web.user.usermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 
 @section('content')
@@ -346,7 +346,6 @@
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 
-<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 
 @stop
 
@@ -355,9 +354,6 @@
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
 <script src="{{ asset('js/site/location_gmap.js') }}"></script>
-<script src="{{ asset('js/site/profile_photo.js') }}"></script> 
-<script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script> 
-<script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
 
 <script type="text/javascript">
 $(document).ready(function() {
