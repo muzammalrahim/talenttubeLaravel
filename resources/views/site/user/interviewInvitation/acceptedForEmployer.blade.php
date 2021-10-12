@@ -3,45 +3,33 @@
 @extends('site.employer.employermaster')
 
 @section('content')
-  <div class="head icon_head_browse_matches">Interview Detail 
+{{--   <div class="head icon_head_browse_matches">Interview Detail 
     @if (isEmployer())
       <a href="{{ route('jobSeekerInfo' ,['id'=> $UserInterview->js->id] ) }}" class="unhideInterviews"> Click here to go to Job Seeker profile </a> 
     @endif
   </div>
-  
   @if ($UserInterview->status == 'pending')
-
     @if (isEmployer())
       <h3> <b> {{$UserInterview->js->name}} </b> has not accepted your interview proposal yet. </h3>
     @endif
-  
   @elseif($UserInterview->status == 'Interview Confirmed' )
-    {{-- <h3> Interview has been confirmed. </h3> --}}
     @php
-
       $tempQuestions = App\InterviewTempQuestion::where('temp_id', $UserInterview->temp_id)->get();
-    
     @endphp
-
       @if (isEmployer())
-        
           @foreach ($tempQuestions as $question)
           <p class="qualifType p0"> <b>Question {{$loop->index+1}}:</b> {{$question->question}} </p>
           @php
             $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $UserInterview->id)->where('emp_id' ,$user->id)->where('user_id' , $UserInterview->js->id)->first();   
           @endphp
-
             @if ($question->video_response == 1)
             <div class="video_div pointer"  onclick="showVideoModal12('{{assetVideo_response($answers->answer)}}')"> 
               <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
             </div>
             @else
-
             <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
-            
             @endif
           @endforeach
-
       @endif
     
     @else
@@ -62,13 +50,81 @@
         </div>
     </div>
 </div>
+ --}}
+
+{{-- html for interview detail page --}}
+<section class="row profile profile-section">
+                <div class="col-md-12 ">
+                  <div class="profile profile-section interview-details-page">
+                    <h2>Interview Detail @if (isEmployer())
+                      <a href="{{ route('jobSeekerInfo' ,['id'=> $UserInterview->js->id] ) }}" class="unhideInterviews blue_btn pt-2 text-decoration-none"> Click here to go to Job Seeker profile </a> 
+                    @endif</h2>
+                       <div class="row">
+                        <div class="col-md-12">
+                         @if ($UserInterview->status == 'pending')
+                          @if (isEmployer())
+                            <h3> <b> {{$UserInterview->js->name}} </b> has not accepted your interview proposal yet. </h3>
+                          @endif
+                        @elseif($UserInterview->status == 'Interview Confirmed' )
+                          @php
+                            $tempQuestions = App\InterviewTempQuestion::where('temp_id', $UserInterview->temp_id)->get();
+                          @endphp
+                            @if (isEmployer())
+                            @foreach ($tempQuestions as $question)
+                        
+                          <div class="question-ans">
+                              <p class="accordionone text-light"><b>Question  {{$loop->index+1}}:</b>{{$question->question}} </p>
+                              <div class="panel">
+                                 @php
+                                  $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $UserInterview->id)->where('emp_id' ,$user->id)->where('user_id' , $UserInterview->js->id)->first();   
+                                @endphp
+                                 @if ($question->video_response == 1)
+                                <p><h1 data-toggle="modal" data-target="#exampleModalCenter" style="cursor: pointer;"><i class="fas fa-photo-video"></i></h1></p>
+                                @else
+                                <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
+                                 @endif
+                              </div>
+                            </div>
+                             @endforeach
+                                @endif
+                              @else
+                              <h3> <b> {{$UserInterview->js->name}} </b> has not accepted your interview proposal yet. </h3>
+                            @endif
+                          </div>
+                       </div>
+                  </div>
+                </div>
+              </section>
+
+<!-- ================================Modal for video=================================== -->
+<!-- Button trigger modal -->
+
+  
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <!-- <div class="modal-header"> -->
+       <!--  -->
+        <!-- </div> -->
+      <div class="modal-body">
+        <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
+        <iframe width="100%" height="215" src="https://www.youtube-nocookie.com/embed/nknwAOtmtDk" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ================================Modal for video ends=================================== -->
+
+
 
 
 @stop
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 <style>
 
 .button {
@@ -95,14 +151,14 @@
 
 
 @section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
-<link rel="stylesheet" type="text/css" href="{{asset('js/dropzone/dist/min/dropzone.min.css')}}">
+{{-- <link rel="stylesheet" type="text/css" href="{{asset('js/dropzone/dist/min/dropzone.min.css')}}"> --}}
 
 @stop
 
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
 

@@ -419,14 +419,8 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('ajax/geo_cities', 'Site\HomeController@geo_cities')->name('ajax_geo_cities');
 
 });
-
-
 // Front End  with Authentication
-
-
 Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
-
-
 //  jobSeekerProfile  'controlUser'
     Route::get('useridforcontroling/{id}', 'Site\SiteUserController@useridforcontroling')->name('useridforcontroling');
     Route::get('employeridforcontroling/{id}', 'Site\SiteUserController@employeridforcontroling')->name('employeridforcontroling');
@@ -439,13 +433,8 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/accept/interview/invitation','Site\EmployerController@acceptInterviewInvitation')->name('acceptInterviewInvitation');
     Route::post('ajax/confirmInterInvitation',    'Site\InterviewController@confirmInterInvitation')->name('confirmInterInvitation');
     Route::post('ajax/confirmInterInvitation/js',    'Site\InterviewController@confirmInterInvitationJs')->name('confirmInterInvitationJs');
-
-
     Route::post('/ajax/interview-response/uploadVideo','Site\InterviewController@interview_video_reponse')->name('interview_video_reponse');
     Route::post('/ajax/interview-response/delete_video/{id}','Site\InterviewController@interview_delete_video')->name('interview_delete_video');
-
-    
-
     Route::post('save/interview/invitation',    'Site\InterviewController@save_jobSeeker_response_interview')->name('save_jobSeeker_response_interview'); 
     // ==========================================================================
     // jobseekerprofile
@@ -455,44 +444,29 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('user/{username}', 'Site\SiteUserController@index')->name('username');
     Route::post('saveUserProfile', 'Site\SiteUserController@updateUserProfile')->name('saveUserProfile');
     Route::post('saveUserPersonalSetting', 'Site\SiteUserController@saveUserPersonalSetting')->name('saveUserPersonalSetting');
-
     // ======================================= For Updating User Setting =======================================
-
     Route::get('updateUserPersonalSetting', 'Site\SiteUserController@updateUserPersonalSetting')->name('updateUserPersonalSetting');
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
-
     Route::post('ajax/update/about_me', 'Site\SiteUserController@updateAboutField');
     Route::post('ajax/update/interested_in', 'Site\SiteUserController@updateInterestedIn');
-
-
-
     Route::post('ajax/update/recentJob', 'Site\SiteUserController@updateRecentJob');
-
     // Added by ALi
     Route::post('ajax/addNewLocation', 'Site\SiteUserController@addNewLoaction');
-
     // Added by Hassan
-
     Route::post('ajax/updateSalaryRange', 'Site\SiteUserController@updateSalaryRange');
     Route::post('ajax/updateQualification', 'Site\SiteUserController@updateQualification')->name('updateQualification');
     Route::post('ajax/updateQuestions', 'Site\SiteUserController@updateQuestions');
     Route::post('ajax/booking/deleteInterviewBooking',    'Site\SiteUserController@deleteInterviewBooking')->name('deleteInterviewBooking');
-
     // ========================== Update Employer Questions ===========================================
-
     Route::post('ajax/updateEmployerQuestions', 'Site\SiteUserController@updateEmployerQuestions');
-
     // ========================== Update Employer Questions ===========================================
-
     Route::post('ajax/updateIndustryExperience', 'Site\SiteUserController@updateIndustryExperience')->name('updateIndustryExperience');
     Route::post('ajax/updateNewJobIndustryExperience', 'Site\EmployerController@updateNewJobIndustryExperience')->name('updateNewJobIndustryExperience');
     Route::post('ajax/updateEmail', 'Site\SiteUserController@updateEmail');
     Route::post('ajax/updatePhone', 'Site\SiteUserController@updatePhone');
     Route::post('ajax/updatePassword', 'Site\SiteUserController@updatePassword');
     Route::post('ajax/deleteuser', 'Site\SiteUserController@deleteuser');
-
     // Added by Hassan
-
     Route::get('ajax/getUserPersonalInfo', 'Site\SiteUserController@getUserPersonalInfo');
     Route::post('ajax/uploadUserGallery', 'Site\SiteUserController@uploadUserGallery');
     Route::post('ajax/deleteGallery/{id}', 'Site\SiteUserController@deleteGallery');
@@ -503,15 +477,10 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('ajax/purchaseUserInfo/', 'Site\SiteUserController@purchaseUserInfo')->name('purchaseUserInfo');
     Route::get('ajax/getTags/{category}/{offset?}', 'Site\SiteUserController@getTags');
     Route::get('ajax/searchTags', 'Site\SiteUserController@searchTags')->name('searchTags');
-
     // ============================================= Save User Tags =============================================
-
     Route::post('ajax/updateUserTags', 'Site\SiteUserController@updateUserTags')->name('updateUserTags');
-
     // ============================================= Save User Tags =============================================
-
     Route::post('ajax/addNewTag', 'Site\SiteUserController@addNewTag')->name('addNewTag');
-
     // activity  user/employer
     Route::post('ajax/saveNewActivity', 'Site\SiteUserController@saveNewActivity')->name('saveNewActivity');
     Route::post('ajax/removeActivity', 'Site\SiteUserController@removeActivity')->name('removeActivity');

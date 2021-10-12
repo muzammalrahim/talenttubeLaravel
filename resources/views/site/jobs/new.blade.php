@@ -109,19 +109,16 @@
                             <div class="IndustrySelect" style="width:80%;"></div>
                         </div>
                         <div class="">
-                            <a class=" block addIndus jbtn hide_it " style="background: #499ffd;">+ Add</a>
+                            <a class=" block addIndus jbtn hide_it " style="background: #499ffd;"  title="Add a Question">+ Add</a>
                             <a class="block jbtn hide_it buttonSaveIndustry"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
                         </div>
                     </div>
                 </div>
-            
-                
-
             </div>
 
-            <div class="job_age form_field">
-                <span class="form_label">Job Questions:</span>
-                <div class="form_input w100">
+            <div class="job_age form_field ">
+                
+                <div class="form_input ">
                   {{--   
                     <div class="jobQuestions">
                        <div class="question mb10 relative"><input type="text" name="questions[]" class="w100" />
@@ -129,37 +126,40 @@
                        </div>
                     </div>
                       --}}
-                     <div class="jobQuestions">
-                         <div class="jobQuestion q1">
-                             <div class="jq_field_box ">
+                     <div class="jobQuestions row d-flex justify-content-space-between border border-secondary rounded">
+                        <h2 class="form_label">Job Questions:</h2>
+                         <div class="jobQuestion q1 col-md-6 p-3">
+                             <div class="jq_field_box form-group">
                                  <div class="jq_field_label">Title</div>
-                                 <div class="jq_field title"><input type="text" name="jq[0][title]" /></div>
+                                 <div class="jq_field title col-md-12 p-0"><input type="text" name="jq[0][title]" class="form-control bg-white" /></div>
                              </div>
                              <div class="jq_field_box">
                                  <div class="jq_field_label">Options</div>
                                  <div class="jq_field_questions mb20">
-                                     <div class="option">
-                                         <input type="text" name="jq[0][option][0][text]" />
-                                         <div class="jq_option_cbx">
+                                     <div class="option d-flex ">
+                                        <div class="col-md-6 p-0">
+                                         <input type="text" class="form-control bg-white" name="jq[0][option][0][text]" />
+                                         </div>
+                                         <div class="jq_option_cbx col-md-3  d-flex justify-content-center align-items-center" style="height: 30px!important;">
                                             <input type="checkbox" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer">
                                             <label for="jq_0_option_0_preffer">Undiserable</label>
                                          </div>
-                                          <div class="jq_option_cbx">
+                                          <div class="jq_option_cbx col-md-3 d-flex justify-content-center align-items-center" style="height: 30px!important;">
                                             <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar">
                                             <label for="jq_0_option_0_goldstar">Gold Star</label>
                                          </div>
                                       </div>
                                  </div>
 
-                                 <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn" data-qc="0">Add Option+</a></div>
+                                 <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn blue_btn py-2" data-qc="0">Add Option+</a></div>
                              </div>
-                             <div class="jq_remove"><span class="close_icon removeJobQuestion"></span></div>
+                             <div class="jq_remove"><span class="close_icon removeJobQuestion text-danger"><i class="fas fa-times-circle"></i></span></div>
                          </div>
                      </div>
-
                      <input type="hidden" name="questionCounter" id="questionCounter" value="0">
-                    <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn">Add+</a></div>
+                    <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn blue_btn px-3 py-1" style="cursor: pointer;"data-bs-toggle="tooltip" data-bs-placement="left" title="Add Questions">Add+</a></div>
                 </div>
+                
             </div>
 
             <div class="form_field">
@@ -169,10 +169,12 @@
                 </div>
             </div>
 
-            <div class="fomr_btn act_field">
+            <div class="fomr_btn act_field m-auto row">
                 <span class="form_label"></span>
                 {{-- <input type="type" value="academic" /> --}}
-                <button class="btn small turquoise saveNewJob">Save</button>
+                <div class="col-md-3 m-auto pt-5">
+                <button class="btn small turquoise saveNewJob orange_btn ">Save</button>
+                </div>
             </div>
         </form>
         </div>
@@ -197,15 +199,6 @@
 
 
 <style type="text/css">
-.jq_field_label {float: left;width: 10%;}
-.jq_field {float: left;width: 90%;}
-.jq_field_box {display: table;width: 100%;margin-bottom: 5px;}
-.jq_field.title input { width: 100%; }
-.jq_field.option input[type="text"]{width: 60%;float: left;}
-.jq_option_cbx {width: 20%;float: left;margin: 7px 0px;text-align: center;}
-.jq_field_box.optionfield {height: 80px;}
-.addOptionsBtn {float: none;margin-left: 10%;margin-top: 5px;margin-bottom: 10px;}
-.jq_field_questions.mb20 {min-height: 20px;}
 .jobQuestion {position: relative;margin: 6px 0px;padding: 10px 4px;border-radius: 4px;background: rgba(0, 0, 0, 0.08);}
 .jq_remove {position: absolute;right: 0px;bottom: 0px;cursor: pointer;}
 .jq_option_cbx label {margin: 0px 4px;}
@@ -228,14 +221,6 @@ select.userTags.userTagsSelect {width: 45%;display: inline-block;}
 .jobSeekerProfileUpdate,.signOutButtonHeader{color: white !important;}
 /*===================================================== Save Resume ===========================================*/
 button.btn.violet.save-resume-btn.valign-top {margin-bottom: 23px;}
-/*===================================================== Make Profile Icon ===========================================*/
-span.icon_image_profile {bottom: 42px;right: 5px;}
-div.jq-selectbox.jqselect.dropdown.opened>.jq-selectbox__dropdown.drop_down{position: absolute !important;}
-.jq-selectbox__search {display: none;}
-.jq-selectbox__dropdown.drop_down {width: 100% !important;}
-.saveIndus,.saveQualification{background: #28a745;text-align: center;height: 22px;padding-top: 6px;border-radius: 4px;opacity: 0.7;color: white;cursor: pointer;}
-.block {display: inline-block;width: 88%;border: none;background-color: #4CAF50;color: white;padding: 10px 28px;font-size: 16px;cursor: pointer;text-align: center;margin-top:13px;}
-.block:hover {background-color: #ddd;color: black;}
 .mz{margin: 0!important;}
 </style>
 
@@ -313,29 +298,31 @@ $(document).ready(function() {
         console.log(' addQuestion clck  ');
         var qC = parseInt($('#questionCounter').val())+1;
         if(qC<=5){
-        var jobQuestion  = '<div class="jobQuestion q'+qC+'">';
-            jobQuestion +=  '<div class="jq_field_box ">';
+        var jobQuestion  = '<div class="jobQuestion p-3 q'+qC+' col-md-6">';
+            jobQuestion +=  '<div class="jq_field_box form-group">';
             jobQuestion +=    '<div class="jq_field_label">Title</div>';
-            jobQuestion +=    '<div class="jq_field title"><input type="text" name="jq['+qC+'][title]" /></div>';
+            jobQuestion +=    '<div class="jq_field title p-0"><input type="text" name="jq['+qC+'][title]" class="form-control bg-white" /></div>';
             jobQuestion +=  '</div>';
             jobQuestion +=  '<div class="jq_field_box">';
             jobQuestion +=    '<div class="jq_field_label">Options</div>';
             jobQuestion +=    '<div class="jq_field_questions mb20">';
-            jobQuestion +=          '<div class="option">';
-            jobQuestion +=             '<input type="text" name="jq['+qC+'][option][0][text]" />';
-            jobQuestion +=                 '<div class="jq_option_cbx">';
-            jobQuestion +=                      '<input type="checkbox" id="jq_'+qC+'_option_0_preffer" name="jq['+qC+'][option][0][preffer]" value="preffer">';
+            jobQuestion +=          '<div class="option d-flex">';
+            jobQuestion +=          '<div class="col-md-6 p-0">';
+            jobQuestion +=             '<input type="text" name="jq['+qC+'][option][0][text]" class="form-control bg-white"/>';
+            jobQuestion +=          '</div>';
+            jobQuestion +=                 '<div class="jq_option_cbx col-md-3 d-flex justify-content-center align-items-center" style="height: 30px!important;">';
+            jobQuestion +=                      '<input type="checkbox" id="jq_'+qC+'_option_0_preffer" name="jq['+qC+'][option][0][preffer]" value="preffer" >';
             jobQuestion +=                       '<label for="jq_'+qC+'_option_0_preffer">Undiserable</label> ';
             jobQuestion +=                  '</div>';
-            jobQuestion +=                  '<div class="jq_option_cbx">';
+            jobQuestion +=                  '<div class="jq_option_cbx  col-md-3 d-flex justify-content-center align-items-center" style="height: 30px!important;">';
             jobQuestion +=                     '<input type="checkbox" id="jq_'+qC+'_option_0_goldstar" name="jq['+qC+'][option][0][goldstar]" value="goldstar">';
             jobQuestion +=                     '<label for="jq_'+qC+'_option_0_goldstar">Gold Star</label> ';
             jobQuestion +=                  '</div>';
             jobQuestion +=          '</div>';
             jobQuestion +=      '</div>';
-            jobQuestion +=     '<div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn" data-qc="'+qC+'">Add Option+</a></div>';
+            jobQuestion +=     '<div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn blue_btn py-2" data-qc="'+qC+'">Add Option+</a></div>';
             jobQuestion +=    '</div>';
-            jobQuestion +=  '<div class="jq_remove"><span class="close_icon removeJobQuestion"></span></div>';
+            jobQuestion +=  '<div class="jq_remove"><span class="close_icon removeJobQuestion text-danger"><i class="fas fa-times-circle"></i></span></div>';
             jobQuestion +=  '</div>';
 
          $('.jobQuestions').append(jobQuestion);
@@ -372,14 +359,16 @@ $(document).ready(function() {
         // var qC = $(this).attr('data-qc');
         var qC = parseInt($('#questionCounter').val());
         var option_html = '';
-            option_html +=          '<div class="jq_option option">';
-            option_html +=             '<input type="text" name="jq['+qC+'][option]['+oC+'][text]" />';
-            option_html +=              '<div class="jq_option_cbx">';
+            option_html +=          '<div class="jq_option option d-flex">';
+             option_html +=          '<div class="col-md-6 p-0">';
+            option_html +=             '<input type="text" name="jq['+qC+'][option]['+oC+'][text]" class="form-control bg-white" />';
+             option_html +=          '</div>';
+            option_html +=              '<div class="jq_option_cbx col-md-3 d-flex justify-content-center align-items-center" style="height: 20px!important;">';
             option_html +=              '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_preffer" name="jq['+qC+'][option]['+oC+'][preffer]" value="preffer">';
             option_html +=                '<label for="jq_'+qC+'_option_'+oC+'_preffer">Undiserable</label> ';
             option_html +=                  '</div>';
-            option_html +=                  '<div class="jq_option_cbx">';
-            option_html +=                     '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_goldstar" name="jq['+qC+'][option]['+oC+'][goldstar]" value="goldstar">';
+            option_html +=                  '<div class="jq_option_cbx col-md-3  d-flex justify-content-center align-items-center" style="height: 20px!important;">';
+            option_html +=                     '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_goldstar" name="jq['+qC+'][option]['+oC+'][goldstar]" value="goldstar" style="height:15px!important;"> ';
             option_html +=                     '<label for="jq_'+qC+'_option_'+oC+'_goldstar">Gold Star</label> ';
             option_html +=                  '</div>';
             option_html +=          '</div>';

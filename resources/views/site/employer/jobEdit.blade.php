@@ -7,34 +7,27 @@
 @stop
 
 @section('content')
-<div class="newJobCont">
-    <div class="head icon_head_browse_matches">Edit Job</div>
+<div class="newJobCont profile profile-section">
+    <h2 class="head icon_head_browse_matches">Edit Job</h2>
 
     {{-- @dump($job) --}}
 
     <div class="job_edit">
+        
     <form method="POST" name="edit_job_form" class="edit_job_form jobEdut job_validation">
         @csrf
-        <div class="job_title form_field">
+        <div class="row d-flex">
+        {{-- <div class=" col-md-6 py-2 ">
             <span class="form_label">Title :</span>
             <div class="form_input">
-                <input type="text" value="{{$job->title}}" name="title" class="w100" required>
+                <input type="text" value="{{$job->title}}" name="title" class="form-control" required>
                 <div id="title_error" class="error field_error to_hide">&nbsp;</div>
             </div>
         </div>
-
-        <div class="job_description form_field" required>
-            <span class="form_label">Description :</span>
-            <div class="form_input">
-                <textarea name="description" class="form_editor w100" maxlength="1000" style="min-height: 120px;">{{$job->description}}</textarea>
-                <div id="description_error" class="error field_error to_hide">&nbsp;</div>
-            </div>
-        </div>
-
-        <div class="job_type form_field">
+         <div class=" col-md-6 py-2">
             <span class="form_label">Type :</span>
-            <div class="form_input">
-                <select name="type" class="form_select " >
+            <div class="form_input " style="margin: 0!important;">
+                <select name="type" class="form-control " >
                     <option value="part_time" {{($job->type == 'Contract')?'selected="selected"':''}} >contract</option>
                     <option value="full_time" {{($job->type == 'temporary')?'selected="selected"':''}} >temporary</option>
                     <option value="part_time" {{($job->type == 'casual')?'selected="selected"':''}} >casual</option>
@@ -43,27 +36,66 @@
                 </select>
                 <div id="type_error" class="error field_error to_hide">&nbsp;</div>
             </div>
-        </div>
+        </div> --}}
+       
+
+           <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Title</label>
+                    <input type="text" name="title" class="form-control" value="{{$job->title}}" id="inputEmail4" placeholder="Title">
+                    <div id="title_error" class="error field_error">&nbsp;</div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Type</label>
+                    <select name="type" class="form-control custom-select" >
+                        <option value="part_time" {{($job->type == 'Contract')?'selected="selected"':''}} >contract</option>
+                        <option value="full_time" {{($job->type == 'temporary')?'selected="selected"':''}} >temporary</option>
+                        <option value="part_time" {{($job->type == 'casual')?'selected="selected"':''}} >casual</option>
+                        <option value="full_time" {{($job->type == 'full_time')?'selected="selected"':''}} >Full time</option>
+                        <option value="part_time" {{($job->type == 'part_time')?'selected="selected"':''}} >Part time</option>
+                     </select>
+                    <div id="type_error" class="error field_error">&nbsp;</div>
+                </div>
+            </div>
 
 
-        <div class="job_vacancies form_field">
+       {{--  <div class="job_vacancies  col-md-6 py-2">
             <span class="form_label">Vacancies :</span>
             <div class="form_input">
-                <input type="text" value="{{$job->vacancies}}" name="vacancies" class="">
+                <input type="text" value="{{$job->vacancies}}" name="vacancies" class=" form-control">
                 <div id="vacancies_error" class="error field_error to_hide">&nbsp;</div>
             </div>
         </div>
 
 
-        <div class="job_salary form_field">
+        <div class="job_salary col-md-6 py-2">
             <span class="form_label">Salary :</span>
-            <div class="form_input">
-                {{ Form::select('salary', $salaryRange, $job->salary, ['placeholder' => 'Select Salary Range', 'onchange' => '', 'id' => 'salaryRangeFieldnew', 'class' => ' salaryRangeField']) }}
+            <div class="form_input p-0 m-0">
+                {{ Form::select('salary', $salaryRange, $job->salary, ['placeholder' => 'Select Salary Range', 'onchange' => '', 'id' => 'salaryRangeFieldnew', 'class' => ' salaryRangeField form-control mz']) }}
                 <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="job_age form_field">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="salaryRangeFieldnew">Salary</label>
+                    {{ Form::select('salary', $salaryRange, ['placeholder' => 'Select Salary Range','onchange' => '', 'id' => 'salaryRangeFieldnew'],['class' => 'salaryRangeField form-control custom-select',]) }}
+                        <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Expiration Date:</label>
+                       @php
+                           $expiration = ($job->expiration)?(explode(' ', $job->expiration)):null;
+                           $expiration = (is_array($expiration))?($expiration[0]):null;
+                        @endphp
+                    <input type="text" name="expiration" class="form-control datepicker" value="{{$expiration}}" id="inputPassword4" placeholder="Expiration Date">
+                    <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
+                </div>
+            </div>
+
+     {{--    <div class="job_age col-md-6 py-2">
             <span class="form_label">Expiration Date:</span>
             <div class="form_input">
                 @php
@@ -71,16 +103,16 @@
                    $expiration = (is_array($expiration))?($expiration[0]):null;
 
                 @endphp
-                <input type="text" name="expiration" value="{{$expiration}}" class="datepicker" />
+                <input type="text" name="expiration" value="{{$expiration}}" class="datepicker form-control" />
                 <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
             </div>
-        </div>
-
-        <div class="job_age form_field">
+        </div> --}}
+{{-- 
+        <div class="job_age col-md-6 py-2">
                 <span class="form_label">Online Test</span>
-                <div class="form_input">
+                <div class="form_input ">
 
-                   <select name="test_id">
+                   <select name="test_id" class="form-control">
                         @if ($job->onlineTest_id == null)
                        <option value="0">Select Test</option>
 
@@ -91,37 +123,44 @@
                    </select> 
                 </div>
         </div>
-
-
-
-        <div class="job_experience form_field">
-
-            {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
-          <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
-          <div class="cl"></div> --}}
-          <span class="form_label2">Industry Experience :<i class="editIndustry fas fa-edit"></i></span>
-              <p class="loader SaveindustryExperience"style="float: left;"></p>
-
-              <div class="IndusList form_input">
-                <div class="IndustrySelect" style="width:80%;">
-                    @include('site.layout.parts.newJobIndustryList')
+ --}}
+   <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="onlineTest">Online Test</label>
+                       <select name="test_id" class="form-control" id = "onlineTest">
+                            @if ($job->onlineTest_id == null)
+                                 <option value="0">Select Test</option>
+                             @endif
+                           @foreach ($onlineTest as $test)
+                               <option value="{{$test->id}}" {{ $job->onlineTest_id == $test->id ? 'selected':'' }}> {{$test->name}} </option>
+                           @endforeach
+                       </select> 
                 </div>
-              </div>
-              <div class="">
-                <a class="addIndus graybtn jbtn hide_it marginButton" style = "cursor:pointer;">+ Add</a>
-                <a class="greenbtn jbtn hide_it buttonSaveIndustry"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
-              </div>
-        </div>
+
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Vacancies</label>
+                    <input type="text" name="vacancies" value="{{$job->vacancies}}" class="form-control" id="inputPassword4" placeholder="Vacancies">
+                    <div id="vacancies_error" class="error field_error to_hide">&nbsp;</div>
+
+                </div>
+            </div>
+
 
         
+{{--  <div class="job_description col-md-6" required>
+            <span class="form_label">Description :</span>
+            <div class="form_input">
+                <textarea name="description" class="form_editor w100" maxlength="1000" style="min-height: 200px;">{{$job->description}}</textarea>
+                <div id="description_error" class="error field_error to_hide">&nbsp;</div>
+            </div>
+        </div>
 
-
-        <div class="job_country form_field geo_location_cont">
+        <div class="job_country  geo_location_cont col-md-6">
             <span class="form_label">Location :</span>
             <div class="location_search_cont">
-                <div class="location_input dtable form_input">
-                    <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
-                    <select class="dinline_block filter_location_radius select_aw" name="filter_location_radius" data-placeholder="Select Location Radius">
+                <div class="location_input dtable form_input d-flex">
+                    <input type="text" name="location_search" class="form-control  " id="location_search" value="" placeholder="Type a location" aria-invalid="false">
+                    <select class="px-5" name="filter_location_radius" data-placeholder="Select Location Radius" style="height: 34px; border: 1px solid #ced4da;">
                          <option value="5">5km</option>
                          <option value="10">10km</option>
                          <option value="25">25km</option>
@@ -129,7 +168,7 @@
                          <option value="51">50km +</option>
                     </select>
                 </div>
-                <div class="location_latlong dtable w100">
+                <div class="location_latlong dtable w100" >
                     <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
                     <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
 
@@ -139,10 +178,66 @@
                     <input type="hidden" name="location_country" id="location_country"  value="">
 
                 </div>
-                <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
+                <div class="location_map_box dtable w100"><div class="location_map" id="location_map" style="height: 160px;"></div></div>
             </div>
-        </div>
+        </div> --}}
 
+             <div class="form-row">
+
+                <div class="form-group col-md-6"> 
+                    <label for="inputPassword4">Description</label>
+                        <textarea name="description" class="form-control" rows="7" cols="5" maxlength="1000">{{$job->description}}</textarea>
+                        <div id="description_error" class="error field_error to_hide">&nbsp;</div>
+                </div>
+
+                <div class="form-group col-md-6">
+                    {{-- <span class="form_label">Location :</span> --}}
+                    <label for="location_search_cont">Location</label>
+
+                    <div class="location_search_cont">
+                        <div class="row m-0 jus">
+                            <input type="text" name="location_search" class="col-9 form-control" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
+                            <select class="filter_location_radius col-3 form-control" name="filter_location_radius" data-placeholder="Select Location Radius">
+                                 <option value="5">5km</option>
+                                 <option value="10">10km</option>
+                                 <option value="25">25km</option>
+                                 <option value="50">50km</option>
+                                 <option value="51">50km +</option>
+                            </select>
+                        </div>
+                        <div class="location_latlong dtable w100">
+                            <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+                            <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+
+                            <input type="hidden" name="location_name" id="location_name"  value="">
+                            <input type="hidden" name="location_city" id="location_city"  value="">
+                            <input type="hidden" name="location_state" id="location_state"  value="">
+                            <input type="hidden" name="location_country" id="location_country"  value="">
+
+                        </div>
+                        <div class="location_map_box dtable w100"><div class="location_map" id="location_map" style="height: 125px !important"></div></div>
+                    </div>
+                </div>
+
+            </div>
+        <div class="job_experience col-md-12">
+
+            {{-- <div id="basic_anchor_industry_experience">Industry Experience <i class="editIndustry fas fa-edit "></i>
+          <p class="loader SaveIndustryLoader"style="float: left;"></p></div>
+          <div class="cl"></div> --}}
+          <span class="form_label2">Industry Experience :</span><i class="editIndustry fas fa-edit orange_btn pt-2 float-right"></i>
+              <p class="loader SaveindustryExperience"style="float: left;"></p>
+
+              <div class="IndusList form_input">
+                <div class="IndustrySelect"{{--  style="width:80%;" --}}>
+                    @include('site.layout.parts.newJobIndustryList')
+                </div>
+              </div>
+              <div class="">
+                <a class="addIndus graybtn jbtn hide_it marginButton" style = "cursor:pointer;">+ Add</a>
+                <a class="greenbtn jbtn hide_it buttonSaveIndustry"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
+              </div>
+        </div>
 
         
 
@@ -177,15 +272,15 @@
 
         <div class="job_age form_field">
             <span class="form_label">Job Questions:</span>
-            <div class="form_input w100">
+            <div class="form_input w100 ">
 
-                 <div class="jobQuestions">
+                 <div class="jobQuestions row">
                     @if (!empty($questions) && count($questions) > 0)
                     @foreach ($questions as $keyq=>$question)
-                     <div class="jobQuestion q1">
+                     <div class="jobQuestion q1 col-md-6">
                          <div class="jq_field_box ">
                              <div class="jq_field_label">Title</div>
-                             <div class="jq_field title"><input type="text" value="{{$question['title']}}" name="jq[{{$keyq}}][title]" /></div>
+                             <div class="jq_field title"><input type="text" value="{{$question['title']}}" name="jq[{{$keyq}}][title]" class="form-control bg-white" /></div>
                          </div>
                          <div class="jq_field_box">
                              <div class="jq_field_label">Options</div>
@@ -197,6 +292,7 @@
 
                                 $remSpecialChar = str_replace("\&#39;","'",$option);
                                 @endphp
+                                
                                  <div class="option">
                                  <input type="text" name="jq[{{$keyq}}][option][{{$key}}][text]" value="{{$remSpecialChar}}" />
                                                 {{-- @dd($question) --}}
@@ -258,6 +354,60 @@
             </div>
         </div>
 
+
+{{-- html for editing the job page --}}
+
+            <div class="job_age form_field ">
+                
+                <div class="form_input ">
+                  {{--   
+                    <div class="jobQuestions">
+                       <div class="question mb10 relative"><input type="text" name="questions[]" class="w100" />
+                        <span class="close_icon jobQuestion"></span>
+                       </div>
+                    </div>
+                      --}}
+                     <div class="jobQuestions row d-flex justify-content-space-between border border-secondary rounded">
+                        <h2 class="form_label">Job Questions:</h2>
+                         @if (!empty($questions) && count($questions) > 0)
+                         @foreach ($questions as $keyq=>$question)
+                         <div class="jobQuestion q1 col-md-6 p-3">
+                             <div class="jq_field_box form-group">
+                                 <div class="jq_field_label">Title</div>
+                                 <div class="jq_field title col-md-12 p-0"><input type="text" name="jq[{{$keyq}}][title]" value="{{$question['title']}}" class="form-control bg-white" /></div>
+                             </div>
+                             <div class="jq_field_box">
+                                 <div class="jq_field_label">Options</div>
+                                 <div class="jq_field_questions mb20">
+                                     <div class="option d-flex ">
+                                        <div class="col-md-6 p-0">
+                                         <input type="text" class="form-control bg-white" name="jq[0][option][0][text]" />
+                                         </div>
+                                         <div class="jq_option_cbx col-md-3  d-flex justify-content-center align-items-center" style="height: 30px!important;">
+                                            <input type="checkbox" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer">
+                                            <label for="jq_0_option_0_preffer">Undiserable</label>
+                                         </div>
+                                          <div class="jq_option_cbx col-md-3 d-flex justify-content-center align-items-center" style="height: 30px!important;">
+                                            <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar">
+                                            <label for="jq_0_option_0_goldstar">Gold Star</label>
+                                         </div>
+                                      </div>
+                                 </div>
+
+                                 <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn blue_btn py-2" data-qc="0">Add Option+</a></div>
+                             </div>
+                             <div class="jq_remove"><span class="close_icon removeJobQuestion text-danger"><i class="fas fa-times-circle"></i></span></div>
+                         </div>
+                          @endforeach
+                     @endif
+                     </div>
+                     <input type="hidden" name="questionCounter" id="questionCounter" value="{{$qnum}}">
+                    <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn blue_btn px-3 py-1" style="cursor: pointer;"data-bs-toggle="tooltip" data-bs-placement="left" title="Add Questions">Add+</a></div>
+                </div>
+                
+            </div>
+{{-- html for edit job ends here --}}
+
         <div class="form_field">
             <span class="form_label"></span>
             <div class="form_input">
@@ -270,8 +420,10 @@
             <iput type="type" value="academic" />
             <button class="btn small turquoise updateJobBtn" data-jobid="{{$job->id}}">Update</button>
         </div>
-
+        <div class="row d-flex">
+        </div>
     </form>
+    
     </div>
 
 
@@ -428,7 +580,9 @@
     width: 90%;
 }
 
-
+.mz{
+    margin:0!important;
+}
 
 div.tab_about.tab_cont>div#basic {
 margin: 0px 10px 20px 0px;
@@ -566,7 +720,7 @@ div.jq-selectbox__dropdown.drop_down>ul>li {
     top: 5px;
     float: right;
 }*/
-select{
+/*select{
         display: block;
         width: 100%;
         height: calc(2.75rem + 2px);
@@ -575,7 +729,7 @@ select{
         font-weight: 400;
         line-height: 1.5;
         color: #495057;
-        margin: 5px 0px 5px 0px ;
+        /*margin: 5px 0px 5px 0px ;*/
         background-color: #fff;
         background-clip: padding-box;
         border: 1px solid #ced4da;
@@ -583,7 +737,7 @@ select{
         box-shadow: inset 0 0 0 transparent;
         transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
     }
-
+*/
 .QualificationSelect{
     font-size: 14px;
 }

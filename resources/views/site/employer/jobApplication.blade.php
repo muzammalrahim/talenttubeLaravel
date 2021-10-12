@@ -4,23 +4,23 @@
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 
 @stop
 
 @section('content')
-<div class="jobApplicationCont">
-    <div class="head icon_head_browse_matches">Job Seeker's Applications</div>
+<div class="jobApplicationCont profile profile-section">
+    <h2 class="head icon_head_browse_matches">Job Seeker's Applications</h2>
 
-    <div class="job_applications_filter mb20">
-
+    <div class="job_applications_filter mb20 employee-wraper">
+        
     {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'job_applications_filter_form' )) }}
         <input type="hidden" name="page" id="paginate" value="">
         <input type="hidden" name="job_id" value="{{$job->id}}">
-
-        <div class="searchField_qualification mb10">
-            <div class="searchFieldLabel dinline_block">Qualification: </div>
-            <select class="dinline_block filter_qualification_type" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
+<div class="row b-filter-row top-filter-row d-flex">
+        <div class="searchField_qualification mb10 col-md-4 d-flex">
+            <div class="searchFieldLabel col-5 pt-2">Qualification: </div>
+            <select class=" filter_qualification_type form-control bg-white w-100" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
                  <option value="">Select Qalification & Trades</option>
                  <option value="certificate">Certificate or Advanced Diploma</option>
                  <option value="trade">Trade Certificate</option>
@@ -42,9 +42,9 @@
             @endif
         </div>
 
-        <div class="searchField_salaryRange dblock mb10">
-            <div class="searchFieldLabel dinline_block">Salary Range: </div>
-            <select name="ja_filter_salary" id="filter_salary" class="dinline_block" data-placeholder="Select Salary Range">
+        <div class="searchField_salaryRange d-flex mb10 col-md-4">
+            <div class="searchFieldLabel col-5 pt-2">Salary Range: </div>
+            <select name="ja_filter_salary" id="filter_salary" class="form-control bg-white" data-placeholder="Select Salary Range">
                  <option value="">Select Salary Range</option>
                 @foreach(getSalariesRange() as $sk => $salary)
                     <option value="{{$sk}}">{{$salary}}</option>
@@ -52,31 +52,133 @@
             </select>
         </div>
 
-        <div class="searchField_industry mb10">
-            <div class="searchFieldLabel dinline_block">Filter by Industry: </div>
-            <div class="toggleSwitchButton dinline_block"><label class="switch"><input type="checkbox" name="filter_industry_status"></label></div>
-            {{-- industry selection --}}
-            <div class="filter_industryList hide_it">
-                @php ($industries = getIndustries())
-                @if(!empty($industries))
-                <div class="filter_industries_list ">
-                    <ul class="industries_ul item_ul dot_list">
-                        @foreach ($industries as $indK => $indV)
-                            <li class="" data-id="{{$indK}}" data-type="filter_industry[]"><span>{{$indV}}</span></li>
-                        @endforeach
-                    </ul>
-                </div>
-                @endif
-            </div>
-            {{-- industry selection --}}
+        <div class="searchField_industry d-flex mb10 col-md-4">
+            <div class=" col-5 pt-2">Filter by Industry: </div>
+          <input type="text" name="filter_industry_status" class="form-control" data-toggle="modal" data-target="#myModal">
+           <i class="search-employee-icon fas fa-search pe-4 fs-5 pb-2"></i>
         </div>
 
 
-        <div class="searchField_location mb10">
-            <div class="searchFieldLabel dinline_block">Filter by Location: </div>
-            <div class="search_location_status_cont toggleSwitchButton"><label class="switch"><input type="checkbox" name="filter_location_status"></label></div>
-            {{-- bl_location --}}
-            <div class="location_search_cont hide_it">
+        <div class="searchField_location mb10 col-md-4 d-flex">
+            <div class="searchFieldLabel col-5 ">Filter by Location: </div>
+            <input type="text" class="form-control bg-white" name="filter_location_status" data-toggle="modal" data-target="#myModal2">
+           <div class="loc-icon">
+            <img src="{{ asset('assests/images/location.png') }}" class="pe-2" alt="">
+        </div>
+        </div>
+
+        <div class="searchField_questions mb10 col-md-4 d-flex">
+            <div class="searchFieldLabel col-5 ">Filter by Question: </div>
+           <input type="text" name="filter_by_questions" class="bg-white form-control" data-toggle="modal" data-target="#myModal234">
+           
+        </div>
+
+        <div class="searchField_keyword d-flex mb10 col-md-4">
+            <div class="searchFieldLabel col-5 pt-2">Keyword: </div>
+            <input type="text" name="ja_filter_keyword" class="form-control">
+        </div>
+
+        <div class="searchField_sortBy d-flex  col-md-4">
+            <div class="sortByFieldLabel col-5 pt-2">Sort By: </div>
+            <select name="ja_filter_sortBy" class="bg-white w-100 text-center" style="height: 35px; border: 1px solid #ced4da;">
+              <option value="goldstars">Gold Stars</option>
+              <option value="applied">Applied</option>
+              <option value="inreview">In Review</option>
+              <option value="interview">Interview</option>
+              <option value="unsuccessful">Unsuccessful</option>
+              <option value="pending">pending</option>
+              <option value="all_candidates">All candidates</option>
+            </select>
+        </div>
+
+        <div class="bj-tr-btn">
+            <button class="orange_btn" type="reset"><i class="fas fa-redo"></i> Reset</button>
+            <button class="interview-tag used-tag"><i class="fas fa-paper-plane"></i>Submit</button>
+         </div>
+         </div>
+    {{ Form::close() }}
+   
+    </div>
+
+    {{-- ================================================== Job Applications ================================================== --}}
+    
+    <div class="job_applications"></div>
+
+
+</div>
+  <!-- Modal by filter industry -->
+             <div class="bj-modal">
+              <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog filter-industry-modal" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="m-header">
+                        <h4 class="modal-title" id="myModalLabel">
+                          <i class="fas fa-filter"></i>
+                          Filter by Industry
+                        </h4>
+                        <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
+                      </div>
+                      
+  
+  
+                    </div>
+                    <div class="modal-body">
+                     
+                         {{-- industry selection --}}
+                            <div class="filter_industryList ">
+                                @php ($industries = getIndustries())
+                                @if(!empty($industries))
+                                <div class="filter_industries_list ">
+                                    <ul class="industries_ul item_ul dot_list">
+                                        @foreach ($industries as $indK => $indV)
+                                            <li class="" data-id="{{$indK}}" data-type="filter_industry[]"><span>{{$indV}}</span></li>
+                                        @endforeach
+                                    </ul>
+                                </div>
+                                @endif
+                            </div>
+                            {{-- industry selection --}}
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary bs-btn">
+                       <i class=" fas fa-search"></i>
+                        <span class="fb-text">
+                          Search
+                        </span>
+                      </button>
+  
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+     
+            <!-- Modal -->
+            <!-- Modal -->
+
+            <!-- Modal filter by location -->
+            <div class="bj-modal loc-modal">
+              <div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel" aria-hidden="true">
+  
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="m-header">
+                        <h4 class="modal-title">
+                          <i class="fas fa-map-marker-alt"></i> Location
+                          <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
+                        </h4>
+                      </div>
+                      
+  
+  
+                    </div>
+                    <div class="modal-body">
+                  {{-- bl_location --}}
+            <div class="location_search_cont ">
                 <div class="location_input dtable w100">
                     <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
                     <select class="dinline_block filter_location_radius select_aw" name="filter_location_radius" data-placeholder="Select Location Radius">
@@ -94,12 +196,41 @@
                 <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
             </div>
             {{-- bl_location --}}
-        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary gl-btn">
+                        <i class="fas fa-paper-plane"></i>
+                        <span class="gl-text">Done </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal -->
 
-        <div class="searchField_questions mb10">
-            <div class="searchFieldLabel dinline_block">Filter by Question: </div>
-            <div class="toggleSwitchButton dinline_block"><label class="switch"><input type="checkbox" name="filter_by_questions"></label></div>
-            <div class="filter_question_cont hide_it">
+
+  <!-- Modal by filter question -->
+             <div class="bj-modal">
+              <div class="modal fade" id="myModal234" tabindex="-1" role="dialog"
+                aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog filter-industry-modal" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="m-header">
+                        <h4 class="modal-title" id="myModalLabel">
+                          <i class="fas fa-filter"></i>
+                          Filter by Industry
+                        </h4>
+                        <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
+                      </div>
+                      
+  
+  
+                    </div>
+                    <div class="modal-body">
+                     
+                         <div class="filter_question_cont ">
                  <div class="questionFilter">
                  @if(varExist('questions', $job))
                  @foreach ($job->questions as $qkey =>  $jq)
@@ -108,7 +239,7 @@
                         <span class="fjq_title">{{$jq->title}}</span>
                         <div class="fjq_options">
                             @if($jq->options)
-                            <select class="filter_question select_aw" name="filter_question[{{$jq->id}}]" >
+                            <select class="filter_question select_aw" name="filter_question[{{$jq->id}}]" style="height: 34px;" >
                                 <option value="">Select</option>
                                 @foreach ($jq->options as $qk => $jqopt)
                                     <option value="{{$jqopt}}">{{$jqopt}}</option>
@@ -121,43 +252,20 @@
                  @endif
                  </div>
             </div>
-        </div>
-
-        <div class="searchField_keyword dblock mb10">
-            <div class="searchFieldLabel dinline_block">Keyword: </div>
-            <input type="text" name="ja_filter_keyword">
-        </div>
-
-        <div class="searchField_sortBy dblock mb10">
-            <div class="sortByFieldLabel dinline_block">Sort By: </div>
-            <select name="ja_filter_sortBy">
-              <option value="goldstars">Gold Stars</option>
-              <option value="applied">Applied</option>
-              <option value="inreview">In Review</option>
-              <option value="interview">Interview</option>
-              <option value="unsuccessful">Unsuccessful</option>
-              <option value="pending">pending</option>
-              <option value="all_candidates">All candidates</option>
-            </select>
-        </div>
-
-        <div class="searchField_action">
-            <div class="searchFieldLabel dinline_block"></div>
-            <button class="btn small OrangeBtn">Submit</button>
-            <button class="btn small OrangeBtn reset-btn" >Reset</button>
-        </div>
-
-    {{ Form::close() }}
-    </div>
-
-    {{-- ================================================== Job Applications ================================================== --}}
-    
-    <div class="job_applications"></div>
-
-
-</div>
-
-
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-primary bs-btn">
+                       <i class=" fas fa-search"></i>
+                        <span class="fb-text">
+                          Search
+                        </span>
+                      </button>
+  
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
 {{-- Jquery pop up itertaion-9 --}}
 <div id="onlineTestModal" class="modal w100 p0">
@@ -696,7 +804,6 @@ $('input[name="filter_location_status"]').change(function() {
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 <style type="text/css">
 button.ja_load_qa { background: #40c7db; }
 .job_app_qa_box {padding: 10px;border: 1px solid rgba(0,0,0,0.1);border-radius: 4px;margin: 10px 0px;}
