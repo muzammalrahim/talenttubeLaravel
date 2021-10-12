@@ -1,16 +1,9 @@
 
-
-{{-- @dump($js->vidoes) --}}
 @php
 $profile_image  = asset('images/site/icons/nophoto.jpg');
 $profile_image_gallery    = $js->profileImage()->first();
-
-// dump($profile_image_gallery);
-
  if ($profile_image_gallery) {
-    // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
     $profile_image   = assetGallery2($profile_image_gallery,'small');
-     // dump($profile_image);
  }
 
 @endphp
@@ -20,11 +13,6 @@ $profile_image_gallery    = $js->profileImage()->first();
         <div class="js_profile_video">
             <div class="js_video_thumb">
                 <img class="js_profile_photo w100" id="pic_main_img" src="{{$profile_image}}">
-               {{--
-               <a onclick="profileVideoShow('{{assetVideo($js->vidoes->first())}}')" class="js_video_link" target="_blank">
-                {!! generateVideoThumbs($js->vidoes->first())!!}
-               </a>
-               --}}
             </div>
             <div class="videos_list">
                 @foreach($js->vidoes as $video)

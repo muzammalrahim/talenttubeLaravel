@@ -8,8 +8,8 @@
 @stop
 
 @section('content')
-<div class="newJobCont">
-    <div class="head icon_head_browse_matches">Job Seekers List</div>
+<div class="newJobCont  profile profile-section">
+    <h2 class="head icon_head_browse_matches">Job Seekers List</h2>
     <div class="add_new_job jobSeekersListingCont">
         <!-- =============================================================================================================================== -->
         @include('site.employer.jobSeekers.filter')   {{-- site/employer/jobSeekers/filter --}}
@@ -18,6 +18,7 @@
         <!-- =============================================================================================================================== -->
         <div class="jobSeekers_list">
             @include('site.employer.jobSeekers.list')  {{-- site/employer/jobSeekers/list --}}
+          
         </div>
         <!-- =============================================================================================================================== -->
     </div>
@@ -663,5 +664,5 @@ $(document).on('click','.btnBulkPDFGenerate', function(){
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 @stop

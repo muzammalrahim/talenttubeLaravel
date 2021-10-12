@@ -4,7 +4,7 @@
 
     {{-- ============================================= Pie Chart =============================================  --}}
             
-        @include('site.talent_matcher.algo') {{-- site/talent_matcher/algo --}}
+       {{--  @include('site.talent_matcher.algo') --}} {{-- site/talent_matcher/algo --}}
             
     {{-- ============================================= Pie Chart =============================================  --}}
             
