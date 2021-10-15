@@ -1,576 +1,487 @@
-{{-- @extends('site.user.usertemplate') --}}
-
-
 @extends('web.user.usermaster')
-
 @section('custom_css')
-
+{{-- 
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
+--}}
 <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 @stop
-
-
-
-
 @section('content')
-
-{{-- @dump($UserInterview); --}}
-<div class="newJobCont">
-    <div class="head icon_head_browse_matches">Job Seeker Detail</div>
-    <div class="add_new_job">
-        <div class="job_row_heading jobs_filter">
-            @php
-                $js = $jobSeeker;
-            @endphp
-            <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
-                <div class="jobSeeker_box relative dinline_block w100">
-                <div class="js_profile w_30p w_box dblock fl_left">
-                    <div class="js_profile_cont center p10">
-                        @php
-                       $profile_image  = asset('images/site/icons/nophoto.jpg');
-                        $profile_image_gallery    = $js->profileImage()->first();
-                        if ($profile_image_gallery) {
-                            // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
-                            $profile_image   = assetGallery2($profile_image_gallery,'small');
-                            // dump($profile_image);
-                        }
-                        @endphp
-                        <img class="js_photo w100" id="pic_main_img" src="{{$profile_image}}">
-                    </div>
-                    <div class="js_info center">
-                        <div class="js_name"><h4 class="bold">{{$js->username}}</h4></div>
-                        {{-- <div class="js_status_label">{{$js->statusText}}</div> --}}
-                        <div class="js_location">Location: {{$js->city}},  {{$js->state}}, {{$js->country}} </div>
-                    </div>
-                </div>
-
-                <div class="js_info w_70p w_box dblock fl_left">
-
-                    {{-- ============================================= Pie Chart =============================================  --}}
-                    @if (!isAdmin($user))
+{{-- html for job seeker details starts here --}}
+<section class="row">
+   <div class="col-md-12">
+   <div class="profile profile-section">
+      <h2>Job Seeker Detail</h2>
+      @php
+      $js = $jobSeeker;
+      @endphp                
+      <!-- Top Filter Row -->
+      <div class="row">
+         <div class="col-sm-12 col-md-12">
+            <div class="job-box-info employee-details-info block-box clearfix">
+               <div class="box-head">                        
+               </div>
+               <div class="row Block-user-wrapper">
+                  @php
+                  $profile_image  = asset('images/site/icons/nophoto.jpg');
+                  $profile_image_gallery    = $js->profileImage()->first();
+                  if ($profile_image_gallery) {
+                  $profile_image   = assetGallery2($profile_image_gallery,'small');
+                  }
+                  @endphp
+                  <div class="col-md-3 user-images">
+                     <div class="block-user-img ">
+                        <img src="{{$profile_image}}" alt="">
+                     </div>
+                     <div class="block-user-progress ">
+                        <h6>{{$js->username}}</h6>
+                        <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
+                        <div class="block-progrees-ratio d-block d-md-none">
+                           <ul>
+                              <li><span class="Progress-ratio-icon1">.</span> <span>60%</span> Match </li>
+                              <li><span class="Progress-ratio-icon2">.</span> <span>40%</span> UnMatch</li>
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-9 user-details">
+                     <div class="row blocked-user-about">
+                        @if (!isAdmin($user))
                         {{-- expr --}}
                         @include('site.user.match_algo.match_algo')   {{-- site/user/match_algo/match_algo --}}
-                        
-                    @endif
-                    
-                    {{-- ============================================= Pie Chart =============================================  --}}
-                    
-                    
-                    <div class="js_interested js_field"> <span class="js_label">Recent Job:</span> <p><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b> </p></div>
-                    <div class="js_about js_field"> <span class="js_label">About me:</span><p class="js_about_me"> {{$js->about_me}}</p> </div>
-                    <div class="js_interested js_field"><span class="js_label">Interested in:</span><p>{{$js->interested_in}}</p></div>
-                    <div class="js_interested js_field"><span class="js_label">Expected Salary:</span><p>{{getSalariesRangeLavel($js->salaryRange)}}</p></div>
-
-                    <div class="js_education js_field">
-                        <span class="js_label">Qualification:</span>
-                        <div class="qualifType"><i class="fas fa-angle-right qualifiCationBullet"></i>Type:
-                            <span class="qualifTypeSpan">{{$js->qualificationType}}</span>
-                        </div>
-                        {{-- {{implode(', ', getQualificationNames($js->qualification))}} --}}
+                        @endif
+                     </div>
                      @php
-                          $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
-                      @endphp
+                     $dist = calculate_distance($js, $user);
+                     $ind_exp = cal_ind_exp($js,$user);
+                     $compatibility = compatibility($js, $user); 
+                     $user_compat = $compatibility*20;
+                     // dump($user_compat);
+                     // $resident = initial_last_question($js,$user);
+                     // ========================= excluded 6th question ========================= 
+                     $emp_questions = json_decode($js->questions , true);
+                     $user_questions = json_decode($user->questions , true);
+                     // dump($emp_questions);
+                     // {"resident":"no","relocation":"yes","fulltime":"yes","temporary_contract":"yes","part_time":"no","graduate_intern":"yes"}
+                     // $checkLastQuestion = end($emp_questions);
+                     // dump($checkLastQuestion);
+                     $emp_resident = '';
+                     $user_resident = '';
+                     if ($emp_questions != null && $user_questions != null) {
+                     $emp_match = array_slice($emp_questions, 5, 6, true);
+                     foreach ($emp_match as $key => $value) {
+                     $emp_resident .= $value;
+                     }
+                     $user_match = array_slice($user_questions, 5, 6, true);
+                     foreach ($user_match as $key => $value) {
+                     $user_resident .= $value;
+                     }
+                     }
+                     @endphp
+                     <div class="row blocked-user-about">
+                        <h6>Recent Job:</h6>
+                        <p><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
+                     </div>
+                     <div class="row blocked-user-about">
+                        <h6>About Me:</h6>
+                        <p>{{$js->about_me}}</p>
+                     </div>
+                     <div class="row blocked-user-about">
+                        <h6>Intrested In:</h6>
+                        <p>{{$js->interested_in}}</p>
+                     </div>
+                     <div class="row blocked-user-about">
+                        <h6>Location:</h6>
+                        <p>{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
+                     </div>
+                     <div class="row blocked-user-about">
+                        <h6>Sallary Range:</h6>
+                        <p>{{getSalariesRangeLavel($js->salaryRange)}}</p>
+                     </div>
+                     <div class="row blocked-user-about">
+                        <h6>Qualification:</h6>
+                        <p><span><b>Type:</b></span>{{$js->qualificationType}}</p>
+                        @php
+                        $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
+                        @endphp
                         @if(!empty($qualificationsData))
+                        <ul>
                            @foreach($qualificationsData as $qualification)
-                              <div class="QualificationSelect">
-                                  <p style="margin-bottom: 0px;"><i class="fas fa-angle-double-right qualifiCationBullet"></i>{{$qualification['title']}}</p>
-                              </div>
+                           <li class="QualificationSelect">
+                              <p>{{$qualification['title']}}</p>
+                           </li>
                            @endforeach
-                         @endif
-                    </div>
-
-                    <div class="js_interested js_field">
-                        <span class="js_label">Industry Experience:</span>
-                            @if(isset($js->industry_experience))
-                            @foreach ($js->industry_experience as $ind)
-                                <div class="indsutrySelect">
-                                 <p style="margin-bottom: 0px;"><i class="fas fa-angle-right qualifiCationBullet"></i>{{getIndustryName($ind)}} </p>
-                                </div>
-                            @endforeach
-                            @endif
-                    </div>
-
-                </div>
-
-                <div class="js_actionBtn">
-                    <a id="JSBlockBtn" class="graybtn jbtn" data-jsid="{{$js->id}}">Block</a>
-                    @if (in_array($js->id,$likeUsers))
-                    <a class="active graybtn jbtn" data-jsid="{{$js->id}}">Liked</a>
-                    @else
-                    <a class="jsLikeUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Like</a>
-                    @endif
-                </div>
-                </div>
+                        </ul>
+                        @endif
+                     </div>
+                     <div class="row blocked-user-experience">
+                        <h6>Industory Experience:</h6>
+                        @if(isset($js->industry_experience))
+                        <ul>
+                           @foreach ($js->industry_experience as $ind)
+                           <li class="indsutrySelect">
+                              <p >{{getIndustryName($ind)}} </p>
+                           </li>
+                           @endforeach
+                        </ul>
+                        @endif
+                     </div>
+                  </div>
+               </div>
+               <div class="box-footer clearfix">
+                  <div class="block-progrees-ratio d-none d-md-block">
+                  </div>
+                  <a id="JSBlockBtn"  data-jsid="{{$js->id}}"><button class="unblock-btn" data-toggle="modal" data-target="#myModal333"><i class="fas fa-ban"></i> Block</button></a>
+                  @if (in_array($js->id,$likeUsers))
+                  <a class="active " data-jsid="{{$js->id}}"><button class="like-btn"><i class="fas fa-thumbs-up"></i> Liked</button></a>
+                  @else
+                  <a class="jsLikeUserBtn " data-jsid="{{$js->id}}"><button class="like-btn" data-toggle="modal" data-target="#myModal999"><i class="fas fa-thumbs-up"></i> Like</button></a>
+                  @endif                          
+               </div>
             </div>
-
-        </div>
-    </div>
-
-<div class="cl"></div>
-
-
-<!-- tabs_employer -->
-<div class="tabs_profile tabContainer">
-
-
-
-    <div id="tabs_profile">
-        <ul class="tab customTab">
-            {{-- <li id="tabs-1_switch" class="switch_tab ">
-                <a href="#tabs-1" title=""><span>Jobs</span></a>
-            </li> --}}
-
-            <li id="tabs-2_switch" class="switch_tab selected">
-                <a href="#tabs-2" title=""><span>Albums</span></a>
+         </div>
+      </div>
+      <div class="profile">
+         <ul class="nav nav-tabs employee-tab-info" id="Profile-tab" role="tablist">
+            <span class="line-tab"></span>
+            <li class="nav-item" role="presentation">
+               <button class="nav-link active" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference"
+                  type="button" role="tab" aria-controls="job" aria-selected="false">
+               <i class="fa fa-circle tab-circle-cross"></i>Refrance</button>
             </li>
-
-            <li id="tabs-3_switch" class="switch_tab">
-                <a href="#tabs-3" title=""><span>Questions</span></a>
+            <li class="nav-item" role="presentation">
+               <button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
+                  type="button" role="tab" aria-controls="profile" aria-selected="false">
+               <i class="fa fa-circle tab-circle-cross"></i>Album</button>
             </li>
-
-            <li id="tabs-4_switch" class="switch_tab">
-                <a href="#tabs-4" title=""><span>Reference</span></a>
+            <li class="nav-item" role="presentation">
+               <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                  type="button" role="tab" aria-controls="contact" aria-selected="false">
+               <i class="fa fa-circle tab-circle-cross"></i>Questions</button>
             </li>
-
-            {{-- <li id="tabs-5_switch" class="switch_tab">
-                <a href="#tabs-5" title=""><span>History</span></a>
-            </li>
-
-            <li id="tabs-6_switch" class="switch_tab">
-                <a href="#tabs-6" title=""><span>Notes</span></a>
-            </li> --}}
-
-            {{-- @dump($user->id); --}}
             @if ($controlsession->count() > 0 || isAdmin())
-                @include('site.user.jobseekerInfoTabs.notesAndHistory')
+            @include('site.user.jobseekerInfoTabs.notesAndHistory')
             @endif
-
-            <li id="tabs-7_switch" class="switch_tab">
-                <a href="#tabs-7" title=""><span>Interview</span></a>
+            <li class="nav-item" role="presentation">
+               <button class="nav-link" id="interview-tab" data-bs-toggle="tab" data-bs-target="#interview"
+                  type="button" role="tab" aria-controls="contact" aria-selected="false">
+               <i class="fa fa-circle tab-circle-cross"></i>InterView</button>
             </li>
-
-            <li id="tabs-9_switch" class="switch_tab">
-                <a href="#tabs-9" title=""><span>Online Tests</span></a>
+            <li class="nav-item" role="presentation">
+               <button class="nav-link" id="online_test-tab" data-bs-toggle="tab" data-bs-target="#online_test"
+                  type="button" role="tab" aria-controls="contact" aria-selected="false">
+               <i class="fa fa-circle tab-circle-cross"></i>Online Test</button>
             </li>
-
-            <li id="tabs-10_switch" class="switch_tab">
-                <a href="#tabs-10" title=""><span>Last Login</span></a>
+            <li class="nav-item" role="presentation">
+               <button class="nav-link" id="last_login-tab" data-bs-toggle="tab" data-bs-target="#last_login"
+                  type="button" role="tab" aria-controls="contact" aria-selected="false">
+               <i class="fa fa-circle tab-circle-cross"></i>Last Login</button>
             </li>
-
-            
-
-           {{--  <li id="tabs-3_switch" class="switch_tab">
-                <a href="#tabs-3" title=""><span>Questions</span></a>
-            </li> --}}
-
-        </ul>
-    </div>
-
-    <div id="tabs_content" class="tabs_content">
-
-    <!-- tab_album -->
-
-    <!-- =============================================== Tab Albums =============================================== -->
-
-    <a id="tabs-2" class="tab_link tab_a target"></a>
-    <div class="tab_photos tab_cont">
-        <div class="galleryCont">
-            <div class="head2">Gallery Photos</div>
-                <div class="photos">
-                    @if ($galleries)
-                    @foreach ($galleries as $gallery)
-                        <div id="{{$gallery->id}}" class="emp_profile_photo_frame fl_left gallery_{{$gallery->id}}">
-                            <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-                            href="{{assetGallery($gallery->access,$jobSeeker->id,'',$gallery->image)}}"
-
-                            data-lcl-thumb="{{assetGallery($gallery->access,$jobSeeker->id,'small',$gallery->image)}}"
-                            >
-                            <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="w100"
-                            data-src="{{assetGallery($gallery->access,$jobSeeker->id,'',$gallery->image)}}"
-                            src="{{assetGallery($gallery->access,$jobSeeker->id,'small',$gallery->image)}}" >
-                            </a>
+         </ul>
+         <div class="tab-content employee-details-infomation" id="myTabContent">
+            <!--=================job tab ============================ -->
+            <div class="tab-pane fade show active job-applied" id="reference"  role="tabpanel" aria-labelledby="reference-tab">
+               <h2>Refrance</h2>
+               <div class="row">
+                  @include('site.user.jobseekerInfoTabs.reference')
+               </div>
+            </div>
+            <!--================== album-tab-->
+            <div class="album-section tab-pane fade Photos " id="profile" role="tabpanel"
+               aria-labelledby="profile-tab">
+               <div class="tab_photos tab_cont">
+                  <div class="galleryCont row">
+                     <div class="head2 ">
+                        <h2>Gallery Photos</h2>
+                        <div class="photos">
+                           <ul>
+                              @if ($galleries)
+                              @foreach ($galleries as $gallery)
+                              <li class=" float-left">
+                                 <div class="album-upload-img field" align="left">
+                                    <div id="{{$gallery->id}}" class="pip">
+                                       <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
+                                          href="{{assetGallery($gallery->access,$jobSeeker->id,'',$gallery->image)}}" data-lcl-thumb="{{assetGallery($gallery->access,$jobSeeker->id,'small',$gallery->image)}}">
+                                       <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="imageThumb" src="{{assetGallery($gallery->access,$jobSeeker->id,'small',$gallery->image)}}" > </a>
+                                    </div>
+                                 </div>
+                              </li>
+                              @endforeach
+                              @endif
+                           </ul>
                         </div>
-                    @endforeach
-                    @endif
-                </div>
-        </div>
-
-        <div class="cl mb20"></div>
-        @if($isallowed)
-            <span class="prvate-section">
-                <div class="title_private_photos" style="margin-bottom: 5px;">
-                    Resume &amp; Contact Details
-                </div>
-                <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
-                    <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
-                    <li><span class="basic_info">•</span><span id="info_looking_for_ages">First Name : {{$js->name}}</span></li>
-                    <li><span class="basic_info">•</span><span id="info_looking_for_ages">Last Name : {{$js->surname}}</span></li>
-                    <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
-                </ul>
-            </span>
-                <br>
-            <div class="private_attachments">
-                    @foreach ($attachments as $attachment)
-                        <div class="attachment_{{$attachment->id}} attachment_file">
-                            <div class="attachment"><img src="{{asset('images/site/icons/cv.png')}}" /></div>
-                            <span class="attach_title">{{ $attachment->name }}</span>
-                            <div class="attach_btns">
-                                    <a class="attach_btn downloadAttachBtn" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
-                            </div>
+                     </div>
+                  </div>
+                  <div class="cl mb20"></div>
+                  @if($isallowed)
+                  <span class="prvate-section">
+                     <div class="title_private_photos" style="margin-bottom: 5px;">
+                        Resume &amp; Contact Details
+                     </div>
+                     <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
+                        <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
+                        <li><span class="basic_info">•</span><span id="info_looking_for_ages">First Name : {{$js->name}}</span></li>
+                        <li><span class="basic_info">•</span><span id="info_looking_for_ages">Last Name : {{$js->surname}}</span></li>
+                        <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
+                     </ul>
+                  </span>
+                  <br>
+                  <div class="private_attachments">
+                     @foreach ($attachments as $attachment)
+                     <div class="attachment_{{$attachment->id}} attachment_file">
+                        <div class="attachment"><img src="{{asset('images/site/icons/cv.png')}}" /></div>
+                        <span class="attach_title">{{ $attachment->name }}</span>
+                        <div class="attach_btns">
+                           <a class="attach_btn downloadAttachBtn" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
                         </div>
-                    @endforeach
-            </div>
-            @else
-            <span class="prvate-section">
-                <div class="title_private_photos" style="margin-bottom: 5px;">
-                    Content Locked
-                </div>
-
-                <p>
-                    Get premium account from
-                    <a class="credits_balans" id="credits_balans_header" href="{{route('premiumAccount')}}"> here</a>
-                    for contacting job seekers
-                </p>
-                
-
-                {{-- <div class="attach_btns">
-                    <a class="attach_btn downloadAttachBtn"  onclick="UProfile.confirmPurchase({{$js->id}});" style="margin-bottom: 25px;">Unlock</a>
-                </div> --}}
-            
-            </span>
-        @endif
-
-        {{-- ======================== Paid employer viewing the jobseeker personal info ========================  --}}
-        
-        
-        
-
-
-        {{-- ======================== Paid employer viewing the jobseeker personal info ========================  --}}
-        
-
-        <div class="cl mb20"></div>
-        <div class="VideoCont">
-            <div class="head2">Gallery Videos</div>
-            <div class="videos">
-                @if ($videos->count() > 0 )
-               	@foreach ($videos as $video)
-                <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-                    <a onclick="UProfile.showVideoModal( '{{assetVideo($video)}}'  )" class="video_link" target="_blank">
-                        <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
-                            {!! generateVideoThumbs($video) !!}
-                        </a>
-                </div>
-                @endforeach
-                @endif
-            </div>
-        </div>
-        <!-- /videos -->
-    </div>
-
-    <div style="display:none;">
-        <div id="lowPointsModal" class="modal p0 confirmDeleteModal">
-            <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-                <div class="cont">
-                    <div class="title">You don't have enough credits</div>
-                    <div class="img_chat">
-                        <div class="icon">
-                                <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
+                     </div>
+                     @endforeach
+                  </div>
+                  @else
+                  <span class="prvate-section">
+                     <div class="title_private_photos" style="margin-bottom: 5px;">
+                        Content Locked
+                     </div>
+                     <p>
+                        Get premium account from
+                        <a class="credits_balans" id="credits_balans_header" href="{{route('premiumAccount')}}"> here</a>
+                        for contacting job seekers
+                     </p>
+                  </span>
+                  @endif
+                  {{-- ======================== Paid employer viewing the jobseeker personal info ========================  --}}
+                  {{-- ======================== Paid employer viewing the jobseeker personal info ========================  --}}
+                  <div class="cl mb20"></div>
+                  <div class="VideoCont row">
+                     <h2 class="head2">Gallery Videos</h2>
+                     <div class="videos">
+                        @if ($videos->count() > 0 )
+                        @foreach ($videos as $video)
+                        <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
+                           <a onclick="UProfile.showVideoModal( '{{assetVideo($video)}}'  )" class="video_link" target="_blank">
+                              <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
+                              {!! generateVideoThumbs($video) !!}
+                           </a>
                         </div>
-                        <div class="msg">Please, purchases some points to unlock private info</div>
-                    </div>
-                    <div class="double_btn">
-                        <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">OK</button>
-                        <input type="hidden" name="user_id" id="user_id" value=""/>
-                        <div class="cl"></div>
-                    </div>
-                </div>
+                        @endforeach
+                        @endif
+                     </div>
+                  </div>
+                  <!-- /videos -->
+               </div>
             </div>
-        </div>
-    </div>
-
-{{-- Hi there --}}
-
-
-    <div style="display:none;">
-        <div id="confirmPurchaseModal" class="modal p0 confirmDeleteModal">
-            <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-                <div class="cont">
-                    <div class="title">Do you wanna unlock this user private info? costs 10 points</div>
-                    <div class="img_chat">
-                            <div class="icon">
-                                    <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
-                            </div>
-                            <div class="msg">This action can not be undone. Are you sure you wish to continue?</div>
-                    </div>
-                    <div class="double_btn">
-                            <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
-                            <button class="confirm_ok btn small marsh" onclick="UProfile.purchase(); return false;">OK</button>
-                            <input type="hidden" name="user_id" id="user_id" value=""/>
-                            <div class="cl"></div>
-                    </div>
-                </div>
+            <!--====================== question tab===========================-->
+            <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
+               <h2>Questions</h2>
+               <div class="tab_photos tab_cont">
+                  {{-- Added By Hassan --}}
+                  @include('site.user.jobseekerInfoTabs.questions')  {{-- site/user/jobseekerInfoTabs/questions --}}
+               </div>
             </div>
-        </div>
-    </div>
-
-	<div style="display:none;">
-    	<div id="videoShowModal" class="modal p0 videoShowModal">
-    		<div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-    			<div class="cont">
-    				<div class="videoBox"></div>
-    				{{-- <div class="double_btn">
-    								<button class="confirm_close btn small dgrey" onclick="UProfile.cancelVideoModal(); return false;">Close</button>
-    								<div class="cl"></div>
-    				</div> --}}
-    			</div>
-    		</div>
-    	</div>
-	</div>
-    <!-- /tab_album -->
-
-
-   <!--Tab Questions -->
-
-    <!-- =============================================== Tab Questions =============================================== -->
-
-    <a id="tabs-3" class="tab_link tab_a"></a>
-    <div class="tab_photos tab_cont">
-        {{-- Added By Hassan --}}
-        @include('site.user.jobseekerInfoTabs.questions')  {{-- site/user/jobseekerInfoTabs/questions --}}
-    </div>
-
-    <!-- =============================================== Tab Reference =============================================== -->
-    
-    <a id="tabs-4" class="tab_link tab_a"></a>
-    <div class="tab_reference tab_cont pt30px">
-        @include('site.user.jobseekerInfoTabs.reference')
-    </div>
-
-    @if ($controlsession->count() > 0 || isAdmin())
-
-        <!-- =============================================== Tab History =============================================== -->
-
-        <a id="tabs-5" class="tab_link tab_a"></a>
-        <div class="tab_history tab_cont pt30px">
-            @include('site.user.jobseekerInfoTabs.history') {{-- site/user/jobseekerInfoTabs/history --}}
-        </div>
-
-        <!-- =============================================== Tab Notes =============================================== -->
-
-        <a id="tabs-6" class="tab_link tab_a"></a>
-        <div class="tab_notes tab_cont pt30px">
-            @include('site.user.jobseekerInfoTabs.addNotes')
-
-        </div>
-
+            @if ($controlsession->count() > 0 || isAdmin())
+            <!-- =============================================== Tab History =============================================== -->
+            <a id="tabs-5" class="tab_link tab_a"></a>
+            <div class="tab_history tab_cont pt30px">
+               @include('site.user.jobseekerInfoTabs.history') {{-- site/user/jobseekerInfoTabs/history --}}
+            </div>
+            <!-- =============================================== Tab Notes =============================================== -->
+            <a id="tabs-6" class="tab_link tab_a"></a>
+            <div class="tab_notes tab_cont pt30px">
+               @include('site.user.jobseekerInfoTabs.addNotes')
+            </div>
             <!-- =============================================== Tab Jobs =============================================== -->
-
-        <a id="tabs-8" class="tab_link tab_a"></a>
-        <div class="tab_interviews tab_cont pt30px">
-        @include('site.user.jobseekerInfoTabs.jobApplications')
-            
-            {{--    site/user/jobseekerInfoTabs/jobApplications  --}}
-
-        </div>
-
-    @endif
-    <!-- =============================================== Tab Interview =============================================== -->
-
-    <a id="tabs-7" class="tab_link tab_a"></a>
-    <div class="tab_interviews tab_cont pt30px">
-        {{-- @dd($UserInterview); --}}
-        @include('site.user.jobseekerInfoTabs.interviews')
-        {{--    site/user/jobseekerInfoTabs/interviews  --}}
-    </div>
-
-    <!-- =============================================== Tab Interview =============================================== -->
-
-    <a id="tabs-9" class="tab_link tab_a"></a>
-    <div class="tab_onlineTest tab_cont pt30px">
-        @include('site.user.jobseekerInfoTabs.onlineTests')
-        {{--    site/user/jobseekerInfoTabs/onlineTests  --}}
-    </div>
-
-
-    <!-- =============================================== Tab Last Login =============================================== -->
-
-    <a id="tabs-10" class="tab_link tab_a"></a>
-    <div class="tab_lastLogin tab_cont pt30px">
-        {{-- @dump($jobSeeker->last_login); --}}
-        <p>
-            {{ $jobSeeker->last_login }}
-        </p>
-    </div>
-
-    <!-- =============================================== Tabs End here =============================================== -->
-
-    {{-- Added By Hassan --}}
-
-
-    </div>
-
-</div>
-<!-- /tabs_employer -->
-
-</div>
-
-<div style="display:none;">
-<div id="confirmJobSeekerBlockModal" class="modal p0 confirmJobSeekerBlockModal wauto">
-    <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-        <div class="cont">
-            <div class="title">Block Job Seeker?</div>  {{-- Modal in job seeker info page --}}
-            <div class="img_chat">
-                <div class="icon">
-                    <img src="{{asset('/images/site/icons/icon_pp_sure.png')}}" height="48" alt="">
-                </div>
-                <div class="msg">Are you sure you wish to continue?</div>
+            <a id="tabs-8" class="tab_link tab_a"></a>
+            <div class="tab_interviews tab_cont pt30px">
+               @include('site.user.jobseekerInfoTabs.jobApplications')   
+               {{--    site/user/jobseekerInfoTabs/jobApplications  --}}
             </div>
-            <div class="double_btn">
-                <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
-                <button class="ConfirmBlockJsInJsInfoPage btn small marsh">OK</button>
-                <input type="hidden" name="jobSeekerBlockId" id="jobSeekerBlockId" value=""/>
-                <div class="cl"></div>
+            @endif
+            <div class="tab-pane fade interview-tab" id="interview"  role="tabpanel" aria-labelledby="contact-tab">
+               <h2>Interviews</h2>
+               <div class="tab_interviews tab_cont pt30px">
+                  {{-- @dd($UserInterview); --}}
+                  @include('site.user.jobseekerInfoTabs.interviews')
+                  {{--    site/user/jobseekerInfoTabs/interviews  --}}
+               </div>
             </div>
-        </div>
-        <div class="apiMessage"></div>
-    </div>
-</div>
-</div>
-
+            <div class="tab-pane fade online_test-tab" id="online_test"  role="tabpanel" aria-labelledby="online_test-tab">
+               <h2>online Tests</h2>
+               <div class="tab_onlineTest tab_cont pt30px">
+                  @include('site.user.jobseekerInfoTabs.onlineTests')
+                  {{--    site/user/jobseekerInfoTabs/onlineTests  --}}
+               </div>
+            </div>
+            <div class="tab-pane fade last_login-tab" id="last_login"  role="tabpanel" aria-labelledby="last_login-tab">
+               <h2>last Login</h2>
+               <div class="tab_lastLogin tab_cont pt30px">
+                  {{-- @dump($jobSeeker->last_login); --}}
+                  <p>
+                     {{ $jobSeeker->last_login }}
+                  </p>
+               </div>
+            </div>
+            <!--========================end all tabs-->
+         </div>
+         {{-- 
+      </div>
+      --}}
+   </div>
+   {{-- modal for Block user of like page --}}
+   <!-- ====================================================================================Modal -->
+   <div class="modal fade" id="myModal333" role="dialog">
+      <div class="modal-dialog delete-applications">
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header">
+               <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
+               <h1 class="modal-title"><i class="fas fa-ban trash-icon"></i>Block User</h1>
+            </div>
+            <div class="modal-body">
+               <strong>Are you sure you wish to continue?</strong>
+            </div>
+            <div class="dual-footer-btn">
+               <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+               <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button>
+            </div>
+         </div>
+      </div>
+   </div>
+   {{-- modal for unlike user of like page --}}
+   <!-- ====================================================================================Modal -->
+   <div class="modal fade" id="myModal999" role="dialog">
+      <div class="modal-dialog delete-applications">
+         <!-- Modal content-->
+         <div class="modal-content">
+            <div class="modal-header">
+               <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
+               <h1 class="modal-title"><i class="fas fa-thumbs-up trash-icon"></i>Like User</h1>
+            </div>
+            <div class="modal-body">
+               <strong>Are you sure you wish to continue?</strong>
+            </div>
+            <div class="dual-footer-btn">
+               <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+               <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</section>
+{{-- html for job seekers details ends here --}}
 @stop
-
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+{{-- 
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+--}}
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
-
 <style type="text/css">
-    /*.seeCompletedReference{text-decoration: underline;}*/
-
-/*a.seeCompletedReference {color: black;text-transform: uppercase;text-decoration: none;letter-spacing: 0.15em;display: inline-block;
-  padding: 15px 20px;
-  position: relative;
-}
-a.seeCompletedReference:after {    
-  background: none repeat scroll 0 0 transparent;bottom: 0;content: "";display: block;height: 2px;left: 50%;position: absolute;background: black;
-  transition: width 0.3s ease 0s, left 0.3s ease 0s;
-  width: 0;
-}
-a.seeCompletedReference:hover:after { width: 100%; left: 0; }*/
-.js_location {font-size: 11px !important;}
-div#tabs_profile>ul.tab.customTab { margin-bottom: 15px;}
-.item_video .video_link{height: 23% !important;}
- .hide{display: none;}
-
-/*.jq-selectbox.jqselect.templateSelect { position: revert  !important; }*/
-
-
+   .js_location {font-size: 11px !important;}
+   div#tabs_profile>ul.tab.customTab { margin-bottom: 15px;}
+   .item_video .video_link{height: 23% !important;}
+   .hide{display: none;}
 </style>
 @stop
-
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
 <script type="text/javascript">
-$(document).ready(function(){
-
- // ========== Function to show Block popup when click on ==========//
- $(document).on('click','#JSBlockBtn',function(){
-     var jobseeker_id = $(this).data('jsid');
-     console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
-     $('#jobSeekerBlockId').val(jobseeker_id);
-     $('.double_btn').show();
-
-
-     $('#confirmJobSeekerBlockModal').modal({
-        fadeDuration: 200,
-        fadeDelay: 2.5,
-        escapeClose: false,
-        clickClose: false,
+   $(document).ready(function(){
+   
+    // ========== Function to show Block popup when click on ==========//
+    $(document).on('click','#JSBlockBtn',function(){
+        var jobseeker_id = $(this).data('jsid');
+        console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
+        $('#jobSeekerBlockId').val(jobseeker_id);
+        $('.double_btn').show();
+   
+   
+        $('#confirmJobSeekerBlockModal').modal({
+           fadeDuration: 200,
+           fadeDelay: 2.5,
+           escapeClose: false,
+           clickClose: false,
+       });
     });
- });
-
- // ========== Block Employer Ajax call  ==========//
- $(document).on('click','.ConfirmBlockJsInJsInfoPage',function(){
-    console.log(' blockJsInJsInfoPage ');
-    var jobseeker_id = $('#jobSeekerBlockId').val();
-
-    $('.confirmJobSeekerBlockModal  .img_chat').html(getLoader('blockJobSeekerLoader'));
-    var btn = $(this); //
-    btn.prop('disabled',true);
-
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/ajax/blockJobSeeker/'+jobseeker_id,
-        success: function(data){
-            btn.prop('disabled',false);
-            if( data.status == 1 ){
-                $('.confirmJobSeekerBlockModal .img_chat').html(data.message);
-                $('.jobSeeker_row.js_'+jobseeker_id).remove();
-                $('.double_btn').hide();
-
-            }else{
-                $('.confirmJobSeekerBlockModal .img_chat').html(data.error);
-            }
-        }
-    });
-});
-
-// ========== Ajax call to like the employer ==========//
-$(document).on('click','.jsLikeUserBtn',function(){
-    var btn = $(this);
-    var jobseeker_id = $(this).data('jsid');
-    console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
-    // $(this).html(getLoader('blockJobSeekerLoader'));
-    $(this).html('..');
-    $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    $.ajax({
-        type: 'POST',
-        url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
-        success: function(data){
-            btn.prop('disabled',false);
-            if( data.status == 1 ){
-                btn.html('Liked').addClass('active');
-                // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-            }else{
-                btn.html('error');
-            }
-        }
-    });
-});
-
-$('.cop_text').click(function (e) {
-   e.preventDefault();
-   var copyText = $('.seeCompletedReference').attr('href');
-
-   document.addEventListener('copy', function(e) {
-      e.clipboardData.setData('text/plain', copyText);
+   
+    // ========== Block Employer Ajax call  ==========//
+    $(document).on('click','.ConfirmBlockJsInJsInfoPage',function(){
+       console.log(' blockJsInJsInfoPage ');
+       var jobseeker_id = $('#jobSeekerBlockId').val();
+   
+       $('.confirmJobSeekerBlockModal  .img_chat').html(getLoader('blockJobSeekerLoader'));
+       var btn = $(this); //
+       btn.prop('disabled',true);
+   
+       $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+       $.ajax({
+           type: 'POST',
+           url: base_url+'/ajax/blockJobSeeker/'+jobseeker_id,
+           success: function(data){
+               btn.prop('disabled',false);
+               if( data.status == 1 ){
+                   $('.confirmJobSeekerBlockModal .img_chat').html(data.message);
+                   $('.jobSeeker_row.js_'+jobseeker_id).remove();
+                   $('.double_btn').hide();
+   
+               }else{
+                   $('.confirmJobSeekerBlockModal .img_chat').html(data.error);
+               }
+           }
+       });
+   });
+   
+   // ========== Ajax call to like the employer ==========//
+   $(document).on('click','.jsLikeUserBtn',function(){
+       var btn = $(this);
+       var jobseeker_id = $(this).data('jsid');
+       console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
+       // $(this).html(getLoader('blockJobSeekerLoader'));
+       $(this).html('..');
+       $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+       $.ajax({
+           type: 'POST',
+           url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
+           success: function(data){
+               btn.prop('disabled',false);
+               if( data.status == 1 ){
+                   btn.html('Liked').addClass('active');
+                   // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+               }else{
+                   btn.html('error');
+               }
+           }
+       });
+   });
+   
+   $('.cop_text').click(function (e) {
       e.preventDefault();
-   }, true);
-
-   document.execCommand('copy');
-   console.log('Link Copied : ', copyText);
-   alert('Link Copied: ' + copyText);
- });
-
-
-// ======================================== On Change button get interview templates ========================================
-    
-    $(document).on('click' , ".conductInterview", function(){ 
-        var abcdrf = $('.jq-selectbox__select-text').text().trim();
-        console.log(abcdrf);  
+      var copyText = $('.seeCompletedReference').attr('href');
+   
+      document.addEventListener('copy', function(e) {
+         e.clipboardData.setData('text/plain', copyText);
+         e.preventDefault();
+      }, true);
+   
+      document.execCommand('copy');
+      console.log('Link Copied : ', copyText);
+      alert('Link Copied: ' + copyText);
     });
-
-    
-
-// ======================================== On Change button get interview templates ========================================
-
-
-});
+   
+   
+   // ======================================== On Change button get interview templates ========================================
+       
+       $(document).on('click' , ".conductInterview", function(){ 
+           var abcdrf = $('.jq-selectbox__select-text').text().trim();
+           console.log(abcdrf);  
+       });
+   
+       
+   
+   // ======================================== On Change button get interview templates ========================================
+   
+   
+   });
 </script>
 @stop
-
