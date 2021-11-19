@@ -1,27 +1,41 @@
 $(document).ready(function(){
 
     this.showFieldEditor = function(field){
-        console.log('.save'+field+'button');
-        if (field == 'salaryRange') {
-            $('#salaryRangeFieldnew').removeClass('d-none');
-            $('.salaryRangeValue').addClass('d-none');
+        // console.log('.save'+field+'button');
+        if (field == 'question') {
+            console.log('Questions are here');
+            $('.QuestionsKeyPTag').toggleClass('d-none');
+            $('.questionSelect').toggleClass('d-none');
+
         }
-        if (field =='recentJob') {
-            $('.recentjob').addClass('d-none');
-            $('.sec_recentJob').removeClass('d-none');
+        else{
+            $('.sec_'+field).removeAttr('readonly');
+            $('.sec_'+field).focus();
+            $('.sec_'+field).removeClass('bg-white border-0 d-none');
+            $('.text_'+field).addClass('d-none');
         }
-        $('.sec_'+field).removeAttr('readonly');
-        $('.sec_'+field).focus();
-        $('.sec_'+field).removeClass('bg-white border-0');
+
         $('.button_'+field).removeClass('d-none');
+
+
     }
 
     this.hideFieldEditor = function(field){
         console.log('.save'+field+'button');
+
+        if (field == 'question') {
+            console.log('Questions are here');
+            $('.QuestionsKeyPTag').toggleClass('d-none');
+            $('.questionSelect').toggleClass('d-none');
+
+        }
+
         $('.sec_'+field).attr('readonly', 'true');
         $('.sec_'+field).blur();
-        $('.sec_'+field).addClass('bg-white border-0');
+        $('.sec_'+field).addClass('bg-white border-0 d-none');
         $('.button_'+field).addClass('d-none');
+        $('.text_'+field).removeClass('d-none');
+
         if (field == 'salaryRange') {
             $('.sec_salaryRange').removeClass('d-none');
             $('.newSalary').addClass('d-none');
@@ -36,6 +50,7 @@ $(document).ready(function(){
 
     this.updateProfile = function(field){
         console.log(field);
+
         var val = $('.sec_'+field).val();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
@@ -45,12 +60,13 @@ $(document).ready(function(){
             success: function(data){
                 console.log(' data ', data);
                 if(data.status == 1){
-                    // $('.attachment_file.attachment_'+attachment_id).remove();
                     $('.sec_'+field).attr('readonly', 'true');
                     $('.sec_'+field).blur();
-                    $('.sec_'+field).addClass('bg-white border-0');
+                    $('.sec_'+field).addClass('bg-white border-0 d-none');
                     $('.button_'+field).addClass('d-none');
                     $('.alert_'+field).show().delay(3000).fadeOut('slow');
+                    $('.text_'+field).removeClass('d-none');
+                    $('.text_'+field).text(val);
 
                     if (field =='recentJob') {
                        $('.recentjob').removeClass('d-none');
@@ -66,9 +82,9 @@ $(document).ready(function(){
     // ================================================ Update Recent Job ================================================
 
     this.updateRecentJob = function(){
-        var recentJobField = $('.recentJobField').val();
+        var recentJobField = $('#recentJobInput').val();
         var organHeldTitleField  = $('.organHeldTitleField').val();
-        // console.log(organHeldTitleField);
+        console.log(recentJobField);
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
@@ -78,9 +94,9 @@ $(document).ready(function(){
                 if(data.status == 1){
                     $('.organizationSpan').text(data.organHeldTitle);
                     $('.recentjobSpan').text(data.recentjob);
-                    $('.recentjob').removeClass('d-none');
-                    $('.sec_recentJob').addClass('d-none');
-                    $('.button_recentJob').addClass('d-none');
+                    // $('.recentjob').removeClass('d-none');
+                    // $('.sec_recentJob').addClass('d-none');
+                    // $('.button_recentJob').addClass('d-none');
                     $('.alert_recentJob').show().delay(3000).fadeOut('slow');
 
 
@@ -127,6 +143,7 @@ $(document).ready(function(){
                     $('.removeQualification').addClass('d-none');
                     $('.button_qualification').addClass('d-none');
 
+
                 }
             }
         });
@@ -170,7 +187,6 @@ $(document).ready(function(){
 
      this.updateSalaryRangeValue = function(){
         var salaryRangeField = $('#salaryRangeFieldnew option:selected').val();
-        $('#salaryRangeFieldnew').addClass('d-none');
        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
@@ -178,9 +194,11 @@ $(document).ready(function(){
             data: {'salaryRange': salaryRangeField},
             success: function(data){
                 if(data.status){
-                    $('.salaryRangeValue').removeClass('d-none').text(data.data);
-                    $('.salaryRangeFieldnew').addClass('d-none');
-                    $('.button_salaryRange').addClass('d-none');
+                    $('.salaryRangeValue').text(data.data);
+                    // $('.salaryRangeFieldnew').addClass('d-none');
+                    $('.alert_salayRange').show().delay(3000).fadeOut('slow');
+
+                    // $('.button_salaryRange').addClass('d-none');
                 }
             }
         });
@@ -266,8 +284,6 @@ $(document).ready(function(){
                 gallery_item += '<span>FileType: '+file.type+'</span>';
                 gallery_item += '</div>';
                 gallery_item += '</div>';
-
-
 
                 $('.uploaded-photo').append(gallery_item);
                 $.ajax({
@@ -358,7 +374,7 @@ $(document).ready(function(){
                     console.log("Hassaan doing this job : " + attachments );
                     var attach_html = '';
                     attach_html += '<li class="attachment_'+attachments.id+' uploaded-file-resume">';
-                    attach_html += '<span class="attach_title">Talent Tube Video Iteration bugs 11.08B (2) (1).docx</span>';
+                    attach_html += '<span class="attach_title">'+attachments.name+'</span>';
                     attach_html += '<div class="attach_btns">';
                     attach_html += '<a class="attach_btn downloadAttachBtn" href="'+data.file+'"><i class="fas fa-download"></i></a>';
                     attach_html += '<a class="attach_btn removeAttachBtn" data-attachmentid="'+attachments.id+'" data-toggle="modal" data-target="#deleteresumeModal" onclick="removeAttachmentModal('+attachments.id+');">X</a>';
@@ -430,9 +446,6 @@ $(document).ready(function(){
             video_item  +=  '<div class="v_progress"></div>';
             video_item  += '</div>';
 
-
-
-
             $('.list_videos').append(video_item);
             var updateForm = document.querySelector('form');
             $.ajaxSetup({
@@ -446,6 +459,9 @@ $(document).ready(function(){
                  console.log(' progress-bar ', percent+'%' );
                  $('#v_'+item_id+' .v_progress').css('width',  percent+'%');
             }, false);
+
+
+
             request.addEventListener('load', function(e){
                console.log(' load e ', e);
                var res = JSON.parse(e.target.responseText);
@@ -472,14 +488,14 @@ $(document).ready(function(){
     // ====================================== Showing uploaded video ======================================
 
 
-    this.showVideoModalFunction = function(video_url,$video_title=null){
+    this.showVideoModalFunction = function(video_url,video_title=null){
 
         console.log(' showVideoModal ', video_url);
         var videoElem  = '<video id="player" class ="w-100" controls>';
         videoElem     += '<source src="'+video_url+'" type="video/mp4">';
         videoElem     += '</video>';
         $('#videoShowModal .videoBox').html(videoElem);
-        $('#videoTitle').text(video_title);
+        // $('#videoTitle').text(video_title);
 
     }
 
@@ -513,7 +529,191 @@ $(document).ready(function(){
         });
     }
 
+    // ====================================== send reference from jobseeker's profile ======================================
 
+    this.sendReferrenceNotification = function(){
+
+        console.log('clicked send Notification for crossReference');    
+    // $('.sendNotification').on('click',function() {
+        event.preventDefault();
+        var formData = $('.crossReference').serializeArray();
+        // $('.sendNotification').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+        console.log(' formData ', formData);
+        $('.general_error1').html('');
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/crossReference/sendEmailReferee',
+            data: formData,
+            success: function(response){
+                console.log(' data ', data);
+                $('.sendNotification').html('Send Email').prop('disabled',false);
+                if( response.status == 1 ){
+                    // $('.errorsInFields').text('Notification sent sucessfully');
+                    setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
+                    swal("Good job!", "Email sent successfully!", "success");
+
+                }else{
+
+                      var errorss =  response.validator;
+                           var nameError = errorss['name'];
+                           var emailError = errorss['email'];
+                           var mobileError = errorss['mobile'];
+                           
+                           // Name Error 
+                           if(nameError) {
+                                var nameError2 = nameError.toString();
+                                $('.errorsInFields').text(nameError2);
+                            }       
+                           // Email Error 
+                           if(emailError){
+                               var emailError2 = emailError.toString();
+                               $('.errorsInFields').text(emailError2);
+                            }
+                            // Email Error 
+                           if(mobileError){
+                           var mobileError2 = mobileError.toString();
+                           $('.errorsInFields').text(mobileError2);
+                           }
+
+                    // $('.errorsInFields').text('Error occured');
+                   setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
+                }
+
+            }
+        });
+    // });
+
+    }
+
+
+    // ====================================== Update user's profile right side bar fiels ======================================
+
+    this.editMultipleFields = function(){
+
+        // alert('Hi How are you');
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'GET',
+            url: base_url+'/ajax/editMultipleFields',
+            success: function(data){
+                $('.multiFields').html(data);
+            }
+        });
+
+        
+
+
+        // $('.recentJobField').removeClass('d-none');
+        // $('.organHeldTitleField').removeClass('d-none');
+        // $('.recentjobSpan').addClass('d-none');
+        // $('.organizationSpan').addClass('d-none');
+        // $('.location_search_cont').removeClass('hide_it');
+
+        
+
+
+
+        // $('#salaryRangeFieldnew').removeClass('d-none');
+        // $('.salaryRangeValue').addClass('d-none');
+        // $('.recentjob').addClass('d-none');
+        // $('.sec_recentJob').removeClass('d-none');
+
+    }
+
+    // ====================================== update jobseeker's questions ======================================
+
+    this.updateUserQuestions = function(fiels){
+        var items = {};
+        $('select.jobSeekerRegQuestion').each(function(index,el){
+        // console.log(index, $(el).attr('name')  , $(el).val()   );
+            // items.push({name:  $(el).attr('name') , value: $(el).val()});
+            var elem_name = $(el).attr('name');
+            var elem_val = $(el).val();
+            items[elem_name] = elem_val;
+            // items.push({elem_name : elem_val });
+        });
+
+        // console.log(items); return;
+         $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        // $('.SaveQuestionsLoader').after(getLoader('smallSpinner SaveQuestionsSpinner'));
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/updateQuestions',
+            data: {'questions': items},
+
+            success: function(data){
+                $('.QuestionsKeyPTag').removeClass('d-none');
+                $('.questionSelect').addClass('d-none');
+                $('.alert_'+fiels).show().delay(3000).fadeOut('slow');
+                    if(data.status==1){
+                        // $(".questionsOfUser").load(" .questionsOfUser");
+                        // $(".SaveQuestionsSpinner").remove();
+                        $('.questionsOfUser').html(data.data);
+
+                }
+            }
+        });
+    }
+
+    // ====================================== Delete Job Application ======================================
+
+    this.deleteJobApp = function(jobApp_id){
+        // console.log(' confirmJobAppRemoval click  job_id ', jobApp_id, $(this) );
+        $('#deleteConfirmJobAppId').val(jobApp_id);
+    }
+
+    this.confirmDeleteJobApp = function(){
+
+        // $('.deleteJobAppLoader').removeClass('d-none');
+        // $('.modalBody').addClass('d-none');
+
+        var job_app_id = $('#deleteConfirmJobAppId').val();
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/deleteJobApplication/'+job_app_id,
+            success: function(data){
+                $('.jobAppDeleteModal').removeClass('showLoader').addClass('showMessage');
+                if( data.status == 1 ){
+                    $('.jobAppDeleteModal .apiMessage').html(data.message);
+                    $('.jobApp_'+job_app_id).remove();
+                }else{
+                    $('.jobAppDeleteModal .apiMessage').html(data.error);
+                }
+            }
+        });
+    }
+
+
+    // ============================================ Like user (jobseeker info page)
+
+    this.likeFunction = function(jobseeker_id){
+        console.log(jobseeker_id);
+        // $(document).on('click','.jsLikeUserBtn',function(){
+        var btn = $(this);
+        console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
+        // $(this).html(getLoader('blockJobSeekerLoader'));
+        $('.jsLikeUserBtn').html('Liked');
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
+            success: function(data){
+                btn.prop('disabled',false);
+                if( data.status == 1 ){
+                    btn.html('Liked').addClass('active');
+                    // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+                }else{
+                    btn.html('error');
+                }
+            }
+        });
+    // });
+    }
 
 
 

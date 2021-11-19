@@ -449,6 +449,7 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::post('ajax/changeUserStatusText', 'Site\SiteUserController@changeUserStatusText');
     Route::post('ajax/update/about_me', 'Site\SiteUserController@updateAboutField');
     Route::post('ajax/update/interested_in', 'Site\SiteUserController@updateInterestedIn');
+    
     Route::post('ajax/update/recentJob', 'Site\SiteUserController@updateRecentJob');
     // Added by ALi
     Route::post('ajax/addNewLocation', 'Site\SiteUserController@addNewLoaction');
@@ -493,6 +494,10 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('like',         'Site\SiteUserController@likeList')->name('likeList');
     Route::post('ajax/unLikeUser', 'Site\SiteUserController@unLikeUser')->name('unLikeUser');
     Route::get('mutual-likes',         'Site\SiteUserController@mutualLikes')->name('mutualLikes');
+
+    Route::get('ajax/editMultipleFields', 'Site\SiteUserController@editMultipleFields')->name('editMultipleFields');
+
+
 	// User Step2
 	Route::get('step2',       'Site\SiteUserController@step2User')->name('step2User');
 	Route::post('step2',      'Site\SiteUserController@Step2');

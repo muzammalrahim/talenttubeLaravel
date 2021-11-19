@@ -56,6 +56,10 @@
     {{-- Google map --}}
     <script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 
+    {{-- sweet alert --}}
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 </head>
 <body>
@@ -107,6 +111,9 @@
 
             <div class="main-content col-lg-10 col-md-12 col-sm-12">
                 @include('site.layout.leftSideBar') {{-- site/layout/leftSideBar --}} 
+
+                {{-- @include('web.loader.loader') --}}
+
                 @yield('content') 
             </div>
 
@@ -115,6 +122,8 @@
     </div>
 
 </div>
+
+
 
         
 

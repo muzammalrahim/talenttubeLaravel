@@ -159,13 +159,17 @@
          <div class="box-footer1 box-footer  clearfix">
             <div class="block-progrees-ratio1 d-none d-md-block">
             </div>
-            <div class=" employe-btn-group">
+            <div class="employe-btn-group">
+               {{-- @dump($likeUsers) --}}
                @if (in_array($js->id,$likeUsers))
-               <button class="like-btn"><i class="fas fa-thumbs-up"></i> Like</button>
+                  <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up" ></i> UnLike</button>
                @else
-               <button class="like-btn"><i class="fas fa-thumbs-up"></i> Liked</button>
+                  <button class="like-btn" data-userid = "{{ $js->id }}" {{-- onclick="likeFunction('{{ $js->id }}')" --}}><i class="fas fa-thumbs-up"></i> Like</button>
                @endif
-               <button class="detail-btn"><i class="fas fa-file-alt"></i> View profile</button>
+               <a href="{{ route('jobSeekerInfo', ['id'=> $js->id]) }}" target="_blank">
+                  <button class="detail-btn"><i class="fas fa-file-alt"></i> View profile</button>
+               </a>
+
             </div>
          </div>
       </div>

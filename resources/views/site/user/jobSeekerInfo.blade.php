@@ -34,13 +34,13 @@
                      </div>
                      <div class="block-user-progress ">
                         <h6>{{$js->username}}</h6>
-                        <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
-                        <div class="block-progrees-ratio d-block d-md-none">
+                        {{-- <div class="progress-img"> <img src="{{ asset('assests/images/user-progressbar.svg') }}" alt=""></div> --}}
+                        {{-- <div class="block-progrees-ratio d-block d-md-none">
                            <ul>
                               <li><span class="Progress-ratio-icon1">.</span> <span>60%</span> Match </li>
                               <li><span class="Progress-ratio-icon2">.</span> <span>40%</span> UnMatch</li>
                            </ul>
-                        </div>
+                        </div> --}}
                      </div>
                   </div>
                   <div class="col-md-9 user-details">
@@ -132,9 +132,9 @@
                   </div>
                   <a id="JSBlockBtn"  data-jsid="{{$js->id}}"><button class="unblock-btn" data-toggle="modal" data-target="#myModal333"><i class="fas fa-ban"></i> Block</button></a>
                   @if (in_array($js->id,$likeUsers))
-                  <a class="active " data-jsid="{{$js->id}}"><button class="like-btn"><i class="fas fa-thumbs-up"></i> Liked</button></a>
+                  <a class="active " data-jsid="{{$js->id}}"><button class="like-btn"><i class="fas fa-thumbs-up"></i> UnLike</button></a>
                   @else
-                  <a class="jsLikeUserBtn " data-jsid="{{$js->id}}"><button class="like-btn" data-toggle="modal" data-target="#myModal999"><i class="fas fa-thumbs-up"></i> Like</button></a>
+                  <a class="jsLikeUserBtn" onclick="likeFunction('{{ $js->id }}')" data-jsid="{{$js->id}}"><button class="like-btn"><i class="fas fa-thumbs-up"></i> Like</button></a>
                   @endif                          
                </div>
             </div>
@@ -178,105 +178,34 @@
             </li>
          </ul>
          <div class="tab-content employee-details-infomation" id="myTabContent">
-            <!--=================job tab ============================ -->
+
+            <!-- ======================================================= job tab ======================================================= -->
+            
             <div class="tab-pane fade show active job-applied" id="reference"  role="tabpanel" aria-labelledby="reference-tab">
                <h2>Refrance</h2>
                <div class="row">
                   @include('site.user.jobseekerInfoTabs.reference')
                </div>
             </div>
-            <!--================== album-tab-->
+
+            <!-- ======================================================= album-tab ======================================================= -->
+            
             <div class="album-section tab-pane fade Photos " id="profile" role="tabpanel"
                aria-labelledby="profile-tab">
-               <div class="tab_photos tab_cont">
-                  <div class="galleryCont row">
-                     <div class="head2 ">
-                        <h2>Gallery Photos</h2>
-                        <div class="photos">
-                           <ul>
-                              @if ($galleries)
-                              @foreach ($galleries as $gallery)
-                              <li class=" float-left">
-                                 <div class="album-upload-img field" align="left">
-                                    <div id="{{$gallery->id}}" class="pip">
-                                       <a  data-offset-id="{{$gallery->id}}" class="show_photo_gallery"
-                                          href="{{assetGallery($gallery->access,$jobSeeker->id,'',$gallery->image)}}" data-lcl-thumb="{{assetGallery($gallery->access,$jobSeeker->id,'small',$gallery->image)}}">
-                                       <img data-photo-id="{{$gallery->id}}"  id="photo_{{$gallery->id}}"   class="imageThumb" src="{{assetGallery($gallery->access,$jobSeeker->id,'small',$gallery->image)}}" > </a>
-                                    </div>
-                                 </div>
-                              </li>
-                              @endforeach
-                              @endif
-                           </ul>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="cl mb20"></div>
-                  @if($isallowed)
-                  <span class="prvate-section">
-                     <div class="title_private_photos" style="margin-bottom: 5px;">
-                        Resume &amp; Contact Details
-                     </div>
-                     <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
-                        <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
-                        <li><span class="basic_info">•</span><span id="info_looking_for_ages">First Name : {{$js->name}}</span></li>
-                        <li><span class="basic_info">•</span><span id="info_looking_for_ages">Last Name : {{$js->surname}}</span></li>
-                        <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
-                     </ul>
-                  </span>
-                  <br>
-                  <div class="private_attachments">
-                     @foreach ($attachments as $attachment)
-                     <div class="attachment_{{$attachment->id}} attachment_file">
-                        <div class="attachment"><img src="{{asset('images/site/icons/cv.png')}}" /></div>
-                        <span class="attach_title">{{ $attachment->name }}</span>
-                        <div class="attach_btns">
-                           <a class="attach_btn downloadAttachBtn" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
-                        </div>
-                     </div>
-                     @endforeach
-                  </div>
-                  @else
-                  <span class="prvate-section">
-                     <div class="title_private_photos" style="margin-bottom: 5px;">
-                        Content Locked
-                     </div>
-                     <p>
-                        Get premium account from
-                        <a class="credits_balans" id="credits_balans_header" href="{{route('premiumAccount')}}"> here</a>
-                        for contacting job seekers
-                     </p>
-                  </span>
-                  @endif
-                  {{-- ======================== Paid employer viewing the jobseeker personal info ========================  --}}
-                  {{-- ======================== Paid employer viewing the jobseeker personal info ========================  --}}
-                  <div class="cl mb20"></div>
-                  <div class="VideoCont row">
-                     <h2 class="head2">Gallery Videos</h2>
-                     <div class="videos">
-                        @if ($videos->count() > 0 )
-                        @foreach ($videos as $video)
-                        <div id="v_{{$video->id}}" class="item profile_photo_frame item_video" style="display: inline-block;">
-                           <a onclick="UProfile.showVideoModal( '{{assetVideo($video)}}'  )" class="video_link" target="_blank">
-                              <div class="v_title_shadow"><span class="v_title">{{$video->title}}</span></div>
-                              {!! generateVideoThumbs($video) !!}
-                           </a>
-                        </div>
-                        @endforeach
-                        @endif
-                     </div>
-                  </div>
-                  <!-- /videos -->
-               </div>
+
+               @include('site.user.jobseekerInfoTabs.album')
+
             </div>
-            <!--====================== question tab===========================-->
+
+            <!-- ======================================================= question tab ======================================================= -->
+
             <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
                <h2>Questions</h2>
                <div class="tab_photos tab_cont">
-                  {{-- Added By Hassan --}}
                   @include('site.user.jobseekerInfoTabs.questions')  {{-- site/user/jobseekerInfoTabs/questions --}}
                </div>
             </div>
+
             @if ($controlsession->count() > 0 || isAdmin())
             <!-- =============================================== Tab History =============================================== -->
             <a id="tabs-5" class="tab_link tab_a"></a>
@@ -291,10 +220,10 @@
             <!-- =============================================== Tab Jobs =============================================== -->
             <a id="tabs-8" class="tab_link tab_a"></a>
             <div class="tab_interviews tab_cont pt30px">
-               @include('site.user.jobseekerInfoTabs.jobApplications')   
-               {{--    site/user/jobseekerInfoTabs/jobApplications  --}}
+               @include('site.user.jobseekerInfoTabs.jobApplications') {{--    site/user/jobseekerInfoTabs/jobApplications  --}}
             </div>
             @endif
+
             <div class="tab-pane fade interview-tab" id="interview"  role="tabpanel" aria-labelledby="contact-tab">
                <h2>Interviews</h2>
                <div class="tab_interviews tab_cont pt30px">
@@ -345,47 +274,16 @@
          </div>
       </div>
    </div>
-   {{-- modal for unlike user of like page --}}
-   <!-- ====================================================================================Modal -->
-   <div class="modal fade" id="myModal999" role="dialog">
-      <div class="modal-dialog delete-applications">
-         <!-- Modal content-->
-         <div class="modal-content">
-            <div class="modal-header">
-               <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
-               <h1 class="modal-title"><i class="fas fa-thumbs-up trash-icon"></i>Like User</h1>
-            </div>
-            <div class="modal-body">
-               <strong>Are you sure you wish to continue?</strong>
-            </div>
-            <div class="dual-footer-btn">
-               <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
-               <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button>
-            </div>
-         </div>
-      </div>
-   </div>
+   
 </section>
 {{-- html for job seekers details ends here --}}
 @stop
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-{{-- 
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
---}}
-<link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
-<style type="text/css">
-   .js_location {font-size: 11px !important;}
-   div#tabs_profile>ul.tab.customTab { margin-bottom: 15px;}
-   .item_video .video_link{height: 23% !important;}
-   .hide{display: none;}
-</style>
+
 @stop
 @section('custom_js')
-{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+
+<script src="{{ asset('js/web/profile.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function(){
    
@@ -395,14 +293,6 @@
         console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
         $('#jobSeekerBlockId').val(jobseeker_id);
         $('.double_btn').show();
-   
-   
-        $('#confirmJobSeekerBlockModal').modal({
-           fadeDuration: 200,
-           fadeDelay: 2.5,
-           escapeClose: false,
-           clickClose: false,
-       });
     });
    
     // ========== Block Employer Ajax call  ==========//
@@ -432,28 +322,7 @@
        });
    });
    
-   // ========== Ajax call to like the employer ==========//
-   $(document).on('click','.jsLikeUserBtn',function(){
-       var btn = $(this);
-       var jobseeker_id = $(this).data('jsid');
-       console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
-       // $(this).html(getLoader('blockJobSeekerLoader'));
-       $(this).html('..');
-       $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-       $.ajax({
-           type: 'POST',
-           url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
-           success: function(data){
-               btn.prop('disabled',false);
-               if( data.status == 1 ){
-                   btn.html('Liked').addClass('active');
-                   // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-               }else{
-                   btn.html('error');
-               }
-           }
-       });
-   });
+   
    
    $('.cop_text').click(function (e) {
       e.preventDefault();

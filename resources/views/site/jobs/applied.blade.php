@@ -6,143 +6,126 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 
- @section('content')
+@section('content')
 
 
 
-   <section class="row">
-                <div class="col-md-12">
-                  <div class="profile profile-section">
-                    <h2>Jobs I Have Applied</h2>
+<section class="row">
+    <div class="col-md-12">
+        <div class="profile profile-section">
+            <h2>Jobs I Have Applied</h2>
+            <div class="row">
+                @if ($applications->count() > 0)
+                @foreach ($applications as $application)
+                <div class="col-sm-12 col-md-6 jobApp_{{$application->id}}">
+                    @php
+                    $job = $application->job;
+                    $experience = json_decode($job->experience);
+                    $jobType = '';
+                    if($job->type == 'Contract')
+                    {
+                        $jobType = 'Contract';
+                    }
+                    elseif ($job->type == 'temporary') {
+                        $jobType = 'Temporary';
+                    }
+                    elseif ($job->type == 'casual') {
+                        $jobType = 'casual';
+                    }
+                    elseif ($job->type == 'full_time') {
+                        $jobType = 'Full time';
+                    }
+                    elseif ($job->type == 'part_time') {
+                        $jobType = 'Part time';
+                    }
+                    $status = '';
+                    // $status = $application->status;
+                    if ($application->status == 'applied') {
+                        $status = 'Applied';
+                    }
+                    elseif ($application->status == 'inreview') {
+                        $status = 'In Review';
+                    }
+                    elseif($application->status == 'interview'){
+                        $status = 'Interview';
+                    }
+                    else{
+                        $status = 'Unsuccessful';
+                    }
+                    @endphp
 
-                     <div class="row">
-                           @if ($applications->count() > 0)
-        @foreach ($applications as $application)
-        <div class="job_row jobApp_{{$application->id}}">
+                    <div class="">
+                        <div class="job-box-info">
+                            <div class="box-head">
+                                <h4 class="text-white">{{$job->title}}</h4>
+                                Location:<span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span>
+                                <i data-toggle="modal" data-target="#jobAppDeleteModal" class="close-box fa fa-times" onclick="deleteJobApp({{$application->id}})"></i>
+                            </div>
+                            <div class="job-box-text clearfix">
+                                <div class="text-info-detail clearfix">
+                                    <label>Job Type:</label>
+                                    <span>{{$jobType}}</span>
+                                </div>
+                                <div class="text-info-detail clearfix">
+                                    <label class="mt-1">Job Experience:</label>
+                                    <span>
+                                        @if(!empty($experience))
+                                        @foreach($experience as $industry )
+                                        <div class="IndustrySelect">
+                                            <p class="m-0"><i class="fas fa-angle-right qualifiCationBullet"></i>
+                                                {{getIndustryName($industry)}}
+                                                <i class="fa fa-trash removeIndustry hide_it"></i>
+                                            </p>
+                                        </div>
+                                        @endforeach
+                                        @endif
+                                    </span>
+                                </div>
 
-            @php
-                $job = $application->job;
-                $experience = json_decode($job->experience);
-                $jobType = '';
-                if($job->type == 'Contract')
-                {
-                    $jobType = 'Contract';
-                }
-                elseif ($job->type == 'temporary') {
-                    $jobType = 'Temporary';
-                }
-                elseif ($job->type == 'casual') {
-                    $jobType = 'casual';
-                }
-                elseif ($job->type == 'full_time') {
-                    $jobType = 'Full time';
-                }
-                elseif ($job->type == 'part_time') {
-                    $jobType = 'Part time';
-                }
-
-                $status = '';
-                // $status = $application->status;
-                if ($application->status == 'applied') {
-                    $status = 'Applied';
-                }
-                elseif ($application->status == 'inreview') {
-                    $status = 'In Review';
-                }
-                elseif($application->status == 'interview'){
-                    $status = 'Interview';
-                }
-                else{
-                    $status = 'Unsuccessful';
-                }
-
-
-@endphp
-<div class="col-sm-12 col-md-6">
-    <div class="job-box-info">
-        <div class="box-head">
-            <h4 class="text-white">{{$job->title}}</h4>
-            Location:<span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span></label>
-            <i data-toggle="modal" data-target="#myModal" class="close-box fa fa-times"></i>
-            </div>
-                 <div class="job-box-text clearfix">
-                      <div class="text-info-detail clearfix">
-                       <label>Job Type:</label>
-                       <span>{{$jobType}}</span>
+                                <div class="text-info-detail clearfix">
+                                    <label>Job Salary:</label>
+                                    <span>{{$job->salary}}</span>
+                                </div>
+                                <div class="text-info-detail clearfix">
+                                    <label>Submitted:</label>
+                                    <span>{{$application->created_at->format('yy-m-d')}}</span>
+                                </div>
+                                <div class="text-info-detail clearfix">
+                                    <label>Job Detailed:</label>
+                                    <p>{{$job->description}} </p>
+                                </div>
+                                <span class="inreview-tag used-tag">{{$status}}</span>
+                            </div>
+                        </div>
                     </div>
-                 <div class="text-info-detail clearfix">
-            <label>Job Experience:</label>
-            <span>@if(!empty($experience))
-             @foreach($experience as $industry )
-                <div class="IndustrySelect">
-                <p><i class="fas fa-angle-right qualifiCationBullet"></i>
-                      {{getIndustryName($industry)}}
-                      <i class="fa fa-trash removeIndustry hide_it"></i>
-                  </p>
-                     </div>
-                            @endforeach
-                        @endif</span>
-                    </div>
+                </div>
 
-            <div class="text-info-detail clearfix">
-              <label>Job Salary:</label>
-              <span>{{$job->salary}}</span>
+                @endforeach
+
+                @else
+                <h3>You have not applied to any job yet</h3>
+                @endif
             </div>
-            <div class="text-info-detail clearfix">
-              <label>Submitted:</label>
-              <span>{{$application->created_at->format('yy-m-d')}}</span>
-            </div>
-            <div class="text-info-detail clearfix">
-              <label>Job Detailed:</label>
-              <p>{{$job->description}} </p>
-            </div>
-            <span class="inreview-tag used-tag">{{$status}}</span>
-          </div>
         </div>
-       </div>
-       @endforeach
-        @else
-           <h3>You have not applied to any job yet</h3>
-         @endif
-     </div>
-  </div>
-</div>
+    </div>
 </section>
 
-                         {{-- ----------------------------------------------------delete modal --------------------------------------------}}
-                <div class="modal fade" id="myModal" role="dialog">
-                <div class="modal-dialog delete-applications">
-                
-                  <!-- Modal content-->
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <i data-dismiss="modal" class="close-box fa fa-times"></i>                      
-                      <h1 class="modal-title"><i class="fa fa-trash trash-icon"></i>Delete Job Application</h1>
-                    </div>
-                    <div class="modal-body">
-                      <strong>Are you sure you wish to continue?</strong>
-                    </div>
-                    <div class="dual-footer-btn">
-                      <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
-                      <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button>
-                    </div>
-                  </div>
-                  
-                </div>
-              </div>
+{{-- ===================================== delete modal =====================================  --}}
+
+@include('web.user.profile.modal.deletejobapplication') {{-- web/user/profile/modal/deletejobapplication --}}
 
 
 @stop
 
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 @stop
 
 @section('custom_js')
 {{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/web/profile.js') }}"></script>
 {{-- <script type="text/javascript">
 $(document).ready(function() {
     console.log(' new job doc ready  ');

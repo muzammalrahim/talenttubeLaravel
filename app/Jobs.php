@@ -145,7 +145,7 @@ class Jobs extends Model {
         $jobType = $request->filter_jobType;
 
 
-           // Filter by salaryRange.
+           // Filter by industry experience
         $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
         $industries = $request->filter_industry;
 
@@ -237,19 +237,21 @@ class Jobs extends Model {
         //     $applications = $applications->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC');
         // }
 
-      //  dd( $query->toSql() );
+        //  dd( $query->toSql() );
 
-      if($industry_status && !empty($industries)){
-        $query = $query->where(function($q) use($industries) {
-            $q->where('experience','LIKE', "%{$industries[0]}%");
-            if(count($industries) > 1){
-                foreach ($industries as $indk =>  $industry) {
-                    if($indk == 0) continue;
-                    $q->orWhere('experience','LIKE', "%{$industry}%");
+        if($industry_status && !empty($industries)){
+            $query = $query->where(function($q) use($industries) {
+                $q->where('experience','LIKE', "%{$industries[0]}%");
+                if(count($industries) > 1){
+                    foreach ($industries as $indk =>  $industry) {
+                        if($indk == 0) continue;
+                        $q->orWhere('experience','LIKE', "%{$industry}%");
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
+
+        // dd( $query->toSql() );
 
 
 

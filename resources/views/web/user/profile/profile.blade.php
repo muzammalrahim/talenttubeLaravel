@@ -15,72 +15,126 @@
                   </div>
                </div>
                <div class="profile-detail clearfix ">
+                  <div class="text-center">
+                     <h1> {{ $user->name }} {{ $user->surname }} </h1>
+                     {{-- <p> {{userLocation($user)}} </p> --}}
 
+                     <div class="location p-2">  
+                        <div class="row m-0"> 
+                           <p class="userLocationSpan col-10" > {{userLocation($user)}} </p> 
+                           <button type="button" id="list_info_location" class="orange_btn float-right col-2" onclick="showMap()">
+                           <i class="fas fa-edit salaryRangeEdit"></i> 
+                        </div>
+                        </button>
+                          <div class="location_search_cont hide_it ">
+                              <div class="location_input dtable w100">
+                                <input type="text" name="location_search" class="inp fl_left form-control" id="location_search" value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
+                                <select class="dinline_block filter_location_radius select_aw hide_it" name="filter_location_radius" data-placeholder="Select Location Radius">
+                                     <option value="5">5km</option>
+                                     <option value="10">10km</option>
+                                     <option value="25">25km</option>
+                                     <option value="50">50km</option>
+                                     <option value="51">50km +</option>
+                                </select>
+                              </div>
+                            <div class="location_latlong dtable w100">
+                                <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+                                <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+                                <input type="hidden" name="location_name" id="location_name"  value="">
+                                <input type="hidden" name="location_city" id="location_city"  value="">
+                                <input type="hidden" name="location_state" id="location_state"  value="">
+                                <input type="hidden" name="location_country" id="location_country"  value="">
+                            </div>
 
-                  <h2 class="text-center"> {{$user->name}} </h2>
+                            <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
+                            <div class="searchField_action">
+                                <div class="searchFieldLabel dinline_block"></div>
 
+                                {{-- <button class=" btn-sm btn-danger" onclick="showMap()">Cancel</button> --}}
 
-                  <div class="location p-2">  
+                                <button class="btn small orange_btn saveNewLocation" onclick="updateLocation()">Save</button>
 
-                     <b> Location: <span class="userLocationSpan" > {{userLocation($user)}} </span> </b> 
+                            </div>
+                        </div>
+                     </div>
 
-                     <button type="button" id="list_info_location" class="orange_btn float-right" onclick="showMap()">
-                        <i class="fas fa-edit salaryRangeEdit"></i>
-                     </button>
-                       <div class="location_search_cont hide_it ">
-                      <div class="location_input dtable w100">
-                          <input type="text" name="location_search" class="inp w80 fl_left form-control" id="location_search" value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
-                          <select class="dinline_block filter_location_radius select_aw hide_it" name="filter_location_radius" data-placeholder="Select Location Radius">
-                               <option value="5">5km</option>
-                               <option value="10">10km</option>
-                               <option value="25">25km</option>
-                               <option value="50">50km</option>
-                               <option value="51">50km +</option>
-                          </select>
-                      </div>
-                      <div class="location_latlong dtable w100">
-                          <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
-                          <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
-                          <input type="hidden" name="location_name" id="location_name"  value="">
-                          <input type="hidden" name="location_city" id="location_city"  value="">
-                          <input type="hidden" name="location_state" id="location_state"  value="">
-                          <input type="hidden" name="location_country" id="location_country"  value="">
-                      </div>
-
-                      <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
-                      <div class="searchField_action">
-                          <div class="searchFieldLabel dinline_block"></div>
-
-                          <button class=" btn-sm btn-danger" onclick="showMap()">Cancel</button>
-
-                          <button class="btn small orange_btn saveNewLocation" onclick="updateLocation()">Save</button>
-                      </div>
+                     <h2> {{$user->username}} </h2>
                   </div>
-                  </div>
 
+                  
+                  {{-- ==================================== Recent job ==================================== --}}
 
-                  {{-- <h2>Job Seekers</h2> --}}
+                     {{-- <div class="about-infomation">
+                        <h2>Recent Job</h2>
+                            <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text"><i class="fas fa-edit"></i></button>
+                        
+                        <div class="recentjob">
+                           <span class="recentjobSpan"> {{$user->recentJob}} </span>
+                              <b class="mx-2">at</b>
+                           <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
+                        </div>
+
+                        <div class="row sec_recentJob d-none">
+                           <div class="col-5">
+                              <input type="text" name="recentJobField" class="form-control recentJobField" value="{{$user->recentJob}}">
+                           </div>
+                           <div class="col-1">  <span> at </span>  </div>
+                           <div class="col-6">
+                              <input type="text" name="organHeldTitleField" class="form-control organHeldTitleField" value="{{$user->organHeldTitle}}" onclick="showFieldEditor()">
+                           </div>
+                        </div>           
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="float-right button_recentJob d-none">
+                                 <button class="cancel-button" onclick="hideFieldEditor('recentJob');">Cancel</button>
+                                 <button class="orange_btn mt-2" onclick="updateRecentJob()">Save</button> 
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="alert alert-success alert_recentJob hide_me" role="alert">
+                          <strong>Success!</strong> Recent Job has been updated successfully!
+                        </div>
+                     </div> --}}
+
+                  {{-- ==================================== Recent job ==================================== --}}
+
+                  <div class="recent-job recentjob clearfix px-3">
+
+                     <div class="row m-0"> 
+                        <div class="col-5">
+                           <label class="mb-2">Recent Job:</label>
+                        </div>
+
+                        <div class="col-7">
+                              <span class="recentjobSpan"> {{$user->recentJob}} </span>
+                              at
+                              <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
+                        </div>
+                     </div>
+
+                  </div> 
+
 
                   {{-- ========================================= Salary Range ========================================= --}}
 
-                  <div class="px-2 mt-2">
 
-                      <span ><b>Expecting Salary:</b></span>
-                      
-                      <button type="button" onclick="showFieldEditor('salaryRange');" class="orange_btn float-right"><i class="fas fa-edit"></i></button>
-
-                       <b> {{'AUD: '}}<span class="salaryRangeValue">{{number_format($user->salaryRange),3}}</span>  </b>
-                        
-                      {{ Form::select('salaryRange', $salaryRange, $user->salaryRange, ['placeholder' => 'Select Salary Range', 'id' => 'salaryRangeFieldnew', 'class' => 'd-none form-control ']) }}
-                       <button class="btn-block orange_btn button_salaryRange d-none my-2" onclick="updateSalaryRangeValue()" >Save</button>
+                  <div class="recent-job clearfix mt-3 px-3">
+                     <div class="row m-0">
+                        <div class="col-5">Expecting Salary:</div>
+                        <div class="col-7"><span>AUD: </span>  <span class="salaryRangeValue"> {{number_format($user->salaryRange),3}} </span></div>
+                     </div>
                   </div>
 
-                 
 
-
-            {{-- ========================================= Salary Range End Here ========================================= --}}
-
+                  {{-- ========================================= Salary Range End Here ========================================= --}}
+                  <div class="text-center mb-4">  
+                     <button type="button" class="edit-btn orange_btn" data-toggle = "modal" data-target ="#multifieldPopUp" onclick="editMultipleFields()"><i class="fas fa-edit"></i>Edit</button>
+                  </div> 
                </div>
+
+
             </div>
          </div>
 
@@ -119,53 +173,22 @@
                         type="button" role="tab" aria-controls="refrance" aria-selected="false">
                      <i class="fa fa-circle tab-circle-cross"></i>Refrences</button>
                   </li>
+
                </ul>
                <div class="tab-content" id="myTabContent">
                   <!--==================== profile tab-->
                   <div class="profile-text-wrap tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="Profile-tab">
                      
-                     {{-- ==================================== Recent job ==================================== --}}
-
-                     <div class="about-infomation">
-                        <h2>Recent Job</h2>
-                            <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text"><i class="fas fa-edit"></i></button>
-                        
-                        <div class="recentjob">
-                           <span class="recentjobSpan"> {{$user->recentJob}} </span>
-                              <b class="mx-2">at</b>
-                           <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
-                        </div>
-
-                        <div class="row sec_recentJob d-none">
-                           <div class="col-5">
-                              <input type="text" name="recentJobField" class="form-control recentJobField" value="{{$user->recentJob}}">
-                           </div>
-                           <div class="col-1">  <span> at </span>  </div>
-                           <div class="col-6">
-                              <input type="text" name="organHeldTitleField" class="form-control organHeldTitleField" value="{{$user->organHeldTitle}}" onclick="showFieldEditor()">
-                           </div>
-                        </div>           
-
-                        <div class="row">
-                           <div class="col-md-12">
-                              <div class="float-right button_recentJob d-none">
-                                 <button class="cancel-button" onclick="hideFieldEditor('recentJob');">Cancel</button>
-                                 <button class="orange_btn mt-2" onclick="updateRecentJob()">Save</button> 
-                              </div>
-                           </div>
-                        </div>
-
-                        <div class="alert alert-success alert_recentJob hide_me" role="alert">
-                          <strong>Success!</strong> Recent Job has been updated successfully!
-                        </div>
-                     </div>
+                     
 
                      {{-- ==================================== About me ==================================== --}}
 
                      <div class="about-infomation">
                         <h2>About me</h2>
                         <button type="button"id="showeditbox" onclick="showFieldEditor('about_me');" class="edited-text"><i class="fas fa-edit"></i></button>
-                        <textarea class="form-control bg-white border-0 sec_about_me" rows="3" cols="3" readonly > {{$user->about_me}}</textarea>
+                        <p class="text_about_me m-0"> {{$user->about_me}} </p>
+
+                        <textarea class="form-control bg-white border-0 sec_about_me d-none" rows="3" cols="3" readonly > {{$user->about_me}}</textarea>
 
                         <div class="row">
                            <div class="col-md-12">
@@ -183,8 +206,10 @@
                      <div class="about-infomation">
                         <h2>Interested In</h2>
                         <button type="button"  onclick="showFieldEditor('interested_in');" class="edited-text"><i class="fas fa-edit"></i></button>
-                     
-                        <textarea class="form-control bg-white border-0 sec_interested_in" rows="3" cols="3" readonly > {{$user->interested_in}}</textarea>
+                        
+                        <p class="text_interested_in m-0"> {{$user->interested_in}} </p>
+
+                        <textarea class="form-control bg-white border-0 sec_interested_in d-none" rows="3" cols="3" readonly > {{$user->interested_in}}</textarea>
 
                         <div class="row">
                            <div class="col-md-12">
@@ -224,7 +249,7 @@
                     <div class="about-infomation IndusListBox">
                         <h2>Industry Experience</h2>
                         <button type="button" class="edited-text" onclick="showIndustryExpEditor();"><i class="fas fa-edit"></i></button>
-                        <ul class="qualification-li">
+                        <ul class="qualification-li font-16">
                             <div class="IndusList">  
                               @include('site.layout.parts.jobSeekerIndustryList')
                             </div>
@@ -262,38 +287,91 @@
                   
                   <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
 
-                     <h2>Questions  <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text orange_btn float-right"><i class="fas fa-edit"></i></button></h2>
+                     <h2>Questions  <button type="button"  onclick="showFieldEditor('question');" class="edited-text orange_btn float-right"><i class="fas fa-edit"></i></button></h2>
                      
                         @include('site.user.profile.questionsuserpart')
                   </div>
 
                   <!-- ========================================== tag tab ========================================== -->
+                  <div class="tab-pane fade tag-tab-info " id="tag"  role="tabpanel" aria-labelledby="tag-tab">
 
-                  @include('site.user.profile.tabs.tags')
+                     @include('site.user.profile.tabs.tags')
 
+                  </div>
                   <!--=================job tab ============================ -->
                   
-                  @include('site.user.profile.tabs.jobs')
+                  <div class="tab-pane fade job-applied" id="job"  role="tabpanel" aria-labelledby="job-tab">
+
+                     @include('site.user.profile.tabs.jobs') {{-- site/user/profile/tabs/jobs --}}
+
+                  </div>
                   
-                  <!--=================referance tab=====================-->
-                  
-                  @include('site.user.profile.tabs.reference')
-                  
+                  <!--=================referancesss tab=====================-->
+                  <div class="tab-pane fade referance-tab" id="refrance"  role="tabpanel" aria-labelledby="refrance-tab">
+                     @include('site.user.profile.tabs.reference') {{-- site/user/profile/tabs/reference --}}
+                  </div>
+
                   <!--========================end all tabs-->
+               </div>
                
                </div>
+
             </div>
-         </div>
+ 
       </section>
    </div>
    
 </div>
+
+
+<div class="bj-modal">
+   <div class="modal fade" id="multifieldPopUp" tabindex="-1" role="dialog"
+      aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog filter-industry-modal" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <div class="m-header">
+                  <h4 class="modal-title" id="myModalLabel">
+                     <img src="{{ asset('assests/images/filter.png') }}" alt="img" class="">
+                     Edit Fields
+                  </h4>
+                  <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
+               </div>
+            </div>
+            <div class="modal-body">
+
+               <div class="i-modal-checks multiFields">
+                  
+               </div>
+
+
+            </div>
+            <div class="modal-footer" >
+               <button type="button" class="btn btn-primary bs-btn" data-dismiss="modal">
+               {{-- <img src="{{ asset('assests/images/search-modal.png') }}" alt="img" class=""> --}}
+               <span class="fb-text"> Done </span>
+               </button>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
+
+
+
+
 @stop
+
+
 
 @section('custom_js')
 
+<script type="text/javascript" src="https://maps.google.com/maps/api/js?libraries=places&key={{env('GOOGLE_API')}}"></script>
 
 <script src="{{ asset('js/web/profile.js') }}"></script>
+<script src="{{ asset('js/site/tagSystem.js') }}"></script>
+<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+
 
 
 <script type="text/javascript">
@@ -659,11 +737,13 @@ var base_url = {!! json_encode(url('/')) !!};
 @stop
 
 @section('custom_css')
-   <style type="text/css">
 
-     textarea{ resize: none }
-      
+<link rel="stylesheet" href="{{ asset('css/site/tagSystem.css') }}">
+
+   <style type="text/css">
+      textarea{ resize: none }
    </style>
+     }
   
 
 @stop

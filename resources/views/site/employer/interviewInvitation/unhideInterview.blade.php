@@ -1,8 +1,8 @@
 {{-- @dump($UserInterview) --}}
 @extends('web.user.usermaster')
 @section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 @section('content')
 {{-- html for unhide interview page --}}
@@ -13,7 +13,7 @@
          <div class="row">
             @if ($UserInterview->count() > 0)
             @foreach ($UserInterview   as $interview)
-            <div class="col-sm-12 col-md-6">
+            <div class="col-sm-12 col-md-6 interviewBookingsRow_{{ $interview->id }}">
                <div class="job-box-info interview-box clearfix">
                   <div class="box-head">
                      <h4>Invitation {{$loop->index+1}}: Interview of {{$interview->js->name}}</h4>
@@ -65,19 +65,14 @@
 </section>
 @stop
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-<style>
-   .timeTable{width: 33%;display: block;}
-   .width75p{width: 75%;display: inline-block;}
-   .bgColor{background: #dddfe3;}
-   .confirmInterview{margin: 15px 0 !important;}
-</style>
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
+
 @stop
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
+<script src="{{ asset('js/web/interview.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function(){
    
@@ -140,40 +135,7 @@
      });
    
    
-     // ========================================================= Change Status of interview =========================================================
-   
-     $('.statusOfInterviewHidden').on('change',function() {
-       event.preventDefault();
-       var formData = $(this).serializeArray();
-       // $('.selectStatus').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
-       var interview_id = $(this).closest('.statusOfInterviewHidden').find('.interview_id').val();
-   
-       // console.log(interview_id);
-   
-       console.log(' formData ', formData);
-       // return;
-       $('.general_error1').html('');
-       $.ajax({
-           type: 'POST',
-           url: base_url+'/ajax/userInterview/unhide',
-           data: formData,
-           success: function(response){
-               console.log(' response ', response);
-               // $('.selectStatus').html('Send Email').prop('disabled',false);
-               $('.interviewBookingsRow_'+interview_id).remove();
-               if( response.status == 1 ){
-                   // $('.errorsInFields').text('Notification sent sucessfully');
-                   // setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
-               }else{
-   
-                     
-               }
-   
-           }
-       });
-     });
-   
-     // ========================================================= Change Status of interview =========================================================
+     
    
    
    

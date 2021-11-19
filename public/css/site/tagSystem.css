@@ -22,7 +22,7 @@
 .newTag { margin: 10px; }
 
 
-.newTagInput input {
+/*.newTagInput input {
     margin: 0;
     padding: 0 21px 0 11px;
     float: left;
@@ -31,15 +31,15 @@
     border-radius: 3px 0px 0px 0px;
     border: none;
     font-size: 16px;
-}
+}*/
 
-button#addNewTag {
+/*button#addNewTag {
     float: left;
     width: 15%;
     padding: 0;
     border-radius: 0px 3px 0px 0px;
     height: 46px;
-}
+}*/
 
 .newTagInput {
     width: 100%;
@@ -172,12 +172,12 @@ ul.tagSuggestion li:first-child { padding-top: 10px; }
 .addNewTagModal  .jq-selectbox__dropdown { width: 100% !important; }
 .addNewTagModal .jq-selectbox__select { background: rgba(0,0,0,0.1); }
 .addNewTagModal .form_input input {
-    padding: 0 21px 0 11px;
+ /*   padding: 0 21px 0 11px;
     height: 33px;
     border-radius: 3px 0px 0px 0px;
     border: none;
     font-size: 16px;
-    background: #e5e5d8;
+    background: #e5e5d8;*/
 }
 .addNewTagModal .form_label {
     display: table-caption;
