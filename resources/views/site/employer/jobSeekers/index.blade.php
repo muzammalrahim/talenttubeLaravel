@@ -1,8 +1,8 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('site.employer.employermaster') {{-- site/employer/employermaster --}}
 @section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 @section('content')
 <div class="newJobCont  profile profile-section">
@@ -42,15 +42,89 @@
       </div>
    </div>
 </div>
+
+
+<div class="modal fade" id="unlikeModal" role="dialog">
+    <div class="modal-dialog delete-applications">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
+          <h1 class="modal-title"><i class="fas fa-thumbs-down trash-icon"></i>UnLike User</h1>
+        </div>
+        <div class="modal-body">
+          <strong>Are you sure you wish to continue?</strong>
+        </div>
+
+        <input type="hidden" id="jobSeekerBlockId" />
+        <div class="dual-footer-btn">
+          <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+          <button type="button" class="orange_btn" onclick="confirmUnlikeFun()" data-dismiss="modal"><i class="fa fa-check"></i>OK</button>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
 @stop
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
 <script src="{{ asset('js/site/common.js') }}"></script>
-<script src="{{ asset('js/site/UserFilter.js') }}"></script>
+{{-- <script src="{{ asset('js/site/UserFilter.js') }}"></script> --}}
 <script type="text/javascript">
    $(document).ready(function() {
    
+
+    $(document).on('click', '.like-btn', function(){
+
+    // this.likeFunction = function(jobseeker_id){
+        console.log( ' Like User button ' );
+        var jobseeker_id = $(this).attr('data-userid');
+        $(this).html('Liked');
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
+            success: function(res){
+                if( res.status == 1 ){
+                    swal("Good job!", "User Liked Successfully!", "success");
+                }else{
+                    // btn.html('error');
+                }
+            }
+        });
+    // }
+
+    })
+
+    // =========================================== ulike user ======================================================
+
+    this.unlikefunction = function(user_id){
+        console.log(' confirm_JobSeekerBlock_ok ');
+        $('#jobSeekerBlockId').val(user_id);
+    }
+
+    this.confirmUnlikeFun = function(){
+        var jobseeker_id = $('#jobSeekerBlockId').val();
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/unLikeUser',
+            data: {id: jobseeker_id},
+            success: function(data){
+                if( data.status == 1 ){
+                    // $('.js_'+jobseeker_id).remove();
+                    swal("Good job!", "user unliked Successfully", "success");
+                }else{
+                    $('.confirmJobSeekerBlockModal .apiMessage').html(data.error);
+                }
+            }
+        });
+    }
+
+
    //====================================================================================================================================//
    // Block User Button click. Show confirm popup modal.
    //====================================================================================================================================//

@@ -1188,7 +1188,7 @@ class InterviewController extends Controller
 
         $user = Auth::user();
         $data = $request->all();
-        // dd($data);
+        dd($data);
         // ================================================== Validation for answering the questions ==================================================
      
         if(in_array(null, $data['answer'], true))
@@ -1200,7 +1200,7 @@ class InterviewController extends Controller
         }
         else{
 
-            // dd(' =========== hi =============== ');
+            dd(' =========== hi =============== ');
 
             $rules = array(
             'answer*' => 'required|max:255',

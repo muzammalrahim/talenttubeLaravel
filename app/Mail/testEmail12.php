@@ -24,7 +24,7 @@ class testEmail12 extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->from('creativedev33@gmail.com')
+        return $this->from(CONSTANTS['MAIL_FROM_ADDRESS'])
         ->view('emails.user.testEmail'); // emails/user/testEmail
     }
 }

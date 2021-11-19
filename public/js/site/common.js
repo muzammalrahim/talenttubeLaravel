@@ -154,21 +154,23 @@ $(document).ready(function(){
     });
 
 
+    
+
+
     // ========== Function to show popup when click on jobApplyBtn ==========//
 
-    $('#jobApplyModal').on($.modal.OPEN, function(event, modal) {
-        var job_id = $('#openModalJobId').val();
-        console.log(' job_id ', job_id);
-        console.log(' after open ', event);
-        $('.jquery-modal.blocker.current').off('click');
-        $.ajax({
-        type: 'GET',
-            url: base_url+'/ajax/jobApplyInfo/'+job_id,
-            success: function(data){
-                $('#jobApplyModal .cont').html(data);
-            }
-        });
-    });
+    // $('#jobApplyModal').on($.modal.OPEN, function(event, modal) {
+        this.jobApplyFunction = function(job_id){
+            console.log(' job_id ', job_id);
+            console.log(' after open ', event);
+            $.ajax({
+            type: 'GET',
+                url: base_url+'/ajax/jobApplyInfo/'+job_id,
+                success: function(data){
+                    $('#jobApplyModal .jobData').html(data);
+                }
+            });
+        }
 
     $(document).on('click','.jobApplyBtn', function(){
         var job_id = $(this).attr('data-jobid');
@@ -185,26 +187,64 @@ $(document).ready(function(){
 
     // ========== Function to submit job application ==========//
 
-    $(document).on('click','.submitApplication',function(){
-        event.preventDefault();
-        console.log(' submitApplication submit click ');
-        $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
+    // $(document).on('click','.submitApplication',function(){
+        this.submitApplication = function(){
+
+            event.preventDefault();
+            console.log(' submitApplication submit click ');
+            // $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
+            var applyFormData = $('#job_apply_form').serializeArray()
+            $.ajax({
+            type: 'POST',
+                url: base_url+'/ajax/jobApplySubmit',
+                data: applyFormData,
+                success: function(data){
+                    $('.submitApplication').html('Submit').prop('disabled',false);
+                    console.log(' data ', data );
+                    if (data.status == 1){
+                         $('#job_apply_form').html(data.message);
+                    }else {
+                         $('#job_apply_form').html(data.error);
+                    }
+                }
+            });
+
+        }
+
+    // });
+
+    // ================================================================================================
+    //  User previous result of test while applying to job
+    // =================================================================================================
+
+
+    // $(document).on('click','.usePreviousResult',function(){
+        // event.preventDefault();
+
+    this.usePreviousResult = function($job_id){
+        console.log(' use previous result clicked ');
+        // $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
         var applyFormData = $('#job_apply_form').serializeArray()
         $.ajax({
         type: 'POST',
-            url: base_url+'/ajax/jobApplySubmit',
+            url: base_url+'/ajax/use-previous-result',
             data: applyFormData,
             success: function(data){
                 $('.submitApplication').html('Submit').prop('disabled',false);
                 console.log(' data ', data );
                 if (data.status == 1){
                      $('#job_apply_form').html(data.message);
+                     // var link = parseInt(data.userTest_id);
+                     var jobApp_id = '<p class = "mt10"> Your test result has been submitted </p>';
+                     $('.onlineTestBox').html(jobApp_id);
+
                 }else {
                      $('#job_apply_form').html(data.error);
+                     $('.onlineTestBox').addClass('hide_it');
                 }
             }
         });
-    });
+    }
 
 //====================================================================================================================================//
 //========== jobSubmitApplyBtn clck end. ==========
@@ -435,38 +475,45 @@ $(document).on('click' , '.sendTestButton' , function(){
 });
 
 */
-$(document).on('click','.proceedTest',function(){
-    event.preventDefault();
-    console.log(' submitApplication submit click ');
-    $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
-    var applyFormData = $('#job_apply_form').serializeArray()
-    $.ajax({
-    type: 'POST',
-        url: base_url+'/ajax/reject/test',
-        data: applyFormData,
-        success: function(data){
-            $('.submitApplication').html('Submit').prop('disabled',false);
-            console.log(' data ', data );
-            if (data.status == 1){
-                 $('#job_apply_form').html(data.message);
-                 var link = parseInt(data.userTest_id);
-                 var jobApp_id = '<a class = "mt10" href = "'+base_url+'/proceed/test/'+link+'"> Click Here to Complete test  </a>';
-                 $('.onlineTestBox').html(jobApp_id);
+// $(document).on('click','.proceedTest',function(){
+    this.proceedTest = function(){
 
-            }else {
-                 $('#job_apply_form').html(data.error);
-                 $('.onlineTestBox').addClass('hide_it');
+        event.preventDefault();
+        console.log(' submitApplication submit click ');
+        $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
+        var applyFormData = $('#job_apply_form').serializeArray()
+        $.ajax({
+        type: 'POST',
+            url: base_url+'/ajax/reject/test',
+            data: applyFormData,
+            success: function(data){
+                $('.submitApplication').html('Submit').prop('disabled',false);
+                console.log(' data ', data );
+                if (data.status == 1){
+                     $('#job_apply_form').html(data.message);
+                     var link = parseInt(data.userTest_id);
+                     var jobApp_id = '<a class = "mt10" href = "'+base_url+'/proceed/test/'+link+'"> Click Here to Complete test  </a>';
+                     $('.onlineTestBox').html(jobApp_id);
+
+                }else {
+                     $('#job_apply_form').html(data.error);
+                     $('.onlineTestBox').addClass('hide_it');
+                }
             }
-        }
-    });
-});
+        });
+
+    }
+
+// });
 
 
 // ================================================================================================
 //  Online Test submit while applying to any job without submitting test 
 // =================================================================================================
 
-$(document).on('click','.rejectTest',function(){
+this.rejectTest = function(){
+    
+// $(document).on('click','.rejectTest',function(){
     event.preventDefault();
     console.log(' submitApplication submit click ');
     $('.submitApplication').html(getLoader('jobSubmitBtn')).prop('disabled',true);
@@ -491,6 +538,7 @@ $(document).on('click','.rejectTest',function(){
             }
         }
     });
-});
+// });
 
 
+}

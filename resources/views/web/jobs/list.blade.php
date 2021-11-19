@@ -78,7 +78,7 @@
             </div>
             <div class="row blocked-user-about  clearfix">
               <h6>Job Detailed:</h6>
-              <p class="pl-3">{{$job->description}}</p>
+              <textarea class="pl-3 border-0">{{$job->description}}</textarea>
             </div>
             <div class="row blocked-user-about  clearfix">
               <h6>Applications:</h6>
@@ -102,7 +102,7 @@
             <div class="col-lg-8 col-md-12 col-sm-12 col-12">
               <div class="b-card-btn">
                 <a type="button" class="orange_btn" href="{{route('jobDetail', ['id' => $job->id]) }}"> <i class="fas fa-file-alt"></i> Detail</a>
-                <button data-toggle="modal" data-target="#myModal9" class="interview-tag used-tag"><i class="far fa-check-circle"></i> Apply </button>
+                <button data-toggle="modal" data-target="#jobApplyModal" onclick="jobApplyFunction({{ $job->id }})" class="interview-tag used-tag"><i class="far fa-check-circle"></i> Apply </button>
               </div>
             </div>
           </div>

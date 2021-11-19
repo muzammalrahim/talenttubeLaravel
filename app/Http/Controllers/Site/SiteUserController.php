@@ -1244,9 +1244,12 @@ class SiteUserController extends Controller
         $file_path   = $user->id.'/gallery/'.$fileName;
 
         $img = Image::make($image->getRealPath());
-        $img->resize(120, 120, function ($constraint) {
+        $img->resize(200, 150, function ($constraint) {
             $constraint->aspectRatio();
         });
+
+        // $img->crop(100, 100, 25, 25);
+
         $img->stream();
 
         // Storage::disk('user')->put($user->id . '/gallery/small/' . $fileName, $img, 'public');
@@ -1718,17 +1721,38 @@ class SiteUserController extends Controller
 
             // generate video thumbs.
             $video->generateThumbs();
-            $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;">';
+
+/*            $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video123" style="display: inline-block;">';
             $html .=    '<a onclick="UProfile.showVideoModal(\''.assetVideo($video).'\')" class="video_link" target="_blank">';
             $html .=        '<div class="v_title_shadow"><span class="v_title">'.$video->title.'</span></div>';
             $html .=        generateVideoThumbs($video);
             $html .=    '</a>';
-            $html .=    '<span title="Delete video" class="icon_delete" data-vid="12" onclick="UProfile.delteVideo('.$video->id.')">';
+            $html .=    '<span title="Delete video" class="icon_delete" data-vid="12" onclick="deleteVideoFun('.$video->id.')">';
             $html .=        '<span class="icon_delete_photo"></span>';
             $html .=        '<span class="icon_delete_photo_hover"></span>';
             $html .=    '</span>';
             $html .=    '<div class="v_error error hide_it"></div>';
-            $html .=  '</div>';
+            $html .=  '</div>';*/
+
+            $html   = '<div id="v_'.$video->id.'" class="item profile_photo_frame col-5 m-3 item_video pointer position-relative d-inline-block">';
+            $html  .=   '<a class="videoFunction" class="video_link" target="_blank">';
+            $html  .=      '<div class="v_title_shadow">';
+            $html  .=         '<span class="v_title">'.$video->title.'</span>';
+            $html  .=      '</div>';
+
+            $html  .=      '<span class="viewVideo" onclick="showVideoModalFunction(\''.assetVideo($video). '\', \'' .$video->title.'\' )" data-bs-toggle="modal" data-bs-target="#videoShowModal" >View Video</span>';
+
+            $html  .=      '<span class="deleteVideoSpan" onclick="deleteVideoFun('.$video->id.')" data-toggle="modal" data-target ="#deleteVideoModal">Delete Video</span>';
+
+            $html  .=      generateVideoThumbs($video);
+            $html  .=   '</a>';
+            $html  .=   '<span title="Delete video" class="icon_delete" data-vid="'.$video->id.'">';
+            $html  .=      '<span class="icon_delete_photo"></span>';
+            $html  .=      '<span class="icon_delete_photo_hover"></span>';
+            $html  .=   '</span>';
+            $html  .=   '<div class="v_error error hide_it"></div>';
+            $html  .= '</div>';
+
 
             return response()->json([
                 'status' => '1',
@@ -2764,6 +2788,18 @@ class SiteUserController extends Controller
                 ]);
             }
         }
+
+    }
+
+
+
+    public function editMultipleFields(Request $request){
+        $user = Auth::user();
+        // dd($user);
+        $data['user'] = $user;
+        $data['salaryRange'] = getSalariesRange();
+        
+        return view('web.user.profile.multipleFieldsPopUp',$data);
 
     }
 

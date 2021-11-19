@@ -1255,7 +1255,6 @@ class HomeController extends Controller {
             if ($this->agent->isMobile()){
                 $data['title'] = 'User';
                 return view('mobile.interviewInvitation.home' , $data);            
-
             }
             else{
                 $data['title'] = 'User';

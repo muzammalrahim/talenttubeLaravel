@@ -12,7 +12,7 @@
    </li>
 </ul>
 
-<div class="list_videos" id="video">
+<div class="list_videos row" id="video">
    {{-- <div id="list_videos_public" class="list_videos_public pointer">
       <div id="photo_add_video" class="item add_photo add_video_public item_video">
          <a class="add_photo" onclick="uploadVideoFunction();">
@@ -25,11 +25,13 @@
 
    @if ($videos->count() > 0 )
         @foreach ($videos as $video)
-            <div id="v_{{$video->id}}" class="item profile_photo_frame item_video pointer position-relative d-inline-block">
-               <a onclick="showVideoModalFunction('{{assetVideo($video)}}', '{{ $video->title }}' )" class="videoFunction" data-bs-toggle="modal" data-bs-target="#videoShowModal" class="video_link" target="_blank">
+            <div id="v_{{$video->id}}" class="item profile_photo_frame item_video col-5 pointer position-relative d-inline-block m-3">
+               <a class="videoFunction" class="video_link" target="_blank">
                   <div class="v_title_shadow">
                      <span class="v_title">{{$video->title}}</span>
                   </div>
+
+                  <span class="viewVideo" onclick="showVideoModalFunction('{{assetVideo($video)}}', '{{ $video->title }}' )" data-bs-toggle="modal" data-bs-target="#videoShowModal" >View Video</span>
 
                   <span class="deleteVideoSpan" onclick="deleteVideoFun({{$video->id}})" data-toggle="modal" data-target ="#deleteVideoModal">Delete Video</span>
 
@@ -44,7 +46,10 @@
         @endforeach
     @endif
 
+
+
 </div>
+
 
 
  <!-- Button trigger modal -->
@@ -66,10 +71,7 @@
          <div class="videoBox"></div>
 
       </div>
-      {{-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div> --}}
+
     </div>
   </div>
 </div>

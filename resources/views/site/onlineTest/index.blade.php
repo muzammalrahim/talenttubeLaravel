@@ -41,15 +41,15 @@
 @stop
 
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 
 @stop
 
 @section('custom_js')
 {{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/common.js') }}"></script> --}}
 
 <script type="text/javascript">
 

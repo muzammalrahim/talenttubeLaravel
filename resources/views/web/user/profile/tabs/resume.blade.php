@@ -12,7 +12,7 @@
          <section class="multiple-file-pdf" id="mupload5" > 
             <div class="file-chooser clearfix">
 
-               <form id="frm_upload" onsubmit="userResumeUpload()" class="submit-document" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
+               <form id="frm_upload" class="submit-document" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
                   {{ csrf_field() }}
                     <br>
                     <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">

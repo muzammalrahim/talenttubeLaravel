@@ -107,7 +107,7 @@ h1{
 h2{
     font-size: 24px;
     font-weight: 600;
-    margin-bottom: 30px;
+    /*margin-bottom: 30px;*/
 }
 h3{
     font-size: 20px;
@@ -209,7 +209,7 @@ input, textarea, select{
 }
 .sidebar ul li{
     list-style: none;
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #19212e;
 }
 .sidebar ul li a {
     font-size: 14px;
@@ -217,7 +217,7 @@ input, textarea, select{
     display: block;
     transition: all 0.3s;
     font-weight: 500;
-    padding: 8px;
+    padding: 16px;
 }
 .sidebar ul li .sidebar-text-view:hover {
     color: #ffffff;
@@ -234,7 +234,7 @@ input, textarea, select{
     font-weight: 500;
 }
 .sidebar ul li a i{
-    padding:0 10px;
+    padding:0 28px 0px 10px;
 }
 .logo-design a {
     width: 70%;

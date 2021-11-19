@@ -1175,7 +1175,7 @@ class EmployerController extends Controller {
             $UserInterview->status = 'Rejected';
             $empEmail = $UserInterview->employer->email;
             $UserInterview->save();
-            Mail::to('hassaansaeed1@gmail.com')->send(new rejectInterviewInvitationEmail($user->name, $UserInterview->employer->company));
+            Mail::to($empEmail)->send(new rejectInterviewInvitationEmail($user->name, $UserInterview->employer->company));
             return response()->json([
                 'status' => 1,
                 'message' => 'Interview Rejected Successfully'

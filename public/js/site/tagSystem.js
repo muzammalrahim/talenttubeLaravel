@@ -157,12 +157,7 @@
         jQuery('.addNewTagModal .apiMessage').hide();
         jQuery('.addNewTagModal .error').html('&nbsp;');
 
-       jQuery('#addNewTagModal').modal({
-            fadeDuration: 200,
-            fadeDelay: 2.5,
-            escapeClose: false,
-            clickClose: false,
-        });
+       
     });
 
 
@@ -185,16 +180,16 @@
                 if(resp.status){
                     console.log(' resp data ', resp.data);
                     var newTagElem = resp.data;
-                    var newTagHtml = '<li class="tagItem" data-id="'+newTagElem.id+'"><i class="tagIcon fa '+newTagElem.icon+'"></i><span>'+newTagElem.title+'</span></li>';                    
+                    var newTagHtml = '<li class="tagItem" data-id="'+newTagElem.id+'"><i class="tagIcon fa '+newTagElem.icon+'"></i>'+newTagElem.title+'</li>';                    
                     var dom_nodes = jQuery(jQuery.parseHTML(newTagHtml));
                     addNewTag(dom_nodes);
 
                     // jQuery('.selectTagList ul').append(newTagHtml); 
                     jQuery('.addNewTagModal .apiMessage').html('Tag Succesfully Added').show();
-                    setTimeout(function() {
-                        jQuery.modal.close();
-                        jQuery('.newTagInput input').val(''); 
-                    }, 1000);
+                    // setTimeout(function() {
+                    //     jQuery.modal.close();
+                    //     jQuery('.newTagInput input').val(''); 
+                    // }, 1000);
                 }else{
                     jQuery('.addNewTagModalBox').removeClass('loading');
                      if(resp.validator != undefined){

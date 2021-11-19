@@ -35,7 +35,7 @@
          <div class="col-md-3 col-sm-9">
             <a class="navbar-brand text-white" href="{{ route('homepage') }}"><img class="logo" src="assests/images/frame1.png" alt=""></a>
          </div>
-         <div class="col-md-5">
+         <div class="col-md-6">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -60,7 +60,7 @@
                </div>
             </div>
          </div>
-         <div class="col-md-4 header-signin-btn" clearfix>
+         <div class="col-md-3 header-signin-btn" clearfix>
             <div class="form-inline account-have">
                @if (Auth::check())
                @if (isEmployer())
