@@ -545,13 +545,13 @@ function getQualificationsList(){
 
 function getSalariesRange(){
     $salaries = array(
-        '50000' => '50,000 to 60000',
-        '60000' => '60,000 to 70000',
-        '70000' => '70,000 to 80000',
-        '80000' => '80,000 to 90000',
-        '90000' => '90,000 to 100000',
-        '100000' => '100,000 to 120000',
-        '120000' => '120,000 to 150000',
+        '50000' => '50,000 and Above',
+        '60000' => '60,000 and Above',
+        '70000' => '70,000 and Above',
+        '80000' => '80,000 and Above',
+        '90000' => '90,000 and Above',
+        '100000' => '100,000 and Above',
+        '120000' => '120,000 and Above',
         '150000' => '150,000 + ',
     );
     return $salaries;
@@ -1013,7 +1013,7 @@ function cal_ind_exp($js, $user){
     // dd($js->industry_experience, $user->industry_experience);
     $js_indExp = $js->industry_experience;
     $user_indExp = $user->industry_experience;
-    if (isset($js_indExp) && !empty($js_indExp)) {
+    if (isset($js_indExp) && !empty($js_indExp && $user_indExp != null)) {
         $result = array_intersect($js_indExp, $user_indExp);
         return $result;
     }
@@ -1157,3 +1157,9 @@ function template_video($video){
     return asset( $vPath );
 }
 
+function userInterview_answer_video($video){
+    $vPath  = 'media/public/interview_bookings/';
+    $vPath .= $video;
+    // dump($vPath);
+    return asset( $vPath );
+}

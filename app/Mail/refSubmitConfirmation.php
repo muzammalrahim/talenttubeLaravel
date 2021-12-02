@@ -28,7 +28,7 @@ class refSubmitConfirmation extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->from('creativedev22@gmail.com')
+        return $this->from(CONSTANTS['MAIL_FROM_ADDRESS'])
             ->subject($this->jsname)
             ->view('emails.user.refSubmitConfirmation'); // emails/user/refSubmitConfirmation
     }

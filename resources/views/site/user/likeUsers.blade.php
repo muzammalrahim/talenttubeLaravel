@@ -9,8 +9,8 @@
 @extends('web.user.usermaster')
 
 @section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 
 @section('content')
@@ -171,7 +171,7 @@
       <h2>Like Users Lists</h2>
       <div class="row">
          @foreach ($likeUsers as $likeuser)
-         <div class="col-sm-12 col-md-6">
+         <div class="col-sm-12 col-md-6 js_{{ $likeuser->user->id }}">
             <div class="job-box-info block-box clearfix">
 
          @php
@@ -179,8 +179,15 @@
          $js = $likeuser->user;
          @endphp
                <div class="box-head">
+                @if (isEmployer())
                   <h4>{{$js->name}} {{$js->surname}}</h4>
+                  @else
+                  
+                  <h4>{{$js->company}}</h4>
+
+                @endif
                </div>
+
                <div class="row Block-user-wrapper">
                   <div class="col-md-4 user-images">
                      <div class="block-user-img ">
@@ -204,38 +211,40 @@
                   <div class="col-md-8 user-details">
                      <div class="row blocked-user-about">
                         <h6>About me:</h6>
-                        <p>{{$js->about_me}}.</p>
+                        <textarea class="form-control border-0" rows="1">{{$js->about_me}}.</textarea>
                      </div>
                      <div class="row blocked-user-about">
                         <h6>Intrested In:</h6>
-                        <p>{{$js->interested_in}}</p>
+                        <textarea class="form-control border-0" rows="1">{{$js->interested_in}}</textarea>
                      </div>
                      <div class="row blocked-user-about">
                         <h6>Location:</h6>
-                        <p>{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
+                        <p class="pl-2 ml-1">{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
                      </div>
                      <div class="row blocked-user-experience">
                         <h6>Industory Experience:</h6>
                         @if(isset($js->industry_experience))
-                        @foreach ($js->industry_experience as $ind)
-                        <ul class="indsutrySelect">
-                           <li>
-                              <p>{{getIndustryName($ind)}}</p>
-                           </li>
-                        </ul>
-                        @endforeach
+                        <div class="indusDiv">
+                            @foreach ($js->industry_experience as $ind)
+                            <ul class="indsutrySelect">
+                               <li>
+                                  <p>{{getIndustryName($ind)}}</p>
+                               </li>
+                            </ul>
+                            @endforeach
+                        </div>
                         @endif
                      </div>
                   </div>
                </div>
                <div class="box-footer unlike-btn-group clearfix">
-                  <div class="block-progrees-ratio d-none d-md-block user-page-footer">
+                  {{-- <div class="block-progrees-ratio d-none d-md-block user-page-footer">
                      <ul>
                         <li><span class="Progress-ratio-icon1">.</span> <span>60%</span> Match </li>
                         <li><span class="Progress-ratio-icon2">.</span> <span>40%</span> UnMatch</li>
                      </ul>
-                  </div>
-                  <button class="unlike-btn" data-toggle="modal" data-target="#myModal"><i class="fas fa-thumbs-down"></i> UnLike</button> 
+                  </div> --}}
+                  <button class="unlike-btn" data-toggle="modal" onclick="unlikefunction('{{ $js->id }}')" data-target="#myModal"><i class="fas fa-thumbs-down"></i> UnLike</button> 
                   <a  href="{{route('employerInfo', ['id' => $js->id])}}"><button class="block-btn "> View Profile</button></a>                     
                </div>
             </div>
@@ -271,9 +280,10 @@
         <div class="modal-body">
           <strong>Are you sure you wish to continue?</strong>
         </div>
+        <input type="hidden" id="jobSeekerBlockId" name="">
         <div class="dual-footer-btn">
           <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
-          <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button>
+          <button type="button" class="orange_btn" onclick="confirmUnlikeFunction()" data-dismiss="modal"><i class="fa fa-check" ></i>OK</button>
         </div>
       </div>
       
@@ -285,12 +295,18 @@
 @stop
 
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
+<style type="text/css">
+    .indusDiv{
+        height: 50px;
+        overflow-y: scroll;
+    }
+</style>
 @stop
 
 @section('custom_js')
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/web/profile.js') }}"></script>
+{{-- <script src="{{ asset('js/site/common.js') }}"></script> --}}
 
 @stop
 

@@ -346,3 +346,6 @@ body.register.step2>div.jquery-modal.blocker.current>div#jobApplyModal {
 .arrows {background: #d5dce6;padding: 14px 40px 10px 40px;transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;}
 .arrows:hover {background: #f1f1f1;}
 .arrows:hover .initial_arrow{color: black;font-weight: 800;}
+
+.to_hide{ opacity: 0; }
+.to_show{ opacity: 1; }

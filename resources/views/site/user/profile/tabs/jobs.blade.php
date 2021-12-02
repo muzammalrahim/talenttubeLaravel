@@ -83,7 +83,12 @@
                                 </div>
                                 <div class="text-info-detail clearfix">
                                     <label>Job Detailed:</label>
-                                    <p>{{$job->description}} </p>
+
+                                    @php 
+                                        $remSpecialCharQues = str_replace("\&#39;","'",$job->description);
+                                    @endphp
+
+                                    <p>{{$remSpecialCharQues}} </p>
                                 </div>
                                 <span class="inreview-tag used-tag">{{$status}}</span>
                             </div>

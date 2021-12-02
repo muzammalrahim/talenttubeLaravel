@@ -231,7 +231,11 @@
                 </div>
                 <div class="row blocked-user-experience">
                   <h6>Job Detail:</h6>
-                 <p class="pl-3">{{$job->description}}</p>
+
+                   @php 
+                        $remSpecialCharQues = str_replace("\&#39;","'",$job->description);
+                    @endphp
+                 <p class="pl-3">{{$remSpecialCharQues}}</p>
                 </div>
 
               </div>

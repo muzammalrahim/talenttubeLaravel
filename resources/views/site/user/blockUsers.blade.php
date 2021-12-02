@@ -202,7 +202,7 @@
                             @php
                             $js = $blockuser->user;
                             @endphp                   
-                    <div class="col-sm-12 col-md-6">
+                    <div class="col-sm-12 col-md-6 js_{{ $js->id }}">
                         <div class="job-box-info block-box clearfix">
                           <div class="box-head">
                             <h4>No Match potential</h4>                          
@@ -226,7 +226,7 @@
                                 @endphp
                                 <img src="{{$profile_image}}" alt="">
                               </div>
-                              <div class="block-user-progress ">
+                              {{-- <div class="block-user-progress ">
                                 <h6>Rapid Print</h6>
                                <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
                                <div class="block-progrees-ratio d-block d-md-none  ">
@@ -235,7 +235,7 @@
                                 <li><span class="Progress-ratio-icon2">.</span> <span>40%</span> UnMatch</li>
                               </ul>
                             </div>
-                              </div>
+                              </div> --}}
                             </div>
                             <div class="col-md-8 user-details">
                               <div class="row blocked-user-about">
@@ -264,13 +264,13 @@
                             </div>
                           </div>
                           <div class="box-footer clearfix">
-                            <div class="block-progrees-ratio d-none d-md-block  user-page-footer">
+                            {{-- <div class="block-progrees-ratio d-none d-md-block  user-page-footer">
                               <ul>
                                 <li><span class="Progress-ratio-icon1">.</span> <span>60%</span> Match </li>
                                 <li><span class="Progress-ratio-icon2">.</span> <span>40%</span> UnMatch</li>
                               </ul>
-                            </div>
-                            <button class="unblock-btn"  data-toggle="modal" data-target="#myModal"><i class="fas fa-ban"  ></i>UnBlock</button>                          
+                            </div> --}}
+                            <button class="unblock-btn" onclick="unblockUser('{{ $js->id }}')"  data-toggle="modal" data-target="#unblockUserModal"><i class="fas fa-ban"  ></i>UnBlock</button>                          
                           </div>
                            @endforeach
                        </div>
@@ -285,7 +285,7 @@
 {{-- modal for unblock user of block page --}}
 
    <!-- ====================================================================================Modal -->
-              <div class="modal fade" id="myModal" role="dialog">
+              <div class="modal fade" id="unblockUserModal" role="dialog">
                 <div class="modal-dialog delete-applications">
                 
                   <!-- Modal content-->
@@ -297,9 +297,11 @@
                     <div class="modal-body">
                       <strong>Are you sure you wish to continue?</strong>
                     </div>
+
+                    <input type="hidden" id="jobSeekerBlockId" name="">
                     <div class="dual-footer-btn">
                       <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
-                      <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button>
+                      <button type="button" class="orange_btn" onclick="confirmUnblockUser()" data-dismiss="modal"><i class="fa fa-check"></i>OK</button>
                     </div>
                   </div>
                   
@@ -318,7 +320,7 @@
 @section('custom_js')
 {{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/web/profile.js') }}"></script>
 {{-- <script type="text/javascript">
 $(document).ready(function() {
 

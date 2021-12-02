@@ -24,7 +24,7 @@
                         <div class="form_qstn_options my-2">
                             @if(!empty($question->options && !empty($question) ))
                                 
-                                <select name="answer[{{$question['id']}}][option]" class="form-select selectpicker">
+                                <select name="answer[{{$question['id']}}][option]" class="w-100 selectpicker">
                                     @foreach($question->options as $option)
                                         @php
                                             $remSpecialChar = str_replace("\&#39;","'",$option);

@@ -192,13 +192,16 @@ $('#intConform_login').click(function ($event) {
 
             }else{
 
-                $('.intConSigninButton').text('Sign in Successfully');
+                
+                    
+                if( response.status == 1) {
+                    location.href = response.redirect;
+                    $('.intConSigninButton').text('Sign in Successfully');
                 $('.intConSigninButton').css("background","rgba(0,0,0,.4)");
                 console.log(' data >>>> ', response);
-                    
-                if( response.status) {
-                    location.href = response.redirect;
-                }else{                    
+                }else{   
+                $('.errorInBooking').text('This "Email" and "Mobile" is not registered with any booking.');
+                                 
                    var errorIntCon = response['message'];
                    // var nameError = errorIntCon['name'];
                    var mobileError = errorIntCon['mobile'];

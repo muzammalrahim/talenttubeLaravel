@@ -70,6 +70,14 @@
                 </p>
               </div>
               @endforeach
+              @else
+
+              <p class="pl-3">
+                  <i class="fas fa-angle-right"></i>
+                  No Experience Required
+                  <i class="fa fa-trash removeIndustry hide_it"></i>
+                </p>
+
               @endif
             </div>
             <div class="row blocked-user-about">
