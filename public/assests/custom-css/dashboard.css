@@ -2884,7 +2884,7 @@ opacity: 1 !important;
 
 
 .userLocationSpan{
-    word-break: break-all;
+    word-break: break-word;
 }
 
 .uploaded-file-resume { 

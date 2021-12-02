@@ -171,7 +171,7 @@
       <h2>Like Users Lists</h2>
       <div class="row">
          @foreach ($likeUsers as $likeuser)
-         <div class="col-sm-12 col-md-6 js_{{ $likeuser->user->id }}">
+         <div class="col-sm-12 col-md-12 js_{{ $likeuser->user->id }}">
             <div class="job-box-info block-box clearfix">
 
          @php
