@@ -116,37 +116,37 @@
 
          </li> --}}
 
-        {{-- ======================================== Template Questions ======================================== --}}
+         {{-- ======================================== Template Questions ======================================== --}}
 
-        <h6 class="font-weight-bold text-center"> Template Questions </h6> 
-        <form method="POST" action="{{ route('save_jobSeeker_response_interview') }}" enctype="multipart/form-data" name="saveInterviewResponse" class="saveInterviewResponse">
-          @csrf
-          @foreach ($InterviewTempQuestion as  $quest)
+         <h6 class="font-weight-bold text-center"> Template Questions </h6> 
+         <form method="POST" action="{{ route('save_jobSeeker_response_interview') }}" enctype="multipart/form-data" name="saveInterviewResponse" class="saveInterviewResponse">
+            @csrf
+            @foreach ($InterviewTempQuestion as  $quest)
 
             <div class="question mt-3">
-              
-              {{-- <p class="p0 qualifType bold mt10" name = ""> <span> Question ({{$loop->index+1}}):   </span> {{$quest->question}} </p> --}}
-              <label for="exampleFormControlFile1"> <b> Question ({{$loop->index+1}}): </b> {{$quest->question}} </label>
-              @if ($quest->video_response == 1)
-                  <div class="video_response"> 
-                    <p> Upload video to answer this question </p> 
-                      <input type="file" required  class="question_id form-control-file" id="exampleFormControlFile1" name="answer[{{$quest->id}}][img]" accept="video/mp4,video/x-m4v,video/*">
-                  </div>
-                @else
-                <input type="text" class="bg-white form-control jobseekersAnswer_{{ $loop->index }}" required name="answer[{{$quest->id}}]">
-              @endif
+               {{-- <p class="p0 qualifType bold mt10" name = ""> <span> Question ({{$loop->index+1}}):   </span> {{$quest->question}} </p> --}}
+               <label for="exampleFormControlFile1"> <b> Question ({{$loop->index+1}}): </b> {{$quest->question}} </label>
+               @if ($quest->video_response == 1)
+               <div class="video_response"> 
+                  <p> Upload video to answer this question </p> 
+                  <input type="file" required  class="question_id form-control-file" id="exampleFormControlFile1" name="answer[{{$quest->id}}][img]" accept="video/mp4,video/x-m4v,video/*">
+               </div>
+               @else
+               <input type="text" class="bg-white form-control jobseekersAnswer_{{ $loop->index }}" required name="answer[{{$quest->id}}]">
+               @endif
             </div>
+            @endforeach
 
-          @endforeach
+            <input type="hidden" name="userInterviewId" class="userInterviewId" value="{{$UserInterview->id}}"> 
+            <p class="errorsInFields qualifType"></p>
+            <div class="actionButton">
+               <button class="orange_btn">Save Reponse</button>
+            </div>
+         </form>
 
-          <input type="hidden" name="userInterviewId" class="userInterviewId" value="{{$UserInterview->id}}"> 
-          <p class="errorsInFields qualifType"></p>
-          <div class="actionButton">
-            <button class="orange_btn">Save Reponse</button>
-          </div>
-        </form>
-        {{-- ======================================== Template Questions ======================================== --}}
-      </ul>
+
+      {{-- ======================================== Template Questions ======================================== --}}
+   </ul>
 
     </div>
 </div>

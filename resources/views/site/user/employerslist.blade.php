@@ -64,7 +64,7 @@
             <div class="col-md-10 user-details">
                {{-- ============================================= Pie Chart =============================================  --}}
                {{-- @include('site.user.match_algo.match_algo')    site/user/match_algo/match_algo --}} 
-               <div class="pb-4" style="width:32%">
+               <div class="pb-4" style="width:310px">
                   <div  id="piechart_{{$js->id}}" class="job-box-info"></div>
                </div>
                <script type="text/javascript">
