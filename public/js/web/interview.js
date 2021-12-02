@@ -73,6 +73,8 @@ $(document).ready(function(){
                     $('.errorsInFields').text('Interview rejected successfully');
                     setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
                     // window.location.href = "{{ route('intetviewInvitation')}}" ;
+                    window.location.href = base_url+'/interview-invitation/'+ rejectUrl;
+
                 }else{
                    setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
                 }

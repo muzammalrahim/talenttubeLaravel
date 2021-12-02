@@ -746,6 +746,7 @@ function assetVideo($video){
     // $vPath  = ($video->status == 2)?('media/private/'):('media/public/');
     $vPath  = 'stream/';
     $vPath .= $video->file;
+    // dump($vPath);
     return asset( $vPath );
 }
 

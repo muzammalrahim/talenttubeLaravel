@@ -411,16 +411,18 @@ $(function(){
             var that        = this;
             var item_id     =  Math.floor((Math.random() * 1000) + 1);
             var video_item = '';
+            $('.list_videos').html('');
             video_item  += '<div id="v_'+item_id+'" class="item profile_photo_frame item_video" style="display: inline-block;">';
             video_item  +=  '<a class="show_photo_gallery video_link" href="">';
             video_item  +=  '</a>';
-            video_item  +=  '<span class="v_title">Video title</span>';
+            video_item  +=  '<span class="v_title p10">Video is uploading</span>';
             video_item  +=  '<span title="Delete video" class="icon_delete">';
             video_item  +=      '<span class="icon_delete_photo"></span>';
             video_item  +=      '<span class="icon_delete_photo_hover"></span>';
             video_item  +=  '</span>';
             video_item  +=  '<div class="v_error error hide_it"></div>';
             video_item  +=  '<div class="v_progress"></div>';
+            video_item  +=  '<div class="uploaded-text"></div>';
             video_item  += '</div>';
 
             $('.list_videos').append(video_item);
@@ -435,12 +437,14 @@ $(function(){
                 var percent = Math.round((e.loaded / e.total) * 100);
                 console.log(' progress-bar ', percent+'%' );
                 $('#v_'+item_id+' .v_progress').css('width',  percent+'%');
+                $('#v_'+item_id+' .uploaded-text').text(percent+'%');
             }, false);
             request.addEventListener('load', function(e){
                 console.log(' load e ', e);
                 var res = JSON.parse(e.target.responseText);
                 console.log(' jsonResponse ', res);
                 $('#v_'+item_id+' .v_progress').remove();
+                $('#v_'+item_id+' .uploaded-text').remove();
                 if(res.status == 1) {
                     // $('.profile_photo_frame').addClass('item_video');
 

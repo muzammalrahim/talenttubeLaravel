@@ -1216,16 +1216,7 @@ class InterviewController extends Controller
                 $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('user_id' , $user->id)->first();
             if ($UserInterview) {
 
-                if ($UserInterview->status == 'pending') {
-                    $UserInterview->status =  'Interview Confirmed';
-                    $UserInterview->save();
-
-                    $history = new History;
-                    $history->user_id = $UserInterview->user_id; 
-                    $history->type = 'Interview Confirmed'; 
-                    $history->userinterview_id = $UserInterview->id; 
-
-                    $history->save();
+                if ($UserInterview->status == 'Accepted') {
 
                     foreach ($data['answer'] as $key => $value) {
                         if (isset($value['img'])) {
@@ -1248,9 +1239,6 @@ class InterviewController extends Controller
                         }
 
                         else{
-
-                            // dd(' without video ');
-
                             $answers = new UserInterviewAnswers;
                             $answers->userInterview_id  = $data['userInterviewId'];
                             $answers->emp_id = $UserInterview->emp_id;
@@ -1260,10 +1248,18 @@ class InterviewController extends Controller
                             $answers->save();
 
                         }
-
-
                         
                     }
+
+                    $UserInterview->status =  'Interview Confirmed';
+                    $UserInterview->save();
+
+                    $history = new History;
+                    $history->user_id = $UserInterview->user_id; 
+                    $history->type = 'Interview Confirmed'; 
+                    $history->userinterview_id = $UserInterview->id; 
+                    $history->save();
+
 
                     return redirect()->route('intetviewInvitation');
                     

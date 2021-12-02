@@ -679,7 +679,8 @@ div#list_videos_public {
     position: absolute;
     bottom: 0;
     background: black;
-    padding: 6px;
+    height: 6px;
+    /*padding: 6px;*/
 }
 
 .card_profile .part_photo .name{ display: none !important; }
