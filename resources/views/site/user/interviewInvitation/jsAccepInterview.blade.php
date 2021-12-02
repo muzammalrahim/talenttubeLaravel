@@ -63,7 +63,7 @@
                {{$UserInterview->interview_type}}
             </p>
 
-            <label class="col-md-2 font-weight-bold">Employer's Instructions:</label>
+            <label class="col-md-2 font-weight-bold"> Instructions:</label>
             <p class="col-md-4">
                {{$UserInterview->template->employers_instruction}}
             </p>

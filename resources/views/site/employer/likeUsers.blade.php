@@ -177,7 +177,7 @@
          $js = $likeuser->user;
          @endphp
 
-         <div class="col-sm-12 col-md-6 js_{{$js->id}}">
+         <div class="col-sm-12 col-md-12 js_{{$js->id}}">
             <div class="job-box-info block-box clearfix">
 
          

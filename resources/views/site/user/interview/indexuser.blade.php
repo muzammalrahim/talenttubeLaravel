@@ -83,34 +83,62 @@
                           </div>
                           <p class="slot-para">Your slot for interview is with below timetable.</p>
                              <ul class="job-box-text concigerge clearfix">
-                                <li class="text-info-detail clearfix">
-                                  <label>From:</label>
-                                  <span>{{ Form::text('Start Time', $value = $Int_booking->slot->starttime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}</span>
-                                </li>
-                                <li class="text-info-detail clearfix">
-                                 <label>Booking Title:</label>
-                                 <span> {{$Int_booking->interview->title}}</span>
-                                </li>
-                               <li class="text-info-detail clearfix">
-                                 <label>To:</label>
-                                 <span> {{ Form::text('Start Time', $value = $Int_booking->slot->endtime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}</span>
-                               </li>
-                               <li class="text-info-detail clearfix">
-                                 <label>Company:</label>
-                                 <span>{{$Int_booking->interview->companyname}}</span>
-                               </li>
-                               <li class="text-info-detail clearfix">
-                                <label>Date:</label>
-                                <span> {{ Form::text('date',Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d'), $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}</span>
-                              </li>
-                              <li class="text-info-detail clearfix">
-                                <label>Position:</label>
-                                <span>{{$Int_booking->interview->positionname}}</span>
-                              </li>
-                              <li class="text-info-detail clearfix">
-                                <label>Insructions:</label>
-                                <span>{{$Int_booking->interview->instruction}}</span>
-                              </li>
+                                <div class="text-info-detail clearfix row">
+                                  <div class="col-4">   
+                                    <div class="row"> 
+                                      <span class="col-3 font-weight-bold text-dark">From:</span>
+                                      <span class="col-9"> {{$Int_booking->slot->starttime}}</span>
+                                    </div>
+                                  </div>
+                                  {{-- <span>{{ Form::text('Start Time', $value = $Int_booking->slot->starttime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
+                                  </span> --}}
+                                  <div class="col-8">   
+                                    <div class="row"> 
+                                      <span class="col-3 font-weight-bold text-dark">Booking:</span>
+                                      <span class="col-9"> {{$Int_booking->interview->title}}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                               <div class="text-info-detail clearfix row">
+                                <div class="col-4">
+                                  <div class="row"> 
+                                    <span class="col-3 font-weight-bold text-dark">To:</span>
+                                    <span class="col-9"> {{$Int_booking->slot->endtime}} </span>
+                                  </div>
+                                </div>
+                                 {{-- <span> {{ Form::text('Start Time', $value = $Int_booking->slot->endtime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
+                                 </span> --}}
+                                
+                                <div class="col-8">
+                                  <div class="row"> 
+                                    <span class="col-3 font-weight-bold text-dark">Company:</span>
+                                    <span class="col-9">{{$Int_booking->interview->companyname}}</span>
+                                  </div>
+                                </div>
+                               </div>
+                               <div class="text-info-detail clearfix row">
+                                <div class="col-4">
+                                  <div class="row"> 
+                                    <span class="col-3 font-weight-bold text-dark">Date:</span>
+                                    <span class="col-9"> {{ Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d') }} </span>
+                                  </div>
+                                </div>
+
+                                {{-- <span> {{ Form::text('date',Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d'), $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
+                                </span> --}}
+                                <div class="col-8">
+                                  <div class="row"> 
+                                    <span class="col-3 font-weight-bold text-dark">Position:</span>
+                                    <span class="col-9">{{$Int_booking->interview->positionname}}</span>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="text-info-detail clearfix row">
+                                {{-- <div class="row">  --}}
+                                  <span class="col-3 font-weight-bold text-dark">Insructions:</span>
+                                  <span class="col-9">{{$Int_booking->interview->instruction}}</span>
+                                {{-- </div> --}}
+                              </div>
                             </ul>
                             <button type="button" class="click-here-tag">Click here To Cancel Your Interview</button>
                        </div>
