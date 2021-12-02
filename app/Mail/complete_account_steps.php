@@ -28,7 +28,7 @@ class complete_account_steps extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->from('info@rapid-print.com.au')
+        return $this->from(CONSTANTS['MAIL_FROM_ADDRESS'])
             ->subject($this->name)
             ->view('emails.user.complete_account_steps'); // emails/user/complete_account_steps
     }

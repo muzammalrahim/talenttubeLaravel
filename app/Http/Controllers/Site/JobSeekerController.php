@@ -48,6 +48,7 @@ class JobSeekerController extends Controller {
     // Get // layout for listing of employers.
     //====================================================================================================================================//
     public function employers(Request $request){
+
         $user = Auth::user();
         if (isEmployer($user)){ return redirect(route('jobSeekers')); }
         $data['user']           = $user;
@@ -61,12 +62,14 @@ class JobSeekerController extends Controller {
 
         $data['likeUsers'] = $likeUsers;
        // $data['employers'] = $jobSeekers;
-        return view('site.user.employers', $data);   // site/user/employers
+        return view('site.user.employers', $data);   // site/user/employers 
 		}
 
     public function employerspost(Request $request){
         
         $user = Auth::user();
+        // dd($request->all());
+
       //  if (isEmployer($user)){ return redirect(route('jobSeekers')); }
         $data['user']           = $user;
         $data['title']          = 'Employers';

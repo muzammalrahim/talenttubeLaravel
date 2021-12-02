@@ -2,7 +2,7 @@
 @extends('site.employer.employermaster')
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 @section('content')
 <div class="newJobCont profile profile-section">
@@ -10,77 +10,51 @@
    <div class="add_new_job employee-wraper">
       <form method="POST" name="new_job_form" class="new_booking_form newJob job_validation">
          @csrf
-         <div class="job_title form_field">
-            <span class="form_label fw-bold">Booking Title :</span>
-            <div class="form_input">
-               <input type="text" value="{{$interview->title}}" name="title" class="w100 bg-white" required>
+         <div class="form-group row my-0">
+            <label for="booking-title" class="col-sm-2 col-form-label">Booking Title</label>
+            <div class="col-sm-10">
+               <input type="text" value="{{$interview->title}}" name="title" id="booking-title" class="form-control bg-white" required>
                <div id="title_error" class="error field_error to_hide">&nbsp;</div>
             </div>
          </div>
-         <div class="job_title form_field">
-            <span class="form_label fw-bold">Company Name :</span>
-            <div class="form_input">
-               <input type="text" value="{{$interview->companyname}}" name="companyname" class="w100 bg-white" required>
+
+         <div class="form-group row my-0">
+            <label for="company" class="col-sm-2 col-form-label">Company Name</label>
+
+            <div class="col-sm-10">
+               <input type="text" value="{{$interview->companyname}}" id="company" name="companyname" class="form-control bg-white" required>
                <div id="companyname_error" class="error field_error to_hide">&nbsp;</div>
             </div>
          </div>
-         <div class="job_title form_field">
-            <span class="form_label fw-bold">Position Name :</span>
-            <div class="form_input">
-               <input type="text" value="{{$interview->positionname}}" name="positionname" class="w100 bg-white" required>
+
+         <div class="form-group row my-0">
+            <label for="positionname" class="col-sm-2 col-form-label">Company Name</label>
+
+            <div class="col-sm-10">
+               <input type="text" value="{{$interview->positionname}}" id="positionname" name="positionname" class="form-control bg-white" required>
                <div id="positionname_error" class="error field_error to_hide">&nbsp;</div>
             </div>
          </div>
-         {{-- 
-         <div class="job_title form_field">
-            <span class="form_label">Employer Email :</span>
-            <div class="form_input">
-               <input type="email" value="{{$interview->employeremail}}" name="employeremail" class="w100" required>
-               <div id="employeremail_error" class="error field_error to_hide">&nbsp;</div>
-            </div>
-         </div>
-         <div class="job_title form_field">
-            <span class="form_label">Booking Password :</span>
-            <div class="form_input">
-               <input type="text" value="{{$interview->employerpassword}}" name="employerpassword" class="w100" required>
-               <div id="bookingpassword_error" class="error field_error to_hide">&nbsp;</div>
-            </div>
-         </div>
-         --}}
-         <div class="job_description form_field" required>
-            <span class="form_label fw-bold">Interview Instruction: </span>
-            <div class="form_input">
-               <textarea name="instruction" class="form_editor w100 bg-white" maxlength="1000" style="min-height: 120px;">{{$interview->instruction}}</textarea>
+
+         <div class=" form-group row my-0" required>
+            <label for="instruction" class="col-sm-2 col-form-label">Interview Instruction:</label>
+
+            <div class=" col-sm-10">
+               <textarea name="instruction" id="instruction" class=" form-control bg-white" maxlength="1000" style="min-height: 120px;">{{$interview->instruction}}</textarea>
                <div id="instruction_error" class="error field_error to_hide">&nbsp;</div>
             </div>
          </div>
-         <div class="job_title form_field">
-            <span class="form_label fw-bold">Additional Managers :</span>
-            <div class="form_input">
-               <input type="text" value="{{$interview->additionalmanagers}}" name="additionalmanagers" class="w100 bg-white" >
+         <div class="form-group row my-0">
+            <label for="manager" class="col-sm-2 col-form-label">Additional Managers :</label>
+
+            <div class="col-sm-10">
+               <input type="text" value="{{$interview->additionalmanagers}}" id="manager" name="additionalmanagers" class="form-control bg-white" >
                <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
             </div>
          </div>
-         {{-- 
-         <div class="job_title form_field">
-            <span class="form_label">Booking ID :</span>
-            <div class="form_input">
-               <input type="text" value="{{$interview->uniquedigits}}" name="uniquedigits" class="w100" >
-               <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
-            </div>
-         </div>
-         --}}
+ 
          <input type="hidden" name="interviewURL" value="{{$interview->url}}">
-         {{-- <input type="hidden" name="interviewID" value="{{$interview->id}}"> --}}
-         {{--    
-         <div class="job_title form_field">
-            <span class="form_label">Number of Slots :</span>
-            <div class="form_input">
-               <input type="number" class="jq-number__field" value="{{$interview->numberofslots}}" name="numberofslots" min="1" max="20" class="w20" >
-               <div id="title_error" class="error field_error to_hide">&nbsp;</div>
-            </div>
-         </div>
-         --}}
+        
          <div class="slot form_field">
             <h4 class="form_label " style="font-weight: 500;">Interview Slots:</h4>
             <div class="form_input w100">
@@ -91,27 +65,33 @@
                   @foreach ($slots as $key => $slot)
                   <div class="slot s{{$key+1}} m_rb20">
                      <div class="textCenter2">Interview Slot <span class="test">{{$key+1}}</span> 
-                        <i class="fas fa-trash text-danger fl_right deleteSlotClck pointer"></i>
+                        <i class="fas fa-trash text-danger fl_right deleteSlotClck pointer" data-toggle="modal" data-target = "#deleteSlotModal"></i>
                      </div>
                      <input type="hidden" class="SlotIDInputHidden" name="slotID" value="{{$slot->id}}">
                      <input type="hidden" class="companynameInSlot" id="" value="{{$interview->companyname}}">
                      <input type="hidden" class="positionnameInSlot" id="" value="{{$interview->positionname}}">
-                     <div class="time notbrak">
-                        <div class="notbrak fw-bold">Time :</div>
-                        <input type="hidden" name="slot[{{$key+1}}][id]" value="{{$slot->id}}" />
-                        <div class="notbrak"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center pointer bg-white" name="slot[{{$key+1}}][start]" size="8" value="slot[{{$key+1}}]" required readonly /></div>
-                        <div class="notbrak">To</div>
-                        <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker-without-dropdown text-center pointer bg-white" name="slot[{{$key+1}}][end]" size="8" required readonly /></div>
-                     </div>
-                     <div class="date topMargin notbrak ps-4">
-                        <span class="notbrak fw-bold">Date</span>
-                        <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}"   name="slot[{{$key+1}}][date]" class="datepicker notbrak pointer bg-white" size="20" required readonly />
-                     </div>
-                     <div class="notbrak ">
-                        <div class="form_input p" style="display: contents;">
-                           <label class="form_label notbrak float_none pl-5 fw-bold" style="margin-right: 5px;vertical-align: middle;">Maximum number of interviews:</label>
-                           {{ Form::select('maximumnumberofinterviewees', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'slot['.($key+1).'][maxNumberofInterviewees]', 'class' => 'selectedInput bg-white']) }}
+                     <div class="form-group row">
+                        <label for="time" class="col-sm-1 col-form-label">Time :</label>
+                        <input type="hidden" class="" name="slot[{{$key+1}}][id]" value="{{$slot->id}}" />
+                        <div class="col-sm-2"> 
+                           <input type="text" id="time" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center pointer bg-white" name="slot[{{$key+1}}][start]" size="8" value="slot[{{$key+1}}]" required readonly />
                         </div>
+
+                        <label for="to" class="col-sm-1 col-form-label">To :</label>
+
+                        <div class="col-sm-2">
+                           <input type="text" id="to" value="{{$slot->endtime}}" class="timepicker timepicker-without-dropdown text-center pointer bg-white" name="slot[{{$key+1}}][end]" size="8" required readonly />
+                        </div>
+ 
+                        <label for="date" class="col-sm-1 col-form-label">Date :</label>
+                        <div class="col-sm-2">
+                           <input type="text" id="date" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}"   name="slot[{{$key+1}}][date]" class="datepicker float-right notbrak pointer bg-white" size="20" required readonly />
+                        </div>
+                        <label for="maxinterviews" class="col-sm-2 col-form-label">Maximum number of interviews:</label>
+                        <div class="col-sm-1">
+                           {{ Form::select('maximumnumberofinterviewees', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'slot['.($key+1).'][maxNumberofInterviewees]', 'class' => 'selectedInput bg-white', 'id'=>'maxinterviews']) }}
+                        </div>
+                        {{-- </div> --}}
                      </div>
                      {{--  For sending email to js after updating slot --}}
                      @foreach ($slot->bookings3 as $book)
@@ -156,8 +136,8 @@
                <div class="general_error error to_hide">&nbsp;</div>
             </div>
          </div>
-         <div class="interviewSlot addSlot ">
-            <span class="btn small violet "> Add Interview slot</span>
+         <div class="addSlot">
+            <span class="blue_btn py-2 px-2"> Add Interview slot</span>
          </div>
          <div class="fomr_btn act_field center">
             <button class=" updateNewBooking orange_btn px-5">Update</button>
@@ -169,36 +149,14 @@
 @include('site.home.deleteSlotPop')   {{-- site/home/deleteSlotPop --}}
 @stop
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-{{-- 
-<link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}">
---}}
-{{-- 
-<link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
---}}
+
 <style>
-   .notbrak{display: inline-block;}
-   .leftMargin{margin-left: 10px;}
-   .leftMargin2{margin-left: 10%;}
-   .rightMargin{margin-right : 10px;}
-   .topMargin{margin-top: 10px;}
-   .textCenter{margin-left: 40%;padding-bottom: 10px !important;}
-   .textCenter2{padding-bottom: 10px !important;font-weight: 600;}
-   .dynamicTextStyle{margin-left: 5px;margin-right: 5px;}
-   .interviewSlot:hover {width: fit-content;color: #142d69!important;border:1px solid #142d69!important; background: #fff; font-weight: 600;}
-   .interviewSlot{background: #142d69; color: #fff!important; padding: 0 10px; border-radius: 5px;opacity: 0.8; transition: all 0.5s ease;cursor: pointer;}
-   .btn{color: #fff;}
-   .interviewConcierge {background: #254c8e !important;}
-   .slot.m_rb20 { display: block;padding: 10px;border: 1px solid #ced1da;border-radius: 3px;clear: both;margin: 0px;}
-   .selectInput>.jq-selectbox>.jq-selectbox__dropdown>ul , .selectedInput>.jq-selectbox__dropdown>ul { height: 200px; }
+   
 </style>
 @stop
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script type="text/javascript">
    // $('.datepicker').datepicker({ dateFormat: "yy-mm-dd", minDate: 0, });
@@ -210,87 +168,7 @@
    
    
    });
-   //   ============================================= Code commented for adding new slot on click function =============================================
-   
-   // $("input[type=number]").bind('keyup input', function(){
-   //    // alert("fired");
-   //    console.log("This value",this.value);
-   //     if(this.value>20 || this.value <1){
-   //         this.value =1;
-   //         return 0;
-   //     }
-   //     var sC = parseInt($('#slotsCounter').val());
-   //     console.log("Slot counter",sC);
-   //     if(sC<this.value){
-   //     for (i=sC+1; i<=this.value; i++)
-   //     {
-   //         var slot  = '<div class="slot s'+i+' notbrak leftMargin topMargin">';
-   //             slot  += '<div class="textCenter">Interview Slot '+i+'</div>';
-   //             slot  += '<div class="time">';
-   //             slot  += '<div class="notbrak dynamicTextStyle">Time</div>';
-   //             slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][start]" size="8" required /></div>';
-   //             slot  += '<div class="notbrak dynamicTextStyle">To</div>';
-   //             slot  += '<div class="notbrak"><input type="text" class="timepicker timepicker-without-dropdown text-center" name="slot['+i+'][end]" size="8" required /></div>';
-   //             slot  += '</div>';
-   //             slot  += '<div class="date topMargin">';
-   //             slot  += '<span class="notbrak dynamicTextStyle">Date</span>';
-   //             slot  += '<input type="text" name="date['+i+']" class="datepicker notbrak" size="8" required />';
-   //             slot  += '</div>';
-   
-   //             slot  += '<div>';
-   //                 slot  += '<label class="form_label notbrak" style="margin-right: 5px;">Maximum number of interviewees:</label>';
-   
-   //                 slot  += '               <div class="form_input">';
-   //                     slot  += '                  <select name="maximumnumber['+i+']" class="form_select" >';
-   //                         slot  += '                      <option value="1">1</option>';
-   //                         slot  += '                       <option value="2">2</option>';
-   //                         slot  += '                       <option value="3">3</option>';
-   //                         slot  += '                       <option value="4">4</option>';
-   //                         slot  += '             <option value="5">5</option>';
-   //                         slot  += '           <option value="6">6</option>';
-   //                         slot  += '              <option value="7">7</option>';
-   //                         slot  += '              <option value="8">8</option>';
-   //                         slot  += '               <option value="9">9</option>';
-   //                         slot  += '              <option value="10">10</option>';
-   //                         slot  += '              <option value="11">11</option>';
-   //                         slot  += '             <option value="12">12</option>';
-   //                         slot  += '             <option value="13">13</option>';
-   //                         slot  += '             <option value="14">14</option>';
-   //                         slot  += '            <option value="15">15</option>';
-   //                         slot  += '            <option value="16">16</option>';
-   //                         slot  += '           <option value="17">17</option>';
-   //                         slot  += '           <option value="18">18</option>';
-   //                         slot  += '           <option value="19">19</option>';
-   //                         slot  += '           <option value="20">20</option>';
-   //                         slot  += '       </select>';
-   //                         slot  += '       </div>';
-   //                         slot  += '   </div>';
-   //                         slot  += '  </div>';
-   //             slot  += '</div>';
-   //             $('.slots').append(slot);
-   //     }
-   //     $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
-   //     $('input.timepicker').timepicker({});
-   //     $('#slotsCounter').val(this.value);
-   //     $('input, select').styler();
-   //     }
-   
-   //     else if(sC > this.value){
-   
-   //         for (i=sC; i>this.value; i--){
-   
-   //             $( ".s"+i ).remove();
-   
-   //         }
-   
-   //     $('#slotsCounter').val(this.value);
-   //     }
-   
-   // });
-   
-   //   ============================================= Code commented for adding new slot on click function =============================================
-   
-   
+
    // ============================================= Added new slot button start =============================================
    
    var vals = $('.test').last().text();
@@ -298,7 +176,7 @@
    $(".addSlot").bind('click', function(){
    if(i <= 20){
    i=i;
-       var slot  = '<div class="slot s'+i+' notbrak m_rb20 addNewInterviewSlot">';
+       /*var slot  = '<div class="slot s'+i+' m_rb20 addNewInterviewSlot">';
            slot  += '<div class="textCenter2 ">Interview Slot '+i+' ';
            slot  += '<i class="fas fa-trash text-danger fl_right deleteSlot">'
            slot  += '</i>'
@@ -343,15 +221,76 @@
                        slot  += '       </select>';
                        slot  += '       </div>';
                        slot  += '   </div>';
-                       slot  += '  </div>';
-           slot  += '</div>';
+                       slot  += '  </div>';*/
+
+         var   slot  = '<div class="slot s'+i+' m_rb20 addNewInterviewSlot">';
+               slot  += '<div class="textCenter2 ">Interview Slot '+i+' ';
+               slot  += '<i class="fas fa-trash text-danger fl_right deleteSlot">'
+               slot  += '</i>'
+               slot  +=  '</div>';
+
+               slot += '<div class="form-group row">';
+
+               slot +=    '<label for="time" class="col-sm-1 col-form-label">Time :</label>';
+               // slot +=       '<input type="hidden" class="" name="slot['+i+'][id]">';
+               slot +=        '<div class="col-sm-2"> ';
+               slot +=           '<input type="text" name="slot['+i+'][start1]" id="time" class="timepicker timepicker-without-dropdown text-center pointer bg-white"  size="8" required="" readonly="">';
+               slot +=         '</div>';
+
+               slot +=         '<label for="to" class="col-sm-1 col-form-label">To :</label>';
+
+               slot +=         '<div class="col-sm-2">';
+               slot +=            '<input type="text" name="slot['+i+'][end1]" id="to" class="timepicker timepicker-without-dropdown text-center pointer bg-white" size="8" required="" readonly="">';
+               slot +=         '</div>';
+ 
+                        
+               slot +=         '<label for="date" class="col-sm-1 col-form-label">Date :</label>';
+               slot +=         '<div class="col-sm-2">';
+               slot +=            '<input type="text" name="slot['+i+'][date1]" class="datepicker float-right notbrak pointer bg-white" autocomplete="off" readonly size="20" required />';
+               slot +=         '</div>';
+                     
+                     
+               slot +=         '<label for="maxinterviews" class="col-sm-2 col-form-label">Maximum number of interviews:</label>';
+
+                        
+                           
+               slot +=         '<div class="col-sm-1">';
+               slot +=            '<select name="slot['+i+'][maxNumberofInterviewees1]" class="selectedInput bg-white" id="maxinterviews">';
+               slot +=              '<option value="1" selected="selected">1</option>';
+               slot +=              '<option value="2">2</option>';
+               slot +=              '<option value="3">3</option>';
+               slot +=              '<option value="4">4</option>';
+               slot +=              '<option value="5">5</option>';
+               slot +=              '<option value="6">6</option>';
+               slot +=              '<option value="7">7</option>';
+               slot +=              '<option value="8">8</option>';
+               slot +=              '<option value="9">9</option>';
+               slot +=              '<option value="10">10</option>';
+               slot +=              '<option value="12">12</option>';
+               slot +=              '<option value="13">13</option>';
+               slot +=              '<option value="14">14</option>';
+               slot +=              '<option value="15">15</option>';
+               slot +=              '<option value="16">16</option>';
+               slot +=              '<option value="17">17</option>';
+               slot +=              '<option value="18">18</option>';
+               slot +=              '<option value="19">19</option>';
+               slot +=              '<option value="20">20</option>';
+               slot +=              '</select>';
+               slot +=         '</div>';
+                        
+               slot +=      '</div>';
+
+
+
+
+           // slot  += '</div>';
            slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
    
    $('.slots').append(slot);
    $(".datepicker").datepicker({ dateFormat: "yy-mm-dd", minDate: 0, });
    $('input.timepicker').timepicker({});
    $('#slotsCounter').val(this.value);
-   $('input, select').styler();
+   // $('input, select').styler();
    i++;
    
    }
@@ -359,7 +298,7 @@
    else {
    return false;
    }
-   
+
    // ============================================= Delete Slot JS =============================================
    
    
@@ -368,36 +307,21 @@
    });
    
    
-   
    // ============================================= Delete Slot JS =============================================
    
    });
    
    
-   // ============================================= Add new slot buttton end here =============================================
-   
-   // ============================================= Delete Slot JS =============================================
-   
-   //  Commenting for opening popup on click
-   
-   
-   // $('i').click(function(){
-   
-   //     $(this).closest('.slot').remove();
-   // });
-   
-   //  Commenting for opening popup on click
-   
    // ============================================= Delete Slot JS end here =============================================
    
    $(document).ready(function(){
    $('input.timepicker').timepicker({});
-   $('input, select').styler();
+   // $('input, select').styler();
    
    $('.updateNewBooking').on('click',function() {
    event.preventDefault();
    var formData = $('.new_booking_form').serializeArray();
-   $('.updateNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+   // $('.updateNewBooking').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
    console.log(' formData ', formData);
    $('.general_error').html('');
    $.ajax({
@@ -445,10 +369,10 @@
    // ================================= Delete Slot Popup Open onClick =================================
    
    if( $('#deleteSlotModal').length ){
-   var $deleteSlot = $('#deleteSlotModal').modalPopup({shClass: ''});
+   // var $deleteSlot = $('#deleteSlotModal').modalPopup({shClass: ''});
    $('.deleteSlotClck').click(function(){
    console.log(' open ');
-   $deleteSlot.open();
+   // $deleteSlot.open();
    var deleteSlot2 = $(this).closest('.slot').find('.SlotIDInputHidden').val();
    var companyName = $(this).closest('.slot').find('.companynameInSlot').val();
    var useremail = $(this).closest('.slot').find('.useremails').val();

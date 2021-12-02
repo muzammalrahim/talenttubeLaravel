@@ -1243,7 +1243,7 @@ class HomeController extends Controller {
                         return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser  
                     }
                     else{ 
-                        return view('site.user.interviewinvitation.detail', $data);
+                        return view('site.user.interviewInvitation.detail', $data);
                         // site/user/interviewInvitation/detail
                     }
                 }

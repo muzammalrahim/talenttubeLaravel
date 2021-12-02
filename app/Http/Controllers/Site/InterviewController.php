@@ -621,7 +621,7 @@ class InterviewController extends Controller
           }})
           ->addColumn('profile', function ($records) {
               if (isEmployer()){
-                  $rhtml = '<a class="button w30 textCenterButton turquoise" href="'.route('jobSeekerInfo',['id'=>$records->like]).'" target="_blank" >Info</a>';
+                  $rhtml = '<a class="blue_btn px-2 py-1" href="'.route('jobSeekerInfo',['id'=>$records->like]).'" target="_blank" >Info</a>';
                   return $rhtml;
               }})
 
@@ -1188,7 +1188,7 @@ class InterviewController extends Controller
 
         $user = Auth::user();
         $data = $request->all();
-        dd($data);
+        // dd($data);
         // ================================================== Validation for answering the questions ==================================================
      
         if(in_array(null, $data['answer'], true))
@@ -1199,8 +1199,6 @@ class InterviewController extends Controller
             ]);
         }
         else{
-
-            dd(' =========== hi =============== ');
 
             $rules = array(
             'answer*' => 'required|max:255',
@@ -1215,9 +1213,6 @@ class InterviewController extends Controller
             }
 
             else{
-
-                // dd(' sab thek  ');
-
                 $UserInterview = UserInterview::where('id' ,$data['userInterviewId'])->where('user_id' , $user->id)->first();
             if ($UserInterview) {
 
@@ -1233,38 +1228,30 @@ class InterviewController extends Controller
                     $history->save();
 
                     foreach ($data['answer'] as $key => $value) {
-
-                        // dump($key);
-
                         if (isset($value['img'])) {
-
                             // dd(' img hai ');
-
                             $answers = new UserInterviewAnswers;
                             $video = $value['img'];
                             $fileOriginalName = $video->getClientOriginalName();
                             $fileName = $fileOriginalName;
                             $storeStatus = Storage::disk('publicMedia')->put( 'interview_bookings/' .$user->id . '/User_interview_id('.$request->userInterviewId.')' . '/question_id('.$key.')' . '/video_response/' .  $fileName, 
                                 file_get_contents($video));
-
                             $video_response_path = $user->id . '/User_interview_id('.$data['userInterviewId'].')' .
                              '/question_id('.$key.')' . '/video_response/' .  $fileName;
-   
-                            // $answers->video_url = $video_response_path;
                             $answers->answer = $video_response_path;
                             $answers->emp_id = $UserInterview->emp_id;
                             $answers->userInterview_id  = $data['userInterviewId'];
                             $answers->user_id  = $user->id;
                             $answers->question_id = $key;
-                            // $answers->answer = $value;
                             $answers->save();
   
                         }
 
                         else{
 
+                            // dd(' without video ');
+
                             $answers = new UserInterviewAnswers;
-                            // dump(' img tu ni hai ');
                             $answers->userInterview_id  = $data['userInterviewId'];
                             $answers->emp_id = $UserInterview->emp_id;
                             $answers->user_id  = $user->id;

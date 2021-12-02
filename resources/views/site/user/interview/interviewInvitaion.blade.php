@@ -34,7 +34,7 @@
                 <span>
                   <form class="statusOfInterview d-contents" name="statusOfInterview">  
                     @csrf
-                    <select class="form-control" name="hide" style="background: #fff !important;">
+                    <select class="selectpicker w-100" name="hide" style="background: #fff !important;">
                       <option value= "0"> Select Status   </option> 
                       <option value= "yes"> Hide Interview </option> 
                       @if ($Int_booking->status == 'pending')
@@ -56,19 +56,44 @@
                 <span><b> {{$Int_booking->template->type}} </b></span>
               </li>
               @endif
+
+              <li class="text-info-detail clearfix">
+                <label>Interview Name:</label>
+                <span><b> {{$Int_booking->template->template_name}} </b></span>
+              </li>
+
               <li>
                 <span>  Instructions:</span><span> <b> {{$Int_booking->template->employers_instruction}} </b></span>
               </li>
+
             </ul>
             <div class="dual-tags interview-btn-call clearfix">
               @if ($Int_booking->status == "Interview Confirmed" )
               <a  href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
                 class="interview-tag">View My Responses</a>
                 <span class="pendinginterview-tag used-tag pull-right">{{$Int_booking->status}}</span>
-              @else
+
+                @elseif($Int_booking->status == "Rejected")
+
+                <a  href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
+                class="interview-tag">You have rejected this interview</a>
+                <span class="pendinginterview-tag used-tag pull-right">{{$Int_booking->status}}</span>
+
+                @elseif($Int_booking->status == "Accepted")
+
                 <a  href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
                 class="interview-tag">Click here to respond to this interview</a>
                 <span class="pendinginterview-tag used-tag pull-right">{{$Int_booking->status}}</span>
+
+              @else
+                {{-- <a href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
+                class="interview-tag">Click here to respond to this interview</a>  --}}
+                <div class="float-left acceptInterviewDiv_{{ $Int_booking->id }}">
+                  <button type="button" class="blue_btn" data-target = "#acceptOrRejectInterview" data-toggle = "modal" 
+                  onclick="acceptInterviewFun('{{ $Int_booking->url }}', '{{ $Int_booking->id }}')">Click here to respond to this interview</button> 
+                </div>
+
+                <span class="pendinginterview-tag used-tag pull-right intStatus_{{ $Int_booking->id }}">{{$Int_booking->status}}</span>
               @endif
 
               </div>
@@ -85,6 +110,35 @@
     </div>
   </div>
 </section>
+
+
+<!-- ========================================= Accept or reject interview ========================================= -->
+              
+<div class="modal fade" id="acceptOrRejectInterview" role="dialog">
+    <div class="modal-dialog delete-applications">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
+          {{-- <h1 class="modal-title"><i class="fas fa-thumbs-down trash-icon"></i>UnLike User</h1> --}}
+        </div>
+        <div class="modal-body">
+          <strong>Would you like to accept or reject this interview ?</strong>
+        </div>
+        <input type="hidden" id="interviewUrl" name="">
+        <input type="hidden" id="interviewId" name="">
+        <div class="dual-footer-btn">
+          <button type="button" class="btn btn-default black_btn" onclick="rejectInterviewInvitation()" data-dismiss="modal"><i class="fa fa-times"></i>Reject</button>
+          <button type="button" class="orange_btn" onclick="acceptInterviewButton()" data-dismiss="modal"><i class="fa fa-check" ></i>Accept</button>
+        </div>
+      </div>
+      
+    </div>
+</div>
+
+<!-- ========================================= Accept or reject interview end here ========================================= -->
+
 
 @include('site.user.interview.popup')
 @stop

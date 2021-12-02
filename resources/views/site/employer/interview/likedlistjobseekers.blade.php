@@ -1,123 +1,69 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('web.employer.employermaster')
 @section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 @section('content')
-<div class="">
-   <div class="heading icon_head_browse_matches">Select Job Seekers to send them notifications</div>
-   <hr class="new">
-   {{-- @dump($title); --}}
-   @php
-   session()->put('bookingid',$interview->id);
-   @endphp
-   <a class="button w10 small turquoise" href="{{route('interviewconcierge.created')}}">Go Back</a>
-   <table class="table table-bordered cbxDataTable" id="dataTable">
-      <thead>
-         <tr style="text-align: center" >
-            <th><input name="select_all" value="0" id="cbx" type="checkbox" /></th>
-            <th>Surname</th>
-            <th>city</th>
-            <th>email</th>
-            <th>phone</th>
-            <th>profile</th>
-         </tr>
-      </thead>
-   </table>
-   <butto class="button small colorSendButton sendNotification turquoise">Send notifications</butto>
-</div>
-<div class="form_field">
-   <span class="form_label"></span>
-   <div class="form_input">
-      <div class="general_error error to_hide">&nbsp;</div>
-   </div>
-</div>
-<div class="d-none">
-   <form method="POST" class="notificationForm" action="{{route('bulk.BulkGenerateCVPDF')}}">
-      @csrf
-      <div class="cbx_list">
-      </div>
-      <input type="hidden" name="url" id="url" value="{{$interview->url}}">
-      <input type="hidden" value="{{$interview->positionname}}" name="positionname" class="w20" required>
-      <input type="hidden" value="{{$interview->employerData->name}}" name="employerName" class="w20" required>
-   </form>
+<div class="profile profile-section">
+    <div class="">
+       {{-- <div class="heading icon_head_browse_matches">Select Job Seekers to send them notifications</div> --}}
+       <h2 class="head icon_head_browse_matches">Select Job Seekers to send them notifications</h2>
+       <hr class="new">
+       {{-- @dump($title); --}}
+       @php
+       session()->put('bookingid',$interview->id);
+       @endphp
+       <a class="" href="{{route('interviewconcierge.created')}}">
+           <button class="blue_btn px-2 mb-2"> Go Back  </button>
+       </a>
+       <table class="table table-bordered cbxDataTable" id="dataTable">
+          <thead>
+             <tr style="text-align: center" >
+                <th><input name="select_all" value="0" id="cbx" type="checkbox" /></th>
+                <th>Surname</th>
+                <th>city</th>
+                <th>email</th>
+                <th>phone</th>
+                <th>profile</th>
+             </tr>
+          </thead>
+       </table>
+       <button class="blue_btn sendNotification">Send notifications</button>
+    </div>
+    <div class="form_field">
+       <span class="form_label"></span>
+       <div class="form_input">
+          <div class="general_error error to_hide">&nbsp;</div>
+       </div>
+    </div>
+    <div class="d-none">
+       <form method="POST" class="notificationForm" action="{{route('bulk.BulkGenerateCVPDF')}}">
+          @csrf
+          <div class="cbx_list">
+          </div>
+          <input type="hidden" name="url" id="url" value="{{$interview->url}}">
+          <input type="hidden" value="{{$interview->positionname}}" name="positionname" class="w20" required>
+          <input type="hidden" value="{{$interview->employerData->name}}" name="employerName" class="w20" required>
+       </form>
+    </div>
 </div>
 @stop
 @section('custom_footer_css')
-{{-- 
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
---}}
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
-{{-- 
-<link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}">
---}}
-{{-- 
-<link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
---}}
+
 <style>
-   .notbrak{
-   display: inline-block;
-   }
-   .leftMargin{
-   margin-left: 10px;
-   }
-   .topMargin{
-   margin-top: 10px;
-   }
-   .textCenter{
-   margin-left: 40%;
-   padding-bottom: 10px !important;
-   }
-   .dynamicTextStyle{
-   margin-left: 5px;
-   margin-right: 5px;
-   }
-   .heading{
-   font-size: 1.4em !important;
-   margin-bottom: 10px;
-   line-height: 26pt;
-   }
-   hr.new{
-   border-top: 1px dotted #8c8b8b;
-   border-bottom: 1px dotted #fff;
-   }
-   .textCenterButton {
-   text-align: center;
-   }
-   .button {
-   background: rgb(31, 120, 236);
-   border-radius: 5px;
-   color: white;
-   padding: .5em 1.5em .5em 1.5em;
-   text-decoration: none;
-   margin-top: 20px !important;
-   margin-bottom: 20px !important;
-   display:block;
-   width: fit-content;
-   cursor: pointer;
-   }
-   .colorSendButton{
-   background-color: rgb(102, 123, 150);
-   }
-   .button:focus,
-   .button:hover {
-   background-color: rgb(52, 49, 238);
-   color: White;
-   }
+   
 </style>
 @stop
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.22/js/jquery.dataTables.js"></script>
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
+
 <script type="text/javascript">
    $( document ).ready(function() {
       var checked = false;

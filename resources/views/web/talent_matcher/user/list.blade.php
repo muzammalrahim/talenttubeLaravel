@@ -2,6 +2,7 @@
    @php
    $check = false;
    @endphp
+
    @if ($query && $query->count() > 0)
    @foreach ($query as $js) 
    @php
@@ -30,6 +31,9 @@
    $check = true;
    @endphp
    @endif
+
+   {{-- @dd('coming here') --}}
+   
    @if ($check)
    <div class="col-sm-12 col-md-6">
       <div class="job-box-info block-box clearfix">

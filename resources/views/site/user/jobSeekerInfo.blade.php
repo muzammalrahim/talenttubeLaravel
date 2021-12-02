@@ -208,20 +208,45 @@
 
             @if ($controlsession->count() > 0 || isAdmin())
             <!-- =============================================== Tab History =============================================== -->
-            <a id="tabs-5" class="tab_link tab_a"></a>
-            <div class="tab_history tab_cont pt30px">
-               @include('site.user.jobseekerInfoTabs.history') {{-- site/user/jobseekerInfoTabs/history --}}
+            
+            <div class="tab-pane fade history-tab" id="history"  role="tabpanel" aria-labelledby="history-tab">
+               <h2>History</h2>
+               <div class="tab_photos tab_cont">
+                  @include('site.user.jobseekerInfoTabs.history')  {{-- site/user/jobseekerInfoTabs/questions --}}
+               </div>
             </div>
+
+            {{-- <a id="tabs-5" class="tab_link tab_a"></a> --}}
+            {{-- <div class="tab_history tab_cont pt30px"> --}}
+               {{-- @include('site.user.jobseekerInfoTabs.history')  --}}
+               {{-- site/user/jobseekerInfoTabs/history --}}
+            {{-- </div> --}}
             <!-- =============================================== Tab Notes =============================================== -->
-            <a id="tabs-6" class="tab_link tab_a"></a>
+            {{-- <a id="tabs-6" class="tab_link tab_a"></a>
             <div class="tab_notes tab_cont pt30px">
                @include('site.user.jobseekerInfoTabs.addNotes')
+            </div> --}}
+
+            <div class="tab-pane fade notes-tab" id="notes"  role="tabpanel" aria-labelledby="notes-tab">
+               <h2>Notes</h2>
+               <div class="tab_photos tab_cont">
+                  @include('site.user.jobseekerInfoTabs.addNotes')  {{-- site/user/jobseekerInfoTabs/questions --}}
+               </div>
             </div>
+
             <!-- =============================================== Tab Jobs =============================================== -->
-            <a id="tabs-8" class="tab_link tab_a"></a>
+            {{-- <a id="tabs-8" class="tab_link tab_a"></a>
             <div class="tab_interviews tab_cont pt30px">
-               @include('site.user.jobseekerInfoTabs.jobApplications') {{--    site/user/jobseekerInfoTabs/jobApplications  --}}
+               @include('site.user.jobseekerInfoTabs.jobApplications') 
+            </div> --}}
+
+            <div class="tab-pane fade jobs-tab" id="jobs"  role="tabpanel" aria-labelledby="jobs-tab">
+               <h2>Jobs</h2>
+               <div class="tab_photos tab_cont">
+                  @include('site.user.jobseekerInfoTabs.jobApplications')  {{-- site/user/jobseekerInfoTabs/questions --}}
+               </div>
             </div>
+
             @endif
 
             <div class="tab-pane fade interview-tab" id="interview"  role="tabpanel" aria-labelledby="contact-tab">

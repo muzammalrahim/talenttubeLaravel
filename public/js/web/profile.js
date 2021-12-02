@@ -691,9 +691,11 @@ $(document).ready(function(){
 
     // ============================================ Like user (jobseeker info page)
 
-    this.likeFunction = function(jobseeker_id){
+    $(document).on('click', '.likeFunction',function(){
+
+    // this.likeFunction = function(jobseeker_id){
+        var jobseeker_id = $(this).attr('data-jsid');
         console.log(jobseeker_id);
-        // $(document).on('click','.jsLikeUserBtn',function(){
         var btn = $(this);
         console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
         // $(this).html(getLoader('blockJobSeekerLoader'));
@@ -703,8 +705,10 @@ $(document).ready(function(){
             type: 'POST',
             url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
             success: function(data){
-                btn.prop('disabled',false);
+                // btn.prop('disabled',false);
                 if( data.status == 1 ){
+                    console.log('User Liked ==============' );
+                    $(this).text('Liked');
                     btn.html('Liked').addClass('active');
                     // $('.jobSeeker_row.js_'+jobseeker_id).remove();
                 }else{
@@ -712,8 +716,106 @@ $(document).ready(function(){
                 }
             }
         });
+    // }
+
+    })
+
+
+    // ============================================ block functions ============================================
+
+    this.blockFunction = function(jobseeker_id){
+        console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
+        console.log(' confirm_JobSeekerBlock_ok ');
+        var btn = $(this); //
+        btn.prop('disabled',true);
+        // $('.img_chat').hide();
+
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/blockEmployer/'+jobseeker_id,
+            success: function(data){
+                btn.prop('disabled',false);
+                if( data.status == 1 ){
+                    $('.showError').addClass('apiMessageForBlockingEmp').css("display","block");
+                    $('.apiMessageForBlockingEmp').html(data.message);
+                    // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+                    $('.blockJobSeekerLoader').hide();
+
+                    $('.double_btn').hide();
+
+                }else{
+                    // $('#confirmJobSeekerBlockModal .img_chat').html(data.error);
+                }
+            }
+        });
+    }
+
+
+    // =============================================== unblock user ===============================================
+
+    this.unblockUser = function(jobseeker_id){
+        $('#jobSeekerBlockId').val(jobseeker_id);
+
+    }
+
+    this.confirmUnblockUser = function(){
+        console.log(' confirm_JobSeekerBlock_ok ');
+        var jobseeker_id = $('#jobSeekerBlockId').val();
+        $('.confirmJobSeekerBlockModal').addClass('showLoader');
+        var btn = $(this); //
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/unBlockUser',
+            data: {id: jobseeker_id},
+            success: function(data){
+               // btn.prop('disabled',false);
+               // $('.confirmJobSeekerBlockModal').removeClass('showLoader').addClass('showMessage');
+                if( data.status == 1 ){
+                    $('.confirmJobSeekerBlockModal .apiMessage').html(data.message);
+                    $('.js_'+jobseeker_id).remove();
+
+                    $('.double_btn').hide();
+
+                }else{
+                    $('.confirmJobSeekerBlockModal .apiMessage').html(data.error);
+                }
+            }
+        });
     // });
     }
+
+    // =============================================== unlike user ===============================================
+
+    this.unlikefunction = function(jobseeker_id){
+        console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
+        $('#jobSeekerBlockId').val(jobseeker_id);
+    }
+
+    this.confirmUnlikeFunction = function(){
+        console.log(' confirm_JobSeekerBlock_ok ');
+        var jobseeker_id = $('#jobSeekerBlockId').val();
+        var btn = $(this); //
+       //  btn.prop('disabled',true);
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/unLikeUser',
+            data: {id: jobseeker_id},
+            success: function(data){
+                if( data.status == 1 ){
+                    $('.js_'+jobseeker_id).remove();
+
+                }else{
+                    $('.jobSeekerBlockId .apiMessage').html(data.error);
+                }
+            }
+        });
+    }
+
+
+
 
 
 

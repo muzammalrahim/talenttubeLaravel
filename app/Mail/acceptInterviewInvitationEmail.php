@@ -31,7 +31,7 @@ class acceptInterviewInvitationEmail extends Mailable
     public function build()
     {
         // return $this->view('view.name');
-        return $this->from('creativedev22@gmail.com')
+        return $this->from(CONSTANTS['MAIL_FROM_ADDRESS'])
             ->subject($this->name)
             ->view('emails.interviewInvitation.acceptInterviewInvitation'); // emails/interviewInvitation/acceptInterviewInvitation
     }

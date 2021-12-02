@@ -1,79 +1,56 @@
-<div style="display:none;">
+{{-- <div style="display:none;">
 
 
-<div id="deleteSlotModal" class="popup intConc_sign_inPP">
-    <div class="head"> Delete Slot
+    <div id="deleteSlotModal" class="popup intConc_sign_inPP">
+        <div class="head"> Delete Slot
 
-        <span class="close_hover"> </span>
+            <span class="close_hover"> </span>
 
-    </div>
-    <div class="cont">
-        <div class="bl">
+        </div>
+        <div class="cont">
+            <div class="bl">
+                    <p> All the interview bookings with this slot will be deleted.<br> Are you sure you wish to continue? </p> 
 
-            {{-- <form id="intCon_login" class="intCon_login" method="post" autocomplete="on" action=""> --}}
+                    <input type="hidden" name="" class="slotIDPopUp">
+                    <input type="hidden" name="" class="comnameInPopUp">
+                    <input type="hidden" name="" class="useremailInPopup">
+                    <input type="hidden" name="" class="posNamePopup">
+
+                  <div class="center deleteSlotDiv">  <button id="deleteSlot_confirm" type="submit" class="btn pink">Yes</button></div>
                 
-                {{-- @csrf --}}
-                <p> All the interview bookings with this slot will be deleted.<br> Are you sure you wish to continue? </p> 
+            </div>
+        </div>
+    </div>
 
-                <input type="hidden" name="" class="slotIDPopUp">
-                <input type="hidden" name="" class="comnameInPopUp">
-                <input type="hidden" name="" class="useremailInPopup">
-                <input type="hidden" name="" class="posNamePopup">
 
-              <div class="center deleteSlotDiv">  <button id="deleteSlot_confirm" type="submit" class="btn pink">Yes</button></div>
-            {{-- </form> --}}
-            
+</div> --}}
+
+
+
+<div class="modal fade" id="deleteSlotModal" role="dialog">
+    <div class="modal-dialog delete-applications">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
+                <h1 class="modal-title"><i class="fas fa-thumbs-down trash-icon"></i>Delete Booking</h1>
+            </div>
+            <div class="modal-body">
+                <strong>All the interview bookings with this slot will be deleted.<br> Are you sure you wish to continue?</strong>
+            </div>
+
+            {{-- <input type="hidden" id="jobSeekerBlockId" /> --}}
+
+            <input type="hidden" name="" class="slotIDPopUp">
+            <input type="hidden" name="" class="comnameInPopUp">
+            <input type="hidden" name="" class="useremailInPopup">
+            <input type="hidden" name="" class="posNamePopup">
+
+            <div class="dual-footer-btn deleteSlotDiv">
+                <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+                <button type="button" class="orange_btn" id="deleteSlot_confirm" {{-- onclick="confirmUnlikeFun()" --}} data-dismiss="modal"><i class="fa fa-check"></i>OK</button>
+            </div>
         </div>
     </div>
 </div>
 
-
-</div>
-
-
-<style type="text/css">
-
-.errorPtag {
-    color: red;
-    margin: 7px;
-    font-size: 13px;
-}
-.popup .head{
-    font-size: 20px;
-    margin-bottom: 20px;
-    font-weight: 600;
-}
-.popup {
-    min-height: 160px;
-}
-.close_hover{
-    position: absolute;
-    background-image: url(/images/site/icon_close.png);
-    width: 24px;
-    height: 24px;
-    background-repeat: no-repeat;
-    display: block;
-    top: 15px;
-    right: 3px;
-    cursor: pointer;
-}
-
-#deleteSlotModal{
-  background: white;
-  padding: 20px;
-}
-
-.interviewConcierge {
-    background: #254c8e;
-}
-.deleteSlotDiv{
-    margin-top: 20px;
-}
-</style>
-
- <script type="text/javascript">
-  
-
-
-
-</script>

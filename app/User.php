@@ -317,10 +317,15 @@ class User extends Authenticatable
 		}
 
 		$filter_by_questions_status = (isset($request->filter_by_questions) && !empty($request->filter_by_questions == 'on'))?true:false;
+
+        // dd($filter_by_questions_status);
 		
         // ====================================== Filter by Question ======================================
 		
         if($filter_by_questions_status){
+            
+            // dd($filter_by_questions_status);
+
             if(varExist('filter_question', $request) && varExist('filter_question_value', $request) ){
 			// SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
 			$question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';

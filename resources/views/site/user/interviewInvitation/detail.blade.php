@@ -12,7 +12,7 @@
 
       <h2>Interview Detail</h2> 
         
-      @if ($UserInterview->status == 'pending')
+      @if ($UserInterview->status == 'Accepted')
 
 
       {{-- ========================================= if jobseeker has not accepted the interview yet ========================================= --}}
@@ -64,7 +64,7 @@
                   <div class="panel">
                      @if ($question->video_response == 1 )
                      <p>
-                     <h1 data-toggle="modal" onclick="showEmployerVideoIntro( '{{template_video($answers->video_url)}}')" data-target="#employerVideoIntroModal"><i class="fas fa-photo-video"></i></h1>
+                     <h1 data-toggle="modal" onclick="showEmployerVideoIntro( '{{userInterview_answer_video($answers->answer)}}')" data-target="#employerVideoIntroModal"><i class="fas fa-photo-video"></i></h1>
                      </p>
                      @else
                      <p class="text-dark"><b>Your Response:</b> {{$answers->answer}} </p>
@@ -91,7 +91,7 @@
 
 {{-- ===================================== employer video intro showing modal ===================================== --}}
 
-<div class="modal fade" id="employerVideoIntroModal" tabindex="-1" aria-labelledby="exampleModalLabel" 
+{{-- <div class="modal fade" id="employerVideoIntroModal" tabindex="-1" aria-labelledby="exampleModalLabel" 
    aria-hidden="true" >
   <div class="modal-dialog">
     <div class="modal-content">
@@ -104,7 +104,31 @@
       </div>
     </div>
   </div>
+</div> --}}
+
+
+<div class="modal fade" id="employerVideoIntroModal" role="dialog">
+    <div class="modal-dialog delete-applications">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
+          {{-- <h1 class="modal-title"><i class="fas fa-thumbs-down trash-icon"></i>Video</h1> --}}
+        </div>
+        <div class="modal-body">
+          {{-- <strong>Are you sure you wish to continue?</strong> --}}
+            <div class="videoBox"></div>
+        </div>
+        <div class="dual-footer-btn">
+          <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+          {{-- <button type="button" class="orange_btn" onclick="confirmUnlikeFunction()" data-dismiss="modal"><i class="fa fa-check" ></i>OK</button> --}}
+        </div>
+      </div>
+      
+    </div>
 </div>
+
 
 @stop
 
@@ -155,6 +179,7 @@ $('.saveResponse').on('click',function() {
     });
 
 });
+
 
 
 

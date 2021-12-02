@@ -3,11 +3,13 @@
 @extends('web.user.usermaster')
 
 @section('custom_css')
-{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 
 @stop
 
@@ -17,7 +19,7 @@
       <section class="row">
         <div class="col-md-12">
           <div class="profile profile-section">
-                @include("site.user.employerfilter")
+                @include("site.user.employerfilter") {{-- site/user/employerfilter --}}
                 <div class="employers_list">
                   @include("site.user.employerslist") {{-- site/user/employerslist --}}
                 </div>    
@@ -38,6 +40,7 @@
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/web/profile.js') }}"></script>
 
 
 

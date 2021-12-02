@@ -51,15 +51,44 @@ $(document).ready(function(){
     // ========================================= unhide Interview detail responding to interview =========================================
 
     this.acceptInterviewButton = function(){
-        $('.interviewBookingsRow').removeClass('d-none');
-        $('.acceptDiv').addClass('d-none');
+        // $('.interviewBookingsRow').removeClass('d-none');
+        // $('.acceptDiv').addClass('d-none');
+
+        // console.log(rejectUrl);
+        var rejectUrl = $('#interviewUrl').val();
+        var interview_id = $('#interviewId').val();
+        console.log(rejectUrl , interview_id);
+        $('.general_error1').html('');
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/accept/interview/invitation',
+             data:{url:rejectUrl},
+            success: function(data){
+                console.log(' data ', data);
+                $('.rejectButton').html('Rejected').prop('disabled',false);
+                if( data.status == 1 ){ 
+                    $('.acceptInterviewDiv_'+interview_id).html('<a href = "http://talenttube.org/interview-invitation/'+rejectUrl+'" class="blue_btn px-2 py-1"> Click Here to Respond to this interview </a>')
+                    $('.intStatus_'+interview_id).text('Accepted');
+                    $('.errorsInFields').text('Interview rejected successfully');
+                    setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
+                    // window.location.href = "{{ route('intetviewInvitation')}}" ;
+                }else{
+                   setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
+                }
+
+            }
+        });
 
     }  
 
     // ========================================= reject interview invitation =========================================
 
-    this.rejectInterviewInvitation = function(rejectUrl){
+    this.rejectInterviewInvitation = function(){
         // console.log(rejectUrl);
+        var rejectUrl = $('#interviewUrl').val();
+        var interview_id = $('#interviewId').val();
+        console.log(rejectUrl , interview_id);
         $('.general_error1').html('');
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
@@ -69,10 +98,11 @@ $(document).ready(function(){
             success: function(data){
                 console.log(' data ', data);
                 $('.rejectButton').html('Rejected').prop('disabled',false);
-                if( data.status == 1 ){
+                if( data.status == 1 ){ 
+                    $('.intStatus_'+interview_id).text('Rejected');
                     $('.errorsInFields').text('Interview rejected successfully');
                     setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
-                    window.location.href = "{{ route('intetviewInvitation')}}" ;
+                    // window.location.href = "{{ route('intetviewInvitation')}}" ;
                 }else{
                    setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
                 }
@@ -85,7 +115,7 @@ $(document).ready(function(){
 
     this.showEmployerVideoIntro= function(video_url){
         console.log(' =============== hassan here ================ ', video_url);
-        var videoElem  = '<video id="player" controls>';
+        var videoElem  = '<video id="player" style="width: -webkit-fill-available;" controls>';
         videoElem     += '<source src="'+video_url+'" type="video/mp4">';
         videoElem     += '</video>';
         $('#employerVideoIntroModal .videoBox').html(videoElem);
@@ -122,6 +152,13 @@ $(document).ready(function(){
             }
         });
     }*/
+
+    this.acceptInterviewFun = function(interview_url, interview_id){
+        console.log(interview_url, interview_id);
+        $('#interviewUrl').val(interview_url);
+        $('#interviewId').val(interview_id);
+
+    }
 
 
 
