@@ -17,7 +17,7 @@
       @yield('meta_tags')
       @yield('custom_css')
    </head>
-   <body class="{{-- {{$classes_body}} --}}" style="background-image: url({{asset('/images/homepage_bg.jpg')}}) !important; background-attachment: fixed !important;">
+   <body class="{{-- {{$classes_body}} --}} Content" >
       {{-- @yield('body') --}}
       {{-- 
       <div class="main">
@@ -54,6 +54,7 @@
       {{-- <script src="jquery-3.5.1.min.js"></script> --}}
       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
       @yield('custom_footer_css')
       <style type="text/css">    
          .col_center { width: 70%; background: #e9ecef; margin: 0 auto;border-radius: 10px; }
@@ -62,6 +63,14 @@
          .notbrak{display: inline-block;}
          .btn-sm {font-size: 14px !important;padding: .375rem .75rem !important;}
          label {font-weight: 700;}
+
+         .Content { 
+            background-image: url("../assests/images/Signin-bg.svg") !important;
+            background-repeat: no-repeat !important;
+            background-size: cover !important;
+            width: 100% !important;
+            min-height: 100vh !important;
+         }
       </style>
       @yield('custom_js')
    </body>

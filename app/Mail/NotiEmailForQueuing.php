@@ -15,7 +15,7 @@ class NotiEmailForQueuing extends Mailable
     public $url;
     public $employerName;
     public $positionname;
-    public function __construct($name, $url, $employerName,$positionname)
+    public function __construct($name, $url, $positionname ,$employerName)
     {
         $this->name = $name;
         $this->url = $url;

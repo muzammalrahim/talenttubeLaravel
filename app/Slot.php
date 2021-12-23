@@ -30,5 +30,13 @@ class Slot extends Model
     {
         return $this->hasMany('App\Interviews_booking', 'slot_id');
     }
+
+    public function bookings_count()
+    {
+        // return $this->hasOne(Interviews_booking::class, 'slot_id')->selectRaw('slot_id, count * as aggregate')->groupBy('slot_id');
+        return $this->hasOne(Interviews_booking::class, 'slot_id')->selectRaw('slot_id, count(*) as aggregate')->groupBy('slot_id');
+        
+        // return $this->belongsTo('App\Interviews_booking', 'slot_id');
+    }
  
 }

@@ -70,89 +70,125 @@
 {{-- html for interview concerge --}}
 @section('content')
 <section class="row">
-                <div class="col-md-12">
-                  <div class="profile profile-section">
-                    <h2>Welcome To Interview Concierge</h2>
-                     <div class="row">
-                       @if ($Interviews_booking->count() > 0)
-                       @foreach ($Interviews_booking   as $Int_booking)
-                       <div class="col-sm-12 col-md-6">
-                        <div class="job-box-info concigerge-box clearfix">
-                          <div class="box-head">
-                            <h4>{{$Int_booking->interview->positionname}}</h4>                          
-                          </div>
-                          <p class="slot-para">Your slot for interview is with below timetable.</p>
-                             <ul class="job-box-text concigerge clearfix">
-                                <div class="text-info-detail clearfix row">
-                                  <div class="col-4">   
-                                    <div class="row"> 
-                                      <span class="col-3 font-weight-bold text-dark">From:</span>
-                                      <span class="col-9"> {{$Int_booking->slot->starttime}}</span>
-                                    </div>
-                                  </div>
-                                  {{-- <span>{{ Form::text('Start Time', $value = $Int_booking->slot->starttime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
-                                  </span> --}}
-                                  <div class="col-8">   
-                                    <div class="row"> 
-                                      <span class="col-3 font-weight-bold text-dark">Booking:</span>
-                                      <span class="col-9"> {{$Int_booking->interview->title}}</span>
-                                    </div>
-                                  </div>
-                                </div>
-                               <div class="text-info-detail clearfix row">
-                                <div class="col-4">
-                                  <div class="row"> 
-                                    <span class="col-3 font-weight-bold text-dark">To:</span>
-                                    <span class="col-9"> {{$Int_booking->slot->endtime}} </span>
-                                  </div>
-                                </div>
-                                 {{-- <span> {{ Form::text('Start Time', $value = $Int_booking->slot->endtime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
-                                 </span> --}}
-                                
-                                <div class="col-8">
-                                  <div class="row"> 
-                                    <span class="col-3 font-weight-bold text-dark">Company:</span>
-                                    <span class="col-9">{{$Int_booking->interview->companyname}}</span>
-                                  </div>
-                                </div>
-                               </div>
-                               <div class="text-info-detail clearfix row">
-                                <div class="col-4">
-                                  <div class="row"> 
-                                    <span class="col-3 font-weight-bold text-dark">Date:</span>
-                                    <span class="col-9"> {{ Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d') }} </span>
-                                  </div>
-                                </div>
+  <div class="col-md-12">
+    <div class="profile profile-section">
+      <h2>Welcome To Interview Concierge</h2>
+       <div class="row">
+         @if ($Interviews_booking->count() > 0)
+         @foreach ($Interviews_booking   as $Int_booking)
+         <div class="col-sm-12 col-md-6 intBooking_{{ $Int_booking->id }}">
+          <div class="job-box-info concigerge-box clearfix">
+            <div class="box-head">
+              <h4>{{$Int_booking->interview->positionname}}</h4>                          
+            </div>
+            <p class="slot-para">Your slot for interview is with below timetable.</p>
+               <ul class="job-box-text concigerge clearfix">
+                  <div class="text-info-detail clearfix row">
+                    <div class="col-4">   
+                      <div class="row"> 
+                        <span class="col-3 font-weight-bold text-dark">From:</span>
+                        <span class="col-9"> {{$Int_booking->slot->starttime}}</span>
+                      </div>
+                    </div>
+                    {{-- <span>{{ Form::text('Start Time', $value = $Int_booking->slot->starttime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
+                    </span> --}}
+                    <div class="col-8">   
+                      <div class="row"> 
+                        <span class="col-3 font-weight-bold text-dark">Booking:</span>
+                        <span class="col-9"> {{$Int_booking->interview->title}}</span>
+                      </div>
+                    </div>
+                  </div>
+                 <div class="text-info-detail clearfix row">
+                  <div class="col-4">
+                    <div class="row"> 
+                      <span class="col-3 font-weight-bold text-dark">To:</span>
+                      <span class="col-9"> {{$Int_booking->slot->endtime}} </span>
+                    </div>
+                  </div>
+                   {{-- <span> {{ Form::text('Start Time', $value = $Int_booking->slot->endtime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
+                   </span> --}}
+                  
+                  <div class="col-8">
+                    <div class="row"> 
+                      <span class="col-3 font-weight-bold text-dark">Company:</span>
+                      <span class="col-9">{{$Int_booking->interview->companyname}}</span>
+                    </div>
+                  </div>
+                 </div>
+                 <div class="text-info-detail clearfix row">
+                  <div class="col-4">
+                    <div class="row"> 
+                      <span class="col-3 font-weight-bold text-dark">Date:</span>
+                      <span class="col-9"> {{ Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d') }} </span>
+                    </div>
+                  </div>
 
-                                {{-- <span> {{ Form::text('date',Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d'), $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
-                                </span> --}}
-                                <div class="col-8">
-                                  <div class="row"> 
-                                    <span class="col-3 font-weight-bold text-dark">Position:</span>
-                                    <span class="col-9">{{$Int_booking->interview->positionname}}</span>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="text-info-detail clearfix row">
-                                {{-- <div class="row">  --}}
-                                  <span class="col-3 font-weight-bold text-dark">Insructions:</span>
-                                  <span class="col-9">{{$Int_booking->interview->instruction}}</span>
-                                {{-- </div> --}}
-                              </div>
-                            </ul>
-                            <button type="button" class="click-here-tag">Click here To Cancel Your Interview</button>
-                       </div>
-                     </div> 
-                     @endforeach  
-                        @else
-                        <h6> You have not booked any interview yet</h6>
-                        @endif
+                  {{-- <span> {{ Form::text('date',Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d'), $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
+                  </span> --}}
+                  <div class="col-8">
+                    <div class="row"> 
+                      <span class="col-3 font-weight-bold text-dark">Position:</span>
+                      <span class="col-9">{{$Int_booking->interview->positionname}}</span>
+                    </div>
                   </div>
                 </div>
-              </section>
-         @stop
+                <div class="text-info-detail clearfix row">
+                  {{-- <div class="row">  --}}
+                    <span class="col-3 font-weight-bold text-dark">Insructions:</span>
+                    <p class="col-9 font-14">{{$Int_booking->interview->instruction}}</p>
+                  {{-- </div> --}}
+                </div>
+              </ul>
+              <button type="button" onclick="interviewConciergeDelete('{{ $Int_booking->id }}')" class="ml-3 orange_btn" data-toggle="modal" data-target="#interviewConciergeModal">Click here To Cancel Your Interview</button>
+         </div>
+       </div> 
+       @endforeach  
+          @else
+          <h6> You have not booked any interview yet</h6>
+          @endif
+    </div>
+  </div>
+</section>
 
-@include('site.user.interview.popup')
+
+<div class="modal fade" id="interviewConciergeModal" role="dialog">
+    <div class="modal-dialog delete-applications">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <i data-dismiss="modal" class="close-box fa fa-times"></i>                      
+                <h1 class="modal-title"><i class="fa fa-trash trash-icon"></i>Cancel Interview Concierge</h1>
+            </div>
+            {{-- <div class="modalBody"> --}}
+                <div class="modal-body">
+                    <strong>Are you sure you wish to continue?</strong>
+                </div>
+                <input type="hidden" id="deleteConfirmInterviewConcierge" name="">
+
+                <div class="dual-footer-btn">
+                    <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+                    <button type="button" class="orange_btn" onclick="confirmDeleteInterviewConcierge()" data-dismiss="modal" ><i class="fa fa-check"></i>OK</button>
+                </div>
+            {{-- </div> --}}
+
+            {{-- <div class="modalFooter my-4 text-center">
+                <div class="apiMessage"></div>
+                <div class="spinner-grow text-primary deleteJobAppLoader d-none" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+            </div> --}}
+        </div>
+    </div>
+</div>
+
+@stop
+
+
+
+
+
+{{-- @include('site.user.interview.popup') --}}
 
 
 
@@ -162,52 +198,17 @@
 
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}"> --}}
-{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
+
 <style>
 
-.button {
-  background-color: rgb(31, 120, 236);
-  border-radius: 5px;
-  color: white;
-  padding: .5em;
-  text-decoration: none;
-  margin-top: 20px !important;
-  margin-bottom: 20px !important;
-  display:block
-}
 
-.button:focus,
-.button:hover {
-  background-color: rgb(52, 49, 238);
-  color: White;
-}
-
-.timeTable{
-  width: 33%;
-  display: table-cell;
-}
-.width75p{
-  width: 75%;
-  display: inline-block;
-}
-.bgColor{
-  background: #dddfe3;
-}
 </style>
 
 @stop
 
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
-<script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script>
 
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
+<script type="text/javascript" src="{{ asset('js/web/profile.js') }}"></script>
 
 <script type="text/javascript">
 

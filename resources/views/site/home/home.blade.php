@@ -132,7 +132,7 @@
 
 <!-- =================== main Section starts here================================-->
     
-<div class="container-fluid first-section">
+<div class="container first-section">
   <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6">  
       <div class="feature-img-wrap">
@@ -150,7 +150,7 @@
   </div>
 </div>
 
-<div class="container-fluid first-section">
+<div class="container first-section">
   <div class="row">
     <div class="col-sm-12 col-md-6 col-lg-6 order-md-2 order-sm-1">  
       <div class="feature-img-wrap">
@@ -171,7 +171,7 @@
   </div>
 </div>
 
-<div class="container-fluid first-section">
+<div class="container first-section">
   <div class="row ">
     <div class="col-sm-12 col-md-6 col-lg-6">  
       <div class="feature-img-wrap">

@@ -53,7 +53,13 @@ button.btn.like_frame:hover span.like_hover{ opacity: 1; }
 /*-- /global --*/
 /*-- header --*/
 .header{ min-width: 1000px; width: 100%; height: 96px; margin: 0 0 40px; color: #fff; position: relative; text-align: center;  position: absolute; top: 0; z-index: 5; }
-.header .step{ float: left; position: absolute; top: 22px; left: 30px; }
+.header .step{ 
+    float: left; 
+    position: absolute; 
+    top: 22px; 
+    left: 30px;
+    /*margin: 20px 0px 0px 30px;*/
+}
 .header .step ul{ margin: 0; padding: 0; }
 .header .step ul li{margin: 0 19px 0 0; padding: 0; float: left; width: 47px; height: 47px; box-sizing: border-box; border: 2px solid #7b8ca8; border-radius: 50%; font-size: 24px; line-height: 50px; text-align: center; color: #7b8ca8; }
 .header .step ul li.selected{ border: 2px solid #fefefe; color: #fefefe; }
@@ -63,7 +69,7 @@ button.btn.like_frame:hover span.like_hover{ opacity: 1; }
 .logo a{ height: 96px; display: table-cell; vertical-align: middle; }
 
 .slogan{ width: 44%; height: 96px; overflow: hidden; margin: 0 auto; font-size: 24px; line-height: 28px; }
-.slogan span{ display: block; padding: 33px 0 0; vertical-align: middle; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+.slogan span{ display: block; padding: 33px 60px 0; vertical-align: middle; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
 /*-- /header --*/
 /*-- content --*/
 .content{ /*padding: 76px 0 0;*/ padding: 116px 0 40px; clear: both; overflow-x: hidden; }

@@ -119,9 +119,9 @@
 
 
                 <div class="card_question_btn">
-                    <button class="arrows initialPrevQuestion pointer questionNaviateTo"  data-action="previous" >
+                    {{-- <button class="arrows initialPrevQuestion pointer questionNaviateTo"  data-action="previous" >
                         <h1><i class="initial_arrow fas fa-arrow-left"></i></h1>
-                    </button>
+                    </button> --}}
                     
                             <button data-action="0" class="btn large pink fl_left btn_question">No</button>
                     <button data-action="1" class="btn large turquoise fl_right btn_question">Yes</button>

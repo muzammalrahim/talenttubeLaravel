@@ -640,7 +640,7 @@ class InterviewController extends Controller
                         // $details = ['email' => $user->email];
                         // SendBulkEmailJob::dispatch($details);
                         // $when = now()->addSeconds(2);
-                        Mail::to($user->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($user->surname,$request->url,$request->positionname,$request->employerName));
+                        Mail::to($user->email)->send(new NotiEmailForQueuing($user->name,$request->url,$request->positionname,$request->employerName));
                     }
                     }
 
@@ -664,7 +664,7 @@ class InterviewController extends Controller
         // $details = ['email' => $user->email];
         // SendBulkEmailJob::dispatch($details);
         // $when = now()->addSeconds(2);
-        Mail::to($request->email)->cc('creativedev22@gmail.com')->send(new NotiEmailForQueuing($request->name,$request->url,$request->employerName,$request->positionname));
+        Mail::to($request->email)->send(new NotiEmailForQueuing($request->name,$request->url,$request->employerName,$request->positionname));
 
         return response()->json([
         'status' => 1,
