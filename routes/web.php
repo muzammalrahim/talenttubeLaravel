@@ -105,6 +105,20 @@ Route::get('stream/{userid}/videos/{any}', [
     'as'         => 'videoStream.show',
     'middleware' => 'auth',
     'uses'       => 'Site\HomeController@videoStream',
+])->where('any', '.*'); 
+
+
+Route::get('media/public/template/employer_intro/{any}', [
+    'as'         => 'videoStream.show',
+    'middleware' => 'auth',
+    'uses'       => 'Site\HomeController@videoStreamForInterview',
+])->where('any', '.*');  
+
+
+Route::get('media/public/interview_bookings/{any}', [
+    'as'         => 'videoStream.show',
+    'middleware' => 'auth',
+    'uses'       => 'Site\HomeController@videoStreamInterviewAnswers',
 ])->where('any', '.*');
 
 //Media access gallery

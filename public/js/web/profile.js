@@ -814,11 +814,40 @@ $(document).ready(function(){
         });
     }
 
+    // =============================================== interview concierge delete function ===============================================
+
+    this.interviewConciergeDelete = function(interviewConcierge_id){
+        console.log('Interview concierge id = ', interviewConcierge_id);
+        $('#deleteConfirmInterviewConcierge').val(interviewConcierge_id);
+    }
 
 
+    this.confirmDeleteInterviewConcierge = function(){
+    // $('.confirmDeleteInterview').click(function(){
+        var confirmDelete = $('#deleteConfirmInterviewConcierge').val();
+        console.log(confirmDelete);
+        $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+        $.ajax({
+        type: 'POST',
+        url: base_url+'/ajax/booking/deleteInterviewBooking',
+        data:{id: confirmDelete},
+        success: function(data){
+          console.log(' data ', data);
+          if( data.status == 1 ){
+            $('.DeleteInterviewModal .apiMessage').html(data.message);
+            $('.intBooking_'+confirmDelete).remove();
+            
+          }else{
+            // $('#overlay').addClass('d-none');
+                $('#DeleteInterviewModal').hide();
 
 
+          }
+        }
+        });
 
+    // });
+    }
 
 
 

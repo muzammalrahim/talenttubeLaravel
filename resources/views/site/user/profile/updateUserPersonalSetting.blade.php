@@ -4,7 +4,7 @@
 @extends('web.user.usermaster')
 
 @section('content')
-<div class="cont bl_profile">
+<div class="cont profile profile-section">
     <div class="bl_pic_info  my_profile">
         <div class="cl"></div>
 
@@ -22,9 +22,10 @@
 
 
             <div class="row">
-	        <div class="col-md-3"></div>
-
-	        <button type="button" class="emailUpdateBUtton" data-toggle="modal" data-target="#emailModal">Update</button> {{-- c-update-email --}}
+                <div class="col-md-3"></div>
+                <div class="col-9">  
+                   <button type="button" class="emailUpdateBUtton orange_btn" data-toggle="modal" data-target="#emailModal">Update</button> {{-- c-update-email --}}
+                </div>
             </div>
 	        <div class="alert alert-success EmailAlert hide_it2" role="alert">
 	            <strong>Success!</strong> Email has been updated successfully!
@@ -46,7 +47,9 @@
 	        </div>
             <div class="row">
     	        <div class="col-md-3"></div>
-    	        <button type="button" class="PhoneUpdateBUtton"data-toggle="modal" data-target="#PhoneModal">Update</button>
+                <div class="col-9">
+        	        <button type="button" class="PhoneUpdateBUtton orange_btn"data-toggle="modal" data-target="#PhoneModal">Update</button>
+                </div>
             </div>
 	        <div class="alert alert-success PhoneAlert hide_it2" role="alert">
 	            <strong>Success!</strong> Phone has been updated successfully!
@@ -78,9 +81,11 @@
 
                 </div>
             </div>
-             <div class="row">
-            <div class="col-md-3"></div>
-	        <button type="button" class="PasswordUpdateBUtton" data-toggle="modal" data-target="#PasswordModal">Update</button>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-9">
+                    <button type="button" class="PasswordUpdateBUtton orange_btn" data-toggle="modal" data-target="#PasswordModal">Update</button>
+                </div>
             </div>
             <div class="alert alert-success PasswordAlert hide_it2" role="alert">
                 <strong>Success!</strong> Password has been updated successfully!
@@ -108,23 +113,118 @@
 
 </div>
 
+
+
+{{-- =============================================== Email Modal =============================================== --}}
+
+<div class="modal fade" id="emailModal" role="dialog">
+    <div class="modal-dialog delete-applications">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <i data-dismiss="modal" class="close-box fa fa-times"></i>                      
+                <h1 class="modal-title"><i class="fad fa-refresh"></i>Confirm Update Email</h1>
+            </div>
+            <div class="modalBody p-3">
+    
+                <p class="m-0"> After clicking "Confirm" you will be logout !</p>
+                <p class="m-0">To continue your session on "TalentTube" </p>
+                <p class="m-0">You need to Log In again with your new Email Address.</p>
+                <p class="m-0 textNewEmailAddress">Your new Email Address will be:</p><p class="updatedEmailInModal"></p>
+
+                <div class="dual-footer-btn">
+                    <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+                    <button type="button" class="orange_btn" onclick="updateEmailFunction()" data-dismiss="modal" ><i class="fa fa-check"></i>Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- =============================================== Phone Modal =============================================== --}}
+
+
+<div class="modal fade" id="PhoneModal" role="dialog">
+    <div class="modal-dialog delete-applications">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <i data-dismiss="modal" class="close-box fa fa-times"></i>                      
+                <h1 class="modal-title"><i class="fad fa-refresh"></i>Confirm Update Phone</h1>
+            </div>
+            <div class="modalBody p-3">
+    
+                <p class="m-0"> After clicking "Confirm" your phone number will be updated !</p>
+                <p class="m-0 textNewEmailAddress">Your new Phone Number will be:</p><p class="updatedPhoneInModal"></p>
+
+                <div class="dual-footer-btn">
+                    <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+                    <button type="button" class="orange_btn" onclick="updatePhoneFunction()" data-dismiss="modal" ><i class="fa fa-check"></i>Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- =============================================== Password Modal =============================================== --}}
+
+<div class="modal fade" id="PasswordModal" role="dialog">
+    <div class="modal-dialog delete-applications">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <i data-dismiss="modal" class="close-box fa fa-times"></i>                      
+                <h1 class="modal-title"><i class="fad fa-refresh"></i>Confirm Update Password</h1>
+            </div>
+            <div class="modalBody p-3">
+                <p class="m-0"> After clicking "Confirm" you will be logout !</p>
+                <p class="m-0">To continue your session on "TalentTube" </p>
+                <p class="m-0">You need to Log In again with your new Password.</p>
+
+                <div class="dual-footer-btn mt-3">
+                    <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+                    <button type="button" id="update-password" class="orange_btn" onclick="updatePasswordFunction()" data-dismiss="modal" ><i class="fa fa-check"></i>Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{-- =============================================== Delete Account Modal =============================================== --}}
+
+<div class="modal fade" id="DeleteProfileModal" role="dialog">
+    <div class="modal-dialog delete-applications">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <i data-dismiss="modal" class="close-box fa fa-times"></i>                      
+                <h1 class="modal-title"><i class="fad fa-refresh"></i>Confirm Delete</h1>
+            </div>
+            <div class="modalBody p-3">
+                <div class="deletingIcon text-center text-danger mb-2">
+                    <i class="fas fa-times fa-4x animated rotateIn"></i>
+                </div>
+                <p> <strong> Please!</strong> Tell us why are you removing your account?</p>
+                <textarea class="form-control reasonAccRem" rows="3" id="removingAccount"></textarea>
+
+                <div class="dual-footer-btn mt-3">
+                    <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+                    <button type="button" id="delete-profile" class="orange_btn" onclick="deleteProfileFunction()" data-dismiss="modal" ><i class="fa fa-check"></i>Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @stop
 
 @section('custom_footer_css')
 <style type="text/css">
-	.jobSeekerProfileHeader,.signOutButtonHeader {
-    color: white !important;
-}
-div#colfix_l {
-    height: 470px;
-    width: 185px;
-}
-div.cont_w>.column_main {
-    min-height: 700px;
-}
-.column_main .col_center .cont.bl_profile .my_profile {
-    /*margin: 2% 10% 0px 10%;*/
-}
+
+
+
 .sectionUpdateProfile{
 	height: 35px;
     width: 100%;
@@ -133,20 +233,8 @@ div.cont_w>.column_main {
     margin-bottom: 20px;
     border-radius: 10px;
 }
-.emailUpdateBUtton,.PhoneUpdateBUtton,.PasswordUpdateBUtton{
-	margin-left: 19px;
-    padding: 5px;
-    background:#142d69;
-	color: white;
-    border: 2px solid #142d69;
-    width: 75px;
-    border-radius: 7px;
-    transition: 0.3s;
-    opacity: 0.7;
-}
-.emailUpdateBUtton:hover,.PhoneUpdateBUtton:hover,.PasswordUpdateBUtton:hover{
-    opacity: 1.0;
-}
+
+
 .DeleteProfileBUtton{
 	margin-left: 5px;
     padding: 5px;
@@ -166,20 +254,14 @@ div.cont_w>.column_main {
     margin: 15px 26%;
     width: 40%;
 }
-.smallSpinner.SaveEmailSpinner,.smallSpinner.SavePhoneSpinner,.smallSpinner.SavePasswordSpinner {
-    position: relative;
-    float: left;
-    font-size: 20px;
-    margin-top: 15px;
 
-}
 p.emailValidatorErrorText,p.PhoneValidatorErrorText {
     margin: 0px;
 }
 
 </style>
-<link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
 
 @stop
 
@@ -195,40 +277,46 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
     		$('.updatedEmailInModal').html(updateEmail);
     	});
 
-        $('#c-update-email').on('click', function(){
-        console.log('hi');
-        var updateEmail = $('#updateEmail').val();
-        console.log(updateEmail);
-           $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+        this.updateEmailFunction = function(){
 
-        $('.emailLoader').after(getLoader('smallSpinner SaveEmailSpinner'));
+            // $('#c-update-email').on('click', function(){
+            var updateEmail = $('#updateEmail').val();
+            console.log(updateEmail);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
-        $.ajax({
-            type: 'POST',
-            url: base_url+'/ajax/updateEmail',
-            data: {'email': updateEmail},
-            success: function(resp){
-                if(resp.status == true){
-                    console.log('email updated successfully');
-                    $('.SaveEmailSpinner').remove();
-                    // location.reload();
-                    window.location = resp.data.logout_Route;
-                    // $('#updateEmail').attr("disabled",true);
-                    $('.EmailAlert').show().delay(3000).fadeOut('slow');
+            // $('.emailLoader').after(getLoader('smallSpinner SaveEmailSpinner'));
+
+            $.ajax({
+                type: 'POST',
+                url: base_url+'/ajax/updateEmail',
+                data: {'email': updateEmail},
+                success: function(resp){
+                    if(resp.status == true){
+                        console.log('email updated successfully');
+                        // $('.SaveEmailSpinner').remove();
+                        // location.reload();
+                        window.location = resp.data.logout_Route;
+                        // $('#updateEmail').attr("disabled",true);
+                        $('.EmailAlert').show().delay(3000).fadeOut('slow');
+                    }
+                    else{
+                        // console.log(resp.validator[0])
+                        $('.emailValidatorErrorText').text(resp.validator[0]);   // fail
+                        $('.emailValidatorErrorText').show().delay(3000).fadeOut('slow');
+                        // $('.SaveEmailSpinner').remove();
+                    }
                 }
-                else{
-                    // console.log(resp.validator[0])
-                    $('.emailValidatorErrorText').text(resp.validator[0]);   // fail
-                    $('.emailValidatorErrorText').show().delay(3000).fadeOut('slow');
-                    $('.SaveEmailSpinner').remove();
-                }
-            }
-        });
-        });
+            });
+            // });
+
+        } 
+
+
+
     });
 
  // =========================================== Update Email Ajax End here ===========================================
@@ -240,17 +328,15 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
     		 var updatePhone = $('#updatePhone').val();
     		$('.updatedPhoneInModal').html(updatePhone);
     	});
-        $('#update-Phone').on('click', function(){
-        console.log('hi');
-        var updatePhone = $('#updatePhone').val();
-        console.log(updatePhone);
-           $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
 
-        $('.PhoneLoader').after(getLoader('smallSpinner SavePhoneSpinner'));
+        this.updatePhoneFunction = function(){
+
+        // $('#update-Phone').on('click', function(){
+        var updatePhone = $('#updatePhone').val();
+        console.log(updatePhone); 
+           $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+
+        // $('.PhoneLoader').after(getLoader('smallSpinner SavePhoneSpinner'));
 
         $.ajax({
             type: 'POST',
@@ -258,21 +344,23 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
             data: {'phone': updatePhone},
             success: function(resp){
                 if(resp.status == true){
-                    $('.SavePhoneSpinner').remove();
+                    // $('.SavePhoneSpinner').remove();
                     $('.PhoneAlert').show().delay(3000).fadeOut('slow');
                     $('.PhoneValidatorErrorText').addClass('hide_it2');
-
                 }
                 else{
                     console.log(resp.validator[0]);
                     $('.PhoneValidatorErrorText').text(resp.validator[0]);
-                    $('.SavePhoneSpinner').remove();
+                    // $('.SavePhoneSpinner').remove();
                     $('.PhoneValidatorErrorText').removeClass('hide_it2');
 
                 }
             }
         });
-        });
+        // });
+
+        }
+
     });
 
  // =========================================== Update Phone Ajax End here ==============================================
@@ -282,46 +370,42 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
 
     $(document).ready(function (){
 
-        $('#update-password').on('click', function(){
+        // $('#update-password').on('click', function(){
         // console.log('hi');
-        var new_password 	 = $('input[name="new_password"]').val();
-        var current_password  = $('input[name="current_password"]').val();
+        this.updatePasswordFunction = function(){
+            var new_password 	 = $('input[name="new_password"]').val();
+            var current_password  = $('input[name="current_password"]').val();
 
-        // console.log(new_password);
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
 
-           $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
+            // $('.PasswordLoader').after(getLoader('smallSpinner SavePasswordSpinner'));
 
-        $('.PasswordLoader').after(getLoader('smallSpinner SavePasswordSpinner'));
-
-        $.ajax({
-            type: 'POST',
-            url: base_url+'/ajax/updatePassword',
-            data: {'new_password': new_password, 'current_password':current_password},
-            success: function(resp){
-                if(resp.status == true){
-                    $('.SavePasswordSpinner').remove();
-                    $('.PasswordAlert').show().delay(3000).fadeOut('slow');
-                    $('.PasswordValidatorErrorTextOld').addClass('hide_it2');
-                    $('.PasswordValidatorErrorTextNew').addClass('hide_it2');
+            $.ajax({
+                type: 'POST',
+                url: base_url+'/ajax/updatePassword',
+                data: {'new_password': new_password, 'current_password':current_password},
+                success: function(resp){
+                    if(resp.status == true){
+                        // $('.SavePasswordSpinner').remove();
+                        $('.PasswordAlert').show().delay(3000).fadeOut('slow');
+                        $('.PasswordValidatorErrorTextOld').addClass('hide_it2');
+                        $('.PasswordValidatorErrorTextNew').addClass('hide_it2');
+                    }
+                    else{
+                        // $('.SavePasswordSpinner').remove();
+                        var CPR = resp.validator['current_password'];
+                        console.log(CPR);
+                        var NPR = resp.validator['new_password'];
+                        console.log(NPR);
+                        $('.PasswordValidatorErrorTextOld').text(CPR);
+                        $('.PasswordValidatorErrorTextNew').text(NPR);
+                        $('.PasswordValidatorErrorTextOld').removeClass('hide_it2');
+                        $('.PasswordValidatorErrorTextNew').removeClass('hide_it2');
+                    }
                 }
-                else{
-                    $('.SavePasswordSpinner').remove();
-                    var CPR = resp.validator['current_password'];
-                    console.log(CPR);
-                    var NPR = resp.validator['new_password'];
-                    console.log(NPR);
-                    $('.PasswordValidatorErrorTextOld').text(CPR);
-                    $('.PasswordValidatorErrorTextNew').text(NPR);
-                    $('.PasswordValidatorErrorTextOld').removeClass('hide_it2');
-                    $('.PasswordValidatorErrorTextNew').removeClass('hide_it2');
-                }
-            }
-        });
-        });
+            });
+        }
+        // });
 
     });
 
@@ -332,49 +416,29 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
 
     $(document).ready(function (){
 
-        $('#delete-profile').on('click', function(){
-        console.log('hi');
-        var reasonValue = $('.reasonAccRem').val();
-        // var current_password  = $('input[name="current_password"]').val();
+        // $('#delete-profile').on('click', function(){
+        this.deleteProfileFunction = function(){
+            console.log('hi');
+            var reasonValue = $('.reasonAccRem').val();
+            console.log(reasonValue);
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+            $.ajax({
+                type: 'POST',
+                url: base_url+'/ajax/deleteuser',
+                data: {'reasonValue': reasonValue},
+                success: function(resp){
+                    if(resp.status == 1){
+                        var newpath = '{!! route('homepage') !!}';
+                        window.location.href = newpath;
+                    }
+                    else{
 
-        console.log(reasonValue);
-
-           $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        // $('.PasswordLoader').after(getLoader('smallSpinner SavePasswordSpinner'));
-
-        $.ajax({
-            type: 'POST',
-            url: base_url+'/ajax/deleteuser',
-            data: {'reasonValue': reasonValue},
-            success: function(resp){
-                if(resp.status == 1){
-                    var newpath = '{!! route('homepage') !!}';
-                    window.location.href = newpath;
-                    // $('.SavePasswordSpinner').remove();
-                    // $('.PasswordAlert').show().delay(3000).fadeOut('slow');
-                    // $('.PasswordValidatorErrorTextOld').addClass('hide_it2');
-                    // $('.PasswordValidatorErrorTextNew').addClass('hide_it2');
+                    }
                 }
-                else{
-                    // $('.SavePasswordSpinner').remove();
-                    // var CPR = resp.validator['current_password'];
-                    // console.log(CPR);
-                    // var NPR = resp.validator['new_password'];
-                    // console.log(NPR);
-                    // $('.PasswordValidatorErrorTextOld').text(CPR);
-                    // $('.PasswordValidatorErrorTextNew').text(NPR);
-                    // $('.PasswordValidatorErrorTextOld').removeClass('hide_it2');
-                    // $('.PasswordValidatorErrorTextNew').removeClass('hide_it2');
-                }
-            }
-        });
+            });
 
-        });
+            // });
+        }
 
     });
 

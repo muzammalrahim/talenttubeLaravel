@@ -904,30 +904,30 @@ class SiteUserController extends Controller
 
     // ===================================== Update Email  =================================
 
-        public function updateEmail(Request $request)
-    {
-        $rules = array('email' => 'required|email|unique:users,email');
-        $validator = Validator::make($request->all(), $rules);
-        if ($validator->fails()) {
-            $valitdaion_message = $validator->getMessageBag()->toArray();
-            $mes = $valitdaion_message['email'];
-            return response()->json([
-                'status' => 0,
-                'validator' =>  $mes
-            ]);
-        }else{
-            $user = Auth::user();
-            $user->oldEmail = $user->email;
-            $user->email = $request->email;
-            $user->save();
-            return response()->json([
-                    'status' => 1,
-                    'data' => array(
-                        'email_User' => $user->email,
-                        'logout_Route' => route('logout')
-                    )
-            ]);
-        }
+        public function updateEmail(Request $request){
+            // dd($request->all());
+            $rules = array('email' => 'required|email|unique:users,email');
+            $validator = Validator::make($request->all(), $rules);
+            if ($validator->fails()) {
+                $valitdaion_message = $validator->getMessageBag()->toArray();
+                $mes = $valitdaion_message['email'];
+                return response()->json([
+                    'status' => 0,
+                    'validator' =>  $mes
+                ]);
+            }else{
+                $user = Auth::user();
+                $user->oldEmail = $user->email;
+                $user->email = $request->email;
+                $user->save();
+                return response()->json([
+                        'status' => 1,
+                        'data' => array(
+                            'email_User' => $user->email,
+                            'logout_Route' => route('logout')
+                        )
+                ]);
+            }
     }
 
     //====================================================================================================================================//
@@ -997,7 +997,6 @@ class SiteUserController extends Controller
 
     // =================================================  Delete User Function ================================================
     public function deleteuser(Request $request){
-
 
         $user = Auth::user();
         $del_data = new fbremacc();
@@ -2440,6 +2439,7 @@ class SiteUserController extends Controller
     // ========================================== Interview Concierge Delete Booking ==========================================
 
     public function deleteInterviewBooking(Request $request){
+        // dd($request->all());
         $user = Auth::user();
         $interviewBooking = Interviews_booking::where('id',$request->id)->where('email', $user->email)->first();
         if($interviewBooking && $interviewBooking->email == $user->email)

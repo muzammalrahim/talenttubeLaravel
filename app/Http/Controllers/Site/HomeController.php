@@ -733,43 +733,36 @@ class HomeController extends Controller {
 
         $path_var = 'media/private/'.$userid.'/videos/'.$slug;
         $path = storage_path($path_var);
-
         $video_path = 'somedirectory/somefile.mp4';
         $stream = new \App\Helpers\VideoStream($path);
         $stream->start();
-
-        // $path_var = 'media/private/'.$userid.'/videos/'.$slug;
-        // $path = storage_path($path_var);
-        // $fullsize = filesize($path);
-
-        // $size = $fullsize;
-        // $stream = fopen($path, "r");
-        // $response_code = 200;
-        // $headers = array("Content-type" => 'video/mp4');
-
-        // // Check for request for part of the stream
-        // $range = Request::header('Range');
-        // if($range != null) {
-        //     $eqPos = strpos($range, "=");
-        //     $toPos = strpos($range, "-");
-        //     $unit = substr($range, 0, $eqPos);
-        //     $start = intval(substr($range, $eqPos+1, $toPos));
-        //     $success = fseek($stream, $start);
-        //     if($success == 0) {
-        //         $size = $fullsize - $start;
-        //         $response_code = 206;
-        //         $headers["Accept-Ranges"] = $unit;
-        //         $headers["Content-Range"] = $unit . " " . $start . "-" . ($fullsize-1) . "/" . $fullsize;
-        //     }
-        // }
-
-        // $headers["Content-Length"] = $size;
-
-        // return Response::stream(function () use ($stream) {
-        //     fpassthru($stream);
-        // }, $response_code, $headers);
-
     }
+
+    function videoStreamForInterview($slug) {
+
+        $path_var = 'media/public/template/employer_intro/'.$slug;
+        // dd('dsdsdsdsdsd');
+        $path = storage_path($path_var);
+        // dd($path);
+        $video_path = 'somedirectory/somefile.mp4';
+        $stream = new \App\Helpers\VideoStream($path);
+        $stream->start();
+    }
+
+
+    function videoStreamInterviewAnswers($slug) {
+
+        $path_var = 'media/public/interview_bookings/'.$slug;
+        // dd('dsdsdsdsdsd');
+        $path = storage_path($path_var);
+        // dd($path);
+        $video_path = 'somedirectory/somefile.mp4';
+        $stream = new \App\Helpers\VideoStream($path);
+        $stream->start();
+    }
+
+
+
 
 
 
@@ -944,40 +937,50 @@ class HomeController extends Controller {
                 'message'   => $validator->getMessageBag()->toArray()
             );
         }else{
-        // dd($request->interviewId);
             $emailUser  = $request->email;
             $interviewID  = $request->interviewId;
-            $checkingBooking = Interviews_booking::where('interview_id', $interviewID)->where('email',$emailUser)->first();
-            // dd($checkingBooking);
-            if ($checkingBooking == null){
-                $Interviews_booking = new Interviews_booking();
-                $Interviews_booking->interview_id =$request->interviewId;
-                $Interviews_booking->slot_id = $request->slotId;
-                $Interviews_booking->name = $request->name;
-                $Interviews_booking->email = $request->email;
-                $Interviews_booking->mobile = $request->mobile;
-                $Interviews_booking->status = 0;
-                if ($request->manager){
-                    Mail::to($request->employerEmail)->cc($request->manager)->send(new saveSlotUserEmail($request->name, $request->position));
-                }else{
-                     Mail::to($request->employerEmail)->send(new saveSlotUserEmail($request->name, $request->position));
-                }
-                // $Interviews_booking->save();
+            $slot = Slot::where('id', $request->slotId)->where('interview_id',$request->interviewId)->first();
 
-                // =========================================== Mail to Job Seeker ===========================================
-                Mail::to($request->email)->send(new confirmSlotMailToJobSeeker($request->name, $request->bookingTitle,$request->companyname,$request->position,$request->instruction,$request->timepicker,$request->timepicker1,$request->datepicker));
-                // =========================================== Mail to Job Seeker ===========================================
-                $Interviews_booking->save();
-                $request->session()->put('bookingid',$request->interviewId);
-                return response()->json([
-                    'status' => 1,
-                    'message' =>  "Your slot has booked successfully"
-                ]);
-            }else{
+            // dump($slot->maximumnumberofinterviewees);
+            if ($slot->bookings_count->aggregate < $slot->maximumnumberofinterviewees ) { // if interview slot has maximum number of interviews
+                $checkingBooking = Interviews_booking::where('interview_id', $interviewID)->where('email',$emailUser)->first();
+                if ($checkingBooking == null){
+                    $Interviews_booking = new Interviews_booking();
+                    $Interviews_booking->interview_id =$request->interviewId;
+                    $Interviews_booking->slot_id = $request->slotId;
+                    $Interviews_booking->name = $request->name;
+                    $Interviews_booking->email = $request->email;
+                    $Interviews_booking->mobile = $request->mobile;
+                    $Interviews_booking->status = 0;
+                    if ($request->manager){
+                        Mail::to($request->employerEmail)->cc($request->manager)->send(new saveSlotUserEmail($request->name, $request->position));
+                    }else{
+                         Mail::to($request->employerEmail)->send(new saveSlotUserEmail($request->name, $request->position));
+                    }
+                    // $Interviews_booking->save();
+
+                    // =========================================== Mail to Job Seeker ===========================================
+                    Mail::to($request->email)->send(new confirmSlotMailToJobSeeker($request->name, $request->bookingTitle,$request->companyname,$request->position,$request->instruction,$request->timepicker,$request->timepicker1,$request->datepicker));
+                    // =========================================== Mail to Job Seeker ===========================================
+                    $Interviews_booking->save();
+                    $request->session()->put('bookingid',$request->interviewId);
+                    return response()->json([
+                        'status' => 1,
+                        'message' =>  "Your slot has booked successfully"
+                    ]);
+                }else{
+                    return response()->json([
+                        'status' => 2,
+                        'error' =>  "You have already booked slot for this interview"
+                    ]);
+                }
+            }
+            else{
                 return response()->json([
                     'status' => 2,
-                    'error' =>  "You have already booked slot for this interview"
+                    'error' =>  "The slot already booked by maximum number of interviews"
                 ]);
+
             }
             // return redirect('/');
         }

@@ -3,7 +3,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container px-3">
 	<div class="header1 text-center">
 		<h4 class="pt-4 font-weight-bold">Interview Concierge - Booking {{$interview->uniquedigits}} </h4>
 	</div> 
@@ -40,7 +40,7 @@
 
 	    <p class="text-center moreDetails"> Please select from the below available time/date for your interview.If you have already selected an <br>
 	    	interview time and wish to cancel or reschedule, please click 
-	    	<span class="clickHere interviewConciergeRoute" > here  </span> 
+	    	<span class="clickHere interviewConciergeRoute" data-toggle="modal" data-target="#interviewConciergeModal" > here  </span> 
 	    </p>
 
 
@@ -49,35 +49,42 @@
 	        $slots = $interview->slots;
 	        @endphp
 	        @foreach ($slots as $key => $slot)
-	        	{{-- @dump($slot->id); --}}
+	        	{{-- @dump($slot->id) --}}
 	        	
+	        	{{-- @dump($slot->maximumnumberofinterviewees) --}}
+	        	{{-- @dump($slot->bookings_count->aggregate) --}}
+	        	@if ($slot->bookings_count->aggregate < $slot->maximumnumberofinterviewees )
 
-	        <div class="slot s{{$key+1}} notbrak m_rb20">
-	        	<input type="hidden" name="" value="{{$slot->id}}" class="slotIDinInputTypeInSlot">
+			        <div class="slot s{{$key+1}} notbrak m_rb20">
+			        	<input type="hidden" name="" value="{{$slot->id}}" class="slotIDinInputTypeInSlot">
 
-	            <div class="font-weight-bold">Interview Slot <span class="test">{{$key+1}}</span> 
-	            </div>
-	            <div class="time">
-	                <div class="notbrak">Time</div>
+			            <div class="font-weight-bold">Interview Slot <span class="test">{{$key+1}}</span> 
+			            </div>
+			            <div class="time">
+			                <div class="notbrak">Time</div>
 
-	                <div class="notbrak my-2"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" readonly="true" value="slot[{{$key+1}}]" required />
-	                </div>
+			                <div class="notbrak my-2"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" readonly="true" value="slot[{{$key+1}}]" required />
+			                </div>
 
-	                <div class="notbrak">To</div>
+			                <div class="notbrak">To</div>
 
-	                <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker1 timepicker-without-dropdown text-center" name="slot[{{$key+1}}][end]" size="8" readonly="true" required />
-	                </div>
-	            </div>
+			                <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker1 timepicker-without-dropdown text-center" name="slot[{{$key+1}}][end]" size="8" readonly="true" required />
+			                </div>
+			            </div>
 
-	            <div class="date topMargin">
-	                <span class="notbrak">Date</span>
-	                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" readonly="true" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
-	            </div>
-	            <div class="text-center mt-3">
-	                <button onclick="topFunction()" class="btn-sm btn btn-primary selectTimeUrl"> Select This Time</button>
-	            </div>
-	          
-	        </div>																	
+			            <div class="date topMargin">
+			                <span class="notbrak">Date</span>
+			                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" readonly="true" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
+			            </div>
+			            <div class="text-center mt-3">
+			                <button onclick="topFunction()" class="btn-sm btn btn-primary selectTimeUrl"> Select This Time</button>
+			            </div>
+			          
+			        </div>
+	        	{{-- @else
+	        		<p>  This slot is not available for booking  </p> --}}	
+	        	@endif
+
 	        @endforeach
 	    </div>
     </div>
@@ -184,7 +191,10 @@
     
 </div>
 
-@include('site.home.interviewLogin')
+{{-- @include('site.home.interviewLogin') --}}
+
+@include('web.home.interviewConcierge.signin')
+
 
 
 @stop

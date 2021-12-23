@@ -525,6 +525,6 @@ input, textarea, select{
     border-color: #dc3545;
 }
     
-
-
-    
+.font-14{
+    font-size: 14px !important;
+}

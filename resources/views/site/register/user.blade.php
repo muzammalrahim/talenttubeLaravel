@@ -172,8 +172,8 @@
                 <div class="custom-checkbox">
                 <label class="form-check-label" for="agree">
                   <input class="form-check-input" id="agree" name="privacy_policy" value="1" type="checkbox" value="">
-                  I agree to the <a href="{{ route('privacy') }}">Terms , Conditions & Privacy Policy</a>and confirm 
-                  <span class="age-limit">I am at least 18 years of age or over </span>
+                  I agree to the <a href="{{ route('privacy') }}" target="_blank">Terms , Conditions & Privacy Policy</a> and confirm 
+                  I am at least 18 years of age or over 
                 </label>
               </div>
             </div>
