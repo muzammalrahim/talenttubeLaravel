@@ -49,41 +49,41 @@
 	        $slots = $interview->slots;
 	        @endphp
 	        @foreach ($slots as $key => $slot)
-	        	{{-- @dump($slot->id) --}}
-	        	
-	        	{{-- @dump($slot->maximumnumberofinterviewees) --}}
-	        	{{-- @dump($slot->bookings_count->aggregate) --}}
-	        	@if ($slot->bookings_count->aggregate < $slot->maximumnumberofinterviewees )
 
-			        <div class="slot s{{$key+1}} notbrak m_rb20">
-			        	<input type="hidden" name="" value="{{$slot->id}}" class="slotIDinInputTypeInSlot">
+	        	@php
+	        		$slotBooking = $slot->bookings_count? $slot->bookings_count->aggregate:0;
+	        	@endphp
 
-			            <div class="font-weight-bold">Interview Slot <span class="test">{{$key+1}}</span> 
-			            </div>
-			            <div class="time">
-			                <div class="notbrak">Time</div>
+		        	@if ($slotBooking < $slot->maximumnumberofinterviewees )
+				        <div class="slot s{{$key+1}} notbrak m_rb20">
+				        	<input type="hidden" name="" value="{{$slot->id}}" class="slotIDinInputTypeInSlot">
 
-			                <div class="notbrak my-2"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" readonly="true" value="slot[{{$key+1}}]" required />
-			                </div>
+				            <div class="font-weight-bold">Interview Slot <span class="test">{{$key+1}}</span> 
+				            </div>
+				            <div class="time">
+				                <div class="notbrak">Time</div>
 
-			                <div class="notbrak">To</div>
+				                <div class="notbrak my-2"><input type="text" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown text-center" name="slot[{{$key+1}}][start]" size="8" readonly="true" value="slot[{{$key+1}}]" required />
+				                </div>
 
-			                <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker1 timepicker-without-dropdown text-center" name="slot[{{$key+1}}][end]" size="8" readonly="true" required />
-			                </div>
-			            </div>
+				                <div class="notbrak">To</div>
 
-			            <div class="date topMargin">
-			                <span class="notbrak">Date</span>
-			                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" readonly="true" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
-			            </div>
-			            <div class="text-center mt-3">
-			                <button onclick="topFunction()" class="btn-sm btn btn-primary selectTimeUrl"> Select This Time</button>
-			            </div>
-			          
-			        </div>
-	        	{{-- @else
-	        		<p>  This slot is not available for booking  </p> --}}	
-	        	@endif
+				                <div class="notbrak"><input type="text" value="{{$slot->endtime}}" class="timepicker timepicker1 timepicker-without-dropdown text-center" name="slot[{{$key+1}}][end]" size="8" readonly="true" required />
+				                </div>
+				            </div>
+
+				            <div class="date topMargin">
+				                <span class="notbrak">Date</span>
+				                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" readonly="true" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
+				            </div>
+				            <div class="text-center mt-3">
+				                <button onclick="topFunction()" class="btn-sm btn btn-primary selectTimeUrl"> Select This Time</button>
+				            </div>
+				          
+				        </div>
+		        	{{-- @else
+		        		<p>  This slot is not available for booking  </p> --}}	
+		        	@endif
 
 	        @endforeach
 	    </div>

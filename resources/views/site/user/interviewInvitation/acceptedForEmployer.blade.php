@@ -79,7 +79,8 @@
                                   $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $UserInterview->id)->where('emp_id' ,$user->id)->where('user_id' , $UserInterview->js->id)->first();   
                                 @endphp
                                  @if ($question->video_response == 1)
-                                <p><h1 data-toggle="modal" data-target="#exampleModalCenter" style="cursor: pointer;"><i class="fas fa-photo-video"></i></h1></p>
+                                <h1 data-target = "#employerVideoIntroModal" data-toggle = "modal" onclick="showEmployerVideoIntro( '{{userInterview_answer_video($answers->answer)}}')"><i class="fas fa-photo-video"></i></h1>
+
                                 @else
                                 <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
                                  @endif
@@ -102,18 +103,27 @@
   
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <!-- <div class="modal-header"> -->
-       <!--  -->
-        <!-- </div> -->
-      <div class="modal-body">
-        <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
-        <iframe width="100%" height="215" src="https://www.youtube-nocookie.com/embed/nknwAOtmtDk" title="YouTube video player" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+<div class="modal fade" id="employerVideoIntroModal" role="dialog">
+    <div class="modal-dialog delete-applications">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
+          {{-- <h1 class="modal-title"><i class="fas fa-thumbs-down trash-icon"></i>Video</h1> --}}
+        </div>
+        <div class="modal-body">
+          {{-- <strong>Are you sure you wish to continue?</strong> --}}
+            <div class="videoBox"></div>
+        </div>
+        <div class="dual-footer-btn">
+          <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+          {{-- <button type="button" class="orange_btn" onclick="confirmUnlikeFunction()" data-dismiss="modal"><i class="fa fa-check" ></i>OK</button> --}}
+        </div>
       </div>
+      
     </div>
-  </div>
 </div>
 <!-- ================================Modal for video ends=================================== -->
 
@@ -123,29 +133,9 @@
 @stop
 
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
-<style>
 
-.button {
-  background-color: rgb(31, 120, 236);
-  border-radius: 5px;
-  color: white;
-  padding: .5em;
-  text-decoration: none;
-  margin-top: 20px !important;
-  margin-bottom: 20px !important;
-  display:block
-}
-
-.button:focus,
-.button:hover {
-  background-color: rgb(52, 49, 238);
-  color: White;
-}
-
-
-</style>
 
 @stop
 
@@ -159,10 +149,13 @@
 
 @section('custom_js')
 {{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/common.js') }}"></script> --}}
 
-<script src="{{ asset('js/site/userProfile.js') }}"></script>
+{{-- <script src="{{ asset('js/site/userProfile.js') }}"></script> --}}
+
+<script src="{{ asset('js/web/interview.js') }}"></script>
+
 
 <script type="text/javascript">
 

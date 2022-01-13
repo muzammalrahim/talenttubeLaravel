@@ -2,11 +2,11 @@
 @extends('site.employer.employermaster')
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 @section('content')
 <div class="newJobCont profile profile-section">
-<h2 class="head icon_head_browse_matches">Edit Job</h2>
+<h2>Edit Job</h2>
 {{-- @dump($job) --}}
 <div class="job_edit">
    <form method="POST" name="edit_job_form" class="edit_job_form jobEdut job_validation">
@@ -200,15 +200,17 @@
             </div>
          </div>
          <div class="form-row job-experience">
-            <span class="form_label2 clearfix">Industry Experience :<i class="editIndustry fas fa-edit orange_btn pt-2 float-right"></i></span>
+            <h2 class="form_label2 clearfix">Industry Experience :
+               <i class="fas fa-edit orange_btn pt-2 float-right editIndustry pointer" onclick="editJobIndustryExpAsEmp()"></i>
+            </h2>
             <div class="IndusList form_input col-md-12">
                <div class="IndustrySelect w-100">
                   @include('site.layout.parts.newJobIndustryList')
                </div>
             </div>
-            <div class="col-md-12">
-               <a class="addIndus btn btn-success  hide_it mt-2" style = "cursor:pointer;">+ Add</a>
-               <a class="greenbtn  hide_it btn btn-info buttonSaveIndustry mt-2"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
+            <div class="col-md-12 mb-3">
+               <a class="addIndus hide_it py-2 pointer blue_btn">+ Add</a>
+               <a class="saveIndus hide_it py-2 pointer buttonSaveIndustry orange_btn"onclick="updateNewJobIndustryExpAsEmployer()">Save</a>
             </div>
          </div>
          @php
@@ -301,7 +303,7 @@
          <div class="fomr_btn act_field">
             <span class="form_label"></span>
             <iput type="type" value="academic" />
-            <button class="btn small turquoise updateJobBtn orange_btn" data-jobid="{{$job->id}}">Update</button>
+            <button class="orange_btn updateJobBtn" onclick="updateJobAsEmployer('{{$job->id}}')" data-jobid="{{$job->id}}">Update</button>
          </div>
          <div class="row d-flex">
          </div>
@@ -336,7 +338,7 @@
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/web/common.js') }}"></script>
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
@@ -365,8 +367,7 @@
    
    
    
-   
-   
+
    
    $(document).ready(function(){
       $(document).on('click','.removeIndustry', function(){
@@ -390,14 +391,7 @@
       });
    });
    
-   $(".editIndustry").click(function(){
-       $(this).closest('.IndusListBox').addClass('edit');
-       $('.removeIndustry').removeClass('hide_it');
-       $('.addIndus').removeClass('hide_it');
-       $('.buttonSaveIndustry').removeClass('hide_it');
    
-       // console.log('welcome');
-     });
    
    
    
@@ -540,46 +534,7 @@
            $('#questionCounter').val(qC);
     });
    
-       // Update New job button click //
-       /////////////////////////////////////////////////////////////////
-       $('.updateJobBtn').on('click',function() {
-           event.preventDefault();
-           var formData = $('.edit_job_form').serializeArray();
-           $('.updateJobBtn').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
-           console.log(' formData ', formData);
-           $('.general_error').html('');
-   
-           $.ajax({
-               type: 'POST',
-               url: base_url+'/ajax/job/{{$job->id}}',
-               data: formData,
-               success: function(data){
-                   console.log(' data ', data);
-                   $('.updateJobBtn').html('Save').prop('disabled',false);
-                   if( data.status == 1 ){
-                       // that.hideMainEditor();
-                       // $('.add_new_job').html(data.message);
-                       window.location =data.redirect;
-                   }else{
-                       $('.general_error').html('<p>Error Creating new job</p>').removeClass('to_hide').addClass('to_show');
-                       if(data.validator != undefined){
-                           const keys = Object.keys(data.validator);
-                           for (const key of keys) {
-                               if($('#'+key+'_error').length > 0){
-                                   $('#'+key+'_error').removeClass('to_hide').addClass('to_show').text(data.validator[key][0]);
-                               }
-                           }
-                       }
-                      if(data.error != undefined){
-                        $('.general_error').append(data.error);
-                      }
-                      setTimeout(() => { $('.general_error').removeClass('to_show').addClass('to_hide').text(''); },3000);
-                   }
-   
-               }
-           });
-           console.log('after ajsx');
-       })
+      
    
    
    

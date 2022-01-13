@@ -99,10 +99,10 @@
          </div>
          <div class="col-md-4">
             <div class="row browse-mp" style="align-items: center;">
-               <div class="col-lg-4 col-md-12 col-sm-12">
+               <div class="col-lg-5 col-md-12 col-sm-12">
                   <h5 class="browse-heading">Salary Range:</h5>
                </div>
-               <div class="col-lg-8 col-md-12 col-sm-12">
+               <div class="col-lg-7 col-md-12 col-sm-12">
                      <div class="form-group">
                         <select name="filter_salary" class="b-select selectpicker" id="filter_salary" aria-label="Default select example" data-placeholder="Select Salary Range">
                            <option value="">Select Salary Range</option>
@@ -117,10 +117,10 @@
 
          <div class="col-md-4">
             <div class="row browse-mp" style="align-items: center;">
-               <div class="col-lg-3 col-md-12 col-sm-12">
+               <div class="col-lg-5 col-md-12 col-sm-12">
                   <h5 class="browse-heading">Job Type:</h5>
                </div>
-               <div class="col-lg-9 col-md-12 col-sm-12">
+               <div class="col-lg-7 col-md-12 col-sm-12">
                      <div class="form-group">
                         <select name="filter_jobType" class="b-select selectpicker" id="filter_jobType" aria-label="Default select example"  data-placeholder="Select Job Type">
                            <option value="">Select Job Type</option>

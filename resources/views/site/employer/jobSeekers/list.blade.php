@@ -96,7 +96,7 @@
                         ['Match', {{ $user_compat }}],
                         ['Unmatch',100-{{ $user_compat }}],
                       ]);
-                    var options = { 'width':300, 'height':160};
+                    var options = { 'width':300, 'height':160, tooltip: { isHtml: true },};
                     var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
                     chart.draw(data, options);
                   }

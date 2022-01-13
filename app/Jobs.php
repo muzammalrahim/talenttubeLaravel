@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\JobsQuestions;
+use App\JobsApplication;
+use Illuminate\Support\Facades\Auth;
+
 use JustBetter\PaginationWithHavings\PaginationWithHavings;
 use Carbon\Carbon;
 class Jobs extends Model {
@@ -64,6 +67,13 @@ class Jobs extends Model {
         // return $this->hasOne('App\UserGallery', 'user_id', 'user_id')->selectRaw('job_id, count(*) as aggregate')->groupBy('job_id');
         return $this->hasOne('App\UserGallery', 'user_id', 'user_id')->where('profile',1);
     }
+
+
+
+    public function jobApplication(){
+        return $this->hasOne('App\JobsApplication', 'job_id', 'id')->where('user_id',Auth::user()->id);
+    }
+    
 
 
     public function jobEmployer(){

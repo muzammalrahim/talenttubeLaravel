@@ -93,10 +93,10 @@
                   </li>
                   <li class="text-info-detail clearfix">
                      <label>Interview Type:</label>
-                     @if ($interview->template->type == "phone_screeen")
+                     @if ($interview->template->type == "phone_screen")
                      <span> <b> Phone Screen</b> </span>
                      @else
-                     <span class="p0 qualifType m5">  <b> {{$interview->template->type}} </b> </span>
+                     <span class="p0 qualifType text_capital">  <b> {{$interview->template->type}} </b> </span>
                      @endif
                   </li>
                </ul>

@@ -87,8 +87,12 @@ jQuery(document).ready(function() {
                 else if(country)
                     address = country;
 
-                 if((place) && (place.name))
+          /*       if((place) && (place.name))
                     address = place.name + ',' + address;
+*/
+                if((place) && (place.name) && (place.name != city))
+                 address = place.name + ',' + address;
+             
                     jQuery("#location_search").val(address);
                     placeMarker(place.geometry.location);
             });

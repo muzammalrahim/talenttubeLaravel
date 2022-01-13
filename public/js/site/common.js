@@ -161,8 +161,8 @@ $(document).ready(function(){
 
     // $('#jobApplyModal').on($.modal.OPEN, function(event, modal) {
         this.jobApplyFunction = function(job_id){
-            console.log(' job_id ', job_id);
-            console.log(' after open ', event);
+            console.log(' job_id asasas', job_id);
+            // console.log(' after open ', event);
             $.ajax({
             type: 'GET',
                 url: base_url+'/ajax/jobApplyInfo/'+job_id,

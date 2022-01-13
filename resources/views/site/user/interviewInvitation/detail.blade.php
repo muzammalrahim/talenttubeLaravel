@@ -142,6 +142,12 @@
 
 @section('custom_footer_css')
 
+<style type="text/css">
+    input#exampleFormControlFile1{
+        border-radius: 0px !important;
+    }
+</style>
+
 @stop
 
 @section('custom_js')

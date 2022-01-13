@@ -309,33 +309,7 @@ this.updateIndustryExperience = function(){
     });
  }
 
- this.updateNewJobIndustryExperience = function(){
-    $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        var industry_experience = jQuery('.industry_experience').map(function(){ return $(this).val()}).get();
-         $('.SaveindustryExperience').after(getLoader('smallSpinner SaveIndustrySpinner'));
-        $.ajax({
-            type: 'POST',
-            url: base_url+'/ajax/updateNewJobIndustryExperience',
-            data: {'industry_experience': industry_experience},
-            success: function(resp){
-                if(resp.status){
-                    $('.IndusListBox').removeClass('edit');
-                    $('.IndusAlert').show().delay(3000).fadeOut('slow');
-                    $('.SaveIndustrySpinner').remove();
-                    $('.IndusList').html(resp.data);
-                    $('.removeIndustry').addClass('hide_it');
-                    $('.addIndus').addClass('hide_it');
-                    $('.buttonSaveIndustry').addClass('hide_it');
-
-                    }
-            }
-    });
- }
+ 
 
 // ======================== Edit Industry Experience End Here ========================
 

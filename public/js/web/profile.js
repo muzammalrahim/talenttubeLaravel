@@ -408,7 +408,7 @@ $(document).ready(function(){
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type:'GET',
-            url: base_url+'/ajax/removeAttachment/',
+            url: App_url+'/ajax/removeAttachment/',
             data: {attachment_id: attachment_id},
             success: function(data){
                 console.log(' data ', data);
@@ -691,28 +691,56 @@ $(document).ready(function(){
 
     // ============================================ Like user (jobseeker info page)
 
-    $(document).on('click', '.likeFunction',function(){
+    // $(document).on('click', '.likeFunction',function(){
+
+    // // this.likeFunction = function(jobseeker_id){
+    //     var jobseeker_id = $(this).attr('data-jsid');
+    //     console.log(jobseeker_id); 
+    //     var btn = $(this);
+    //     console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
+    //     // $(this).html(getLoader('blockJobSeekerLoader'));
+    //     $('.jsLikeUserBtn').html('Liked');
+    //     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
+    //         success: function(data){
+    //             // btn.prop('disabled',false);
+    //             if( data.status == 1 ){
+    //                 console.log('User Liked ==============' );
+    //                 $(this).text('Liked');
+    //                 btn.html('Liked').addClass('active');
+    //                 // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+    //             }else{
+    //                 btn.html('error');
+    //             }
+    //         }
+    //     });
+    // // }
+
+    // })
+
+
+
+    $(document).on('click', '.like-btn', function(){
 
     // this.likeFunction = function(jobseeker_id){
-        var jobseeker_id = $(this).attr('data-jsid');
-        console.log(jobseeker_id);
-        var btn = $(this);
-        console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
-        // $(this).html(getLoader('blockJobSeekerLoader'));
-        $('.jsLikeUserBtn').html('Liked');
+        console.log( ' Like User button profile.js new file' );
+        var jobseeker_id = $(this).attr('data-userid');
+        $(this).html('Liked');
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
-            success: function(data){
-                // btn.prop('disabled',false);
-                if( data.status == 1 ){
-                    console.log('User Liked ==============' );
-                    $(this).text('Liked');
-                    btn.html('Liked').addClass('active');
-                    // $('.jobSeeker_row.js_'+jobseeker_id).remove();
+            success: function(res){
+                if( res.status == 1 ){
+                    swal("Good job!", "User Liked Successfully!", "success");
+
+                    var html = '<button class="unlike-btn" onclick="unlikefunction('+jobseeker_id+')"data-toggle="modal" data-target="#unlikeModal">';
+                        html += '<i class="fas fa-thumbs-up" ></i> UnLike</button>';
+                        $(this).html(html);
                 }else{
-                    btn.html('error');
+                    // btn.html('error');
                 }
             }
         });

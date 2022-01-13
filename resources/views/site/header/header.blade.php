@@ -31,52 +31,54 @@
    <!-- =========================================================================== -->
    <!-- for windows navigation-bar -->
    <div class="window-header clearfix">
-      <nav class="row navbar navbar-expand-lg d-none d-lg-flex navigation-bar navbar-light bg-transparent">
-         <div class="col-md-3 col-sm-9">
-            <a class="navbar-brand text-white" href="{{ route('homepage') }}"><img class="logo" src="assests/images/frame1.png" alt=""></a>
-         </div>
-         <div class="col-md-6">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-               aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-            </button>    
-            <div class="collapse navbar-collapse header-section-nav" id="navbarSupportedContent">
-               <ul class="navbar-nav mr-auto">
-                  <!-- <li class="nav-item active">
-                     <a class="nav-link text-white" href="#">Home </a>
-                     </li> -->
-                  <li class="nav-item">
-                     <a class="nav-link text-white" href="#">About </a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link text-white" href="#">Contact </a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link text-white" href="#">Blog </a>
-                  </li>
-               </ul>
-               <div class="dual-button">
-                  <a href="#" data-toggle="modal" data-target="#interviewConciergeModal" class="orange_btn interview-button"><img src="assests/images/Interview-icon.svg" alt="" class="interview-icon"> <img src="assests/images/interview_hover.svg" class="interview_hover_icon" alt="" style="display: none;"> Interview concierge</a>
+      {{-- <div class="container">  --}}
+         <nav class="row navbar navbar-expand-lg d-none d-lg-flex navigation-bar navbar-light bg-transparent">
+            <div class="col-md-3 col-sm-9">
+               <a class="navbar-brand text-white" href="{{ route('homepage') }}"><img class="logo" src="assests/images/frame1.png" alt=""></a>
+            </div>
+            <div class="col-md-6">
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+               <span class="navbar-toggler-icon"></span>
+               </button>    
+               <div class="collapse navbar-collapse header-section-nav" id="navbarSupportedContent">
+                  <ul class="navbar-nav mr-auto">
+                     <!-- <li class="nav-item active">
+                        <a class="nav-link text-white" href="#">Home </a>
+                        </li> -->
+                     <li class="nav-item">
+                        <a class="nav-link text-white" href="#">About </a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Contact </a>
+                     </li>
+                     <li class="nav-item">
+                        <a class="nav-link text-white" href="#">Blog </a>
+                     </li>
+                  </ul>
+                  <div class="dual-button">
+                     <a href="#" data-toggle="modal" data-target="#interviewConciergeModal" class="orange_btn interview-button"><img src="assests/images/Interview-icon.svg" alt="" class="interview-icon"> <img src="assests/images/interview_hover.svg" class="interview_hover_icon" alt="" style="display: none;"> Interview concierge</a>
+                  </div>
                </div>
             </div>
-         </div>
-         <div class="col-md-3 header-signin-btn" clearfix>
-            <div class="form-inline account-have">
-               @if (Auth::check())
-               @if (isEmployer())
-               <a href="{{route('employerProfile')}}" class="orange_btn"><i class="fas fa-th-large"></i> Dashboard</a>
-               @elseif(isAdmin())
-               <a href="{{route('adminDashboard')}}" class="orange_btn"><i class="fas fa-th-large"></i> Dashboard</a>
-               @else
-               <a href="{{route('profile')}}" class="orange_btn"><i class="fas fa-th-large"></i> Dashboard</a>
-               @endif
-               @else
-               <span class="Account">HAVE AN ACCOUNT?</span>
-               <a href="{{ route('signIn') }}" class="orange_btn signin" id="">SIGN IN</a>
-               @endif
+            <div class="col-md-3 header-signin-btn" clearfix>
+               <div class="form-inline account-have">
+                  @if (Auth::check())
+                  @if (isEmployer())
+                  <a href="{{route('employerProfile')}}" class="orange_btn"><i class="fas fa-th-large"></i> Dashboard</a>
+                  @elseif(isAdmin())
+                  <a href="{{route('adminDashboard')}}" class="orange_btn"><i class="fas fa-th-large"></i> Dashboard</a>
+                  @else
+                  <a href="{{route('profile')}}" class="orange_btn"><i class="fas fa-th-large"></i> Dashboard</a>
+                  @endif
+                  @else
+                  <span class="Account">HAVE AN ACCOUNT?</span>
+                  <a href="{{ route('signIn') }}" class="orange_btn signin" id="">SIGN IN</a>
+                  @endif
+               </div>
             </div>
-         </div>
-      </nav>
+         </nav>
+      {{-- </div> --}}
    </div>
 </header>
 <div class="modal fade" id="signin-modal" role="dialog">

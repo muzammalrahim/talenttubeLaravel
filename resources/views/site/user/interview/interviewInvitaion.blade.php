@@ -62,7 +62,7 @@
                 <span><b> {{$Int_booking->template->template_name}} </b></span>
               </li>
 
-              <li>
+              <li style="height: 50px;overflow-y: auto;">
                 <span>  Instructions:</span><span> <b> {{$Int_booking->template->employers_instruction}} </b></span>
               </li>
 

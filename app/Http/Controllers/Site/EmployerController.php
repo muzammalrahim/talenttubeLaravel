@@ -306,7 +306,7 @@ class EmployerController extends Controller {
 
     public function updateNewJobIndustryExperience(Request $request){
 
-        // dump($request->tags);
+        // dd($request->all());
         $user = Auth::user();
         $rules = array(
                 'industry_experience'    => 'required|array',
@@ -571,6 +571,7 @@ class EmployerController extends Controller {
     public function updateJob($job_id, Request $request){
         $user = Auth::user();
         $requestData = $request->all();
+        // dd($requestData);
         if(!empty($requestData['jq'])){
         foreach ($requestData['jq'] as $jqk => $jqv) {
 

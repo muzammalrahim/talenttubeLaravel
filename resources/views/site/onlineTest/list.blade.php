@@ -62,40 +62,95 @@
             <div class="box-head">
               <h4 class="text-white"><b>Online Test {{$loop->index+1}}: </b></h4>                          
             </div>
-            @if ($test->jobApplication != NULL)
-              
-              <p class="slot-para">Online Test against your "job application" <b> {{$test->jobApplication->job->title}} </b></p>
 
-              <ul class="job-box-text concigerge clearfix">
+            <h4 class="p-3 font-weight-bold"> Testing Information </h4>
+            
+              {{-- <p class="slot-para">Online Test against your "job application" <b> {{$test->jobApplication->job->title}} </b></p> --}}
+              <ul class="job-box-text concigerge clearfix py-0">
+                <li class="text-info-detail clearfix">
+                  <label>Test Name: </label>
+                  <span class="pl-3"><b> {{$test->onlineTest->name}} </b></span>
+                </li>
+
+
+                  <li class="text-info-detail clearfix">
+                    <label>Score:</label>
+                      @if ($test->status == 'complete')
+                      <span><b> {{$test->test_result}} % </b></span>
+                      @else
+                        <span> <b> Test Not Attempted Yet </b> </span>
+                      @endif
+
+                  </li>
+
+                  {{-- <div class="dual-tags testing-tag clearfix"></div> --}}
+                
+
+                <li class="text-info-detail clearfix">
+                 <label>Time:</label>
+                 <span class="pl-3"><b> {{$test->onlineTest->time}} Minutes </b></span>
+                </li>
+
+                <li class="text-info-detail clearfix">
+                 <label>Date:</label>
+                 <span><b> {{$test->updated_at->format('d-m-y')}} </b></span>
+                </li>
+
+
+                @if ($test->jobApplication != NULL)
+
+                  <li class="text-info-detail clearfix">
+                    <label>Application:</label>
+                   <span class="pl-3"><b> {{$test->jobApplication->job->title}} </b></span>
+                  </li>
+
+                  <li class="text-info-detail clearfix">
+                    <label>Employer:</label>
+                   <span><b> {{$test->jobApplication->job->jobEmployer->company}} </b></span>
+                  </li>
+                @else
+
+                  
+
+                @endif
+
+                @if ($test->status != 'complete')
+                  <a href="{{ route('proceedTesting' , ['id' => $test->id] ) }}" class="proceed-test used-tag " >Proceed To Test</a>
+                @endif
+                <span class="pendinginterview-tag used-tag">{{$test->status}}</span>
+
+              </ul>            
+
+              {{-- <ul class="job-box-text concigerge clearfix py-0">
                 <li class="text-info-detail clearfix">
                   <label>Test Name: </label>
                   <span><b> {{$test->onlineTest->name}} </b></span>
                 </li>
 
                 <li class="text-info-detail clearfix">
-                 <label>Test Duration:</label>
+                 <label>Time :</label>
                  <span><b> {{$test->onlineTest->time}} Minutes </b></span>
+                </li>
+
+
+                <li class="text-info-detail clearfix">
+                 <label>Date :</label>
+                 <span><b> {{$test->updated_at->format('d-m-y')}} </b></span>
                 </li>
 
                 @if ($test->status == 'complete')
                   <li class="text-info-detail clearfix">
-                    <label>Your Score:</label>
+                    <label>Score:</label>
                    <span><b> {{$test->test_result}} % </b></span>
                   </li>
                   <div class="dual-tags testing-tag clearfix"></div>
                 @else
                   <a href="{{ route('proceedTesting' , ['id' => $test->id] ) }}" class="proceed-test used-tag " >Proceed To Test</a>
                 @endif
-
                   <span class="pendinginterview-tag used-tag">{{$test->status}}</span>
-
-
-              </ul>
-            @endif
-
-        </div>
-              
-      </div>   
+              </ul> --}}
+        </div>  
+      </div> 
     @endforeach  
   @else
   <h3> You have not received any test yet.</h3>
