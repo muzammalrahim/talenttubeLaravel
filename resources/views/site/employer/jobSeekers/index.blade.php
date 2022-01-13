@@ -72,32 +72,33 @@
 {{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 {{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
 <script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/web/profile.js') }}"></script>
 {{-- <script src="{{ asset('js/site/UserFilter.js') }}"></script> --}}
 <script type="text/javascript">
    $(document).ready(function() {
    
 
-    $(document).on('click', '.like-btn', function(){
+    // $(document).on('click', '.like-btn', function(){
 
-    // this.likeFunction = function(jobseeker_id){
-        console.log( ' Like User button ' );
-        var jobseeker_id = $(this).attr('data-userid');
-        $(this).html('Liked');
-        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-        $.ajax({
-            type: 'POST',
-            url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
-            success: function(res){
-                if( res.status == 1 ){
-                    swal("Good job!", "User Liked Successfully!", "success");
-                }else{
-                    // btn.html('error');
-                }
-            }
-        });
-    // }
+    // // this.likeFunction = function(jobseeker_id){
+    //     console.log( ' Like User button ' );
+    //     var jobseeker_id = $(this).attr('data-userid');
+    //     $(this).html('Liked');
+    //     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+    //     $.ajax({
+    //         type: 'POST',
+    //         url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
+    //         success: function(res){
+    //             if( res.status == 1 ){
+    //                 swal("Good job!", "User Liked Successfully!", "success");
+    //             }else{
+    //                 // btn.html('error');
+    //             }
+    //         }
+    //     });
+    // // }
 
-    })
+    // })
 
     // =========================================== ulike user ======================================================
 

@@ -37,7 +37,11 @@
                                    <span><span> {{ $reference->refType }} </span></span>
                                                       </li>
                                   @if ($reference->refStatus == "Reference Fraud")
-                                    <p> <span class="bold">Status: </span> <span> Awaiting Response</span></p>
+                                    {{-- <p> <span class="bold">Status: </span> <span> Awaiting Response</span></p> --}}
+
+                                    <li class="text-info-detail clearfix">
+                                          <label>Status:</label> <span> Awaiting Response </span>
+                                    </li>
                                   @else
                                         <li class="text-info-detail clearfix">
                                               <label>Status:</label> <span> {{ $reference->refStatus }} </span>

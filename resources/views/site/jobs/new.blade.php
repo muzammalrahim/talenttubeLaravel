@@ -28,8 +28,8 @@
                <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
             </div>
             <div class="form-group col-md-6">
-               <label for="inputPassword4">Expiration Date:</label>
-               <input type="text" name="expiration" class="form-control datepicker" id="inputPassword4" placeholder="Expiration Date">
+               <label for="expiration_error">Expiration Date:</label>
+               <input type="text" name="expiration" class="form-control datepicker" id="expiration_error" placeholder="Expiration Date">
                <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
             </div>
          </div>
@@ -93,7 +93,7 @@
                   </div>
                   <div class="">
                      <a class=" addIndus btn btn-success hide_it mt-2" title="Add a Question">+ Add</a>
-                     <a class=" btn btn-info hide_it buttonSaveIndustry mt-2"style = "cursor:pointer;" onclick="UProfile.updateNewJobIndustryExperience()">Save</a>
+                     <a class=" btn btn-info hide_it buttonSaveIndustry mt-2"style = "cursor:pointer;" onclick="updateNewJobIndustryExperience()">Save</a>
                   </div>
                </div>
             </div>
@@ -182,7 +182,7 @@
 @section('custom_js')
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-{{-- <script src="{{ asset('js/site/common.js') }}"></script> --}}
+<script src="{{ asset('js/web/common.js') }}"></script>
 <script type="text/javascript">
    $('input:checkbox').change(function() {
     if ($(this).is(':checked')) {
@@ -202,6 +202,11 @@
       $(this).closest('label').removeClass('checked');
     }
    });
+
+
+   
+
+   
    
    // ====================================================== Remove Industry. ======================================================
    

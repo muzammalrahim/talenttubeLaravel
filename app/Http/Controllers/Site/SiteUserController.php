@@ -1796,6 +1796,9 @@ class SiteUserController extends Controller
     //====================================================================================================================================//
     public function jobs(){
 		$user = Auth::user();
+        if (isEmployer()) {
+            return redirect()->route('employerJobs');
+        }
 		$user->step2 = 10;
 		$user->save();
         $data['user'] = $user;
@@ -1837,6 +1840,7 @@ class SiteUserController extends Controller
             $jobs = $jobs->filterJobs($request);
             // ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
             $data['jobs'] = $jobs;
+            $data['user'] = $user;
             return view('web.jobs.list', $data);
             // web/jobs/list
         }
@@ -1855,7 +1859,7 @@ class SiteUserController extends Controller
         // $data['classes_body'] = 'jobs';
         $job = Jobs::with('questions')->find($job_id);
         $data['job'] = $job;
-
+        
         if ($job->onlineTest_id != null) {
             $onlineTest = $job->onlineTest;
             $data['onlineTest'] = $onlineTest;
@@ -1866,6 +1870,10 @@ class SiteUserController extends Controller
             $data['UserOnlineTest'] = $UserOnlineTest;
 
         }
+        else{
+            $data['UserOnlineTest'] = '';
+        }
+
         // dd( $data['job']  );
         // dd( $data['job']->questions()->count() );
         return view('site.jobs.applyInfo', $data);

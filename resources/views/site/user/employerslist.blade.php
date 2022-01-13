@@ -76,28 +76,28 @@
                   	  ['Match', {{ $user_compat }}],
                   	  ['Unmatch',100-{{ $user_compat }}],
                   	]);
-                    var options = { 'width':305, 'height':160};
+                    var options = { 'width':305, 'height':160, tooltip: { isHtml: true },};
                     var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
                     chart.draw(data, options);
                   }
                </script>
                {{-- ============================================= Pie Chart =============================================  --}}
-               <div class="row blocked-user-about">
-                  <h6>About me:</h6>
-                  <p class="pl-3">{{$js->about_me}}</p>
+               <div class="row blocked-user-about pl-3">
+                  <h6 class="p-0">About me:</h6>
+                  <p class="">{{$js->about_me}}</p>
                </div>
-               <div class="row blocked-user-about">
-                  <h6>Intrested In:</h6>
-                  <p class="pl-3">{{$js->interested_in}}</p>
+               <div class="row blocked-user-about pl-3 mt-2">
+                  <h6 class="p-0">Intrested In:</h6>
+                  <p class="">{{$js->interested_in}}</p>
                </div>
-               <div class="row blocked-user-about">
-                  <h6>Location:</h6>
-                  <p class="pl-3">{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
+               <div class="row blocked-user-about pl-3 mt-2">
+                  <h6 class="p-0">Location:</h6>
+                  <p class="">{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
                </div>
-               <div class="row blocked-user-experience">
-                  <h6>Industory Experience:</h6>
+               <div class="row blocked-user-experience pl-3 mt-2">
+                  <h6 class="p-0">Industory Experience:</h6>
                   @if(isset($js->industry_experience))
-                  <ul>
+                  <ul class="p-0">
                      @foreach ($js->industry_experience as $ind) 
                      <li>
                         <p>{{getIndustryName($ind)}}</p>

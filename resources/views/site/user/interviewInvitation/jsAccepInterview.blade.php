@@ -60,7 +60,7 @@
          <div class="row">
             <label class="col-md-2 font-weight-bold">Template Type:</label>
             <p class="col-md-4">
-               {{$UserInterview->interview_type}}
+               {{$UserInterview->template->type}}
             </p>
 
             <label class="col-md-2 font-weight-bold"> Instructions:</label>
@@ -118,7 +118,7 @@
 
          {{-- ======================================== Template Questions ======================================== --}}
 
-         <h6 class="font-weight-bold text-center"> Template Questions </h6> 
+         <h6 class="font-weight-bold"> Template Questions </h6> 
          <form method="POST" action="{{ route('save_jobSeeker_response_interview') }}" enctype="multipart/form-data" name="saveInterviewResponse" class="saveInterviewResponse">
             @csrf
             @foreach ($InterviewTempQuestion as  $quest)

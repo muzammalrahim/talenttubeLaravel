@@ -132,9 +132,9 @@
                   </div>
                   <a id="JSBlockBtn"  data-jsid="{{$js->id}}"><button class="unblock-btn" data-toggle="modal" data-target="#myModal333"><i class="fas fa-ban"></i> Block</button></a>
                   @if (in_array($js->id,$likeUsers))
-                  <a class="active " data-jsid="{{$js->id}}"><button class="like-btn"><i class="fas fa-thumbs-up"></i> UnLike</button></a>
+                  <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up" ></i> UnLike</button>
                   @else
-                  <a class="jsLikeUserBtn" onclick="likeFunction('{{ $js->id }}')" data-jsid="{{$js->id}}"><button class="like-btn"><i class="fas fa-thumbs-up"></i> Like</button></a>
+                  <button class="like-btn" data-userid = "{{ $js->id }}" {{-- onclick="likeFunction('{{ $js->id }}')" --}}><i class="fas fa-thumbs-up"></i> Like</button>
                   @endif                          
                </div>
             </div>
@@ -298,6 +298,32 @@
             </div>
          </div>
       </div>
+   </div>
+
+
+   <!-- Modal for unlike jobseeker  -->
+
+   <div class="modal fade" id="unlikeModal" role="dialog">
+       <div class="modal-dialog delete-applications">
+       
+         <!-- Modal content-->
+         <div class="modal-content">
+           <div class="modal-header">
+             <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
+             <h1 class="modal-title"><i class="fas fa-thumbs-down trash-icon"></i>UnLike User</h1>
+           </div>
+           <div class="modal-body">
+             <strong>Are you sure you wish to continue?</strong>
+           </div>
+
+           <input type="hidden" id="jobSeekerBlockId" />
+           <div class="dual-footer-btn">
+             <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+             <button type="button" class="orange_btn" onclick="confirmUnlikeFunction()" data-dismiss="modal"><i class="fa fa-check"></i>OK</button>
+           </div>
+         </div>
+         
+       </div>
    </div>
    
 </section>

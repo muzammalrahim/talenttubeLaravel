@@ -914,7 +914,7 @@ class HomeController extends Controller {
         if ($this->agent->isMobile()){
             return view('mobile.user.interview.userurl', $data);  // site/user/interview/userurl
         }else{
-         return view('site.user.interview.userurl', $data);  // site/user/interview/userurl   
+         return view('site.user.interview.userurl', $data);  // site/user/interview/userurl 
         }
     }
    
@@ -942,7 +942,9 @@ class HomeController extends Controller {
             $slot = Slot::where('id', $request->slotId)->where('interview_id',$request->interviewId)->first();
 
             // dump($slot->maximumnumberofinterviewees);
-            if ($slot->bookings_count->aggregate < $slot->maximumnumberofinterviewees ) { // if interview slot has maximum number of interviews
+            $slotBooking = $slot->bookings_count? $slot->bookings_count->aggregate:0;
+
+            if ($slotBooking < $slot->maximumnumberofinterviewees ) { // if interview slot has maximum number of interviews
                 $checkingBooking = Interviews_booking::where('interview_id', $interviewID)->where('email',$emailUser)->first();
                 if ($checkingBooking == null){
                     $Interviews_booking = new Interviews_booking();
@@ -1246,6 +1248,7 @@ class HomeController extends Controller {
                         return view('site.user.interviewInvitation.unAuthUser', $data);   // site/user/interviewInvitation/unAuthUser  
                     }
                     else{ 
+                        // dd('coming here');
                         return view('site.user.interviewInvitation.detail', $data);
                         // site/user/interviewInvitation/detail
                     }

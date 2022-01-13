@@ -234,7 +234,7 @@ input, textarea, select{
     font-weight: 500;
 }
 .sidebar ul li a i{
-    padding:0 28px 0px 10px;
+    /*padding:0 28px 0px 10px;*/
 }
 .logo-design a {
     width: 70%;
@@ -527,4 +527,9 @@ input, textarea, select{
     
 .font-14{
     font-size: 14px !important;
+}
+
+/* Employer Info page html display none  */
+div.google-visualization-tooltip {
+     display: none !important;
 }

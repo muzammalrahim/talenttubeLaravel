@@ -18,10 +18,11 @@
     @foreach($industry_experience as  $industry )
     	<div class="IndustrySelect">
               <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}">
-              <p>
+              <p class="m-0">
                 <i class="fas fa-angle-right qualifiCationBullet"></i>
               	{{getIndustryName($industry)}}
-              	<i class="fa fa-trash removeIndustry hide_it"></i></p>
+              	<i class="fa fa-trash removeIndustry hide_it pointer text-danger"></i>
+              </p>
         </div>
     @endforeach
 @endif
