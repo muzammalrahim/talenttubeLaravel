@@ -122,7 +122,11 @@
 
                   <div class="recent-job clearfix mt-3 px-3">
                      <div class="row m-0">
-                        <div class="col-5">Expecting Salary:</div>
+                        <div class="col-5">
+                           <label class="mb-2"> 
+                              Expecting Salary: 
+                           </label>
+                        </div>
                         <div class="col-7"><span>AUD: </span>  <span class="salaryRangeValue"> {{number_format($user->salaryRange),3}} </span></div>
                      </div>
                   </div>
@@ -743,7 +747,5 @@ var base_url = {!! json_encode(url('/')) !!};
    <style type="text/css">
       textarea{ resize: none }
    </style>
-     }
-  
-
+    
 @stop

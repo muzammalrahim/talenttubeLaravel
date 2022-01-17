@@ -17,7 +17,7 @@
         <h2>Employers Detail</h2>
         <!-- Top Filter Row -->
         <div class="row">
-           <div class="col-sm-12 col-md-12">
+           <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
               <div class="job-box-info employee-details-info block-box clearfix">
                  <div class="box-head">
                     @php
@@ -122,12 +122,20 @@
                  <div class="box-footer clearfix">
                     <div class="block-progrees-ratio d-none d-md-block">
                     </div>
-                    <button class="unblock-btn" onclick="blockFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button> 
-                    @if (in_array($js->id,$likeUsers))
-                    <button class="like-btn"><i class="fas fa-thumbs-up"></i> Liked</button>
-                    @else
-                    <button class="like-btn" data-toggle="modal" data-target="#myModal999"><i class="fas fa-thumbs-up"></i> Like</button>
-                    @endif                         
+                     <div class="block-div">
+                        <button class="block-btn" onclick="blockEmployerFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
+                     </div>
+                     <a href="{{route('employerInfo', ['id' => $js->id])}}"><button class="detail-btn"><i class="fas fa-file-alt"></i> Detail</button></a>
+                     @if (in_array($js->id,$likeUsers))
+                     <div class="unlike-div">
+                        <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
+                     </div>
+                     @else
+                        <div class="like-div">
+                           <button class="like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
+                        </div>
+                     @endif
+
                  </div>
               </div>
            </div>
@@ -175,48 +183,11 @@
      </div>
   </section>
 
+   {{-- ======================================== Unblock employer (employerInfo page) ======================================== --}}
+   @include('web.modals.unblockEmployer')
 
-  <!-- ====================================================================================Modal -->
-  <div class="modal fade" id="myModal333" role="dialog">
-    <div class="modal-dialog delete-applications">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
-          <h1 class="modal-title"><i class="fas fa-ban trash-icon"></i>Block User</h1>
-        </div>
-        <div class="modal-body">
-          <strong>Are you sure you wish to continue?</strong>
-        </div>
-        <div class="dual-footer-btn">
-          <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
-          <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-  <!-- ====================================================================================Modal -->
-
-  <div class="modal fade" id="myModal999" role="dialog">
-    <div class="modal-dialog delete-applications">
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
-          <h1 class="modal-title"><i class="fas fa-thumbs-up trash-icon"></i>Like User</h1>
-        </div>
-        <div class="modal-body">
-          <strong>Are you sure you wish to continue?</strong>
-        </div>
-        <div class="dual-footer-btn">
-          <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
-          <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button>
-        </div>
-      </div>
-    </div>
-  </div>
+   {{-- ======================================== Unlike employer (employerInfo page) ======================================== --}}
+   @include('web.modals.unlike')
 
 @stop
 

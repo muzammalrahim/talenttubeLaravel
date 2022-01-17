@@ -57,8 +57,8 @@
 
   @if ($UserOnlineTest->count() > 0)
     @foreach ($UserOnlineTest   as $test)
-      <div class="col-sm-12 col-md-6 col-6 testing1234">
-        <div class="job-box-info concigerge-box clearfix">
+      <div class="col-sm-12 col-md-6 col-6">
+        <div class="job-box-info concigerge-box clearfix h_300">
             <div class="box-head">
               <h4 class="text-white"><b>Online Test {{$loop->index+1}}: </b></h4>                          
             </div>

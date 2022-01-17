@@ -32,12 +32,6 @@
     <link rel="stylesheet" href="{{ asset('assests/custom-css/common.css') }}">
     <link rel="stylesheet" href="{{ asset('assests/custom-css/dashboard.css') }}">
 
-    {{-- New Style End here --}}
-
-    {{-- Added By Hassan --}}
-    {{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
-    {{-- Added By Hassan --}}
-
     @yield('meta_tags')
     @yield('custom_css')
 
@@ -99,7 +93,7 @@
 
     <div class="container-fluid">
 
-        @if ($controlsession->count() < 0)
+        @if ($controlsession->count() > 0)
         <div class="adminControl">
             <p>You are in control of <span class="bold">{{$user->company}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
         </div>

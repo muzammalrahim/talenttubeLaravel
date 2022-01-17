@@ -42,7 +42,7 @@ class TalentController extends Controller
             $query = $query->whereNotIn('id', $block);
         }
         
-        $data['query'] =  $query->get();
+        $data['query'] =  $query->paginate(10);
         //dd($data['query'] );       
         $data['likeUsers'] = $likeUsers;
         $data['title'] = 'Talent Match';
@@ -60,6 +60,7 @@ class TalentController extends Controller
 
 
         }else{
+            // dd( ' Coming here ' );
             return view('site.talent_matcher.index', $data); // site/talent_matcher/index
         }
 
