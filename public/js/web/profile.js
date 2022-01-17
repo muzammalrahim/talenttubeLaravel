@@ -691,42 +691,10 @@ $(document).ready(function(){
 
     // ============================================ Like user (jobseeker info page)
 
-    // $(document).on('click', '.likeFunction',function(){
+    // $(document).on('click', '.like-btn', function(){
 
-    // // this.likeFunction = function(jobseeker_id){
-    //     var jobseeker_id = $(this).attr('data-jsid');
-    //     console.log(jobseeker_id); 
-    //     var btn = $(this);
-    //     console.log(' jsLikeUserBtn jobseeker_id ', jobseeker_id);
-    //     // $(this).html(getLoader('blockJobSeekerLoader'));
-    //     $('.jsLikeUserBtn').html('Liked');
-    //     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-    //     $.ajax({
-    //         type: 'POST',
-    //         url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
-    //         success: function(data){
-    //             // btn.prop('disabled',false);
-    //             if( data.status == 1 ){
-    //                 console.log('User Liked ==============' );
-    //                 $(this).text('Liked');
-    //                 btn.html('Liked').addClass('active');
-    //                 // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-    //             }else{
-    //                 btn.html('error');
-    //             }
-    //         }
-    //     });
-    // // }
-
-    // })
-
-
-
-    $(document).on('click', '.like-btn', function(){
-
-    // this.likeFunction = function(jobseeker_id){
+    this.likeFunction = function(jobseeker_id){
         console.log( ' Like User button profile.js new file' );
-        var jobseeker_id = $(this).attr('data-userid');
         $(this).html('Liked');
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
@@ -734,49 +702,73 @@ $(document).ready(function(){
             url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
             success: function(res){
                 if( res.status == 1 ){
-                    swal("Good job!", "User Liked Successfully!", "success");
-
-                    var html = '<button class="unlike-btn" onclick="unlikefunction('+jobseeker_id+')"data-toggle="modal" data-target="#unlikeModal">';
-                        html += '<i class="fas fa-thumbs-up" ></i> UnLike</button>';
-                        $(this).html(html);
+                    var html = '<button class="unlike-btn" onclick="unlikefunction('+jobseeker_id+')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>';
+                    $('.js_'+jobseeker_id+' .like-div').html(html);
+                    $('.js_'+jobseeker_id+' .like-div').removeClass('like-div').addClass('unlike-div');
+                    
                 }else{
                     // btn.html('error');
                 }
             }
         });
-    // }
+    }
 
-    })
+    // })
 
+
+    // =============================================== unlike user ===============================================
+
+    this.unlikefunction = function(jobseeker_id){
+        console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
+        $('#jobSeekerBlockId').val(jobseeker_id);
+    }
+
+    this.unlikeConfirm = function(){
+        console.log('unlike button new');
+        // $('#jobSeekerBlockId').val(jobseeker_id);
+        var jobseeker_id = $('#jobSeekerBlockId').val();
+        var btn = $(this); 
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/unLikeUser',
+            data: {id: jobseeker_id},
+            success: function(data){
+                if( data.status == 1 ){
+                  var html = '<button class="like-btn" onclick="likeFunction('+jobseeker_id+')" data-jsid = "'+jobseeker_id+'}}"><i class="fas fa-thumbs-up"></i> Like</button>';
+                  $('.js_'+jobseeker_id+' .unlike-div').html(html);
+                  $('.js_'+jobseeker_id+' .unlike-div').removeClass('unlike-div').addClass('like-div');
+                  $('.removeJs_'+jobseeker_id).remove();
+
+                }else{
+                  $('.jobSeekerBlockId .apiMessage').html(data.error);
+                }
+            }
+        });
+
+    }
 
     // ============================================ block functions ============================================
 
     this.blockFunction = function(jobseeker_id){
-        console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
-        console.log(' confirm_JobSeekerBlock_ok ');
-        var btn = $(this); //
-        btn.prop('disabled',true);
-        // $('.img_chat').hide();
-
+        console.log('jobseeker block 13-01-2021 ', jobseeker_id);
+        // $('#jobSeekerBlockId').val(jobseeker_id);
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
-            url: base_url+'/ajax/blockEmployer/'+jobseeker_id,
+            url: base_url+'/ajax/blockJobSeeker/'+jobseeker_id,
             success: function(data){
-                btn.prop('disabled',false);
+                // btn.prop('disabled',false);
                 if( data.status == 1 ){
-                    $('.showError').addClass('apiMessageForBlockingEmp').css("display","block");
-                    $('.apiMessageForBlockingEmp').html(data.message);
-                    // $('.jobSeeker_row.js_'+jobseeker_id).remove();
-                    $('.blockJobSeekerLoader').hide();
-
-                    $('.double_btn').hide();
-
+                    var html = '<a onclick="unblockUser('+jobseeker_id+')"><button class="unblock-btn" data-toggle="modal" data-target="#unBlockModal"><i class="fas fa-ban"></i> UnBlock</button></a>';
+                    $('.js_'+jobseeker_id+' .block-div' ).html(html);
                 }else{
                     // $('#confirmJobSeekerBlockModal .img_chat').html(data.error);
                 }
             }
         });
+
+        
     }
 
 
@@ -787,24 +779,20 @@ $(document).ready(function(){
 
     }
 
-    this.confirmUnblockUser = function(){
-        console.log(' confirm_JobSeekerBlock_ok ');
+    this.confirmUnBlockUser = function(){
+        // console.log(' 14-01-2021 ');
         var jobseeker_id = $('#jobSeekerBlockId').val();
         $('.confirmJobSeekerBlockModal').addClass('showLoader');
-        var btn = $(this); //
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
             url: base_url+'/ajax/unBlockUser',
             data: {id: jobseeker_id},
             success: function(data){
-               // btn.prop('disabled',false);
-               // $('.confirmJobSeekerBlockModal').removeClass('showLoader').addClass('showMessage');
                 if( data.status == 1 ){
-                    $('.confirmJobSeekerBlockModal .apiMessage').html(data.message);
-                    $('.js_'+jobseeker_id).remove();
-
-                    $('.double_btn').hide();
+                    var html = '<a onclick="blockFunction('+jobseeker_id+')"><button class="unblock-btn" data-toggle="modal" data-target="#blockModal"><i class="fas fa-ban"></i> Block</button></a>';
+                    $('.js_'+jobseeker_id+' .block-div' ).html(html);
+                    $('.removeJs_'+jobseeker_id).remove();
 
                 }else{
                     $('.confirmJobSeekerBlockModal .apiMessage').html(data.error);
@@ -814,33 +802,59 @@ $(document).ready(function(){
     // });
     }
 
-    // =============================================== unlike user ===============================================
 
-    this.unlikefunction = function(jobseeker_id){
-        console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
-        $('#jobSeekerBlockId').val(jobseeker_id);
-    }
+    // ============================================ block functions(Employer) ============================================
 
-    this.confirmUnlikeFunction = function(){
-        console.log(' confirm_JobSeekerBlock_ok ');
-        var jobseeker_id = $('#jobSeekerBlockId').val();
-        var btn = $(this); //
-       //  btn.prop('disabled',true);
+    this.blockEmployerFunction = function(jobseeker_id){
+        console.log('jobseeker block 13-01-2021 ', jobseeker_id);
+        // $('#jobSeekerBlockId').val(jobseeker_id);
+
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
-            url: base_url+'/ajax/unLikeUser',
+            url: base_url+'/ajax/blockEmployer/'+jobseeker_id,
+            success: function(data){
+                // btn.prop('disabled',false);
+                if( data.status == 1 ){
+                    var html = '<a onclick="unblockEmployer('+jobseeker_id+')"><button class="unblock-btn" data-toggle="modal" data-target="#unblockUserModal"><i class="fas fa-ban"></i> UnBlock</button></a>';
+                    $('.js_'+jobseeker_id+' .block-div' ).html(html);
+                }else{
+                    // $('#confirmJobSeekerBlockModal .img_chat').html(data.error);
+                }
+            }
+        });
+
+        
+    }
+
+    this.unblockEmployer = function(jobseeker_id){
+        $('#jobSeekerBlockId').val(jobseeker_id);
+    }
+
+    this.confirmUnBlockEmployer = function(){
+        var jobseeker_id = $('#jobSeekerBlockId').val();
+        console.log(jobseeker_id);
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/unBlockUser/',
             data: {id: jobseeker_id},
             success: function(data){
+                // btn.prop('disabled',false);
                 if( data.status == 1 ){
-                    $('.js_'+jobseeker_id).remove();
+                    var html = '<a onclick="blockEmployerFunction('+jobseeker_id+')"><button class="unblock-btn"><i class="fas fa-ban"></i> Block</button></a>';
+                    $('.js_'+jobseeker_id+' .block-div' ).html(html);
+                    $('.remjs_'+jobseeker_id).remove();
 
                 }else{
-                    $('.jobSeekerBlockId .apiMessage').html(data.error);
+                    // $('#confirmJobSeekerBlockModal .img_chat').html(data.error);
                 }
             }
         });
     }
+
+    
+    
 
     // =============================================== interview concierge delete function ===============================================
 

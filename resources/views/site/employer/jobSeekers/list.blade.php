@@ -21,7 +21,7 @@
       </div>
    </div>
    --}}
-   <div class="col-sm-12 col-md-12">
+   <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
       <div class="job-box-info block-box clearfix">
          <div class="box-head">
             @php
@@ -65,7 +65,7 @@
             @endif                          
          </div>
          <div class="row Block-user-wrapper">
-            <div class="col-md-4 user-images">
+            <div class="col-md-2 user-images">
                @php
                $profile_image  = asset('images/site/icons/nophoto.jpg');
                $profile_image_gallery    = $js->profileImage()->first();
@@ -83,7 +83,7 @@
                   <h6>{{$js->username}}</h6>
                </div>
             </div>
-            <div class="col-md-8 user-details">
+            <div class="col-md-10 user-details">
                <div class="w50 py-3">
                   <div id="piechart_{{$js->id}}"></div>
                </div>
@@ -103,11 +103,11 @@
                   
                </script>
                <div class="row blocked-user-about">
-                  <h6>Recent job:</h6>
-                  <p class="pl-2"><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
+                  <h6 class="p-0">Recent job:</h6>
+                  <p class=""><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
                </div>
                <div class="row blocked-user-about">
-                  <h6>Qualificaton:</h6>
+                  <h6 class="p-0">Qualificaton:</h6>
                   @php
                   $qualification_names =  getQualificationNames($js->qualification)
                   @endphp
@@ -125,25 +125,25 @@
                   @endif
                </div>
                <div class="row blocked-user-about">
-                  <h6>About Me:</h6>
-                  <p class="pl-2">{{$js->about_me}}</p>
+                  <h6 class="p-0">About Me:</h6>
+                  <p class="">{{$js->about_me}}</p>
                </div>
                <div class="row blocked-user-about">
-                  <h6>Intrested In:</h6>
-                  <p class="pl-2">{{$js->interested_in}}</p>
+                  <h6 class="p-0">Intrested In:</h6>
+                  <p class="">{{$js->interested_in}}</p>
                </div>
                <div class="row blocked-user-about">
-                  <h6>Sallary Range:</h6>
-                  <p class="pl-2">{{getSalariesRangeLavel($js->salaryRange)}}</p>
+                  <h6 class="p-0">Sallary Range:</h6>
+                  <p class="">{{getSalariesRangeLavel($js->salaryRange)}}</p>
                </div>
                <div class="row blocked-user-about">
-                  <h6>Location:</h6>
-                  <p class="pl-2">{{userLocation($js)}}</p>
+                  <h6 class="p-0">Location:</h6>
+                  <p class="">{{userLocation($js)}}</p>
                </div>
                <div class="row blocked-user-experience">
-                  <h6>Industory Experience:</h6>
+                  <h6 class="p-0">Industory Experience:</h6>
                   @if(isset($js->industry_experience))
-                  <ul>
+                  <ul class="p-0">
                      @foreach ($js->industry_experience as $ind)
                      <div class="indsutrySelect">
                         <li>
@@ -162,14 +162,18 @@
             <div class="employe-btn-group">
                {{-- @dump($likeUsers) --}}
                @if (in_array($js->id,$likeUsers))
-                  <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up" ></i> UnLike</button>
+               <div class="unlike-div">
+                  <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
+               </div>
                @else
-                  <button class="like-btn" data-userid = "{{ $js->id }}" {{-- onclick="likeFunction('{{ $js->id }}')" --}}><i class="fas fa-thumbs-up"></i> Like</button>
+                  <div class="like-div">
+                     <button class="like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
+                  </div>
                @endif
+
                <a href="{{ route('jobSeekerInfo', ['id'=> $js->id]) }}" target="_blank">
                   <button class="detail-btn"><i class="fas fa-file-alt"></i> View profile</button>
                </a>
-
             </div>
          </div>
       </div>

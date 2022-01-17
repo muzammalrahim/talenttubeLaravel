@@ -474,7 +474,18 @@ input, textarea, select{
 }
 
 
-.adminControl{ background: black; color: red; text-align: center; padding: 5px 0px 0px 0px; width: 1166px; margin: 0 auto;}
+.adminControl{ 
+    background: black;
+    color: red;
+    text-align: center;
+    padding: 5px 0px 0px 0px;
+    width: 700px;
+    position: absolute;
+    margin: 0 auto;
+    z-index: 1;
+    top: 10px;
+    left: 34%;
+}
 .adminLogin{color: red; cursor: pointer;text-decoration: underline}
 /*.site_btn{
     position: absolute;
@@ -532,4 +543,8 @@ input, textarea, select{
 /* Employer Info page html display none  */
 div.google-visualization-tooltip {
      display: none !important;
+}
+
+.h_300{
+    height: 300px;
 }

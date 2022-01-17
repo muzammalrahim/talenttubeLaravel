@@ -16,7 +16,7 @@
       @endphp                
       <!-- Top Filter Row -->
       <div class="row">
-         <div class="col-sm-12 col-md-12">
+         <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
             <div class="job-box-info employee-details-info block-box clearfix">
                <div class="box-head">                        
                </div>
@@ -44,7 +44,7 @@
                      </div>
                   </div>
                   <div class="col-md-9 user-details">
-                     <div class="row blocked-user-about">
+                     <div class="row blocked-user-about mt-2">
                         @if (!isAdmin($user))
                         {{-- expr --}}
                         @include('site.user.match_algo.match_algo')   {{-- site/user/match_algo/match_algo --}}
@@ -77,34 +77,34 @@
                      }
                      }
                      @endphp
-                     <div class="row blocked-user-about">
-                        <h6>Recent Job:</h6>
+                     <div class="row blocked-user-about mt-2">
+                        <h6 class="p-0">Recent Job:</h6>
                         <p><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
                      </div>
-                     <div class="row blocked-user-about">
-                        <h6>About Me:</h6>
+                     <div class="row blocked-user-about mt-2">
+                        <h6 class="p-0">About Me:</h6>
                         <p>{{$js->about_me}}</p>
                      </div>
-                     <div class="row blocked-user-about">
-                        <h6>Intrested In:</h6>
+                     <div class="row blocked-user-about mt-2">
+                        <h6 class="p-0">Intrested In:</h6>
                         <p>{{$js->interested_in}}</p>
                      </div>
-                     <div class="row blocked-user-about">
-                        <h6>Location:</h6>
+                     <div class="row blocked-user-about mt-2">
+                        <h6 class="p-0">Location:</h6>
                         <p>{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
                      </div>
-                     <div class="row blocked-user-about">
-                        <h6>Sallary Range:</h6>
+                     <div class="row blocked-user-about mt-2">
+                        <h6 class="p-0">Sallary Range:</h6>
                         <p>{{getSalariesRangeLavel($js->salaryRange)}}</p>
                      </div>
-                     <div class="row blocked-user-about">
-                        <h6>Qualification:</h6>
+                     <div class="row blocked-user-about mt-2">
+                        <h6 class="p-0">Qualification:</h6>
                         <p><span><b>Type:</b></span>{{$js->qualificationType}}</p>
                         @php
                         $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
                         @endphp
                         @if(!empty($qualificationsData))
-                        <ul>
+                        <ul class="p-0">
                            @foreach($qualificationsData as $qualification)
                            <li class="QualificationSelect">
                               <p>{{$qualification['title']}}</p>
@@ -113,10 +113,10 @@
                         </ul>
                         @endif
                      </div>
-                     <div class="row blocked-user-experience">
-                        <h6>Industory Experience:</h6>
+                     <div class="row blocked-user-experience mt-2">
+                        <h6 class="p-0">Industory Experience:</h6>
                         @if(isset($js->industry_experience))
-                        <ul>
+                        <ul class="p-0">
                            @foreach ($js->industry_experience as $ind)
                            <li class="indsutrySelect">
                               <p >{{getIndustryName($ind)}} </p>
@@ -130,12 +130,25 @@
                <div class="box-footer clearfix">
                   <div class="block-progrees-ratio d-none d-md-block">
                   </div>
-                  <a id="JSBlockBtn"  data-jsid="{{$js->id}}"><button class="unblock-btn" data-toggle="modal" data-target="#myModal333"><i class="fas fa-ban"></i> Block</button></a>
+                  {{-- <div class="block-div">
+                     <a onclick="blockFunction('{{$js->id}}')"><button class="unblock-btn" data-toggle="modal" data-target="#blockModal"><i class="fas fa-ban"></i> Block</button></a>
+                  </div> --}}
+
+                  <div class="block-div">
+                     <button class="block-btn" onclick="blockFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
+                  </div>
+                  
                   @if (in_array($js->id,$likeUsers))
-                  <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up" ></i> UnLike</button>
+                     <div class="unlike-div">
+                        <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
+                     </div>
                   @else
-                  <button class="like-btn" data-userid = "{{ $js->id }}" {{-- onclick="likeFunction('{{ $js->id }}')" --}}><i class="fas fa-thumbs-up"></i> Like</button>
-                  @endif                          
+                     <div class="like-div">
+                        <button class="like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
+                     </div>
+                  @endif
+
+
                </div>
             </div>
          </div>
@@ -279,52 +292,18 @@
       </div>
       --}}
    </div>
-   {{-- modal for Block user of like page --}}
-   <!-- ====================================================================================Modal -->
-   <div class="modal fade" id="myModal333" role="dialog">
-      <div class="modal-dialog delete-applications">
-         <!-- Modal content-->
-         <div class="modal-content">
-            <div class="modal-header">
-               <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
-               <h1 class="modal-title"><i class="fas fa-ban trash-icon"></i>Block User</h1>
-            </div>
-            <div class="modal-body">
-               <strong>Are you sure you wish to continue?</strong>
-            </div>
-            <div class="dual-footer-btn">
-               <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
-               <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button>
-            </div>
-         </div>
-      </div>
-   </div>
+
+   <!-- ===================================== Modal for block jobseeker =====================================  -->
+
+   {{-- @include('web.modals.block') --}}
+   @include('web.modals.unblock')
 
 
-   <!-- Modal for unlike jobseeker  -->
+   <!-- ===================================== Modal for unlike jobseeker =====================================  -->
 
-   <div class="modal fade" id="unlikeModal" role="dialog">
-       <div class="modal-dialog delete-applications">
-       
-         <!-- Modal content-->
-         <div class="modal-content">
-           <div class="modal-header">
-             <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
-             <h1 class="modal-title"><i class="fas fa-thumbs-down trash-icon"></i>UnLike User</h1>
-           </div>
-           <div class="modal-body">
-             <strong>Are you sure you wish to continue?</strong>
-           </div>
+   @include('web.modals.unlike')
 
-           <input type="hidden" id="jobSeekerBlockId" />
-           <div class="dual-footer-btn">
-             <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
-             <button type="button" class="orange_btn" onclick="confirmUnlikeFunction()" data-dismiss="modal"><i class="fa fa-check"></i>OK</button>
-           </div>
-         </div>
-         
-       </div>
-   </div>
+
    
 </section>
 {{-- html for job seekers details ends here --}}
@@ -339,41 +318,6 @@
    $(document).ready(function(){
    
     // ========== Function to show Block popup when click on ==========//
-    $(document).on('click','#JSBlockBtn',function(){
-        var jobseeker_id = $(this).data('jsid');
-        console.log('jsBlockUserBtn click jobseeker_id = ', jobseeker_id);
-        $('#jobSeekerBlockId').val(jobseeker_id);
-        $('.double_btn').show();
-    });
-   
-    // ========== Block Employer Ajax call  ==========//
-    $(document).on('click','.ConfirmBlockJsInJsInfoPage',function(){
-       console.log(' blockJsInJsInfoPage ');
-       var jobseeker_id = $('#jobSeekerBlockId').val();
-   
-       $('.confirmJobSeekerBlockModal  .img_chat').html(getLoader('blockJobSeekerLoader'));
-       var btn = $(this); //
-       btn.prop('disabled',true);
-   
-       $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
-       $.ajax({
-           type: 'POST',
-           url: base_url+'/ajax/blockJobSeeker/'+jobseeker_id,
-           success: function(data){
-               btn.prop('disabled',false);
-               if( data.status == 1 ){
-                   $('.confirmJobSeekerBlockModal .img_chat').html(data.message);
-                   $('.jobSeeker_row.js_'+jobseeker_id).remove();
-                   $('.double_btn').hide();
-   
-               }else{
-                   $('.confirmJobSeekerBlockModal .img_chat').html(data.error);
-               }
-           }
-       });
-   });
-   
-   
    
    $('.cop_text').click(function (e) {
       e.preventDefault();

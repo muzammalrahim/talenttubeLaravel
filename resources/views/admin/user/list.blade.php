@@ -26,6 +26,7 @@
       <div class="col-md-1.5 bulkButton"><a  class="btn btn-sm btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
       <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
       <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary bulkPool">Bulk Pool</a></div>
+      {{-- <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary bulkSms" onclick="bulkSmsFunction()">Bulk SMS</a></div> --}}
       {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
     </div>
     {{-- testing --}}
@@ -706,6 +707,11 @@ $(document).on('click','.btnBulkEmail', function(){
 
 
 
+this.bulkSmsFunction = function(){
+    var cbx = $('input[ name = "cbx[]" ]:checked').map(function(){ return $(this).val(); }).toArray();
+    console.log(cbx);
+
+}
 
 
 

@@ -30,7 +30,7 @@
                         $jobType = 'Temporary';
                     }
                     elseif ($job->type == 'casual') {
-                        $jobType = 'casual';
+                        $jobType = 'Casual';
                     }
                     elseif ($job->type == 'full_time') {
                         $jobType = 'Full time';
@@ -68,18 +68,18 @@
                                 </div>
                                 <div class="text-info-detail clearfix">
                                     <label class="mt-1">Job Experience:</label>
-                                    <span>
-                                        @if(!empty($experience))
-                                        @foreach($experience as $industry )
-                                        <div class="IndustrySelect">
-                                            <p class="m-0"><i class="fas fa-angle-right qualifiCationBullet"></i>
-                                                {{getIndustryName($industry)}}
-                                                <i class="fa fa-trash removeIndustry hide_it"></i>
-                                            </p>
+                                        <div class="jobIndustryExp">
+                                            @if(!empty($experience))
+                                            @foreach($experience as $industry )
+                                                <span class="m-0 w-100"><i class="fas fa-angle-right qualifiCationBullet"></i>
+                                                    {{getIndustryName($industry)}}
+                                                    <i class="fa fa-trash removeIndustry hide_it"></i>
+                                                </span>
+                                            @endforeach
+                                            @else
+                                            <span> No Experience Required </span>
+                                            @endif
                                         </div>
-                                        @endforeach
-                                        @endif
-                                    </span>
                                 </div>
 
                                 <div class="text-info-detail clearfix">
@@ -92,7 +92,12 @@
                                 </div>
                                 <div class="text-info-detail clearfix">
                                     <label>Job Detailed:</label>
-                                    <p>{{$job->description}} </p>
+
+                                     @php 
+                                        $remSpecialCharQues = str_replace("\&#39;","'",$job->description);
+                                    @endphp
+
+                                    <p>{{$remSpecialCharQues}} </p>
                                 </div>
                                 <span class="inreview-tag used-tag">{{$status}}</span>
                             </div>
@@ -118,6 +123,14 @@
 @stop
 
 @section('custom_footer_css')
+
+<style type="text/css">
+    .jobIndustryExp {
+        height: 50px;
+        overflow-y: auto;
+    }
+</style>
+
 {{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 @stop

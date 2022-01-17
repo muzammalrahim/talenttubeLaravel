@@ -2129,8 +2129,8 @@ class SiteUserController extends Controller
         $data['controlsession'] = $controlsession;
         $data['blockUsers'] = BlockUser::with('user')->where('user_id',$user->id)->get();
         if(isEmployer()){
-
-            return view('site.employer.blockUsers', $data);
+            // dd('coming here');
+            return view('site.employer.blockUsers', $data);  // site/employer/blockUsers
               // return view('mobile.user.profile.profile', $data);
           }
 
@@ -2152,7 +2152,6 @@ class SiteUserController extends Controller
         $data['likeUsers'] = LikeUser::with('user')->where('user_id',$user->id)->get();
 
         if(isEmployer()){
-
             return view('site.employer.likeUsers', $data); // site/employer/likeUsers
           }
 
@@ -2424,6 +2423,7 @@ class SiteUserController extends Controller
     function logoutRouteForAdmin(Request $request){
         // dd($userID);
         $user = Auth::user();
+        // dd($user);
         $controlsession = ControlSession::where('user_id',$user->id)->where('admin_id', 1)->get();
         foreach ($controlsession as $control) {
             if ($control->ip_address == $request->ip()) {

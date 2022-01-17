@@ -3,7 +3,7 @@
    @if(isset($employers))
    @if ($employers->count() > 0)
    @foreach ($employers as $js)
-   <div class="col-sm-12 col-md-12">
+   <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
       <div class="job-box-info block-box clearfix">
          <div class="box-head">
             @php
@@ -112,13 +112,20 @@
             <div class="block-progrees-ratio1 d-none d-md-block">
             </div>
             <div class=" employe-btn-group">
-               <button class="block-btn" onclick="blockFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
+               <div class="block-div">
+                  <button class="block-btn" onclick="blockEmployerFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
+               </div>
                <a href="{{route('employerInfo', ['id' => $js->id])}}"><button class="detail-btn"><i class="fas fa-file-alt"></i> Detail</button></a>
-               @if (in_array($js->id,$likeUsers))            
-               <button class="like-btn"><i class="fas fa-thumbs-up"></i> Liked</button>
+               @if (in_array($js->id,$likeUsers))
+               <div class="unlike-div">
+                  <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
+               </div>
                @else
-               <button class="like-btn likeFunction" data-jsid="{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button>
+                  <div class="like-div">
+                     <button class="like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
+                  </div>
                @endif
+         
             </div>
          </div>
       </div>
@@ -128,3 +135,6 @@
    @endif
    @endif 
 </div>
+
+@include('web.modals.unblockEmployer')
+
