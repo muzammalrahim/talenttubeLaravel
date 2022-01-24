@@ -106,6 +106,8 @@ class EmployerController extends Controller {
             $data['industriesList'] = getIndustries();
             $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
             $data['controlsession'] = $controlsession;
+            $data['empquestion'] = getEmpRegisterQuestions();
+            $data['userQuestions'] = !empty($user->questions)?(json_decode($user->questions, true)):(array());
 			$view_name = 'web.employer.profile.profile'; // web/employer/profile/profile
             return view($view_name, $data);
         }else{
@@ -691,7 +693,7 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function jobSeekersFilter(Request $request){
         // $data =  $request->toArray();
-        // dd($request->all());
+        // dump($request->all());
         $user = Auth::user();
         if (!isEmployer($user)){
             return response()->json([
@@ -730,40 +732,11 @@ class EmployerController extends Controller {
             $query = $query->whereNotIn('id', $block);
         }
 
-
-        // ================================================ Filter by salaryRange. ================================================
-
-        if (isset($request->filter_salary) && !empty($request->filter_salary)){
-            $query = $query->where('salaryRange', '=', $request->filter_salary);
-          }
-
-        // ================================================ Filter by google map location radius.================================================
-
-        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
-            if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
-                // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
-                 $latitude = $request->location_lat;
-                 $longitude = $request->location_long;
-                 $radius = $request->filter_location_radius;
-                 $radius_sign = ($radius <= 50)?'<':'>';
-
-                 $query = $query->selectRaw("*,
-                     ( 6371 * acos( cos(radians('".$latitude."'))
-                     * cos( radians(location_lat))
-                     * cos( radians(location_long) - radians('".$longitude."'))
-                     + sin( radians('".$latitude."'))
-                     * sin( radians( location_lat )))
-                     ) AS distance")
-                ->having("distance", $radius_sign, $radius)
-                ->orderBy("distance",'asc');
-
-            }
-        }
-
         // ================================================ Filter by Keyword filter_keyword ================================================
 
         if(varExist('filter_keyword', $request)){
             $keyword = $request->filter_keyword;
+            // dd($keyword);
             $query = $query->where(function($q) use($keyword) {
                         $q->where('username','LIKE', "%{$keyword}%")
                         ->orWhere('name','LIKE', "%{$keyword}%")
@@ -772,61 +745,6 @@ class EmployerController extends Controller {
                         ->orWhere('interested_in','LIKE', "%{$keyword}%")
                         ->orWhere('recentJob','LIKE', "%{$keyword}%");
                 });
-        }
-
-        // ================================================ Filter by Questions ================================================
-
-        if(varExist('filter_qualification_type', $request)){
-            $query = $query->where('qualificationType', '=', $request->filter_qualification_type);
-        }
-
-        // ================================================ Filter by Question ================================================
-
-        if(varExist('filter_question', $request) &&varExist('filter_by_questions', $request)&& varExist('filter_question_value', $request) ){
-            // SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
-            $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';
-            $query = $query->where('questions', 'LIKE', $question_like);
-
-            // dump($request->all());
-            
-        }
-
-
-        // ================================================ Filter by industry status. ================================================
-
-        if($industry_status && !empty($industries)){
-            $query = $query->where(function($q) use($industries) {
-                $q->where('industry_experience','LIKE', "%{$industries[0]}%");
-                if(count($industries) > 1){
-                    foreach ($industries as $indk =>  $industry) {
-                        if($indk == 0) continue;
-                        $q->orWhere('industry_experience','LIKE', "%{$industry}%");
-                    }
-                }
-            });
-        }
-
-
-        // ================================================ Filter by qualification. ================================================
-
-        if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
-        if(!empty($qualifications)){
-            $query->whereHas('qualificationRelation', function($query2) use($qualifications) {
-                $query2->whereIn('qualifications.id', $qualifications);
-                // $query->where('jobseeker.id', 1);
-                // dd($query->toSql());
-                return $query2;
-            });
-        }
-
-        // ================================================ Filter by Tags. ================================================
-
-        $tags = $request->filter_tags;
-        if(!empty($tags)){
-            $query->whereHas('user_tags', function($query2) use($tags) {
-                $query2->whereIn('tags.id', $tags);
-                return $query2;
-            });
         }
 
         // ================================================ filter by cv keyword ================================================
@@ -839,9 +757,18 @@ class EmployerController extends Controller {
             });
         }
 
+
+        // ================================================ Filter by salaryRange. ================================================
+
+        if (isset($request->filter_salary) && !empty($request->filter_salary)){
+            // dump($request->filter_salary);
+            $query = $query->where('salaryRange', '=', $request->filter_salary);
+        }
+
+
         // ================================================ Filter by Age Group. ================================================
 
-        if (isset($request->filter_by_age_val) && !empty($request->filter_by_age   == 'on')) {
+        if (isset($request->filter_by_age_val)) {
             $age = $request->filter_by_age_val;
             // dd($age);
             if ($age == '18-25') {
@@ -866,11 +793,22 @@ class EmployerController extends Controller {
 
         }
 
+        // ================================================ Filter by Tags. ================================================
+
+        $tags = $request->filter_tags;
+        if(!empty($tags)){
+            $query->whereHas('user_tags', function($query2) use($tags) {
+                $query2->whereIn('tags.id', $tags);
+                return $query2;
+            });
+        }
+
         // ================================================ Filter by Gender. ================================================
 
         if (isset($request->filter_by_gender_val) && !empty($request->filter_by_gender)){
             $gender = $request->filter_by_gender_val;
             if ($gender == 'male') {
+                // dd($gender);
                 $query = $query->where('title' , '=', 'Mr');
             }
             else{
@@ -880,30 +818,81 @@ class EmployerController extends Controller {
             }
         }
 
+        // ================================================ Filter by Qualification Type ================================================
+
+        if(varExist('filter_qualification_type', $request)){
+
+            // dd($request->filter_qualification_type);
+            $query = $query->where('qualificationType', '=', $request->filter_qualification_type);
+        }
+
+        // ================================================ Filter by qualification. ================================================
+
+        // if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
+        if(!empty($qualifications)){
+            $query->whereHas('qualificationRelation', function($query2) use($qualifications) {
+                $query2->whereIn('qualifications.id', $qualifications);
+                // $query->where('jobseeker.id', 1);
+                // dd($query->toSql());
+                return $query2;
+            });
+        }
+
+
+        // ================================================ Filter by industry status. ================================================
+
+        if($industry_status && !empty($industries)){
+            $query = $query->where(function($q) use($industries) {
+                $q->where('industry_experience','LIKE', "%{$industries[0]}%");
+                if(count($industries) > 1){
+                    foreach ($industries as $indk =>  $industry) {
+                        if($indk == 0) continue;
+                        $q->orWhere('industry_experience','LIKE', "%{$industry}%");
+                    }
+                }
+            });
+        }
+
+        // ================================================ Filter by google map location radius.================================================
+
+        if (isset($request->filter_location_status) && !empty($request->filter_location_status == 'on')){
+            if( isset($request->location_lat) && isset($request->location_long)  && isset($request->filter_location_radius)){
+                // $query =  $query->findByLatLongRadius($data, $request->location_lat, $request->location_long, $request->filter_location_radius);
+                $latitude = $request->location_lat;
+                $longitude = $request->location_long;
+                $radius = $request->filter_location_radius;
+                $radius_sign = ($radius <= 50)?'<':'>';
+
+                $query = $query->selectRaw("*,
+                     ( 6371 * acos( cos(radians('".$latitude."'))
+                     * cos( radians(location_lat))
+                     * cos( radians(location_long) - radians('".$longitude."'))
+                     + sin( radians('".$latitude."'))
+                     * sin( radians( location_lat )))
+                     ) AS distance")
+                ->having("distance", $radius_sign, $radius)
+                ->orderBy("distance",'asc');
+
+            }
+        }
+
+
+        // ================================================ Filter by Question ================================================
+
+        if(varExist('filter_question', $request) &&varExist('filter_by_questions', $request)&& varExist('filter_question_value', $request) ){
+            // SELECT * FROM `users` WHERE `questions` LIKE '%\"relocation\":\"yes\"%' ORDER BY `id` DESC
+            $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';
+            $query = $query->where('questions', 'LIKE', $question_like);
+        }
+        
+
         // ================================================ Filter by Tags ================================================
-
-
-
-        // $filter_tags = $request->filter_tags;
-        // // dd($filter_tags);
-        // if(!empty($filter_tags)){
-        //     $query->whereHas('tags', function($query3) use($filter_tags) {
-        //         $abcd = $query3->where('tags.id','like', '%'.$filter_tags.'%');
-        //         dd($abcd);
-        //         return $query3;
-        //     });
-        // }
-
-                
 
         // DB::enableQueryLog();
         // print_r( $query->toSql() );exit;
         $jobSeekers =  $query->paginate(10);
         // $jobSeekers =  $query->get();
-
-
-         // dd(DB::getQueryLog());
-         
+        // dd(DB::getQueryLog());
         // dd(DB::getQueryLog());
 
         // return $data;

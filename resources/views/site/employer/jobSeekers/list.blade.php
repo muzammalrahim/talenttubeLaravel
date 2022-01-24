@@ -84,9 +84,13 @@
                </div>
             </div>
             <div class="col-md-10 user-details">
-               <div class="w50 py-3">
-                  <div id="piechart_{{$js->id}}"></div>
+              
+               {{-- <div class="w50 py-3"> --}}
+               <div class="pb-4" style="width:310px">
+                  <div id="piechart_{{$js->id}}" class="job-box-info"></div>
                </div>
+
+
                <script type="text/javascript">
                   google.charts.load('current', {'packages':['corechart']});
                   google.charts.setOnLoadCallback(drawChart);
@@ -102,45 +106,46 @@
                   }
                   
                </script>
-               <div class="row blocked-user-about">
+               <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">Recent job:</h6>
                   <p class=""><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
                </div>
-               <div class="row blocked-user-about">
+               <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">Qualificaton:</h6>
                   @php
                   $qualification_names =  getQualificationNames($js->qualification)
                   @endphp
                   @if(!empty($qualification_names))
-                  <div class="font13"><i class="fas fa-angle-right qualifiCationBullet"></i>
-                     Type:<span class="qualifTypeSpan">{{$js->qualificationType}}</span>
-                  </div>
-                  <ul>
+                  
+                  {{-- <h6 class="p-0">Qualification:</h6> --}}
+                  <p><span><b>Type:</b></span>{{$js->qualificationType}}</p>
+
+                  <ul class="p-0">
                      @foreach ($qualification_names as $qnKey => $qnValue)
-                     <li class="qualification">
+                     {{-- <li class="qualification"> --}}
                         <p>{{$qnValue}}</p>
-                     </li>
+                     {{-- </li> --}}
                      @endforeach
                   </ul>
                   @endif
                </div>
-               <div class="row blocked-user-about">
+               <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">About Me:</h6>
                   <p class="">{{$js->about_me}}</p>
                </div>
-               <div class="row blocked-user-about">
+               <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">Intrested In:</h6>
                   <p class="">{{$js->interested_in}}</p>
                </div>
-               <div class="row blocked-user-about">
+               <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">Sallary Range:</h6>
                   <p class="">{{getSalariesRangeLavel($js->salaryRange)}}</p>
                </div>
-               <div class="row blocked-user-about">
+               <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">Location:</h6>
                   <p class="">{{userLocation($js)}}</p>
                </div>
-               <div class="row blocked-user-experience">
+               <div class="row blocked-user-experience mt-2" >
                   <h6 class="p-0">Industory Experience:</h6>
                   @if(isset($js->industry_experience))
                   <ul class="p-0">

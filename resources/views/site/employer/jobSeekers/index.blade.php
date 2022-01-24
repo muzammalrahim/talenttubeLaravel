@@ -1,12 +1,15 @@
-{{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster') {{-- site/employer/employermaster --}}
+
+@extends('web.employer.employermaster') {{-- site/employer/employermaster --}}
 @section('custom_css')
-{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
-{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 @stop
 @section('content')
 <div class="newJobCont  profile profile-section">
-   <h2 class="head icon_head_browse_matches">Job Seekers List</h2>
+   {{-- <h2 class="head icon_head_browse_matches">Job Seekers List</h2> --}}
    <div class="add_new_job jobSeekersListingCont">
       <!-- =============================================================================================================================== -->
       @include('site.employer.jobSeekers.filter')   {{-- site/employer/jobSeekers/filter --}}
@@ -74,25 +77,7 @@
        getData();
    });
    
-   //====================================================================================================================================//
-   // Enable/Disabled Filtering by google map location.
-   //====================================================================================================================================//
-   
-   $('input[name="filter_location_status"]').change(function() {
-       console.log(' filter_location_status ');
-       (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
-   });
-   
-   //====================================================================================================================================//
-   // Enable/Disabled Filtering by Questions.
-   //====================================================================================================================================//
-   
-   $('input[name="filter_by_questions"]').change(function() {
-       console.log(' filter_by_questions ');
-       (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));
-       // $('input, select').styler({ selectSearch: true, });
-   });
-   
+
    //====================================================================================================================================//
    // Enable/Disabled Filtering by Resume.
    //====================================================================================================================================//
@@ -113,7 +98,7 @@
    // Enable/Disabled Filtering by Age Group.
    //====================================================================================================================================//
    
-   $('input[name="filter_by_age"]').change(function() {
+    $('input[name="filter_by_age"]').change(function() {
        console.log(' filter_by_age ');
        if(this.checked){
            jQuery('.filter_age_cont').removeClass('hide_it');
@@ -122,13 +107,13 @@
            jQuery('.filter_by_age_val').val("");
        }
    
-   });
-   
+    });
+
    //====================================================================================================================================//
    // Enable/Disabled Filtering by Gender.
    //====================================================================================================================================//
    
-   $('input[name="filter_by_gender"]').change(function() {
+    $('input[name="filter_by_gender"]').change(function() {
        console.log(' filter_by_gender ');
        if(this.checked){
            jQuery('.filter_gender_cont').removeClass('hide_it');
@@ -137,11 +122,10 @@
            jQuery('.filter_by_gender_val').val("");
        }
    
-   });
-   
-   
-   
-   //====================================================================================================================================//
+    });
+
+
+    //====================================================================================================================================//
    // Filter by Tags
    //====================================================================================================================================//
    
@@ -162,6 +146,42 @@
    
        }
    });
+    
+    //====================================================================================================================================//
+   // Filter by Industry Experience
+   //====================================================================================================================================//
+   
+
+   $('input[name="filter_industry_status"]').change(function() {
+        (this.checked)?(jQuery('.filter_industryDiv').removeClass('hide_it')):(jQuery('.filter_industryDiv').addClass('hide_it'));
+   });
+
+   //====================================================================================================================================//
+   // Enable/Disabled Filtering by google map location.
+   //====================================================================================================================================//
+   
+   $('input[name="filter_location_status"]').change(function() {
+       console.log(' filter_location_status ');
+       (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
+   });
+   
+   //====================================================================================================================================//
+   // Enable/Disabled Filtering by Questions.
+   //====================================================================================================================================//
+   
+   $('input[name="filter_by_questions"]').change(function() {
+       console.log(' filter_by_questions ');
+       (this.checked)?(jQuery('.filter_question_cont').removeClass('hide_it')):(jQuery('.filter_question_cont').addClass('hide_it'));
+       // $('input, select').styler({ selectSearch: true, });
+   });
+   
+   
+   
+   
+   
+   
+   
+   
    
    //====================================================================================================================================//
    // Google map location script
@@ -429,7 +449,7 @@
    //====================================================================================================================================//
    
    $(".reset-btn").click(function(){
-       jQuery('input[name="filter_location_status"]').styler();
+       // jQuery('input[name="filter_location_status"]').styler();
        event.preventDefault();
        $('#paginate').val('');
    

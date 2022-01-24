@@ -1,5 +1,5 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('mobile.user.usermaster')
+@extends('web.user.usermaster')
 @section('content')
 
 
