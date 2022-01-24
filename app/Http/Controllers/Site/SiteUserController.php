@@ -2435,6 +2435,7 @@ class SiteUserController extends Controller
                 return redirect('/admin/dashboard');
             }
             else{
+                $controlsession = ControlSession::where('admin_id', 1)->delete();
                 Auth::logout($user, TRUE);
                 return redirect('/');
             }

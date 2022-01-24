@@ -120,103 +120,22 @@
 		<a href="{{route('homepage')}}"> Click here to go home page</a>
 	</div>
 
-{{-- =================================================== Booking deleting Modal ===================================================--}}
+  {{-- =================================================== Booking deleting Modal ===================================================--}}
 
-<!-- Modal -->
-<div class="modal fade" id="bookingDeletingModal" tabindex="-1" role="dialog" aria-labelledby="sendemail1" aria-hidden="true" data-backdrop="static" data-keyboard="false">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content" style="width: 70%;">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteBooking1">Cancel Interview Booking</h5>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        <input type="hidden" name="" class="intBookingInModal">
-        <p>Are you sure you wish to continue ?</p>
-        <h1><i class="far fa-question-circle"></i></h1>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
-        <button type="button" class="confirmDeleteBooking btn btn-primary" data-dismiss="modal">Yes</button>
-      </div>
-    </div>
-  </div>
-</div>
+  @include('web.modals.bookingDeleting')
 
+  {{-- =================================================== Sending email Modal ===================================================--}}
 
-{{-- =================================================== Booking deleting Modal End Here ===================================================--}}
+  @include('web.modals.rescedulingSlot')
 
-{{-- =================================================== Sending email Modal ===================================================--}}
+  {{-- =================================================== Booking Deleted Success Modal ===================================================--}}
 
-<!-- Modal -->
+  @include('web.modals.bookingDeleted')
 
-<div class="modal fade" id="emailSendingModal" tabindex="-1" role="dialog" aria-labelledby="sendemail" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="sendemail">Send Your Preferred Slot</h5>
-        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body p-0">
-        {{-- <input type="text" name="" class="intConInModal"> --}}
-        <div class="text-center preferredSlotLoader d-none">
-            <div class="spinner-border text-primary" role="status">
-              <span class="sr-only">Loading...</span>
-            </div>
-        </div>
+  {{-- =================================================== Booking Deleted Success Modal ===================================================--}}
 
-        <div class="ajaxDataOfSlots"></div>
-        <input type="hidden" name="" class="bookingIdINModal">
+  @include('web.modals.slotUpdated')
 
-      </div>
-      <div class="modal-footer text-center d-block">
-        {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
-        {{-- <button type="button" class="confirmSendEmail btn btn-primary" data-dismiss="modal">Confirm</button> --}}
-
-        <div class="pb-3"> 
-            <a href="{{route('homepage')}}"> Click here to go home page</a>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-{{-- =================================================== Sending email Modal End Here ===================================================--}}
-
-{{-- =================================================== Booking Deleted Success Modal ===================================================--}}
-
-
-<div class="modal fade" id="bookingDeletedModal" tabindex="-1" role="dialog" aria-labelledby="sendemail" aria-hidden="true" data-backdrop = "static">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="sendemail">Interview Booking Deleted</h5>
-        <button type="button" class="close text-white bookingDeletedClodeModal" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body p-0">
-        <div class="text-center my-4">
-            Your interview booking has been cancelled successfully.
-        </div>
-        <div class="ajaxDataOfSlots"></div>
-      </div>
-      <div class="modal-footer text-center d-block">
-        <button type="button" class="btn btn-sm btn-success  text-white bookingDeletedClodeModal" data-dismiss="modal" aria-label="Close"> ok </button>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-{{-- =================================================== Booking Deleted Success Modal End ===================================================--}}
 
 
 </div>
@@ -243,6 +162,7 @@ $(document).ready(function(){
 
     $('.confirmDeleteBooking').click(function(){
       var intConConfID = $('.intBookingInModal').val();
+      console.log(intConConfID);
       $('#overlay').removeClass('d-none');
       $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
 
@@ -312,7 +232,7 @@ $(document).ready(function(){
 <style type="text/css">
 	
 .col_center{
-    width: 50% !important;
+    /*width: 50% !important;*/
     padding-top: 0px;
 }
 .interviewBooking:nth-child(odd) { background-color:#d7dedff0;}

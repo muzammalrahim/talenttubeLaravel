@@ -82,8 +82,10 @@
                <div class="progress-img">
                   {{-- ============================================= Pie Chart =============================================  --}}
                   {{--  @include('site.talent_matcher.algo')  --}}{{-- site/talent_matcher/algo --}}
-                  <div class="w50">
-                     <div id="piechart_{{$js->id}}"></div>
+                  {{-- <div class="w50"> --}}
+                  <div class="pb-4" style="width:310px">
+
+                     <div id="piechart_{{$js->id}}" class="job-box-info"></div>
                   </div>
                   <script type="text/javascript">
                      google.charts.load('current', {'packages':['corechart']});
@@ -103,11 +105,11 @@
                   {{-- ============================================= Pie Chart =============================================  --}}
                </div>
                @if (isEmployer())
-                  <div class="row blocked-user-about pl-3 mt-2">
+                  <div class="row blocked-user-about mt-2">
                      <h6 class="p-0">Recent Job:</h6>
                      <p>{{$js->recentJob}}<b> at </b>{{$js->organHeldTitle}}</p>
                   </div>
-                  <div class="row blocked-user-about pl-3 mt-2">
+                  <div class="row blocked-user-about mt-2">
                      <h6 class="p-0">Qualificaton:</h6>
                      @php
                      $qualification_names =  getQualificationNames($js->qualification)
@@ -126,21 +128,21 @@
                      @endif
                   </div>
 
-                  <div class="row blocked-user-about pl-3 mt-2">
+                  <div class="row blocked-user-about mt-2">
                      <h6 class="p-0">Sallary Range:</h6>
                      <p>{{getSalariesRangeLavel($js->salaryRange)}}</p>
                   </div>
                @endif
-               <div class="row blocked-user-about pl-3 mt-2">
+               <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">About Me:</h6>
                   <p>{{$js->about_me}}</p>
                </div>
-               <div class="row blocked-user-about pl-3 mt-2">
+               <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">Intrested In:</h6>
                   <p>{{$js->interested_in}}</p>
                </div>
                
-               <div class="row blocked-user-experience pl-3 mt-2">
+               <div class="row blocked-user-experience mt-2">
                   <h6 class="p-0">Industory Experience:</h6>
                   @if(isset($js->industry_experience))
                   @foreach ($js->industry_experience as $ind)

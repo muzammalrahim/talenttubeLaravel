@@ -1,8 +1,13 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster')
+@extends('web.employer.employermaster')
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+
+
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 {{-- 
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 --}}
@@ -15,7 +20,126 @@
       <input type="hidden" name="page" id="paginate" value="">
       <input type="hidden" name="job_id" value="{{$job->id}}">
       <div class="row b-filter-row top-filter-row d-flex">
-         <div class="searchField_qualification mb10 col-md-4 d-flex">
+         
+
+         {{-- ======================================= Filter By Keyword ======================================= --}}
+         
+         <div class="row">   
+            <div class="col-md-6 col-sm-6">
+               <div class="input-employee clearfix">
+                  <div class="row">
+                     <label class="col-md-4">Keyword:</label>
+                     <input type="text" class="form-control col-md-8" name="filter_keyword">
+                  </div>
+               </div>
+            </div>
+            
+            {{-- ======================================= Filter By Salary ======================================= --}}
+
+            <div class="col-md-6 col-sm-6">
+               <div class="input-employee clearfix">
+                  <div class="row">
+                     <label class="col-md-4">Salary Range:</label>
+                     {{-- <input type="text" class="form-control col-md-8" name="filter_salary" aria-label="Recipient's username"> --}}
+                     <select name="filter_salary" class="form-control col-md-8 bg-white" id="filter_salary" data-placeholder="Select Salary Range">
+                        <option value="">Select Salary Range</option>
+                        @foreach(getSalariesRange() as $sk => $salary)
+                            <option value="{{$sk}}">{{$salary}}</option>
+                        @endforeach
+                    </select>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+
+         {{-- ======================================= Filter By Industry ======================================= --}}
+
+         {{-- ================================== Filter by Industry ================================== --}}
+
+
+            <div class="row b-filter-row mt-3">
+               <div class="col-md-12 browse-mp">
+                  <div class="row">
+                     <div class="col-md-3 col-sm-12 mt-1">
+                        <h5 class="browse-heading">Filter by Industry:</h5>
+                     </div>
+                     <div class="col-md-1 col-sm-2 col-2 custom-checkbox mt-1">
+                        <input type="checkbox" name="filter_industry_status" checked class="">
+                     </div>
+                     <div class="col-md-8 col-sm-12 filter_industryDiv">
+                           <select name="filter_industry[]" multiple="multiple" id="filter_industry" placeholder = "Filter by Job" class="multi-select form-control custom-select">
+                              @php
+                              $industries = getIndustries()
+                              @endphp
+                              @if(!empty($industries))
+                              <div class="filter_industries_list">
+                                 @foreach ($industries as $indK => $indV)
+                                 <option class="" value="{{$indK}}" data-id="{{$indK}}"><span>{{$indV}}</span></option>
+                                 @endforeach
+                              </div>
+                              @endif
+                           </select>
+                           {{-- 
+                        </div>
+                        --}}
+                     </div>
+                  </div>
+               </div>
+            </div>
+            
+            {{-- ============================================ Filter by Location ============================================ --}}
+
+
+            <div class="row b-filter-row mt-3">
+               <div class="col-md-12">
+                  <div class="row">
+                     <div class="col-md-3 col-sm-12 mt-1 b-mob-pad">
+                        <h5 class="browse-heading">Filter by Location:</h5>
+                     </div>
+                     <div class="col-1 custom-checkbox mt-1">  
+                        <input type="checkbox" class="" name="filter_location_status">
+                     </div>
+                     <div class="FilterLocationBox col">
+                        <div class="location_search_cont row hide_it">
+                           <div class="col-10 md-form form-sm">
+                              <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
+                           </div>
+                           <div class="col-2">
+                              <select class="white-text mdb-select md-form filter_location_radius custom-select" name="filter_location_radius" data-placeholder="Select Location Radius">
+                                 <option value="5" selected="selected">5km</option>
+                                 <option value="10">10km</option>
+                                 <option value="25">25km</option>
+                                 <option value="50">50km</option>
+                                 <option value="51">50km +</option>
+                              </select>
+                           </div>
+                           <div class="location_latlong d-none w100">
+                              <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+                              <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+                           </div>
+                           <div class="location_map_box dtable w100">
+                              <div class="location_map" id="location_map"></div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+         {{-- ======================================= Filter By Question ======================================= --}}
+
+         <div class="searchField_questions col-md-4 d-flex">
+            <div class="searchFieldLabel col-5 ">Filter by Question: </div>
+            <input type="text" name="filter_by_questions" class="bg-white form-control" data-toggle="modal" data-target="#myModal234">
+         </div>
+         
+         
+
+
+         {{-- ======================================= Filter By Qualification ======================================= --}}
+
+         <div class="searchField_qualification col-md-4 d-flex">
             <div class="searchFieldLabel col-5 pt-2">Qualification: </div>
             <select class=" filter_qualification_type form-control bg-white w-100" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
                <option value="">Select Qalification & Trades</option>
@@ -37,36 +161,11 @@
             </div>
             @endif
          </div>
-         <div class="searchField_salaryRange d-flex mb10 col-md-4">
-            <div class="searchFieldLabel col-5 pt-2">Salary Range: </div>
-            <select name="ja_filter_salary" id="filter_salary" class="form-control bg-white" data-placeholder="Select Salary Range">
-               <option value="">Select Salary Range</option>
-               @foreach(getSalariesRange() as $sk => $salary)
-               <option value="{{$sk}}">{{$salary}}</option>
-               @endforeach
-            </select>
-         </div>
-         <div class="searchField_industry d-flex mb10 col-md-4">
-            <div class=" col-5 pt-2">Filter by Industry: </div>
-            <input type="text" name="filter_industry_status" class="form-control" data-toggle="modal" data-target="#myModal">
-            <i class="search-employee-icon fas fa-search pe-4 fs-5 pb-2"></i>
-         </div>
-         <div class="searchField_location mb10 col-md-4 d-flex">
-            <div class="searchFieldLabel col-5 ">Filter by Location: </div>
-            <input type="text" class="form-control bg-white" name="filter_location_status" data-toggle="modal" data-target="#myModal2">
-            <div class="loc-icon">
-               <img src="{{ asset('assests/images/location.png') }}" class="pe-2" alt="">
-            </div>
-         </div>
-         <div class="searchField_questions mb10 col-md-4 d-flex">
-            <div class="searchFieldLabel col-5 ">Filter by Question: </div>
-            <input type="text" name="filter_by_questions" class="bg-white form-control" data-toggle="modal" data-target="#myModal234">
-         </div>
-         <div class="searchField_keyword d-flex mb10 col-md-4">
-            <div class="searchFieldLabel col-5 pt-2">Keyword: </div>
-            <input type="text" name="ja_filter_keyword" class="form-control">
-         </div>
-         <div class="searchField_sortBy d-flex  col-md-4">
+
+         {{-- ======================================= Filter By Sort By ======================================= --}}
+
+
+         <div class="searchField_sortBy d-flex col-md-4">
             <div class="sortByFieldLabel col-5 pt-2">Sort By: </div>
             <select name="ja_filter_sortBy" class="bg-white w-100 text-center" style="height: 35px; border: 1px solid #ced4da;">
                <option value="goldstars">Gold Stars</option>
@@ -78,6 +177,7 @@
                <option value="all_candidates">All candidates</option>
             </select>
          </div>
+
          <div class="bj-tr-btn">
             <button class="orange_btn" type="reset"><i class="fas fa-redo"></i> Reset</button>
             <button class="interview-tag used-tag"><i class="fas fa-paper-plane"></i>Submit</button>
@@ -89,149 +189,14 @@
    <div class="job_applications"></div>
 </div>
 <!-- Modal by filter industry -->
-<div class="bj-modal">
-   <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-      aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog filter-industry-modal" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <div class="m-header">
-                  <h4 class="modal-title" id="myModalLabel">
-                     <i class="fas fa-filter"></i>
-                     Filter by Industry
-                  </h4>
-                  <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
-               </div>
-            </div>
-            <div class="modal-body">
-               {{-- industry selection --}}
-               <div class="filter_industryList ">
-                  @php ($industries = getIndustries())
-                  @if(!empty($industries))
-                  <div class="filter_industries_list ">
-                     <ul class="industries_ul item_ul dot_list">
-                        @foreach ($industries as $indK => $indV)
-                        <li class="" data-id="{{$indK}}" data-type="filter_industry[]"><span>{{$indV}}</span></li>
-                        @endforeach
-                     </ul>
-                  </div>
-                  @endif
-               </div>
-               {{-- industry selection --}}
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-primary bs-btn">
-               <i class=" fas fa-search"></i>
-               <span class="fb-text">
-               Search
-               </span>
-               </button>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
+
 <!-- Modal -->
 <!-- Modal -->
 <!-- Modal filter by location -->
-<div class="bj-modal loc-modal">
-   <div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
-      aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <div class="m-header">
-                  <h4 class="modal-title">
-                     <i class="fas fa-map-marker-alt"></i> Location
-                     <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
-                  </h4>
-               </div>
-            </div>
-            <div class="modal-body">
-               {{-- bl_location --}}
-               <div class="location_search_cont ">
-                  <div class="location_input dtable w100">
-                     <input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
-                     <select class="dinline_block filter_location_radius select_aw" name="filter_location_radius" data-placeholder="Select Location Radius">
-                        <option value="5">5km</option>
-                        <option value="10">10km</option>
-                        <option value="25">25km</option>
-                        <option value="50">50km</option>
-                        <option value="51">50km +</option>
-                     </select>
-                  </div>
-                  <div class="location_latlong dtable w100">
-                     <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
-                     <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
-                  </div>
-                  <div class="location_map_box dtable w100">
-                     <div class="location_map" id="location_map"></div>
-                  </div>
-               </div>
-               {{-- bl_location --}}
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-primary gl-btn">
-               <i class="fas fa-paper-plane"></i>
-               <span class="gl-text">Done </span>
-               </button>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
+
 <!-- Modal -->
 <!-- Modal by filter question -->
-<div class="bj-modal">
-   <div class="modal fade" id="myModal234" tabindex="-1" role="dialog"
-      aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog filter-industry-modal" role="document">
-         <div class="modal-content">
-            <div class="modal-header">
-               <div class="m-header">
-                  <h4 class="modal-title" id="myModalLabel">
-                     <i class="fas fa-filter"></i>
-                     Filter by Industry
-                  </h4>
-                  <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
-               </div>
-            </div>
-            <div class="modal-body">
-               <div class="filter_question_cont ">
-                  <div class="questionFilter">
-                     @if(varExist('questions', $job))
-                     @foreach ($job->questions as $qkey =>  $jq)
-                     <div class="jobFilterQuestion">
-                        <span class="fjq_counter">Question {{($qkey+1)}}: </span>
-                        <span class="fjq_title">{{$jq->title}}</span>
-                        <div class="fjq_options">
-                           @if($jq->options)
-                           <select class="filter_question select_aw" name="filter_question[{{$jq->id}}]" style="height: 34px;" >
-                              <option value="">Select</option>
-                              @foreach ($jq->options as $qk => $jqopt)
-                              <option value="{{$jqopt}}">{{$jqopt}}</option>
-                              @endforeach
-                           </select>
-                           @endif
-                        </div>
-                     </div>
-                     @endforeach
-                     @endif
-                  </div>
-               </div>
-            </div>
-            <div class="modal-footer">
-               <button type="button" class="btn btn-primary bs-btn">
-               <i class=" fas fa-search"></i>
-               <span class="fb-text">
-               Search
-               </span>
-               </button>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
+
 {{-- Jquery pop up itertaion-9 --}}
 <div id="onlineTestModal" class="modal w100 p0">
    <div class="testHeader">
@@ -269,12 +234,16 @@
 --}}
 @stop
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
+
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function() {
-   
+      $('#filter_industry').select2();
    
    
        $(".reset-btn").click(function(){
@@ -431,7 +400,7 @@
            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
            $.post(url, $('#job_applications_filter_form').serialize(), function(data){
                $('.job_applications').html(data);
-               $('.jobApplicationStatusCont select').styler({ selectSearch: true,});
+               // $('.jobApplicationStatusCont select').styler({ selectSearch: true,});
            });
        }
    
@@ -756,28 +725,7 @@
 </script>
 @stop
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
 <style type="text/css">
-   button.ja_load_qa { background: #40c7db; }
-   .job_app_qa_box {padding: 10px;border: 1px solid rgba(0,0,0,0.1);border-radius: 4px;margin: 10px 0px;}
-   .job_answers { margin-bottom: 6px; }
-   .jqa_q {margin: 2px 0px;display: inline-block;}
-   .jqa_a {margin: 2px 0px;display: inline-block;font-weight: bold;color: #eea11e;}
-   .searchFieldLabel { min-width: 15%; }
-   .searchField { display: inline-block; }
-   .jobFilterQuestion {margin: 10px 0px;}
-   .jobFilterQuestion .fjq_title {display: inline-block;float: left;padding: 0px 8px;
-   background: rgb(0 0 0 / 3%);border: 1px solid rgb(0 0 0 / 11%);height: 33px;line-height: 33px;}
-   .jobFilterQuestion .fjq_counter {float: left;padding: 0px 8px;
-   border: 1px solid rgb(0 0 0 / 11%);height: 33px;line-height: 33px;border-right: 0px;}
-   .location_map {height: 250px;margin: 2px;border-radius: 4px;}
-   .jobApplicAction {display: inline-block;float: right;margin: 10px 0px;}
-   .jobApplicationStatusCont .jq-selectbox__select,
-   .jobApplicationStatusCont .jq-selectbox__trigger {height: 28px;line-height: 28px;}
-   .jobApplicationStatusResponse {display: block;position: absolute;font-size: 11px;margin: 6px;color: #fba82f;}
-   .sortByFieldLabel.dinline_block {margin-right: 88px;}
-   /* ===================================== iteration-9 ===================================== */
-   .pp_wrapper, .pp_shadow{position: inherit !important;}
-   .jq-selectbox > .jq-selectbox__dropdown.drop_down > ul{height: 133px !important;overflow-y: scroll;z-index: 9999;width: fit-content !important;}
 </style>
 @stop

@@ -17,16 +17,26 @@
                <div class="profile-detail clearfix ">
 
 
-                  <h2 class="text-center"> {{$user->name}} </h2>
-
+                  <div class="text-center">
+                     <h1> {{$user->company}} </h1>
+                  </div>
 
                   <div class="location p-2">  
 
-                     <b> Location: <span class="userLocationSpan" > {{userLocation($user)}} </span> </b> 
+                     <div class="row m-0"> 
+                        <div class="col-10">
+                           <p class="userLocationSpan text-center location_margin"> {{userLocation($user)}} </p> 
+                        </div>
+                        <div class="col-2">
+                           <button type="button" id="list_info_location" class="orange_btn float-right" onclick="showMap()">
+                           <i class="fas fa-edit salaryRangeEdit"></i> 
+                        </div>
+                     </div>
+                     {{-- <b> Location: <span class="userLocationSpan" > {{userLocation($user)}} </span> </b>  --}}
 
-                     <button type="button" id="list_info_location" class="orange_btn float-right" onclick="showMap()">
+                    {{--  <button type="button" id="list_info_location" class="orange_btn float-right" onclick="showMap()">
                         <i class="fas fa-edit salaryRangeEdit"></i>
-                     </button>
+                     </button> --}}
                        <div class="location_search_cont hide_it ">
                       <div class="location_input dtable w100">
                           <input type="text" name="location_search" class="inp w80 fl_left form-control" id="location_search" value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
@@ -109,7 +119,9 @@
                      <div class="about-infomation">
                         <h2>About Us</h2>
                         <button type="button"id="showeditbox" onclick="showFieldEditor('about_me');" class="edited-text"><i class="fas fa-edit"></i></button>
-                        <textarea class="form-control bg-white border-0 sec_about_me" rows="3" cols="3" readonly > {{$user->about_me}}</textarea>
+                        <p class="text_about_me m-0"> {{$user->about_me}} </p>
+
+                        <textarea class="form-control bg-white border-0 sec_about_me d-none" rows="3" cols="3" readonly > {{$user->about_me}}</textarea>
 
                         <div class="row">
                            <div class="col-md-12">
@@ -127,8 +139,10 @@
                      <div class="about-infomation">
                         <h2>Interested In</h2>
                         <button type="button"  onclick="showFieldEditor('interested_in');" class="edited-text"><i class="fas fa-edit"></i></button>
-                     
-                        <textarea class="form-control bg-white border-0 sec_interested_in" rows="3" cols="3" readonly > {{$user->interested_in}}</textarea>
+                        
+                        <p class="text_interested_in m-0"> {{$user->interested_in}} </p>
+
+                        <textarea class="form-control bg-white border-0 sec_interested_in d-none" rows="3" cols="3" readonly > {{$user->interested_in}}</textarea>
 
                         <div class="row">
                            <div class="col-md-12">
@@ -187,9 +201,9 @@
                   
                   <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
 
-                     <h2>Questions</h2>
-                      <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text"><i class="fas fa-edit"></i></button>
-                        @include('site.user.profile.questionsuserpart')
+                     <h2>Questions  <button type="button"  onclick="showFieldEditor('question');" class="edited-text orange_btn float-right"><i class="fas fa-edit"></i></button></h2>
+
+                        @include('web.employer.profile.questionsuserpart')  <!-- web/employer/profile/questionsuserpart -->
                   </div>
 
                </div>
@@ -550,6 +564,7 @@ var base_url = {!! json_encode(url('/')) !!};
    <style type="text/css">
 
      textarea{ resize: none }
+      
       
    </style>
   

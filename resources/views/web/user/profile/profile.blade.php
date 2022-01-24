@@ -102,17 +102,19 @@
 
                   <div class="recent-job recentjob clearfix px-3">
 
-                     <div class="row m-0"> 
-                        <div class="col-5">
-                           <label class="mb-2">Recent Job:</label>
-                        </div>
+                     {{-- <div class="row m-0">  --}}
+                        {{-- <div class="col-5"> --}}
+                           <div class="d-inline-block">
+                              <label class="mb-2">Recent Job:</label>
+                        {{-- </div> --}}
 
-                        <div class="col-7">
+                        {{-- <div class="col-7"> --}}
                               <span class="recentjobSpan"> {{$user->recentJob}} </span>
                               at
                               <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
-                        </div>
-                     </div>
+                              </div>
+                        {{-- </div> --}}
+                     {{-- </div> --}}
 
                   </div> 
 
@@ -120,15 +122,19 @@
                   {{-- ========================================= Salary Range ========================================= --}}
 
 
-                  <div class="recent-job clearfix mt-3 px-3">
-                     <div class="row m-0">
-                        <div class="col-5">
+                  <div class="recent-job clearfix px-3">
+                     {{-- <div class="row m-0"> --}}
+                        <div class="d-inline-block">
+                        {{-- <div class="col-5"> --}}
                            <label class="mb-2"> 
                               Expecting Salary: 
                            </label>
+                        {{-- </div> --}}
+                        {{-- <div class="col-7"> --}}
+                           <span>AUD: </span>  <span class="salaryRangeValue"> {{number_format($user->salaryRange),3}} </span>
                         </div>
-                        <div class="col-7"><span>AUD: </span>  <span class="salaryRangeValue"> {{number_format($user->salaryRange),3}} </span></div>
-                     </div>
+                        {{-- </div> --}}
+                     {{-- </div> --}}
                   </div>
 
 

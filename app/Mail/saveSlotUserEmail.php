@@ -12,12 +12,24 @@ class saveSlotUserEmail extends Mailable
     use Queueable, SerializesModels;
 
     public $name;
-
+    public $bookingTitle;
+    public $companyname;
     public $position;
-    public function __construct($name, $position)
+    public $instruction;
+    public $timepicker;
+    public $timepicker1;
+    public $datepicker;
+    public function __construct($name,$bookingTitle,$companyname, $position,$instruction,$timepicker,$timepicker1,$datepicker)
     {
         $this->name = $name;
+        $this->bookingTitle = $bookingTitle;
+        $this->companyname = $companyname;
         $this->position = $position;
+        $this->instruction = $instruction;
+        $this->timepicker = $timepicker;
+        $this->timepicker1 = $timepicker1;
+        $this->datepicker = $datepicker;
+
     }
 
     /**

@@ -162,6 +162,24 @@ $(document).ready(function(){
 
     }
 
+    // =========================================================================================
+    // Employer (Interview Concierge) 
+    // =========================================================================================
+    
+    // ============================================= Common Date Picker =============================================
+
+    jQuery('.datepicker').datepicker({
+        // minDate: +1, // this will disable today date and previous date
+        minDate: 0, 
+        dateFormat: "dd-mm-yy", minDate: 0, 
+    });
+
+
+    $('input.timepicker').timepicker({
+        // closeOnWindowScroll: true,
+        scrollbar: true
+    });
+
 
 
 

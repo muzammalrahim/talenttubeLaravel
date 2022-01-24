@@ -1,37 +1,71 @@
 
-<div class="container1 p-0">	
+<div class="container1 p-0">
+
+	@php
+		// $totalMaxmumInterviewBookings = [] ; 
+		// $total_boking = [] ;
+		$slotSum = 0;
+		$bookingsSum = 0;
+
+		foreach ($slots as $slot) {
+			// $totalMaxmumInterviewBookings[] .= (int)$slot->maximumnumberofinterviewees;
+			// $total_boking[] .= (int)( $slot->bookings_count? $slot->bookings_count->aggregate:0);
+			$slotSum = $slotSum + $slot->maximumnumberofinterviewees;
+			$bookingsSum= $bookingsSum + ( $slot->bookings_count? $slot->bookings_count->aggregate:0);
+		}
+
+	@endphp
+
+	@if ( $bookingsSum < $slotSum )
+		{{-- expr --}}
 		@foreach ($slots as $slot)
 
-		<div class="slotData p-3">
-			<div class="form-group row">
-	            {{ Form::label('From', null, ['class' => 'col-md-3 form-control-label']) }}
-	            <div class="col-md-3">
-	              {{ Form::text('starttime', $value = $slot->starttime, $attributes = array('class'=>'form-control', 'readonly'=>'true')) }}
-	            </div>
+		@php
+			$slotBooking = $slot->bookings_count? $slot->bookings_count->aggregate:0;
+		@endphp
 
-	            {{ Form::label('To', null, ['class' => 'col-md-3 form-control-label']) }}
-	            <div class="col-md-3">
-	              {{ Form::text('endtime', $value = $slot->endtime, $attributes = array('class'=>'form-control', 'readonly'=>'true')) }}
-	            </div>
+		@if ($slotBooking < $slot->maximumnumberofinterviewees )
+
+			<div class="slotData p-3">
+				{{-- @dump($slot->maximumnumberofinterviewees) --}}
+				<div class="form-group row">
+		            {{ Form::label('From', null, ['class' => 'col-md-3 form-control-label']) }}
+		            <div class="col-md-3">
+		              {{ Form::text('starttime', $value = $slot->starttime, $attributes = array('class'=>'form-control', 'readonly'=>'true')) }}
+		            </div>
+
+		            {{ Form::label('To', null, ['class' => 'col-md-3 form-control-label']) }}
+		            <div class="col-md-3">
+		              {{ Form::text('endtime', $value = $slot->endtime, $attributes = array('class'=>'form-control', 'readonly'=>'true')) }}
+		            </div>
+		        </div>
+
+		        <div class="form-group row">
+		            {{ Form::label('Date', null, ['class' => 'col-md-3 form-control-label']) }}
+		            <div class="col-md-9">
+		              {{ Form::text('Date', $value = Carbon\Carbon::parse($slot->date)->format('Y-m-d'), $attributes = array('class'=>'form-control', 'readonly'=>'true')) }}
+		            </div>
+		        </div>
+
+		        <div class="row">
+		        	<div class="col-md-3"></div>
+		        	<div class="btn btn-primary col-md-3 rescheduleSlot" data-dismiss="modal" >  Select this Slot</div>
+		        </div>
+
+			    <input type="hidden" name="" value="{{$slot->id}}" class="slotIDHidden">
+			    {{-- <input type="text" name="bookingID" value="" class="bookingID"> --}}
 	        </div>
 
-	        <div class="form-group row">
-	            {{ Form::label('Date', null, ['class' => 'col-md-3 form-control-label']) }}
-	            <div class="col-md-9">
-	              {{ Form::text('Date', $value = Carbon\Carbon::parse($slot->date)->format('Y-m-d'), $attributes = array('class'=>'form-control', 'readonly'=>'true')) }}
-	            </div>
-	        </div>
-
-	        <div class="row">
-	        	<div class="col-md-3"></div>
-	        	<div class="btn btn-primary col-md-3 rescheduleSlot" data-dismiss="modal">  Select this Slot</div>
-	        </div>
-
-		        <input type="hidden" name="" value="{{$slot->id}}" class="slotIDHidden">
-		    	{{-- <input type="text" name="bookingID" value="" class="bookingID"> --}}
-        </div>
-
+	    @endif
 		@endforeach
+	@else
+
+	    <div class="slotData p-3">
+	    	<p> No interview time slots available, please contact <a href="mailto:admin@talenttube.org">admin@talenttube.org</a> to discuss </p>
+	    </div>
+
+	@endif
+
 
 </div>
 
@@ -56,13 +90,32 @@
             if( data.status == 1 ){
     			// $('.preferredSlotLoader').hide();
                 $('#overlay').addClass('d-none');
-        		$('.successMsgUpdatingBooking').removeClass('d-none');
-                setTimeout(function() {
+        		// $('.successMsgUpdatingBooking').removeClass('d-none');
+                /*setTimeout(function() {
         		$('.successMsgUpdatingBooking').addClass('d-none');
                 location.reload();
-                }, 3000);
+                }, 3000);*/
+
+            	$('#slotUpdatedModal').modal('show');
+
+                var html = '<div class="modal-body p-0">';
+					html +=        '<div class="text-center my-4 warning_text">';
+					html +=            'Your interview slot has been updated successfully.';
+					html +=        '</div>';
+					html +=        '<div class="ajaxDataOfSlots"></div>';
+					html +=      '</div>';
+
+                // $('.ajaxDataOfSlots').html(html);
+            	// $('#bookingDeletedModal').modal('show');
+            	// $('.warning_text').text(' Your interview slot has been updated successfully. ');
+
+                // $('.ajaxDataOfSlots').html(data);
+
 
             }else{
+
+                $('#overlay').addClass('d-none');
+        		$('.successMsgUpdatingBooking').addClass('d-none');
                
             }
 

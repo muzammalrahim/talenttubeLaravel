@@ -42,8 +42,10 @@ class InterviewController extends Controller
 {
 
     public $agent;
-    public function __construct(){      
-		$this->middleware('auth');
+    // private $interview;
+    public function __construct(){
+        // $this->interview = new Interview;
+        $this->middleware('auth');
 		$this->agent = new Agent();
     }
 
@@ -125,44 +127,44 @@ class InterviewController extends Controller
                 }
             }
 
-        // dd($data['slot']);
-        // dd(' all valiation correct ');
-        $slots = array();
-        //array_push($slots, $data['slot']);
-        $interview = new Interview;
-        $interview->emp_id = $user->id;
-        $interview->title = $data['title'];
-        $interview->companyname = $data['companyname'];
-        $interview->positionname = $data['positionname'];
-        // $interview->employeremail = $data['employeremail'];
-        // $interview->employerpassword = $data['employerpassword'];
-        $interview->instruction = $data['instruction'];
-        $interview->additionalmanagers = $data['additionalmanagers'];
-        // $interview->numberofslots = $data['numberofslots'];
-        $interview->uniquedigits = rand(10000,99999);
-        $interview->url = generateRandomString();
-        $interview->save();
-       // dd($data['slot']);
-        foreach ($data['slot'] as $key => $value) {
-            $slot = new Slot;
-            // dd($slot);
-            $slot->date = $data['date'][$key];
-            $slot->maximumnumberofinterviewees = $data['maximumnumber'][$key];
-            $slot->starttime =$value['start'];
-            $slot->endtime = $value['end'];
-            $slot->numberofintervieweesbooked =0;
-            $slot->is_housefull = false;
-            $interview->slots()->save($slot);
-        }
+            // dd($data['slot']);
+            // dd(' all valiation correct ');
+            $slots = array();
+            //array_push($slots, $data['slot']);
+            $interview = new Interview;
+            $interview->emp_id = $user->id;
+            $interview->title = $data['title'];
+            $interview->companyname = $data['companyname'];
+            $interview->positionname = $data['positionname'];
+            // $interview->employeremail = $data['employeremail'];
+            // $interview->employerpassword = $data['employerpassword'];
+            $interview->instruction = $data['instruction'];
+            $interview->additionalmanagers = $data['additionalmanagers'];
+            // $interview->numberofslots = $data['numberofslots'];
+            $interview->uniquedigits = rand(10000,99999);
+            $interview->url = generateRandomString();
+            $interview->save();
+           // dd($data['slot']);
+            foreach ($data['slot'] as $key => $value) {
+                $slot = new Slot;
+                // dd($slot);
+                $slot->date = $data['date'][$key];
+                $slot->maximumnumberofinterviewees = $data['maximumnumber'][$key];
+                $slot->starttime =$value['start'];
+                $slot->endtime = $value['end'];
+                $slot->numberofintervieweesbooked =0;
+                $slot->is_housefull = false;
+                $interview->slots()->save($slot);
+            }
 
-       // dd($interview);
-        $interview->save();
-        $request->session()->put('bookingid',$interview->id);
-        return response()->json([
-            'status' => 1,
-            'route' => route('interviewconcierge.created'),
-            // 'redirect' => route('')
-        ]);
+           // dd($interview);
+            $interview->save();
+            $request->session()->put('bookingid',$interview->id);
+            return response()->json([
+                'status' => 1,
+                'route' => route('interviewconcierge.created'),
+                // 'redirect' => route('')
+            ]);
         }
 
     }

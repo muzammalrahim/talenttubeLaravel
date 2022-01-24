@@ -55,7 +55,13 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.css">
 
 <style>
-   
+    /*#datatable{*/
+ 
+    td, th {
+            vertical-align: middle !important;
+            text-align: center !important;
+        }
+    /*}*/
 </style>
 @stop
 @section('custom_js')

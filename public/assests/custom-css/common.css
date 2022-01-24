@@ -545,6 +545,18 @@ div.google-visualization-tooltip {
      display: none !important;
 }
 
-.h_300{
-    height: 300px;
+.h_330{
+    height: 330px;
+    overflow-y: auto;
 }
+
+.icon_show{
+    -webkit-appearance: auto !important;
+}
+.slotBorder{border: 1px solid #00326f;}
+
+/*@media (min-width:1500px){*/
+	.location_margin {
+						margin-left: 31px;
+			} 
+/*}*/

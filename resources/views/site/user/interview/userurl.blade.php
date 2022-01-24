@@ -74,7 +74,7 @@
 
 				            <div class="date topMargin">
 				                <span class="notbrak">Date</span>
-				                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('Y-m-d')}}" readonly="true" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
+				                <input type="text" value="{{Carbon\Carbon::parse($slot->date)->format('d-m-Y')}}" readonly="true" name="date[{{$key+1}}]" class="datepicker notbrak" size="8" required />
 				            </div>
 				            <div class="text-center mt-3">
 				                <button onclick="topFunction()" class="btn-sm btn btn-primary selectTimeUrl"> Select This Time</button>

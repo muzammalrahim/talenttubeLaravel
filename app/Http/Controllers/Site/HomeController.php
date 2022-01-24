@@ -26,6 +26,10 @@ use App\Interviews_booking;
 use App\Slot;
 use App\Mail\saveSlotUserEmail;
 use App\Mail\deleteSlotToUserEmail;
+use App\Mail\rescheduleSlotEmail;
+use App\Mail\deletedSlotEmailToEmployer;
+
+
 use App\Mail\confirmSlotMailToJobSeeker;
 use App\History;
 use App\UserInterview;
@@ -924,6 +928,7 @@ class HomeController extends Controller {
     public function saveInterviewSlot(Request $request){
         $data = $request->toArray();
         $data = $request->all();
+        // dd($data);
         $rules = array(
             "name" => "required|string|max:255",
             "mobile" => "required|string|max:10|min:10",
@@ -955,9 +960,9 @@ class HomeController extends Controller {
                     $Interviews_booking->mobile = $request->mobile;
                     $Interviews_booking->status = 0;
                     if ($request->manager){
-                        Mail::to($request->employerEmail)->cc($request->manager)->send(new saveSlotUserEmail($request->name, $request->position));
+                        Mail::to($request->employerEmail)->cc($request->manager)->send(new saveSlotUserEmail($request->name, $request->bookingTitle,$request->companyname,$request->position,$request->instruction,$request->timepicker,$request->timepicker1,$request->datepicker));
                     }else{
-                         Mail::to($request->employerEmail)->send(new saveSlotUserEmail($request->name, $request->position));
+                         Mail::to($request->employerEmail)->send(new saveSlotUserEmail($request->name, $request->bookingTitle,$request->companyname,$request->position,$request->instruction,$request->timepicker,$request->timepicker1,$request->datepicker));
                     }
                     // $Interviews_booking->save();
 
@@ -1073,6 +1078,10 @@ class HomeController extends Controller {
 
             $Interviews_booking = Interviews_booking::with(['slot','interview'])->where('email', $int_conc_email)->where('mobile', $int_conc_mobile)->get();
             // dd($Interviews_booking->slot);
+            $request->session()->put('emailInLayout', $int_conc_email );
+            // dd($int_conc_email);
+            \Session::put('emailInLayouts', $int_conc_email);
+
             if($Interviews_booking == ""){
                 return redirect(route('noBookingMade'));
             }else{
@@ -1102,10 +1111,18 @@ class HomeController extends Controller {
 
     public function deleteBooking(Request $request){
         $email = $request->session()->pull('emailInLayout');
+        // dd($email);
         $intBookId = (int) $request->id;
         $interviewBooking = Interviews_booking::where('id',$intBookId)->first();
         if($interviewBooking && $interviewBooking->email == $email)
         {
+
+             // $interviewBooking = Interviews_booking::where('slot_id',$intSlotID)->first();
+    
+            // dd($interviewBooking->interview->employerData->company);
+
+            Mail::to($interviewBooking->interview->employerData->email)->send(new deletedSlotEmailToEmployer($interviewBooking->interview->employerData->company,$interviewBooking->interview->positionname,$interviewBooking->slot->starttime,$interviewBooking->slot->endtime,$interviewBooking->slot->date,$interviewBooking->name));
+
             $interviewBooking->delete();
             return response()->json([
             'status' => 1,
@@ -1126,12 +1143,14 @@ class HomeController extends Controller {
     public function sendEmailEmployer(Request $request){
 
         $intBookId = $request->intConID;
-        $email = $request->session()->pull('emailInLayout');
+        // $email = $request->session()->pull('emailInLayout');
+        $email = \Session::get('emailInLayouts');
         $slots = Slot::where('interview_id',$intBookId)->get();
         $data['slots'] = $slots;
         $data['classes_body'] = 'interview';
         $request->session()->put('emailInModal', $email);
-        return view('site.home.preferred' , $data);
+
+        return view('site.home.preferred' , $data); // site/home/preferred
     }
 
     // ========================================== Interview Concierge Delete Slot after login ==========================================
@@ -1160,14 +1179,25 @@ class HomeController extends Controller {
     // ============================================== Rescedule Slot start here ==============================================
 
     public function rescheduleSlot(Request $request){
-        $email = $request->session()->pull('emailInModal');
-        $data = $request->all();
-        // dd($data['slot_id']);
-        // dd($email);
-        $interviewBooking = Interviews_booking::where('id',$data['booking_id'])->where('email', $email)->first();
-        // $slot = Slot::where('id', $data['slot_id'])->first();
-        // dd($slot);
-        
+        $email = \Session::get('emailInLayouts');
+        // $email = $request->session()->pull('emailInModal');
+        $data = $request->toArray();
+        $interviewBooking = Interviews_booking::where('id', $data['booking_id'])->where('email', $email)->first();
+        /*dump($interviewBooking->slot->starttime);
+        dump($interviewBooking->slot->endtime);
+        dump($interviewBooking->slot->date);
+        dd($interviewBooking->interview->positionname);*/
+
+        Mail::to($email)->send(new rescheduleSlotEmail($interviewBooking->name,$interviewBooking->interview->positionname,$interviewBooking->slot->starttime,$interviewBooking->slot->endtime,$interviewBooking->slot->date));
+
+
+        /*if (!empty($interviewBooking)) {
+            dd($interviewBooking->slot_id);
+        }
+        else{
+            dd( ' Empty samaan ' );
+        }
+        */
         // dd($interviewBooking->slot->id);
         $interviewBooking->slot_id = $data['slot_id'];
         $interviewBooking->save();

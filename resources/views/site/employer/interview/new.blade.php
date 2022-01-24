@@ -2,7 +2,6 @@
 @extends('web.employer.employermaster')
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
 @stop
 @section('content')
 <div class="newJobCont profile profile-section">
@@ -34,12 +33,12 @@
          <div class="job_description form_field" required>
             <span class="form_label fw-bold fs-6">Interview Instruction: </span>
             <div class="form_input">
-               <textarea name="instruction" class="form_editor w100 bg-white" maxlength="1000" style="min-height: 120px;"></textarea>
+               <textarea name="instruction" class="form_editor form-control w100 bg-white" maxlength="1000" style="min-height: 120px;"></textarea>
                <div id="instruction_error" class="error field_error to_hide">&nbsp;</div>
             </div>
          </div>
          <div class="job_title form_field">
-            <span class="form_label fw-bold fs-6">Additional Managers :</span>
+            <span class="form_label fw-bold fs-6">Additional Managers:</span>
             <div class="form_input">
                <input type="text" value="" name="additionalmanagers" class="w100 bg-white form-control" >
                <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
@@ -49,22 +48,23 @@
          <div class="slot form_field">
             <div class="form_input w100">
                <div class="slots">
-                  <div class="slot s1 notbrak leftMargin pSlot topMargin slotBorder ">
+                  <div class="slot s1 notbrak leftMargin pSlot topMargin slotBorder">
                      <div class="mb10 fw-bold fs-4">Interview Slot 1 <span class="fl_right"> <i class="fas fa-trash deleteSlot fl_right tk text-danger" style="cursor: pointer;"></i></span></div>
                      <div class="time">
                         <div class="notbrak fw-bold">Time:</div>
-                        <div class="notbrak"><input type="text" class="timepicker pointer timepicker-without-dropdown text-center checkstatus bg-white" autocomplete="off" name="slot[1][start]" size="20" required /></div>
+                        <div class="notbrak"><input type="text" class="timepicker pointer form-control timepicker-without-dropdown text-center checkstatus bg-white" autocomplete="off" name="slot[1][start]" size="20" required /></div>
                         <div class="notbrak">To</div>
-                        <div class="notbrak"><input type="text" class="timepicker pointer timepicker-without-dropdown text-center checkstatus1 bg-white" autocomplete="off" name="slot[1][end]" size="20" required /></div>
+                        <div class="notbrak"><input type="text" class="timepicker pointer form-control timepicker-without-dropdown text-center checkstatus1 bg-white" autocomplete="off" name="slot[1][end]" size="20" required /></div>
                      </div>
                      <div class="date topMargin">
                         <span class="notbrak fw-bold">Date:</span>
-                        <input type="text" name="date[1]" class="datepicker pointer notbrak checkstatusDate bg-white text-center"  autocomplete="off" size="49" required />
+                        <div class="notbrak">
+                        <input type="text" name="date[1]" class="datepicker pointer form-control checkstatusDate bg-white text-center"  autocomplete="off" size="49" required /></div>
                      </div>
                      <div class="m_no_i d-flex">
                         <label class="w50 notbrak my10 pt-2 fw-bold" style="margin-right: 5px;">Maximum number of interviews:</label>
                         <div class="form_input pt-3">
-                           <select name="maximumnumber[1]" class="form_select bg-white "  >
+                           <select name="maximumnumber[1]" class="form-control icon_show form_select bg-white"  >
                               <option value="1">1</option>
                               <option value="2">2</option>
                               <option value="3">3</option>
@@ -115,19 +115,9 @@
 </div>
 @stop
 @section('custom_footer_css')
-{{-- 
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
---}}
-{{-- 
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
---}}
+
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-{{-- 
-<link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}">
---}}
-{{-- 
-<link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
---}}
+
 <style>
    .notbrak{display: inline-block;}
    .leftMargin{margin-left: 7px;}
@@ -136,18 +126,12 @@
    .dynamicTextStyle{margin-left: 5px;margin-right: 5px;}
    .pSlot{padding: 2% 1% 4% 15px;}
    .padding{padding: 2% 1% 4%;}
-   .slotBorder{border: 1px solid;}
-   .marginR{margin-right:5px;}
 </style>
 @stop
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/web/interview.js') }}"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
-{{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
-{{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
 <script type="text/javascript">
    //   ============================================= Code commented for adding new slot on click function =============================================
    
@@ -235,8 +219,7 @@
    var i = 2;
    $(".addSlot").bind('click', function(){
     
-      
-   
+
        var timeValue = $('.checkstatus').val();
        var timeEndValue = $('.checkstatus1').val();
        var timeDateValue = $('.checkstatusDate').val();
@@ -244,7 +227,6 @@
        var array = [timeValue,timeEndValue,timeDateValue];
        // const obj = Object.assign({}, array);
        console.log(array);
-   
        if($.inArray(checkstatusjq, array)){
            if(($('.ui-timepicker-viewport li a').text()) == timeValue ){
                $(this).css('display', 'block');
@@ -253,28 +235,29 @@
        }
        // if(timeValue != "" && timeEndValue != "" && timeDateValue != "")
        // {
-   
        if(i <= 20){
            i=i;
                var slot  = '<div class="slot s'+i+' notbrak  leftMargin topMargin padding slotBorder">';
                    slot  += '<div class="mb10 dynamicTextStyle fs-4 fw-bold">Interview Slot '+i+' ';
                    slot  += '<i id = "deleteSlot" class="fas fa-trash deleteSlot deleteSlot'+i+' fl_right text-danger" style="cursor:pointer;">';
                    slot  += '</i>';                                  
-                slot  += '</div>';                                                                                                      
+                   slot  += '</div>';                                                                                                      
                    slot  += '<div class="time">';
                    slot  += '<div class="notbrak dynamicTextStyle fw-bold">Time:</div>';
-                   slot  += '<div class="notbrak"><input type="text" class="timepicker pointer timepicker-without-dropdown text-center checkstatusjq bg-white" autocomplete="off" name="slot['+i+'][start]" size="20" required /></div>';
+                   slot  += '<div class="notbrak"><input type="text" class="timepicker pointer form-control timepicker-without-dropdown text-center checkstatusjq bg-white" autocomplete="off" name="slot['+i+'][start]" size="20" required /></div>';
                    slot  += '<div class="notbrak dynamicTextStyle">To</div>';
-                   slot  += '<div class="notbrak"><input type="text" class="timepicker pointer timepicker-without-dropdown text-center bg-white" autocomplete="off" name="slot['+i+'][end]" size="20" required /></div>';
+                   slot  += '<div class="notbrak"><input type="text" class="timepicker pointer form-control timepicker-without-dropdown text-center bg-white" autocomplete="off" name="slot['+i+'][end]" size="20" required /></div>';
                    slot  += '</div>';
                    slot  += '<div class="date topMargin">';
                    slot  += '<span class="notbrak dynamicTextStyle fw-bold">Date:</span>';
-                   slot  += '<input type="text" name="date['+i+']" class="datepicker pointer notbrak bg-white" autocomplete="off" size="49" required />';
+                   slot  += '<div class="notbrak">';
+                   slot  += '<input type="text" name="date['+i+']" class="datepicker pointer form-control bg-white text-center" autocomplete="off" size="49" required />';
+                   slot  += '</div>';
                    slot  += '</div>';
                    slot  += '<div class="m_no_i d-flex">';
                        slot  += '<label class="w50 notbrak my10 fw-bold pt-2" style="margin-left: 5px;">Maximum number of interviews:</label>';
-                       slot  += ' <div class="form_input ">';
-                           slot  += ' <select name="maximumnumber['+i+']" class="form_select bg-white pt-3" >';
+                       slot  += ' <div class="form_input pt-3">';
+                           slot  += ' <select name="maximumnumber['+i+']" class="form-control icon_show form_select bg-white" >';
                                slot  += '                      <option value="1">1</option>';
                                slot  += '                       <option value="2">2</option>';
                                slot  += '                       <option value="3">3</option>';
@@ -303,14 +286,17 @@
                    slot  += '<div class="checkStatusError hide_it2"> <span>Fill all fields before proceeding to next slot</span> </div>';
                                                                      i++;
            $('.slots').append(slot);
-           $(".datepicker").datepicker({ 
+           $(".datepicker").datepicker({
                dateFormat: "yy-mm-dd" , minDate: 0, 
    
            });
            
-           $('input.timepicker').timepicker({});
+           $('input.timepicker').timepicker({
+               closeOnWindowScroll: true,
+               scrollbar: true
+           });
            $('#slotsCounter').val(this.value);
-           $('input, select').styler();
+           // $('input, select').styler();
    
    
        }
@@ -346,16 +332,9 @@
    
    // ============================================= Deleting Slot FUnction end here =============================================
    
-   jQuery('.datepicker').datepicker({
-         // minDate: +1, // this will disable today date and previous date
-         minDate: 0, 
-         dateFormat: "yy-mm-dd", minDate: 0,
-   
-        
-   });
    
    $(document).ready(function(){
-       $('input.timepicker').timepicker({});
+       
        $('.saveNewBooking').on('click',function() {
            event.preventDefault();
            var formData = $('.new_booking_form').serializeArray();
