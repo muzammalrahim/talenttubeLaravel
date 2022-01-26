@@ -297,7 +297,7 @@ input, textarea, select{
     font-size: 16px;
     color: #ffffff;
     display: block;
-    padding: 10px 0;
+    padding: 16px 0;
     transition: all 0.3s;
 }
 #sidebarMenu li a.active{
@@ -426,7 +426,7 @@ input, textarea, select{
         height: 42px;
         position: absolute;
         z-index: 20;
-        top: 95px;
+        top: 88px;
         right: 25px;
         cursor: pointer;
         background: #00326f;
@@ -445,11 +445,11 @@ input, textarea, select{
         width: 0;
     }
     #sidebarMenu ul li a img {
-        padding: 30px 0 !important;
+        padding: 0px 0 !important;
         padding-right: 2.86rem;
         padding-top: 25px;
         padding-bottom: 25px;
-        width: 60%;
+        width: 90%;
         margin: auto;
         display: block;
     }
@@ -464,8 +464,8 @@ input, textarea, select{
 
 @media (max-width:479px){
     .sidebaricontoggle {
-        top: 135px;
-        right: 16px;
+        top: 65px;
+        right: 30px;
     }
     button{
         width: 100% !important;
@@ -555,8 +555,9 @@ div.google-visualization-tooltip {
 }
 .slotBorder{border: 1px solid #00326f;}
 
-/*@media (min-width:1500px){*/
+@media (min-width:767px){
 	.location_margin {
-						margin-left: 31px;
+						margin-left: 45px;
 			} 
-/*}*/
+}
+

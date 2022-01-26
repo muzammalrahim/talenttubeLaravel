@@ -76,6 +76,7 @@ if (! function_exists('str_random')) {
 
 function isMobile(){
       $agent = new Agent();
+      return false;
       return $agent->isMobile();
 }
 

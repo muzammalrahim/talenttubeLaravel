@@ -1,4 +1,4 @@
-@extends('mobile.user.usermaster') {{-- mobile/user/usermaster --}}
+@extends('web.user.usermaster') {{-- mobile/user/usermaster --}}
 @section('content')
 
     {{-- <h6 class="h6 jobAppH6">Job Seekeers</h6> --}}

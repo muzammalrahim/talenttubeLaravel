@@ -14,8 +14,33 @@
          </label>
          <div id="sidebarMenu" class="mobile-sidebar">
             <ul class="menu">
-               <li><a href="#"><i class="fas fa-user "></i> Profile</a></li>
-               <li><a href="" class="modal-dialog"><i class="fas fa-sign-in-alt"></i> Sign In</a></li>
+               <li>
+
+                  @if (Auth::check())
+                  @if (isEmployer())
+                     {{-- <a href="{{route('employerProfile')}}" class="orange_btn"><i class="fas fa-th-large"></i> Dashboard</a> --}}
+                     <a href="{{route('employerProfile')}}"><i class="fas fa-user "></i> Profile</a>
+
+                  @elseif(isAdmin())
+                     {{-- <a href="{{route('adminDashboard')}}" class="orange_btn"><i class="fas fa-th-large"></i> Dashboard</a> --}}
+                     <a href="{{route('adminDashboard')}}"><i class="fas fa-user "></i> Profile</a>
+
+                  @else
+                     {{-- <a href="{{route('profile')}}" class="orange_btn"><i class="fas fa-th-large"></i> Dashboard</a> --}}
+                     <a href="{{route('profile')}}"><i class="fas fa-user "></i> Profile</a>
+
+                  @endif
+                  @else
+                     {{-- <span class="Account">HAVE AN ACCOUNT?</span> --}}
+                     {{-- <a href="{{ route('signIn') }}" class="orange_btn signin" id="">SIGN IN</a> --}}
+                     <a href="{{ route('signIn') }}" ><i class="fas fa-sign-in-alt"></i> Sign In</a>
+                     {{-- <a href="#"><i class="fas fa-user "></i> Profile</a> --}}
+
+                  @endif
+
+                  {{-- <a href="#"><i class="fas fa-user "></i> Profile</a> --}}
+               </li>
+               {{-- <li><a href="" class="modal-dialog"><i class="fas fa-sign-in-alt"></i> Sign In</a></li> --}}
                <!-- <li><a href="#">Have an Account?</a></li> -->
             </ul>
             <ul class="menu2">

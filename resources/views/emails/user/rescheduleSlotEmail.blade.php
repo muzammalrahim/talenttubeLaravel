@@ -8,7 +8,7 @@
 	
 	This email is to confirm your interview for the position of <b> {{ $position }} </b> has been rescheduled to the <b> {{ $date }} </b> 
 
-	From: <b> {{ $starttime }} </b> To: <b> {{ $endtime }}. </b>
+	at <b> {{ $starttime }} </b>.
 	Good luck!
 
 

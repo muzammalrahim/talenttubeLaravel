@@ -8,19 +8,19 @@
 @stop
 
 @section('custom_css')
-				{{-- <link rel="stylesheet" href="{{ asset('css/mobile/mdb/addons-pro/steppers.min.css') }}"> --}}
-				<link rel="stylesheet" href="{{ asset('css/site/card.css') }}">
-				<link rel="stylesheet" href="{{ asset('css/mobile/mjoin.css') }}">
+	{{-- <link rel="stylesheet" href="{{ asset('css/mobile/mdb/addons-pro/steppers.min.css') }}"> --}}
+	<link rel="stylesheet" href="{{ asset('css/site/card.css') }}">
+	<link rel="stylesheet" href="{{ asset('css/mobile/mjoin.css') }}">
 @stop
 
 @section('classes_body', 'register step2')
 
 @section('body')
 <!-- Header Start -->
-<div class="jumbotron text-white bg-dark text-center">
+<div class="jumbotron text-white bg-blue text-center">
 	<input type="hidden" id="userType" name="userType" value="user" />
 	<div class="container">
-		<a href="./index"><img src="{{asset('/images/site/logo.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
+		<a href="./index"><img src="{{asset('images/logo.png')}}" style="max-height:45px;  max-width:238px;" alt="" /></a>
 	</div>
 </div>
 <!-- Header End -->
@@ -93,12 +93,12 @@
 
 			<div class="card_question_btn p-0 ">
 				
-				<button class="btn btn-sm btn-info initialPrevQuestion questionNaviateTo"  data-action="previous" > 
+				{{-- <button class="btn btn-sm btn-info initialPrevQuestion questionNaviateTo"  data-action="previous" > 
 	                <h3><i class="initial_arrow fas fa-arrow-left text-white"></i></h3>
-	        	</button>
+	        	</button> --}}
 
 				<button data-action="0" class="btn btn-sm btn-danger btn_question">No</button>
-				<button data-action="1" class="btn btn-sm btn-primary btn_question" >Yes</button>
+				<button data-action="1" class="btn btn-sm btn-primary btn_question float-right" >Yes</button>
 
 				<div class="cl"></div>
 			</div>

@@ -14,9 +14,8 @@ select {
     $('.multiple-select').multipleSelect()
   })
 
-  $(document).on('change' '.filter_qualification_type', function(){
-    // $(".qualifSelected").prop("selected", false);
-  });
+  /*$(document).on('change' '.filter_qualification_type', function(){
+  });*/
 
 </script>
 

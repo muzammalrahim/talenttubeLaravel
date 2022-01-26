@@ -34,6 +34,7 @@ use App\InterviewTemplate;
 use App\UserOnlineTest;
 use App\OnlineTest;
 
+use App\ControlSession;
 
 use Carbon\Carbon;
 use DateTime;
@@ -2002,6 +2003,9 @@ class MobileUserController extends Controller
 		$jobSeekers             = $jobSeekersObj->swipeJobseeker($request, $user);
 		$likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
 		$data['likeUsers'] = $likeUsers;
+
+		$controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        $data['controlsession'] = $controlsession;
 		return view('mobile.employer.jobSeekers.swipe_jobseeker', $data);
 	 	// mobile/employer/jobSeekers/swipe_jobseeker
 	}
