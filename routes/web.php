@@ -408,7 +408,7 @@ Route::get('media/private/{userid}/{any}', [
 	Route::get('employer/verify/{id}/{code}', 'Site\HomeController@accountVerification')->name('accountVerification');
 
     // Desktop layout only.
-    Route::group(array('middleware' => ['devicecheck']), function(){
+    // Route::group(array('middleware' => ['devicecheck']), function(){
     Route::get('/', 'Site\HomeController@index')->name('homepage'); 
     Route::get('sign-in', 'Site\HomeController@signIn')->name('signIn'); 
     Route::get('register', 'Site\HomeController@showRegisterPage')->name('register'); 
@@ -432,9 +432,9 @@ Route::get('media/private/{userid}/{any}', [
     Route::post('ajax/geo_states', 'Site\HomeController@geo_states')->name('ajax_geo_states');
     Route::post('ajax/geo_cities', 'Site\HomeController@geo_cities')->name('ajax_geo_cities');
 
-});
+// });
 // Front End  with Authentication
-Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
+Route::group(array('middleware' => ['auth']), function(){
 //  jobSeekerProfile  'controlUser'
     Route::get('useridforcontroling/{id}', 'Site\SiteUserController@useridforcontroling')->name('useridforcontroling');
     Route::get('employeridforcontroling/{id}', 'Site\SiteUserController@employeridforcontroling')->name('employeridforcontroling');
@@ -534,6 +534,11 @@ Route::group(array('middleware' => ['auth' ,'devicecheck']), function(){
     Route::get('jobSeekerInfo/{id}', 'Site\JobSeekerController@jobSeekerInfo')->name('jobSeekerInfo');
     Route::post('ajax/blockEmployer/{id}', 'Site\JobSeekerController@blockEmployer')->name('blockEmployer');
     Route::post('ajax/likeEmployer/{id}', 'Site\JobSeekerController@likeEmployer')->name('likeEmployer');
+
+    Route::get('Swipe-jobseekers',        'Mobile\MobileUserController@mSwipeJobseekers')->name('Swipe-jobseekers');
+
+    Route::post('swipeJobSeekersFilter', 'Mobile\MobileUserController@swipeJobSeekersFilter')->name('swipeJobSeekersFilter'); 
+    
 
     // job
 

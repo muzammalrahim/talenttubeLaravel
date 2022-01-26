@@ -139,6 +139,10 @@
           el: ".swiper-pagination",
           dynamicBullets: true,
         },
+
+        longSwipes: false,
+        loopPreventsSlide: false,
+        touchEventsTarget: 'container'
       });
 
 

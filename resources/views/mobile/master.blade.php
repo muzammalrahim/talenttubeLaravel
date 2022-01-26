@@ -13,25 +13,20 @@
         var base_url = '{!! url('/') !!}';
     </script>
 
+    <!-- MDB icon -->
+    <!-- <link rel="icon" href="{{ URL::asset('/img/favicon.ico') }}" type="image/x-icon"/> -->
+    <link rel="icon" href="{{ URL::asset('favicon.ico') }}" type="image/x-icon"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="{{ asset('css/mobile/mdb/bootstrap.min.css') }}">
+    <!-- Material Design Bootstrap -->
+    <link rel="stylesheet" href="{{ asset('css/mobile/mdb/mdb.min.css') }}">
+    <!-- Your custom styles (optional) -->
+    <link rel="stylesheet" href="{{ asset('css/mobile/style.css') }}">
 
-
-      <!-- MDB icon -->
-      <!-- <link rel="icon" href="{{ URL::asset('/img/favicon.ico') }}" type="image/x-icon"/> -->
-      <link rel="icon" href="{{ URL::asset('favicon.ico') }}" type="image/x-icon"/>
-      <!-- Font Awesome -->
-      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-      <!-- Bootstrap core CSS -->
-      <link rel="stylesheet" href="{{ asset('css/mobile/mdb/bootstrap.min.css') }}">
-      <!-- Material Design Bootstrap -->
-      <link rel="stylesheet" href="{{ asset('css/mobile/mdb/mdb.min.css') }}">
-      <!-- Your custom styles (optional) -->
-						<link rel="stylesheet" href="{{ asset('css/mobile/style.css') }}">
-
-
-
-						@yield('custom_css')
-
-						<input type="hidden" id="layout" name="layout" value="mobile"/>
+    @yield('custom_css')
+    <input type="hidden" id="layout" name="layout" value="mobile"/>
 
 </head>
 <body class="@yield('classes_body')" @yield('body_data')>

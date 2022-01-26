@@ -1,5 +1,5 @@
 
-@extends('site.employer.employermaster')
+@extends('web.employer.employermaster')
 
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">

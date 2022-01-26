@@ -2193,6 +2193,7 @@ opacity: 1 !important;
     }
     .main-content {
         margin-left: 0;
+        overflow: hidden;
     }
 
     /* ========================concigerge============== */
@@ -2267,12 +2268,17 @@ opacity: 1 !important;
         position: static;
         margin: 0 0;
     }
-    .profile-information {
+    .profile-text-wrap{
+        padding: 0px ;
+    }
+
+     .profile-information {
         padding: 30px;
         background: #00326f !important;
     }
     .profile-data-info{
         padding: 0 !important;
+        height: unset !important;
        
     }
     .profile-detail h1 {
@@ -2282,8 +2288,8 @@ opacity: 1 !important;
     }
     .profile-detail p {
         color: #ffffff !important;
-        text-align: left;
-        font-size: 20px;
+        text-align: left !important;
+        font-size: 14px;
     }
     .recent-job label {
         color: #ffffff;
@@ -2431,7 +2437,7 @@ opacity: 1 !important;
         margin-bottom: 10px;
     }
     .first-tap-detail .tab-content {
-        margin: 30px 0;
+        /*margin: 30px 0;*/
     }
     .tag-tabactive{
         display: none !important;

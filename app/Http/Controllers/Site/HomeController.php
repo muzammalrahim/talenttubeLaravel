@@ -28,6 +28,10 @@ use App\Mail\saveSlotUserEmail;
 use App\Mail\deleteSlotToUserEmail;
 use App\Mail\rescheduleSlotEmail;
 use App\Mail\deletedSlotEmailToEmployer;
+use App\Mail\deletedSlotEmailToJobseeker;
+use App\Mail\rescheduleSlotEmailToEmployer;
+
+
 
 
 use App\Mail\confirmSlotMailToJobSeeker;
@@ -1123,6 +1127,8 @@ class HomeController extends Controller {
 
             Mail::to($interviewBooking->interview->employerData->email)->send(new deletedSlotEmailToEmployer($interviewBooking->interview->employerData->company,$interviewBooking->interview->positionname,$interviewBooking->slot->starttime,$interviewBooking->slot->endtime,$interviewBooking->slot->date,$interviewBooking->name));
 
+            Mail::to($interviewBooking->email)->send(new deletedSlotEmailToJobseeker($interviewBooking->name,$interviewBooking->interview->positionname,$interviewBooking->slot->starttime,$interviewBooking->slot->endtime,$interviewBooking->slot->date,$interviewBooking->name));
+
             $interviewBooking->delete();
             return response()->json([
             'status' => 1,
@@ -1183,24 +1189,27 @@ class HomeController extends Controller {
         // $email = $request->session()->pull('emailInModal');
         $data = $request->toArray();
         $interviewBooking = Interviews_booking::where('id', $data['booking_id'])->where('email', $email)->first();
-        /*dump($interviewBooking->slot->starttime);
-        dump($interviewBooking->slot->endtime);
-        dump($interviewBooking->slot->date);
-        dd($interviewBooking->interview->positionname);*/
+
+        
+
+        $old_starttime = '';
+        $old_date = '';
+        $old_starttime .= $interviewBooking->slot->starttime;
+        $old_date .= $interviewBooking->slot->date;
+
+        // dd($old_starttime);
+
+        
+
+        $interviewBooking->slot_id = $data['slot_id'];
+        $interviewBooking->save();
 
         Mail::to($email)->send(new rescheduleSlotEmail($interviewBooking->name,$interviewBooking->interview->positionname,$interviewBooking->slot->starttime,$interviewBooking->slot->endtime,$interviewBooking->slot->date));
 
+        // Mail to employer for informing of resceduling interview of jbseeker
 
-        /*if (!empty($interviewBooking)) {
-            dd($interviewBooking->slot_id);
-        }
-        else{
-            dd( ' Empty samaan ' );
-        }
-        */
-        // dd($interviewBooking->slot->id);
-        $interviewBooking->slot_id = $data['slot_id'];
-        $interviewBooking->save();
+        Mail::to($interviewBooking->interview->employerData->email)->send(new rescheduleSlotEmailToEmployer($interviewBooking->interview->employerData->company,$interviewBooking->interview->positionname,$interviewBooking->slot->starttime,$interviewBooking->slot->endtime,$interviewBooking->slot->date,$old_starttime,$old_date));
+
         return response()->json([
             'status' => 1,
             'data' => 'Slot Updated Successsfully'

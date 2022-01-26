@@ -12,8 +12,8 @@
 
             @foreach ($jobSeekers as $js)
 
-            <div class="card mb-3 swiper-slide shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}}">
-                <div class="card">
+            <div class="card mb-3 swiper-slide shadow mb-3 bg-white rounded job_row jobApp_{{-- {{$application->id}} --}} overflow-hidden">
+                <div class="card overflow-hidden">
 
                     {{-- <div class="swiper-button-next"></div> --}}
 

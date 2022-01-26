@@ -1,164 +1,374 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('mobile.user.usermaster')
+@extends('web.user.usermaster')
 @section('content')
 
 
+<div class="tab-content" id="nav-tabContent">
+   
+   <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+      <section class="row">
+         <div class="col-md-4 order-md-2 order-sm-1 profile-data-info ">
+            <div class="profile-information ">
+               <div class="profile-img-wrapper">
+                  <div class="profileimgContainer">
+                    <img  src="{{$profile_image}}" class="profile_img" width="150" height="200" alt="profile">
+                  </div>
+               </div>
+               <div class="profile-detail clearfix ">
+                  <div class="text-center">
+                     <h1> {{ $user->name }} {{ $user->surname }} </h1>
+                     {{-- <p> {{userLocation($user)}} </p> --}}
 
-<div class="card shadow mb-3 bg-white rounded">
+                     <div class="location p-2">  
+                        <div class="row m-0"> 
+                           <p class="userLocationSpan col-10" > {{userLocation($user)}} </p> 
+                           <button type="button" id="list_info_location" class="orange_btn float-right col-2" onclick="showMap()">
+                           <i class="fas fa-edit salaryRangeEdit"></i> 
+                        </div>
+                        </button>
+                          <div class="location_search_cont hide_it ">
+                              <div class="location_input dtable w100">
+                                <input type="text" name="location_search" class="inp fl_left form-control" id="location_search" value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
+                                <select class="dinline_block filter_location_radius select_aw hide_it" name="filter_location_radius" data-placeholder="Select Location Radius">
+                                     <option value="5">5km</option>
+                                     <option value="10">10km</option>
+                                     <option value="25">25km</option>
+                                     <option value="50">50km</option>
+                                     <option value="51">50km +</option>
+                                </select>
+                              </div>
+                            <div class="location_latlong dtable w100">
+                                <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
+                                <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+                                <input type="hidden" name="location_name" id="location_name"  value="">
+                                <input type="hidden" name="location_city" id="location_city"  value="">
+                                <input type="hidden" name="location_state" id="location_state"  value="">
+                                <input type="hidden" name="location_country" id="location_country"  value="">
+                            </div>
 
-  <h6 class="card-header h6 m-0">Personal Information {{-- <i class="fas fa-edit float-right"></i> --}} </h6>
+                            <div class="location_map_box dtable w100"><div class="location_map" id="location_map"></div></div>
+                            <div class="searchField_action">
+                                <div class="searchFieldLabel dinline_block"></div>
 
-	  <div class="card-body p-2 cardBody">
+                                {{-- <button class=" btn-sm btn-danger" onclick="showMap()">Cancel</button> --}}
 
-      {{-- ==================================================== For image ==================================================== --}}
+                                <button class="btn small orange_btn saveNewLocation" onclick="updateLocation()">Save</button>
 
-      <div class="row">
-        <div class="col-lg-12 col-md-12 mb-1">
-          <div class="testimonial-card">
-            <div class="card-up teal lighten-2">
+                            </div>
+                        </div>
+                     </div>
+
+                     <h2> {{$user->username}} </h2>
+                  </div>
+
+                  
+                  {{-- ==================================== Recent job ==================================== --}}
+
+                     {{-- <div class="about-infomation">
+                        <h2>Recent Job</h2>
+                            <button type="button"  onclick="showFieldEditor('recentJob');" class="edited-text"><i class="fas fa-edit"></i></button>
+                        
+                        <div class="recentjob">
+                           <span class="recentjobSpan"> {{$user->recentJob}} </span>
+                              <b class="mx-2">at</b>
+                           <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
+                        </div>
+
+                        <div class="row sec_recentJob d-none">
+                           <div class="col-5">
+                              <input type="text" name="recentJobField" class="form-control recentJobField" value="{{$user->recentJob}}">
+                           </div>
+                           <div class="col-1">  <span> at </span>  </div>
+                           <div class="col-6">
+                              <input type="text" name="organHeldTitleField" class="form-control organHeldTitleField" value="{{$user->organHeldTitle}}" onclick="showFieldEditor()">
+                           </div>
+                        </div>           
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="float-right button_recentJob d-none">
+                                 <button class="cancel-button" onclick="hideFieldEditor('recentJob');">Cancel</button>
+                                 <button class="orange_btn mt-2" onclick="updateRecentJob()">Save</button> 
+                              </div>
+                           </div>
+                        </div>
+
+                        <div class="alert alert-success alert_recentJob hide_me" role="alert">
+                          <strong>Success!</strong> Recent Job has been updated successfully!
+                        </div>
+                     </div> --}}
+
+                  {{-- ==================================== Recent job ==================================== --}}
+
+                  <div class="recent-job recentjob clearfix px-3">
+
+                     {{-- <div class="row m-0">  --}}
+                        {{-- <div class="col-5"> --}}
+                           <div class="d-inline-block">
+                              <label class="mb-2">Recent Job:</label>
+                        {{-- </div> --}}
+
+                        {{-- <div class="col-7"> --}}
+                              <span class="recentjobSpan"> {{$user->recentJob}} </span>
+                              at
+                              <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
+                              </div>
+                        {{-- </div> --}}
+                     {{-- </div> --}}
+
+                  </div> 
+
+
+                  {{-- ========================================= Salary Range ========================================= --}}
+
+
+                  <div class="recent-job clearfix px-3">
+                     {{-- <div class="row m-0"> --}}
+                        <div class="d-inline-block">
+                        {{-- <div class="col-5"> --}}
+                           <label class="mb-2"> 
+                              Expecting Salary: 
+                           </label>
+                        {{-- </div> --}}
+                        {{-- <div class="col-7"> --}}
+                           <span>AUD: </span>  <span class="salaryRangeValue"> {{number_format($user->salaryRange),3}} </span>
+                        </div>
+                        {{-- </div> --}}
+                     {{-- </div> --}}
+                  </div>
+
+
+                  {{-- ========================================= Salary Range End Here ========================================= --}}
+                  <div class="text-center mb-4">  
+                     <button type="button" class="edit-btn orange_btn" data-toggle = "modal" data-target ="#multifieldPopUp" onclick="editMultipleFields()"><i class="fas fa-edit"></i>Edit</button>
+                  </div> 
+               </div>
+
+
             </div>
-            <div class="avatar mx-auto white">
-                <div class="avatarimg">
-                <img src="{{$profile_image}}"
-                    alt="avatar mx-auto white" class="rounded-circle img-fluid" style="height: 110px">
+         </div>
+
+         <div class="col-md-8 order-md-1 order-sm-2 first-tap-detail">
+
+            <div class="profile profile-section">
+               <ul class="nav nav-tabs" id="Profile-tab" role="tablist">
+                  <span class="line-tab"></span>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home"
+                        type="button" role="tab" aria-controls="home" aria-selected="true">
+                     <i class="fa fa-circle tab-circle-cross"></i>Profile</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
+                        type="button" role="tab" aria-controls="profile" aria-selected="false">
+                     <i class="fa fa-circle tab-circle-cross"></i>Album</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+                        type="button" role="tab" aria-controls="contact" aria-selected="false">
+                     <i class="fa fa-circle tab-circle-cross"></i>Questions</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link" id="tag-tab" data-bs-toggle="tab" data-bs-target="#tag"
+                        type="button" role="tab" aria-controls="tag" aria-selected="false">
+                     <i class="fa fa-circle tab-circle-cross"></i>Tags</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
+                        type="button" role="tab" aria-controls="job" aria-selected="false">
+                     <i class="fa fa-circle tab-circle-cross"></i>Job</button>
+                  </li>
+                  <li class="nav-item" role="presentation">
+                     <button class="nav-link" id="refrance-tab" data-bs-toggle="tab" data-bs-target="#refrance"
+                        type="button" role="tab" aria-controls="refrance" aria-selected="false">
+                     <i class="fa fa-circle tab-circle-cross"></i>Refrences</button>
+                  </li>
+
+               </ul>
+               <div class="tab-content" id="myTabContent">
+                  <!--==================== profile tab-->
+                  <div class="profile-text-wrap tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="Profile-tab">
+                     
+                     
+
+                     {{-- ==================================== About me ==================================== --}}
+
+                     <div class="about-infomation">
+                        <h2>About me</h2>
+                        <button type="button"id="showeditbox" onclick="showFieldEditor('about_me');" class="edited-text"><i class="fas fa-edit"></i></button>
+                        <p class="text_about_me m-0"> {{$user->about_me}} </p>
+
+                        <textarea class="form-control bg-white border-0 sec_about_me d-none" rows="3" cols="3" readonly > {{$user->about_me}}</textarea>
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="float-right button_about_me d-none">
+                                 <button class="cancel-button" onclick="hideFieldEditor('about_me');">Cancel</button>
+                                 <button class="orange_btn mt-2" onclick="updateProfile('about_me');" >Save</button> 
+                              </div>
+                           </div>
+                        </div>
+                        <div class="alert alert-success alert_about_me hide_me" role="alert">
+                          <strong>Success!</strong> About me has been updated successfully!
+                        </div>
+                     </div>
+
+                     <div class="about-infomation">
+                        <h2>Interested In</h2>
+                        <button type="button"  onclick="showFieldEditor('interested_in');" class="edited-text"><i class="fas fa-edit"></i></button>
+                        
+                        <p class="text_interested_in m-0"> {{$user->interested_in}} </p>
+
+                        <textarea class="form-control bg-white border-0 sec_interested_in d-none" rows="3" cols="3" readonly > {{$user->interested_in}}</textarea>
+
+                        <div class="row">
+                           <div class="col-md-12">
+                              <div class="float-right button_interested_in d-none">
+                                 <button class="cancel-button" onclick="hideFieldEditor('interested_in');">Cancel</button>
+                                 <button class="orange_btn mt-2" onclick="updateProfile('interested_in');">Save</button> 
+                              </div>
+                           </div>
+                        </div>
+                        <div class="alert alert-success alert_interested_in hide_me" role="alert">
+                          <strong>Success!</strong> Interested In have been updated successfully!
+                        </div>
+                     </div>
+
+
+                    
+                    <div class="about-infomation bl qualificationBox">
+                        <h2>Qualification</h2>
+                        <button type="button" class="edited-text" onclick="showQualificationEditor();"><i class="fas fa-edit editQualification"></i></button>
+                        <p class="loader SaveQualification"style="float: left;"></p>
+                              <div class="cl"></div>
+                        <ul class="qualification-li">
+                            <li><i class="qualification-circle"></i><span> Type: {{ ucfirst($user->qualificationType) }}</span></li>
+                            <div class="">
+                            @include('site.layout.parts.jobSeekerQualificationList') {{-- site/layout/parts/jobSeekerQualificationList --}}  </div>
+                            <div class="button_qualification d-none "> 
+                                <button class="btn-info btn-block rounded py-2 btn-sm m-0 addQualification" onclick="addQualification()" >Add New</button> 
+                                 <button class="savequalification btn-block orange_btn rounded py-2 " onclick="updateQualification()">Save</button>
+                              </div>
+                              <div class="alert alert-success QualifAlert hide_me" role="alert">
+                                <strong>Success!</strong> Qualification have been updated successfully!
+                              </div>
+                        </ul>
+                     </div> 
+                    
+
+                    <div class="about-infomation IndusListBox">
+                        <h2>Industry Experience</h2>
+                        <button type="button" class="edited-text" onclick="showIndustryExpEditor();"><i class="fas fa-edit"></i></button>
+                        <ul class="qualification-li font-16">
+                            <div class="IndusList">  
+                              @include('site.layout.parts.jobSeekerIndustryList')
+                            </div>
+                            <div class="button_industryExperience d-none">
+                                <button class="addIndus btn-info btn-block rounded py-2 btn-sm m-0" onclick="addIndustryExp()" >Add New</button> 
+                                <button class=" btn-block orange_btn rounded py-2  saveIndus " onclick="updateIndusExperience()">Save</button>
+                            </div>
+                            <div class="alert alert-success IndusAlert hide_me" role="alert">
+                               <strong>Success!</strong> Industry Experience have been updated successfully!
+                            </div>
+                        </ul>
+                    </div>
                 </div>
+               
+                  <!-- ========================================== album-tab ========================================== -->
+                  
+
+                  <div class="album-section tab-pane fade Photos " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                     @include('site.user.profile.tabs.album')  {{-- site/user/profile/tabs/album --}}
+                     
+
+                     @include('web.user.profile.tabs.resume')  {{-- web/user/profile/tabs/resume --}}
+
+                     <div class=" Gallery">
+                        <h2>Video's</h2>
+
+                           @include('web.user.profile.tabs.videos') {{-- web/user/profile/tabs/videos --}}
+
+                     </div>
+                  </div>
+
+
+                  <!-- ========================================== question tab ========================================== -->
+                  
+                  <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
+
+                     <h2>Questions  <button type="button"  onclick="showFieldEditor('question');" class="edited-text orange_btn float-right"><i class="fas fa-edit"></i></button></h2>
+                     
+                        @include('site.user.profile.questionsuserpart')
+                  </div>
+
+                  <!-- ========================================== tag tab ========================================== -->
+                  <div class="tab-pane fade tag-tab-info " id="tag"  role="tabpanel" aria-labelledby="tag-tab">
+
+                     @include('site.user.profile.tabs.tags')
+
+                  </div>
+                  <!--=================job tab ============================ -->
+                  
+                  <div class="tab-pane fade job-applied" id="job"  role="tabpanel" aria-labelledby="job-tab">
+
+                     @include('site.user.profile.tabs.jobs') {{-- site/user/profile/tabs/jobs --}}
+
+                  </div>
+                  
+                  <!--=================referancesss tab=====================-->
+                  <div class="tab-pane fade referance-tab" id="refrance"  role="tabpanel" aria-labelledby="refrance-tab">
+                     @include('site.user.profile.tabs.reference') {{-- site/user/profile/tabs/reference --}}
+                  </div>
+
+                  <!--========================end all tabs-->
+               </div>
+               
+               </div>
+
             </div>
+ 
+      </section>
+   </div>
+   
+</div>
 
-          </div>
-        </div>
+
+<div class="bj-modal">
+   <div class="modal fade" id="multifieldPopUp" tabindex="-1" role="dialog"
+      aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog filter-industry-modal" role="document">
+         <div class="modal-content">
+            <div class="modal-header">
+               <div class="m-header">
+                  <h4 class="modal-title" id="myModalLabel">
+                     <img src="{{ asset('assests/images/filter.png') }}" alt="img" class="">
+                     Edit Fields
+                  </h4>
+                  <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
+               </div>
+            </div>
+            <div class="modal-body">
+
+               <div class="i-modal-checks multiFields">
+                  
+               </div>
+
+
+            </div>
+            <div class="modal-footer" >
+               <button type="button" class="btn btn-primary bs-btn" data-dismiss="modal">
+               {{-- <img src="{{ asset('assests/images/search-modal.png') }}" alt="img" class=""> --}}
+               <span class="fb-text"> Done </span>
+               </button>
+            </div>
+         </div>
       </div>
-
-      {{-- ==================================================== For image ==================================================== --}}
-
-
-      {{-- <div class="personalInfoDiv"> --}}
-		
-      <div class="personalInfo mt-2"> <h6 class="m-0 font-weight-bold">{{$user->name}} {{$user->surname}}</h6></div>
-  		<div class="personalInfo"> <b>Email:</b>     <span class="m-0">{{$user->email}}</span></div>
-  		<div class="personalInfo"> <b>Phone:</b>     <span class="m-0">{{$user->phone}}</span></div>
-
-      @include('mobile.user.tabs.location')   {{-- mobile/user/tabs/location --}}
-
-      {{-- </div> --}}
-
-
-
-      {{-- =============================================== Interested in =============================================== --}}
-
-
-      @include('mobile.user.tabs.interested')   {{-- mobile/user/tabs/interested --}}
-
-
-      {{-- =============================================== Recent Job =============================================== --}}
-
-      @include('mobile.user.tabs.recentjob')   {{-- mobile/user/tabs/recentjob --}}
-
-      
-      {{-- =============================================== Organization Name =============================================== --}}
-
-      @include('mobile.user.tabs.organization')   {{-- mobile/user/tabs/organization --}}
-
-      
-      {{-- =============================================== Salary Range =============================================== --}}
-
-      @include('mobile.user.tabs.salaryrange')   {{-- mobile/user/tabs/salaryrange --}}
-
-
-      {{-- =============================================== About Me =============================================== --}}
-
-      @include('mobile.user.tabs.aboutme')   {{-- mobile/user/tabs/aboutme --}}
-
-
-
-      <div class="cardContent"></div>
-      <div class="cardEdit" style="display: none;"></div>
-    </div>
-  </div>
+   </div>
 </div>
 
 
-{{-- =============================================== qualification_card =============================================== --}}
 
-@include('mobile.user.tabs.qualification_card')   {{-- mobile/user/tabs/qualification_card --}}
-
-
-{{-- =============================================== industry_exp =============================================== --}}
-
-@include('mobile.user.tabs.industry_exp')   {{-- mobile/user/tabs/industry_exp --}}
-
-
-
-{{-- ======================================================================================================================== --}}
-
-
-<ul class="nav nav-tabs nav-justified md-tabs indigo" id="myTabJust" role="tablist" style="font-size:12px">
-
-  <li class="nav-item">
-    <a class="nav-link active" id="home-tab-just" data-toggle="tab" href="#home-just" role="tab" aria-controls="home-just"
-      aria-selected="true">Albums</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="profile-tab-just" data-toggle="tab" href="#profile-just" role="tab" aria-controls="profile-just"
-      aria-selected="false">Questions</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" id="reference-tab-just" data-toggle="tab" href="#reference-just" role="tab" aria-controls="reference-just"
-      aria-selected="false">Reference</a>
-  </li>
-
-  {{--   <li class="nav-item">
-    <a class="nav-link" id="tags-tab-just" data-toggle="tab" href="#tags-just" role="tab" aria-controls="tags-just"
-      aria-selected="false">Tags</a>
-  </li> --}}
-
-</ul>
-
-<div class="tab-content card pt-5 pl-2 text-dark" id="myTabContentJust">
-
-
-  {{-- ============================================================= Album Tab Start here ============================================================= --}}
-
-    <div class="tab-pane fade show active" id="home-just" role="tabpanel" aria-labelledby="home-tab-just">
-
-      {{-- =================================================================== Photos =================================================================== --}}
-
-
-      @include('mobile.user.tabs.photos')   {{-- mobile/user/tabs/photos --}}
-
-
-      {{-- ======================================================== Resume & Contact Detail ======================================================== --}}
-
-      @include('mobile.user.tabs.resume_contact')   {{-- mobile/user/tabs/resume_contact --}}
-
-      {{-- =================================================================== videos =================================================================== --}}
-
-    
-      @include('mobile.user.tabs.videos')
-
-      {{-- =================================================================== videos end =================================================================== --}}
-
-    </div>
-
-    {{-- ============================================================= Album Tab Ends here ============================================================= --}}
-
-
-    {{-- ============================================================= Questions Tab Start here ============================================================= --}}
-
-
-    @include('mobile.user.tabs.questions')  {{-- mobile/user/tabs/questions --}}
-
-
-    {{-- ============================================================= Reference Tab Start here ============================================================= --}}
-
-    <div class="tab-pane fade" id="reference-just" role="tabpanel" aria-labelledby="reference-tab-just">
-        <div class="mb-3 bg-white rounded text-dark">
-          @include('mobile.layout.parts.jsAddReference')  {{--  mobile/layout/parts/jsAddReference    --}}
-        </div>
-    </div>
-
-    {{-- ============================================================= Reference Tab End here ============================================================= --}}
-
-</div>
 
 {{-- ======================================================================================================================== --}}
 
@@ -168,23 +378,7 @@
 @section('custom_footer_css')
 <style type="text/css">
 
-.qualifType{ /*margin-left: 10px;*/font-size: 12px;}
-.qualifTypeSpan{text-transform: capitalize;font-weight: bold;}
-p,span{font-size: 12px;}
-.iconPosition {position: relative;right: 20px;top: 5px;}
-.tabs_profile .tab_photos .item {position: relative;overflow: hidden;width: 126px;height: 140px;margin: 0 26px 25px 0;transition: 0.5s ease;float: left;width: auto;
-  height: auto;float: none;display: inline-block;box-shadow: 0 2px 4px -1px rgba(0,0,0,.2), 0 4px 5px 0 rgba(0,0,0,.14), 0 1px 10px 0 rgba(0,0,0,.12);border-radius: 4px;}
-div#home-just {/*display: grid;*/}
-.uploadedPhotos {vertical-align: middle;/* overflow: visible; */object-fit: cover;height: 119px;width: 120px;}
-.teal.lighten-2 {background-color: #254c8e !important;}
 
-/*.video_box{width: 36%;float: right;}*/
-
-.video_box {
-    width: 46%;
-    float: left;
-    margin-right: 13px;
-}
 </style>
 @stop
 
@@ -194,6 +388,8 @@ div#home-just {/*display: grid;*/}
 <script src="{{ asset('js/site/plyr.polyfilled.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/mobile/userProfile.js') }}"></script>
 <script src="{{ asset('js/site/plyr.polyfilled.js') }}"></script>
+<script src="{{ asset('js/web/profile.js') }}"></script>
+
 <script>
     @if ($videos->count() > 0 )
     @foreach ($videos as $video)
@@ -210,6 +406,76 @@ div#home-just {/*display: grid;*/}
     });
     @endforeach
     @endif
+
+
+    // {{-- ==================================================== Edit Qualification ==================================================== --}}
+
+  this.addQualification = function(){
+    console.log('Add Qualification Button profile');
+
+    var newQualificationHtml = '<div class="QualificationSelect row ml-0 my-2"> <select name="qualification[]" class="userQualification form-control col-10">';
+    @if(!empty($qualificationList))
+        @foreach($qualificationList as $lk=>$qualification)
+            newQualificationHtml += '<option value="{{$qualification['id']}}">{{$qualification['title']}}</option>';
+        @endforeach
+    @endif
+    newQualificationHtml += '</select>';
+    newQualificationHtml += '<div class = "col-2">';
+    newQualificationHtml += '<i class="fa fa-trash removeQualification float-right"></i></div>';
+    newQualificationHtml += '</div>';
+    newQualificationHtml += '</div>';
+    $('.jobSeekerQualificationList').append(newQualificationHtml);
+
+  }
+
+
+// ===================================================== add remove industry ===================================================
+
+
+$(document).ready(function(){
+   $(document).on('click','.removeIndustry', function(){
+    $(this).closest('.IndustrySelect').remove();
+   });
+
+    this.addIndustryExp = function (){
+
+    console.log(' addIndus ');
+    var newIndusHtml = '<div class="IndustrySelect row ml-0 my-2"><select name="industry_experience[]" class="industry_experience userIndustryExperience form-control col-10">';
+    @if(!empty($industriesList))
+        @foreach($industriesList as $lk=>$lv)
+            newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>';
+        @endforeach
+    @endif
+    newIndusHtml += '</select>';
+    newIndusHtml += '<div class = "col-2">';
+    newIndusHtml += '<i class="fa fa-trash removeIndustry float-right"></i></div>';
+    newIndusHtml += '</div>';
+    $('.IndusList').append(newIndusHtml);
+
+   }
+
+});
+
+// ======================== Edit Industry Experience for Ajax ========================
+
+var toggle = true;
+$('input[name="filter_location_status"]').change(function() {
+    console.log(' filter_location_status ');
+    (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
+});
+
+function showMap(){
+    if(toggle){
+        jQuery('.location_search_cont').removeClass('hide_it');
+        toggle = false;
+    }
+    else{
+        jQuery('.location_search_cont').addClass('hide_it');
+        toggle = true;
+    }
+}
+
+
 
 </script>
 <script type="text/javascript">
