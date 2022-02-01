@@ -84,26 +84,33 @@
             <p class="slot-para">Your slot for interview is with below timetable.</p>
                <ul class="job-box-text concigerge clearfix">
                   <div class="text-info-detail clearfix row">
-                    <div class="col-4">   
+                    <div class="col-12 col-sm-4">   
                       <div class="row"> 
-                        <span class="col-3 font-weight-bold text-dark">From:</span>
-                        <span class="col-8 ml-2"> {{$Int_booking->slot->starttime}}</span>
+                        <span class="col-4 py-2 font-weight-bold text-dark">From:</span>
+                        <span class="col-8 py-2"> {{$Int_booking->slot->starttime}}</span>
+                        <span class="col-4 py-2 font-weight-bold text-dark">To:</span>
+                        <span class="col-8 py-2"> {{$Int_booking->slot->endtime}} </span>
+                        <span class="col-4 py-2 font-weight-bold text-dark">Date:</span>
+                        <span class="col-8 py-2"> {{ Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d') }} </span>
                       </div>
                     </div>
                     {{-- <span>{{ Form::text('Start Time', $value = $Int_booking->slot->starttime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
                     </span> --}}
-                    <div class="col-8">   
+                    <div class="col-12 col-sm-8">   
                       <div class="row"> 
-                        <span class="col-3 font-weight-bold text-dark">Booking:</span>
-                        <span class="col-8 ml-2"> {{$Int_booking->interview->title}}</span>
+                        <span class="col-4 py-2 font-weight-bold text-dark">Booking:</span>
+                        <span class="col-8 py-2"> {{$Int_booking->interview->title}}</span>
+                        <span class="col-4 py-2 font-weight-bold text-dark">Company:</span>
+                        <span class="col-8 py-2">{{$Int_booking->interview->companyname}}</span>
+                        <span class="col-4 py-2 font-weight-bold text-dark">Position:</span>
+                        <span class="col-8 py-2">{{$Int_booking->interview->positionname}}</span>
                       </div>
                     </div>
                   </div>
                  <div class="text-info-detail clearfix row">
                   <div class="col-4">
                     <div class="row"> 
-                      <span class="col-3 font-weight-bold text-dark">To:</span>
-                      <span class="col-8 ml-2"> {{$Int_booking->slot->endtime}} </span>
+                      
                     </div>
                   </div>
                    {{-- <span> {{ Form::text('Start Time', $value = $Int_booking->slot->endtime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
@@ -111,16 +118,14 @@
                   
                   <div class="col-8">
                     <div class="row"> 
-                      <span class="col-3 font-weight-bold text-dark">Company:</span>
-                      <span class="col-8 ml-2">{{$Int_booking->interview->companyname}}</span>
+                      
                     </div>
                   </div>
                  </div>
                  <div class="text-info-detail clearfix row">
                   <div class="col-4">
                     <div class="row"> 
-                      <span class="col-3 font-weight-bold text-dark">Date:</span>
-                      <span class="col-8 ml-2"> {{ Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d') }} </span>
+                      
                     </div>
                   </div>
 
@@ -128,15 +133,14 @@
                   </span> --}}
                   <div class="col-8">
                     <div class="row"> 
-                      <span class="col-3 font-weight-bold text-dark">Position:</span>
-                      <span class="col-8 ml-2">{{$Int_booking->interview->positionname}}</span>
+                      
                     </div>
                   </div>
                 </div>
                 <div class="text-info-detail clearfix row">
                   {{-- <div class="row">  --}}
-                    <span class="col-3 font-weight-bold text-dark">Insructions:</span>
-                    <p class="col-9 font-14">{{$Int_booking->interview->instruction}}</p>
+                    <span class="col-4 font-weight-bold text-dark">Insructions:</span>
+                    <p class="col-8 font-14">{{$Int_booking->interview->instruction}}</p>
                   {{-- </div> --}}
                 </div>
               </ul>

@@ -464,12 +464,15 @@ input, textarea, select{
 
 @media (max-width:479px){
     .sidebaricontoggle {
-        top: 65px;
-        right: 30px;
+        top: 90px;
+        right: 20px;
     }
-    button{
+    .button{
         width: 100% !important;
         margin-bottom: 20px;
+    }
+    p{
+        font-size: 11px;
     }
 }
 
@@ -559,5 +562,20 @@ div.google-visualization-tooltip {
 	.location_margin {
 						margin-left: 45px;
 			} 
+}
+
+
+
+@media screen and (max-width: 479px){
+    input, textarea, select{
+        font-size: 11px;
+    }
+    b, strong{
+        font-size: 11px;
+    }
+    select.white-text.mdb-select.md-form.filter_location_radius.custom-select{
+        padding: 0px 5px;
+        font-size: 14px;
+    }
 }
 
