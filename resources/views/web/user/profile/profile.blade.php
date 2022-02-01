@@ -58,7 +58,7 @@
                         </div>
                      </div>
 
-                     <h2> {{$user->username}} </h2>
+                     <!-- <h2> {{$user->username}} </h2> -->
                   </div>
 
                   

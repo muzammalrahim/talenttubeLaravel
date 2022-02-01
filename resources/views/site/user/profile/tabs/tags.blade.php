@@ -19,11 +19,11 @@
       <div class="newTagInput relative">
          
         <div class="row">
-        	<div class="col-10 p-0">
+        	<div class="col-sm-10 p-0">
          		<input type="text" class="form-control" name="newTag" value="" />
         	</div>
 
-        	<div class="col-2">	
+        	<div class="col-sm-2 mt-2 mt-md-0">	
          		<button id="addNewTag" class="orange_btn" data-toggle = "modal" data-target = "#addNewTagModal" style="height:none !important">Add New</button>
         	</div> 		
         </div>

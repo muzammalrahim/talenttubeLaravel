@@ -34,7 +34,11 @@
     border-radius: 5px;
 }
 .Content .signin h2{
+	font-weight: 600;
     padding: 15px 0px;
+}
+.Content .signin .orange_btn{
+	font-size: 16px;
 }
 .input-group-text {
     color:  rgba(136, 136, 136, 1);
@@ -76,6 +80,7 @@
     color: #2672ab;
 }
 .registration-link a{
+	font-size: 16px;
     color: #2672ab;
 }
 @media screen and (max-width:450px){
@@ -91,14 +96,20 @@
     
     .Content .signin{
         background-color: #fff;
-        width: 80%;
+        width: 90%;
         margin: auto;
     }
+				.Content .signin form label{
+					font-weight:600;
+				}
+				.Content .signin form .form-check-label{
+					font-weight: 400;
+				}
     .password a{
         padding: 0px;
         margin: auto;
         float: right;
-        font-size: 12px;
+        font-size: 14px;
        }
        .form-check{
            margin-top: 20px;
