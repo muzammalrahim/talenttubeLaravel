@@ -3272,7 +3272,7 @@ button i {
         top: 13px;
     }
     .bc-footer .orange_btn{
-        padding: 6px 25px !important;
+        padding: 9px 6px !important;
         width: 90%;
         text-align: center;
     }
@@ -3556,7 +3556,7 @@ span.v_title {
         float: left;
     }
     .user-details .blocked-user-about p{
-        font-size: 14px;
+        font-size: 11px;
     }
     .user-details .blocked-user-experience p{
         font-size: 14px;
@@ -3583,6 +3583,9 @@ span.v_title {
     }
     .bc-footer .used-tag{
         width: 90%;
+        height: 35px !important;
+        font-size: 11px;
+        padding: 3px 6px !important;
     }
     .pendinginterview-tag{
         text-align: center;
@@ -3632,6 +3635,35 @@ span.v_title {
         height: 35px !important;
         font-size: 11px;
     }
+    .user-details .blocked-user-about{
+        padding: 10px 10px 20px !important;
+    }
+    .user-details .blocked-user-about h6{
+        font-size: 11px;
+        width: 50%;
+        float: left;
+    }
+    .IndustrySelect{
+        overflow: hidden;
+        width: 50%;
+    }
+    .user-details .blocked-user-experience h6{
+        font-size: 11px;
+        width: 50%;
+        float: left;
+    }
+    .user-details .blocked-user-experience p{
+        font-size: 11px !important;
+    }
+    .bc-footer h4{
+        font-size: 12px;
+    }
+    h4{
+        font-size: 12px !important;
+    }
+    h6.p-0{
+        width: 100% !important;
+    }
 }
 
 
@@ -3647,9 +3679,6 @@ span.v_title {
     h2{
         font-size: 15px;
         text-align: center;
-        margin: 0;
-    }
-    .job-box-info{
         margin: 0;
     }
     .close-box{
@@ -3680,6 +3709,9 @@ span.v_title {
     }
     .slot-para{
         font-size: 10px
+    }
+    .bj-tr-btn .orange_btn{
+        width: 43%;
     }
 
 }
