@@ -1189,26 +1189,35 @@ class HomeController extends Controller {
         // $email = $request->session()->pull('emailInModal');
         $data = $request->toArray();
         $interviewBooking = Interviews_booking::where('id', $data['booking_id'])->where('email', $email)->first();
+        $slot = Slot::find($data['slot_id']);
 
+        if ($interviewBooking->slot->starttime == $slot->starttime && $interviewBooking->slot->date == $slot->date ) {
+            // dd(' Not Same Time ');
+            return response()->json([
+                'status' => 0,
+                'data' => 'You can cannot select the same time '
+            ]);
+        }
         
+        // dd('same time');
+        $old_starttime = $interviewBooking->slot->starttime;
+        $old_date = $interviewBooking->slot->date;
 
-        $old_starttime = '';
-        $old_date = '';
-        $old_starttime .= $interviewBooking->slot->starttime;
-        $old_date .= $interviewBooking->slot->date;
-
-        // dd($old_starttime);
-
-        
-
+        // updating slot id in interview booking
         $interviewBooking->slot_id = $data['slot_id'];
-        $interviewBooking->save();
+        $interviewBooking->update();
 
-        Mail::to($email)->send(new rescheduleSlotEmail($interviewBooking->name,$interviewBooking->interview->positionname,$interviewBooking->slot->starttime,$interviewBooking->slot->endtime,$interviewBooking->slot->date));
+        $slot = Slot::find($interviewBooking->slot_id);
+        
+        Mail::to($email)->send(new rescheduleSlotEmail($interviewBooking->name,$interviewBooking->interview->positionname,
+            $slot->starttime,$interviewBooking->slot->endtime,$slot->date));
 
-        // Mail to employer for informing of resceduling interview of jbseeker
+        // ============================ Mail to employer for informing him of resceduling interview of jbseeker
+        $company = $interviewBooking->interview->employerData->company;
+        $position = $interviewBooking->interview->positionname;
 
-        Mail::to($interviewBooking->interview->employerData->email)->send(new rescheduleSlotEmailToEmployer($interviewBooking->interview->employerData->company,$interviewBooking->interview->positionname,$interviewBooking->slot->starttime,$interviewBooking->slot->endtime,$interviewBooking->slot->date,$old_starttime,$old_date));
+        Mail::to($interviewBooking->interview->employerData->email)->
+        send(new rescheduleSlotEmailToEmployer($company,$position,$slot->starttime,$slot->date,$old_starttime,$old_date,$interviewBooking->name));
 
         return response()->json([
             'status' => 1,

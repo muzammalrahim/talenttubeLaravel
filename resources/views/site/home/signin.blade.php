@@ -34,7 +34,7 @@
         <label for="username">Your Email or Username</label>
         <div class="input-group mb-3 ">
             <span class="input-group-text" id="basic-addon1"><i class="fas fa-user-circle"></i></span>
-            <input type="email" required id="form_login_user" name="email" class="form-control" placeholder="Email or Username" aria-label="Username" aria-describedby="basic-addon1">
+            <input type="email" required id="form_login_user" name="email" class="form-control rounded" placeholder="Email or Username" aria-label="Username" aria-describedby="basic-addon1">
             <input type="hidden" name="login_type" value="site_ajax" />
             <div class="error"></div>
           </div>

@@ -1,8 +1,8 @@
 {{-- @dump($UserInterview) --}}
 @extends('web.employer.employermaster')
 @section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 @section('content')
 {{-- 
@@ -65,7 +65,7 @@
       <div class="row">
          @if ($UserInterview->count() > 0)
          @foreach ($UserInterview   as $interview)
-         <div class="col-sm-12 col-md-6">
+         <div class="col-sm-12 col-md-6 interview_{{ $interview->id }}">
             <div class="job-box-info interview-box clearfix">
                <div class="box-head">
                   <h4>Invitation {{$loop->index+1}}: Interview with {{$interview->js->name}}</h4>
@@ -76,7 +76,7 @@
                      <span>
                         <form class="statusOfInterview d-contents" name="statusOfInterview">
                            @csrf
-                           <select name="hide" class="form-control" style="background: #fff !important;">
+                           <select name="hide" class="form-control icon_show" style="background: #fff !important;">
                               <option value= "0"> Select Status   </option>
                               <option value= "yes"> Hide Interview </option>
                               @if ($interview->status == 'pending')
@@ -115,19 +115,19 @@
 </section>
 @stop
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 <style>
-   .timeTable{width: 33%;display: block;}
+   /*.timeTable{width: 33%;display: block;}
    .width75p{width: 75%;display: inline-block;}
    .bgColor{background: #dddfe3;}
-   .confirmInterview{margin: 15px 0 !important;}
+   .confirmInterview{margin: 15px 0 !important;}*/
 </style>
 @stop
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
+{{-- <script src="{{ asset('js/site/common.js') }}"></script> --}}
 <script type="text/javascript">
    $(document).ready(function(){
    
@@ -204,7 +204,7 @@
            success: function(response){
                console.log(' response ', response);
                // $('.selectStatus').html('Send Email').prop('disabled',false);
-               $('.interviewBookingsRow_'+interview_id).remove();
+               $('.interview_'+interview_id).remove();
                if( response.status == 1 ){
                    // $('.errorsInFields').text('Notification sent sucessfully');
                    // setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },3000);
