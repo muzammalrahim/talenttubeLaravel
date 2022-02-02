@@ -693,7 +693,7 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function jobSeekersFilter(Request $request){
         // $data =  $request->toArray();
-        // dump($request->all());
+        // dd($request->all());
         $user = Auth::user();
         if (!isEmployer($user)){
             return response()->json([
@@ -721,8 +721,8 @@ class EmployerController extends Controller {
 
         $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
         $industries = $request->filter_industry;
-        $qualification_type = $request->ja_filter_qualification_type;
-        $qualifications = $request->ja_filter_qualification;
+        $qualification_type = $request->filter_qualification_type;
+        $qualifications = $request->filter_qualification;
 
         $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
         $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
@@ -747,6 +747,14 @@ class EmployerController extends Controller {
                 });
         }
 
+
+        // ================================================ Filter by salaryRange. ================================================
+
+        if (isset($request->filter_salary) && !empty($request->filter_salary)){
+            // dump($request->filter_salary);
+            $query = $query->where('salaryRange', '=', $request->filter_salary);
+        }
+
         // ================================================ filter by cv keyword ================================================
 
         $resume_filter = $request->filter_by_resume_value;
@@ -755,14 +763,6 @@ class EmployerController extends Controller {
                 $query3->where('cv_data.data_text','like', '%'.$resume_filter.'%');
                 return $query3;
             });
-        }
-
-
-        // ================================================ Filter by salaryRange. ================================================
-
-        if (isset($request->filter_salary) && !empty($request->filter_salary)){
-            // dump($request->filter_salary);
-            $query = $query->where('salaryRange', '=', $request->filter_salary);
         }
 
 
@@ -804,6 +804,7 @@ class EmployerController extends Controller {
         }
 
         // ================================================ Filter by Gender. ================================================
+
 
         if (isset($request->filter_by_gender_val) && !empty($request->filter_by_gender)){
             $gender = $request->filter_by_gender_val;

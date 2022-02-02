@@ -152,9 +152,9 @@
                      @endphp
                      @if(!empty($qualifications))
                         <div class="filter_qualificaton_degree col-md-5" style="opacity:0">
-                           <select name="ja_filter_qualification[]" multiple="multiple" id="filter_by_qualification" placeholder = "Filter by Job" class="multi-select form-control custom-select">
+                           <select name="filter_qualification[]" multiple="multiple" id="filter_by_qualification" placeholder = "Filter by Job" class="multi-select form-control custom-select">
                               @foreach ($qualifications as $qualif)
-                                 <option class="" value="{{$qualif['type']}}" data-id="{{$qualif['id']}}"><span>{{$qualif['title']}}</span></option>
+                                 <option class="d-none" value="{{$qualif['type']}}" data-id="{{$qualif['id']}}"><span>{{$qualif['title']}}</span></option>
                               @endforeach
                            </select>
                         </div>

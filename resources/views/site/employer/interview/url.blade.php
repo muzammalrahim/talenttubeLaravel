@@ -1,26 +1,32 @@
-@extends('site.employer.employermaster')
+@extends('web.employer.employermaster')
 @section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 @section('content')
-<div class=" ">
-<div class="head icon_head_browse_matches">Send url to job seeker</div>
-<div class="">
-   <div class=""style="margin-top: 15px">
-      <h3> Click on the link to copy it to your clipboard </h3>
+{{-- <div class=" "> --}}
+
+<section class="row">
+
+   <div class="col-md-12">
+      <div class="profile profile-section">
+            <div class="row filter-section py-2 mb-5">
+               <h2> Click on the link to copy it to your clipboard </h2>
+                  <div class="link py-2">
+                     <a  class="w60 copy_text blue_btn py-2" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
+                     {{-- <a  class="button w50" href="{{$interview->url}}">{{$interview->url}}</a> --}}
+                  </div>
+                  <a href="{{ url()->previous() }}" class="btn btn-default backToCreated orange_btn w-auto m-3">Back</a>
+            </div>
+      </div>
+
    </div>
-   <div class="link">
-      <a  class="w60 copy_text button" href="{{route('userinterviewconcierge.url', ['url' => $interview->url])}}">{{route('userinterviewconcierge.url', ['url' => $interview->url])}}</a>
-      {{-- <a  class="button w50" href="{{$interview->url}}">{{$interview->url}}</a> --}}
-   </div>
-</div>
-<a href="{{ url()->previous() }}" class="btn btn-default backToCreated">Back</a>
+</section>
 @stop
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
+{{-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css"> --}}
 {{-- 
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}">
 --}}
@@ -28,7 +34,7 @@
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}">
 --}}
 <style>
-   .text-underline{
+   /*.text-underline{
    text-decoration: underline;
    }
    .heading.icon_head_browse_matches {
@@ -51,7 +57,7 @@
    }
    .link{
    margin-bottom: 20px;
-   }
+   }*/
 </style>
 @stop
 @section('custom_js')

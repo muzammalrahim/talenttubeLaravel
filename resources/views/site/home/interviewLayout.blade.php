@@ -136,6 +136,10 @@
 
   @include('web.modals.slotUpdated')
 
+  {{-- =================================================== Booking Deleted Success Modal ===================================================--}}
+
+  @include('web.modals.errorReschedulingSlot')
+
 
 
 </div>

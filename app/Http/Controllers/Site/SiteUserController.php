@@ -183,8 +183,13 @@ class SiteUserController extends Controller
 
         $data['tags'] = $tags;
         $data['tagCategories'] = $tagCategories;
-
-        return view('site.register.user_step2', $data);         //      site/register/user_step2
+        if (isMobileStep2()) {
+            return view('mobile.register.user_step2', $data);    //     mobile/register/user_step2
+            // code...
+        }
+        else{
+            return view('site.register.user_step2', $data);         //      site/register/user_step2
+        }
 
     }
 

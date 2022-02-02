@@ -112,7 +112,12 @@
                 // $('.ajaxDataOfSlots').html(data);
 
 
-            }else{
+            }
+            else if( data.status == 0 ){
+                $('#overlay').addClass('d-none');
+            	$('#errorReschedulingSlot').modal('show');
+            }
+            else{
 
                 $('#overlay').addClass('d-none');
         		$('.successMsgUpdatingBooking').addClass('d-none');
@@ -124,6 +129,12 @@
 
 });
 
+this.removeOverlay = function(){
+    $('#overlay').addClass('d-none');
+    $('#errorReschedulingSlot').modal('hide');
+
+
+}
 </script>
 
 <style type="text/css">

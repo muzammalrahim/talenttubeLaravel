@@ -9,12 +9,12 @@
 {{-- ========================================================== User Interviews ========================================================== --}}
 @include('site.user.jobseekerInfoTabs.userInterviewForJobseeker')   {{-- site/user/jobseekerInfoTabs/userInterviewForJobseeker --}}
 <p> If you want to conduct interview of <b> {{$jobSeeker->name}} </b> <span style="text-decoration: underline" class="pointer displayInterviewTemplate">  Click Here </span>  to see the available templates.</p>
-<div class="tempDisplayforemployer hide_it job_row col-md-6 job-box-info concigerge-box clearfix p-0" style="background-color: #f8f8f8;">
+<div class="tempDisplayforemployer hide_it job_row col-md-12 col-12 job-box-info concigerge-box clearfix p-0" style="background-color: #f8f8f8;">
    <form method="POST" name="interviewTemplate" class="interviewTemplate newJob job_validation">
       @csrf
-      <div class="job_title form_field {{-- job_heading --}} {{-- p10 --}} box-head m-0 ">
-         <p class="w20 form_label bold qualifType text-white">Interview Template:</p>
-         <select class="templateSelect  " name="templateSelect" style="width: 80%!important;">
+      <div class="row box-head m-0 ">
+         <h3 class="col-3 bold m-auto text-white">Interview Template:</h3>
+         <select class="templateSelect col-9 form-control icon_show" name="templateSelect">
             <option value="0"> Select Template</option>
             @foreach ($interviewTemplate as $template)
             <option value="{{ $template->id }}"> 
@@ -52,7 +52,7 @@
               success: function(data){
                   // console.log(' data ', data);
                   $('.interviewTemplateLoader').addClass('hide_it');
-                $('.interviewLoader').prop('disabled',false);
+                  $('.interviewLoader').prop('disabled',false);
                   $('.templateData').html(data);
               }
         });
