@@ -775,9 +775,7 @@ class InterviewController extends Controller
         }else
         {
             $interview = Interview::where('id',$data['intervieww_id'])->first();
-            
               // dd($data['uniquedigits']);
-// 
             $interview->uniquedigits = $data['uniquedigits'];
             $interview->save();
             return response()->json([

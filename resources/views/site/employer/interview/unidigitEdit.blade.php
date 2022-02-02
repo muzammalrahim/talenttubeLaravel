@@ -1,38 +1,51 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster')
+@extends('web.employer.employermaster')
 @section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 @section('content')
-<div class="newJobCont">
-   <div class="head icon_head_browse_matches">Interview Concierge - Editing Booking ID</div>
-   <div class="add_new_job">
-      <form method="POST" name="new_job_form" class="new_booking_form newJob job_validation">
-         @csrf
-         <div class="job_title form_field">
-            <span class="form_label">Booking ID :</span>
-            <div class="form_input">
-               <input type="text" value="{{$interview->uniquedigits}}" name="uniquedigits" class="w100" >
-               <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
-            </div>
-         </div>
-         <input type="hidden" name="intervieww_id" value="{{$interview->id}}">
-         <p class="errorBookinId hide_it2"></p>
-         <p class="bookedSuccessfully"></p>
-         <a href="{{ url()->previous() }}" class="btn btn-default backToCreated">Back</a>
-         <div class="fomr_btn act_field center">
-            <button class="btn small turquoise updateNewBooking ">Update</button>
-         </div>
-      </form>
-   </div>
-   <div class="cl"></div>
+
+
+<section class="row">
+
+   <div class="col-md-12">
+      <div class="profile profile-section">
+            <div class="row filter-section py-2 mb-5">
+
+            {{-- <div class="newJobCont"> --}}
+               <h2>Interview Concierge - Editing Booking ID</h2>
+               {{-- <div class="add_new_job"> --}}
+                  <form method="POST" name="new_job_form" class="new_booking_form newJob job_validation">
+                     @csrf
+                     {{-- <div class="job_title form_field"> --}}
+                     <label class="">Booking ID :</label>
+                     <div class="form_input">
+                        <input type="text" value="{{$interview->uniquedigits}}" name="uniquedigits" class="form-control bg-white" >
+                        <div id="additionalmanagers_error" class="error field_error to_hide">&nbsp;</div>
+                     </div>
+                     {{-- </div> --}}
+                     <input type="hidden" name="intervieww_id" value="{{$interview->id}}">
+                     <p class="errorBookinId hide_it2"></p>
+                     <p class="bookedSuccessfully"></p>
+                     <a href="{{ url()->previous() }}" class="btn btn-default backToCreated orange_btn">Back</a>
+                     <div class="fomr_btn act_field center">
+                        <button class="btn small turquoise updateNewBooking blue_btn">Update</button>
+                     </div>
+                  </form>
+               {{-- </div> --}}
+               <div class="cl"></div>
+            {{-- </div> --}}
+
 </div>
+</div>
+</div>
+</section>
 {{-- @include('site.home.deleteSlotPop') --}}
 @stop
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 {{-- 
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}">

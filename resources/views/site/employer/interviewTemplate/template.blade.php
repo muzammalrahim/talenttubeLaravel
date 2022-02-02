@@ -5,37 +5,54 @@
       @foreach ($interviewTemplate as $template)
       <div class="notes note_{{$template->id}} mb10">
          <div class="mb10">
-            <h4> <b> Template  </b> <b {{-- class="test qualifType" --}}>{{$template->index+1}}</b></h4>
-            : 
-            <ul class="d-flex justify-content-between px-5">
+            <h5> <b> Template  </b> <b {{-- class="test qualifType" --}}>{{$template->index+1}}: </b></h5>
+            
+            <div class="inline-bock qualifType">
+               <span> <b> Name: </b> {{$template->template_name}} </span>
+               <span> <b>Type: </b> {{$template->type}} </span>
+            {{-- <ul class="d-flex justify-content-between px-5">
                <li class="float-left"><b> Name: </b> {{$template->template_name}} </li>
                <li class="float-left"><b>Type: </b> {{$template->type}}</li>
-            </ul>
+            </ul> --}}
+
+               @if ($template->employers_instruction)
+               {{-- <div class="dflex "> --}}
+                  {{-- <ul> --}}
+                     {{-- <li class="float-left px-5">  --}}
+                        <label class="bold"></label>
+                        <span class=""> <b> Instruction: </b> {{ $template->employers_instruction }}</span> 
+                     {{-- </li> --}}
+                  {{-- </ul> --}}
+               {{-- </div> --}}
+               @endif
+            </div>
+
          </div>
-         @if ($template->employers_instruction)
-         <div class="dflex ">
-            <ul>
-               <li class="float-left px-5"> 
-                  <label class="bold">Instruction:</label>
-                  <span class="">{{ $template->employers_instruction }}</span> 
-               </li>
-            </ul>
-         </div>
-         @endif
+         
       </div>
       @endforeach
-      <h3 class="text-start bold"> Questions </h3>
+      <h5 class="{{-- text-start --}} text-center bold"> Questions </h5>
       @foreach ($InterviewTempQuestion as $key=> $quest)
-      <div class="mb10 mt10"> <b> Question:{{$loop->index+1}}  </b> </div>
-      <div class="dflex">
-         <div class="w80">
+      <div class="qualifType mt-1"> <b> Question:{{$loop->index+1}}  </b> </div>
+      <div class="row">
+         <div class="col-9">
             <span class="test qualifType" name = "question[{{$key+1}}]">{{$quest->question}} </span>
          </div>
-         <div class="w20">
-            <input type="checkbox" {{($quest->video_response == 1)? 'checked': ''}}  > Video Response
+
+         <div class="col-3 form-check">
+            <input type="checkbox" {{($quest->video_response == 1)? 'checked': ''}} id="flexCheckDefault" class="h-auto" />
+           <label class="form-check-label" for="flexCheckDefault">
+             Video Response
+           </label>
          </div>
+
+         {{-- <div class="w20">
+            <input type="checkbox" {{($quest->video_response == 1)? 'checked': ''}}> Video Response
+         </div> --}}
+
+
       </div>
-      <input type="text" class="w100 mt10 hide_it answersInput" name="answer[{{$quest->id}}]">
+      <input type="text" class="form-control bg-white hide_it answersInput" name="answer[{{$quest->id}}]">
       @endforeach
       <input type="hidden" name="temp_id" value="{{$template->id}}"> 
       <div class="mt10">

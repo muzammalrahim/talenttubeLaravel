@@ -80,6 +80,12 @@ function isMobile(){
       return $agent->isMobile();
 }
 
+function isMobileStep2(){
+      $agent = new Agent();
+      // return false;
+      return $agent->isMobile();
+}
+
 function isRequestAjax($request){
       return (isset($request->ajax) && ($request->ajax)) ? true : false;
 }

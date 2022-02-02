@@ -14,20 +14,20 @@ class rescheduleSlotEmailToEmployer extends Mailable
     public $name;
     public $position;
     public $starttime;
-    public $endtime;
     public $date;
     public $old_starttime;
     public $old_date;
+    public $jobseeker;
 
-    public function __construct($name,$position,$starttime,$endtime,$date,$old_starttime,$old_date)
+    public function __construct($name,$position,$starttime,$date,$old_starttime,$old_date,$jobseeker)
     {
         $this->name = $name;
         $this->position = $position;
         $this->starttime = $starttime;
-        $this->endtime = $endtime;
         $this->date = $date;
         $this->old_starttime = $old_starttime;
         $this->old_date = $old_date;
+        $this->jobseeker = $jobseeker;
         
 
 

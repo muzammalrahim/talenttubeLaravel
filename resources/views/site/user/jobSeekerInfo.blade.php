@@ -262,7 +262,7 @@
 
             @endif
 
-            <div class="tab-pane fade interview-tab" id="interview"  role="tabpanel" aria-labelledby="contact-tab">
+            <div class="tab-pane fade interview-tab pt-4" id="interview"  role="tabpanel" aria-labelledby="contact-tab">
                <h2>Interviews</h2>
                <div class="tab_interviews tab_cont pt30px">
                   {{-- @dd($UserInterview); --}}
@@ -270,14 +270,14 @@
                   {{--    site/user/jobseekerInfoTabs/interviews  --}}
                </div>
             </div>
-            <div class="tab-pane fade online_test-tab" id="online_test"  role="tabpanel" aria-labelledby="online_test-tab">
+            <div class="tab-pane fade online_test-tab pt-4" id="online_test"  role="tabpanel" aria-labelledby="online_test-tab">
                <h2>online Tests</h2>
                <div class="tab_onlineTest tab_cont pt30px">
                   @include('site.user.jobseekerInfoTabs.onlineTests')
                   {{--    site/user/jobseekerInfoTabs/onlineTests  --}}
                </div>
             </div>
-            <div class="tab-pane fade last_login-tab" id="last_login"  role="tabpanel" aria-labelledby="last_login-tab">
+            <div class="tab-pane fade last_login-tab pt-4" id="last_login"  role="tabpanel" aria-labelledby="last_login-tab">
                <h2>last Login</h2>
                <div class="tab_lastLogin tab_cont pt30px">
                   {{-- @dump($jobSeeker->last_login); --}}
