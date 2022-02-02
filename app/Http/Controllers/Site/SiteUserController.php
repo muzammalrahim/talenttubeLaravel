@@ -1801,6 +1801,7 @@ class SiteUserController extends Controller
         }
 		$user->step2 = 10;
 		$user->save();
+
         $data['user'] = $user;
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         $data['controlsession'] = $controlsession;

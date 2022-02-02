@@ -56,12 +56,12 @@
                </div>
                <div class="mt-2 row blocked-user-about">
                   <h6 class="p-0">Job Experience:</h6>
-                  @if(!empty($experience))
-                  @foreach($experience as $industry )
+                     @if(!empty($experience))
+                     @foreach($experience as $industry )
                   <div class="IndustrySelect">
                      <p class="p-0">
                         <i class="fas fa-angle-right"></i>
-                        {{getIndustryName($industry)}}
+                          {{getIndustryName($industry)}}
                         <i class="fa fa-trash removeIndustry hide_it"></i>
                      </p>
                   </div>
