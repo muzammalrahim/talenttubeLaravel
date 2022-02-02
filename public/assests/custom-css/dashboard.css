@@ -1585,10 +1585,12 @@ button i {
     border: 1px solid #e6e6e6;
     padding: 15px;
     border-radius: 5px;
+    margin-top: 26px;
 }
 
 .browse-heading {
     font-size: 16px;
+    font-weight: 600;
 }
 
 .bj-tr-btn .used-tag {
@@ -1703,7 +1705,7 @@ button i {
     background: #ffffff !important;
     border: 1px solid #F48128 !important;
     cursor: pointer;
-    margin-top: 0px !important;
+    margin-top: 7px !important;
 }
 
 .custom-checkbox input[type='checkbox']:after {
@@ -3077,12 +3079,20 @@ button i {
     }
 }
 
+
 @media (max-width:479px) {
     body {
         overflow: auto !important;
     }
     .top-nav-header {
         padding: 10px 15px 0 15px;
+
+    .box-head h4{
+        font-size: 13px;
+        font-weight: 600;
+    }
+    .box-head{
+        font-size: 11px;
     }
     .profile-section .nav-tabs {
         left: -27%;
@@ -3137,8 +3147,7 @@ button i {
         height: 250px;
     }
     .text-info-detail label {
-        width: 100%;
-        font-size: 16px;
+        width: 50%;
     }
     .text-info-detail span {
         width: 100%;
@@ -3150,6 +3159,7 @@ button i {
     }
     .text-info-detail span {
         font-size: 14px;
+
     }
     .sign-btn {
         width: 40% !important;
@@ -3213,7 +3223,6 @@ button i {
         border-radius: 2px 2px 0 0;
         position: relative;
         color: #ffffff;
-        margin: 0px 20px;
         display: block;
     }
     .unlike-btn-group {
@@ -3221,13 +3230,14 @@ button i {
         justify-content: space-between;
         flex-direction: row-reverse;
     }
+
     .block-box .box-footer .unblock-btn {
         margin: 10px 0px;
     }
     .block-box .box-footer .block-btn,
     .block-box .box-footer .unlike-btn,
     .block-box .box-footer .Detail-btn {
-        margin: 5px 5px;
+
     }
     .block-box .box-footer1 {
         display: block;
@@ -3244,8 +3254,9 @@ button i {
     }
     /* ======================interview============ */
     .interview-box .text-info-detail label {
-        width: 100% !important;
+        width: 50% !important;
     }
+
     .interview-box .text-info-detail span {
         width: 100% !important;
     }
@@ -3260,11 +3271,13 @@ button i {
         position: relative;
         top: 13px;
     }
+    .bc-footer .orange_btn{
+        padding: 6px 25px !important;
+        width: 90%;
+        text-align: center;
+    }
     .bj-modal .modal-footer .bs-btn {
         justify-content: center;
-    }
-    .bc-footer .used-tag {
-        padding: 4px 27px;
     }
     .filter-modal-list li {
         width: 100%;
@@ -3325,10 +3338,6 @@ button i {
     }
     .employer-main .loc-icon img {
         top: 42px;
-    }
-    .used-tag {
-        padding: 7px 5px;
-        height: 35px;
     }
     .body-tab-btn {
         z-index: 99;
@@ -3512,6 +3521,165 @@ span.v_title {
     font-size: 16px;
 }
 
-font-size: 16px;
+
+
+
+
+
+@media screen and (max-width: 479px){
+    .blue_btn{
+        display: none !important;
+    }
+    .profile-section .col-11{
+            max-width: 85.666667%;
+    }
+    .interview-btn-call .interview-tag {
+        color: #ffffff !important;
+        padding: 5px;
+        border: 1px solid #00820D;
+        border-radius: 2px;
+        width: 48%;
+        transition: all 0.3s;
+        margin-top: 5px;
+        font-size: 11px;
+    }
+    .job-box-info{
+        margin-top: 15px;
+    }
+    .used-tag {
+        font-size: 11px;
+        width: 46%;
+        text-align: center;
+        height: 30px !important;
+    }
+    .block-box .box-footer .block-btn{
+        float: left;
+    }
+    .user-details .blocked-user-about p{
+        font-size: 14px;
+    }
+    .user-details .blocked-user-experience p{
+        font-size: 14px;
+    }
+    .block-box .box-footer .unblock-btn{
+        width: 92%;
+        float: none;
+    }
+    .orange_btn{
+        padding: 0px !important;
+        font-size: 11px !important;
+        width: 90%;
+        float: left;
+    }
+    .signout{
+        width: 80%;
+        float: right;
+    }
+    .slot-para{
+        font-size: 11px;
+        color: #242424 !important;
+        font-weight: 600;
+        padding: 15px 7px !important;
+    }
+    .bc-footer .used-tag{
+        width: 90%;
+    }
+    .pendinginterview-tag{
+        text-align: center;
+    }
+    .proceed-test{
+        text-align: center;
+    }
+    .text-white{
+        width: 90%;
+    }
+    .close-box{
+        top: 5px;
+        position: absolute;
+    }
+    .text-info-detail label{
+        font-size: 11px;
+    }
+    .text-info-detail span{
+        font-size: 11px;
+    }
+    .text-info-detail p{
+        height: auto;
+        font-size: 11px !important;
+    }
+    h2{
+        font-size: 15px;
+        width: 85%;
+    }
+    .concigerge-box{
+        margin-top: 15px;
+    }
+    .browse-heading{
+        font-size: 12px;
+        margin-bottom: 18px;
+    }
+    .filter-section{
+        margin-top: 16px;
+    }
+    .b-filter-row input{
+        font-size: 11px !important;
+    }
+    .bj-tr-btn .orange_btn{
+        width: 45%;
+    }
+    .bj-tr-btn .used-tag{
+        width: 45%;
+        height: 35px !important;
+        font-size: 11px;
+    }
+}
+
+
+
+@media screen and (max-width: 318px) {
+    .sidebaricontoggle{
+        top: 62px;
+    }
+    .signout{
+        float: left;
+        margin-left: 20px;
+    }
+    h2{
+        font-size: 15px;
+        text-align: center;
+        margin: 0;
+    }
+    .job-box-info{
+        margin: 0;
+    }
+    .close-box{
+        top: 5px;
+    }
+    .box-head h4{
+        font-size: 10px;
+        padding-top: 0px;
+        width: 86%;
+        padding-bottom: 15px;
+    }
+    .box-head{
+        font-size: 9px;
+    }
+    .text-info-detail span{
+        font-size: 10px;
+    }
+    .text-info-detail label{
+        font-size: 10px;
+    }
+    .text-info-detail p{
+        font-size: 10px !important
+        height: auto;
+    }
+    .used-tag{
+        font-size: 10px;
+        height: 27px;
+    }
+    .slot-para{
+        font-size: 10px
+    }
 
 }

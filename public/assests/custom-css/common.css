@@ -514,12 +514,22 @@ select {
 
 @media (max-width:479px) {
     .sidebaricontoggle {
+
         top: 84px;
         right: 10px;
     }
     button {
+
+        top: 90px;
+        right: 20px;
+    }
+    .button{
+
         width: 100% !important;
         margin-bottom: 20px;
+    }
+    p{
+        font-size: 11px;
     }
 }
 
@@ -618,8 +628,25 @@ div.google-visualization-tooltip {
     border: 1px solid #00326f;
 }
 
+
 @media (min-width:767px) {
     .location_margin {
         margin-left: 45px;
     }
 }
+
+
+@media screen and (max-width: 479px){
+    input, textarea, select{
+        font-size: 11px;
+    }
+    b, strong{
+        font-size: 11px;
+    }
+    select.white-text.mdb-select.md-form.filter_location_radius.custom-select{
+        padding: 0px 5px;
+        font-size: 14px;
+    }
+}
+
+

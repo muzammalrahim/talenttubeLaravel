@@ -37,11 +37,15 @@
        <div class="banner-info-text">
         <h1>Join The Best</h1>
         <h2>TALENT MATCHER<span >in the<strong>world.</strong></span></h2>        
-        <div class=" header-buttons ">
+        <div class="header-buttons">
                    
-          
-          <ul class="btn-infomation d-flex">
+          <div class="interview-con-link">
+             <a href="#" data-toggle="modal" data-target="#interviewConciergeModal" class="orange_btn interview-button"><img src="assests/images/Interview-icon.svg" alt="" class="interview-icon"> <img src="assests/images/interview_hover.svg" class="interview_hover_icon" alt="" style="display: none;"> Interview concierge</a>
+          </div>
 
+          <ul class="btn-infomation ">
+
+            
             <li><label>I am</label></li>
             
             <form id="frm_join_index_step_1" action="{{route('join')}}" method="POST">
@@ -134,13 +138,13 @@
     
 <div class="container first-section">
   <div class="row">
-    <div class="col-sm-12 col-md-6 col-lg-6">  
+    <div class="col-sm-12 col-md-6 col-lg-6 first-section">  
       <div class="feature-img-wrap">
         <img src="assests/images/man.svg" alt="vector-img" />
       </div>             
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
-     <div class="article">
+     <div class="article hr">
         <h2>Tired of applying</h2>
        <h3> with Countless employers</h3>
       <p>uploading the same old documents and answering the same old question?</p>
@@ -158,7 +162,7 @@
       </div>             
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6 order-md-1 order-sm-2">
-     <div class="article second-article">
+     <div class="article second-article hr">
       <h2>Watch, compare &</h2>
       <h3> then decides to get right one</h3>
       <p>73% of all consumers are more likely to commit to a purchase after watching a video</p>
@@ -179,7 +183,7 @@
       </div>             
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
-     <div class="article"> 
+     <div class="article hr"> 
       <h2>Finding candidates</h2>
       <h3> with the online presence</h3>
       <p>Over 40% of Employers say they may not interview candidates if they can’t find their online presence. Create a tailored online 
