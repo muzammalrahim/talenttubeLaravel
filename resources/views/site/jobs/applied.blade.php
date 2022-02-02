@@ -17,7 +17,7 @@
             <div class="row">
                 @if ($applications->count() > 0)
                 @foreach ($applications as $application)
-                <div class="col-sm-12 col-md-6 jobApp_{{$application->id}}">
+                <div class="col-sm-12 col-md-6 pt-3 jobApp_{{$application->id}}">
                     @php
                     $job = $application->job;
                     $experience = json_decode($job->experience);

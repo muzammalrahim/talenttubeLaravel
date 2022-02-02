@@ -57,7 +57,7 @@
 
   @if ($UserOnlineTest->count() > 0)
     @foreach ($UserOnlineTest   as $test)
-      <div class="col-sm-12 col-md-6 col-6">
+      <div class="col-sm-12 col-md-6 col-12">
         <div class="job-box-info concigerge-box clearfix h_330">
             <div class="box-head">
               <h4 class="text-white"><b>Online Test {{$loop->index+1}}: </b></h4>                          
@@ -69,7 +69,7 @@
               <ul class="job-box-text concigerge clearfix py-0">
                 <li class="text-info-detail clearfix">
                   <label>Test Name: </label>
-                  <span class="pl-3"><b> {{$test->onlineTest->name}} </b></span>
+                  <span><b> {{$test->onlineTest->name}} </b></span>
                 </li>
 
 
@@ -88,7 +88,7 @@
 
                 <li class="text-info-detail clearfix">
                  <label>Time:</label>
-                 <span class="pl-3"><b> {{$test->onlineTest->time}} Minutes </b></span>
+                 <span><b> {{$test->onlineTest->time}} Minutes </b></span>
                 </li>
 
                 <li class="text-info-detail clearfix">
@@ -101,7 +101,7 @@
 
                   <li class="text-info-detail clearfix">
                     <label>Application:</label>
-                   <span class="pl-3"><b> {{$test->jobApplication->job->title}} </b></span>
+                   <span><b> {{$test->jobApplication->job->title}} </b></span>
                   </li>
 
                   <li class="text-info-detail clearfix">

@@ -180,11 +180,11 @@
                </div>
                <div class="FilterLocationBox col">
                     <div class="location_search_cont row">
-                        <div class="col-10 md-form form-sm">
+                        <div class="col-8 col-sm-10 md-form form-sm">
                           <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
 
                         </div>
-                        <div class="col-2">
+                        <div class="col-4 col-sm-2">
                             <select class="white-text mdb-select md-form filter_location_radius custom-select" name="filter_location_radius" data-placeholder="Select Location Radius">
                                  <option value="5" selected="selected">5km</option>
                                  <option value="10">10km</option>
