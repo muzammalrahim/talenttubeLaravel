@@ -646,12 +646,12 @@ footer {
     .banner-icon {
         width: 40%;
     }
-				#frm_join_index_step_1{
-					width: 75%;
-					text-align: center;
-					margin-left: auto;
-					margin-right: auto;
-				}
+	#frm_join_index_step_1{
+		width: 75%;
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+	}
     .banner-info-text h1{
         font-size: 20px;
     }
@@ -692,14 +692,14 @@ footer {
     .fist-paragrah {
         width: 92%;
         font-size: 14px;
-	   				padding-bottom: 10px;
+	   	padding-bottom: 10px;
     }
     .hr{
-         border-bottom: 2px solid #C4C4C4;
-         padding-bottom: 35px;
+        border-bottom: 2px solid #C4C4C4;
+        padding-bottom: 35px;
     }
     footer{
-         margin-top: 0px;
+        margin-top: 0px;
     }
     .CopyRight{
         display: none;
@@ -708,7 +708,7 @@ footer {
         padding-bottom: 0px;
     }
     .bg-light{
-         margin-top: 0px;
+        margin-top: 0px;
     }
     .first-section{
       margin: 0;
@@ -767,11 +767,15 @@ footer {
         margin-top: 0;
         margin-bottom: 10px;
         margin-left: auto;
-								margin-right: auto;
-								width: 90%;
+		margin-right: auto;
+		width: 90%;
     }
     .feature-text-wrap p{
         font-size: 13px;
+    }
+    
+    .feature-text-wrap h2{
+        font-size: 16px !important;
     }
     
 }

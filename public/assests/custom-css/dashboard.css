@@ -3086,7 +3086,7 @@ button i {
     }
     .top-nav-header {
         padding: 10px 15px 0 15px;
-
+    }
     .box-head h4{
         font-size: 13px;
         font-weight: 600;
@@ -3150,7 +3150,7 @@ button i {
         width: 50%;
     }
     .text-info-detail span {
-        width: 100%;
+        width: 50%;
         font-size: 16px;
     }
     .text-info-detail p {
@@ -3224,6 +3224,7 @@ button i {
         position: relative;
         color: #ffffff;
         display: block;
+        margin: 0px 5px 10px 5px;
     }
     .unlike-btn-group {
         display: flex;
@@ -3241,13 +3242,15 @@ button i {
     }
     .block-box .box-footer1 {
         display: block;
-        padding: 20px 0;
+        margin-right: 5px;
+        margin-left: 5px;
+        margin-bottom: 10px !important;
     }
     .employe-btn-group {
         width: 100% !important;
         text-align: center;
         display: block;
-        padding: 20px 0 !important;
+        padding-bottom: 10px !important;
     }
     .employe-btn-group .like-btn {
         margin-bottom: 30px;
@@ -3258,7 +3261,7 @@ button i {
     }
 
     .interview-box .text-info-detail span {
-        width: 100% !important;
+        width: 50% !important;
     }
     /* ================================= start Browse job ============================= */
     .loc-modal .modal-dialog {
@@ -3535,7 +3538,7 @@ span.v_title {
     }
     .interview-btn-call .interview-tag {
         color: #ffffff !important;
-        padding: 5px;
+        padding: 5px 0px 5px 0px;
         border: 1px solid #00820D;
         border-radius: 2px;
         width: 48%;
@@ -3548,12 +3551,46 @@ span.v_title {
     }
     .used-tag {
         font-size: 11px;
-        width: 46%;
+        width: 48%;
         text-align: center;
         height: 30px !important;
     }
     .block-box .box-footer .block-btn{
         float: left;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 30%;
+        height: 30px;
+        font-size: 11px;
+    }
+    .block-box .box-footer .like-btn{
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 30%;
+        height: 30px;
+        font-size: 11px;
+        margin-right: 10px !important;
+        float: right;
+    }
+    .block-box .box-footer .scd-like-btn{
+        margin-left: 15px !important;
+    }
+    .block-box .box-footer .detail-btn{
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 30%;
+        height: 30px;
+        font-size: 11px !important;
+        float: right;
+    }
+    .block-box .box-footer .unlike-btn{
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 30% !important;
+        height: 30px;
+        font-size: 11px !important;
+        float: right;
+        margin-right: 10px !important;
     }
     .user-details .blocked-user-about p{
         font-size: 11px;
@@ -3564,6 +3601,8 @@ span.v_title {
     .block-box .box-footer .unblock-btn{
         width: 92%;
         float: none;
+        margin-left: 10px !important;
+        font-size: 12px !important;
     }
     .orange_btn{
         padding: 0px !important;
@@ -3626,6 +3665,7 @@ span.v_title {
     }
     .b-filter-row input{
         font-size: 11px !important;
+        margin-bottom: 10px;
     }
     .bj-tr-btn .orange_btn{
         width: 45%;
@@ -3640,8 +3680,6 @@ span.v_title {
     }
     .user-details .blocked-user-about h6{
         font-size: 11px;
-        width: 50%;
-        float: left;
     }
     .IndustrySelect{
         overflow: hidden;
@@ -3649,8 +3687,6 @@ span.v_title {
     }
     .user-details .blocked-user-experience h6{
         font-size: 11px;
-        width: 50%;
-        float: left;
     }
     .user-details .blocked-user-experience p{
         font-size: 11px !important;
@@ -3664,6 +3700,51 @@ span.v_title {
     h6.p-0{
         width: 100% !important;
     }
+    .box-head h6{
+        font-size: 11px;
+    }
+    .employee-wraper{
+        margin-top: 30px;
+        padding: 3px 15px !important;
+    }
+    .input-employee .form-control{
+        margin-left: 14px !important;
+        font-size: 11px !important;
+    }
+    .input-employee label{
+        width: 100%;
+        font-size: 11px;
+    }
+    .searchField_resume{
+        margin-bottom: 20px;
+    }
+    .searchField_resume label{
+        font-size: 11px !important;
+    }
+    .searchField_resume .filter_by_resume_value{
+        margin-left: 14px !important;
+        font-size: 11px !important;
+    }
+    .searchField_resume .form-control{
+        margin-left: 14px !important;
+        font-size: 11px !important;
+    }
+    .top-filter-row .input-employee{
+        margin: 0px 0 13px;
+    }
+    .b-filter-row{
+        font-size: 11px !important;
+    }
+    .filter_tagList{
+        margin-bottom: 30px !important;
+    }
+    .b-filter-row .form-control{
+        font-size: 11px !important;
+    }
+    .block-user-progress h6{
+        font-size: 11px !important;
+    }
+
 }
 
 
@@ -3678,7 +3759,6 @@ span.v_title {
     }
     h2{
         font-size: 15px;
-        text-align: center;
         margin: 0;
     }
     .close-box{
