@@ -15,10 +15,59 @@
       $js = $jobSeeker;
       @endphp                
       <!-- Top Filter Row -->
+
+      @if (!isAdmin($user))
+
+         {{-- @include('site.user.match_algo.match_algo') --}}
+
+         @php
+         $dist = calculate_distance($js, $user);
+         $ind_exp = cal_ind_exp($js,$user);
+         $compatibility = compatibility($js, $user); 
+         $user_compat = $compatibility*20;
+         // ========================= excluded 6th question ========================= 
+         $emp_questions = json_decode($js->questions , true);
+         $user_questions = json_decode($user->questions , true);
+         $emp_resident = '';
+         $user_resident = '';
+         
+         if ($emp_questions != null && $user_questions != null) {
+            $emp_match = array_slice($emp_questions, 5, 6, true);
+            foreach ($emp_match as $key => $value) {
+               $emp_resident .= $value;
+            }
+            $user_match = array_slice($user_questions, 5, 6, true);
+            foreach ($user_match as $key => $value) {
+               $user_resident .= $value;
+            }
+         }
+
+         if ($emp_resident == 'no' && $user_resident == 'no') {
+            $html = '<h4 class="text-danger bold "> No Match Potential </h4>';
+         }
+         else if($dist < 50 && !empty($ind_exp)) {
+            $html = '<h4 class="text-green bold "> Strong Match Potential </h4>';
+         }
+         else if($dist < 50 ) {
+            $html = '<h4 class="text-orange bold "> Moderate Match Potential  </h4>';
+
+         }
+         else if(!empty($ind_exp)){
+            $html = '<h4 class="text-orange bold "> Moderate Match Potential  </h4>';
+         }
+         else{
+            $html = '<h4 class="text-danger bold "> No Match Potential </h4>';
+
+         }
+         
+         @endphp
+         
+      @endif
       <div class="row">
          <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
             <div class="job-box-info employee-details-info block-box clearfix">
-               <div class="box-head">                        
+               <div class="box-head"> 
+                  {!! $html !!}                       
                </div>
                <div class="row Block-user-wrapper">
                   @php
@@ -28,54 +77,50 @@
                   $profile_image   = assetGallery2($profile_image_gallery,'small');
                   }
                   @endphp
-                  <div class="col-md-3 user-images">
+                  <div class="col-md-2 user-images">
                      <div class="block-user-img ">
                         <img src="{{$profile_image}}" alt="">
                      </div>
                      <div class="block-user-progress ">
                         <h6>{{$js->username}}</h6>
-                        {{-- <div class="progress-img"> <img src="{{ asset('assests/images/user-progressbar.svg') }}" alt=""></div> --}}
-                        {{-- <div class="block-progrees-ratio d-block d-md-none">
-                           <ul>
-                              <li><span class="Progress-ratio-icon1">.</span> <span>60%</span> Match </li>
-                              <li><span class="Progress-ratio-icon2">.</span> <span>40%</span> UnMatch</li>
-                           </ul>
-                        </div> --}}
                      </div>
                   </div>
-                  <div class="col-md-9 user-details">
-                     <div class="row blocked-user-about mt-2">
+                  <div class="col-md-10 user-details">
+                     {{-- <div class="blocked-user-about mt-2"> --}}
+                        
+                        {{-- ========================================== Pie Chart ========================================== --}}
+
                         @if (!isAdmin($user))
-                        {{-- expr --}}
-                        @include('site.user.match_algo.match_algo')   {{-- site/user/match_algo/match_algo --}}
+                        <div class="progress-img"> 
+
+                           <div class="pb-4" style="width:310px">
+
+                              <div id="piechart_{{$js->id}}" class="job-box-info"></div>
+                           </div>
+                           <script type="text/javascript">
+                              google.charts.load('current', {'packages':['corechart']});
+                              google.charts.setOnLoadCallback(drawChart);
+                                 function drawChart() {
+                                   var data = google.visualization.arrayToDataTable([
+                                   ['Task', 'Potenial'],
+                                   ['Match', {{ $user_compat }}],
+                                   ['Unmatch',100-{{ $user_compat }}],
+                                 ]);
+                                var options = { 'width':300, 'height':160 ,tooltip: { isHtml: true },};
+                                var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
+                                chart.draw(data, options);
+                              }
+                              
+                           </script>
+                        </div>
                         @endif
-                     </div>
+
+                        {{-- ========================================== Pie Chart ========================================== --}}
+
+
+                     {{-- </div> --}}
                      @php
-                     $dist = calculate_distance($js, $user);
-                     $ind_exp = cal_ind_exp($js,$user);
-                     $compatibility = compatibility($js, $user); 
-                     $user_compat = $compatibility*20;
-                     // dump($user_compat);
-                     // $resident = initial_last_question($js,$user);
-                     // ========================= excluded 6th question ========================= 
-                     $emp_questions = json_decode($js->questions , true);
-                     $user_questions = json_decode($user->questions , true);
-                     // dump($emp_questions);
-                     // {"resident":"no","relocation":"yes","fulltime":"yes","temporary_contract":"yes","part_time":"no","graduate_intern":"yes"}
-                     // $checkLastQuestion = end($emp_questions);
-                     // dump($checkLastQuestion);
-                     $emp_resident = '';
-                     $user_resident = '';
-                     if ($emp_questions != null && $user_questions != null) {
-                     $emp_match = array_slice($emp_questions, 5, 6, true);
-                     foreach ($emp_match as $key => $value) {
-                     $emp_resident .= $value;
-                     }
-                     $user_match = array_slice($user_questions, 5, 6, true);
-                     foreach ($user_match as $key => $value) {
-                     $user_resident .= $value;
-                     }
-                     }
+                     
                      @endphp
                      <div class="row blocked-user-about mt-2">
                         <h6 class="p-0">Recent Job:</h6>

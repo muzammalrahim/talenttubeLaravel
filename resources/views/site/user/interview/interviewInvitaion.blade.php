@@ -34,7 +34,7 @@
                 <span>
                   <form class="statusOfInterview d-contents" name="statusOfInterview">  
                     @csrf
-                    <select class="selectpicker w-100" name="hide" style="background: #fff !important;">
+                    <select class="form-control icon_show w-100" name="hide" style="background: #fff !important;">
                       <option value= "0"> Select Status   </option> 
                       <option value= "yes"> Hide Interview </option> 
                       @if ($Int_booking->status == 'pending')
@@ -114,28 +114,7 @@
 
 <!-- ========================================= Accept or reject interview ========================================= -->
               
-<div class="modal fade" id="acceptOrRejectInterview" role="dialog">
-    <div class="modal-dialog delete-applications">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
-          {{-- <h1 class="modal-title"><i class="fas fa-thumbs-down trash-icon"></i>UnLike User</h1> --}}
-        </div>
-        <div class="modal-body">
-          <strong>Would you like to accept or reject this interview ?</strong>
-        </div>
-        <input type="hidden" id="interviewUrl" name="">
-        <input type="hidden" id="interviewId" name="">
-        <div class="dual-footer-btn">
-          <button type="button" class="btn btn-default black_btn" onclick="rejectInterviewInvitation()" data-dismiss="modal"><i class="fa fa-times"></i>Reject</button>
-          <button type="button" class="orange_btn" onclick="acceptInterviewButton()" data-dismiss="modal"><i class="fa fa-check" ></i>Accept</button>
-        </div>
-      </div>
-      
-    </div>
-</div>
+@include('web.modals.accept_or_reject_interview')
 
 <!-- ========================================= Accept or reject interview end here ========================================= -->
 

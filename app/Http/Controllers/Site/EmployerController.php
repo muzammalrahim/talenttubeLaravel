@@ -1183,7 +1183,7 @@ class EmployerController extends Controller {
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         $data['controlsession'] = $controlsession;
         $UserInterview = UserInterview::where('url', $data['url'])->where('user_id',$user->id)->first();
-        // dd($UserInterview);
+        // dd($UserInterview->employer->email);
         if ($UserInterview) {
            if ($UserInterview->user_id != $user->id) {
             return redirect()->route('profile');

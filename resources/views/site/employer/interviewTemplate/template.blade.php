@@ -7,23 +7,15 @@
          <div class="mb10">
             <h5> <b> Template  </b> <b {{-- class="test qualifType" --}}>{{$template->index+1}}: </b></h5>
             
-            <div class="inline-bock qualifType">
-               <span> <b> Name: </b> {{$template->template_name}} </span>
-               <span> <b>Type: </b> {{$template->type}} </span>
-            {{-- <ul class="d-flex justify-content-between px-5">
-               <li class="float-left"><b> Name: </b> {{$template->template_name}} </li>
-               <li class="float-left"><b>Type: </b> {{$template->type}}</li>
-            </ul> --}}
+            <div class="qualifType">
+               <span class="d-block"> <b> Name: </b> {{$template->template_name}} </span>
+               <span class="d-block"> <b>Type: </b> {{$template->type}} </span>
 
                @if ($template->employers_instruction)
-               {{-- <div class="dflex "> --}}
-                  {{-- <ul> --}}
-                     {{-- <li class="float-left px-5">  --}}
-                        <label class="bold"></label>
-                        <span class=""> <b> Instruction: </b> {{ $template->employers_instruction }}</span> 
-                     {{-- </li> --}}
-                  {{-- </ul> --}}
-               {{-- </div> --}}
+
+                  {{-- <label class="bold"></label> --}}
+                  <span class="d-block"> <b> Instructions: </b> {{ $template->employers_instruction }}</span> 
+         
                @endif
             </div>
 

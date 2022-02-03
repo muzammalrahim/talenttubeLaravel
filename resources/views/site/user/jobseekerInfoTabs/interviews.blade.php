@@ -8,7 +8,9 @@
 {{-- @dump($UserInterview) --}}
 {{-- ========================================================== User Interviews ========================================================== --}}
 @include('site.user.jobseekerInfoTabs.userInterviewForJobseeker')   {{-- site/user/jobseekerInfoTabs/userInterviewForJobseeker --}}
-<p> If you want to conduct interview of <b> {{$jobSeeker->name}} </b> <span style="text-decoration: underline" class="pointer displayInterviewTemplate">  Click Here </span>  to see the available templates.</p>
+
+<p> To conduct an interview with <b> {{$jobSeeker->name}} </b>, please <span style="text-decoration: underline" class="pointer displayInterviewTemplate"> click here </span> to see the available interview templates </p>
+{{-- <p> If you want to conduct interview of <b> {{$jobSeeker->name}} </b> <span style="text-decoration: underline" class="pointer displayInterviewTemplate">  Click Here </span>  to see the available templates.</p> --}}
 <div class="tempDisplayforemployer hide_it job_row col-md-12 col-12 job-box-info concigerge-box clearfix p-0" style="background-color: #f8f8f8;">
    <form method="POST" name="interviewTemplate" class="interviewTemplate newJob job_validation">
       @csrf
