@@ -509,14 +509,14 @@ select {
         transform: translateX(0px);
         overflow-y: auto;
         overflow-x: hidden;
+								z-index:99999;
     }
 }
 
 @media (max-width:479px) {
     .sidebaricontoggle {
-
-        top: 60px;
-        right: 20px;
+        top: 57px;
+        right: 30px;
     }
     button {
 
@@ -649,6 +649,7 @@ div.google-visualization-tooltip {
         font-size: 20px;
     }
     select.white-text.mdb-select.md-form.filter_location_radius.custom-select{
+
         padding: 5px 5px;
         font-size: 12px;
         height: 27px;
@@ -664,6 +665,7 @@ div.google-visualization-tooltip {
     }
     label, span, strong{
         font-size: 12px;
+
     }
 }
 

@@ -64,7 +64,7 @@
             <div class="col-md-10 user-details">
                {{-- ============================================= Pie Chart =============================================  --}}
                {{-- @include('site.user.match_algo.match_algo')    site/user/match_algo/match_algo --}} 
-               <div class="pb-4" style="width:310px">
+               <div class="pb-4" style="width:200px">
                   <div  id="piechart_{{$js->id}}" class="job-box-info"></div>
                </div>
                <script type="text/javascript">
@@ -76,7 +76,7 @@
                   	  ['Match', {{ $user_compat }}],
                   	  ['Unmatch',100-{{ $user_compat }}],
                   	]);
-                    var options = { 'width':305, 'height':160, tooltip: { isHtml: true },};
+                    var options = { 'width':200, 'height':160, tooltip: { isHtml: true },};
                     var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
                     chart.draw(data, options);
                   }

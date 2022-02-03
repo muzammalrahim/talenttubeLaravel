@@ -104,7 +104,7 @@
                </div>
                <div class="col-lg-7 col-md-12 col-sm-12">
                      <div class="form-group">
-                        <select name="filter_salary" class="b-select selectpicker" id="filter_salary" aria-label="Default select example" data-placeholder="Select Salary Range">
+                        <select name="filter_salary" class="b-select form-control icon_show" id="filter_salary" aria-label="Default select example" data-placeholder="Select Salary Range">
                            <option value="">Select Salary Range</option>
                            @foreach(getSalariesRange() as $sk => $salary)
                            <option value="{{$sk}}">{{$salary}}</option>
@@ -122,7 +122,7 @@
                </div>
                <div class="col-lg-7 col-md-12 col-sm-12">
                      <div class="form-group">
-                        <select name="filter_jobType" class="b-select selectpicker" id="filter_jobType" aria-label="Default select example"  data-placeholder="Select Job Type">
+                        <select name="filter_jobType" class="b-select form-control icon_show" id="filter_jobType" aria-label="Default select example"  data-placeholder="Select Job Type">
                            <option value="">Select Job Type</option>
                            <option value="contract">Contract</option>
                            <option value="temporary">Temporary</option>
@@ -176,16 +176,16 @@
                </div>
                
                <div class="col-1 custom-checkbox">  
-                  <input type="checkbox" class="" name="filter_location_status">
+                  <input type="checkbox" checked class="" name="filter_location_status">
                </div>
                <div class="FilterLocationBox col">
                     <div class="location_search_cont row">
-                        <div class="col-8 col-sm-10 md-form form-sm">
+                        <div class="col-8 col-sm-9">
                           <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
 
                         </div>
-                        <div class="col-4 col-sm-2">
-                            <select class="white-text mdb-select md-form filter_location_radius custom-select" name="filter_location_radius" data-placeholder="Select Location Radius">
+                        <div class="col-4 col-sm-3">
+                            <select class="white-text bg-white icon_show filter_location_radius form-control mb-1" name="filter_location_radius" data-placeholder="Select Location Radius">
                                  <option value="5" selected="selected">5km</option>
                                  <option value="10">10km</option>
                                  <option value="25">25km</option>

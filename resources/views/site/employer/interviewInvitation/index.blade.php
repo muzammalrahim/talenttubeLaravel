@@ -5,57 +5,7 @@
 {{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 @section('content')
-{{-- 
-<div class="newJobCont">
-   <div class="head icon_head_browse_matches">Interview Invitations <a href="{{ route('unhideInterviews') }}" class="unhideInterviews"> Click here to Un-Hide your interviews </a> </div>
-   @if ($UserInterview->count() > 0)
-   @foreach ($UserInterview   as $interview)
-   <div class="job_row interviewBookingsRow_{{$interview->id}}">
-      <div class="job_heading p10">
-         <div class="w70 dinline_block">
-            <h3 class=" job_title"><a> <b>Invitation {{$loop->index+1}}: </b> Interview with {{$interview->js->name}}</a></h3>
-         </div>
-         <div class="w10 selectStatus d-contents">
-            <form class="statusOfInterview d-contents" name="statusOfInterview">
-               @csrf
-               <select name="hide">
-                  <option value= "0"> Select Status   </option>
-                  <option value= "yes"> Hide Interview </option>
-                  @if ($interview->status == 'pending')
-                  <option value= "decline"> Decline Interview </option>
-                  @endif
-               </select>
-               <input type="hidden" class="interview_id" name="interview_id" value="{{$interview->id}}">
-            </form>
-         </div>
-         <div class="fl_right">
-            <div class="j_label bold">Status:</div>
-            <div class="j_value text_capital">{{$interview->status}}</div>
-         </div>
-      </div>
-      <div class="job_info row p10 dblock">
-         <div class="timeTable">
-            <div class="IndustrySelect">
-               <p class="p0 qualifType m5"> Template Name: <b> {{$interview->template->template_name}} </b> </p>
-               @if ($interview->template->type == "phone_screeen")
-               <p> Template Type: <b> Phone Screen</b> </p>
-               @else
-               <p class="p0 qualifType m5"> Template Type: <b> {{$interview->template->type}} </b> </p>
-               @endif
-               <div class="j_button pb20">
-                  <a class="jobApplyBtn graybtn jbtn seeDetailOfInterview" href="{{ route('interviewInvitationUrl',['url' =>$interview->url]) }}" data-jobid="{{$interview->id}}">Click here to See the response</a>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   @endforeach  
-   @else
-   <h3> You have not booked any interview yet</h3>
-   @endif
-   <div class="cl"></div>
-</div>
---}}
+
 {{-- html for interview page --}}
 <section class="row">
    <div class="col-md-12">
@@ -96,13 +46,19 @@
                      @if ($interview->template->type == "phone_screen")
                      <span> <b> Phone Screen</b> </span>
                      @else
-                     <span class="p0 qualifType text_capital">  <b> {{$interview->template->type}} </b> </span>
+                     <span class="p0 qualifType text-capitalize">  <b> {{$interview->template->type}} </b> </span>
                      @endif
                   </li>
                </ul>
                <div class="dual-tags interview-btn-call clearfix">
-                  <a href="{{ route('interviewInvitationUrl',['url' =>$interview->url]) }}" data-jobid="{{$interview->id}}" type="button" class="interview-tag">Respond Interview</a>
-                  <span class="pendinginterview-tag used-tag pull-right">{{$interview->status}}</span>
+                  @if ($interview->status == 'Interview Confirmed')
+                     {{-- expr --}}
+
+                     <a href="{{ route('interviewInvitationUrl',['url' =>$interview->url]) }}" data-jobid="{{$interview->id}}" type="button" class="interview-tag">View Response </a>
+
+                  @endif
+                  
+                  <span class="pendinginterview-tag used-tag pull-right text-capitalize">{{$interview->status}}</span>
                </div>
             </div>
          </div>
@@ -127,7 +83,7 @@
 @section('custom_js')
 {{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 {{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
-{{-- <script src="{{ asset('js/site/common.js') }}"></script> --}}
+<script src="{{ asset('js/web/profile.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function(){
    

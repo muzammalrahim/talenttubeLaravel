@@ -3038,8 +3038,8 @@ background-color: #edeac4;  }
 
 .spinner {
   position: relative;
-  display: inline-block;
-  width: 1.01em;
+  /* display: inline-block; */
+  width: 100%;
   height: 1.01em;
 }
 

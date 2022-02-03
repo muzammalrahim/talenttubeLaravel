@@ -29,7 +29,7 @@
 
                <li><a href="{{ route('employerJobs') }}" class="{{(request()->is('employer/jobs*'))?'active':''}} sidebar-text"><i class="fas fa-link"></i><span>My Jobs</span></a></li>
 
-               <li><a href="{{ route('newJob') }}" class="{{(request()->is('employer/job/new'))?'active':''}} sidebar-text"><i class="fas fa-link"></i><span>Add New JOb</span></a></li>
+               <li><a href="{{ route('newJob') }}" class="{{(request()->is('employer/job/new'))?'active':''}} sidebar-text"><i class="fas fa-link"></i><span>Add New Job</span></a></li>
 
                <li><a href="{{ route('jobSeekers') }}" class="{{(request()->is('jobSeekers'))?'active':''}} sidebar-text"><i class="fas fa-link"></i><span>Job Seekers</span></a></li>
 

@@ -25,7 +25,7 @@
       <div class="job-box-info">
          <div class="box-head">
             <h4 class="text-white"> {{$job->title}} </h4>
-            <label>Location:<span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span></label>
+            <label><span>Location:</span> <span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span></label>
          </div>
          <div class="row Block-user-wrapper">
             <div class="col-md-4 user-images">
@@ -56,22 +56,22 @@
                </div>
                <div class="mt-2 row blocked-user-about">
                   <h6 class="p-0">Job Experience:</h6>
-                     @if(!empty($experience))
+                  @if(!empty($experience))
                      @foreach($experience as $industry )
-                  <div class="IndustrySelect">
+                     <div class="IndustrySelect">
+                        <p class="p-0">
+                           <i class="fas fa-angle-right"></i>
+                             {{getIndustryName($industry)}}
+                           <i class="fa fa-trash removeIndustry hide_it"></i>
+                        </p>
+                     </div>
+                     @endforeach
+                  @else
                      <p class="p-0">
                         <i class="fas fa-angle-right"></i>
-                          {{getIndustryName($industry)}}
+                        No Experience Required
                         <i class="fa fa-trash removeIndustry hide_it"></i>
                      </p>
-                  </div>
-                  @endforeach
-                  @else
-                  <p class="p-0">
-                     <i class="fas fa-angle-right"></i>
-                     No Experience Required
-                     <i class="fa fa-trash removeIndustry hide_it"></i>
-                  </p>
                   @endif
                </div>
                <div class="mt-2 row blocked-user-about">
