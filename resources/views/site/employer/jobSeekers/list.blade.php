@@ -172,7 +172,7 @@
                </div>
                @else
                   <div class="like-div">
-                     <button class="like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
+                     <button class="like-btn scd-like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
                   </div>
                @endif
 
