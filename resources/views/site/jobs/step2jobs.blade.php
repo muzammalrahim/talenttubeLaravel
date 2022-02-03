@@ -1,45 +1,19 @@
 @if($jobs && $jobs->count() > 0)
     @foreach($jobs as $job)
-
-
-        @php
-
-            // dump($job);
-            $experience = json_decode($job->experience);
-            // dump($experience);
-            $jobType = '';
-            if($job->type == 'Contract')
-            {
-                $jobType = 'Contract';
-            }
-            elseif ($job->type == 'temporary') {
-                $jobType = 'Temporary';
-            }
-            elseif ($job->type == 'casual') {
-                $jobType = 'Casual';
-            }
-            elseif ($job->type == 'full_time') {
-                $jobType = 'Full time';
-            }
-            elseif ($job->type == 'part_time') {
-                $jobType = 'Part time';
-            }
-        @endphp
-
         <div class="job_row">
             <div class="job_heading p10">
                 <h3 class=" job_title"><a>{{$job->title}}</a></h3>
                 @if ($job->code)
                     <div class="job_code">Code: {{$job->code}}</div>
                 @endif
-                <div class="job_employer">Employer: {{ $job->jobEmployer->name.' '.$job->jobEmployer->company }}</div>
+                <div class="job_employer">Employer: {{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</div>
 
                 <div class="job_location">
-                    <span>Location : </span>{{($job->city)?($job->city):''}},  {{($job->state)?($job->state):''}}, {{($job->country)?($job->country):''}}
+                    <span>Location : </span>{{($job->GeoCity)?($job->GeoCity->city_title):''}},  {{($job->GeoState)?($job->GeoState->state_title):''}}, {{($job->GeoCountry)?($job->GeoCountry->country_title):''}}
                 </div>
             </div>
 
-            <div class="job_info row p10 dflex">
+            <div class="job_info row p10 dblock">
 
                 <div class="w_25p companyLogo">
                     @php
@@ -54,23 +28,9 @@
                     <div class="j_value">{{$job->type}}</div>
                 </div> --}}
 
-                <div class="w_50p">
+                <div class="w_25p">
                     <div class="j_label bold">Job Experience</div>
-                    {{-- <div class="j_value">{{$job->experience}}</div> --}}
-                    @if (!empty($experience))
-                        {{-- expr --}}
-                    @foreach($experience as $industry )
-                        <div class="IndustrySelect">
-                            <p>
-                                <i class="fas fa-angle-right qualifiCationBullet"></i>
-                                  {{getIndustryName($industry)}}
-                                  <i class="fa fa-trash removeIndustry hide_it"></i>
-                            </p>
-                        </div>
-                    @endforeach
-                    @endif
-
-
+                    <div class="j_value">{{$job->experience}}</div>
                 </div>
 
                 <div class="w_25p">
@@ -78,10 +38,10 @@
                     <div class="j_value">{{$job->salary}}</div>
                 </div>
 
-                {{-- <div class="w_25p">
+                <div class="w_25p">
                     <div class="j_label bold">Job Category</div>
                     <div class="j_value">Web & E-commerce Job</div>
-                </div> --}}
+                </div>
             </div>
 
             <div class="job_detail p10">
@@ -108,7 +68,7 @@
 
                 <div class="w_25p jobsType">
                     <div class="j_label bold">Job Type</div>
-                    <div class="j_value">{{$jobType}}</div>
+                    <div class="j_value">{{$job->type}}</div>
                 </div>
 
                 <div class="w_25p fl_right">

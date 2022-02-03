@@ -80,7 +80,7 @@
 					{{-- 			<div class="location_search_cont hide_it">
 												<div class="location_input dtable w100">
 																<input type="text" name="location_search" class="inp w80 fl_left" id="location_search" value="" placeholder="Type a location" aria-invalid="false">
-																<select class="dinline_block filter_location_radius select_aw" name="filter_location_radius" data-placeholder="Select Location Radius">
+																<select class="dinline_block filter_location_radius select_aw p-0" name="filter_location_radius" data-placeholder="Select Location Radius">
 																					<option value="5">5km</option>
 																					<option value="10">10km</option>
 																					<option value="25">25km</option>
@@ -208,7 +208,7 @@
                            <div class="col-10 md-form form-sm">
                               <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
                            </div>
-                           <div class="col-2">
+                           <div class="col-2 p-0">
                               <select class="white-text mdb-select md-form filter_location_radius custom-select" name="filter_location_radius" data-placeholder="Select Location Radius">
                                  <option value="5" selected="selected">5km</option>
                                  <option value="10">10km</option>

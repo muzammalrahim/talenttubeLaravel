@@ -509,6 +509,7 @@ select {
         transform: translateX(0px);
         overflow-y: auto;
         overflow-x: hidden;
+								z-index:99999;
     }
 }
 
@@ -644,7 +645,7 @@ div.google-visualization-tooltip {
         font-size: 11px;
     }
     select.white-text.mdb-select.md-form.filter_location_radius.custom-select{
-        padding: 0px 5px;
+        padding: 0;
         font-size: 14px;
     }
 }
