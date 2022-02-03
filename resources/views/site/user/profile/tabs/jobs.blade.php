@@ -49,7 +49,7 @@
                         <div class="job-box-info">
                             <div class="box-head">
                                 <h4 class="text-white">{{$job->title}}</h4>
-                                Location:<span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span>
+                               <span>Location:</span> <span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span>
                                 <i data-toggle="modal" data-target="#jobAppDeleteModal" class="close-box fa fa-times" onclick="deleteJobApp({{$application->id}})"></i>
                             </div>
                             <div class="job-box-text clearfix">

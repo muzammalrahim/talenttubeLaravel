@@ -4,13 +4,11 @@ body {
 
 
 /* ----------------------body main-tab===================== */
-
 .top-nav-header {
     padding: 20px 15px;
     border-bottom: 1px solid #e6e6e6;
     margin-bottom: 20px;
 }
-
 .body-tab-btn button {
     margin: 0 20px 0 0;
 }
@@ -48,7 +46,9 @@ body {
     overflow-y: auto;
     height: 90vh;
 }
-
+.sidebar-menu{
+	padding:0;
+}
 .profile-section {
     background-color: #ffffff;
     box-shadow: 4px 4px 8px #eee8e8;
@@ -897,7 +897,7 @@ span.remove:before {
 /* ======================= job =============== */
 
 .job-applied {
-    padding: 30px 0;
+    padding:  0;
 }
 
 .job-box-info {
@@ -2580,10 +2580,10 @@ button i {
         width: 209px;
     }
     .recent-job label {
-        font-size: 18px;
+        font-size: 16px;
     }
     .recent-job span {
-        font-size: 18px;
+        font-size: 14px;
     }
     .additional-sidebar button span {
         width: 76%;
@@ -2919,7 +2919,7 @@ button i {
         font-weight: 500;
         text-align: center;
         padding: 10px 0;
-        font-size: 22px;
+        font-size: 16pxpx;
     }
     .block-progrees-ratio {
         display: block;
@@ -3101,7 +3101,7 @@ button i {
         color: #00326F;
     }
     .userLocationSpan {
-        font-size: 18px !important;
+        font-size: 14px !important;
     }
     .questions-tab .edited-text {
         width: 30px !important;
@@ -3167,9 +3167,9 @@ button i {
     .body-tab-btn {
         width: 60% !important;
     }
-    .recent-job div label {
+    /* .recent-job div label {
         width: 100%;
-    }
+    } */
     .album-upload-img .pip {
         margin: 10px 0 !important;
     }
@@ -3196,6 +3196,12 @@ button i {
     .profile-section .nav-tabs {
         width: 28%;
     }
+				.profile-section .nav-tabs .nav-item .nav-link{
+					position: initial;
+				}
+				.profile-section .nav-tabs .nav-item {
+					z-index: 999;
+				}
     .profile-section .nav-tabs .nav-item button {
         font-size: 14px;
     }
@@ -3234,11 +3240,11 @@ button i {
     .block-box .box-footer .unblock-btn {
         margin: 10px 0px;
     }
-    .block-box .box-footer .block-btn,
+    /* .block-box .box-footer .block-btn,
     .block-box .box-footer .unlike-btn,
     .block-box .box-footer .Detail-btn {
 
-    }
+    } */
     .block-box .box-footer1 {
         display: block;
         padding: 20px 0;
@@ -3520,25 +3526,32 @@ span.v_title {
 .font-16 {
     font-size: 16px;
 }
-
-
-
-
-
-
 @media screen and (max-width: 479px){
     /*.blue_btn{
         display: none !important;
-    }*/
+    }
+				.box-head h4 {
+					font-size: 16px;
+	}
+	.dual-tags .interview-tag {
+		width:100%;
+}
+	.box-head span{
+		font-size: 14px;
+	}
+
     .profile-section .col-11{
             max-width: 85.666667%;
     }
+				.delete-applications .modal-header {
+					padding: 20px 43px;
+	}
     .interview-btn-call .interview-tag {
         color: #ffffff !important;
         padding: 5px;
         border: 1px solid #00820D;
         border-radius: 2px;
-        width: 48%;
+        width: 100%;
         transition: all 0.3s;
         margin-top: 5px;
         font-size: 11px;
@@ -3548,13 +3561,25 @@ span.v_title {
     }
     .used-tag {
         font-size: 11px;
-        width: 46%;
+        width: 100%;
         text-align: center;
         height: 30px !important;
     }
     .block-box .box-footer .block-btn{
-        float: left;
+        float:none;
+								width: 100%;
     }
+				.block-box .box-footer .like-btn{
+	       	width:100%;
+									margin:0;
+	   }
+				.block-box .box-footer .unlike-btn {
+					width:100%;
+					margin:0 !important;
+}
+.block-box .box-footer .detail-btn{
+								width:100%;
+				}
     .user-details .blocked-user-about p{
         font-size: 11px;
     }
@@ -3607,7 +3632,7 @@ span.v_title {
         font-size: 11px;
     }
     .text-info-detail p{
-        height: auto;
+        height: 70px;
         font-size: 11px !important;
     }
     h2{
@@ -3628,10 +3653,10 @@ span.v_title {
         font-size: 11px !important;
     }
     .bj-tr-btn .orange_btn{
-        width: 45%;
+        width: 100%;
     }
     .bj-tr-btn .used-tag{
-        width: 45%;
+        width: 100%;
         height: 35px !important;
         font-size: 11px;
     }
@@ -3645,7 +3670,7 @@ span.v_title {
     }
     .IndustrySelect{
         overflow: hidden;
-        width: 50%;
+        width: 100%;
     }
     .user-details .blocked-user-experience h6{
         font-size: 11px;
@@ -3665,9 +3690,6 @@ span.v_title {
         width: 100% !important;
     }
 }
-
-
-
 @media screen and (max-width: 318px) {
     .sidebaricontoggle{
         top: 62px;
@@ -3701,7 +3723,7 @@ span.v_title {
     }
     .text-info-detail p{
         font-size: 10px !important
-        height: auto;
+        /* height: auto; */
     }
     .used-tag{
         font-size: 10px;
@@ -3710,8 +3732,14 @@ span.v_title {
     .slot-para{
         font-size: 10px
     }
-    .bj-tr-btn .orange_btn{
+				/* commentd code by hassan khan */
+    /* .bj-tr-btn .orange_btn{
         width: 43%;
-    }
+    } */
+				.dual-footer-btn .black_btn , .dual-footer-btn .orange_btn{
+				display: block;
+					width: 100%;
+					margin:10px 0;
+				}
 
 }

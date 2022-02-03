@@ -25,7 +25,7 @@
       <div class="job-box-info">
          <div class="box-head">
             <h4 class="text-white"> {{$job->title}} </h4>
-            <label>Location:<span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span></label>
+            <label><span>Location:</span> <span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span></label>
          </div>
          <div class="row Block-user-wrapper">
             <div class="col-md-4 user-images">

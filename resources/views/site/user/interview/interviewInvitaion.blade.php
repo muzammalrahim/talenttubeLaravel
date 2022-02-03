@@ -15,7 +15,7 @@
       <div class="row">
         <div class="col-11 col-sm-6"><h2>Received Interview Invitations</h2></div>
 
-        <div class="col-1 col-sm-6 head icon_head_browse_matches float-right"> 
+        <div class="col-1 col-sm-6 head icon_head_browse_matches float-right d-none d-sm-block"> 
           <a href="{{ route('unhideInterviews') }}" class="unhideInterviews blue_btn py-1 float-right">Click here to Un-Hide your interviews </a> 
         </div>
       </div>
