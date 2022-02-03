@@ -155,7 +155,9 @@
             <div class="col-md-12 col-sm-12">
                <div class="input-employee clearfix">
                	<div class="row">
-	                  <label class="col-md-4">Keyword:</label>
+	                  {{-- <label class="col-md-4">Keyword:</label> --}}
+                  	<h5 class="col-md-4 browse-heading">Keyword:</h5>
+
 	                  <input type="text" class="form-control col-md-8" name="filter_keyword" aria-label="Recipient's username">
                	</div>
                </div>
@@ -201,15 +203,15 @@
                         <h5 class="browse-heading">Filter by Location:</h5>
                      </div>
                      <div class="col-1 custom-checkbox mt-1">  
-                        <input type="checkbox" class="" name="filter_location_status">
+                        <input type="checkbox" checked class="" name="filter_location_status">
                      </div>
                      <div class="FilterLocationBox col">
                         <div class="location_search_cont row">
-                           <div class="col-10 md-form form-sm">
+                           <div class="col-8 col-sm-9">
                               <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
                            </div>
-                           <div class="col-2">
-                              <select class="white-text mdb-select md-form filter_location_radius custom-select" name="filter_location_radius" data-placeholder="Select Location Radius">
+                           <div class="col-4 col-sm-3">
+                              <select class="white-text bg-white icon_show filter_location_radius custom-select mb-1" name="filter_location_radius" data-placeholder="Select Location Radius">
                                  <option value="5" selected="selected">5km</option>
                                  <option value="10">10km</option>
                                  <option value="25">25km</option>
