@@ -3086,7 +3086,7 @@ button i {
     }
     .top-nav-header {
         padding: 10px 15px 0 15px;
-				}
+    }
     .box-head h4{
         font-size: 13px;
         font-weight: 600;
@@ -3527,7 +3527,7 @@ span.v_title {
     font-size: 16px;
 }
 @media screen and (max-width: 479px){
-    .blue_btn{
+    /*.blue_btn{
         display: none !important;
     }
 				.box-head h4 {
@@ -3539,6 +3539,7 @@ span.v_title {
 	.box-head span{
 		font-size: 14px;
 	}
+
     .profile-section .col-11{
             max-width: 85.666667%;
     }
