@@ -239,7 +239,7 @@
 
             <!-- ======================================================= job tab ======================================================= -->
             
-            <div class="tab-pane fade show active job-applied" id="reference"  role="tabpanel" aria-labelledby="reference-tab">
+            <div class="tab-pane fade show active job-applied pt-4" id="reference"  role="tabpanel" aria-labelledby="reference-tab">
                <h2>Refrance</h2>
                <div class="row">
                   @include('site.user.jobseekerInfoTabs.reference')

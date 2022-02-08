@@ -608,7 +608,9 @@ select {
     font-size: 14px !important;
 }
 
-
+.font-unset{
+    font-size: unset !important;
+}
 /* Employer Info page html display none  */
 
 div.google-visualization-tooltip {

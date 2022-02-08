@@ -25,10 +25,14 @@
          {{-- ======================================= Filter By Keyword ======================================= --}}
          
          <div class="row">   
-            <div class="col-md-6 col-sm-6">
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4">
                <div class="input-employee clearfix">
                   <div class="row">
-                     <label class="col-md-4">Keyword:</label>
+                     {{-- <label class="col-md-4">Keyword:</label> --}}
+                     <div class="col-md-4">
+                        <h5 class="browse-heading font-weight-normal">Keyword:</h5>
+                     </div>
+
                      <input type="text" class="form-control col-md-8" name="filter_keyword">
                   </div>
                </div>
@@ -36,10 +40,12 @@
             
             {{-- ======================================= Filter By Salary ======================================= --}}
 
-            <div class="col-md-6 col-sm-6">
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4">
                <div class="input-employee clearfix">
                   <div class="row">
-                     <label class="col-md-4">Salary Range:</label>
+                     <div class="col-md-4">
+                        <h5 class="browse-heading font-weight-normal">Salary Range:</h5>
+                     </div>
                      {{-- <input type="text" class="form-control col-md-8" name="filter_salary" aria-label="Recipient's username"> --}}
                      <select name="filter_salary" class="form-control col-md-8 bg-white" id="filter_salary" data-placeholder="Select Salary Range">
                         <option value="">Select Salary Range</option>
@@ -51,24 +57,49 @@
                </div>
             </div>
 
+            {{-- ======================================= Filter By Sort By ======================================= --}}
+
+
+            {{-- <div class="searchField_sortBy d-flex col-md-4"> --}}
+            <div class="col-12 col-sm-4 col-md-4 col-lg-4">
+               <div class="input-employee clearfix">
+
+                  <div class="row">
+                     <div class="col-md-4">
+                        <h5 class="browse-heading font-weight-normal">Sort By:</h5>
+                     </div>
+
+                     {{-- <div class="sortByFieldLabel col-5 pt-2">Sort By: </div> --}}
+                     <select name="ja_filter_sortBy" class="form-control col-md-8 bg-white">
+                        <option value="goldstars">Gold Stars</option>
+                        <option value="applied">Applied</option>
+                        <option value="inreview">In Review</option>
+                        <option value="interview">Interview</option>
+                        <option value="unsuccessful">Unsuccessful</option>
+                        <option value="pending">pending</option>
+                        <option value="all_candidates">All candidates</option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+
+
          </div>
 
          {{-- ======================================= Filter By Industry ======================================= --}}
-
-         {{-- ================================== Filter by Industry ================================== --}}
 
 
             <div class="row b-filter-row mt-3">
                <div class="col-md-12 browse-mp">
                   <div class="row">
                      <div class="col-md-3 col-sm-12 mt-1">
-                        <h5 class="browse-heading">Filter by Industry:</h5>
+                        <h5 class="browse-heading font-weight-normal">Filter by Industry:</h5>
                      </div>
                      <div class="col-md-1 col-sm-2 col-2 custom-checkbox mt-1">
                         <input type="checkbox" name="filter_industry_status" checked class="">
                      </div>
-                     <div class="col-md-8 col-sm-12 filter_industryDiv">
-                           <select name="filter_industry[]" multiple="multiple" id="filter_industry" placeholder = "Filter by Job" class="multi-select form-control custom-select">
+                     <div class="col-md-8 col-sm-12 filter_industryList">
+                           <select name="filter_industry[]" multiple="multiple" id="filter_industry" placeholder = "Filter by Job" class="multi-select form-control custom-select ">
                               @php
                               $industries = getIndustries()
                               @endphp
@@ -95,7 +126,7 @@
                <div class="col-md-12">
                   <div class="row">
                      <div class="col-md-3 col-sm-12 mt-1 b-mob-pad">
-                        <h5 class="browse-heading">Filter by Location:</h5>
+                        <h5 class="browse-heading font-weight-normal">Filter by Location:</h5>
                      </div>
                      <div class="col-1 custom-checkbox mt-1">  
                         <input type="checkbox" class="" name="filter_location_status">
@@ -129,54 +160,80 @@
 
          {{-- ======================================= Filter By Question ======================================= --}}
 
-         <div class="searchField_questions col-md-4 d-flex py-2">
-            <div class="searchFieldLabel col-5 ">Filter by Question: </div>
-            <input type="text" name="filter_by_questions" class="bg-white form-control" data-toggle="modal" data-target="#myModal234">
+
+         <div class="row b-filter-row mt-3">
+            <div class="col-md-12">            
+               <div class="row">
+                  <div class="col-md-3">  
+                     <h5 class="browse-heading font-weight-normal">Filter by Question:</h5>
+                  </div>
+                  <div class="col-1 custom-checkbox mt-1">
+                     <input type="checkbox" class="" name="filter_by_questions">
+                  </div>
+                  <div class="col-md-8 questionFilter filter_question_cont">
+                     @if(varExist('questions', $job))
+                     @foreach ($job->questions as $qkey =>  $jq)
+                     <div class="jobFilterQuestion row mb-1">
+                        <span class="fjq_counter col-2">Question {{($qkey+1)}}: </span>
+                        <span class="fjq_title col-7">{{$jq->title}}</span>
+                        <div class="fjq_options col-3">
+                           @if($jq->options)
+                           <select class="filter_question bg-white  select_aw form-control icon_show" name="filter_question[{{$jq->id}}]" >
+                              <option value="">Select</option>
+                              @foreach ($jq->options as $qk => $jqopt)
+                              <option value="{{$jqopt}}">{{$jqopt}}</option>
+                              @endforeach
+                           </select>
+                           @endif
+                        </div>
+                     </div>
+                     @endforeach
+                     @endif
+                  </div>
+               </div>
+            </div>
          </div>
          
-         
-
 
          {{-- ======================================= Filter By Qualification ======================================= --}}
 
-         <div class="searchField_qualification col-md-4 d-flex py-2">
-            <div class="searchFieldLabel col-5 pt-2">Qualification: </div>
-            <select class=" filter_qualification_type form-control bg-white w-100 ml-2" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
-               <option value="">Select Qalification & Trades</option>
-               <option value="certificate">Certificate or Advanced Diploma</option>
-               <option value="trade">Trade Certificate</option>
-               <option value="degree">University Degree</option>
-               <option value="post_degree">University Post Graduate (Masters or PHD)</option>
-            </select>
-            @php ($qualifications = getQualificationsList())
-            @if(!empty($qualifications))
-            <div class="filter_qualificaton_degree">
-               <ul class="qualification_ul item_ul dot_list">
-                  @foreach ($qualifications as $qualif)
-                  <li class="{{$qualif['type']}}" data-id="{{$qualif['id']}}" data-type="ja_filter_qualification[]">
-                     <span>{{$qualif['title']}}</span>
-                  </li>
-                  @endforeach
-               </ul>
+
+         <div class="searchField_qualification row b-filter-row mt-3">
+            <div class="col-md-12">
+               <div class="row">
+                  {{-- <div class="searchFieldLabel col-5 pt-2">Qualification: </div> --}}
+                  <div class="col-md-3">  
+                     <h5 class="browse-heading font-weight-normal">Qualification:</h5>
+                  </div>
+
+                  <select class="col-md-9 filter_qualification_type form-control bg-white w-100" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
+                     <option value="">Select Qalification & Trades</option>
+                     <option value="certificate">Certificate or Advanced Diploma</option>
+                     <option value="trade">Trade Certificate</option>
+                     <option value="degree">University Degree</option>
+                     <option value="post_degree">University Post Graduate (Masters or PHD)</option>
+                  </select>
+                  @php ($qualifications = getQualificationsList())
+                  @if(!empty($qualifications))
+                  <div class="filter_qualificaton_degree">
+                     <ul class="qualification_ul item_ul dot_list">
+                        @foreach ($qualifications as $qualif)
+                        <li class="{{$qualif['type']}}" data-id="{{$qualif['id']}}" data-type="ja_filter_qualification[]">
+                           <span>{{$qualif['title']}}</span>
+                        </li>
+                        @endforeach
+                     </ul>
+                  </div>
+                  @endif
+               </div>   
+
             </div>
-            @endif
          </div>
 
-         {{-- ======================================= Filter By Sort By ======================================= --}}
 
 
-         <div class="searchField_sortBy d-flex col-md-4 py-2">
-            <div class="sortByFieldLabel col-5 pt-2">Sort By: </div>
-            <select name="ja_filter_sortBy" class="bg-white w-100 text-center" style="height: 35px; border: 1px solid #ced4da;">
-               <option value="goldstars">Gold Stars</option>
-               <option value="applied">Applied</option>
-               <option value="inreview">In Review</option>
-               <option value="interview">Interview</option>
-               <option value="unsuccessful">Unsuccessful</option>
-               <option value="pending">pending</option>
-               <option value="all_candidates">All candidates</option>
-            </select>
-         </div>
+         {{-- data-target ="#qualification_modal" data-toggle = "modal" --}}
+
 
          <div class="bj-tr-btn">
             <button class="orange_btn" type="reset"><i class="fas fa-redo"></i> Reset</button>
@@ -187,17 +244,20 @@
    </div>
    {{-- ================================================== Job Applications ================================================== --}}
    <div class="job_applications"></div>
+
 </div>
-<!-- Modal by filter industry -->
 
-<!-- Modal -->
-<!-- Modal -->
-<!-- Modal filter by location -->
 
-<!-- Modal -->
-<!-- Modal by filter question -->
+{{-- ================================= Show video =================================  --}}
 
-{{-- Jquery pop up itertaion-9 --}}
+   @include('web.modals.show_video')
+
+{{-- ================================= Show Qualification =================================  --}}
+
+
+   @include('web.modals.qualification_modal')
+
+
 <div id="onlineTestModal" class="modal w100 p0">
    <div class="testHeader">
       <p>Send online Test</p>
@@ -222,16 +282,9 @@
          <button class="btn small turquoise sendTestButton">Send Test</button>
       </div>
    </div>
-   {{--   
-   <div class="textFooter p10">
-      <a href="#" rel="modal:close">Close</a>      
-   </div>
-   --}}
+ 
 </div>
-<!-- Link to open the modal -->
-{{-- 
-<p><a href="#onlineTestModal" rel="modal:open">Open Modal</a></p>
---}}
+
 @stop
 @section('custom_js')
 {{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
@@ -241,6 +294,7 @@
 
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/web/profile.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function() {
       $('#filter_industry').select2();
