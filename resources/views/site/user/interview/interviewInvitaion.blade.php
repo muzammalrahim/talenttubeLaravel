@@ -63,7 +63,7 @@
               </li>
 
               <li style="height: 50px;overflow-y: auto;">
-                <span>  Instructions:</span><span> <b> {{$Int_booking->template->employers_instruction}} </b></span>
+                <span><b>Instructions:</b></span><span> {{$Int_booking->template->employers_instruction}} </span>
               </li>
 
             </ul>
@@ -71,19 +71,19 @@
               @if ($Int_booking->status == "Interview Confirmed" )
               <a  href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
                 class="interview-tag">View My Responses</a>
-                <span class="pendinginterview-tag used-tag pull-right">{{$Int_booking->status}}</span>
+                <span class="pendinginterview-tag used-tag pull-right h-auto font-unset">{{$Int_booking->status}}</span>
 
                 @elseif($Int_booking->status == "Rejected")
 
                 <a  href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
                 class="interview-tag">You have rejected this interview</a>
-                <span class="pendinginterview-tag used-tag pull-right">{{$Int_booking->status}}</span>
+                <span class="pendinginterview-tag used-tag pull-right h-auto font-unset">{{$Int_booking->status}}</span>
 
                 @elseif($Int_booking->status == "Accepted")
 
                 <a  href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
                 class="interview-tag">Click here to respond to this interview</a>
-                <span class="pendinginterview-tag used-tag pull-right">{{$Int_booking->status}}</span>
+                <span class="pendinginterview-tag used-tag pull-right h-auto font-unset">{{$Int_booking->status}}</span>
 
               @else
                 {{-- <a href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
@@ -93,7 +93,7 @@
                   onclick="acceptInterviewFun('{{ $Int_booking->url }}', '{{ $Int_booking->id }}')">Click here to respond to this interview</button> 
                 </div>
 
-                <span class="pendinginterview-tag used-tag pull-right intStatus_{{ $Int_booking->id }}">{{$Int_booking->status}}</span>
+                <span class="pendinginterview-tag used-tag pull-right h-auto font-unset intStatus_{{ $Int_booking->id }}">{{$Int_booking->status}}</span>
               @endif
 
               </div>
