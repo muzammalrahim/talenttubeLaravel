@@ -9,7 +9,7 @@
 @section('content')
 
 <section class="row">
-  	<div class="col-md-12 profile profile-section">
+  	<div class="col-md-12 profile profile-section px-0">
 	    <h2>Talent Matcher</h2>
 	     @include('web.talent_matcher.user.list') {{-- web/talent_matcher/user/list --}}
 	</div>

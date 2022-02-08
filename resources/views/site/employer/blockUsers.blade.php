@@ -36,9 +36,10 @@
                            }
                            @endphp
                            <img src="{{$profile_image}}" alt="">
+																											<h6 class="py-2 fs-6 text-center">{{$js->recentJob}}</h6>
                         </div>
                         <div class="block-user-progress ">
-                           <h6 class="p-0">{{$js->recentJob}}</h6>
+                           
                            {{-- <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div> --}}
                            <div class="block-progrees-ratio d-block d-md-none  ">
                            </div>

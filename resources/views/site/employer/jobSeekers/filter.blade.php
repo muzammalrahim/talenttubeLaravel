@@ -6,10 +6,10 @@
    <div class="employee-wraper">
       <div class="emp-t-row">
          <div class="row b-filter-row top-filter-row">
-            <div class="row">   
+            <div class="row ">   
                <div class="col-md-6 col-sm-6">
                   <div class="input-employee clearfix">
-                     <div class="row">
+                     <div class="row mx-0">
                         <label class="col-md-4">Keyword:</label>
                         <input type="text" class="form-control col-md-8" name="filter_keyword">
                      </div>
@@ -17,7 +17,7 @@
                </div>
                <div class="col-md-6 col-sm-6">
                   <div class="input-employee clearfix">
-                     <div class="row">
+                     <div class="row mx-0">
                         <label class="col-md-4">Salary Range:</label>
                         {{-- <input type="text" class="form-control col-md-8" name="filter_salary" aria-label="Recipient's username"> --}}
                         <select name="filter_salary" class="form-control col-md-8 bg-white" id="filter_salary" data-placeholder="Select Salary Range">

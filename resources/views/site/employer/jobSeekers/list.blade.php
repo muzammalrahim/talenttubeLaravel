@@ -48,19 +48,19 @@
             }
             @endphp
             @if ($emp_resident == 'no' && $user_resident == 'no')
-            <h4 class="text-danger bold w50"> No Match Potential </h4>
+            <h4 class="text-danger bold "> No Match Potential </h4>
             @else
             @if ($dist < 50 && !empty($ind_exp))
-            <h4 class="text-green bold w50"> Strong Match Potential </h4>
+            <h4 class="text-green bold"> Strong Match Potential </h4>
             @elseif($dist < 50 )
-            <h4 class="text-orange bold w50"> Moderate Match Potential  </h4>
+            <h4 class="text-orange bold "> Moderate Match Potential  </h4>
             @elseif(!empty($ind_exp))
-            <h4 class="text-orange w50"> Moderate Match Potential </h4>
+            <h4 class="text-orange "> Moderate Match Potential </h4>
             @else
             @php
             $check = true;
             @endphp
-            <h4 class="text-danger bold w50"> No Match Potential </h4>
+            <h4 class="text-danger bold "> No Match Potential </h4>
             @endif
             @endif                          
          </div>
@@ -78,16 +78,17 @@
                @endphp
                <div class="block-user-img ">
                   <img src="{{$profile_image}}" alt="">
+																		<h6 class="py-2">{{$js->username}}</h6>
                </div>
                <div class="block-user-progress ">
-                  <h6>{{$js->username}}</h6>
+                 
                </div>
             </div>
             <div class="col-md-10 user-details">
               
                {{-- <div class="w50 py-3"> --}}
-               <div class="pb-4" style="width:310px">
-                  <div id="piechart_{{$js->id}}" class="job-box-info"></div>
+               <div class="pb-4" style="width:100%;">
+                  <div id="piechart_{{$js->id}}" class="job-box-info" style="transform:scale(0.7); margin-left:-55px;width:fit-content;"></div>
                </div>
 
 
@@ -100,7 +101,7 @@
                         ['Match', {{ $user_compat }}],
                         ['Unmatch',100-{{ $user_compat }}],
                       ]);
-                    var options = { 'width':300, 'height':160, tooltip: { isHtml: true },};
+                    var options = { 'width':285, 'height':160, tooltip: { isHtml: true },};
                     var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
                     chart.draw(data, options);
                   }
@@ -167,8 +168,8 @@
             <div class="employe-btn-group">
                {{-- @dump($likeUsers) --}}
                @if (in_array($js->id,$likeUsers))
-               <div class="unlike-div">
-                  <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
+               <div class="unlike-div ">
+                  <button class="unlike-btn ml-2" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
                </div>
                @else
                   <div class="like-div">

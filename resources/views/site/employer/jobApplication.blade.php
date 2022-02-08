@@ -129,7 +129,7 @@
 
          {{-- ======================================= Filter By Question ======================================= --}}
 
-         <div class="searchField_questions col-md-4 d-flex">
+         <div class="searchField_questions col-md-4 d-flex py-2">
             <div class="searchFieldLabel col-5 ">Filter by Question: </div>
             <input type="text" name="filter_by_questions" class="bg-white form-control" data-toggle="modal" data-target="#myModal234">
          </div>
@@ -139,9 +139,9 @@
 
          {{-- ======================================= Filter By Qualification ======================================= --}}
 
-         <div class="searchField_qualification col-md-4 d-flex">
+         <div class="searchField_qualification col-md-4 d-flex py-2">
             <div class="searchFieldLabel col-5 pt-2">Qualification: </div>
-            <select class=" filter_qualification_type form-control bg-white w-100" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
+            <select class=" filter_qualification_type form-control bg-white w-100 ml-2" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
                <option value="">Select Qalification & Trades</option>
                <option value="certificate">Certificate or Advanced Diploma</option>
                <option value="trade">Trade Certificate</option>
@@ -165,7 +165,7 @@
          {{-- ======================================= Filter By Sort By ======================================= --}}
 
 
-         <div class="searchField_sortBy d-flex col-md-4">
+         <div class="searchField_sortBy d-flex col-md-4 py-2">
             <div class="sortByFieldLabel col-5 pt-2">Sort By: </div>
             <select name="ja_filter_sortBy" class="bg-white w-100 text-center" style="height: 35px; border: 1px solid #ced4da;">
                <option value="goldstars">Gold Stars</option>
