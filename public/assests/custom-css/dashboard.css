@@ -1741,6 +1741,9 @@ button i {
     max-width: 650px;
     margin: 94px auto 0;
 }
+.jobSeekeerCheckBox{
+    padding-left: 15px;
+}
 
 
 /*-------------------------------checkboxes---------------------------- */
@@ -2484,7 +2487,7 @@ button i {
     }
     .blue_btn {
         font-size: 15px !important;
-        padding: 0 10px !important;
+        padding: 7px 10px !important;
     }
     .additional-sidebar button span {
         width: 78%;
@@ -2523,9 +2526,6 @@ button i {
     }
     .row.b-filter-row .col-md-8 input {
         width: 73%;
-    }
-    .input-employee label {
-        width: 127px;
     }
     .block-box .box-footer1 {
         flex-direction: column;
@@ -2646,6 +2646,13 @@ button i {
         float: left !important;
         width: 70% !important;
     }
+    .browse-heading{
+        font-size: 14px;
+        font-weight: 400;
+    }
+    .input-employee label{
+        font-size: 14px !important;
+    }
     .sign-btn {
         float: left !important;
         width: 30% !important;
@@ -2725,6 +2732,9 @@ button i {
     }
     .body-tab-btn button {
         margin: 0 10px 0 0;
+    }
+    .form-control{
+        font-size: 15px !important;
     }
     /* =======================steps button tap ====================== */
     .first-tap-detail {
@@ -3084,11 +3094,15 @@ button i {
     body {
         overflow: auto !important;
     }
+    .dual-tags .interview-tag{
+        font-size: 10px !important;
+        margin-top: 5px !important;
+    }
     .top-nav-header {
         padding: 10px 15px 0 15px;
     }
     .box-head h4{
-        font-size: 13px;
+        font-size: 16px;
         font-weight: 600;
     }
     .box-head{
@@ -3099,6 +3113,7 @@ button i {
     }
     .profile-section h2 {
         color: #00326F;
+        width: 90%;
     }
     .userLocationSpan {
         font-size: 14px !important;
@@ -3779,7 +3794,7 @@ span.v_title {
     .box-head h4{
         font-size: 10px;
         padding-top: 0px;
-        width: 86%;
+        width: 86% !importent;
         padding-bottom: 15px;
     }
     .box-head{

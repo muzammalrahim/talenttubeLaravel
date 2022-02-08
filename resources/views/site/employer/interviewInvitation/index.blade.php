@@ -8,10 +8,14 @@
 
 {{-- html for interview page --}}
 <section class="row">
-   <div class="col-md-12">
-   <div class="profile profile-section">
-      <a href="{{ route('unhideInterviews') }}" class="unhideInterviews blue_btn float-right py-1"> Click here to Un-Hide your interviews </a>
-      <h2> Interview Invitations</h2>
+    <div class="col-md-12">
+        <div class="profile profile-section">
+            <div class="row mb-2 mb-sm-2 mb-md-1 ">
+                <h2 class="col-12 col-sm-12 col-md-12 col-lg-6"> Interview Invitations</h2>
+                <div class="col-12 col-sm-12 col-md-12 col-lg-6">   
+                    <a href="{{ route('unhideInterviews') }}" class="unhideInterviews blue_btn float-none float-md-right float-lg-right py-1 "> Click here to Un-Hide your interviews </a>
+                </div>
+            </div>
       <div class="row">
          @if ($UserInterview->count() > 0)
          @foreach ($UserInterview   as $interview)

@@ -107,9 +107,9 @@
                   </div>
                </div>
                --}}
-               <div class="jobQuestions row d-flex  border border-secondary rounded-2">
+               <div class="jobQuestions row d-flex  border border-secondary rounded-2 pt-3">
                   <h2 class="form_label">Job Questions:</h2>
-                  <div class="col-md-6">
+                  <div class="col-md-6 pb-3">
                      <div class="jobQuestion q1 p-3 bg-light rounded-3">
                         <div class="jq_field_box form-group">
                            <div class="jq_field_label">Title</div>
@@ -124,22 +124,23 @@
                                  </div>
                                  <div class="jq_option_cbx col-md-3  d-flex justify-content-center align-items-center" style="height: 30px!important;">
                                     <input type="checkbox" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer">
-                                    <label for="jq_0_option_0_preffer" class="pt-1 pl-1">Undiserable</label>
+                                    <label for="jq_0_option_0_preffer" class="pt-2 pl-1">Undiserable</label>
                                  </div>
                                  <div class="jq_option_cbx col-md-3 d-flex justify-content-center align-items-center" style="height: 30px!important;">
                                     <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar">
-                                    <label for="jq_0_option_0_goldstar" class="pt-1 pl-2">Gold Star</label>
+                                    <label for="jq_0_option_0_goldstar" class="pt-2 pl-2">Gold Star</label>
                                  </div>
                               </div>
                            </div>
+                           <div class="jq_remove"><span class=" removeJobQuestion text-danger float-right pb-2"><i class="fas fa-times-circle"></i></span></div>
                            <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption graybtn jbtn blue_btn py-2" data-qc="0">Add Option+</a></div>
                         </div>
-                        <div class="jq_remove"><span class=" removeJobQuestion text-danger float-right pb-2"><i class="fas fa-times-circle"></i></span></div>
+                        
                      </div>
                   </div>
                </div>
                <input type="hidden" name="questionCounter" id="questionCounter" value="0">
-               <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion graybtn jbtn blue_btn py-1" style="cursor: pointer;"data-bs-toggle="tooltip" data-bs-placement="left" title="Add Questions">Add+</a></div>
+               <div class="j_button dinline_block mt20 fl_right mt-4"><a class="addQuestion graybtn jbtn blue_btn py-1" style="cursor: pointer;"data-bs-toggle="tooltip" data-bs-placement="left" title="Add Questions">Add+</a></div>
             </div>
          </div>
          <div class="form_field">
@@ -151,7 +152,7 @@
          <div class="fomr_btn act_field m-auto row">
             <span class="form_label"></span>
             {{-- <input type="type" value="academic" /> --}}
-            <div class="col-md-3 m-auto pt-5">
+            <div class="col-md-3 m-auto">
                <button class="btn small turquoise saveNewJob orange_btn ">Save</button>
             </div>
          </div>

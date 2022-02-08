@@ -1,10 +1,10 @@
 <div class="row">
-   <div class=" float-right pt-5">
+   <div class=" float-right pt-lg-5">
       <a class="blue_btn jbtn btnBulkPDFGenerate float-right">Bulk Snap Shot</a>
    </div>
    @if ($jobSeekers && $jobSeekers->count() > 0)
    @foreach ($jobSeekers as $js)
-   <input type="checkbox" name="cbx[]" value="{{ $js->id }}" style="width: 20px; padding-left: 30px!important;">
+   <span class="jobSeekeerCheckBox"><input type="checkbox" name="cbx[]" value="{{ $js->id }}" style="width: 20px; padding-left: 30px!important;"></span>
    {{--  
    <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
       <div class="jobSeeker_box relative dinline_block w100">
