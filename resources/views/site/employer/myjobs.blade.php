@@ -45,39 +45,46 @@
                         <h6>Location: {{$job->city}},  {{($job->state)}}, {{($job->country)}}</h6>
                      </div>
                      <div class="row Block-user-wrapper">
-                        <ul class="job-box-text concigerge clearfix">
-                           <li class="text-info-detail clearfix">
-                              <label>Job Type:</label>
-                              <span>{{$jobType}}</span>
-                           </li>
-                           <li class="text-info-detail clearfix">
-                              <label>Job Detail:</label>
-                              <p>{{$job->description}}</p>
-                           </li>
-                           <li class="text-info-detail clearfix">
-                              <label>Job Experience:</label>
-                              <span>
-                                 @if(!empty($experience))
-                                 @foreach($experience as $industry )
-                                 <ul class="IndustrySelect">
-                                    <li>{{getIndustryName($industry)}} </li>
-                                 </ul>
-                                 @endforeach
-                                 @endif
-                              </span>
-                           </li>
-                           <li class="text-info-detail clearfix">
-                              <label>Job Salary:</label>
-                              <span>{{$job->salary}}</span>
-                           </li>
-                           <li class="text-info-detail clearfix">
-                              <label>Expired On:</label>
-                              <span>{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</span>
-                           </li>
-                           <a href="{{route('empJobApplications',['id' => $job->id])}}" class="blue_btn py-2">
-                           Applications: <u>{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</u>
-                           </a>
-                        </ul>
+                        <div class="col-sm-6">
+                           <ul class="job-box-text concigerge clearfix">
+                              <li class="text-info-detail clearfix">
+                                 <label>Job Type:</label>
+                                 <span>{{$jobType}}</span>
+                              </li>
+                             
+                              <li class="text-info-detail clearfix">
+                                 <label>Job Salary:</label>
+                                 <span>{{$job->salary}}</span>
+                              </li>
+                              <li class="text-info-detail clearfix">
+                                 <label>Job Experience:</label>
+                                 <span>
+                                    @if(!empty($experience))
+                                    @foreach($experience as $industry )
+                                    <ul class="IndustrySelect">
+                                       <li>{{getIndustryName($industry)}} </li>
+                                    </ul>
+                                    @endforeach
+                                    @endif
+                                 </span>
+                              </li>
+                              <li class="text-info-detail clearfix">
+                                 <label>Expiry:</label>
+                                 <span>{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</span>
+                              </li>
+                              <a href="{{route('empJobApplications',['id' => $job->id])}}" class="blue_btn py-2">
+                              Applications: <u>{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</u>
+                              </a>
+                           </ul>
+                        </div>
+                        <div class="col-sm-6">
+                           <ul class="job-box-text concigerge clearfix">
+                               <li class="text-info-detail clearfix">
+                                 <label>Job Detail:</label>
+                                 <p>{{$job->description}}</p>
+                              </li>
+                           </ul>
+                        </div>
                      </div>
                      <div class="box-footer1 box-footer  clearfix">
                         <div class=" employe-btn-group " style="float: right !important; width: 100%!important;">
