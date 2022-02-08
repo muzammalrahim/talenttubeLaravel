@@ -1234,7 +1234,7 @@ span.remove:before {
 
 .concigerge li {
     display: inline-block;
-    width: 49%;
+    width: 100%;
     vertical-align: text-top;
 }
 
@@ -2558,6 +2558,9 @@ button i {
     body {
         overflow: auto !important;
     }
+    .blue_btn{
+        float: left !important;
+    }
     .profile-section {
         height: auto !important;
         padding-bottom: 30px !important;
@@ -3088,14 +3091,24 @@ button i {
         height: 35px;
     }
 }
-
+@media (max-width: 575px){
+    .blue_btn{
+        display: none !important;
+    }
+    .job-box-text{
+        padding: 10px !important;
+    }
+}
 
 @media (max-width:479px) {
     body {
         overflow: auto !important;
     }
+    .form-control{
+        font-size: 11px !important;
+    }
     .dual-tags .interview-tag{
-        font-size: 10px !important;
+        font-size: 15px !important;
         margin-top: 5px !important;
     }
     .top-nav-header {
@@ -3548,11 +3561,8 @@ span.v_title {
     font-size: 16px;
 }
 @media screen and (max-width: 479px){
-    .blue_btn{
-        display: none !important;
-    }
-				.box-head h4 {
-					font-size: 16px;
+	.box-head h4 {
+		font-size: 16px;
 	}
 	.dual-tags .interview-tag {
 		width:100%;
