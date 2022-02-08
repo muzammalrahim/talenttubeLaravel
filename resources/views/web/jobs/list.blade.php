@@ -35,9 +35,10 @@
                   $profile_image =  !empty($user_gallery)?(assetGallery2($user_gallery,'small')):(asset('images/site/icons/nophoto.jpg'));
                   @endphp
                   <img src="{{$profile_image}}" alt="">
+																		<h6 class="py-2">{{ $job->jobEmployer->company}}</h6>
                </div>
                <div class="block-user-progress ">
-                  <h6>{{ $job->jobEmployer->company}}</h6>
+                  
                   {{--  
                   <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
                   <div class="block-progrees-ratio d-block d-md-none">

@@ -160,6 +160,7 @@
 
          {{-- ======================================= Filter By Question ======================================= --}}
 
+
          <div class="row b-filter-row mt-3">
             <div class="col-md-12">            
                <div class="row">
@@ -196,6 +197,7 @@
 
          {{-- ======================================= Filter By Qualification ======================================= --}}
 
+
          <div class="searchField_qualification row b-filter-row mt-3">
             <div class="col-md-12">
                <div class="row">
@@ -224,11 +226,14 @@
                   </div>
                   @endif
                </div>   
+
             </div>
          </div>
 
 
+
          {{-- data-target ="#qualification_modal" data-toggle = "modal" --}}
+
 
          <div class="bj-tr-btn">
             <button class="orange_btn" type="reset"><i class="fas fa-redo"></i> Reset</button>

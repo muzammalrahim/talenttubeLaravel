@@ -171,18 +171,18 @@
                      <div class="col-md-1 col-sm-2 col-2 custom-checkbox mt-1">
                         <input type="checkbox" name="filter_industry_status" class="">
                      </div>
-                     <div class="col-md-8 col-sm-12">
+                     <div class="col-md-8 col-sm-12 px-0">
                         {{-- 
                         <div class="indusDiv d-none">
                            --}}
-                           <select name="filter_industry[]" multiple="multiple" id="filter_industry" placeholder = "Filter by Job" class="multi-select form-control custom-select">
+                           <select name="filter_industry[]" multiple="multiple" id="filter_industry" placeholder = "Filter by Job" class="multi-select form-control custom-select w-100" >
                               @php
                               $industries = getIndustries()
                               @endphp
                               @if(!empty($industries))
                               <div class="filter_industries_list">
                                  @foreach ($industries as $indK => $indV)
-                                 <option class="" value="{{$indK}}" data-id="{{$indK}}"><span>{{$indV}}</span></option>
+                                 <option class="" value="{{$indK}}" data-id="{{$indK}}"><span style="width:100%;">{{$indV}}</span></option>
                                  @endforeach
                               </div>
                               @endif

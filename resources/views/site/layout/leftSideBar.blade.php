@@ -12,7 +12,7 @@
       <div class="spinner bottom "></div>
    </label>
    <div id="sidebarMenu">
-      <div class="row">
+      <div class="row m-0">
          <ul class="sidebar-menu">
             
             <li class="logo-design"><a href="{{ route('homepage') }}"><img src="{{ asset('assests/images/frame1.png') }}"  alt=""></a></li>

@@ -19,7 +19,7 @@
             </div>
          </div> --}}
 
-         <div class="form-group row filter-section">
+         <div class="form-group row filter-section mx-0">
             <label for="email" class="col-sm-2 col-form-label">Mobile :</label>
             <div class="col-sm-8">
                <input type="text" value="" id="email" name="bookingid" class="form-control bg-white" placeholder="Please enter the booking Id" required>

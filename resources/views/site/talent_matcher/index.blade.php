@@ -2,9 +2,9 @@
 @section('custom_css')
 @stop
 @section('content')
-<section class="row">
-   <div class="col-md-12">
-      <div class="profile profile-section">
+<section class="row m-0">
+   <div class="col-md-12 px-0">
+      <div class="profile profile-section px-0">
          <h2>Talent Matcher</h2>
          @include('web.talent_matcher.user.list') {{-- web/talent_matcher/user/list --}}
       </div>
