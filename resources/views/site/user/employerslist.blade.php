@@ -1,11 +1,17 @@
 {{-- emloyers page new html --}}
-<div class="row px-0">
+<div class="row">
    @if(isset($employers))
    @if ($employers->count() > 0)
    @foreach ($employers as $js)
-   <div class="col-sm-12 col-md-12 js_{{ $js->id }} px-0">
+   <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
       <div class="job-box-info block-box clearfix">
          <div class="box-head">
+            
+
+            {{-- ============================================= Match Potential =============================================  --}}
+
+            {{-- @include('web.piechart.match_potential')   --}}
+
             @php
             $dist = calculate_distance($js, $user);
             $ind_exp = cal_ind_exp($js,$user);
@@ -27,9 +33,7 @@
             }
             @endphp
             @if ($emp_resident == 'no' && $user_resident == 'no')
-            {{-- <div class="text-danger bold w50"> No Match Potential </div> --}}
             <h4 class="text-danger bold"> No Match Potential </h4>
-
             @else
             @if ($dist < 50 && !empty($ind_exp))
             <h4 class="text-green bold "> Strong Match Potential </h4>
@@ -40,74 +44,37 @@
             @else
             <h4 class="text-danger bold"> No Match Potential </h4>
             @endif
-            @endif                          
+            @endif
+            
+            {{-- ============================================= Match Potential =============================================  --}}
+
          </div>
+         
          <div class="row Block-user-wrapper">
-            <div class="col-md-4 user-images">
+            <div class="col-md-2 user-images">
                <div class="block-user-img ">
                   @php
                   $profile_image  = asset('images/site/icons/nophoto.jpg');
                   $profile_image_gallery    = $js->profileImage()->first();
-                  // dump($profile_image_gallery);
                   if ($profile_image_gallery) {
-                  // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
-                  $profile_image   = assetGallery2($profile_image_gallery,'small');
-                  // dump($profile_image);
+                     // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+                     $profile_image   = assetGallery2($profile_image_gallery,'small');
                   }
                   @endphp
                   <img src="{{$profile_image}}" alt="" >
-																		<h6 class="py-2">{{$js->name}} {{$js->company}}</h6>
                </div>
                <div class="block-user-progress ">
-															<div class="pb-4" style="width:100%; position :relative;">
-															<div>
-                  <div  id="piechart_{{$js->id}}" class="job-box-info "></div>
-																		</div>
-																	</div>
-															{{-- ============================================= Pie Chart =============================================  --}}
-               {{-- @include('site.user.match_algo.match_algo')    site/user/match_algo/match_algo --}} 
-               <!-- <div class="pb-4 d-block d-md-none" style="width:305px; margin-left:-60px;">
-															<div>
-                  <div  id="piechart_{{$js->id}}" class="job-box-info" style=" transform:scale(0.7);"></div>
-																		</div>
-																	</div> -->
-               <!-- <script type="text/javascript">
-                  google.charts.load('current', {'packages':['corechart']});
-                  google.charts.setOnLoadCallback(drawChart);
-                  	function drawChart() {
-                  	  var data = google.visualization.arrayToDataTable([
-                  	  ['Task', 'Potenial'],
-                  	  ['Match', {{ $user_compat }}],
-                  	  ['Unmatch',100-{{ $user_compat }}],
-                  	]);
-                    var options = { 'width':300, 'height':160, tooltip: { isHtml: true },};
-                    var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
-                    chart.draw(data, options);
-                  }
-               </script> -->
-               {{-- ============================================= Pie Chart =============================================  --}}
-               
+                  <h6>{{$js->name}} {{$js->company}}</h6>
                </div>
             </div>
-            <div class="col-md-8 user-details">
-               {{-- ============================================= Pie Chart =============================================  --}}
-               {{-- @include('site.user.match_algo.match_algo')    site/user/match_algo/match_algo --}} 
+            <div class="col-md-10 user-details">
                
-               <script type="text/javascript">
-                  google.charts.load('current', {'packages':['corechart']});
-                  google.charts.setOnLoadCallback(drawChart);
-                  	function drawChart() {
-                  	  var data = google.visualization.arrayToDataTable([
-                  	  ['Task', 'Potenial'],
-                  	  ['Match', {{ $user_compat }}],
-                  	  ['Unmatch',100-{{ $user_compat }}],
-                  	]);
-                    var options = { 'width':'90%', 'height':'100%', tooltip:{ isHtml: true }};
-                    var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
-                    chart.draw(data, options);
-                  }
-               </script>
                {{-- ============================================= Pie Chart =============================================  --}}
+
+               @include('web.piechart.pie_chart')
+
+               {{-- ============================================= Pie Chart =============================================  --}}
+
                <div class="row blocked-user-about pl-3">
                   <h6 class="p-0">About me:</h6>
                   <p class="">{{$js->about_me}}</p>

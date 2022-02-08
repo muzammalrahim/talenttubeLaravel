@@ -25,48 +25,28 @@
    </div>
    <div class="cl mb20"></div>
    @if($isallowed)
-   <!-- <span class="prvate-section">
-      <div class="title_private_photos" style="margin-bottom: 5px;">
-         Resume &amp; Contact Details
-      </div>
-      <ul class="list_interest_c" style="margin: 0;padding: 0 0 0 23px;">
-         <li><span class="basic_info">•</span><span id="info_looking_for_orientation">Email: {{$js->email}}</span></li>
-         <li><span class="basic_info">•</span><span id="info_looking_for_ages">First Name : {{$js->name}}</span></li>
-         <li><span class="basic_info">•</span><span id="info_looking_for_ages">Last Name : {{$js->surname}}</span></li>
-         <li><span class="basic_info">•</span><span id="info_looking_for_ages">Mobile : {{$js->phone}}</span></li>
-      </ul>
-   </span> -->
-			<div class="row Resume prvate-section">
-									<h2>Resume & Contact Details</h2>
-									<div class="col-md-6 Resume-email"><label>Email:<span>{{$js->email}}</span></label></div>
-									<div class="col-md-6 Resume-email"><label>First Name:<span>{{$js->name}}</span></label></div>
-									<div class="col-md-6 Resume-email"><label>Last Name:<span>{{$js->surname}}</span></label></div>
-									<div class="col-md-6 Resume-contact"><label>Contact#:<span>{{$js->phone}}</span></label></div>
-					</div>
-   <br>
-   <div class="private_attachments">
-						<section class="multiple-file-pdf" id="mupload5">
-                         <ul class="file-list">
-																									@foreach ($attachments as $attachment)
-																										<li style=""><a href="{{asset('images/user/'.$attachment->file)}}" target="”_blank”" download=""><span class="file-list__name">{{ $attachment->name }}</span></a></li>
-																										@endforeach
-																									</ul>
-                        </section>
-						<!-- <li>
-      <div class="attachment_{{$attachment->id}} attachment_file file-uploader__message-area">
-         <div class="attachment">
-									<a href="" target="”_blank”" download=""><span class="file-list__name">{{ $attachment->name }}</span><button class="removal-button" data-uploadid="1"></button></a>
-										<img src="{{asset('images/site/icons/cv.png')}}" />
-									</div>
-         <span class="attach_title">{{ $attachment->name }}</span>
-         <div class="attach_btns">
-            <a class="attach_btn downloadAttachBtn" href="{{asset('images/user/'.$attachment->file)}}">Download</a>
-         </div>
-      </div>
-</li>
-    
-</ul> -->
+   
+	<div class="row Resume prvate-section">
+      <h2>Resume & Contact Details</h2>
+      <div class="col-md-6 Resume-email"><label>Email:<span>{{$js->email}}</span></label></div>
+      <div class="col-md-6 Resume-email"><label>First Name:<span>{{$js->name}}</span></label></div>
+      <div class="col-md-6 Resume-email"><label>Last Name:<span>{{$js->surname}}</span></label></div>
+      <div class="col-md-6 Resume-contact"><label>Contact#:<span>{{$js->phone}}</span></label></div>
    </div>
+   
+   <br>
+   
+   <div class="private_attachments">
+      <section class="multiple-file-pdf" id="mupload5">
+         <ul class="file-list">
+            @foreach ($attachments as $attachment)
+            <li style=""><a href="{{asset('images/user/'.$attachment->file)}}" target="”_blank”" download=""><span class="file-list__name">{{ $attachment->name }}</span></a>
+            </li>
+            @endforeach
+         </ul>
+      </section>
+	</div>
+   
    @else
    <span class="prvate-section">
       <div class="title_private_photos" style="margin-bottom: 5px;">

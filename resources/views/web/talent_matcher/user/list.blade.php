@@ -1,4 +1,4 @@
-<div class="row mx-0">
+<div class="row">
    @php
    $check = false;
    @endphp
@@ -53,8 +53,8 @@
    {{-- @dd('coming here') --}}
    
    @if ($check)
-   <div class="col-sm-12 col-md-12 js_{{ $js->id }} mx-0 px-0">
-      <div class="job-box-info block-box clearfix mx-0">
+   <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
+      <div class="job-box-info block-box clearfix">
          <div class="box-head">
             {!! $html !!}
          </div>
@@ -71,40 +71,24 @@
                // dump($profile_image);
                }
                @endphp
-               <div class="block-user-img ">
+               <div class="block-user-img  d-flex">
                   <img src="{{$profile_image}}" alt="" >
-																		<h6 class="py-2"> {{ $js->company }} </h6>
                </div>
                <div class="block-user-progress " >
-                 
+                  <h6> {{ $js->company }} </h6>
                </div>
             </div>
             <div class="col-md-10 user-details">
                <div class="progress-img">
+                  
                   {{-- ============================================= Pie Chart =============================================  --}}
-                  {{--  @include('site.talent_matcher.algo')  --}}{{-- site/talent_matcher/algo --}}
-                  {{-- <div class="w50"> --}}
-                  <div class="pb-4" style="width:290px; margin-left:-58px;">
 
-                     <div id="piechart_{{$js->id}}" class="job-box-info" style="transform:scale(0.7);"></div>
-                  </div>
-                  <script type="text/javascript">
-                     google.charts.load('current', {'packages':['corechart']});
-                     google.charts.setOnLoadCallback(drawChart);
-                     	function drawChart() {
-                     	  var data = google.visualization.arrayToDataTable([
-                     	  ['Task', 'Potenial'],
-                     	  ['Match', {{ $user_compat }}],
-                     	  ['Unmatch',100-{{ $user_compat }}],
-                     	]);
-                       var options = { 'width':285, 'height':160 ,tooltip: { isHtml: true },};
-                       var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
-                       chart.draw(data, options);
-                     }
-                     
-                  </script>
+                  @include('web.piechart.pie_chart')
+
                   {{-- ============================================= Pie Chart =============================================  --}}
+
                </div>
+               
                @if (isEmployer())
                   <div class="row blocked-user-about mt-2">
                      <h6 class="p-0">Recent Job:</h6>
