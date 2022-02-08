@@ -639,13 +639,9 @@ div.google-visualization-tooltip {
 
 
 @media screen and (max-width: 479px){
-    input, textarea, select{
-        font-size: 11px !important;
-        height: 30px;
-        margin-top: -5px;
-    }
+   
     b, strong{
-        font-size: 11px;
+        font-size: 13px;
     }
     h2{
         font-size: 20px;
@@ -656,18 +652,8 @@ div.google-visualization-tooltip {
         font-size: 12px;
         height: 27px;
     }
-    .icon_show{
-        font-size: 11px !important;
-    }
     .used-tag{
-        padding: 6px 0px 6px 0px;
-    }
-    .font13{
-        font-size: 11px !important;
-    }
-    label, span, strong{
-        font-size: 12px;
-
+        padding: 6px;
     }
 				.editIndustry {
 					text-align: center!important;
