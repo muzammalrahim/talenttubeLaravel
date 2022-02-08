@@ -42,9 +42,10 @@
                         }
                         @endphp
                         <img src="{{$profile_image}}" alt="">
+																								<h6 class="py-2 fs-6 text-center">{{$js->name}} {{$js->surname}}</h6>
                      </div>
                      <div class="block-user-progress ">
-                        <h6 class="p-0">{{$js->name}} {{$js->surname}}</h6>
+                       
                      </div>
                   </div>
                   <div class="col-md-10 user-details">

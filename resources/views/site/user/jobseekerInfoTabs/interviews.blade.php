@@ -1,15 +1,22 @@
+
+
 @if ($interview_booking->count() > 0)
 @foreach ($interview_booking as $booking)
-<p> <span class="bold">{{$loop->index+1}})  {{$jobSeeker->name}} </span>  has booked interview for the position of <span class="bold"> {{$booking->interview->positionname}} </span> </p>
+  <p> <span class="bold">{{$loop->index+1}})  {{$jobSeeker->name}} </span>  has booked interview for the position of <span class="bold"> {{$booking->interview->positionname}} </span> </p>
 @endforeach
 @else
-<p> This user has not any booking yet</p>
+  <p> This user has not any booking yet</p>
 @endif
+
 {{-- @dump($UserInterview) --}}
+
 {{-- ========================================================== User Interviews ========================================================== --}}
+
 @include('site.user.jobseekerInfoTabs.userInterviewForJobseeker')   {{-- site/user/jobseekerInfoTabs/userInterviewForJobseeker --}}
 
-<p> To conduct an interview with <b> {{$jobSeeker->name}} </b>, please <span style="text-decoration: underline" class="pointer displayInterviewTemplate"> click here </span> to see the available interview templates </p>
+{{-- ========================================================== User Interviews ========================================================== --}}
+
+<p> To conduct an interview with <b> {{$jobSeeker->name}}</b>, please click <span style="text-decoration: underline" class="pointer displayInterviewTemplate"> here</span> to see the available interview templates </p>
 {{-- <p> If you want to conduct interview of <b> {{$jobSeeker->name}} </b> <span style="text-decoration: underline" class="pointer displayInterviewTemplate">  Click Here </span>  to see the available templates.</p> --}}
 <div class="tempDisplayforemployer hide_it job_row col-md-12 col-12 job-box-info concigerge-box clearfix p-0" style="background-color: #f8f8f8;">
    <form method="POST" name="interviewTemplate" class="interviewTemplate newJob job_validation">

@@ -18,9 +18,10 @@
             <span  style="position: absolute; top: 10px; right: 10px;"> No Test attempted </span>
             @endif                         
          </div>
+         
          <div class="row Block-user-wrapper">
             <div class="col-md-4 user-images">
-               <div class="block-user-img ">
+               <div class="block-user-img position-absolute">
                   @php
                   $profile_image  = asset('images/site/icons/nophoto.jpg');
                   $profile_image_gallery    = $js->profileImage()->first();
@@ -28,11 +29,10 @@
                   $profile_image   = assetGallery2($profile_image_gallery,'small');
                   }
                   @endphp
-                  <img src="{{$profile_image}}" alt="">
+                  <img src="{{$profile_image}}" class="w-auto rounded-circle" alt="" >
                </div>
-               <div class="block-user-progress ">
-                  <h6>{{$js->username}}</h6>
-                  <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
+
+               <!-- ================================= Video box ================================= -->
                   <div class="block-progrees-ratio d-block d-md-none">
                      <div class="videos_list">
                         @foreach($js->vidoes as $video)
@@ -41,26 +41,33 @@
                      </div>
                   </div>
                   @if($js->vidoes->count() > 0)
-                  <a onclick="profileVideoShow('{{assetVideo($js->vidoes->first())}}')" class="js_video_link" target="_blank">{!! generateVideoThumbs($js->vidoes->first()) !!}</a>
+                  <a onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" class="js_video_link pointer" data-bs-toggle="modal" data-bs-target="#videoShowModal" target="_blank">{!! generateVideoThumbs($js->vidoes->first()) !!}</a>
                   @endif
+
+               <!-- ================================= Video box ================================= -->
+
+               <div class="block-user-progress ">
+                  <h6>{{$js->username}}</h6>
+                  <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
+                  
                </div>
             </div>
             <div class="col-md-8 user-details">
-               <div class="row blocked-user-about">
-                  <h6>Recent Job:</h6>
+               <div class="row blocked-user-about mt-2">
+                  <h6 class="p-0">Recent Job:</h6>
                   <p><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
                </div>
                <div class="row blocked-user-experience">
-                  <h6>Qualification:</h6>
+                  <h6 class="p-0">Qualification:</h6>
                   @php
                   $qualification_names =  getQualificationNames($js->qualification)
                   @endphp
                   @if(!empty($qualification_names))
-                  <div class="font13">
-                     Type:
-                     <p class="qualifTypeSpan">{{$js->qualificationType}}</p>
-                  </div>
-                  <ul>
+                  {{-- <div class="font13"> --}}
+                     
+                     <p> <span>Type:</span> {{$js->qualificationType}}</p>
+                  {{-- </div> --}}
+                  <ul class="p-0">
                      @foreach ($qualification_names as $qnKey => $qnValue)
                      <li class="qualification">
                         <p>{{$qnValue}}</p>
@@ -69,22 +76,22 @@
                   </ul>
                   @endif
                </div>
-               <div class="row blocked-user-about">
-                  <h6>About me:</h6>
+               <div class="row blocked-user-about mt-2">
+                  <h6 class="p-0">About me:</h6>
                   <p>{{$js->about_me}}</p>
                </div>
-               <div class="row blocked-user-about">
-                  <h6>Intrested In:</h6>
+               <div class="row blocked-user-about mt-2">
+                  <h6 class="p-0">Intrested In:</h6>
                   <p>{{$js->interested_in}}.</p>
                </div>
-               <div class="row blocked-user-about">
-                  <h6>Salary Range:</h6>
+               <div class="row blocked-user-about mt-2">
+                  <h6 class="p-0">Salary Range:</h6>
                   <p>{{getSalariesRangeLavel($js->salaryRange)}}</p>
                </div>
-               <div class="row blocked-user-experience">
-                  <h6>Industory Experience:</h6>
+               <div class="row blocked-user-experience mt-2">
+                  <h6 class="p-0">Industory Experience:</h6>
                   @if(isset($js->industry_experience))
-                  <ul>
+                  <ul class="p-0">
                      @foreach ($js->industry_experience as $ind)
                      <li style="margin-bottom: 0px;">
                         <p>{{getIndustryName($ind)}} </p>
@@ -109,7 +116,12 @@
                @else
                <a class="jsLikeUserBtn  like-btn" data-jsid="{{$js->id}}">Like</a>
                @endif
-               <a class=" block-btn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" target="_blank" >View Profile</a>
+
+               <a class="block-btn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" target="_blank" >View Profile</a>
+               {{-- <a href="{{ route('jobSeekerInfo', ['id'=> $js->id]) }}" target="_blank">
+                  <button class="detail-btn"><i class="fas fa-file-alt"></i> View profile</button>
+               </a> --}}
+
                @if ($application->status != 'pending')
                <div class="jobApplicationStatusCont ">
                   <select name="jobApplicStatus" class="select_aw jobApplicStatus" data-application_id="{{$application->id}}" style="height: 36px; margin-top: 10px;">

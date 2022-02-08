@@ -62,7 +62,7 @@
 
                   @endif
                   
-                  <span class="pendinginterview-tag used-tag pull-right text-capitalize">{{$interview->status}}</span>
+                  <span class="pendinginterview-tag used-tag pull-right h-auto font-unset text-capitalize">{{$interview->status}}</span>
                </div>
             </div>
          </div>

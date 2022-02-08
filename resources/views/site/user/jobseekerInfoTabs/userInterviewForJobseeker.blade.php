@@ -62,7 +62,7 @@
          <div class="box-head">
             <h4><b>Interview {{$loop->index+1}}:</b> <span> Employer: <b>{{$userInt->employer->company}}</b> </span></h4>
          </div>
-         <p class="slot-para">Your slot for interview is with below timetable.</p>
+         <p class="mx-3 mt-3 mb-0">Your slot for interview is with below timetable.</p>
          <ul class="job-box-text concigerge clearfix">
             <li class="text-info-detail clearfix">
                <label>Type:</label>
@@ -75,7 +75,7 @@
          </ul>
          <div class="dual-tags testing-tag clearfix">
             @if ($userInt->status == 'Interview Confirmed' )
-            <a  class="proceed-test used-tag seeEmployerResponse">See Candidate Response</a>
+            <a  class="proceed-test used-tag seeEmployerResponse h-auto font-unset">See Candidate Response</a>
             @php
             $temp_id = $userInt->temp_id;
             $emp_id = $userInt->employer->id;
@@ -101,7 +101,7 @@
                @endif
             </div>
             --}}
-            <span class="pendinginterview-tag used-tag">{{$userInt->status}}</span>
+            <span class="pendinginterview-tag used-tag h-auto font-unset text-capitalize">{{$userInt->status}}</span>
          </div>
       </div>
    </div>

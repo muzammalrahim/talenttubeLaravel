@@ -313,7 +313,7 @@ select {
     color: rgb(247, 247, 248);
     min-height: 100%;
     /* width: 20%; */
-    padding: 0 0 0 15px;
+    padding:0;
 }
 
 #sidebarMenu ul li a img {
@@ -516,7 +516,7 @@ select {
 @media (max-width:479px) {
     .sidebaricontoggle {
         top: 57px;
-        right: 30px;
+        right: 10px;
     }
     button {
 
@@ -608,7 +608,9 @@ select {
     font-size: 14px !important;
 }
 
-
+.font-unset{
+    font-size: unset !important;
+}
 /* Employer Info page html display none  */
 
 div.google-visualization-tooltip {
@@ -653,6 +655,11 @@ div.google-visualization-tooltip {
     .used-tag{
         padding: 6px;
     }
+				.editIndustry {
+					text-align: center!important;
+					width: 26px!important;
+					height: 26px!important;
+				}
 }
 
 

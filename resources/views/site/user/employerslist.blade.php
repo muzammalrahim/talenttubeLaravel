@@ -1,9 +1,9 @@
 {{-- emloyers page new html --}}
-<div class="row">
+<div class="row px-0">
    @if(isset($employers))
    @if ($employers->count() > 0)
    @foreach ($employers as $js)
-   <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
+   <div class="col-sm-12 col-md-12 js_{{ $js->id }} px-0">
       <div class="job-box-info block-box clearfix">
          <div class="box-head">
             @php
@@ -43,7 +43,7 @@
             @endif                          
          </div>
          <div class="row Block-user-wrapper">
-            <div class="col-md-2 user-images">
+            <div class="col-md-4 user-images">
                <div class="block-user-img ">
                   @php
                   $profile_image  = asset('images/site/icons/nophoto.jpg');
@@ -56,17 +56,43 @@
                   }
                   @endphp
                   <img src="{{$profile_image}}" alt="" >
+																		<h6 class="py-2">{{$js->name}} {{$js->company}}</h6>
                </div>
                <div class="block-user-progress ">
-                  <h6>{{$js->name}} {{$js->company}}</h6>
+															<div class="pb-4" style="width:100%; position :relative;">
+															<div>
+                  <div  id="piechart_{{$js->id}}" class="job-box-info "></div>
+																		</div>
+																	</div>
+															{{-- ============================================= Pie Chart =============================================  --}}
+               {{-- @include('site.user.match_algo.match_algo')    site/user/match_algo/match_algo --}} 
+               <!-- <div class="pb-4 d-block d-md-none" style="width:305px; margin-left:-60px;">
+															<div>
+                  <div  id="piechart_{{$js->id}}" class="job-box-info" style=" transform:scale(0.7);"></div>
+																		</div>
+																	</div> -->
+               <!-- <script type="text/javascript">
+                  google.charts.load('current', {'packages':['corechart']});
+                  google.charts.setOnLoadCallback(drawChart);
+                  	function drawChart() {
+                  	  var data = google.visualization.arrayToDataTable([
+                  	  ['Task', 'Potenial'],
+                  	  ['Match', {{ $user_compat }}],
+                  	  ['Unmatch',100-{{ $user_compat }}],
+                  	]);
+                    var options = { 'width':300, 'height':160, tooltip: { isHtml: true },};
+                    var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
+                    chart.draw(data, options);
+                  }
+               </script> -->
+               {{-- ============================================= Pie Chart =============================================  --}}
+               
                </div>
             </div>
-            <div class="col-md-10 user-details">
+            <div class="col-md-8 user-details">
                {{-- ============================================= Pie Chart =============================================  --}}
                {{-- @include('site.user.match_algo.match_algo')    site/user/match_algo/match_algo --}} 
-               <div class="pb-4" style="width:200px">
-                  <div  id="piechart_{{$js->id}}" class="job-box-info"></div>
-               </div>
+               
                <script type="text/javascript">
                   google.charts.load('current', {'packages':['corechart']});
                   google.charts.setOnLoadCallback(drawChart);
@@ -76,7 +102,7 @@
                   	  ['Match', {{ $user_compat }}],
                   	  ['Unmatch',100-{{ $user_compat }}],
                   	]);
-                    var options = { 'width':200, 'height':160, tooltip: { isHtml: true },};
+                    var options = { 'width':'90%', 'height':'100%', tooltip:{ isHtml: true }};
                     var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
                     chart.draw(data, options);
                   }
