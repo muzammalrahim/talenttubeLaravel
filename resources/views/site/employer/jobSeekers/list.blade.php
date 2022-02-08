@@ -75,32 +75,13 @@
                </div>
             </div>
             <div class="col-md-9 col-lg-10 user-details">
-              
-               {{-- <div class="w50 py-3"> --}}
 
-               <div class="pb-4 mt-2 piechart-div" style="width:210px">
-                  <div id="piechart_{{$js->id}}" class="job-box-info"></div>
+               {{-- ============================================= Pie Chart =============================================  --}}
 
-               </div>
+               @include('web.piechart.pie_chart')
 
+               {{-- ============================================= Pie Chart =============================================  --}}
 
-               <script type="text/javascript">
-                  google.charts.load('current', {'packages':['corechart']});
-                  google.charts.setOnLoadCallback(drawChart);
-                      function drawChart() {
-                        var data = google.visualization.arrayToDataTable([
-                        ['Task', 'Potenial'],
-                        ['Match', {{ $user_compat }}],
-                        ['Unmatch',100-{{ $user_compat }}],
-                      ]);
-
-                    var options = { 'width':200, 'height':160, legend:{position: 'bottom'}, tooltip: { isHtml: true },};
-
-                    var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
-                    chart.draw(data, options);
-                  }
-                  
-               </script>
                <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">Recent job:</h6>
                   <p class=""><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>

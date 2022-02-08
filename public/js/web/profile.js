@@ -892,6 +892,30 @@ $(document).ready(function(){
     }
 
 
+    // ====================================== responsive pie chart ======================================
+
+    jQuery(function(){
+        function rescaletable(){
+            var width = jQuery('.user-details').width();
+            console.log(width); 
+
+            var scale;
+            if (width < 450)
+            {
+                scale = width / 450;
+            } else{
+                scale = 1.0;
+            }
+            jQuery('.piechart-div').css('transform', 'scale(' + scale + ')');
+            jQuery('.piechart-div').css('-webkit-transform', 'scale(' + scale + ')');
+            jQuery('.piechart-div').css('transform-origin', '0 0');
+            jQuery('.piechart-div').css('-webkit-transform-origin', '0 0');
+        }
+        rescaletable();
+        jQuery( window ).resize(function() { rescaletable(); });
+    });
+
+   // ====================================== responsive pie chart ======================================
 
 
 
