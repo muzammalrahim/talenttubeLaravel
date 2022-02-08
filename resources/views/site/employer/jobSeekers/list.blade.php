@@ -1,3 +1,6 @@
+
+
+
 <div class="row">
    <div class=" float-right pt-5">
       <a class="blue_btn jbtn btnBulkPDFGenerate float-right">Bulk Snap Shot</a>
@@ -5,22 +8,7 @@
    @if ($jobSeekers && $jobSeekers->count() > 0)
    @foreach ($jobSeekers as $js)
    <input type="checkbox" name="cbx[]" value="{{ $js->id }}" style="width: 20px; padding-left: 30px!important;">
-   {{--  
-   <div class="jobSeeker_row dblock js_{{$js->id}} mb20 p20">
-      <div class="jobSeeker_box relative dinline_block w100">
-         @include('site.layout.parts.jobSeekerProfilePhotoBox')   
-         @include('site.layout.parts.jobSeekerInfoBox')  
-         <div class="jobApplicAction">
-            @if (in_array($js->id,$likeUsers))
-            <a class="active graybtn jbtn" data-jsid="{{$js->id}}">Liked</a>
-            @else
-            <a class="jsLikeUserBtn graybtn jbtn" data-jsid="{{$js->id}}">Like</a>
-            @endif
-            <a class="graybtn jbtn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" target="_blank">View Profile</a>
-         </div>
-      </div>
-   </div>
-   --}}
+   
    <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
       <div class="job-box-info block-box clearfix">
          <div class="box-head">
@@ -65,7 +53,7 @@
             @endif                          
          </div>
          <div class="row Block-user-wrapper">
-            <div class="col-md-2 user-images">
+            <div class="col-md-3 col-lg-2 user-images">
                @php
                $profile_image  = asset('images/site/icons/nophoto.jpg');
                $profile_image_gallery    = $js->profileImage()->first();
@@ -83,10 +71,10 @@
                   <h6>{{$js->username}}</h6>
                </div>
             </div>
-            <div class="col-md-10 user-details">
+            <div class="col-md-9 col-lg-10 user-details">
               
                {{-- <div class="w50 py-3"> --}}
-               <div class="pb-4" style="width:310px">
+               <div class="pb-4 mt-2 piechart-div" style="width:210px">
                   <div id="piechart_{{$js->id}}" class="job-box-info"></div>
                </div>
 
@@ -100,7 +88,7 @@
                         ['Match', {{ $user_compat }}],
                         ['Unmatch',100-{{ $user_compat }}],
                       ]);
-                    var options = { 'width':300, 'height':160, tooltip: { isHtml: true },};
+                    var options = { 'width':200, 'height':160, legend:{position: 'bottom'}, tooltip: { isHtml: true },};
                     var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
                     chart.draw(data, options);
                   }
