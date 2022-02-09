@@ -203,6 +203,115 @@ $(document).ready(function(){
     // ======================================= Fully Update New job added ny employer =======================================
 
 
+    // ====================================================== add more question. ======================================================
+   
+    // $('.addQuestion').on('click',function(){
+
+    this.addnewQuestion = function(){
+       console.log(' addQuestion clck  ');
+       var qC = parseInt($('#questionCounter').val())+1;
+       if(qC<=5){
+           var jobQuestion  = '<div class="col-12 col-sm-6 col-md-6 col-lg-6 p-4">';
+               jobQuestion += '<div class="jobQuestion  q'+qC+' row bg-light rounded">';
+               jobQuestion +=  '<div class="col-md-12 pt-2">';
+               jobQuestion +=    '<label>Title</label>';
+               jobQuestion +=    '<input type="text" name="jq['+qC+'][title]" class="form-control bg-white"/>';
+               jobQuestion +=  '</div>';
+               jobQuestion +=  '<div class="col-md-12 pt-2 ">';
+               jobQuestion +=    '<label class="jq_field_label">Options</label>';
+               jobQuestion +=    '<div class="jq_field_questions">';
+               jobQuestion +=          '<div class="option row mb-1">';
+               jobQuestion +=          '<div class=" col-md-5">';
+               jobQuestion +=             '<input type="text" name="jq['+qC+'][option][0][text]" class="bg-white form-control" />';
+               jobQuestion +=          '</div>';
+               jobQuestion +=                 '<div class="col-md-3 custom-checkbox">';
+               jobQuestion +=                      '<input type="checkbox" id="jq_'+qC+'_option_0_preffer" name="jq['+qC+'][option][0][preffer]" value="preffer">';
+               jobQuestion +=                       '<label for="jq_'+qC+'_option_0_preffer" class="pl-1 pt-1">Undiserable</label> ';
+               jobQuestion +=                  '</div>';
+               jobQuestion +=                  '<div class="col-md-3 custom-checkbox">';
+               jobQuestion +=                     '<input type="checkbox" id="jq_'+qC+'_option_0_goldstar" name="jq['+qC+'][option][0][goldstar]" value="goldstar">';
+               jobQuestion +=                     '<label for="jq_'+qC+'_option_0_goldstar" class="pl-2 pt-1">Gold Star</label> ';
+               jobQuestion +=                  '</div>';
+               jobQuestion +=          '</div>';
+               jobQuestion +=      '</div>';
+               jobQuestion +=     '<div class="j_button dinline_block addOptionsBtn mt-3"><a class="addQuestionOption blue-btn" data-qc="'+qC+'">Add Option+</a></div>';
+               jobQuestion +=    '</div>';
+               jobQuestion +=  '<div class="jq_remove"><span class=" removeJobQuestion text-danger float-right"><i class="fas fa-times-circle"></i></span></div>';
+               jobQuestion +=  '</div>';
+               jobQuestion +=  '</div>';
+
+            $('.jobQuestions').append(jobQuestion);
+            $('#questionCounter').val(qC);
+            // jQFormStyler(); // rerun the form styler.
+            $('input:checkbox').change(function() {
+            if ($(this).is(':checked')) {
+                   $(this).closest('label').addClass('checked');
+                   if($(this).attr('name').includes('preffer')){
+                       var res = $(this).attr('name').replace("preffer", "goldstar");
+                       var arrChkBox = $('[name="'+res+'"]');
+                       arrChkBox.prop('checked', false).trigger('refresh');
+                   }
+
+                   if($(this).attr('name').includes('goldstar')){
+                       var res = $(this).attr('name').replace("goldstar", "preffer");
+                       var arrChkBox = $('[name="'+res+'"]');
+                       arrChkBox.prop('checked', false).trigger('refresh');
+                   }
+
+            } else {
+              $(this).closest('label').removeClass('checked');
+            }
+           });
+
+        }
+    }
+    // });
+
+
+    // ====================================================== add more option to question. ======================================================
+   
+       $('.jobQuestions').on('click','.addQuestionOption', function(){
+           var oC = $(this).closest('.jobQuestion').find('.jq_field_questions .option').length;
+           // var qC = $(this).attr('data-qc');
+           var qC = parseInt($('#questionCounter').val());
+           var option_html = '';
+               option_html +=          '<div class="jq_option option row mb-1">';
+               option_html +=          '<div class="col-md-5">';
+               option_html +=             '<input type="text" name="jq['+qC+'][option]['+oC+'][text]" class="bg-white form-control"/>';
+               option_html +=             '</div>';
+               option_html +=              '<div class="jq_option_cbx col-md-3 custom-checkbox">';
+               option_html +=              '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_preffer" name="jq['+qC+'][option]['+oC+'][preffer]" value="preffer">';
+               option_html +=                '<label for="jq_'+qC+'_option_'+oC+'_preffer" class="pl-1 pt-1">Undiserable</label> ';
+               option_html +=                  '</div>';
+               option_html +=                  '<div class="jq_option_cbx col-md-3 custom-checkbox">';
+               option_html +=                     '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_goldstar" name="jq['+qC+'][option]['+oC+'][goldstar]" value="goldstar">';
+               option_html +=                     '<label for="jq_'+qC+'_option_'+oC+'_goldstar" class="pl-2 pt-1">Gold Star</label> ';
+               option_html +=                  '</div>';
+               option_html +=          '</div>';
+   
+           $(this).closest('.jobQuestion').find('.jq_field_questions').append(option_html);
+           // jQFormStyler(); // rerun the form styler.
+   
+           $('input:checkbox').change(function() {
+            if ($(this).is(':checked')) {
+                   $(this).closest('label').addClass('checked');
+                   if($(this).attr('name').includes('preffer')){
+                       var res = $(this).attr('name').replace("preffer", "goldstar");
+                       var arrChkBox = $('[name="'+res+'"]');
+                       arrChkBox.prop('checked', false).trigger('refresh');
+                   }
+                   if($(this).attr('name').includes('goldstar')){
+                       var res = $(this).attr('name').replace("goldstar", "preffer");
+                       var arrChkBox = $('[name="'+res+'"]');
+                       arrChkBox.prop('checked', false).trigger('refresh');
+                   }
+            } else {
+              $(this).closest('label').removeClass('checked');
+            }
+           });
+   
+       });
+
 
 
 

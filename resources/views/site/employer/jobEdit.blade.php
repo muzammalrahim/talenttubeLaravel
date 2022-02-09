@@ -1,11 +1,11 @@
 {{-- @extends('site.user.usertemplate') --}}
-@extends('site.employer.employermaster')
+@extends('web.employer.employermaster')
 @section('custom_css')
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}"> --}}
 @stop
 @section('content')
-<div class="newJobCont profile profile-section">
+<div class="profile profile-section">
 <h2>Edit Job</h2>
 {{-- @dump($job) --}}
 <div class="job_edit">
@@ -115,7 +115,7 @@
          <div class="form-row">
             <div class="form-group col-md-6">
                <label for="onlineTest">Online Test</label>
-               <select name="test_id" class="form-control" id = "onlineTest">
+               <select name="test_id" class="form-control icon_show" id = "onlineTest">
                   @if ($job->onlineTest_id == null)
                   <option value="0">Select Test</option>
                   @endif
@@ -208,7 +208,7 @@
                   @include('site.layout.parts.newJobIndustryList')
                </div>
             </div>
-            <div class="col-md-12 mb-3">
+            <div class="col-md-12 my-3">
                <a class="addIndus hide_it py-2 pointer blue_btn">+ Add</a>
                <a class="saveIndus hide_it py-2 pointer buttonSaveIndustry orange_btn"onclick="updateNewJobIndustryExpAsEmployer()">Save</a>
             </div>
@@ -220,17 +220,17 @@
          <div class="job_age form_field row">
             <div class="">
                <div class="jobQuestions row  d-flex border border-secondary rounded ">
-                  <h2>Job Questions:</h2>
+                  <h2 class="mt-3">Job Questions:</h2>
                   @if (!empty($questions) && count($questions) > 0)
                   @foreach ($questions as $keyq=>$question)
-                  <div class="col-md-6 p-4">
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-4">
                      <div class="jobQuestion q1 row bg-light rounded">
                         <div class="col-md-12 pt-2">
                            <label>Title</label>
                            <input type="text" value="{{$question['title']}}" name="jq[{{$keyq}}][title]" class="form-control bg-white" />
                         </div>
-                        <div class="jq_field_box">
-                           <div class="jq_field_questions mb-4 col-md-12">
+                        <div class="col-md-12 pt-2">
+                           <div class="jq_field_questions">
                               <label>Options</label>
                               @if (!empty($question['options']) && count($question['options']) > 0)
                               @foreach ($question['options'] as $key=>$option)
@@ -238,11 +238,11 @@
                               $checked = '';
                               $remSpecialChar = str_replace("\&#39;","'",$option);
                               @endphp 
-                              <div class="option row">
+                              <div class="option row mb-1">
                                  <div class="col-5">   
-                                    <input type="text" name="jq[{{$keyq}}][option][{{$key}}][text]" value="{{$remSpecialChar}}" class="bg-white " />
+                                    <input type="text" name="jq[{{$keyq}}][option][{{$key}}][text]" value="{{$remSpecialChar}}" class="bg-white form-control" />
                                  </div>
-                                 <div class=" col-md-3">
+                                 <div class="col-md-3 custom-checkbox">
                                     @if (!empty($question['preffer']) && count($question['preffer']) > 0)
                                     @php
                                     if (in_array($key, $question['preffer']))
@@ -257,7 +257,7 @@
                                     <input type="checkbox" id="jq_{{$keyq}}_option_{{$key}}_preffer" name="jq[{{$keyq}}][option][{{$key}}][preffer]" value="preffer" {{$checked}}>
                                     <label for="jq_0_option_0_preffer" class="pl-1 pt-1">Undiserable</label>
                                  </div>
-                                 <div class=" col-md-3">
+                                 <div class="col-md-3 custom-checkbox">
                                     @if (!empty($question['goldstar']) && count($question['goldstar']) > 0)
                                     @php
                                     if (in_array($key, $question['goldstar'])) {
@@ -282,7 +282,7 @@
                               @endforeach
                               @endif
                            </div>
-                           <div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption  blue_btn py-2" data-qc="0" style="cursor: pointer;">Add Option+</a></div>
+                           <div class="j_button dinline_block addOptionsBtn mt-3"><a class="addQuestionOption blue_btn py-2" data-qc="0" style="cursor: pointer;">Add Option+</a></div>
                         </div>
                         <div class="jq_remove"><span class=" removeJobQuestion text-danger  float-right"> <i class="fas fa-times-circle "></i></span></div>
                      </div>
@@ -291,7 +291,11 @@
                   @endif
                </div>
                <input type="hidden" name="questionCounter" id="questionCounter" value="{{$qnum}}">
-               <div class="j_button dinline_block mt20 fl_right"><a class="addQuestion blue_btn py-2" style="cursor: pointer;">Add+</a></div>
+               
+               <div class="j_button dinline_block mt20 fl_right">
+                  <a class="addQuestion blue_btn py-2" onclick="addnewQuestion()" style="cursor: pointer;">Add Question</a>
+               </div>
+
             </div>
          </div>
          <div class="form_field">
@@ -313,8 +317,8 @@
 </div>
 @stop
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
+{{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
+{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
 {{-- 
 <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/magnific-popup.css') }}">
 --}}
@@ -336,7 +340,7 @@
 </style>
 @stop
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
+{{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/web/common.js') }}"></script>
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
@@ -402,137 +406,27 @@
        $(".datepicker").datepicker({
            dateFormat: "yy-mm-dd"
        });
-   
-   
-       $('.addQuestion').on('click',function(){
-           console.log(' addQuestion clck  ');
-           // var question = '<div class="question mb10 relative"><input type="text" name="questions[]" class="w100" /><span class="close_icon jobQuestion"></span></div>';
-           // $('.jobQuestions').append(question);
-           //  $('#addNewQuestionModel').modal({
-           //     fadeDuration: 200,
-           //     fadeDelay: 2.5,
-           //     escapeClose: false,
-           //     clickClose: false,
-           // });
-   
-           var qC = parseInt($('#questionCounter').val())+1;
-           console.log(qC);
-           if(qC<=5){
-           var jobQuestion  = '<div class=" col-md-6 p-4">';
-               jobQuestion += '<div class="jobQuestion  q'+qC+' row bg-light rounded">';
-               jobQuestion +=  '<div class="col-md-12 pt-2">';
-               jobQuestion +=    '<label>Title</label>';
-               jobQuestion +=    '<input type="text" name="jq['+qC+'][title]" class="form-control bg-white"/>';
-               jobQuestion +=  '</div>';
-               jobQuestion +=  '<div class="jq_field_box ">';
-               jobQuestion +=    '<label class="jq_field_label">Options</label>';
-               jobQuestion +=    '<div class="jq_field_questions mb-4 col-md-12">';
-               jobQuestion +=          '<div class="option row">';
-               jobQuestion +=          '<div class=" col-md-5">';
-               jobQuestion +=             '<input type="text" name="jq['+qC+'][option][0][text]" class="bg-white " />';
-               jobQuestion +=          '</div>';
-               jobQuestion +=                 '<div class=" col-md-3">';
-               jobQuestion +=                      '<input type="checkbox" id="jq_'+qC+'_option_0_preffer" name="jq['+qC+'][option][0][preffer]" value="preffer">';
-               jobQuestion +=                       '<label for="jq_'+qC+'_option_0_preffer" class="pl-1 pt-1">Undiserable</label> ';
-               jobQuestion +=                  '</div>';
-               jobQuestion +=                  '<div class=" col-md-3">';
-               jobQuestion +=                     '<input type="checkbox" id="jq_'+qC+'_option_0_goldstar" name="jq['+qC+'][option][0][goldstar]" value="goldstar">';
-               jobQuestion +=                     '<label for="jq_'+qC+'_option_0_goldstar" class="pl-2 pt-1">Gold Star</label> ';
-               jobQuestion +=                  '</div>';
-               jobQuestion +=          '</div>';
-               jobQuestion +=      '</div>';
-               jobQuestion +=     '<div class="j_button dinline_block addOptionsBtn"><a class="addQuestionOption blue_btn py-2" data-qc="'+qC+'">Add Option+</a></div>';
-               jobQuestion +=    '</div>';
-               jobQuestion +=  '<div class="jq_remove"><span class=" removeJobQuestion text-danger float-right"><i class="fas fa-times-circle"></i></span></div>';
-               jobQuestion +=  '</div>';
-               jobQuestion +=  '</div>';
-   
-            $('.jobQuestions').append(jobQuestion);
-            $('#questionCounter').val(qC);
-            jQFormStyler(); // rerun the form styler.
-            $('input:checkbox').change(function() {
-    if ($(this).is(':checked')) {
-           $(this).closest('label').addClass('checked');
-   
-           if($(this).attr('name').includes('preffer')){
-               var res = $(this).attr('name').replace("preffer", "goldstar");
-               var arrChkBox = $('[name="'+res+'"]');
-               arrChkBox.prop('checked', false).trigger('refresh');
-           }
-   
-           if($(this).attr('name').includes('goldstar')){
-               var res = $(this).attr('name').replace("goldstar", "preffer");
-               var arrChkBox = $('[name="'+res+'"]');
-               arrChkBox.prop('checked', false).trigger('refresh');
-           }
-   
-   
-    } else {
-        $(this).closest('label').removeClass('checked');
-    }
-   });
-   }
-   
-       });
-   
-       // add more option to question
-       $('.jobQuestions').on('click','.addQuestionOption', function(){
-           var oC = $(this).closest('.jobQuestion').find('.jq_field_questions .option').length;
-           // var qC = $(this).attr('data-qc');
-           var qC = parseInt($('#questionCounter').val());
-           var option_html = '';
-               option_html +=          '<div class="jq_option option row">';
-               option_html +=          '<div class="col-md-5">';
-               option_html +=             '<input type="text" name="jq['+qC+'][option]['+oC+'][text]" class="bg-white"/>';
-               option_html +=             '</div>';
-               option_html +=              '<div class="jq_option_cbx col-md-3">';
-               option_html +=              '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_preffer" name="jq['+qC+'][option]['+oC+'][preffer]" value="preffer">';
-               option_html +=                '<label for="jq_'+qC+'_option_'+oC+'_preffer" class="pl-1 pt-1">Undiserable</label> ';
-               option_html +=                  '</div>';
-               option_html +=                  '<div class="jq_option_cbx col-md-3">';
-               option_html +=                     '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_goldstar" name="jq['+qC+'][option]['+oC+'][goldstar]" value="goldstar">';
-               option_html +=                     '<label for="jq_'+qC+'_option_'+oC+'_goldstar" class="pl-2 pt-1">Gold Star</label> ';
-               option_html +=                  '</div>';
-               option_html +=          '</div>';
-   
-           $(this).closest('.jobQuestion').find('.jq_field_questions').append(option_html);
-           jQFormStyler(); // rerun the form styler.
-           $('input:checkbox').change(function() {
-    if ($(this).is(':checked')) {
-           $(this).closest('label').addClass('checked');
-   
-           if($(this).attr('name').includes('preffer')){
-               var res = $(this).attr('name').replace("preffer", "goldstar");
-               var arrChkBox = $('[name="'+res+'"]');
-               arrChkBox.prop('checked', false).trigger('refresh');
-           }
-   
-           if($(this).attr('name').includes('goldstar')){
-               var res = $(this).attr('name').replace("goldstar", "preffer");
-               var arrChkBox = $('[name="'+res+'"]');
-               arrChkBox.prop('checked', false).trigger('refresh');
-           }
-   
-   
-    } else {
-        $(this).closest('label').removeClass('checked');
-    }
-   });
-   
-       });
-   
-       var jQFormStyler = function(){
-           $('input, select').styler({ selectSearch: true, });
-       }
-       $(document).on('click','.close_icon.jobQuestion',function(){
-           $(this).closest('.question').remove();
-       });
-       $(document).on('click','.removeJobQuestion',function(){
-           $(this).closest('.jobQuestion').remove();
-           var qC = parseInt($('#questionCounter').val());
-           qC -=1;
-           $('#questionCounter').val(qC);
-    });
+
+
+      // ===================================================== add more option to question =====================================================
+      
+      
+      
+      // ===================================================== Form Styler =====================================================
+
+      var jQFormStyler = function(){
+         $('input, select').styler({ selectSearch: true, });
+      }
+      $(document).on('click','.close_icon.jobQuestion',function(){
+         $(this).closest('.question').remove();
+      });
+
+      $(document).on('click','.removeJobQuestion',function(){
+         $(this).closest('.jobQuestion').remove();
+         var qC = parseInt($('#questionCounter').val());
+         qC -=1;
+         $('#questionCounter').val(qC);
+      });
    
       
    

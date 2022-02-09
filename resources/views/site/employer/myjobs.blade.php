@@ -41,24 +41,24 @@
                <div class="col-sm-12 col-md-12 job_{{ $job->id }}">
                   <div class="job-box-info block-box clearfix">
                      <div class="box-head">
-                        <h4 class="text-white">{{$job->title}}</h4>
+                        <h6 class="text-white">{{$job->title}}</h6>
                         <h6>Location: {{$job->city}},  {{($job->state)}}, {{($job->country)}}</h6>
                      </div>
                      <div class="row Block-user-wrapper">
-                        <div class="col-sm-6">
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
                            <ul class="job-box-text concigerge clearfix">
                               <li class="text-info-detail clearfix">
-                                 <label>Job Type:</label>
-                                 <span>{{$jobType}}</span>
+                                 <label class="w-50">Job Type:</label>
+                                 <span class="w-50">{{$jobType}}</span>
                               </li>
                              
                               <li class="text-info-detail clearfix">
-                                 <label>Job Salary:</label>
-                                 <span>{{$job->salary}}</span>
+                                 <label class="w-50">Job Salary:</label>
+                                 <span class="w-50">{{$job->salary}}</span>
                               </li>
                               <li class="text-info-detail clearfix">
-                                 <label>Job Experience:</label>
-                                 <span>
+                                 <label class="w-50">Job Experience:</label>
+                                 <span class="w-50">
                                     @if(!empty($experience))
                                     @foreach($experience as $industry )
                                     <ul class="IndustrySelect">
@@ -69,19 +69,19 @@
                                  </span>
                               </li>
                               <li class="text-info-detail clearfix">
-                                 <label>Expiry:</label>
-                                 <span>{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</span>
+                                 <label class="w-50">Expiry:</label>
+                                 <span class="w-50">{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</span>
                               </li>
                               <a href="{{route('empJobApplications',['id' => $job->id])}}" class="blue_btn py-2">
                               Applications: <u>{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</u>
                               </a>
                            </ul>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-12 col-sm-6 col-md-8 col-lg-8">
                            <ul class="job-box-text concigerge clearfix">
                                <li class="text-info-detail clearfix">
                                  <label>Job Detail:</label>
-                                 <p>{{$job->description}}</p>
+                                 <p class="h-auto">{{$job->description}}</p>
                               </li>
                            </ul>
                         </div>
@@ -130,6 +130,7 @@
 @stop
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+
 
 @stop
 @section('custom_js')
