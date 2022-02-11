@@ -24,7 +24,9 @@
          <div class="form-row">
             <div class="form-group col-md-6">
                <label for="salaryRangeFieldnew">Salary</label>
+
                {{ Form::select('salary', $salaryRange, ['placeholder' => 'Select Salary Range','onchange' => '', 'id' => 'salaryRangeFieldnew'],['class' => 'salaryRangeField form-control icon_show',]) }}
+
                <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
             </div>
             <div class="form-group col-md-6">
@@ -85,8 +87,10 @@
          </div>
          <div class="form-row">
             <div class="form-group col-md-12">
+
                <div class="form_field ">
                   <span>Industry Experience :<i class="editIndustry fas fa-edit orange_btn float-right py-2 pointer"></i></span>
+
                   <p class="loader SaveindustryExperience"style="float: left;"></p>
                   <div class="IndusList form_input">
                      <div class="IndustrySelect" style="width:80%;"></div>
@@ -159,7 +163,7 @@
          <div class="fomr_btn act_field m-auto row">
             <span class="form_label"></span>
             {{-- <input type="type" value="academic" /> --}}
-            <div class="col-md-3 m-auto">
+            <div class="col-md-3">
                <button class="btn small turquoise saveNewJob orange_btn ">Save</button>
             </div>
          </div>

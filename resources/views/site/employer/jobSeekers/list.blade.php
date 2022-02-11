@@ -8,7 +8,7 @@
    @if ($jobSeekers && $jobSeekers->count() > 0)
    @foreach ($jobSeekers as $js)
 
-   <input type="checkbox" name="cbx[]" value="{{ $js->id }}" style="width: 20px; padding-left: 30px!important;">
+   <input type="checkbox" name="cbx[]" value="{{ $js->id }}" style="width: 20px; margin-left: 13px!important;">
    
 
    <div class="col-sm-12 col-md-12 js_{{ $js->id }}">

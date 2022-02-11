@@ -1590,7 +1590,7 @@ button i {
 
 .browse-heading {
     font-size: 16px;
-    font-weight: 600;
+    font-weight: normal;
 }
 
 .bj-tr-btn .used-tag {
@@ -2558,8 +2558,8 @@ button i {
     body {
         overflow: auto !important;
     }
-    .blue_btn{
-        float: left !important;
+    .job-box-text{
+        padding: 10px !important;
     }
     .profile-section {
         height: auto !important;
@@ -2974,9 +2974,6 @@ button i {
     .top-filter-row .input-employee {
         margin: 0 0 30px;
     }
-    .question-radiobtn {
-        margin-top: 20px;
-    }
     .loc-modal .modal-dialog {
         max-width: 90%;
     }
@@ -3089,14 +3086,6 @@ button i {
     }
     .filter-talent-btn button {
         height: 35px;
-    }
-}
-@media (max-width: 575px){
-    .blue_btn{
-        display: none !important;
-    }
-    .job-box-text{
-        padding: 10px !important;
     }
 }
 
