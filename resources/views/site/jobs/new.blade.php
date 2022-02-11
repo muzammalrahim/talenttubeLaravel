@@ -24,7 +24,7 @@
          <div class="form-row">
             <div class="form-group col-md-6">
                <label for="salaryRangeFieldnew">Salary</label>
-               {{ Form::select('salary', $salaryRange, ['placeholder' => 'Select Salary Range','onchange' => '', 'id' => 'salaryRangeFieldnew'],['class' => 'salaryRangeField form-control custom-select',]) }}
+               {{ Form::select('salary', $salaryRange, ['placeholder' => 'Select Salary Range','onchange' => '', 'id' => 'salaryRangeFieldnew'],['class' => 'salaryRangeField form-control custom-select',])}}
                <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
             </div>
             <div class="form-group col-md-6">
@@ -85,8 +85,29 @@
          </div>
          <div class="form-row">
             <div class="form-group col-md-12">
-               <div class="form_field ">
-                  <span>Industry Experience :<i class="editIndustry fas fa-edit orange_btn float-right py-2 "></i></span>
+               <div class="form_field row">
+                  <div class="col-12 col-md-2 pt-md-3">Industry Experience :</div>
+                  <div class="col-10 col-md-9">
+                     <select class="form-select text-muted" aria-label="Default select example">
+                       <option selected>Aviation</option>
+                       <option value="1">Aviation</option>
+                       <option value="2">Aviation</option>
+                       <option value="3">Aviation</option>
+                     </select>
+                     <div class="mt-2">
+                        <span>
+                           <a href="#">
+                              <button class="blue_btn">+Add</button>
+                           </a>
+                           <a href="#">
+                              <button class="orange_btn">save</button>
+                           </a>
+                        </span>
+                     </div>
+                  </div>
+                  <div class="col-2 col-md-1">
+                     <a href="#" class="text-dark" ><i class="fas fa-trash color-dark"></i></a>
+                  </div>
                   <p class="loader SaveindustryExperience"style="float: left;"></p>
                   <div class="IndusList form_input">
                      <div class="IndustrySelect" style="width:80%;"></div>
@@ -152,7 +173,7 @@
          <div class="fomr_btn act_field m-auto row">
             <span class="form_label"></span>
             {{-- <input type="type" value="academic" /> --}}
-            <div class="col-md-3 m-auto">
+            <div class="col-md-3">
                <button class="btn small turquoise saveNewJob orange_btn ">Save</button>
             </div>
          </div>
