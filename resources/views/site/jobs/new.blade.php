@@ -1,7 +1,7 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('web.employer.employermaster')
 @section('custom_css')
-{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
+<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 @stop
 @section('content')
 <div class="profile profile-section">
