@@ -1,7 +1,7 @@
 {{-- @extends('site.user.usertemplate') --}}
 @extends('web.employer.employermaster')
 @section('custom_css')
-{{-- <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}"> --}}
+<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 @stop
 @section('content')
 <div class="profile profile-section">
@@ -89,15 +89,19 @@
             <div class="form-group col-md-12">
 
                <div class="form_field ">
-                  <span>Industry Experience :<i class="editIndustry fas fa-edit orange_btn float-right py-2 pointer"></i></span>
-
-                  <p class="loader SaveindustryExperience"style="float: left;"></p>
-                  <div class="IndusList form_input">
-                     <div class="IndustrySelect" style="width:80%;"></div>
-                  </div>
-                  <div class="mt-3">
-                     <a class=" addIndus blue_btn hide_it mt-2 py-2 pointer"  title="Add a Question">+ Add</a>
-                     <a class=" orange_btn hide_it buttonSaveIndustry mt-2 py-2 pointer"style = "cursor:pointer;" onclick="updateNewJobIndustryExperience()">Save</a>
+                  <div class="row">
+                     <div class="col-12 col-sm-2">Industry Experience :</div>
+                     <div class="col-11 col-sm-9">
+                        <p class="loader SaveindustryExperience"style="float: left;"></p>
+                        <div class="IndusList form_input">
+                           <div class="IndustrySelect" style="width:80%;"></div>
+                        </div>
+                        <div class="mt-3">
+                           <a class=" addIndus blue_btn  mt-2 py-2 pointer"  title="Add a Question">+ Add</a>
+                           <a class=" orange_btn  buttonSaveIndustry mt-2 py-2 pointer"style = "cursor:pointer;" onclick="updateNewJobIndustryExperience()">Save</a>
+                        </div>
+                     </div>
+                     <div class="col-1 col-sm-1"><i class="editIndustry fas fa-edit orange_btn float-right py-2 pointer"></i></div>
                   </div>
                </div>
             </div>
@@ -224,8 +228,8 @@
    
       $(document).on('click','.addIndus', function(){
        console.log(' addIndus ');
-       var newIndusHtml = '<div class="row mt-3">';
-           newIndusHtml += '<div class="IndustrySelect col-10"><select name="industry_experience[]" class="industry_experience userIndustryExperience form-control icon_show">';
+       var newIndusHtml = '<div class="row mt-3 mt-lg-0 mb-3">';
+           newIndusHtml += '<div class="IndustrySelect col-11 "><select name="industry_experience[]" class="industry_experience userIndustryExperience form-control icon_show">';
        @if(!empty($industriesList))
            @foreach($industriesList as $lk=>$lv)
                newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>';
@@ -233,7 +237,7 @@
        @endif
        newIndusHtml += '</select>';
        newIndusHtml += '</div>';
-       newIndusHtml += '<i class="fa fa-trash fa-trash2 col-md-2  removeIndustry"></i>';
+       newIndusHtml += '<i class="fa fa-trash fa-trash2 col-1  removeIndustry"></i>';
 
        newIndusHtml += '</div>';
    
