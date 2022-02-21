@@ -133,9 +133,9 @@
 
                                  
 
-                                 <div class="jq_option_cbx col-md-3 custom-checkbox">
+                                 <div class="jq_option_cbx col-md-3 custom-checkbox d-flex">
                                     <input type="checkbox" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer">
-                                    <label for="jq_0_option_0_preffer" >Undiserable</label>
+                                    <label for="jq_0_option_0_preffer"class="pt-1" >Undiserable</label>
                                  </div>
                                  <div class="jq_option_cbx col-md-3 custom-checkbox">
                                     <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar">
@@ -251,7 +251,7 @@
    $(document).ready(function() {
       console.log(' new job doc ready  ');
       $(".datepicker").datepicker({
-         dateFormat: "yy-mm-dd",
+         dateFormat: "dd-mm-yy",
          minDate: 1
       });
    

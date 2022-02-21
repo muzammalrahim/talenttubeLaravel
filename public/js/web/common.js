@@ -51,7 +51,7 @@ $(document).ready(function(){
                     // that.hideMainEditor();
                     $('.add_new_job').html(data.message);
                 }else{
-                    $('.general_error').html('<p>Error Creating new job</p>').removeClass('to_hide').addClass('to_show');
+                    $('.general_error').html('<p>Your job can not be posted until you complete all fields</p>').removeClass('to_hide').addClass('to_show');
                     if(data.validator != undefined){
                         const keys = Object.keys(data.validator);
                         for (const key of keys) {
