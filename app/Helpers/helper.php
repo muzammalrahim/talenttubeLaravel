@@ -565,6 +565,21 @@ function getSalariesRange(){
 }
 
 
+function getSalariesRange1(){
+    $salaries = array(
+        '50000' => '50,000 to 60000',
+        '60000' => '60,000 to 70000',
+        '70000' => '70,000 to 80000',
+        '80000' => '80,000 to 90000',
+        '90000' => '90,000 to 10000',
+        '100000' => '100,000 to 120000',
+        '120000' => '120,000 to 150000',
+        '150000' => '150,000 + ',
+    );
+    return $salaries;
+}
+
+
 function getMaximumInterviews(){
     $range = array(
         '1' => '1',

@@ -351,7 +351,7 @@ class EmployerController extends Controller {
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         $data['controlsession'] = $controlsession;
         $data['jobType']     = getJobTypes();
-        $data['salaryRange'] = getSalariesRange();
+        $data['salaryRange'] = getSalariesRange1();
         $onlineTest = OnlineTest::get();
         $data['onlineTest'] = $onlineTest;
         // dd($onlineTest);
@@ -410,10 +410,13 @@ class EmployerController extends Controller {
             "geo_country"  => "integer",
             "geo_states"  => "integer",
             "geo_cities"  => "integer",
-            "vacancies"  => "integer",
+            "vacancies"  => "required|integer",
             "salary"  => "string|max:255",
+            "industry_experience.*"  => "required|distinct|min:1",
+
+
             // "gender" => "required|in:male,female,any",
-            "expiration" => "string|max:60",
+            "expiration" => "required|string|max:60",
             // "age" => "string|max:20",
         );
         $validator = Validator::make( $requestData , $rules);
@@ -423,7 +426,9 @@ class EmployerController extends Controller {
                 'validator' =>  $validator->getMessageBag()->toArray()
             ]);
         }else{
-            // dd(' all valiation correct ');
+            
+            dd(' all valiation correct ');
+
             $job = new Jobs();
             $job->title =  $requestData['title'];
             $job->description =  $requestData['description'];
@@ -593,8 +598,11 @@ class EmployerController extends Controller {
             "title" => "required|string|max:255",
             "description" => "required|string",
             "type"  => "required|string|max:10",
-            "vacancies"  => "integer",
-            "salary"  => "string|max:255",
+            "vacancies"  => "required|integer",
+            "salary"  => "required|string|max:255",
+            "industry_experience.*"  => "required|distinct|min:1",
+            "expiration" => "required|string|max:60",
+
         );
         $validator = Validator::make( $requestData , $rules);
         if ($validator->fails()){

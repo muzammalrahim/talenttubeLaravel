@@ -12,12 +12,12 @@
          <div class="form-row">
             <div class="form-group col-md-6">
                <label for="inputEmail4">Title</label>
-               <input type="text" name="title" class="form-control" id="inputEmail4" placeholder="Title">
+               <input type="text" name="title" class="form-control" required id="inputEmail4" placeholder="Title">
                <div id="title_error" class="error field_error">&nbsp;</div>
             </div>
             <div class="form-group col-md-6">
                <label for="inputPassword4">Type</label>
-               {{ Form::select('type', $jobType, ['placeholder' => 'Select Job Type'], ['class' => 'form-control custom-select', 'id'=>"inputPassword4"]) }}
+               {{ Form::select('type', $jobType, ['placeholder' => 'Select Job Type'], ['class' => 'form-control custom-select icon_show', 'id'=>"inputPassword4"]) }}
                <div id="type_error" class="error field_error">&nbsp;</div>
             </div>
          </div>
@@ -31,7 +31,7 @@
             </div>
             <div class="form-group col-md-6">
                <label for="expiration_error">Expiration Date:</label>
-               <input type="text" name="expiration" class="form-control datepicker" id="expiration_error" placeholder="Expiration Date">
+               <input type="text" name="expiration" autocomplete="off" class="form-control datepicker" id="expiration_error" placeholder="Expiration Date">
                <div id="expiration_error" class="error field_error to_hide ">&nbsp;</div>
             </div>
          </div>
@@ -47,14 +47,14 @@
             </div>
             <div class="form-group col-md-6">
                <label for="inputPassword4">Vacancies</label>
-               <input type="text" name="vacancies" class="form-control" id="inputPassword4" placeholder="Vacancies">
+               <input type="text" name="vacancies" required class="form-control" id="inputPassword4" placeholder="Vacancies">
                <div id="vacancies_error" class="error field_error to_hide">&nbsp;</div>
             </div>
          </div>
          <div class="form-row">
             <div class="form-group col-md-6">
                <label for="inputPassword4">Description</label>
-               <textarea name="description" class="form-control" rows="7" cols="5" maxlength="1000"></textarea>
+               <textarea name="description" required class="form-control" rows="7" cols="5" maxlength="1000"></textarea>
                <div id="description_error" class="error field_error to_hide">&nbsp;</div>
             </div>
             <div class="form-group col-md-6">
@@ -94,9 +94,27 @@
                      <div class="col-11 col-sm-9">
                         <p class="loader SaveindustryExperience"style="float: left;"></p>
                         <div class="IndusList form_input">
-                           <div class="IndustrySelect" style="width:80%;"></div>
+                           {{-- <div class="IndustrySelect" style="width:80%;"></div> --}}
+
+                           <div class="row mt-3 mt-lg-0 mb-3 IndustrySelect">
+                              <div class="col-11">
+                                 <select name="industry_experience[]" class="industry_experience userIndustryExperience form-control icon_show">
+                                    <option value="">Select Industry</option>
+                                    @if(!empty($industriesList))
+                                    @foreach($industriesList as $lk=>$lv)
+                                    <option value="{{$lk}}">{{$lv}}</option>
+                                    @endforeach
+                                    @endif
+                                 </select>
+                              </div>
+                              {{-- <i class="fa fa-trash fa-trash2 col-1  removeIndustry"></i> --}}
+                           </div>
                         </div>
                         <div class="mt-3">
+
+                          
+
+
                            <a class=" addIndus blue_btn  mt-2 py-2 pointer"  title="Add a Question">+ Add</a>
                            <a class=" orange_btn  buttonSaveIndustry mt-2 py-2 pointer"style = "cursor:pointer;" onclick="updateNewJobIndustryExperience()">Save</a>
                         </div>
@@ -228,8 +246,8 @@
    
       $(document).on('click','.addIndus', function(){
        console.log(' addIndus ');
-       var newIndusHtml = '<div class="row mt-3 mt-lg-0 mb-3">';
-           newIndusHtml += '<div class="IndustrySelect col-11 "><select name="industry_experience[]" class="industry_experience userIndustryExperience form-control icon_show">';
+       var newIndusHtml = '<div class="IndustrySelect row mt-3 mt-lg-0 mb-3">';
+           newIndusHtml += '<div class="col-11 "><select name="industry_experience[]" class="industry_experience userIndustryExperience form-control icon_show">';
        @if(!empty($industriesList))
            @foreach($industriesList as $lk=>$lv)
                newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>';
@@ -237,7 +255,7 @@
        @endif
        newIndusHtml += '</select>';
        newIndusHtml += '</div>';
-       newIndusHtml += '<i class="fa fa-trash fa-trash2 col-1  removeIndustry"></i>';
+       newIndusHtml += '<i class="fa fa-trash fa-trash2 col-1 removeIndustry pointer"></i>';
 
        newIndusHtml += '</div>';
    
