@@ -552,13 +552,13 @@ function getQualificationsList(){
 
 function getSalariesRange(){
     $salaries = array(
-        '50000' => '50,000 and Above',
-        '60000' => '60,000 and Above',
-        '70000' => '70,000 and Above',
-        '80000' => '80,000 and Above',
-        '90000' => '90,000 and Above',
-        '100000' => '100,000 and Above',
-        '120000' => '120,000 and Above',
+        '50000' => '50,000 and above',
+        '60000' => '60,000 and above',
+        '70000' => '70,000 and above',
+        '80000' => '80,000 and above',
+        '90000' => '90,000 and above',
+        '100000' => '100,000 and above',
+        '120000' => '120,000 and above',
         '150000' => '150,000 + ',
     );
     return $salaries;
