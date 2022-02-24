@@ -510,6 +510,8 @@ class EmployerController extends Controller {
         $data['user']   = $user;
         $data['job']    = $job;
         $industry_experience = json_decode($job->experience);
+
+        // dd($industry_experience);
         $data['industry_experience'] =  $industry_experience;
         $data['title']  = 'Job Edit';
         $data['classes_body'] = 'jobEdit';
