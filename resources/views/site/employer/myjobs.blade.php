@@ -70,7 +70,7 @@
                               </li>
                               <li class="text-info-detail clearfix">
                                  <label class="w-50">Expiry:</label>
-                                 <span class="w-50">{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</span>
+                                 <span class="w-50">{{ ($job->expiration)?($job->expiration->format('d-m-Y')):''}}</span>
                               </li>
                               <a href="{{route('empJobApplications',['id' => $job->id])}}" class="blue_btn py-2">
                               Applications: <u>{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</u>
@@ -140,7 +140,7 @@
 
 $(document).ready(function() {
    console.log(' new job doc ready ');
-   $(".datepicker").datepicker({ dateFormat: "yy-mm-dd" });
+   $(".datepicker").datepicker({ dateFormat: "dd-mm-yy" });
 });
 
 </script>

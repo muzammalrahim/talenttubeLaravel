@@ -77,7 +77,7 @@
             <div class="form-group col-md-6">
                <label for="inputPassword4">Expiration Date:</label>
                @php
-               $expiration = ($job->expiration)?(explode(' ', $job->expiration)):null;
+               $expiration = ($job->expiration)?(explode(' ', $job->expiration->format('d-m-Y'))):null;
                $expiration = (is_array($expiration))?($expiration[0]):null;
                @endphp
                <input type="text" name="expiration" class="form-control datepicker" value="{{$expiration}}" id="inputPassword4" placeholder="Expiration Date">
@@ -199,6 +199,9 @@
                </div>
             </div>
          </div>
+
+
+         
          <div class="form-row job-experience">
             <h2 class="form_label2 clearfix">Industry Experience :
                <i class="fas fa-edit orange_btn pt-2 float-right editIndustry pointer" onclick="editJobIndustryExpAsEmp()"></i>
@@ -213,6 +216,9 @@
                <a class="saveIndus hide_it py-2 pointer buttonSaveIndustry orange_btn"onclick="updateNewJobIndustryExpAsEmployer()">Save</a>
             </div>
          </div>
+
+
+
          @php
          $questions = json_decode($job->questions, true);
          $qnum = sizeof($questions)-1;
@@ -404,7 +410,7 @@
    $(document).ready(function() {
        console.log(' new job doc ready  ');
        $(".datepicker").datepicker({
-           dateFormat: "yy-mm-dd"
+           dateFormat: "dd-mm-yy"
        });
 
 

@@ -224,7 +224,7 @@ $(document).ready(function(){
                jobQuestion +=          '<div class=" col-md-5">';
                jobQuestion +=             '<input type="text" name="jq['+qC+'][option][0][text]" class="bg-white form-control" />';
                jobQuestion +=          '</div>';
-               jobQuestion +=                 '<div class="col-md-3 custom-checkbox">';
+               jobQuestion +=                 '<div class="col-md-3 custom-checkbox d-flex">';
                jobQuestion +=                      '<input type="checkbox" id="jq_'+qC+'_option_0_preffer" name="jq['+qC+'][option][0][preffer]" value="preffer">';
                jobQuestion +=                       '<label for="jq_'+qC+'_option_0_preffer" class="pl-1 pt-1">Undiserable</label> ';
                jobQuestion +=                  '</div>';
@@ -279,7 +279,7 @@ $(document).ready(function(){
                option_html +=          '<div class="col-md-5">';
                option_html +=             '<input type="text" name="jq['+qC+'][option]['+oC+'][text]" class="bg-white form-control"/>';
                option_html +=             '</div>';
-               option_html +=              '<div class="jq_option_cbx col-md-3 custom-checkbox">';
+               option_html +=              '<div class="jq_option_cbx col-md-3 custom-checkbox d-flex">';
                option_html +=              '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_preffer" name="jq['+qC+'][option]['+oC+'][preffer]" value="preffer">';
                option_html +=                '<label for="jq_'+qC+'_option_'+oC+'_preffer" class="pl-1 pt-1">Undiserable</label> ';
                option_html +=                  '</div>';
