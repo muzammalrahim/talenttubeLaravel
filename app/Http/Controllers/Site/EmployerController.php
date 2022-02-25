@@ -427,7 +427,7 @@ class EmployerController extends Controller {
             ]);
         }else{
             
-            dd(' all valiation correct ');
+            // dd(' all valiation correct ');
 
             $job = new Jobs();
             $job->title =  $requestData['title'];
