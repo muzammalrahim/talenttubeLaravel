@@ -201,19 +201,44 @@
          </div>
 
 
-         
-         <div class="form-row job-experience">
-            <h2 class="form_label2 clearfix">Industry Experience :
-               <i class="fas fa-edit orange_btn pt-2 float-right editIndustry pointer" onclick="editJobIndustryExpAsEmp()"></i>
-            </h2>
-            <div class="IndusList form_input col-md-12">
-               <div class="IndustrySelect w-100">
-                  @include('site.layout.parts.newJobIndustryList')
+
+         <div class="form-row">
+            <div class="form-group col-md-12">
+
+               <div class="form_field ">
+                  <div class="row">
+                     <div class="col-12 col-sm-2">Industry Experience :</div>
+                     <div class="col-11 col-sm-9">
+                        <p class="loader SaveindustryExperience"style="float: left;"></p>
+                        <div class="IndusList form_input">
+                           {{-- <div class="IndustrySelect" style="width:80%;"></div> --}}
+
+                           <div class="row mt-3 mt-lg-0 mb-3 IndustrySelect">
+                              <div class="col-11">
+                                 <select name="industry_experience[]" class="industry_experience userIndustryExperience form-control icon_show">
+                                    <option value="">Select Industry</option>
+                                    @if(!empty($industriesList))
+                                    @foreach($industriesList as $lk=>$lv)
+                                    <option value="{{$lk}}">{{$lv}}</option>
+                                    @endforeach
+                                    @endif
+                                 </select>
+                              </div>
+                              {{-- <i class="fa fa-trash fa-trash2 col-1  removeIndustry"></i> --}}
+                           </div>
+                        </div>
+                        <div class="mt-3">
+
+                          
+
+
+                           <a class=" addIndus blue_btn  mt-2 py-2 pointer"  title="Add a Question">+ Add</a>
+                           <a class=" orange_btn  buttonSaveIndustry mt-2 py-2 pointer"style = "cursor:pointer;" onclick="updateNewJobIndustryExperience()">Save</a>
+                        </div>
+                     </div>
+                     <div class="col-1 col-sm-1"><i class="editIndustry fas fa-edit orange_btn float-right py-2 pointer"></i></div>
+                  </div>
                </div>
-            </div>
-            <div class="col-md-12 my-3">
-               <a class="addIndus hide_it py-2 pointer blue_btn">+ Add</a>
-               <a class="saveIndus hide_it py-2 pointer buttonSaveIndustry orange_btn"onclick="updateNewJobIndustryExpAsEmployer()">Save</a>
             </div>
          </div>
 
@@ -223,10 +248,10 @@
          $questions = json_decode($job->questions, true);
          $qnum = sizeof($questions)-1;
          @endphp
-         <div class="job_age form_field row">
+         <div class="job_age form_field">
             <div class="">
-               <div class="jobQuestions row  d-flex border border-secondary rounded ">
-                  <h2 class="mt-3">Job Questions:</h2>
+               <div class="jobQuestions border border-secondary rounded ">
+                  <h2 class="mt-3 pl-3">Job Questions:</h2>
                   @if (!empty($questions) && count($questions) > 0)
                   @foreach ($questions as $keyq=>$question)
                   <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-4">
@@ -386,14 +411,17 @@
    
       $(document).on('click','.addIndus', function(){
        console.log(' addIndus ');
-       var newIndusHtml = '<div class="IndustrySelect"><select name="industry_experience[]" class="industry_experience userIndustryExperience">';
+       var newIndusHtml = '<div class="IndustrySelect row mt-3 mt-lg-0 mb-3">';
+           newIndusHtml += '<div class="col-11 "><select name="industry_experience[]" class="industry_experience userIndustryExperience form-control icon_show">';
        @if(!empty($industriesList))
            @foreach($industriesList as $lk=>$lv)
                newIndusHtml += '<option value="{{$lk}}">{{$lv}}</option>';
            @endforeach
        @endif
        newIndusHtml += '</select>';
-       newIndusHtml += '<i class="fa fa-trash removeIndustry"></i>';
+       newIndusHtml += '</div>';
+       newIndusHtml += '<i class="fa fa-trash fa-trash2 col-1 removeIndustry pointer"></i>';
+
        newIndusHtml += '</div>';
    
        $('.IndusList').append(newIndusHtml);
@@ -401,6 +429,15 @@
       });
    });
    
+
+
+
+   $(".editIndustry").click(function(){
+         $(this).closest('.IndusListBox').addClass('edit');
+         $('.removeIndustry').removeClass('hide_it');
+         $('.addIndus').removeClass('hide_it');
+         $('.buttonSaveIndustry').removeClass('hide_it');
+      });
    
    
    

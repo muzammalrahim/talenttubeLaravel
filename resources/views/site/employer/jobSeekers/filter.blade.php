@@ -21,10 +21,10 @@
                   <div class="input-employee clearfix">
 
                      <div class="row">
-                        <label class="col-12 col-sm-3 browse-heading">Salary Range:</label>
+                        <label class="col-12 col-sm-3 browse-heading">Salary:</label>
 
                         {{-- <input type="text" class="form-control col-md-8" name="filter_salary" aria-label="Recipient's username"> --}}
-                        <select name="filter_salary" class="form-control col-sm-8 col-12 ml-3 bg-white" id="filter_salary" data-placeholder="Select Salary Range">
+                        <select name="filter_salary" class="form-control col-sm-8 col-12 ml-3 bg-white icon_show" id="filter_salary" data-placeholder="Select Salary Range">
                            <option value="">Select Salary Range</option>
                            @foreach(getSalariesRange() as $sk => $salary)
                                <option value="{{$sk}}">{{$salary}}</option>
@@ -44,7 +44,7 @@
                      <div class="searchField_resume col-md-6">
                         {{-- <div class="searchFieldLabel">Filter by Resume: </div> --}}
                         <div class="row pb-4">
-                           <label class="col-12 col-sm-3 browse-heading">Filter by Resume:</label>
+                           <label class="col-12 col-sm-3 browse-heading">Resume:</label>
                            {{-- <div class="col-md-1 col-sm-2 col-2 custom-checkbox mt-1">
                               <input type="checkbox" name="filter_by_resume" class="">
                            </div> --}}
@@ -60,9 +60,9 @@
 
                      <div class="searchField_resume col-md-6">
                         <div class="row">
-                           <label class="col-12 col-sm-3 browse-heading">Filter by Age Group:</label>
+                           <label class="col-12 col-sm-3 browse-heading">Age Group:</label>
 
-                              <select name="filter_by_age_val" class="form-control col-12 col-sm-8 ml-3 bg-white" id="filterAgeGroup">
+                              <select name="filter_by_age_val" class="form-control col-12 col-sm-8 ml-3 bg-white icon_show" id="filterAgeGroup">
                                  <option value="">Select Age Group</option>
                                  <option value="18-25">18-25</option>
                                  <option value="25-30">25-30</option>
@@ -87,11 +87,11 @@
                      <div class="col-md-6 col-12">
                         <div class="row">
                             <div class=" col-12 col-sm-3 mt-1">
-                              <h5 class="browse-heading">Filter by Qualification:</h5>
+                              <h5 class="browse-heading">Qualification:</h5>
                            </div>
 
                            <div class=" col-12 col-sm-9">
-                              <select style="width: 94%" class="dinline_block filter_qualification_type js-select form-control" onchange="showQualificationSelect2()" name="filter_qualification_type" data-placeholder="Select Qalification & Trades">
+                              <select style="width: 94%" class="dinline_block filter_qualification_type js-select form-control icon_show bg-white" onchange="showQualificationSelect2()" name="filter_qualification_type" data-placeholder="Select Qalification & Trades">
                                  <option value="">Select Qalification & Trades</option>
                                  <option value="certificate">Certificate or Advanced Diploma</option>
                                  <option value="trade">Trade Certificate</option>
@@ -120,7 +120,7 @@
                      <div class="col-md-6 col-12">
                         <div class="row">
                            <div class=" col-12 col-sm-3  mt-1">
-                              <h5 class="browse-heading">Filter by Industry:</h5>
+                              <h5 class="browse-heading">Industry:</h5>
                            </div>
                            <div class=" col-2 col-sm-1 custom-checkbox mt-1">
                               <input type="checkbox" name="filter_industry_status" checked class="">
@@ -156,7 +156,7 @@
                      <div class="col-md-6 pb-4 pb-lg-none col-12">
                         <div class="row">
                            <label  class="col-12 col-sm-3 browse-heading">
-                              Filter by User Tags:
+                              User Tags:
                            </label>
                            {{-- <input type="checkbox" name="filter_tags_status" class=""> --}}
                            <div class="col-2 col-sm-1 custom-checkbox mt-1">
@@ -164,7 +164,7 @@
                            </div>
                            @if(!empty($tags))
                            <div class="filter_tagList col-10 col-sm-8">
-                              <select name="filter_tags[]" multiple="multiple" id="filter_by_usertaga" placeholder = "Filter by Job" class="multi-select form-control custom-select" style="width: 93%>
+                              <select name="filter_tags[]" multiple="multiple" id="filter_by_usertaga" placeholder = "Filter by Job" class="multi-select form-control custom-select" style="width: 93%">
                                  @foreach ($tags as $tag => $tagVal)
                                  <option class="" value="{{$tagVal->id}}"><span>{{$tagVal->title}}</span></option>
                                  @endforeach
@@ -178,14 +178,14 @@
                      {{-- ============================================ Filter by Gender ============================================ --}}
                       <div class="col-md-6 col-12">
                         <div class="row">
-                           <label class="col-12 col-sm-3 browse-heading">Filter by User Gender:</label>
+                           <label class="col-12 col-sm-3 browse-heading">Gender:</label>
                               {{-- <input type="checkbox" name="filter_tags_status" class=""> --}}
                            <div class="col-2 col-sm-1 custom-checkbox mt-1">
                               <input type="checkbox" name="filter_by_gender" checked class="filter_by_gender">
                            </div>
                            {{-- @if(!empty($tags)) --}}
                            <div class="filter_gender_cont col-10 col-sm-8">
-                              <select name="filter_by_gender_val" id="filterAgeGroup" placeholder = "Filter by Job" class="form-control" style="width: 93%;">
+                              <select name="filter_by_gender_val" id="filterAgeGroup" placeholder = "Filter by Job" class="form-control icon_show bg-white" style="width: 93%;">
                                  <option value="">Select Gender</option>
                                     <option value="male">Male</option>
                                     <option value="female">Female</option>
@@ -207,7 +207,7 @@
                         <div class="col-md-6 col-12">
                            <div class="row">
                               <div class=" col-12 col-sm-3 mt-1 b-mob-pad">
-                                 <h5 class="browse-heading">Filter by Questions:</h5>
+                                 <h5 class="browse-heading">Questions:</h5>
                               </div>
                               <div class="col-2 col-sm-1 custom-checkbox mt-1">  
                                  <input type="checkbox" class="" checked name="filter_by_questions">
@@ -215,7 +215,7 @@
                               <div class=" col-10 col-sm-8">
                                  <div class="input-employee clearfix filter_question_cont">
                                     @if(!empty(getUserRegisterQuestions()))
-                                    <select type="text" class=" bg-white" name="filter_question" aria-label="Recipient's username" style="width: 97%;">
+                                    <select type="text" class="form-control bg-white icon_show" name="filter_question" aria-label="Recipient's username" style="width: 97%;">
                                        @foreach (getUserRegisterQuestions() as $qk => $question)
                                        <option value="{{$qk}}">{{$question}}</option>
                                        @endforeach
@@ -258,7 +258,7 @@
                      <div class="col-12 col-md-6">
                        <div class="row">
                            <div class=" col-12 col-sm-3 mt-1 b-mob-pad">
-                           <h5 class="browse-heading">Filter by Location:</h5>
+                           <h5 class="browse-heading">Location:</h5>
                         </div>
                         <div class="col-2 col-sm-1 custom-checkbox mt-1">  
                            <input type="checkbox" class="" name="filter_location_status">
