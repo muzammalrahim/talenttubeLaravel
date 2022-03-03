@@ -78,7 +78,7 @@
 
                {{-- ============================================= Pie Chart =============================================  --}}
 
-               @include('web.piechart.pie_chart')
+               {{-- @include('web.piechart.pie_chart') --}}
 
                {{-- ============================================= Pie Chart =============================================  --}}
 
@@ -138,8 +138,16 @@
             </div>
          </div>
          <div class="box-footer1 box-footer  clearfix">
+     
+
+
             <div class="block-progrees-ratio1 d-none d-md-block">
+              <ul>
+                <li><span class="Progress-ratio-icon1">.</span> <span> {{ $user_compat }}% </span> Match </li>
+                <li><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$user_compat }}% </span> UnMatch</li>
+              </ul>
             </div>
+
             <div class="employe-btn-group">
                {{-- @dump($likeUsers) --}}
                @if (in_array($js->id,$likeUsers))
