@@ -662,4 +662,16 @@ div.google-visualization-tooltip {
 				}
 }
 
-
+.dropdownSelect2{
+    position: absolute;
+    right: 5px;
+    top: 62px;
+    z-index: 999;
+    color: #495057;
+}
+.dropdownSelect3 {
+    right: 35px;
+    top: 8px;
+    color: #495057;
+    
+}

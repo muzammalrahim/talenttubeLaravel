@@ -83,7 +83,8 @@
    // Enable/Disabled Filtering by Resume.
    //====================================================================================================================================//
    
-   $('input[name="filter_by_resume"]').change(function() {
+   $('input[name="filter_by_resume_value"]').change(function() {
+    
        console.log(' filter_by_resume ');
        if(this.checked){
            jQuery('.filter_resume_cont').removeClass('hide_it');
@@ -504,7 +505,7 @@
    
    // ========================================================= Filter by Age Group =========================================================
    
-   $('input[name="filter_by_age"]').each(function() {
+   $('input[name="filter_by_age_val"]').each(function() {
        if(this.checked){
        $("#filterAgeGroup").prop("selectedIndex", 0);
        $(this).toggleClass('checked').trigger('refresh');
@@ -526,6 +527,10 @@
        (this.checked)?(jQuery('.filter_gender_cont').removeClass('hide_it')):(jQuery('.filter_gender_cont').addClass('hide_it'));
        }
    });
+
+   $("#filter_industry").val('').trigger('change');
+   $("#filter_by_qualification").val('').trigger('change');
+   $("#filter_by_usertaga").val('').trigger('change');
    
    //  ========================================================= Filter By tags =========================================================
    // jQuery('.filter_tagList').addClass('hide_it');

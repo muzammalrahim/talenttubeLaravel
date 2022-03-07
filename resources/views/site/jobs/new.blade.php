@@ -110,13 +110,9 @@
                               {{-- <i class="fa fa-trash fa-trash2 col-1  removeIndustry"></i> --}}
                            </div>
                         </div>
-                        <div class="mt-3">
-
-                          
-
-
-                           <a class=" addIndus blue_btn  mt-2 py-2 pointer"  title="Add a Question">+ Add</a>
-                           <a class=" orange_btn  buttonSaveIndustry mt-2 py-2 pointer"style = "cursor:pointer;" onclick="updateNewJobIndustryExperience()">Save</a>
+                        <div class="mt-3 row px-3">
+                           <a class=" addIndus blue_btn  mt-2 py-2 pointer text-center col-4 col-sm-2 col-md-2"  title="Add a Question">+ Add</a>
+                           <a class=" orange_btn  buttonSaveIndustry mt-2 text-center py-2 col-sm-2 col-md-2 pointer col-4 ml-2" onclick="updateNewJobIndustryExperience()">Save</a>
                         </div>
                      </div>
                      <div class="col-1 col-sm-1"><i class="editIndustry fas fa-edit orange_btn float-right py-2 pointer"></i></div>
@@ -145,19 +141,23 @@
                            <label >Options</label>
                            <div class="jq_field_questions mb20">
                               <div class="option row mb-1 ">
-                                 <div class="col-md-5">
+                                 <div class="col-lg-5">
                                     <input type="text" class="form-control bg-white" name="jq[0][option][0][text]" />
                                  </div>
 
                                  
 
-                                 <div class="jq_option_cbx col-md-3 custom-checkbox d-flex">
-                                    <input type="checkbox" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer">
-                                    <label for="jq_0_option_0_preffer"class="pt-1" >Undiserable</label>
-                                 </div>
-                                 <div class="jq_option_cbx col-md-3 custom-checkbox">
-                                    <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar">
-                                    <label for="jq_0_option_0_goldstar" >Gold Star</label>
+                                 <div class="col-lg-7 p-lg-0">
+                                    <div class="row">
+                                       <div class="jq_option_cbx col-lg-6 custom-checkbox d-flex">
+                                          <input type="checkbox" id="jq_0_option_0_preffer" name="jq[0][option][0][preffer]" value="preffer" class="p-lg-0">
+                                          <label for="jq_0_option_0_preffer"class="pt-1" >Undiserable</label>
+                                       </div>
+                                       <div class="jq_option_cbx col-lg-6 custom-checkbox">
+                                          <input type="checkbox" id="jq_0_option_0_goldstar" name="jq[0][option][0][goldstar]" value="goldstar">
+                                          <label for="jq_0_option_0_goldstar" >Gold Star</label>
+                                       </div>
+                                    </div>
                                  </div>
                               </div>
                            </div>
