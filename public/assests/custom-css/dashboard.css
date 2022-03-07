@@ -2650,6 +2650,9 @@ button i {
         float: left !important;
         width: 70% !important;
     }
+    .searchField_resume{
+        margin-bottom: 20px !important;
+    }
     .browse-heading{
         font-size: 14px;
         font-weight: 400;
@@ -3751,7 +3754,7 @@ span.v_title {
         font-size: 11px;
     }
     .searchField_resume{
-        margin-bottom: 20px;
+        margin-bottom: 20px !important;
     }
     .searchField_resume label{
         font-size: 11px !important;

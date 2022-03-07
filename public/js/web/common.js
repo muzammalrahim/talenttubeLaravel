@@ -226,11 +226,11 @@ $(document).ready(function(){
                jobQuestion +=          '</div>';
                jobQuestion +=                 '<div class="col-md-3 custom-checkbox d-flex">';
                jobQuestion +=                      '<input type="checkbox" id="jq_'+qC+'_option_0_preffer" name="jq['+qC+'][option][0][preffer]" value="preffer">';
-               jobQuestion +=                       '<label for="jq_'+qC+'_option_0_preffer" class="pl-1 pt-1">Undiserable</label> ';
+               jobQuestion +=                       '<label for="jq_'+qC+'_option_0_preffer" class=" pt-1">Undiserable</label> ';
                jobQuestion +=                  '</div>';
                jobQuestion +=                  '<div class="col-md-3 custom-checkbox">';
                jobQuestion +=                     '<input type="checkbox" id="jq_'+qC+'_option_0_goldstar" name="jq['+qC+'][option][0][goldstar]" value="goldstar">';
-               jobQuestion +=                     '<label for="jq_'+qC+'_option_0_goldstar" class="pl-2 pt-1">Gold Star</label> ';
+               jobQuestion +=                     '<label for="jq_'+qC+'_option_0_goldstar" class="pt-1">Gold Star</label> ';
                jobQuestion +=                  '</div>';
                jobQuestion +=          '</div>';
                jobQuestion +=      '</div>';
@@ -276,17 +276,21 @@ $(document).ready(function(){
            var qC = parseInt($('#questionCounter').val());
            var option_html = '';
                option_html +=          '<div class="jq_option option row mb-1">';
-               option_html +=          '<div class="col-md-5">';
+               option_html +=          '<div class="col-lg-5">';
                option_html +=             '<input type="text" name="jq['+qC+'][option]['+oC+'][text]" class="bg-white form-control"/>';
                option_html +=             '</div>';
-               option_html +=              '<div class="jq_option_cbx col-md-3 custom-checkbox d-flex">';
+               option_html +=              '<div class="col-lg-7 p-lg-0">'
+               option_html +=              '<div class="row">';
+               option_html +=              '<div class="jq_option_cbx col-lg-6 custom-checkbox d-flex">';
                option_html +=              '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_preffer" name="jq['+qC+'][option]['+oC+'][preffer]" value="preffer">';
-               option_html +=                '<label for="jq_'+qC+'_option_'+oC+'_preffer" class="pl-1 pt-1">Undiserable</label> ';
+               option_html +=                '<label for="jq_'+qC+'_option_'+oC+'_preffer" class=" pt-1">Undiserable</label> ';
                option_html +=                  '</div>';
-               option_html +=                  '<div class="jq_option_cbx col-md-3 custom-checkbox">';
+               option_html +=                  '<div class="jq_option_cbx col-lg-6 custom-checkbox">';
                option_html +=                     '<input type="checkbox" id="jq_'+qC+'_option_'+oC+'_goldstar" name="jq['+qC+'][option]['+oC+'][goldstar]" value="goldstar">';
-               option_html +=                     '<label for="jq_'+qC+'_option_'+oC+'_goldstar" class="pl-2 pt-1">Gold Star</label> ';
+               option_html +=                     '<label for="jq_'+qC+'_option_'+oC+'_goldstar" class="pt-1">Gold Star</label> ';
                option_html +=                  '</div>';
+               option_html +=                 '</div>';
+               option_html +=               '</div>';
                option_html +=          '</div>';
    
            $(this).closest('.jobQuestion').find('.jq_field_questions').append(option_html);
@@ -311,6 +315,12 @@ $(document).ready(function(){
            });
    
        });
+
+    // ================================= Scroll to top on click pagination =================================
+    
+    $(document).click('.pagination', function(){
+        $(window).scrollTop(0);
+    })
 
 
 
