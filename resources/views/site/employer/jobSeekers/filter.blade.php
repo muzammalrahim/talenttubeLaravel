@@ -280,7 +280,7 @@
                                     <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
                                  </div>
                                  <div class="col-3">
-                                    <select class="white-text mdb-select md-form filter_location_radius custom-select" name="filter_location_radius" data-placeholder="Select Location Radius">
+                                    <select class="white-text mdb-select md-form filter_location_radius custom-select icon_show" name="filter_location_radius" data-placeholder="Select Location Radius">
                                        <option value="5" selected="selected">5km</option>
                                        <option value="10">10km</option>
                                        <option value="25">25km</option>
@@ -291,6 +291,10 @@
                                  <div class="location_latlong d-none w100">
                                     <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
                                     <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
+                                    <input type="hidden" name="location_name" id="location_name"  value="">
+                                    <input type="hidden" name="location_city" id="location_city"  value="">
+                                    <input type="hidden" name="location_state" id="location_state"  value="">
+                                    <input type="hidden" name="location_country" id="location_country"  value="">
                                  </div>
                                  <div class="location_map_box dtable w100">
                                     <div class="location_map" id="location_map"></div>
@@ -307,7 +311,7 @@
    </div>
    <!-- buttons -->
    <div class="bj-tr-btn">
-      <button class="orange_btn reset-btn" type="reset"><i class="fas fa-redo"></i> Reset</button>
+      <button class="orange_btn reset-btn" type="reset" id="btnReset"><i class="fas fa-redo"></i> Reset</button>
       <button class="interview-tag used-tag"><i class="fas fa-paper-plane"></i>Submit</button>
    </div>
    <!-- buttons -->
@@ -333,6 +337,13 @@ $(document).ready(function() {
       allowClear: true
 
    });
+
+
+    $(function () {
+        $("#btnReset").bind("click", function () {
+            $("#filterAgeGroup")[0].selectedIndex = 0;
+        });
+    });
 
 
    // allowClear: true,
