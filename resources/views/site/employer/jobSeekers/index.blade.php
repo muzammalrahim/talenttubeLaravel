@@ -83,9 +83,9 @@
    // Enable/Disabled Filtering by Resume.
    //====================================================================================================================================//
    
-   $('input[name="filter_by_resume_value"]').change(function() {
+   /*$('input[name="filter_by_resume_value"]').change(function() {
     
-       console.log(' filter_by_resume ');
+       // console.log(' filter_by_resume ');
        if(this.checked){
            jQuery('.filter_resume_cont').removeClass('hide_it');
        }else{
@@ -94,7 +94,7 @@
        }
    
    });
-   
+   */
    
    //====================================================================================================================================//
    // Enable/Disabled Filtering by Age Group.
@@ -409,6 +409,9 @@
                            }
                        }
                    }
+
+
+
                    if((city) && (state) && (country))
                        address = city + ", " + state + ", " + country;
                    else if((city) && (state))
@@ -483,14 +486,17 @@
    
    // ========================================================= Filter by resume Resume =========================================================
    
-   $('input[name="filter_by_resume"]').each(function() {
-       if(this.checked){
-       jQuery('.filter_by_resume_value').val("");
+   $('input[name="filter_by_resume_value"]').each(function() {
+
+        jQuery('.filter_by_resume_value').val("");
+
+       /*if(this.checked){
+       // jQuery('.filter_by_resume_value').val("");
        $(this).toggleClass('checked').trigger('refresh');
        this.checked = !this.checked;
        $(this).toggleClass('checked').trigger('refresh');
        (this.checked)?(jQuery('.filter_resume_cont').removeClass('hide_it')):(jQuery('.filter_resume_cont').addClass('hide_it'));
-       }
+       }*/
    
    });
    
