@@ -171,3 +171,6 @@
    <div class="jobseeker_pagination cpagination mb20">{!! $jobSeekers->render() !!}</div>
    @endif
 </div>
+
+
+

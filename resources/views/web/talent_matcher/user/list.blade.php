@@ -174,9 +174,9 @@
    $check = false;
    @endphp
    @endforeach
-   {{-- 
-   <div class="jobseeker_pagination cpagination mb20">{!! $query->onEachSide(0)->links() !!}</div>
-   --}}
+   
+   {{-- <div class="jobseeker_pagination cpagination mb20">{!! $query->onEachSide(0)->links() !!}</div> --}}
+  
    @endif
 </div>
 
@@ -190,3 +190,5 @@
 @section('custom_js')
    <script src="{{ asset('js/web/profile.js') }}"></script>
 @stop
+
+

@@ -5,9 +5,9 @@
 
     <!-- =============================================================================================================================== -->
 
- {{--    <div class="jobSeekers_list">
+    {{-- <div class="jobSeekers_list">
 
-        @include('mobile.talent_matcher.index') <!-- mobile/talent_matcher/index -->
+        @include('mobile.talent_matcher.index') mobile/talent_matcher/index
 
     </div>  --}}
 

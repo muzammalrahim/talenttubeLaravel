@@ -426,7 +426,7 @@ class EmployerController extends Controller {
                 'validator' =>  $validator->getMessageBag()->toArray()
             ]);
         }else{
-            
+
             dd(' all valiation correct ');
 
             $job = new Jobs();
@@ -717,7 +717,7 @@ class EmployerController extends Controller {
         // $userJS = User::find(140);
 
         // DB::enableQueryLog();
-        // // $cvDataTest = $userJS->cvDataTagsRelation()->get(); 
+        // // $cvDataTest = $userJS->cvDataTagsRelation()->get();
 
         // dd(DB::getQueryLog());
 
@@ -726,7 +726,7 @@ class EmployerController extends Controller {
 
         // $jobSeekersObj          = new User();
         // $jobSeekers             = $jobSeekersObj->getJobSeekers($request, $user);
-        
+
         // ================================================ Filter by Industry. ================================================
 
         $industry_status = (isset($request->filter_industry_status) && !empty($request->filter_industry_status == 'on'))?true:false;
@@ -824,7 +824,7 @@ class EmployerController extends Controller {
             }
             else{
                 $query = $query->whereIn('title' , array("Mrs","Miss","Ms"));
-                
+
                 // $query = $query->where('title' , '=', 'Mrs')->orWhere('title' , '=', 'Miss')->orWhere('title' , '=', 'Ms');
             }
         }
@@ -895,7 +895,7 @@ class EmployerController extends Controller {
             $question_like =  '%\"'. $request->filter_question.'\":\"'. $request->filter_question_value.'\"%';
             $query = $query->where('questions', 'LIKE', $question_like);
         }
-        
+
 
         // ================================================ Filter by Tags ================================================
 
@@ -1039,9 +1039,9 @@ class EmployerController extends Controller {
                             $jobsApplication->prev_status = $oldjobstatus;
                             $jobsApplication->save();
                             $history = new History;
-                            $history->user_id = $jobsApplication->jobseeker->id; 
-                            $history->job_status = $request->status; 
-                            $history->job_id = $jobsApplication->job->id; 
+                            $history->user_id = $jobsApplication->jobseeker->id;
+                            $history->job_status = $request->status;
+                            $history->job_id = $jobsApplication->job->id;
                             $history->old_job_status = $oldjobstatus;
                             $history->type = 'job_Status';
                             $history->save();
@@ -1075,9 +1075,9 @@ class EmployerController extends Controller {
             $data['InterviewTempQuestion'] = $InterviewTempQuestion;
                     return view('site.employer.interviewTemplate.template' , $data); // site/employer/interviewTemplate/template
                 /*if (isAdmin()) {
-                    return view('admin.job_applications.interviewTemplate.template' , $data); 
+                    return view('admin.job_applications.interviewTemplate.template' , $data);
                     // admin/job_applications/interviewTemplate/template
-                    
+
 
                 }
                 else{
@@ -1090,7 +1090,7 @@ class EmployerController extends Controller {
         else{
             return false;
         }
-        
+
 
     }
 
@@ -1117,7 +1117,7 @@ class EmployerController extends Controller {
 
 
         $empName = $user->company;
- 
+
         // dd($empName);
         if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
             $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
@@ -1136,9 +1136,9 @@ class EmployerController extends Controller {
                 }
                 $UserInterview->save();
                 $history = new History;
-                $history->user_id = $UserInterview->user_id; 
-                $history->type = 'interview_sent'; 
-                $history->userinterview_id = $UserInterview->id; 
+                $history->user_id = $UserInterview->user_id;
+                $history->type = 'interview_sent';
+                $history->userinterview_id = $UserInterview->id;
                 $history->save();
 
 
@@ -1150,7 +1150,7 @@ class EmployerController extends Controller {
                     'message' => 'Interview conducted and Email sent to jobseeker successfully',
                 ]);
             }
-            else{ 
+            else{
 
                     return response()->json([
                     'status' => 0,
@@ -1181,7 +1181,7 @@ class EmployerController extends Controller {
                 'status' => 1,
                 'message' => 'Interview Rejected Successfully'
             ]);
-        }   
+        }
     }
 
     // ==================================================== Accept Interview ====================================================
@@ -1208,12 +1208,12 @@ class EmployerController extends Controller {
                 'status' => 1,
                 'message' => 'Interview Rejected Successfully'
             ]);
-        } 
+        }
         }
         else{
             return false;
         }
-        
+
 
     }
 
@@ -1244,14 +1244,14 @@ class EmployerController extends Controller {
                 $UserInterview->user_id   = $data['user_id'];
                 $UserInterview->status   = 'Interview Confirmed';
                 $UserInterview->hide   = 'no';
-                
+
                 $UserInterview->url   = generateRandomString();
                 $UserInterview->save();
 
                 $history = new History;
-                $history->user_id = $UserInterview->user_id; 
-                $history->type = 'Interview Confirmed'; 
-                $history->userinterview_id = $UserInterview->id; 
+                $history->user_id = $UserInterview->user_id;
+                $history->type = 'Interview Confirmed';
+                $history->userinterview_id = $UserInterview->id;
                 $history->save();
 
                 foreach ($data['answer'] as $key => $value) {
@@ -1268,7 +1268,7 @@ class EmployerController extends Controller {
                 return response()->json([
                     'status' => 1,
                     'message' => 'Reponse added successfully'
-                ]);                
+                ]);
             /*}
 
             else{
@@ -1315,7 +1315,7 @@ class EmployerController extends Controller {
         }else{
           $pdf = PDF::loadView('admin.pdf.bulkJobSeeker', $data);
           $pdf->setPaper('A4');
-          return $pdf->download('JobSeekers.pdf'); 
+          return $pdf->download('JobSeekers.pdf');
           // admin/pdf/bulkJobSeeker
         }
       }
@@ -1338,7 +1338,7 @@ class EmployerController extends Controller {
         }
     }
 
-    
+
 
 
 
