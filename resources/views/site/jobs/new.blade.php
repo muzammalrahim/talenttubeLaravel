@@ -179,14 +179,13 @@
          <div class="form_field">
             <span class="form_label"></span>
             <div class="form_input">
-               <div class="general_error error to_hide">&nbsp;</div>
+               <div class="general_error error to_hide"></div>
             </div>
          </div>
          <div class="fomr_btn act_field m-auto row">
             <span class="form_label"></span>
-            {{-- <input type="type" value="academic" /> --}}
-            <div class="col-md-3">
-               <button class="btn small turquoise saveNewJob orange_btn ">Save</button>
+            <div class="col-md-3 my-3">
+               <button class="btn small turquoise saveNewJob orange_btn">Save</button>
             </div>
          </div>
       </form>
@@ -194,6 +193,8 @@
 </div>
 <div class="cl"></div>
 </div>
+
+@include('web.modals.addNewJobModalError')
 @stop
 @section('custom_footer_css')
 {{-- 
