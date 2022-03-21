@@ -109,7 +109,7 @@
                                     <select name="filter_qualification[]" multiple="multiple" id="filter_by_qualification"
                                      placeholder = "Filter by Job" class="multi-select form-control icon_show custom-select" style="width:100%">
                                        @foreach ($qualifications as $qualif)
-                                          <option class="d-none" value="{{$qualif['type']}}" data-id="{{$qualif['id']}}" ><span>{{$qualif['title']}}</span></option>
+                                          <option class="d-none" value="{{$qualif['id']}}" data-id="{{$qualif['id']}}" ><span>{{$qualif['title']}}</span></option>
                                        @endforeach
                                     </select>
 
@@ -223,12 +223,12 @@
                               Questions:
                            </label>
                            <div class="col-2 col-sm-1 col-lg-1 custom-checkbox mt-1">  
-                              <input type="checkbox" class="" checked name="filter_by_questions">
+                              <input type="checkbox" class="" name="filter_by_questions">
                            </div>
                            <div class=" col-10 col-sm-7 col-lg-8">
-                              <div class="input-employee clearfix filter_question_cont">
+                              <div class="input-employee clearfix filter_question_cont hide_it">
                                  @if(!empty(getUserRegisterQuestions()))
-                                 <select type="text" class="form-control bg-white icon_show" name="filter_question" aria-label="Recipient's username" style="width: 96%;">
+                                 <select type="text" class="form-control bg-white icon_show " name="filter_question" aria-label="Recipient's username" style="width: 96%;">
                                     @foreach (getUserRegisterQuestions() as $qk => $question)
                                     <option value="{{$qk}}">{{$question}}</option>
                                     @endforeach
@@ -240,7 +240,7 @@
                      </div>
                      <div class="col-12 col-md-6">
                         <div class="row">
-                           <div class="col-12 col-sm-6 filter_question_cont ">
+                           <div class="col-12 col-sm-6 filter_question_cont hide_it">
                               <ul class="question-radiobtn">
                                  <li>
                                     <div class="form-check emp-redio p-0">
@@ -361,6 +361,8 @@ $(document).ready(function() {
       else{
          $('.filter_qualificaton_degree').css('opacity', '0');
          $('.dropdownSelect2').css('opacity', '0');
+         $("#filter_by_qualification").val('').trigger('change');
+
       }
    }
 

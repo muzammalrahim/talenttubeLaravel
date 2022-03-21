@@ -12,14 +12,19 @@
    {{-- <h2 class="head icon_head_browse_matches">Job Seekers List</h2> --}}
    <div class="add_new_job jobSeekersListingCont">
       <!-- =============================================================================================================================== -->
-      @include('site.employer.jobSeekers.filter')   
-      {{-- site/employer/jobSeekers/filter --}}
+      
+      @include('site.employer.jobSeekers.filter')    {{-- site/employer/jobSeekers/filter --}}
+
       <!-- =============================================================================================================================== -->
+      
       @include("site.spinner")
+      
       <!-- =============================================================================================================================== -->
+      <div class="scroll"></div>
       <div class="jobSeekers_list mb-5">
          @include('site.employer.jobSeekers.list')  {{-- site/employer/jobSeekers/list --}}
       </div>
+      
       <!-- =============================================================================================================================== -->
    </div>
    <div class="cl"></div>
@@ -39,6 +44,21 @@
 {{-- <script src="{{ asset('js/site/UserFilter.js') }}"></script> --}}
 <script type="text/javascript">
    $(document).ready(function() {   
+
+    // $('.pagination').click(function(){
+
+        $("html").animate({ scrollTop: 0 }, "slow");
+        //alert('Animation complete.');
+        //return false;
+
+
+        $(".jobseeker_pagination").click(function() {
+            $('.scroll').scroll(function() {
+                didScroll = true;
+            });
+        });
+    // })
+
 
    
    //====================================================================================================================================//
@@ -554,6 +574,8 @@
    
    
    $('input[name="filter_by_questions"]').each(function() {
+
+        // console.log(' Filter by question clicked ');
    
        if(this.checked){
        $(this).toggleClass('checked').trigger('refresh');
@@ -602,6 +624,20 @@
 @stop
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+
+<style type="text/css">
+
+    html {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+body { 
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+</style>
 {{-- 
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 --}}
