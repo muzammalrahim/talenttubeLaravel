@@ -145,7 +145,7 @@ var getDataCustom = function(){
 
 
 $('input[name="filter_location_status"]').change(function() {
-    console.log(' filter_location_status ');
+    // console.log(' filter_location_status ');
     (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
 });
 
@@ -201,10 +201,10 @@ $('input[name="filter_location_status"]').change(function() {
 
         // when click on the Autocomplete suggested locations list
         autocomplete.addListener('place_changed', function() {
-             console.log(' autocomplete place_changed ');
+             // console.log(' autocomplete place_changed ');
 
               var place = autocomplete.getPlace();
-              console.log(' place ', place);
+              // console.log(' place ', place);
 
               if (!place.geometry) {
                 // User entered the name of a Place that was not suggested and
@@ -277,7 +277,7 @@ $('input[name="filter_location_status"]').change(function() {
         // location_map length.
 
     function placeMarker(location) {
-        console.log(' placeMarker location ',location);
+        // console.log(' placeMarker location ',location);
 
         if (marker == "") {
             marker = new google.maps.Marker({
@@ -325,7 +325,7 @@ $('input[name="filter_location_status"]').change(function() {
                      strokeWeight: 0         // DON'T SHOW CIRCLE BORDER.
                     });
         }
-        console.log(' circle marker ', circle);
+        // console.log(' circle marker ', circle);
         circle.bindTo('center', marker, 'position');
         circle.setRadius(filter_location_radius);
         map.fitBounds(circle.getBounds());
@@ -376,6 +376,8 @@ $('input[name="filter_location_status"]').change(function() {
                             }
                         }
                     }
+
+                    console.log( ' Location Address ', address); 
                     if((city) && (state) && (country))
                         address = city + ", " + state + ", " + country;
                     else if((city) && (state))
