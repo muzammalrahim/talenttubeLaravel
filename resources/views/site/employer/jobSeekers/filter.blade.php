@@ -288,7 +288,7 @@
                                        <option value="51">50km +</option>
                                     </select>
                                  </div>
-                                 <div class="location_latlong d-none w100">
+                                 <div class="location_latlong dtable w100">
                                     <input type="hidden" class="location_lat w50 fl_left" name="location_lat" id="location_lat" value="" placeholder="Lat" readonly="true" aria-invalid="false">
                                     <input type="hidden" class="location_long w50 fl_left" name="location_long" id="location_long" value="" placeholder="Long" readonly="true" aria-invalid="false">
                                     <input type="hidden" name="location_name" id="location_name"  value="">
