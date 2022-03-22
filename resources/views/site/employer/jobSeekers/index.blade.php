@@ -96,6 +96,8 @@
        var page = $(this).attr('href').split('page=')[1];
        $('#paginate').val(page); 
        getData();
+       var element = $('#scrollTop1').get(0)
+       element.scrollIntoView({behavior: "smooth", block: "end", inline: "nearest"});
    });
    
 
