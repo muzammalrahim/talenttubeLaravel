@@ -915,8 +915,9 @@ $(document).ready(function(){
         jQuery( window ).resize(function() { rescaletable(); });
     });
 
-   // ====================================== responsive pie chart ======================================
+   // ====================================== Scroll to top ======================================
 
+   
 
 
 
