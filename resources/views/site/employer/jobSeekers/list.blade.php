@@ -11,7 +11,7 @@
    <input type="checkbox" name="cbx[]" value="{{ $js->id }}" style="width: 20px; margin-left: 13px!important;">
    
 
-   <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
+   <div class="col-sm-12 col-md-12 js_{{ $js->id }}" id="scrollTop1">
       <div class="job-box-info block-box clearfix">
          <div class="box-head">
             @php
@@ -169,7 +169,7 @@
    </div>
    @endforeach
    <div class="jobseeker_pagination cpagination mb20">{!! $jobSeekers->render() !!}</div>
-   @endif
+   @endif 
 </div>
 
 
