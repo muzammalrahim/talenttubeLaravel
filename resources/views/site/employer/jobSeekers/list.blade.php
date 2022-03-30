@@ -68,7 +68,7 @@
                @endphp
                <div class="block-user-img ">
                   <img src="{{$profile_image}}" alt="">
-																		<h6 class="py-2">{{$js->username}}</h6>
+						<h6 class="py-2">{{$js->username}}</h6>
                </div>
                <div class="block-user-progress ">
                  
