@@ -116,8 +116,11 @@ class TalentController extends Controller
         }
 
         // dd($talentMatchArray);
+        // dump(url('/'));
+        // $url = url()->current();
+        // dd($url);
         $data['query'] = $this->paginate($talentMatchArray);
-        $data['query']->withPath('http://localhost/talenttube/public/talent-matcher');
+        $data['query']->withPath(url()->current());
         
 
         // dd('not in the loop');
