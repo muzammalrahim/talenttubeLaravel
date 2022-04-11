@@ -1265,6 +1265,7 @@ span.remove:before {
 .concigerge-box {
     background: #f8f8f8;
     padding-bottom: 20px;
+    min-height: 95% !important;
 }
 
 

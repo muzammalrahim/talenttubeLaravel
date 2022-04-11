@@ -241,7 +241,7 @@ class EmployerController extends Controller {
 												$redirect_url = ($this->agent->isMobile())? (route('mEmployerProfile')) : (route('employerProfile'));
             return response()->json([
                 'status' => 1,
-																'message' => 'data saved successfully',
+				'message' => 'data saved successfully',
                 'redirect' => $redirect_url,
                 'step' => 4
             ]);
