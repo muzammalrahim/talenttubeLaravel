@@ -4,15 +4,27 @@
 
 <div class="container p-0 m-0">
 	<div class="workreference">
-		   <h5 class="font-weight-bold text-center mb-4"> Referee's Detail </h5>
-			    <div class="form-group row mr-2">
-			      <label for="inputEmail4" class="col-md-1">Name:</label>
-			      <span type="text" class="form-control col-md-3" id="inputEmail4">{{$reference->refereeName}}</span>
-			      <label for="inputPhone" class="col-md-1">Phone:</label>
-			   	  <span class="form-control col-md-3" id="inputPhone" name="refereePhone">{{$reference->refereePhone}}</span>
-			      <label for="inputPassword4" class="col-md-1">Email: </label>
-			      <span type="text" class="form-control col-md-3" id="inputPassword4">{{$reference->refereeEmail}}</span>
-		  		</div>
+		   <h5 class="font-weight-bold text-center mb-4 py-2"> Referee's Detail </h5>
+		   		<div class="form-group row mr-2">
+		            <div class="col-md-4">
+		              <div class="row">
+		                <label for="inputEmail4" class="col-md-4">Name:</label>
+			      		<span type="text" class="form-control col-md-8" id="inputEmail4">{{$reference->refereeName}}</span>
+		              </div>
+		            </div>
+		            <div class="col-md-4">
+		              <div class="row">
+		                <label for="inputPhone" class="col-md-4">Phone:</label>
+			   	  		<span class="form-control col-md-8" id="inputPhone" name="refereePhone">{{$reference->refereePhone}}</span>
+		              </div>
+		            </div>
+		            <div class="col-md-4">
+		              <div class="row">
+		                <label for="inputPassword4" class="col-md-4">Email: </label>
+			      		<span type="text" class="form-control col-md-8" id="inputPassword4">{{$reference->refereeEmail}}</span>
+		              </div>
+		            </div>
+		        </div>
 
 		   <h5 class="font-weight-bold text-center mb-4"> Verification Details </h5>
 		  		
@@ -46,22 +58,22 @@
 			<div class="form-group row mr-2">
 			    <label for="inputPerExpectation" class="col-md-6">Did the candidate meet their performance expectations in the role?</label>
 			    <span class="form-control col-md-2 spanSyle" id="inputPerExpectation" name="refereePerformance">{{$reference->refereePerformance}}</span>
-			    <textarea type="text" class="form-control col-md-4 bg-white" disabled="true" id="dd1" name="ddText1">{{$reference->ddText1}}</textarea>
+			    <textarea type="text" class="form-control col-md-4 bg-white pt-3" disabled="true" id="dd1" name="ddText1">{{$reference->ddText1}}</textarea>
 			 </div>
 			 <div class="form-group row mr-2">
 			    <label for="inputRequirement" class="col-md-6">Was the candidate on time & punctual? Did they provide adequate notice & acceptable reasons for any leave requirements?</label>
 			    <span class="form-control col-md-2 spanSyle" id="inputRequirement" name="refereeRequirements">{{$reference->refereeRequirements}}</span>
-			    <textarea type="text" class="form-control col-md-4 bg-white" disabled="true" id="dd2" name="ddText2">{{$reference->ddText2}}</textarea>
+			    <textarea type="text" class="form-control col-md-4 bg-white pt-3" disabled="true" id="dd2" name="ddText2">{{$reference->ddText2}}</textarea>
 			 </div>
 			 <div class="form-group row mr-2">
 			    <label for="inputBehaviour" class="col-md-6">Did the candidate display good values and behaviours at work?</label>
 			    <span class="form-control col-md-2 spanSyle" id="inputBehaviour" name="refereeBehaviours">{{$reference->refereeBehaviours}}</span>
-			    <textarea type="text" class="form-control col-md-4 bg-white" disabled="true" id="dd3" name="ddText3" placeholder="Please provide furthur detail here">{{$reference->ddText3}}</textarea>
+			    <textarea type="text" class="form-control col-md-4 bg-white pt-3" disabled="true" id="dd3" name="ddText3" placeholder="Please provide furthur detail here">{{$reference->ddText3}}</textarea>
 			 </div>
 			 <div class="form-group row mr-2">
 			    <label for="inputTeamPlayer" class="col-md-6">In terms of working in a group, was the candidate a team player and able to work well with others?</label>
 			    <span class="form-control col-md-2 spanSyle" id="inputTeamPlayer" name="refereeTeamplayer">{{$reference->refereeTeamplayer}}</span>
-			    <textarea type="text" class="form-control col-md-4 bg-white" disabled="true" id="dd4" name="ddText4">{{$reference->ddText4}}</textarea>
+			    <textarea type="text" class="form-control col-md-4 bg-white pt-3" disabled="true" id="dd4" name="ddText4">{{$reference->ddText4}}</textarea>
 			 </div>
 
 			<h5 class="font-weight-bold text-center mb-4">Final Questions</h5>

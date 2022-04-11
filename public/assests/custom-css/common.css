@@ -164,6 +164,22 @@ li {
     color: #F48128 !important;
 }
 
+.orange_btn1 {
+    font-size: 16px !important;
+    background: #E00f00 !important;
+    height: 35px !important;
+    border-radius: 5px !important;
+    font-weight: 500;
+    color: #ffffff !important;
+    padding: 4px 7px;
+    border: 1px solid #E00f00 !important;
+}
+
+.orange_btn1:hover {
+    background: #ffffff !important;
+    color: #E00f00 !important;
+}
+
 .black_btn {
     font-size: 16px !important;
     background: #242424 !important;

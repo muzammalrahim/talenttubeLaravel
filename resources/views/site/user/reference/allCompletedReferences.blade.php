@@ -14,17 +14,29 @@
         @foreach ($crossreference as $reference)
         <div class="referees1 p-3">
           <div class="row"> 
-            <h5 class="bold col-md-2">Reference ({{ $loop->index+1 }}):</h5> 
-            <h5 class="bold col-md-10"> {{ $reference->refType }}</h5>
+            <h5 class="bold col-md-3">Reference ({{ $loop->index+1 }}):</h5> 
+            <h5 class="bold col-md-9"> {{ $reference->refType }}</h5>
           </div>
           <h5 class="font-weight-bold text-center mb-4">Job Seeker's Detail</h5>
           <div class="form-group row mr-2">
-            <label for="inputEmail4" class="col-md-1">Name:</label>
-            <span type="text" class="form-control col-md-3" id="inputEmail4">{{$reference->jsdata->name}}</span>
-            <label for="inputPhone" class="col-md-1">Phone:</label>
-            <span class="form-control col-md-3" id="inputPhone" name="refereePhone">{{$reference->jsdata->phone}}</span>
-            <label for="inputPassword4" class="col-md-1">Email: </label>
-            <span type="text" class="form-control col-md-3" id="inputPassword4">{{$reference->jsdata->email}}</span>
+            <div class="col-md-4">
+              <div class="row">
+                <label for="inputEmail4" class="col-md-4">Name:</label>
+                <span type="text" class="form-control col-md-8" id="inputEmail4">{{$reference->jsdata->name}}</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <label for="inputPhone" class="col-md-4">Phone:</label>
+                <span class="form-control col-md-8" id="inputPhone" name="refereePhone">{{$reference->jsdata->phone}}</span>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="row">
+                <label for="inputPassword4" class="col-md-4">Email: </label>
+                <span type="text" class="form-control col-md-8" id="inputPassword4">{{$reference->jsdata->email}}</span>
+              </div>
+            </div>
           </div>
           @if ($reference->refType == 'Work Reference')
             @include('site.user.reference.layouts.workReference')     {{-- site/user/reference/layouts/workReference --}}

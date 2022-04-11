@@ -51,6 +51,7 @@
          <button class="btn small leftMargin turquoise conductInterview123 orange_btn" value="{{$template->id}}" >Correspondence Interview</button> 
          <span class="btn small leftMargin turquoise liveInterviewButton pointer blue_btn" value="{{$template->id}}" >Live Interview</span> 
          <button class="btn small leftMargin turquoise liveInterview pointer hide_it orange_btn" value="{{$template->id}}" >Save Response</button> 
+         <span class="displayInterviewTemplate btn small orange_btn1"><i class="fa fa-times">  Close</i></span>
       </div>
       <p>
          <span class="recordalreadExist hide_it"></span>
