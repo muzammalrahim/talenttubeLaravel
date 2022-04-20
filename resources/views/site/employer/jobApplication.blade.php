@@ -14,7 +14,7 @@
 @stop
 @section('content')
 <div class="jobApplicationCont profile profile-section">
-   <h2 class="head icon_head_browse_matches">Job Seeker's Applications</h2>
+   <h2 class="head icon_head_browse_matches">Job Seeker Applications</h2>
    <div class="job_applications_filter mb20 employee-wraper">
       {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'job_applications_filter_form' )) }}
       <input type="hidden" name="page" id="paginate" value="">
@@ -86,7 +86,7 @@
                <div class="searchField_qualification b-filter-row">
                   <div class="row">
                      {{-- <div class="searchFieldLabel col-5 pt-2">Qualification: </div> --}}  
-                     <label class="col-12 col-sm-3 browse-heading font-weight-normal">Qualification:</label>
+                     <label class="col-12 col-sm-3 browse-heading font-weight-normal">Qualifications:</label>
                      <select class="col-12 col-sm-8 ml-3 filter_qualification_type form-control bg-white icon_show" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
                         <option value="">Select Qalification & Trades</option>
                         <option value="certificate">Certificate or Advanced Diploma</option>

@@ -67,7 +67,7 @@
                                     <span>{{$jobType}}</span>
                                 </div>
                                 <div class="text-info-detail clearfix">
-                                    <label class="mt-1">Job Experience:</label>
+                                    <label class="mt-1">Industry:</label>
                                         <div class="jobIndustryExp">
                                             @if(!empty($experience))
                                             @foreach($experience as $industry )
@@ -83,15 +83,15 @@
                                 </div>
 
                                 <div class="text-info-detail clearfix">
-                                    <label>Job Salary:</label>
+                                    <label>Salary Range:</label>
                                     <span>{{$job->salary}}</span>
                                 </div>
                                 <div class="text-info-detail clearfix">
                                     <label>Submitted:</label>
-                                    <span>{{$application->created_at->format('yy-m-d')}}</span>
+                                    <span>{{$application->created_at->format('d-m-Y')}}</span>
                                 </div>
                                 <div class="text-info-detail clearfix">
-                                    <label>Job Detailed:</label>
+                                    <label>Job Details:</label>
 
                                      @php 
                                         $remSpecialCharQues = str_replace("\&#39;","'",$job->description);

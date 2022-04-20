@@ -57,7 +57,8 @@
                 <div class="col-md-12 ">
                   <div class="profile profile-section interview-details-page">
                     <h2>Interview Detail @if (isEmployer())
-                      <a href="{{ route('jobSeekerInfo' ,['id'=> $UserInterview->js->id] ) }}" class="unhideInterviews blue_btn pt-2 text-decoration-none"> Click here to go to Job Seeker profile </a> 
+                      <a href="{{ route('jobSeekerInfo' ,['id'=> $UserInterview->js->id] ) }}" class="unhideInterviews blue_btn pt-2 text-decoration-none"> Click here to go to the Job Seeker's profile
+                       </a> 
                     @endif</h2>
                        <div class="row">
                         <div class="col-md-12">

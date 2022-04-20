@@ -182,7 +182,7 @@
                  // $('.error_applyingJob').html(data.message).fadeOut('3000');
 
                  var link = parseInt(data.userTest_id);
-                 var jobApp_id = '<a class = "mt10" href = "'+base_url+'/m/mProceed/test/'+link+'"> Click Here to Complete test  </a>';
+                 var jobApp_id = '<a class = "mt10" href = "'+base_url+'/m/mProceed/test/'+link+'"> Click here to complete the online test  </a>';
                  $('.onlineTestBox').html(jobApp_id);
 
             }else {

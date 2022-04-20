@@ -32,7 +32,7 @@
          </div>
 
          <div class="col-3 form-check">
-            <input type="checkbox" {{($quest->video_response == 1)? 'checked': ''}} id="flexCheckDefault" class="h-auto" />
+            <input type="checkbox" {{($quest->video_response == 1)? 'checked': ''}} id="flexCheckDefault" class="h-auto mr-2" />
            <label class="form-check-label" for="flexCheckDefault">
              Video Response
            </label>

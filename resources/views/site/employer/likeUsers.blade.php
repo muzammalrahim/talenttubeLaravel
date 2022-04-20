@@ -41,8 +41,7 @@
                         // dump($profile_image);
                         }
                         @endphp
-                        <img src="{{$profile_image}}" alt="">
-																								<h6 class="py-2 fs-6 text-center">{{$js->name}} {{$js->surname}}</h6>
+                        <img src="{{$profile_image}}" alt=""><h6 class="py-2 fs-6 text-center">{{$js->recentJob}}</h6>
                      </div>
                      <div class="block-user-progress ">
                        
@@ -54,7 +53,7 @@
                         <p>{{$js->about_me}}.</p>
                      </div>
                      <div class="row blocked-user-about mt-2">
-                        <h6 class="p-0">Intrested In:</h6>
+                        <h6 class="p-0">Interested In:</h6>
                         <p>{{$js->interested_in}}</p>
                      </div>
                      <div class="row blocked-user-about mt-2">

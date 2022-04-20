@@ -91,7 +91,7 @@
       <div class="modal-header Apply-modal-header">
         <div class="m-header  ">
           <h4 class="modal-title Apply-modal-title " id="myModalLabel">
-            Submit Proposal
+           Quick - Apply
           </h4>
           <i data-dismiss="modal" aria-label="Close" class="close-box fa fa-times"></i>
         </div>

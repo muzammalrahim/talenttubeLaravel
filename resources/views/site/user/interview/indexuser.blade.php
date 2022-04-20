@@ -81,7 +81,7 @@
             <div class="box-head">
               <h4>{{$Int_booking->interview->positionname}}</h4>                          
             </div>
-            <p class="slot-para">Your slot for interview is with below timetable.</p>
+            <p class="slot-para">Your booking confirmation details are below</p>
                <ul class="job-box-text concigerge clearfix">
                   <div class="text-info-detail clearfix row">
                     <div class="col-12 col-sm-4">   
@@ -91,7 +91,7 @@
                         <span class="col-4 py-2 font-weight-bold text-dark">To:</span>
                         <span class="col-8 py-2"> {{$Int_booking->slot->endtime}} </span>
                         <span class="col-4 py-2 font-weight-bold text-dark">Date:</span>
-                        <span class="col-8 py-2"> {{ Carbon\Carbon::parse($Int_booking->slot->date)->format('Y-m-d') }} </span>
+                        <span class="col-8 py-2"> {{ Carbon\Carbon::parse($Int_booking->slot->date)->format('d-m-Y') }} </span>
                       </div>
                     </div>
                     {{-- <span>{{ Form::text('Start Time', $value = $Int_booking->slot->starttime, $attributes = array('class'=>'form-control bgColor', 'readonly'=>'true')) }}
@@ -139,7 +139,7 @@
                 </div>
                 <div class="text-info-detail clearfix row">
                   {{-- <div class="row">  --}}
-                    <span class="col-4 font-weight-bold text-dark">Insructions:</span>
+                    <span class="col-4 font-weight-bold text-dark">Instructions:</span>
                     <p class="col-8 font-14">{{$Int_booking->interview->instruction}}</p>
                   {{-- </div> --}}
                 </div>

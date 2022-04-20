@@ -188,7 +188,7 @@
                      @include('site.user.profile.tabs.album')  {{-- site/user/profile/tabs/album --}}
 
                      <div class=" Gallery">
-                        <h2>Video's</h2>
+                        <h2>Videos</h2>
 
 
                            @include('web.user.profile.tabs.videos') 

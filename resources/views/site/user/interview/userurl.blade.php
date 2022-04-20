@@ -32,13 +32,13 @@
 	    </div>
 
 	    <div class="form-group row mt-4">
-	        {{ Form::label('Instruction', null, ['class' => 'col-md-2 form-control-label']) }}
+	        {{ Form::label('Instructions', null, ['class' => 'col-md-2 form-control-label']) }}
 	        <div class="col-md-10">
 	          {{ Form::text('Instruction', $value = $interview->instruction , $attributes = array('class'=>'form-control', 'readonly' =>'true')) }}
 	        </div>
 	    </div>
 
-	    <p class="text-center moreDetails"> Please select from the below available time/date for your interview.If you have already selected an <br>
+	    <p class="text-center moreDetails"> Please select from the below available times & dates for your interview. If you have already selected an <br>
 	    	interview time and wish to cancel or reschedule, please click 
 	    	<span class="clickHere interviewConciergeRoute" data-toggle="modal" data-target="#interviewConciergeModal" > here  </span> 
 	    </p>
@@ -125,7 +125,7 @@
 		        </div>
 
 		        <div class="slot notbrak col-md-6">
-		            <div class="font-weight-bold"><span class="test"> To confirm your booking, please complete the foollowing details.</span> 
+		            <div class="font-weight-bold"><span class="test"> To confirm your booking, please complete the following details.</span> 
 		            </div>
 
 
@@ -184,7 +184,7 @@
 
     <div class="row">
     	<div class="col-md-6 alreadyBookedInerview d-none">
-    		<p class="bookedSuccessfully"> Slot has booked sucessfully</p>
+    		<p class="bookedSuccessfully">Interview has been booked successfully</p>
     	</div> 
     </div>
 

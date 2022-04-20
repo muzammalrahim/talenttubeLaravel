@@ -98,7 +98,7 @@
 
                 @endforeach
                 @else
-                <h3>You have not applied to any job yet</h3>
+                <h3>You have not applied for any jobs yet</h3>
                 @endif
             </div>
         </div>

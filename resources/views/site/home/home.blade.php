@@ -56,7 +56,7 @@
 
                 <select id="bl_join_done_orientation" name="type" class="select_main select_index blue_btn" aria-label="">
                   <option value="user">Job Seeker</option>
-                  <option value="employer">Employee</option>
+                  <option value="employer">Employer</option>
                 </select>
               </li>
               
@@ -96,9 +96,9 @@
            <img src="assests/images/icon1.png" alt="icon-1" />
          </div>
          <div class="feature-text-wrap">
-           <h2>Search a Job</h2>
+           <h2>Find a Job</h2>
 
-           <p>It’s the modern age. Your job hunt is no longer sneaker-powered. Talenttube is a right place for you.</p>
+           <p>Are you a Job Seeker? Search for active roles on the Talent Tube platform & connect with Employers that have relevant opportunities</p>
 
          </div>
         </a>
@@ -109,9 +109,9 @@
           <img src="assests/images/icon2.png" alt="icon-1" />
         </div>
         <div class="feature-text-wrap">
-          <h2>Apply for Job</h2>
+          <h2>Quick - Apply</h2>
 
-          <p>Find your dream job by browsing jobs in major companies in world on talenttube.org.</p>
+          <p>Applying for jobs and tired of uploading your details, resume & qualifications again and again? Take advantage of Quick-Apply to avoid the hassle</p>
         </div>
       </a>
    </div>
@@ -121,8 +121,8 @@
           <img src="assests/images/icon3.png" alt="icon-1" />
         </div>
         <div class="feature-text-wrap">
-          <h2>Get your Job</h2>
-          <p>This website is one of the best websites for the job search along with simple procedures . </p>
+          <h2>Connect with our Employers</h2>
+          <p>Are you looking for a specific Employer that shares your values? With Talent Tube, you can control which Employers you wish to connect with </p>
         </div>
       </a>
    </div>
@@ -145,10 +145,9 @@
     </div>
     <div class="col-sm-12 col-md-6 col-lg-6">
      <div class="article hr">
-        <h2>Tired of applying</h2>
+        <h2>Streamline your applications</h2>
        <h3> with Countless employers</h3>
-      <p>uploading the same old documents and answering the same old question?</p>
-      <p>Create a Talent Tube account today and make Employers find you!</p>
+      <p>Looking for your ideal next job can be time consuming, which is why Talent Tube allows you to share your candidate data with Employers across our network. This means you only need to complete testing, reference checks & video interviews once, giving Employers the info they need, without having to make you retake job application steps again.</p>
     </div>
     </div>
   </div>
@@ -164,12 +163,10 @@
     <div class="col-sm-12 col-md-6 col-lg-6 order-md-1 order-sm-2">
      <div class="article second-article hr">
       <h2>Watch, compare &</h2>
-      <h3> then decides to get right one</h3>
-      <p>73% of all consumers are more likely to commit to a purchase after watching a video</p>
-      <p> Compare that to the 84% who will reject a resume due to lack of personalisation. At Talent Tube,</p>
-      <p> 
-       we believe in bridging the gap between a resume and a job application through video technology, 
-       to increase Job Seekers chances of success.</p>
+      <h3>then decide who is the right one</h3>
+      <p>73% of all consumers are more likely to commit to a purchase after watching a video.</p>
+      <p>Compare that to the 84% of Employers who will reject a resume, due to lack of personalisation.</p>
+      <p>At Talent Tube, we believe in bridging the gap between a resume and a job application through video technology, to give you more information to assist with your employment decisions.</p>
       </div>
     </div>
   </div>
@@ -185,9 +182,8 @@
     <div class="col-sm-12 col-md-6 col-lg-6">
      <div class="article hr"> 
       <h2>Finding candidates</h2>
-      <h3> with the online presence</h3>
-      <p>Over 40% of Employers say they may not interview candidates if they can’t find their online presence. Create a tailored online 
-        job profile that brings your experience to life, highlighting your strengths and outline the opportunities that matter to you</p>
+      <h3>with an online presence</h3>
+      <p>Over 40% of Employers say they may not interview candidates if they can’t find their online presence. Create a tailored online job profile that brings your experience to life, highlighting your strengths and outline the opportunities that matter to you.</p>
     </div>
     </div>
   </div>

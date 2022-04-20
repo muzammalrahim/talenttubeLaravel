@@ -252,9 +252,11 @@ $js = $jobSeeker;
                 </div>
 
                 <p>
-                    Get premium account from
-                    <a class="text-uppercase text-underline" href="{{route('mPremiumAccount')}}" > here</a>
-                    for contacting job seekers
+                    Upgrade to a 
+                    <a class="text-uppercase text-underline" href="{{route('mPremiumAccount')}}" > premium account </a> 
+                        to unlock Job Seeker’s contact details
+                    {{-- <a class="text-uppercase text-underline" href="{{route('mPremiumAccount')}}" > here</a>
+                    for contacting job seekers --}}
                 </p>
 
                 {{-- <div class="attach_btns">

@@ -28,7 +28,7 @@
 
 
           <div class="row update-info">
-            <h4>Almost There! Just a Little More To Go</h4>
+            <h4>Please complete your application details </h4>
             <div class="col-md-6">
               <label for="">First Name</label>
               <div class="input-group mb-3">

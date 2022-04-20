@@ -94,7 +94,7 @@
                     </div>
 
                     <div data-field="temporary_contract" id="temporary_contract" class="card_question" data-id="temporary_contract">
-                        <div class="count">4 of 6</div><div class="question_txt">Are you open to temporary and contract work?</div>
+                        <div class="count">4 of 6</div><div class="question_txt">Are you open to Temporary and Contract work?</div>
                     </div>
 
                     <div data-field="fulltime" id="fulltime" class="card_question" data-id="fulltime">
@@ -320,11 +320,18 @@
                 <div class="ind_exp">
                     <div class="ind_exp_h">
                         <p>
-                            Well done candidates, you’re nearly at the final stage. To complete your application, all you need to do is upload your ‘elevator pitch’, which is a short 30-60 second video...
+                            Well done candidate, you’re nearly at the final stage. To complete your application, all you need to do is upload your virtual ‘Elevator Pitch’, which is a short 30-60 second video.
                         </p>
                         <div class="step2_uplod_info">
                             <p> 
-                                Record a short 30-60 second video of yourself, and upload it in the portal below. Be sure to say hi and tell us about yourself. You can be as casual as you like, this is more about employers getting an idea of your personality and culture fit. 
+                                How to do an Elevator Pitch: Record a short 30-60 second video of yourself either by phone or webcam and upload it in the portal below. Be sure to say hi and tell us about yourself. You can be as casually dressed as you like, this is more about employers getting an idea of your personality and culture fit. Some things to include are;re fit. 
+                            </p>
+
+                            <p>*A brief summary of your career and studies</p>
+                            <p>*Tell us about your top strengths, skills or achievements</p>
+                            <p>*A brief description about your ideal next role</p>
+                            <p>
+                                Don’t worry about where you record the video, your bedroom or car is fine.
                             </p>
                         </div>
                         <div class="userUpload">
@@ -354,10 +361,10 @@
             <div id="full_step_8" class="bl_card_Final full_step_8"  style="display:none;">
                 <div class="ind_exp">
                     <div class="ind_exp_h">
-                        <p>Almost done candidates, you’re at the final stage. To complete your application, all you need to upload your resume...</p>
+                        <p>Almost done candidate, you’re at the final stage. To complete your application, all you need to do is upload your resume.</p>
                         <div class="step2_uplod_info">
                             <p>
-                                Please upload your most current resume.If you prefer, we also encourage you to remove some of your personal details (such as your full name, address & contact details) for added privacy. 
+                                Please upload your most current resume. If you prefer, we also encourage you to remove some of your personal details (such as your full name, address & contact details) for added privacy.
 
                             </p>
 

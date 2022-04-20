@@ -3,7 +3,7 @@
 <div class="row Resume">
    <h2>Resume & Contact Details</h2>
    <div class="col-md-6 Resume-email"><label>Email:<span>{{  $user->email }}</span></label></div>
-   <div class="col-md-6 Resume-contact"><label>Contact#:<span>{{ $user->phone }}</span></label></div>
+   <div class="col-md-6 Resume-contact"><label>Contact:<span>{{ $user->phone }}</span></label></div>
 </div>
 
 <div class="Gallery clearfix">

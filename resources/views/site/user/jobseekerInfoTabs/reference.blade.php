@@ -4,7 +4,7 @@
 <div class="referees">
    <p><span class="bold">Reference Type:</span><span style="margin-left: 10px;">{{$ref->refType}}</span></p>
    <p><span class="bold">Referee Status:</span><span style="margin-left: 10px;">{{$ref->refStatus}}</span></p>
-   <p><span class="bold">Organization Worked Together:</span><span style="margin-left: 10px;">{{$ref->refereeOrganization}}</span></p>
+   <p><span class="bold">Organization:</span><span style="margin-left: 10px;">{{$ref->refereeOrganization}}</span></p>
    <p><span class="bold">Title at Organization:</span><span style="margin-left: 10px;">{{$ref->refereeOrganizationTitle}}</span></p>
 </div>
 @endforeach

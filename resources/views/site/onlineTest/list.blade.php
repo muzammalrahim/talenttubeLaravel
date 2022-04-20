@@ -117,8 +117,13 @@
                 @if ($test->status != 'complete')
                   <a href="{{ route('proceedTesting' , ['id' => $test->id] ) }}" class="proceed-test used-tag " >Proceed To Test</a>
                 @endif
-                <span class="pendinginterview-tag used-tag">{{$test->status}}</span>
 
+                @if ($test->status == 'complete')
+                  <span class="pendinginterview-tag used-tag">Complete</span>
+                @else
+                  <span class="pendinginterview-tag used-tag">Pending</span>
+
+                @endif
               </ul>            
 
               {{-- <ul class="job-box-text concigerge clearfix py-0">

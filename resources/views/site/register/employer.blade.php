@@ -109,7 +109,7 @@
                     <div class="row update-info-buttons">
                          <div class="col-sm-12 update-buttons-2" clearfix>
                              <ul class="buttons-group mb-3"> 
-                                  <li class="btn-first"> <a href="" ><i class="fas fa-th-large"></i> Dashboard</a></li>
+                                  {{-- <li class="btn-first"> <a href="" ><i class="fas fa-th-large"></i> Dashboard</a></li> --}}
                                  <li ><button class="btn btn-dark"  type="reset"><i class="fas fa-sync-alt"></i> Refresh</button></li>
                                  <li ><buttton  id="frm_emp_register_submit"  class="btn btn-success"><i class="fas fa-arrow-right"></i> Next</button></li>
                                     <span id="agree_error" class="error to_hide d-none">You need to agree to the terms</span>

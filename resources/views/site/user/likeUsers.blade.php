@@ -9,9 +9,9 @@
 
 <section class="row">
    <div class="col-md-12">
+      <h2>Like Users Lists</h2>
    @if ($likeUsers->count() > 0)
    <div class="profile profile-section">
-      <h2>Like Users Lists</h2>
       <div class="row">
          @foreach ($likeUsers as $likeuser)
          <div class="col-sm-12 col-md-12 removeJs_{{ $likeuser->user->id }}">
@@ -99,7 +99,7 @@
    </div>
 
    @else
-      <h3>You have not liked anyone</h3>
+      <h3>You have not liked any Employers</h3>
       @endif
 </section>
 

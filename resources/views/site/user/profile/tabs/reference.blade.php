@@ -4,7 +4,7 @@
           @csrf
          <div class="row mb-4">
             <div class="col-md-4 col-sm-12">
-               <label>Name:</label>
+               <label>Referee’s Name:</label>
             </div>
             <div class="col-md-8 col-sm-12">
                <input type="text" class="form-control" name="name" placeholder="Enter name" required>
@@ -13,7 +13,7 @@
 
          <div class="row mb-4">
             <div class="col-md-4 col-sm-12">
-               <label>Mobile:</label>
+               <label>Referee’s Mobile:</label>
             </div>
             <div class="col-md-8 col-sm-12">
                <input type="number" class="form-control" name="mobile" placeholder="Enter your mobile number" required>
@@ -22,7 +22,7 @@
 
          <div class="row mb-4">
             <div class="col-md-4 col-sm-12">
-               <label>Email:</label>
+               <label>Referee’s Email:</label>
             </div>
             <div class="col-md-8 col-sm-12">
                <input type="email" class="form-control" name="email" placeholder="Enter Email" required>
@@ -33,7 +33,7 @@
 
          <div class="row mb-4">
             <div class="col-md-4 col-sm-12">
-               <label>Reference:</label>
+               <label>Reference Type:</label>
             </div>
             <div class="col-md-8 col-sm-12 select-refeance">
                <i class="fa fa-caret-down select-caret"></i>

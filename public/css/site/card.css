@@ -69,7 +69,7 @@ button.btn.like_frame:hover span.like_hover{ opacity: 1; }
 .logo a{ height: 96px; display: table-cell; vertical-align: middle; }
 
 .slogan{ width: 44%; height: 96px; overflow: hidden; margin: 0 auto; font-size: 24px; line-height: 28px; }
-.slogan span{ display: block; padding: 33px 60px 0; vertical-align: middle; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
+.slogan span{ display: block; padding: 33px 0px 0; vertical-align: middle; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; }
 /*-- /header --*/
 /*-- content --*/
 .content{ /*padding: 76px 0 0;*/ padding: 116px 0 40px; clear: both; overflow-x: hidden; }

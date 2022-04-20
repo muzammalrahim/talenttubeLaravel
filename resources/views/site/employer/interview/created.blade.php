@@ -7,7 +7,7 @@
 @section('content')
 <div class="row profile profile-section" style="height:auto !important">
    <div class="heading icon_head_browse_matches">
-      <p class="bookingCreated ">Good news, your booking is now created, booking ID {{$interview->uniquedigits}}. You can now Select Job Seekers from your liked list to invite to interview, manually enter own Job Seeker details below to receive notification about the interviews, or send the below link directly to anyone you'd like interview </p>
+      <p class="bookingCreated ">Good news, your booking is now created, booking ID {{$interview->uniquedigits}}. You can now select Job Seekers from your liked list to invite them to book in for an interview slot with you. You can also manually enter your own Job Seeker details or send the link directly to anyone you'd like interview (including those that don’t have a Talent Tube profile).</p>
    </div>
 
    <div class="row">

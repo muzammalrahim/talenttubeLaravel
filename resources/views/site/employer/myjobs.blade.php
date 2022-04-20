@@ -53,11 +53,11 @@
                               </li>
                              
                               <li class="text-info-detail clearfix">
-                                 <label class="w-50">Job Salary:</label>
+                                 <label class="w-50">Salary Range:</label>
                                  <span class="w-50">{{$job->salary}}</span>
                               </li>
                               <li class="text-info-detail clearfix">
-                                 <label class="w-50">Job Experience:</label>
+                                 <label class="w-50">Industry:</label>
                                  <span class="w-50">
                                     @if(!empty($experience))
                                     @foreach($experience as $industry )
@@ -80,7 +80,7 @@
                         <div class="col-12 col-sm-6 col-md-8 col-lg-8">
                            <ul class="job-box-text concigerge clearfix">
                                <li class="text-info-detail clearfix">
-                                 <label>Job Detail:</label>
+                                 <label>Job details:</label>
                                  <p class="h-auto">{{$job->description}}</p>
                               </li>
                            </ul>
