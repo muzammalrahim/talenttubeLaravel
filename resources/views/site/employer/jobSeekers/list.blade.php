@@ -87,14 +87,14 @@
                   <p class=""><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
                </div>
                <div class="row blocked-user-about mt-2">
-                  <h6 class="p-0">Qualificaton:</h6>
+                  <h6 class="p-0">Qualificatons:</h6>
                   @php
                   $qualification_names =  getQualificationNames($js->qualification)
                   @endphp
                   @if(!empty($qualification_names))
                   
                   {{-- <h6 class="p-0">Qualification:</h6> --}}
-                  <p><span><b>Type:</b></span>{{$js->qualificationType}}</p>
+                  <p><span><b>Type:</b></span> <span class="text-capitalize"> {{$js->qualificationType}} </span></p>
 
                   <ul class="p-0">
                      @foreach ($qualification_names as $qnKey => $qnValue)
@@ -110,11 +110,11 @@
                   <p class="">{{$js->about_me}}</p>
                </div>
                <div class="row blocked-user-about mt-2">
-                  <h6 class="p-0">Intrested In:</h6>
+                  <h6 class="p-0">Interested In:</h6>
                   <p class="">{{$js->interested_in}}</p>
                </div>
                <div class="row blocked-user-about mt-2">
-                  <h6 class="p-0">Sallary Range:</h6>
+                  <h6 class="p-0">Salary Range:</h6>
                   <p class="">{{getSalariesRangeLavel($js->salaryRange)}}</p>
                </div>
                <div class="row blocked-user-about mt-2">
@@ -122,7 +122,7 @@
                   <p class="">{{userLocation($js)}}</p>
                </div>
                <div class="row blocked-user-experience mt-2" >
-                  <h6 class="p-0">Industory Experience:</h6>
+                  <h6 class="p-0">Industry Experience:</h6>
                   @if(isset($js->industry_experience))
                   <ul class="p-0">
                      @foreach ($js->industry_experience as $ind)
@@ -144,7 +144,7 @@
             <div class="block-progrees-ratio1 d-none d-md-block">
               <ul>
                 <li><span class="Progress-ratio-icon1">.</span> <span> {{ $user_compat }}% </span> Match </li>
-                <li><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$user_compat }}% </span> UnMatch</li>
+                <li><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$user_compat }}% </span> Un-Matched</li>
               </ul>
             </div>
 

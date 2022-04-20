@@ -67,7 +67,7 @@
                        @else
                         <div class="add_new_job">
                           <div class="job_row_heading jobs_filter"></div>
-                          <h3>You have not added any reference yet</h3>
+                          <h3>You have not added any referees yet</h3>
                       </div>
                       @endif
               </div>

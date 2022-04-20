@@ -1871,7 +1871,7 @@ class SiteUserController extends Controller
             $data['onlineTest'] = $onlineTest;
             $duration = $onlineTest->time;
             $data['duration'] = $duration;
-            $UserOnlineTest = UserOnlineTest::where('test_id' ,$job->onlineTest_id )->where('user_id' , $user->id)->first();
+            $UserOnlineTest = UserOnlineTest::where('test_id' ,$job->onlineTest_id )->where('user_id' , $user->id)->where('status', 'complete')->first();
             // dd($UserOnlineTest);
             $data['UserOnlineTest'] = $UserOnlineTest;
 

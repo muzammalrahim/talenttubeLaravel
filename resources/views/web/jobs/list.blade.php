@@ -56,7 +56,7 @@
                   <p class="p-0">{{ $jobType }}</p>
                </div>
                <div class="mt-2 row blocked-user-about">
-                  <h6 class="p-0">Job Experience:</h6>
+                  <h6 class="p-0">Industry:</h6>
                   @if(!empty($experience))
                      @foreach($experience as $industry )
                      <div class="IndustrySelect">
@@ -76,11 +76,11 @@
                   @endif
                </div>
                <div class="mt-2 row blocked-user-about">
-                  <h6 class="p-0">Job Sallary:</h6>
+                  <h6 class="p-0">Salary Range:</h6>
                   <p class="p-0">{{$job->salary}}</p>
                </div>
                <div class="mt-2 row blocked-user-about  clearfix">
-                  <h6 class="p-0">Job Detailed:</h6>
+                  <h6 class="p-0">Job Details:</h6>
                   <textarea class="p-0 border-0 site-grey-color">{{$job->description}}</textarea>
                </div>
                <div class="mt-2 row blocked-user-about  clearfix">
@@ -89,7 +89,7 @@
                </div>
                <div class="mt-2 row blocked-user-experience  clearfix">
                   <h6 class="p-0">Expire On:</h6>
-                  <p class="p-0">{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</p>
+                  <p class="p-0">{{ ($job->expiration)?($job->expiration->format('d-m-Y')):''}}</p>
                </div>
             </div>
          </div>
@@ -107,10 +107,10 @@
                      @if (isset($job->jobApplication))
                      @if ($job->jobApplication->user_id == $user->id)
                      {{-- expr --}}
-                     <button class="interview-tag used-tag"><i class="far fa-check-circle"></i> Appied </button>
+                     <button class="interview-tag used-tag"><i class="far fa-check-circle"></i> Applied </button>
                      @endif
                      @else
-                     <button data-toggle="modal" data-target="#jobApplyModal" onclick="jobApplyFunction({{ $job->id }})" class="interview-tag used-tag"><i class="far fa-check-circle"></i> Apply </button>
+                     <button data-toggle="modal" data-target="#jobApplyModal" onclick="jobApplyFunction({{ $job->id }})" class="interview-tag used-tag"><i class="far fa-check-circle"></i> Quick Apply </button>
                      @endif
                   </div>
                </div>

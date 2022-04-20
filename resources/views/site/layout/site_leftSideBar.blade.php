@@ -52,7 +52,7 @@
 
          <li>
             <a href="{{ route('jobApplications') }}" class="{{(request()->is('jobApplications'))?'active':''}} sidebar-text-view">
-               <div class="row px-2"><i class="fas fa-briefcase col-2"></i><span class="col-10"> My jobs Application</span></div>
+               <div class="row px-2"><i class="fas fa-briefcase col-2"></i><span class="col-10"> My jobs Applications</span></div>
             </a>
          </li>
          
@@ -69,7 +69,7 @@
          </li>
          <li>
             <a href="{{route('crossreference.user')}}" class="{{(request()->is('crossreference.user'))?'active':''}} sidebar-text-view">
-               <div class="row px-2"><i class="fas fa-link col-2"></i><span class="col-10">Cross Refrance</span></div>
+               <div class="row px-2"><i class="fas fa-link col-2"></i><span class="col-10">Cross Reference</span></div>
             </a>
          </li>
          <li>
@@ -100,7 +100,7 @@
 
          <li>
             <a href="{{ route('likeList') }}" class="{{(request()->is('like'))?'active':''}} sidebar-text-view">
-               <div class="row px-2"><i class="fas fa-thumbs-up col-2"></i><span class="col-10">Like Users</span></div>
+               <div class="row px-2"><i class="fas fa-thumbs-up col-2"></i><span class="col-10">Liked Users</span></div>
             </a>
          </li>
 

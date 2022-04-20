@@ -10,7 +10,7 @@
     
     <div class="profile profile-section">
 
-      <h2>Interview Detail</h2> 
+      <h2>Correspondence interview questions</h2> 
         
       @if ($UserInterview->status == 'Accepted')
 
@@ -30,9 +30,9 @@
             </div>
             <div class="col-sm-12 col-md-6">
                @if ($UserInterview->template->type == 'phone_screeen' )
-               <p class="text-dark"> Template Type: <b> Phone Screen</b> </p>
+               <p class="text-dark"> Template Type: <b class="text-capitalize"> Phone Screen</b> </p>
                @else
-               <p class="text-dark">Template Type: <b>{{$UserInterview->template->type}}</b></p>
+               <p class="text-dark text-capitalize">Template Type: <b>{{$UserInterview->template->type}}</b></p>
             </div>
             <div class="col-sm-12 col-md-6">
                <p class="text-dark">Employer Instructions: <b>{{$UserInterview->template->employers_instruction}}</b></p>

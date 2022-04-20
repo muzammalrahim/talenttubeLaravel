@@ -70,7 +70,7 @@
 			<h5 class="font-weight-bold text-center"> Work Related Questions </h5>
 
 			<p>
-				Please note, each of these questions requires a rating (unsatisfactory, met expectations, exceeded expectations) and verbatim commentary
+				Please note, each of these questions requires a rating (unsatisfactory, met expectations or exceeded expectations) and verbatim commentary
 			</p>
 
 			<div class="form-group">

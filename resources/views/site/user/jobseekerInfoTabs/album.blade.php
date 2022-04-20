@@ -53,9 +53,9 @@
          Content Locked
       </div>
       <p>
-         Get premium account from
-         <a class="credits_balans" id="credits_balans_header" href="{{route('premiumAccount')}}"> here</a>
-         for contacting job seekers
+         Upgrade to a 
+         <a class="credits_balans" id="credits_balans_header" href="{{route('premiumAccount')}}">premium account</a>
+         to unlock Job Seeker’s contact details
       </p>
    </span>
    @endif

@@ -6,7 +6,7 @@
     <div class="box-head">
       <h4>Online Test {{$loop->index+1}}:</h4>
        @if ($test->jobApplication != NULL)
-        <p class="p0 qualifType text-white"> Online Test against "job application" <b> {{$test->jobApplication->job->title}} </b> </p>
+        <p class="p0 qualifType text-white"> Online Test against <b> {{$test->jobApplication->job->title}} </b> </p>
         @endif                          
     </div>
     <p class="slot-para">Your slot for test is with below timetable.</p>
@@ -31,7 +31,7 @@
           @endif
       </ul>
       <div class="dual-tags testing-tag clearfix">
-        <span class="pendinginterview-tag used-tag">{{$test->status}}</span>
+        <span class="pendinginterview-tag used-tag text-capitalize">{{$test->status}}</span>
       </div>
  </div>
 </div>

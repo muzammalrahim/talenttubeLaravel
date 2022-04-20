@@ -62,11 +62,11 @@
                                 <p class="">{{$jobType}}</p>
                             </div>
                             <div class="row blocked-user-about mt-2">
-                                <h6 class="p-0">Job Sallary:</h6>
+                                <h6 class="p-0">Salary Range:</h6>
                                 <p class="">{{$job->salary}}</p>
                             </div>
                             <div class="row blocked-user-about mt-2">
-                                <h6 class="p-0">Job Experience:</h6>
+                                <h6 class="p-0">Industry:</h6>
                                 @if(!empty($experience))
                                 @foreach($experience as $industry )
                                 <div class="IndustrySelect">
@@ -80,8 +80,8 @@
                                 @endif
                             </div>
                             <div class="row blocked-user-about mt-2">
-                                <h6 class="p-0">Expired On:</h6>
-                                <p class="">{{ ($job->expiration)?($job->expiration->format('yy-m-d')):''}}</p>
+                                <h6 class="p-0">Expires On:</h6>
+                                <p class="">{{ ($job->expiration)?($job->expiration->format('d-m-Y')):''}}</p>
                             </div>
                             <div class="row blocked-user-experience mt-2">
                                 <h6 class="p-0">Job Detail:</h6>

@@ -51,7 +51,7 @@
                            <p>{{$js->about_me}}</p>
                         </div>
                         <div class="row blocked-user-about mt-2">
-                           <h6 class="p-0">Intrested In:</h6>
+                           <h6 class="p-0">Interested In:</h6>
                            <p>{{$js->interested_in}}</p>
                         </div>
                         <div class="row blocked-user-about mt-2">
@@ -59,7 +59,7 @@
                            <p>{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
                         </div>
                         <div class="row blocked-user-experience mt-2">
-                           <h6 class="p-0">Industory Experience:</h6>
+                           <h6 class="p-0">Industry Experience:</h6>
                            @if(isset($js->industry_experience))
                            @foreach ($js->industry_experience as $ind)
                            <ul class="indsutrySelect p-0">

@@ -104,7 +104,7 @@
          <div class="interviewSlot">
             <button class="btn small violet addSlot blue_btn py-1"> Add Interview slot</button>
          </div>
-         <div class="fomr_btn act_field center">
+         <div class="fomr_btn act_field center mb-5">
             {{-- <span class="form_label"></span> --}}
             {{-- <input type="type" value="academic" /> --}}
             <button type="submit" class="btn small turquoise saveNewBooking orange_btn">Save</button>
@@ -287,7 +287,7 @@
                                                                      i++;
            $('.slots').append(slot);
            $(".datepicker").datepicker({
-               dateFormat: "yy-mm-dd" , minDate: 0, 
+               dateFormat: "dd-mm-yy" , minDate: 0, 
    
            });
            

@@ -185,7 +185,7 @@
                   <li class="nav-item" role="presentation">
                      <button class="nav-link" id="refrance-tab" data-bs-toggle="tab" data-bs-target="#refrance"
                         type="button" role="tab" aria-controls="refrance" aria-selected="false">
-                     <i class="fa fa-circle tab-circle-cross"></i>Refrences</button>
+                     <i class="fa fa-circle tab-circle-cross"></i>References</button>
                   </li>
 
                </ul>
@@ -241,7 +241,7 @@
 
                     
                     <div class="about-infomation bl qualificationBox">
-                        <h2>Qualification</h2>
+                        <h2>Qualifications</h2>
                         <button type="button" class="edited-text" onclick="showQualificationEditor();"><i class="fas fa-edit editQualification"></i></button>
                         <p class="loader SaveQualification"style="float: left;"></p>
                               <div class="cl"></div>
@@ -289,7 +289,7 @@
                      @include('web.user.profile.tabs.resume')  {{-- web/user/profile/tabs/resume --}}
 
                      <div class=" Gallery">
-                        <h2>Video's</h2>
+                        <h2>Videos</h2>
 
                            @include('web.user.profile.tabs.videos') {{-- web/user/profile/tabs/videos --}}
 

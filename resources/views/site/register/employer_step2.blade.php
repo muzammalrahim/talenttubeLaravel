@@ -75,7 +75,7 @@
                     </div>
 
                     <div data-field="temporary_contract" class="card_question ">
-                        <div class="count">4 of 6</div><div class="question_txt">Does you organisation offer temporary or contract type work?</div>
+                        <div class="count">4 of 6</div><div class="question_txt">Does you organisation offer Temporary or Contract type work?</div>
                     </div>
 
                     <div data-field="fulltime" class="card_question ">

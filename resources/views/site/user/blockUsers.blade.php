@@ -78,7 +78,14 @@
 
                 @endforeach
                 @else
-                <h3>You have not blocked anyone</h3>
+                @if (!isEmployer())
+                    <h3>You have not blocked any Employers</h3>
+                    {{-- expr --}}
+
+                    @else
+                    <h3>You have not blocked any Jobseekers</h3>
+
+                @endif
                 @endif 
             </div>
         </div>

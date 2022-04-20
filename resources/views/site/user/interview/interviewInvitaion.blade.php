@@ -53,7 +53,7 @@
               @else
               <li class="text-info-detail clearfix">
                 <label>Interview Type:</label>
-                <span><b> {{$Int_booking->template->type}} </b></span>
+                <span><b class="text-capitalize"> {{$Int_booking->template->type}} </b></span>
               </li>
               @endif
 
@@ -83,7 +83,7 @@
 
                 <a  href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
                 class="interview-tag">Click here to respond to this interview</a>
-                <span class="pendinginterview-tag used-tag pull-right h-auto font-unset">{{$Int_booking->status}}</span>
+                <span class="pendinginterview-tag used-tag pull-right h-auto font-unset text-capitalize">{{$Int_booking->status}}</span>
 
               @else
                 {{-- <a href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
@@ -93,7 +93,7 @@
                   onclick="acceptInterviewFun('{{ $Int_booking->url }}', '{{ $Int_booking->id }}')">Click here to respond to this interview</button> 
                 </div>
 
-                <span class="pendinginterview-tag used-tag pull-right h-auto font-unset intStatus_{{ $Int_booking->id }}">{{$Int_booking->status}}</span>
+                <span class="pendinginterview-tag used-tag pull-right h-auto font-unset text-capitalize intStatus_{{ $Int_booking->id }}">{{$Int_booking->status}}</span>
               @endif
 
               </div>
@@ -104,7 +104,7 @@
           @endphp
           @endforeach  
           @else
-          <h3> You have not received any interview invitation yet.</h3>
+          <h3>You have not received any interview invitations yet.</h3>
           @endif
       </div>
     </div>

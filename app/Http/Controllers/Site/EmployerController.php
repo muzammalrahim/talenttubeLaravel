@@ -473,7 +473,7 @@ class EmployerController extends Controller {
 
             return response()->json([
                 'status' => 1,
-                'message' => '<h3>Job Succesfully Created.</h3><p>Click here to view job detail</p>',
+                'message' => '<h3>Job Succesfully Created.</h3>',
                 // 'redirect' => route('')
             ]);
         }

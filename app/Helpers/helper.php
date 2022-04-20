@@ -238,7 +238,6 @@ function getIndustries(){
         'healthcare_medical'            => 'Healthcare and Medical',
         'hospitality_hotels'            => 'Hospitality & Hotels' ,
         'health_safety'                 => 'Health & Safety',
-        'tourism'                       => 'Tourism',
         'human_resources_recruitment'   => 'Human Resources and Recruitment',
         'information_technology'        => 'Information Technology',
         'insurance'                     => 'Insurance',
@@ -252,6 +251,7 @@ function getIndustries(){
         'sales_business_development'    => 'Sales and Business Development',
         'science_technology'            => 'Science and Technology',
         'sport_recreation'              => 'Sport and Recreation',
+        'tourism'                       => 'Tourism',
         'team_leader_people_management' => 'Team Leader and People Management',
         'telecommunications'            => 'Telecommunications',
         'trades_services'               => 'Trades and Services',
@@ -905,7 +905,7 @@ function getUserRegisterQuestions(){
     $userquestion = array(
         'graduate_intern' => 'Are you seeking a Graduate Program or Internship?',
         'part_time' => 'Are you open to Part Time or Casual work?',
-        'temporary_contract' => 'Are you open to temporary and contract work?',
+        'temporary_contract' => 'Are you open to Temporary and Contract work?',
         'fulltime' => 'Are you looking for Full Time Employment?',
         'relocation' => 'Are you looking or willing to relocate for your next job opportunity?',
         'resident' => 'Are you a Permanent Resident or Citizen of Australia or New Zealand?',
@@ -918,7 +918,7 @@ function getEmpRegisterQuestions(){
     $empquestion = array(
         'graduate_intern' => 'Does your company hire Graduates or Interns?',
         'part_time' => 'Are you open to Part Time or Casual workers?',
-        'temporary_contract' => 'Does you organisation offer temporary or contract type work?',
+        'temporary_contract' => 'Does you organisation offer Temporary or Contract type work?',
         'fulltime' => 'Are you looking for Full Time candidates?',
         'relocation' => 'Are you willing to repay relocation expenses for a strong candidate?',
         'resident' => 'Does your organisation ever hire candidates who are not Permanent Residents or Citizens?',

@@ -58,14 +58,14 @@
                   <p><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
                </div>
                <div class="row blocked-user-experience">
-                  <h6 class="p-0">Qualification:</h6>
+                  <h6 class="p-0">Qualifications:</h6>
                   @php
                   $qualification_names =  getQualificationNames($js->qualification)
                   @endphp
                   @if(!empty($qualification_names))
                   {{-- <div class="font13"> --}}
                      
-                     <p> <span>Type:</span> {{$js->qualificationType}}</p>
+                  <p> <span>Type:</span> <span class="text-capitalize"> {{$js->qualificationType}}</span> </p>
                   {{-- </div> --}}
                   <ul class="p-0">
                      @foreach ($qualification_names as $qnKey => $qnValue)
@@ -81,7 +81,7 @@
                   <p>{{$js->about_me}}</p>
                </div>
                <div class="row blocked-user-about mt-2">
-                  <h6 class="p-0">Intrested In:</h6>
+                  <h6 class="p-0">Interested In:</h6>
                   <p>{{$js->interested_in}}.</p>
                </div>
                <div class="row blocked-user-about mt-2">
@@ -89,7 +89,7 @@
                   <p>{{getSalariesRangeLavel($js->salaryRange)}}</p>
                </div>
                <div class="row blocked-user-experience mt-2">
-                  <h6 class="p-0">Industory Experience:</h6>
+                  <h6 class="p-0">Industry Experience:</h6>
                   @if(isset($js->industry_experience))
                   <ul class="p-0">
                      @foreach ($js->industry_experience as $ind)

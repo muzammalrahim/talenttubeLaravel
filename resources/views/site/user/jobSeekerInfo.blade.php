@@ -10,7 +10,7 @@
 <section class="row">
    <div class="col-md-12">
    <div class="profile profile-section">
-      <h2>Job Seeker Detail</h2>
+      <h2>Job Seeker Details</h2>
       @php
       $js = $jobSeeker;
       @endphp                
@@ -115,7 +115,7 @@
                         <p>{{$js->about_me}}</p>
                      </div>
                      <div class="row blocked-user-about mt-2">
-                        <h6 class="p-0">Intrested In:</h6>
+                        <h6 class="p-0">Interested In:</h6>
                         <p>{{$js->interested_in}}</p>
                      </div>
                      <div class="row blocked-user-about mt-2">
@@ -123,12 +123,12 @@
                         <p>{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
                      </div>
                      <div class="row blocked-user-about mt-2">
-                        <h6 class="p-0">Sallary Range:</h6>
+                        <h6 class="p-0">Salary Range:</h6>
                         <p>{{getSalariesRangeLavel($js->salaryRange)}}</p>
                      </div>
                      <div class="row blocked-user-about mt-2">
-                        <h6 class="p-0">Qualification:</h6>
-                        <p><span><b>Type:</b></span>{{$js->qualificationType}}</p>
+                        <h6 class="p-0">Qualifications:</h6>
+                        <p><span><b>Type:</b></span> <span class="text-capitalize"> {{$js->qualificationType}}</span> </p>
                         @php
                         $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
                         @endphp
@@ -143,7 +143,7 @@
                         @endif
                      </div>
                      <div class="row blocked-user-experience mt-2">
-                        <h6 class="p-0">Industory Experience:</h6>
+                        <h6 class="p-0">Industry Experience:</h6>
                         @if(isset($js->industry_experience))
                         <ul class="p-0">
                            @foreach ($js->industry_experience as $ind)
@@ -188,7 +188,7 @@
             <li class="nav-item" role="presentation">
                <button class="nav-link active" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference"
                   type="button" role="tab" aria-controls="job" aria-selected="false">
-               <i class="fa fa-circle tab-circle-cross"></i>Refrance</button>
+               <i class="fa fa-circle tab-circle-cross"></i>Reference</button>
             </li>
             <li class="nav-item" role="presentation">
                <button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
@@ -206,7 +206,7 @@
             <li class="nav-item" role="presentation">
                <button class="nav-link" id="interview-tab" data-bs-toggle="tab" data-bs-target="#interview"
                   type="button" role="tab" aria-controls="contact" aria-selected="false">
-               <i class="fa fa-circle tab-circle-cross"></i>InterView</button>
+               <i class="fa fa-circle tab-circle-cross"></i>Interview</button>
             </li>
             <li class="nav-item" role="presentation">
                <button class="nav-link" id="online_test-tab" data-bs-toggle="tab" data-bs-target="#online_test"
@@ -224,7 +224,7 @@
             <!-- ======================================================= job tab ======================================================= -->
             
             <div class="tab-pane fade show active job-applied pt-4" id="reference"  role="tabpanel" aria-labelledby="reference-tab">
-               <h2>Refrance</h2>
+               <h2>Reference</h2>
                <div class="row">
                   @include('site.user.jobseekerInfoTabs.reference')
                </div>
@@ -300,14 +300,14 @@
                </div>
             </div>
             <div class="tab-pane fade online_test-tab pt-4" id="online_test"  role="tabpanel" aria-labelledby="online_test-tab">
-               <h2>online Tests</h2>
+               <h2>Online Tests</h2>
                <div class="tab_onlineTest tab_cont pt30px">
                   @include('site.user.jobseekerInfoTabs.onlineTests')
                   {{--    site/user/jobseekerInfoTabs/onlineTests  --}}
                </div>
             </div>
             <div class="tab-pane fade last_login-tab pt-4" id="last_login"  role="tabpanel" aria-labelledby="last_login-tab">
-               <h2>last Login</h2>
+               <h2>Last Login</h2>
                <div class="tab_lastLogin tab_cont pt30px">
                   {{-- @dump($jobSeeker->last_login); --}}
                   <p>

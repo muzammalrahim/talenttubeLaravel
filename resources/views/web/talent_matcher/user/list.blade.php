@@ -47,7 +47,7 @@
                      <p>{{$js['id']->recentJob}}<b> at </b>{{$js['id']->organHeldTitle}}</p>
                   </div>
                   <div class="row blocked-user-about mt-2">
-                     <h6 class="p-0">Qualificaton:</h6>
+                     <h6 class="p-0">Qualifications:</h6>
                      @php
                      $qualification_names =  getQualificationNames($js['id']->qualification)
                      @endphp
@@ -66,7 +66,7 @@
                   </div>
 
                   <div class="row blocked-user-about mt-2">
-                     <h6 class="p-0">Sallary Range:</h6>
+                     <h6 class="p-0">Salary Range:</h6>
                      <p>{{getSalariesRangeLavel($js['id']->salaryRange)}}</p>
                   </div>
                @endif
@@ -75,12 +75,12 @@
                   <p>{{$js['id']->about_me}}</p>
                </div>
                <div class="row blocked-user-about mt-2">
-                  <h6 class="p-0">Intrested In:</h6>
+                  <h6 class="p-0">Interested In:</h6>
                   <p>{{$js['id']->interested_in}}</p>
                </div>
                
                <div class="row blocked-user-experience mt-2">
-                  <h6 class="p-0">Industory Experience:</h6>
+                  <h6 class="p-0">Industry:</h6>
                   @if(isset($js['id']->industry_experience))
                   @foreach ($js['id']->industry_experience as $ind)
                   <ul class="indsutrySelect p-0">
@@ -96,7 +96,7 @@
                
                <ul>
                 <li><span class="Progress-ratio-icon1">.</span> <span> {{ $js['user_compat'] }}% </span> Match </li>
-                <li><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$js['user_compat'] }}% </span> UnMatch</li>
+                <li><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$js['user_compat'] }}% </span> Un-Matched </li>
               </ul>              
             </div>
             {{-- @if (in_array($js->id,$likeUsers))

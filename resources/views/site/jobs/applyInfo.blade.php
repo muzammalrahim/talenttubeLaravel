@@ -10,7 +10,7 @@
                     $questions = $job->questions;
                 @endphp
                 @if (count($questions) > 0)
-                    <p>Almost done, few questions before your resume is accepted for this job.</p>
+                    <p>Please complete the below questions in order to submit your job application</p>
                 <div class="jobQuestions">
                     @foreach ($questions as $question)
                     <div class="job_question form_field col-md-12 Apply-job-modal-form">

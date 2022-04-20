@@ -2,7 +2,7 @@
 
 @if ($interview_booking->count() > 0)
 @foreach ($interview_booking as $booking)
-  <p> <span class="bold">{{$loop->index+1}})  {{$jobSeeker->name}} </span>  has booked interview for the position of <span class="bold"> {{$booking->interview->positionname}} </span> </p>
+  <p> <span class="bold">{{$loop->index+1}})  {{$jobSeeker->name}} </span>  has booked an interview for the position of <span class="bold"> {{$booking->interview->positionname}} </span> </p>
 @endforeach
 @else
   <p> This user has not any booking yet</p>
