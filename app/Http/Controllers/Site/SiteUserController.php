@@ -399,7 +399,8 @@ class SiteUserController extends Controller
                 'status' => 1,
                 'message' => 'data saved successfully'
             ]);
-        } elseif($requestData['step'] == 9) {
+        } 
+        else {
             $requestData['tags'] = my_sanitize_string($request->tags);
             $requestData['tags'] = !empty($requestData['tags'])?(explode(',', $requestData['tags'])):null;
 //            $rules = array(
@@ -421,9 +422,14 @@ class SiteUserController extends Controller
             $user->save();
             return response()->json([
                 'status' => 1,
-                'message' => 'data saved successfully'
+                'message' => 'data saved successfully',
+                'redirect' => route('profile'),
+                'step' => $requestData['step']
             ]);
-        } else {
+        } 
+
+        // Commented for removing step-9
+        /*else {
             $user->step2 = $requestData['step'];
             $user->save();
             return response()->json([
@@ -432,7 +438,9 @@ class SiteUserController extends Controller
                 'redirect' => route('profile'),
                 'step' => $requestData['step']
             ]);
-        }
+        }*/
+        // Commented for removing step-9
+
 
         // card_step2_validation
 //        $rules = array(
@@ -1844,9 +1852,11 @@ class SiteUserController extends Controller
             // $likeUsers    = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
             $jobs = new Jobs();
             $jobs = $jobs->filterJobs($request);
+            
             // ::with(['applicationCount','jobEmployerLogo'])->orderBy('created_at', 'DESC')->get();
             $data['jobs'] = $jobs;
             $data['user'] = $user;
+            // dd($data);
             return view('web.jobs.list', $data);
             // web/jobs/list
         }

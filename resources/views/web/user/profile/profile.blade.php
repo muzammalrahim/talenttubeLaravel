@@ -21,16 +21,16 @@
 
                      <div class="location p-0s">  
                         <div class="row m-0">
-																									<div class="col-10 p-0 m-0"> 
-                           <p class="userLocationSpan px-0" > {{userLocation($user)}} </p> 
-																											</div>
-																											<div class="col-2 p-0 m-0">
-                           <button type="button" id="list_info_location" class="orange_btn float-right " onclick="showMap()">
-                           <i class="fas fa-edit salaryRangeEdit"></i> 
-                        </button>
-																								</div>
-</div>
-                          <div class="location_search_cont hide_it ">
+                           <div class="col-10 p-0 m-0"> 
+                              <p class="userLocationSpan px-0" > {{userLocation($user)}} </p> 
+                           </div>
+                           <div class="col-2 p-0 m-0">
+                              <button type="button" id="list_info_location" class="orange_btn float-right " onclick="showMap()">
+                                 <i class="fas fa-edit salaryRangeEdit"></i> 
+                              </button>
+                           </div>
+                        </div>
+                        <div class="location_search_cont hide_it ">
                               <div class="location_input dtable w100">
                                 <input type="text" name="location_search" class="inp fl_left form-control" id="location_search" value="{{userLocation($user)}}" placeholder="Type a location" aria-invalid="false">
                                 <select class="dinline_block filter_location_radius select_aw hide_it" name="filter_location_radius" data-placeholder="Select Location Radius">

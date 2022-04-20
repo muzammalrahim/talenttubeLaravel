@@ -737,6 +737,10 @@ $(function(){
                                 break;
                             case 9:
                                 showUserStep10();
+                                setTimeout(() => {
+                                    location.href = resp.redirect;
+                                }, 1000);
+
                                 break;
                             case 10:
                                 setTimeout(() => {
@@ -1445,7 +1449,8 @@ function showUserStep9() {
 }
 
 function showUserStep10() {
-    $jq('#join_slogan').text('Browse Jobs');
+    // $jq('#join_slogan').text('Browse Jobs');
+    $jq('#join_slogan').text('');
     $jq('#join_step ul li').removeClass('selected');
     $jq('#join_step ul li:eq(1), #join_step ul li:eq(2), #join_step ul li:eq(3), #join_step ul li:eq(4), #join_step ul li:eq(5), #join_step ul li:eq(6), #join_step ul li:eq(7)').css('display','block');
     $jq('#join_step ul li:eq(8)').addClass('selected').css('display','block');
