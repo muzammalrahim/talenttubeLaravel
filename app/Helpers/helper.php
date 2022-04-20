@@ -4,6 +4,7 @@ use Illuminate\Support\Str;
 use Jenssegers\Agent\Agent;
 use App\UserGallery;
 use App\User;
+use Carbon\Carbon;
 function checkRole($roles){
     echo "test helper working ";
 }
@@ -1185,4 +1186,10 @@ function userInterview_answer_video($video){
     $vPath .= $video;
     // dump($vPath);
     return asset( $vPath );
+}
+
+
+function humanReadableDateTime($dateTime){
+    $dateTime = Carbon::parse($dateTime)->format('F j, Y, g:i a');
+    return $dateTime;
 }

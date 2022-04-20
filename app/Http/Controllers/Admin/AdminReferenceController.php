@@ -66,6 +66,11 @@ class AdminReferenceController extends Controller
         // dd( $records); 
 
       return datatables($records)
+
+      ->editColumn('created_at', function ($records) {
+        return humanReadableDateTime($records->created_at); // human readable format
+      })
+      
       ->addColumn('action', function ($records) {
         // if (isAdmin()){
         //     $rhtml = '<a href="'.route('reference.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';

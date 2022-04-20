@@ -491,6 +491,7 @@ $(document).ready(function(){
     this.showVideoModalFunction = function(video_url,video_title=null){
 
         console.log(' showVideoModal ', video_url);
+        // $('#videoShowModal').modal('show');
         var videoElem  = '<video id="player" class ="w-100" controls>';
         videoElem     += '<source src="'+video_url+'" type="video/mp4">';
         videoElem     += '</video>';

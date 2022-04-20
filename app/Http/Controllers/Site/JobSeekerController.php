@@ -253,10 +253,10 @@ class JobSeekerController extends Controller {
         // $jobs                = Jobs::where('user_id',$employerId)->get();
         $galleries    = UserGallery::Public()->Active()->where('user_id',$jobSeekerId)->get();
         $videos      = Video::where('user_id', $jobSeekerId)->get();
-        $interview_booking = Interviews_booking::where('email',$jobSeeker->email)->get();
+        $data['interview_booking'] = Interviews_booking::where('email',$jobSeeker->email)->get();
         $history = History::where('user_id',$jobSeeker->id)->orderBy('created_at', 'desc')->get();
         $historyCreated = User::where('id',$jobSeeker->id)->first();
-        $interviewTemplate = InterviewTemplate::get();
+        $data['interviewTemplate'] = InterviewTemplate::get();
         $data['jobsApplication'] = JobsApplication::with('job')->where('user_id',$jobSeekerId)->get();
         $UserOnlineTest = UserOnlineTest::where('user_id',$jobSeekerId)->orderBy('created_at', 'desc')->get();
         $data['UserOnlineTest'] = $UserOnlineTest;
@@ -269,12 +269,12 @@ class JobSeekerController extends Controller {
         $data['videos']          = $videos;
         $data['crossreference'] = crossreference::where('jobseekerId', $jobSeekerId)->where('refStatus','Reference Completed')->get();
         $data['qualificationList'] = getQualificationsList();
-        $data['interview_booking'] = $interview_booking;
+        // $data['interview_booking'] = $interview_booking;
         $data['history'] = $history;
         $data['historyCreated'] = $historyCreated;
         $data['controlsession'] = $controlsession;
         $data['notes'] = $notes;
-        $data['interviewTemplate'] = $interviewTemplate;
+        // $data['interviewTemplate'] = $interviewTemplate;
         $data['UserInterview'] = $UserInterview;
         // $data['InterviewTempQuestion'] = $InterviewTempQuestion;
 
