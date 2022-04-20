@@ -149,12 +149,11 @@ body {
 
 .recent-job label {
     color: #202020;
-    font-size: 16px;
-    margin-right: 10px;
+    font-size: 12px;
 }
 
 .recent-job span {
-    font-size: 16px;
+    font-size: 11px;
     color: #00326f !important;
 }
 
@@ -971,7 +970,6 @@ span.remove:before {
     width: 100%;
     display: block;
     float: left;
-    margin: 6px 0 0;
     height: 50px;
 }
 

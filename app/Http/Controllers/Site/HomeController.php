@@ -60,6 +60,27 @@ class HomeController extends Controller {
         return view($view_name, $data);
     }
 
+    //  ===================================== About Page ============================= //
+
+    public function aboutUs()
+    {
+       return view('site.header.about');         // site/header/about
+    }
+
+    //  ===================================== Contact Page ============================= //
+
+    public function contactUs()
+    {
+       return view('site.header.contact');       // site/header/contact
+    }
+
+    //  ===================================== Blog Page ============================= //
+
+    public function blogs()
+    {
+       return view('site.header.blog');          // site/header/blog
+    }
+
 
     public function signIn(){
         if (Auth::check()) {
@@ -497,7 +518,6 @@ class HomeController extends Controller {
             'title' => $title,
         ]);
     }
-
 
     //====================================================================================================================================//
     // Employer registeration.

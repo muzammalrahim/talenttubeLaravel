@@ -12,13 +12,13 @@ elseif ($job->type == 'temporary') {
 $jobType = 'Temporary';
 }
 elseif ($job->type == 'casual') {
-$jobType = 'casual';
+$jobType = 'Casual';
 }
 elseif ($job->type == 'full_time') {
-$jobType = 'Full time';
+$jobType = 'Full Time';
 }
 elseif ($job->type == 'part_time') {
-$jobType = 'Part time';
+$jobType = 'Part Time';
 }
 @endphp
 <div class="col-md-6 col-sm-6">
@@ -33,7 +33,7 @@ $jobType = 'Part time';
             <span>{{$jobType}}</span>
          </div>
          <div class="text-info-detail clearfix">
-            <label>Job Experience:</label>
+            <label>Industry Experience:</label>
             @if (!empty($experience))
             @foreach ($experience as $industry)
             <span> {{ getIndustryName($industry) }}</span>
@@ -41,7 +41,7 @@ $jobType = 'Part time';
             @endif
          </div>
          <div class="text-info-detail clearfix">
-            <label>Job Salary:</label>
+            <label>Salary Range:</label>
             <span>{{$job->salary}}</span>
          </div>
          <div class="text-info-detail clearfix">
@@ -49,7 +49,7 @@ $jobType = 'Part time';
             <span>{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</span>
          </div>
          <div class="text-info-detail clearfix">
-            <label>Job Detailed:</label>
+            <label>Job Details:</label>
             <p>{{$job->description}} </p>
          </div>
          {{-- <a class="interview-tag used-tag text-white cursor-pointer" href="">Apply</a> --}}
@@ -58,7 +58,7 @@ $jobType = 'Part time';
          @if (isset($job->jobApplication))
          @if ($job->jobApplication->user_id == $user->id)
          {{-- expr --}}
-         <button class="interview-tag used-tag"><i class="far fa-check-circle"></i> Appied </button>
+         <button class="interview-tag used-tag"><i class="far fa-check-circle"></i> Applied </button>
          @endif
          @else
          <button data-toggle="modal" data-target="#jobApplyModal" onclick="jobApplyFunction({{ $job->id }})" class="interview-tag used-tag"><i class="far fa-check-circle"></i> Apply </button>

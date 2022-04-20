@@ -410,6 +410,9 @@ Route::get('media/private/{userid}/{any}', [
     // Desktop layout only.
     // Route::group(array('middleware' => ['devicecheck']), function(){
     Route::get('/', 'Site\HomeController@index')->name('homepage'); 
+    Route::get('about-us', 'Site\HomeController@aboutUs')->name('about-us'); 
+    Route::get('contact-us', 'Site\HomeController@contactUs')->name('contact-us'); 
+    Route::get('blog', 'Site\HomeController@blogs')->name('blogs'); 
     Route::get('sign-in', 'Site\HomeController@signIn')->name('signIn'); 
     Route::get('register', 'Site\HomeController@showRegisterPage')->name('register'); 
 
