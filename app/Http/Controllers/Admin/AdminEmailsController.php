@@ -55,6 +55,11 @@ class AdminEmailsController extends Controller {
       $records = BulkEmail::orderBy('created_at', 'desc');
 
       return datatables($records)
+
+      ->editColumn('created_at', function ($records) {
+        return humanReadableDateTime($records->created_at); // human readable format
+      })
+      
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             // $rhtml = '<a href="'.route('bulkEmail.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';

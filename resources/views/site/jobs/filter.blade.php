@@ -176,10 +176,10 @@
                </div>
                
                <div class="col-1 custom-checkbox">  
-                  <input type="checkbox" checked class="" name="filter_location_status">
+                  <input type="checkbox" class="" name="filter_location_status">
                </div>
                <div class="FilterLocationBox col">
-                    <div class="location_search_cont row">
+                    <div class="location_search_cont row hide_it">
                         <div class="col-8 col-sm-9">
                           <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
 
