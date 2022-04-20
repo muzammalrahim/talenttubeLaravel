@@ -72,13 +72,13 @@
                         <a class="nav-link text-white" href="#">Home </a>
                         </li> -->
                      <li class="nav-item">
-                        <a class="nav-link text-white" href="#">About </a>
+                        <a class="nav-link text-white" href="{{ route('about-us') }}">About </a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Contact </a>
+                        <a class="nav-link text-white" href="{{ route('contact-us') }}">Contact </a>
                      </li>
                      <li class="nav-item">
-                        <a class="nav-link text-white" href="#">Blog </a>
+                        <a class="nav-link text-white" href="{{ route('blogs') }}">Blog </a>
                      </li>
                   </ul>
                   <div class="dual-button">

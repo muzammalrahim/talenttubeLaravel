@@ -24,13 +24,13 @@
                   <div class="location p-2">  
 
                      <div class="row m-0"> 
-                        <div class="col-9 col-sm-10 col-md-10 col-lg-10">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-10">
                            <p class="userLocationSpan text-center location_margin"> {{userLocation($user)}} </p> 
                         </div>
-                        <div class="col-3 col-sm-2 col-md-2 col-lg-2">
-                           <button type="button" id="list_info_location" class="orange_btn float-right" onclick="showMap()">
-                           <i class="fas fa-edit salaryRangeEdit"></i> 
-                        </div>
+                     </div>
+                     <div class="text-center">
+                        <button type="button" id="list_info_location" class="orange_btn" onclick="showMap()">
+                        <i class="fas fa-edit salaryRangeEdit"></i> 
                      </div>
                      {{-- <b> Location: <span class="userLocationSpan" > {{userLocation($user)}} </span> </b>  --}}
 
