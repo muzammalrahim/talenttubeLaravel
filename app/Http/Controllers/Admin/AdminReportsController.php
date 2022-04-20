@@ -143,6 +143,11 @@ class AdminReportsController extends Controller
          $records = Jobs::with(['jobEmployer'])
         ->orderBy('created_at', 'desc');
       return datatables($records)
+
+      ->editColumn('created_at', function ($records) {
+        return humanReadableDateTime($records->created_at); // human readable format
+      })
+      
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $job_aggregate = ($records->applicationCount)?($records->applicationCount->aggregate):0;

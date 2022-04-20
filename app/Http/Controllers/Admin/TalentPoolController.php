@@ -121,9 +121,11 @@ class TalentPoolController extends Controller
         ->orderBy('created_at', 'desc');
       return datatables($records)
 
-      // ->editColumn('created_at', function ($request) {
-      //   return $request->created_at->format('Y-m-d'); // human readable format
-      // })
+      ->editColumn('created_at', function ($records) {
+        return humanReadableDateTime($records->created_at); // human readable format
+      })
+
+
 
       ->addColumn('surname', function ($records) {
         if (isAdmin()){

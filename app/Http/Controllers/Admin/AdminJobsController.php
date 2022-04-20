@@ -85,6 +85,11 @@ class AdminJobsController extends Controller
          $records = Jobs::with(['jobEmployer'])
         ->orderBy('created_at', 'desc');
       return datatables($records)
+
+       ->editColumn('created_at', function ($records) {
+        return humanReadableDateTime($records->created_at); // human readable format
+      })
+      
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $rhtml = '<a href="'.route('jobs.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
@@ -754,6 +759,7 @@ class AdminJobsController extends Controller
         }
         return datatables($records)
 
+        
         ->editColumn('status', function ($records) {
             if($records->status=='applied'){
                 return 'Applied';

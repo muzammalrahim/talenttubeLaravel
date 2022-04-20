@@ -25,7 +25,7 @@ use App\UserPool;
 use App\UserQualification;
 use App\UserTags;
 use App\Interviews_booking;
-
+use Carbon\Carbon;
 
 
 
@@ -104,7 +104,15 @@ class UserController extends Controller
 
      }
 
+
+
       return datatables($records)
+
+      ->editColumn('created_at', function ($records) {
+
+        return humanReadableDateTime($records->created_at); // human readable format
+      })
+
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $rhtml = '<a href="'.route('users.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px;"><i class="far fa-edit"></i></button></a>';
@@ -150,6 +158,12 @@ class UserController extends Controller
      }
 
       return datatables($records)
+
+      ->editColumn('created_at', function ($records) {
+
+        return humanReadableDateTime($records->created_at); // human readable format
+      })
+      
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $rhtml = '<a href="'.route('employers.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-right:2px"><i class="far fa-edit"></i></button></a>';
@@ -1176,6 +1190,11 @@ class UserController extends Controller
         ->orderBy('created_at', 'desc');
 
       return datatables($records)
+
+      ->editColumn('created_at', function ($records) {
+        return humanReadableDateTime($records->created_at); // human readable format
+      })
+      
       ->addColumn('action', function ($records) {
         if (isAdmin()){
             $rhtml = '<a href =" ' .route('useridforcontroling' , ['id' => $records->id]).'"><button type="button" value = "'.$records->id.'" class="btn btn-primary btn-sm"style = "margin-right:2px;"> Control </button></a>';
@@ -1211,6 +1230,11 @@ class UserController extends Controller
         ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
         ->orderBy('created_at', 'desc');
       return datatables($records)
+
+      ->editColumn('created_at', function ($records) {
+        return humanReadableDateTime($records->created_at); // human readable format
+      })
+
       ->addColumn('action', function ($records) {
         if (isAdmin()){
 
@@ -1252,7 +1276,7 @@ class UserController extends Controller
       return datatables($records)
 
       ->editColumn('created_at', function ($request) {
-        return $request->created_at->format('Y-m-d'); // human readable format
+        return $request->created_at->format('d-m-Y'); // human readable format
       })
 
       ->addColumn('action', function ($records) {
