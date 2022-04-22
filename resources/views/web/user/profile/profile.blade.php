@@ -19,17 +19,17 @@
                      <h1> {{ $user->name }} {{ $user->surname }} </h1>
                      {{-- <p> {{userLocation($user)}} </p> --}}
 
-                     <div class="location p-0s">  
+                     <div class="location p-0">  
                         <div class="row m-0">
 
-                           <div class="col-10 p-0 m-0"> 
-                              <p class="userLocationSpan px-0" > {{userLocation($user)}} </p> 
+                           <div class="col-12 p-0 m-0"> 
+                              <p class="userLocationSpan text-center px-0" > {{userLocation($user)}} </p> 
                            </div>
-                           <div class="col-2 p-0 m-0">
-                              <button type="button" id="list_info_location" class="orange_btn float-right " onclick="showMap()">
-                                 <i class="fas fa-edit salaryRangeEdit"></i> 
-                              </button>
-                           </div>
+                        </div>
+                        <div class="text-center">
+                           <button type="button" id="list_info_location" class="orange_btn" onclick="showMap()">
+                              <i class="fas fa-edit salaryRangeEdit"></i> 
+                           </button>
                         </div>
                         <div class="location_search_cont hide_it ">
 
@@ -106,12 +106,12 @@
 
                   {{-- ==================================== Recent job ==================================== --}}
 
-                  <div class="recent-job recentjob clearfix px-0 px-md-3">
+                  <div class="recent-job recentjob clearfix px-0 px-md-3 mt-2">
 
                      {{-- <div class="row m-0">  --}}
                         {{-- <div class="col-5"> --}}
                            <div class="d-inline-block">
-                              <label class="mb-2">Recent Job:</label>
+                              <label class="mb-0">Recent Job:</label>
                         {{-- </div> --}}
 
                         {{-- <div class="col-7"> --}}
