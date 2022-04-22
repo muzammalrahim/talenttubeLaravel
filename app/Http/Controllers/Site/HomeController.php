@@ -81,6 +81,13 @@ class HomeController extends Controller {
        return view('site.header.blog');          // site/header/blog
     }
 
+    //  ===================================== Blog Detail Page ============================= //
+
+    public function blogsDetail()
+    {
+       return view('site.header.blog-detail');          // site/header/blog-detail
+    }
+
 
     public function signIn(){
         if (Auth::check()) {
