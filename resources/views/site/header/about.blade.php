@@ -1,5 +1,3 @@
-
-
 {{-- @extends('adminlte::master') --}}
 @extends('site.master')
 
@@ -10,106 +8,50 @@
 @stop
 
 @section('custom_css')
-  <link rel="stylesheet" href="{{ asset('assests/custom-css/common.css') }}">
-  <link rel="stylesheet" href="{{ asset('assests/custom-css/homestyle.css') }}">
-@stop
+<link rel="stylesheet" href="{{ asset('assests/custom-css/Style.css') }}">
+
+    <link rel="stylesheet" href="{{ asset('assests/custom-css/MyStyle.css') }}"> 
+@endsection
+
 @section('classes_body', 'homepage')
 
 @section('body')
 
 
 
+<div class="container-fluid Content pb-5">
+  <div class="row logo">
+    <a href="{{ route('homepage') }}" class="text-center w-25"><img src="{{ asset('assests/images/talent-tube.png') }}" alt=""></a>
+  </div>
 
-
-@include('site.header.header') {{-- site/header/header --}}
- 
-<!-- ================== banner-section start -->
-<section class="container-fluid banner-section">
-
-    <div class="row banner-main-section ">
-      {{-- <div class="col-lg-7 col-md-7 col-sm-12 order-md-2 order-sm-1 banner-icon-div"> 
-        <img class="banner-icon" src="assests/images/Frame.png" alt="img" />
-      </div>
-      <div class="col-lg-5 col-sm-12 col-md-5 headings order-md-1 order-sm-2">
-       
-      </div> --}}
-    </div>
-  {{-- <div class="container"><h1>About</h1></div> --}}
-
-</section>
-
-
-<!-- ===========================banner-section-end================== -->
-
-
-
-
-<!-- ========================Job wrapper's HTML ends Here======================= -->
-
-  
-<!--==================== Body Section Completes Here=========================== -->
-<!-- =====================Footer Starts here====================================== -->
-<footer><div class="container-fluid bg-light">
-    <div class="container">
-      <div class="row  d-flex justify-content-center align-items-center">
-        <div class="col-md-10 ">
-         <div class="footer-nav ">
-           <a href=""  class="d-block d-sm-none footer-logo-2"><img src="assests/images/frame1.png" alt=""></a>
-           <ul class=" ">
-             <li class=""><a href="{{ route('homepage') }}">Home</a></li>
-             <li ><a href="{{ route('about-us') }}" >About</a></li>
-             <li class="d-none d-sm-block" ><a href="{{ route('homepage') }}" ><img src="assests/images/frame1.png"  alt=""></a></li>
-             <li ><a href="{{ route('contact-us') }}" >Contact</a></li>
-             <li ><a href="{{ route('blogs') }}" >Blog</a></li>
-           </ul>
+  <div class="row signin-wrapper">
+    <div class="signin py-3">
+       <div class="row px-3">
+         <div class="col-lg-7 col-md-6 col-sm-12 col-12 order-2 order-sm-2 order-2 order-md-1 wow">
+           <h3 class="pb-2">About Us</h3>
+           <p>
+             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+           </p>
+           <p>
+             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+           </p>
+           <h3 class="pt-5 pb-2">Mission</h3>
+           <p>
+             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+           </p>
+           <h3 class="pt-5 pb-2">Vission</h3>
+           <p>
+             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+           </p>
          </div>
-        </div>
-        <div class="col-md-10 footer-icon ">
-          <ul>
-            {{-- <li><a href="#"  ><i class="fab fa-instagram" ></i></a></li> --}}
-            {{-- <li> <a href="#" ><i class="fab fa-twitter" ></i></a> </li> --}}
-            <li><a href="#" ><i class="fab fa-youtube" ></i></a> </li>
-            <li><a href="#" ><i class="fab fa-facebook"></i></a></li>
-            <li><a href="#" ><i class="fab fa-linkedin"></i></a></li>
-             {{-- <li> <a href="#" ><i class="fab fa-pinterest"></i></a></li> --}}
-          </ul>
-      </div>
-      <div class="col-md-12 CopyRight"><p>CopyRight 2021</p></div>
-      </div>
+         <div class="col-lg-5 col-md-6 col-sm-12 col-12 order-1 order-sm-1 order-md-2 wow">
+           <img src="assests/images/Frame.png" class="img-fluid" alt="img">
+         </div>
+       </div>
     </div>
   </div>
-</footer>  
-
-{{-- <div class="main  "> --}}
-   <!-- wrapper -->
-
-
-<div class="wrappeasasar">
-
-   {{-- @include('site.header') --}}
-   {{-- @include('site.header.header') --}}
-
-
-   {{-- 03-09-2021 --}}
-
 
 </div>
-
-   <!-- /wrapper -->
-
-
-{{-- @include('site.home.login') --}}
-
-{{-- @include('site.home.interviewLogin') --}}
-
-{{-- @include('site.footer') --}}
-
-
-
-{{-- </div> --}}
-
-@include('web.home.interviewConcierge.signin')
-
 
 @stop
 
@@ -118,23 +60,34 @@
 <script type="text/javascript" src="{{ asset('js/site/jquery.popup.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/login_form.js') }}"></script>
 <script type="text/javascript" src="{{ asset('js/site/jquery.form.js') }}"></script>
+
+    
+
 {{-- <script type="text/javascript" src="{{ asset('js/site/lib.js') }}"></script> --}}
 
 <script src="{{ asset('assests/bootstrap/js/jquery.js') }}"></script>
 <script src="{{ asset('assests/bootstrap/js/bootstrap.js') }}"></script>
 <script src="{{ asset('assests/bootstrap/js/bootstrap.min.js')}}"></script>
 
-
-
-
 @stop
-
-@section('custom_footer_css')
 
 <style type="text/css">
-  
+  .Content .signin{
+    width: 97% !important;
+  }
+  .Content .logo{
+    padding: 30px 0px !important;
+  }
+  .wow h3{
+    font-weight: 500;
+    font-size: 24px;
+  }
+  .wow p{
+    font-weight: 500;
+    font-size: 18px;
+  }
+  .wow img{
+    width: 100%;
+    height: auto;
+  }
 </style>
-
-@stop
-
-
