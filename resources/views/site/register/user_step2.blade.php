@@ -324,7 +324,7 @@
                         </p>
                         <div class="step2_uplod_info">
                             <p> 
-                                How to do an Elevator Pitch: Record a short 30-60 second video of yourself either by phone or webcam and upload it in the portal below. Be sure to say hi and tell us about yourself. You can be as casually dressed as you like, this is more about employers getting an idea of your personality and culture fit. Some things to include are. 
+                                How to do an Elevator Pitch: Record a short 30-60 second video of yourself either by phone or webcam and upload it in the portal below. Be sure to say hi and tell us about yourself. You can be as casually dressed as you like, this is more about employers getting an idea of your personality and culture fit. Some things to include: 
                             </p>
 
                             <p>*A brief summary of your career and studies</p>

@@ -146,7 +146,7 @@
               <li class="nav-item" role="presentation">
                  <button class="nav-link active" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
                     type="button" role="tab" aria-controls="job" aria-selected="false">
-                 <i class="fa fa-circle tab-circle-cross"></i>Job</button>
+                 <i class="fa fa-circle tab-circle-cross"></i>Jobs</button>
               </li>
               <li class="nav-item" role="presentation">
                  <button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
