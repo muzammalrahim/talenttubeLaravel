@@ -1,7 +1,7 @@
 
 @if ($jobsApplication->count() > 0)
 <div class="newJobCont">
-    <div class="head icon_head_browse_matches jobsIApplied"> <b>{{$jobSeeker->name}}</b> have applied to below jobs </div>
+    <div class="head icon_head_browse_matches jobsIApplied"> <b>{{$jobSeeker->name}}</b> has applied to below jobs </div>
 
      <div class="add_new_job">
         {{-- @dump($jobsApplication) --}}

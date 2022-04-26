@@ -291,7 +291,7 @@
   .modal.showProcessing  .modelProcessingUser{ display: block !important; }
   #delConfirmIdUser{ color:red; }
   td{ text-align: center; }
-  .bulkButton {margin-left: 7px;}
+  .bulkButton {margin-left: 7px; margin-top: 7px;}
   .disableClick{pointer-events: none;}
   .adminNote{bottom: 12px;right: 3px;cursor: pointer;display: flex;position: relative;float: right;color: #dc3545;}
 
