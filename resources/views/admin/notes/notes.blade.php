@@ -15,9 +15,9 @@
 <table class="table table-bordered text-center" id="dataTable">
     <thead>
         <tr style = "text-align: center">
-            <th>Id</th>
-            <th>User Id</th>
-            <th>Js Id</th>
+            {{-- <th>Id</th> --}}
+            {{-- <th>User Id</th> --}}
+            <th>Jobseeker's Profile</th>
             <th>Text</th>
             <th>Created_at</th>
             <th>Action</th>
@@ -90,8 +90,8 @@ jQuery(function() {
             }
         },
       columns: [
-          { data: 'id', name: 'id' },
-          { data: 'user_id', name: 'user_id' },
+          // { data: 'id', name: 'id' },
+          // { data: 'user_id', name: 'user_id' },
           { data: 'js_id', name: 'js_id' },
           { data: 'text', name: 'text' },
           { data: 'created_at', name: 'created_at' },

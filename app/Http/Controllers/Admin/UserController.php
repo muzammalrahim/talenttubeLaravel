@@ -1270,10 +1270,16 @@ class UserController extends Controller
 
     public function notesDataTable(Request $request){
       $records = array();
-      $records = Notes::select(['id', 'user_id', 'js_id', 'text', 'created_at'])
+      $records = Notes::select(['js_id', 'text', 'created_at'])
         // ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
         ->orderBy('created_at', 'desc');
       return datatables($records)
+
+      ->editColumn('js_id', function ($request) {
+        $rhtml = '<a class="fas fa-user btn-sm btnUserInfo" href="'.route('jobSeekerInfo',['id'=>$request->js_id]).'" target="_blank" > </a>';
+        return $rhtml;
+      })
+
 
       ->editColumn('created_at', function ($request) {
         return $request->created_at->format('d-m-Y'); // human readable format
@@ -1294,7 +1300,7 @@ class UserController extends Controller
         }
       })
       
-      // ->rawColumns(['profile','action'])
+      ->rawColumns(['js_id'])
       ->toJson();
 
     }

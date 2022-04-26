@@ -67,7 +67,9 @@
          <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
             <div class="job-box-info employee-details-info block-box clearfix">
                <div class="box-head"> 
-                  {!! $html !!}                       
+                  @if (!isAdmin())
+                     {!! $html !!}                       
+                  @endif
                </div>
                <div class="row Block-user-wrapper">
                   @php
