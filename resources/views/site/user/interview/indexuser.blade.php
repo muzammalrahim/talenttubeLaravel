@@ -139,8 +139,8 @@
                 </div>
                 <div class="text-info-detail clearfix row">
                   {{-- <div class="row">  --}}
-                    <span class="col-4 font-weight-bold text-dark">Instructions:</span>
-                    <p class="col-8 font-14">{{$Int_booking->interview->instruction}}</p>
+                    <span class="col-lg-2 col-4 font-weight-bold text-dark">Instructions:</span>
+                    <p class="col-lg-8 col-8 font-14 pl-lg-4">{{$Int_booking->interview->instruction}}</p>
                   {{-- </div> --}}
                 </div>
               </ul>
