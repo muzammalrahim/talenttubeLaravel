@@ -13,33 +13,48 @@
          <div class="w70 dinline_block">
             <h3 class=" job_title"><a> <b>Invitation {{$loop->index+1}}: </b> Interview of {{$interview->js->name}}</a></h3>
          </div>
-         <div class="fl_right">
-            <div class="j_label bold">Status:</div>
-            <div class="j_value text_capital">{{$interview->status}}</div>
-         </div>
       </div>
       <div class="job_info row p10 dblock">
-         <div class="timeTable">
-            <div class="IndustrySelect">
-               <p class="p0 qualifType"> Template Name: <b> {{$interview->template->template_name}} </b> </p>
-               @if ($interview->template->type == "phone_screeen")
-               <p class="p0 qualifType"> Template Type: <b> Phone Screen</b> </p>
-               @else
-               <p class="p0 qualifType"> Template Type: <b> {{$interview->template->type}} </b> </p>
-               @endif
-               @if ($interview->template->employer_video_intro)
-               <div class="dflex">
-                  <div class="w20">
-                     <p class="p0 qualifType text_capital"> Employer's Intro: </p>
-                  </div>
-                  <div class="w80">
-                     <div class="video_div pointer"  onclick="showVideoModal12( '{{template_video($interview->template->employer_video_intro)}}')">
+         <div class="col-md-6">
+            <div class="row">
+               <div class="j_label bold col-md-3">Status:</div>
+               <div class="j_value text_capital col-md-9">{{$interview->status}}</div>
+            </div>
+         </div>
+         <div class="timeTable col-md-6">
+            <div class="IndustrySelect row">
+               <p class="p0 qualifType col-md-3"> Template Name: </p>
+               <b class="col-md-9"> {{$interview->template->template_name}} </b> 
+            </div>
+         </div>
+         <div class="row">
+            <div class="timeTable col-md-6">
+               <div class="IndustrySelect row">
+                  @if ($interview->template->type == "phone_screeen")
+                  <p class="qualifType col-md-3"> Template Type:</p>
+                  <b class="col-md-9"> Phone Screen</b>
+                  @else
+                  <p class="qualifType col-md-3"> Template Type:</p>
+                  <b class="col-md-9"> {{$interview->template->type}} </b> 
+                  @endif
+               </div>
+            </div>
+            <div class="timeTable col-md-6">
+               <div class="IndustrySelect row">
+                  @if ($interview->template->employer_video_intro)
+                     <p class="col-md-3 qualifType text_capital"> Employer's Intro: </p>
+                     <div class="video_div pointer col-md-9"  onclick="showVideoModal12( '{{template_video($interview->template->employer_video_intro)}}')">
                         <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
                      </div>
                   </div>
+                  @endif
                </div>
-               @endif
-               <div class="job_info employerResponseDiv row dblock mt10">
+            </div>
+         </div>
+         <div class="job_info row p10 dblock">
+            <div class="timeTable col-md-6">
+               <div class="IndustrySelect row">
+                  <div class="job_info employerResponseDiv dblock mt10">
                   <div class="j_button pb20">
                      <a class="jobApplyBtn graybtn jbtn seeEmployerResponse">See Candidate's Response</a>
                   </div>
@@ -58,13 +73,14 @@
                         <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
                      </div>
                      @else
-                     <p class="qualifType p0 mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
+                     <p class="qualifType mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
                      @endif
                      {{-- 
                      <p class="qualifType p0 mb10"> <b>Candidate's Response:</b> {{$answers->answer}} </p>
                      --}}
                      @endforeach
                   </div>
+               </div>
                </div>
             </div>
          </div>
