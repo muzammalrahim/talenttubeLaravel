@@ -59,6 +59,11 @@ class AdminEmailsController extends Controller {
       ->editColumn('created_at', function ($records) {
         return humanReadableDateTime($records->created_at); // human readable format
       })
+
+      ->editColumn('status', function ($records) {
+        $rhtml = '<span class = "text-capitalize">'.$records->status.' </span>';
+        return $rhtml;
+      })
       
       ->addColumn('action', function ($records) {
         if (isAdmin()){
@@ -78,6 +83,8 @@ class AdminEmailsController extends Controller {
       // ->editColumn('city', function ($records) {
       //    return  ($records->GeoCity)?($records->GeoCity->city_title):'';
       // })
+      ->rawColumns(['status', 'action'])
+
       ->toJson();
     }
 

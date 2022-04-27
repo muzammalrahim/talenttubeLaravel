@@ -97,7 +97,11 @@
 
         @if ($controlsession->count() > 0)
         <div class="adminControl">
-            <p>You are in control of <span class="bold">{{$user->company}} </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control</p>
+            <p>You are in control of 
+                <span class="bold text-light">
+                    {{ !is_null($user->company)? $user->company : $user->name }} 
+                </span>, click <a href="{{ route('logoutRouteForAdmin') }}" class="adminLogin" > HERE </a> to end control
+            </p>
         </div>
         @endif
 

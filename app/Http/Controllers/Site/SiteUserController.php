@@ -140,6 +140,8 @@ class SiteUserController extends Controller
             $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
             $data['controlsession'] = $controlsession;
 
+            // dd($controlsession);
+
             if(isMobile()){
                 if(isEmployer()){
                   if(isRequestAjax($request)){

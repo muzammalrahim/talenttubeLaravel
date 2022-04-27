@@ -1300,7 +1300,7 @@ class UserController extends Controller
         }
       })
       
-      ->rawColumns(['js_id'])
+      ->rawColumns(['js_id','action'])
       ->toJson();
 
     }
