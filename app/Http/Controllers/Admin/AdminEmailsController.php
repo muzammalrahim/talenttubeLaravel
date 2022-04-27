@@ -69,8 +69,8 @@ class AdminEmailsController extends Controller {
         if (isAdmin()){
             // $rhtml = '<a href="'.route('bulkEmail.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
             $rhtml = '';
-            $rhtml .= '<button id="itemdel" type="button" class="btn btn-danger btn-sm BulkEmailConfirmEmail" data-id='.$records->id.' data-title="'.$records->title.'">SendEmail</button>';
-            $rhtml .= '<button id="itemdel" type="button" class="ml-2 btn btn-danger btn-sm BulkEmailDeleteConfirmEmail" data-id='.$records->id.' data-title="'.$records->title.'">Delete Email</button>';
+            $rhtml .= '<button id="itemdel" type="button" class="btn mt-2 btn-danger btn-sm BulkEmailConfirmEmail" data-id='.$records->id.' data-title="'.$records->title.'">SendEmail</button>';
+            $rhtml .= '<button id="itemdel" type="button" class="ml-2 mt-2 btn btn-danger btn-sm BulkEmailDeleteConfirmEmail" data-id='.$records->id.' data-title="'.$records->title.'">Delete Email</button>';
             return $rhtml;
         }
       })
