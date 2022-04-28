@@ -1270,13 +1270,18 @@ class UserController extends Controller
 
     public function notesDataTable(Request $request){
       $records = array();
-      $records = Notes::select(['js_id', 'text', 'created_at'])
-        // ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
+      $records = Notes::with(['jobseeker'])
         ->orderBy('created_at', 'desc');
       return datatables($records)
 
-      ->editColumn('js_id', function ($request) {
-        $rhtml = '<a class="fas fa-user btn-sm btnUserInfo" href="'.route('jobSeekerInfo',['id'=>$request->js_id]).'" target="_blank" > </a>';
+      ->editColumn('js_id', function ($records) {
+        // $rhtml = '<span class="fas fa-user btn-sm"> '.$records->jobseeker->name.' </span>';
+
+        $jobseeker_name =  ($records->jobseeker)?($records->jobseeker->name.' '.$records->jobseeker->surname.''):' jobseeker test ';
+            $rhtml = '<a>  '.$jobseeker_name.'</a>';
+
+
+
         return $rhtml;
       })
 

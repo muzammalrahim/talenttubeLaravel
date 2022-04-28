@@ -678,6 +678,8 @@ class AdminInterviewController extends Controller
             $data['user'] = $user;
             $data['jobApp_id'] = $jobApp_id;
             $data['user_id'] = $user_id;
+
+            // dd($UserInterview);
             return view('site.employer.interviewInvitation.jobAppCorrespondanceInter', $data);
             // site/employer/interviewInvitation/jobAppCorrespondanceInter
         }
