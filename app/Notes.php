@@ -8,7 +8,7 @@ class Notes extends Model
 {
     
 
-    public function js()
+    public function jobseeker()
     {
         return $this->belongsTo('App\User', 'js_id');
     }

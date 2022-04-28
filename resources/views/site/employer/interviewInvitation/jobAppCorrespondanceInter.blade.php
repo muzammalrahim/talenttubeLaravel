@@ -1,141 +1,112 @@
 @extends('web.user.usermaster')
+
 @section('custom_css')
-<link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jobs.css') }}">
+
 @stop
 @section('content')
-<div class="newJobCont">
-   <div class="head icon_head_browse_matches">Completed Interviews  </div>
+<div class="newJobCont profile profile-section">
+
+   <h2>Correspondence interview questions</h2>
+
+
    @if ($UserInterview->count() > 0)
-   @foreach ($UserInterview   as $interview)
-   <div class="job_row interviewBookingsRow_{{$interview->id}}">
-      <div class="job_heading p10">
-         <div class="w70 dinline_block">
-            <h3 class=" job_title"><a> <b>Invitation {{$loop->index+1}}: </b> Interview of {{$interview->js->name}}</a></h3>
-         </div>
-      </div>
-      <div class="job_info row p10 dblock">
-         <div class="col-md-6">
-            <div class="row">
-               <div class="j_label bold col-md-3">Status:</div>
-               <div class="j_value text_capital col-md-9">{{$interview->status}}</div>
+   @foreach ($UserInterview as $interview)
+   {{-- @dd($UserInterview); --}}
+   <div class="row">
+            <div class="col-sm-12 col-md-6">
+               <p class="text-dark">Template Name: <b>{{$interview->template->template_name}}</b></p>
             </div>
-         </div>
-         <div class="timeTable col-md-6">
-            <div class="IndustrySelect row">
-               <p class="p0 qualifType col-md-3"> Template Name: </p>
-               <b class="col-md-9"> {{$interview->template->template_name}} </b> 
+            <div class="col-sm-12 col-md-6">
+               @if ($interview->template->type == 'phone_screeen' )
+               <p class="text-dark"> Template Type: <b class="text-capitalize"> Phone Screen</b> </p>
+               @else
+               <p class="text-dark text-capitalize">Template Type: <b>{{$interview->template->type}}</b></p>
             </div>
+            <div class="col-sm-12 col-md-6">
+               <p class="text-dark">Employer Instructions: <b>{{$interview->template->employers_instruction}}</b></p>
+            </div>
+            @endif
+            <div class="col-sm-12 col-md-6">
+               <p class="text-dark">Interviewer Name: <b>{{$interview->employer->company}}</b> </p>
+            </div>
+            @if ($interview->template->employer_video_intro)
+            <div class="col-sm-12 col-md-6">
+               <p class="text-dark">Employr's Intro: 
+               <h1 data-target = "#employerVideoIntroModal" data-toggle = "modal" onclick="showEmployerVideoIntro( '{{template_video($interview->template->employer_video_intro)}}')"><i class="fas fa-photo-video"></i></h1>
+               </p>
+            </div>
+            @endif
          </div>
+
+
+
          <div class="row">
-            <div class="timeTable col-md-6">
-               <div class="IndustrySelect row">
-                  @if ($interview->template->type == "phone_screeen")
-                  <p class="qualifType col-md-3"> Template Type:</p>
-                  <b class="col-md-9"> Phone Screen</b>
-                  @else
-                  <p class="qualifType col-md-3"> Template Type:</p>
-                  <b class="col-md-9"> {{$interview->template->type}} </b> 
-                  @endif
-               </div>
-            </div>
-            <div class="timeTable col-md-6">
-               <div class="IndustrySelect row">
-                  @if ($interview->template->employer_video_intro)
-                     <p class="col-md-3 qualifType text_capital"> Employer's Intro: </p>
-                     <div class="video_div pointer col-md-9"  onclick="showVideoModal12( '{{template_video($interview->template->employer_video_intro)}}')">
-                        <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
-                     </div>
-                  </div>
-                  @endif
-               </div>
-            </div>
-         </div>
-         <div class="job_info row p10 dblock">
-            <div class="timeTable col-md-6">
-               <div class="IndustrySelect row">
-                  <div class="job_info employerResponseDiv dblock mt10">
-                  <div class="j_button pb20">
-                     <a class="jobApplyBtn graybtn jbtn seeEmployerResponse">See Candidate's Response</a>
-                  </div>
+            <div class="col-md-12">
+               @php
+               $tempQuestions = App\InterviewTempQuestion::where('temp_id', $interview->temp_id)->get();
+               @endphp
+               @foreach ($tempQuestions as $question)
+               <div class="question-ans">
+                  <p class="accordionone text-light"><b>Question {{$loop->index+1}}:</b>{{$question->question}}</p>
                   @php
-                  $temp_id = $interview->temp_id;
-                  $tempQuestions = App\InterviewTempQuestion::where('temp_id', $temp_id)->get();
+                  $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $interview->id)->first();   
                   @endphp
-                  <div class="employerResponse hide"  >
-                     @foreach ($tempQuestions as $question)
-                     <p class="qualifType p0"> <b>Question {{$loop->index+1}})</b> {{$question->question}} </p>
-                     @php
-                     $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $interview->id)->first();   
-                     @endphp
-                     @if ($question->video_response == 1)
-                     <div class="video_div pointer"  onclick="showVideoModal12( '{{assetVideo_response($answers->answer)}}')">
-                        <div id="v_123456"> <img src="https://img.icons8.com/color/48/000000/video.png"/></div>
-                     </div>
+                  <div class="panel">
+                     @if ($question->video_response == 1 && !isAdmin($user) )
+                     <p>
+                     <h1 data-toggle="modal" onclick="showEmployerVideoIntro('{{userInterview_answer_video($answers->answer)}}')" 
+                        data-target="#employerVideoIntroModal"> <i class="fas fa-photo-video"></i></h1>
+                     </p>
                      @else
-                     <p class="qualifType mb10"> <b>Your Response:</b> {{$answers->answer}} </p>
+                     <p class="text-dark"><b>Your Response:</b> {{$answers->answer}} </p>
                      @endif
-                     {{-- 
-                     <p class="qualifType p0 mb10"> <b>Candidate's Response:</b> {{$answers->answer}} </p>
-                     --}}
-                     @endforeach
                   </div>
                </div>
-               </div>
+               @endforeach
             </div>
          </div>
-      </div>
-   </div>
-   @endforeach  
-   @else
-   <h3> This User has not any interview </h3>
+
+
+   @endforeach
    @endif
-   <div style="display:none;">
-      <div id="videoShowModal" class="modal p0 videoShowModal">
-         <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
-            <div class="cont">
-               <div class="videoBox"></div>
-            </div>
-         </div>
+         
+
+
+
+   
+  
+   <div class="modal fade" id="employerVideoIntroModal" role="dialog">
+    <div class="modal-dialog delete-applications">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
+          {{-- <h1 class="modal-title"><i class="fas fa-thumbs-down trash-icon"></i>Video</h1> --}}
+        </div>
+        <div class="modal-body">
+          {{-- <strong>Are you sure you wish to continue?</strong> --}}
+            <div class="videoBox"></div>
+        </div>
+        <div class="dual-footer-btn">
+          <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+          {{-- <button type="button" class="orange_btn" onclick="confirmUnlikeFunction()" data-dismiss="modal"><i class="fa fa-check" ></i>OK</button> --}}
+        </div>
       </div>
+      
+    </div>
    </div>
-   <div class="cl"></div>
+
 </div>
 {{-- @include('site.user.interview.popup') --}}
 @stop
 @section('custom_footer_css')
-<link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
-<link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
-<style>
-   .width75p{width: 75%;display: inline-block;}
-   .bgColor{background: #dddfe3;}
-   .confirmInterview{margin: 15px 0 !important;}
-   .hide{display: none;}
-</style>
+
+
+
 @stop
 @section('custom_js')
-<script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
-<script src="{{ asset('js/site/jquery-ui.js') }}"></script>
-<script src="{{ asset('js/site/common.js') }}"></script>
-<script type="text/javascript">
-   this.showVideoModal12= function(video_url){
-   
-     console.log(' hassan here ', video_url);
-     var videoElem  = '<video id="player" controls>';
-     videoElem     += '<source src="'+video_url+'" type="video/mp4">';
-     videoElem     += '</video>';
-     $('#videoShowModal .videoBox').html(videoElem);
-     $('#videoShowModal').modal({
-         fadeDuration: 200,
-         fadeDelay: 2.5,
-         escapeClose: false,
-         clickClose: false,
-             });
-     $('#videoShowModal').on($.modal.CLOSE, function(event, modal) {
-       $(this).find(".videoBox video").remove();
-     });
-   
-   }
-   
-</script>
+<script src="{{ asset('js/web/interview.js') }}"></script>
+
+
 @stop
