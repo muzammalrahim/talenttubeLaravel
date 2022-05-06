@@ -1284,6 +1284,10 @@ class UserController extends Controller
 
         return $rhtml;
       })
+      ->editColumn('js_id', function ($request) {
+        $rhtml = '<a class="fas fa-user btn-sm btnUserInfo" href="'.route('jobSeekerInfo',['id'=>$request->js_id]).'" target="_blank" > </a>';
+        return $rhtml;
+      })
 
 
       ->editColumn('created_at', function ($request) {
