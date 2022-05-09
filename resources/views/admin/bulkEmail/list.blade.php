@@ -68,7 +68,7 @@
 @include('admin.errors')
 @include('admin.success')
 
-<table class="table table-bordered" id="dataTable">
+<table class="table table-bordered w-100" id="dataTable">
     <thead>
         <tr style = "text-align: center">
             <th>ID</th>
