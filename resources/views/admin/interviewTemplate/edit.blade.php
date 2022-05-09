@@ -306,7 +306,7 @@ function scrollToTop() {
 
 this.showVideoModal12= function(video_url){
   $("#deleteNoteModal").modal('show');
-  var videoElem  = '<video id="player" controls>';
+  var videoElem  = '<video id="player" class="w-100" controls>';
   videoElem     += '<source class = "video_src" src="'+video_url+'" type="video/mp4">';
   videoElem     += '</video>';
   $('.video_inModal').html(videoElem);

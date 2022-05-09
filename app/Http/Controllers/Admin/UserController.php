@@ -1279,11 +1279,26 @@ class UserController extends Controller
 
         $jobseeker_name =  ($records->jobseeker)?($records->jobseeker->name.' '.$records->jobseeker->surname.''):' jobseeker test ';
             $rhtml = '<a>  '.$jobseeker_name.'</a>';
-
-
-
         return $rhtml;
       })
+
+      ->addColumn('profile', function ($records) {
+        if (isAdmin()){
+
+            $rhtml = '<a class="btn-sm" href="'.route('jobSeekerInfo',['id'=>$records->js_id]).'" target="_blank" ><i class ="fas fa-user"> </i></a>';
+
+
+            //  $rhtml .= '<a href =" ' .route('adminEditNote' , ['id' => $records->id]).'">
+            // <i value = "'.$records->id.'" class="fas fa-edit text-danger"> </i></a>';
+
+            // $rhtml = '<a href =" ' .route('AdminDeleteNote' , ['id' => $records->id]).'">
+            // <i value = "'.$records->id.'" class="fas fa-trash text-danger"> </i></a>';
+
+            return $rhtml;
+        }
+      })
+
+
 
 
       ->editColumn('created_at', function ($request) {
@@ -1305,7 +1320,7 @@ class UserController extends Controller
         }
       })
       
-      ->rawColumns(['js_id','action'])
+      ->rawColumns(['js_id','profile','action'])
       ->toJson();
 
     }
