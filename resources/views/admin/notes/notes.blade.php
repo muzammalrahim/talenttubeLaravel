@@ -91,7 +91,7 @@ jQuery(function() {
         },
       columns: [
           // { data: 'id', name: 'id' },
-          // { data: 'user_id', name: 'user_id' },
+          { data: 'js_id', name: 'js_id' },
           { data: 'js_id', name: 'js_id' },
           { data: 'profile', name: 'profile' },
           { data: 'text', name: 'text' },
