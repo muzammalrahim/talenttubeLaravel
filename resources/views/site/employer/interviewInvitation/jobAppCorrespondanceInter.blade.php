@@ -1,3 +1,4 @@
+
 @extends('web.user.usermaster')
 
 @section('custom_css')
@@ -32,7 +33,10 @@
             @if ($interview->template->employer_video_intro)
             <div class="col-sm-12 col-md-6">
                <p class="text-dark">Employr's Intro: 
-               <h1 data-target = "#employerVideoIntroModal" data-toggle = "modal" onclick="showEmployerVideoIntro( '{{template_video($interview->template->employer_video_intro)}}')"><i class="fas fa-photo-video"></i></h1>
+
+               {{-- @dd(template_video($interview->template->employer_video_intro)); --}}
+                  
+               <h1 data-target = "#employerVideoIntroModal" class="pointer" data-toggle = "modal" onclick="showEmployerVideoIntro( '{{template_video($interview->template->employer_video_intro)}}')"><i class="fas fa-photo-video"></i></h1>
                </p>
             </div>
             @endif
@@ -52,9 +56,16 @@
                   $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $interview->id)->first();   
                   @endphp
                   <div class="panel">
-                     @if ($question->video_response == 1 && !isAdmin($user) )
+
+                     @php
+                        $file = asset('media/public/interview_bookings'.$answers->answer);
+                        $file = \Illuminate\Support\Str::endsWith($file, 'mp4');
+                     @endphp
+
+                     @if ($question->video_response == 1 && $file)
                      <p>
-                     <h1 data-toggle="modal" onclick="showEmployerVideoIntro('{{userInterview_answer_video($answers->answer)}}')" 
+                        {{-- @dump('media/public/interview_bookings'.$answers->answer) --}}
+                     <h1 data-toggle="modal" class="pointer" onclick="showEmployerVideoIntro('{{userInterview_answer_video($answers->answer)}}')" 
                         data-target="#employerVideoIntroModal"> <i class="fas fa-photo-video"></i></h1>
                      </p>
                      @else

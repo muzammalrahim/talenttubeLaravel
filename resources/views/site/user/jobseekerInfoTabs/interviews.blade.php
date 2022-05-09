@@ -12,7 +12,8 @@
 
 {{-- ========================================================== User Interviews ========================================================== --}}
 
-@include('site.user.jobseekerInfoTabs.userInterviewForJobseeker')   {{-- site/user/jobseekerInfoTabs/userInterviewForJobseeker --}}
+{{-- @include('site.user.jobseekerInfoTabs.userInterviewForJobseeker') --}}
+   {{-- site/user/jobseekerInfoTabs/userInterviewForJobseeker --}}
 
 {{-- ========================================================== User Interviews ========================================================== --}}
 

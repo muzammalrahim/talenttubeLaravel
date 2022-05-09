@@ -293,9 +293,15 @@
 
             @endif
 
-            <div class="tab-pane fade interview-tab pt-4" id="interview"  role="tabpanel" aria-labelledby="contact-tab">
+            <div class="tab-pane fade interview-tab pt-4" id="interview"  role="tabpanel" aria-labelledby="interview">
                <h2>Interviews</h2>
                <div class="tab_interviews tab_cont pt30px">
+                  {{-- <p>  Hi how are you  </p> --}}
+
+                  
+
+   
+
                   {{-- @dd($UserInterview); --}}
                   @include('site.user.jobseekerInfoTabs.interviews')
                   {{--    site/user/jobseekerInfoTabs/interviews  --}}

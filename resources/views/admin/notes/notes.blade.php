@@ -17,7 +17,7 @@
         <tr style = "text-align: center">
             {{-- <th>Id</th> --}}
             <th>Job Seeker Name</th>
-            {{-- <th>Profile</th> --}}
+            <th>Profile</th>
             <th>Text</th>
             <th>Created_at</th>
             <th>Action</th>
@@ -93,6 +93,7 @@ jQuery(function() {
           // { data: 'id', name: 'id' },
           // { data: 'user_id', name: 'user_id' },
           { data: 'js_id', name: 'js_id' },
+          { data: 'profile', name: 'profile' },
           { data: 'text', name: 'text' },
           { data: 'created_at', name: 'created_at' },
           { data: 'action', name: 'action', },
