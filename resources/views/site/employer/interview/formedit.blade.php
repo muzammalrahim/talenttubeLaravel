@@ -185,7 +185,7 @@
             <span class="blue_btn py-2 px-2 addSlot pointer"> Add Interview slot</span>
          </div>
          <div class="fomr_btn act_field center">
-            <button class=" updateNewBooking orange_btn px-5">Update</button>
+            <button class=" updateNewBooking orange_btn px-5 mb-5">Update</button>
          </div>
       </form>
    </div>
