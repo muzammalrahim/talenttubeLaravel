@@ -22,7 +22,16 @@
             width: fit-content !important;
         }
         .pp_info_start{
-            width: 540px !important;
+            width: 500px !important;
+        }
+        .modal {
+            background: transparent !important;
+        }
+        .pp_info_start {
+            background: transparent !important;
+        }
+        .pp_info_start .cont {
+            padding: 0px !important;
         }
         #player{
             width: 500px !important;
