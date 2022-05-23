@@ -339,7 +339,7 @@
                                 <div class="userVideo">
                                     <div class="title_private_photos title_videos">Upload Videos</div>
                                     <div id="list_videos_public" class="list_videos_public">
-                                        <div id="photo_add_video" class="item add_photo add_video_public item_video">
+                                        <div id="photo_add_video" class="item add_photo add_video_public item_video" data-view="step2">
                                             <a class="add_photo">
                                                 <img id="video_upload_select" class="transparent is_video" src="{{ asset('images/site/icons/add_video160x120.png') }}" style="opacity: 1">
                                             </a>
@@ -516,6 +516,20 @@
     </div>
 </div>
 
+<div style="display:none;">
+        <div id="videoShowModal" class="modal p0 videoShowModal">
+            <div class="pp_info_start pp_alert pp_confirm pp_cont" style="left: 0px; top: 0px; margin: 0;">
+                <div class="cont">
+                    <div class="videoBox"></div>
+                    {{-- <div class="double_btn">
+                        <button class="confirm_close btn small dgrey" onclick="UProfile.cancelVideoModal(); return false;">Close</button>
+                        <div class="cl"></div>
+                    </div> --}}
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 @stop
 
@@ -534,6 +548,7 @@
 <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script>
 <script src="{{ asset('js/site/jquery-ui.js') }}"></script>
 <script src="{{ asset('js/site/common.js') }}"></script>
+<script src="{{ asset('js/site/userProfile.js') }}"></script>
 
 
 

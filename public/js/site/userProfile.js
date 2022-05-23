@@ -736,7 +736,7 @@ this.updateIndustryExperience = function(){
     this.showVideoModal = function(video_url){
 
 
-        console.log(' showVideoModal Ali ', video_url);
+        console.log('Video Modal step2', video_url);
         var videoElem  = '<video id="player" controls>';
         videoElem     += '<source src="'+video_url+'" type="video/mp4">';
         videoElem     += '</video>';
