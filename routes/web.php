@@ -505,6 +505,7 @@ Route::group(array('middleware' => ['auth']), function(){
     Route::post('ajax/removeActivity', 'Site\SiteUserController@removeActivity')->name('removeActivity');
     // video user/employer
     Route::post('ajax/uploadVideo', 'Site\SiteUserController@uploadVideo')->name('uploadVideo');
+    Route::post('ajax/uploadVideoStep2', 'Site\SiteUserController@uploadVideoStep2')->name('uploadVideoStep2');
     Route::post('ajax/deleteVideo', 'Site\SiteUserController@deleteVideo')->name('deleteVideo');
     Route::get('block',         'Site\SiteUserController@blockList')->name('blockList');
     Route::post('ajax/unBlockUser', 'Site\SiteUserController@unBlockUser')->name('unBlockUser');

@@ -115,7 +115,12 @@
                   <button class="like-btn" onclick="likeFunction('{{ $js['id']->id }}')" data-jsid = "{{ $js['id']->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
                </div>
             @endif
-            <a  href="{{route('jobSeekerInfo',['id'=>$js['id']->id])}}" target="_blank"><button class="block-btn"><i class="fas fa-eye"></i> View profile</button> </a> 
+            @if (isEmployer())
+               {{-- expr --}}
+               <a  href="{{route('jobSeekerInfo',['id'=>$js['id']->id])}}" target="_blank"><button class="block-btn"><i class="fas fa-eye"></i> View profile</button> </a> 
+            @else
+               <a  href="{{route('employerInfo',['id'=>$js['id']->id])}}" target="_blank"><button class="block-btn"><i class="fas fa-eye"></i> View profile</button> </a> 
+            @endif
 
          </div>
       </div>

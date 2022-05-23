@@ -401,13 +401,18 @@ $(function(){
     });
 
     jQuery('#photo_add_video').on('click', function(){
-								var input = document.createElement('input');
+		var input = document.createElement('input');
+        var videoUpload = $('#photo_add_video').attr('data-view');
+        // console.log(videoUpload);return;
         input.type = 'file';
         input.onchange = e => {
             var file = e.target.files[0];
             console.log(' onchange file  ', file );
             var formData = new FormData();
             formData.append('video',file);
+            formData.append('videoUpload',videoUpload);
+
+            // console.log(formData);return;
             var that        = this;
             var item_id     =  Math.floor((Math.random() * 1000) + 1);
             var video_item = '';
