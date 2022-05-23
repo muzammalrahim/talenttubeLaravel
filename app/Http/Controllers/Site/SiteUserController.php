@@ -1739,7 +1739,7 @@ class SiteUserController extends Controller
             $video->generateThumbs();
 
             if ( isset($request->videoUpload) && $request->videoUpload == "step2") {
-                $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video123" style="display: inline-block;width:170px">';
+                $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;width:170px">';
                 $html .=    '<a onclick="UProfile.showVideoModal(\''.assetVideo($video).'\')" class="video_link pointer" target="_blank">';
                 $html .=        '<div class="v_title_shadow"><span class="v_title">'.$video->title.'</span></div>';
                 $html .=        generateVideoThumbs($video);
