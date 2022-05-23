@@ -17,6 +17,19 @@
     <link rel="stylesheet" type="text/css" href="{{asset('css/site/jquery.formstyler.css')}}"/>
     <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
 
+    <style type="text/css">
+        #videoShowModal{
+            width: fit-content !important;
+        }
+        .pp_info_start{
+            width: 540px !important;
+        }
+        #player{
+            width: 500px !important;
+            height: -webkit-fill-available !important;
+        }
+    </style>
+
 @stop
 
 @section('classes_body', 'register step2')
