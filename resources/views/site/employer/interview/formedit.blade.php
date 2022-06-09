@@ -181,11 +181,13 @@
                <div class="general_error error to_hide">&nbsp;</div>
             </div>
          </div>
-         <div class="">
-            <span class="blue_btn py-2 px-2 addSlot pointer"> Add Interview slot</span>
-         </div>
-         <div class="fomr_btn act_field center">
-            <button class=" updateNewBooking orange_btn px-5 mb-5">Update</button>
+         <div class="d-block mb-5">
+            <div class="d-inline-block w-50">
+               <span class="blue_btn py-2 px-2 addSlot pointer"> Add Interview slot</span>
+            </div>
+            <div class="fomr_btn act_field center d-inline-block w-25">
+               <button class=" updateNewBooking orange_btn px-5">Update</button>
+            </div>
          </div>
       </form>
    </div>

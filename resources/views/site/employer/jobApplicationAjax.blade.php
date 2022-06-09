@@ -16,11 +16,10 @@
             @endforeach
             @else
             <span  style="position: absolute; top: 10px; right: 10px;"> No Test attempted </span>
-            @endif                         
-         </div>
-         
+            @endif 
+         </div>   
          <div class="row Block-user-wrapper">
-            <div class="col-md-4 user-images">
+            <div class="col-md-2 user-images">
                <div class="block-user-img position-absolute">
                   @php
                   $profile_image  = asset('images/site/icons/nophoto.jpg');
@@ -29,30 +28,15 @@
                   $profile_image   = assetGallery2($profile_image_gallery,'small');
                   }
                   @endphp
-                  <img src="{{$profile_image}}" class="w-auto rounded-circle" alt="" >
+                  <img src="{{$profile_image}}" class="w-75" alt="" >
                </div>
-
-               <!-- ================================= Video box ================================= -->
-                  <div class="block-progrees-ratio d-block d-md-none">
-                     <div class="videos_list">
-                        @foreach($js->vidoes as $video)
-                        <input type="hidden" name="user_video" value="{{$video->file}}">
-                        @endforeach
-                     </div>
-                  </div>
-                  @if($js->vidoes->count() > 0)
-                  <a onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" class="js_video_link pointer" data-bs-toggle="modal" data-bs-target="#videoShowModal" target="_blank">{!! generateVideoThumbs($js->vidoes->first()) !!}</a>
-                  @endif
-
-               <!-- ================================= Video box ================================= -->
-
                <div class="block-user-progress ">
                   <h6>{{$js->username}}</h6>
                   <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
                   
                </div>
             </div>
-            <div class="col-md-8 user-details">
+            <div class="col-md-10 user-details">
                <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">Recent Job:</h6>
                   <p><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
@@ -109,6 +93,21 @@
                   <div class="job_app_qa_box" style="display: none;"></div>
                </div>
             </div>
+             <!-- ================================= Video box ================================= -->
+               <div class="block-progrees-ratio d-block d-md-none">
+                  <div class="videos_list">
+                     @foreach($js->vidoes as $video)
+                     <input type="hidden" name="user_video" value="{{$video->file}}">
+                     @endforeach
+                  </div>
+               </div>
+                  @if($js->vidoes->count() > 0)
+               <i class="fas fa-video js_video_link pointer fa-2x" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">  
+                     {{-- <a>{!! generateVideoThumbs($js->vidoes->first()) !!}</ a> --}}
+               </i>
+                  @endif   
+
+               <!-- ================================= Video box ================================= -->
             <div class=" employe-btn-group">
                <a href="#onlineTestModal"  class="requestTest  detail-btn "data-toggle="modal" data-target="#myModal" data-jobAppId="{{$application->id}}">Request Testing</a>
                @if (in_array($js->id,$likeUsers))

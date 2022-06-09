@@ -26,7 +26,7 @@
             @if ($test->status == 'complete')
           <li class="text-info-detail clearfix">
            <label>Candidate's Score:</label>
-           <span class="pl-2">{{$test->test_result}} %</span>
+           <span>{{$test->test_result}} %</span>
           </li>
           @endif
       </ul>
