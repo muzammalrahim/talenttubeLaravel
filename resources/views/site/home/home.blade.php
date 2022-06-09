@@ -44,7 +44,7 @@
           <ul class="btn-infomation ">
 
             
-            <li><label>I am</label></li>
+            <li><label>I am a</label></li>
             
             <form id="frm_join_index_step_1" action="{{route('join')}}" method="POST">
               @csrf

@@ -115,13 +115,13 @@ button.btn:disabled, button.btn.disabled {
     border-radius: 3px !important;
     max-width: 48%;
 }
-.goldstar{
+/*.goldstar{
     margin-top: 10px;
     margin-left: -18px;
 }
 .silverstar {
     margin-left: -18px;
-}
+}*/
 /*.silverstar img { height: 40px; }*/
 .goldstar img, .silverstar img {
 
