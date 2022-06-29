@@ -20,7 +20,7 @@
          </div>   
          <div class="row Block-user-wrapper">
             <div class="col-md-2 user-images">
-               <div class="block-user-img position-absolute">
+               <div class="block-user-img">
                   @php
                   $profile_image  = asset('images/site/icons/nophoto.jpg');
                   $profile_image_gallery    = $js->profileImage()->first();
@@ -30,11 +30,27 @@
                   @endphp
                   <img src="{{$profile_image}}" class="w-75" alt="" >
                </div>
+               
                <div class="block-user-progress ">
-                  <h6>{{$js->username}}</h6>
-                  <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
-                  
+                  <h6 class="text-start">{{$js->username}}</h6>
+
+
+                  {{-- <div class="progress-img"> 
+                     <img src="assests/images/user-progressbar.svg" alt="">
+                  </div> --}}
+                  <div class="text-center">
+                     
+                     @if($js->vidoes->count() > 0)
+                     <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
+                     </i>
+                  </div>
+                  @endif
                </div>
+
+
+
+
+
             </div>
             <div class="col-md-10 user-details">
                <div class="row blocked-user-about mt-2">
@@ -101,11 +117,11 @@
                      @endforeach
                   </div>
                </div>
-                  @if($js->vidoes->count() > 0)
-               <i class="fas fa-video js_video_link pointer fa-2x" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">  
-                     {{-- <a>{!! generateVideoThumbs($js->vidoes->first()) !!}</ a> --}}
+               
+               {{-- @if($js->vidoes->count() > 0)
+               <i class="fas fa-video js_video_link pointer fa-2x" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
                </i>
-                  @endif   
+               @endif --}}
 
                <!-- ================================= Video box ================================= -->
             <div class=" employe-btn-group">
@@ -130,7 +146,9 @@
                   </select>
                </div>
                @else
-               <span class="m5">Pending</span>
+               <div class="py-3 bold">
+                  <span class="m5">Pending</span>
+               </div>
                @endif
             </div>
          </div>
