@@ -70,7 +70,8 @@
                             </div>
                         </div>
                         <div class="box-footer clearfix">
-                            <button class="unblock-btn" onclick="unblockEmployer('{{ $js->id }}')"  data-toggle="modal" data-target="#unblockUserModal"><i class="fas fa-ban"  ></i>UnBlock</button>                          
+                            <button class="unblock-btn" onclick="unblockEmployer('{{ $js->id }}')"  data-toggle="modal" data-target="#unblockUserModal"><i class="fas fa-ban"  ></i>UnBlock</button>
+                          
                         </div>
                         
                     </div>
