@@ -1,4 +1,4 @@
-<div class="modal fade" id="videoShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" 
+<div class="modal fade overflow-hidden w-100" id="videoShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" 
    aria-hidden="true" data-keyboard="false" data-backdrop="static">
   <div class="modal-dialog">
     <div class="modal-content">

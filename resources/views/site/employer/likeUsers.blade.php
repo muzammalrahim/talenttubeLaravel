@@ -81,8 +81,8 @@
                         <li><span class="Progress-ratio-icon2">.</span> <span>40%</span> UnMatch</li>
                      </ul> --}}
                   </div>
-                  <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-down"></i> UnLike</button> 
-                  <a  href="{{route('jobSeekerInfo', ['id' => $js->id])}}"><button class="block-btn "> View Profile</button></a>                     
+                  <button class="block-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-down"></i> UnLike</button> 
+                  <a  href="{{route('jobSeekerInfo', ['id' => $js->id])}}"><button class="unlike-btn "> View Profile</button></a>                     
                </div>
             </div>
          </div>

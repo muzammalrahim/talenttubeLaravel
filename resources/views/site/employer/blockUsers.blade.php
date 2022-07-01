@@ -36,7 +36,7 @@
                            }
                            @endphp
                            <img src="{{$profile_image}}" alt="">
-																											<h6 class="py-2 fs-6 text-center">{{$js->recentJob}}</h6>
+										<h6 class="py-2 fs-6 text-center">{{$js->recentJob}}</h6>
                         </div>
                         <div class="block-user-progress ">
                            
@@ -76,6 +76,7 @@
                      <div class="block-progrees-ratio d-none d-md-block  user-page-footer">
                      </div>
                      <button class="unblock-btn" onclick="unblockUser('{{ $js->id }}')" data-toggle="modal" data-target="#unBlockModal"><i class="fas fa-ban"></i>UnBlock</button>
+                     <a  href="{{route('jobSeekerInfo', ['id' => $js->id])}}"><button class="unlike-btn "> View Profile</button></a>
                   </div>
                </div>
             </div>

@@ -73,8 +73,18 @@
                <div class="block-user-progress ">
                  
                </div>
+               <div class="text-center">
+                     
+                     @if($js->vidoes->count() > 0)
+                     <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
+                     </i>
+                  </div>
+                  @endif
             </div>
             <div class="col-md-9 col-lg-10 user-details">
+               {{-- ================================= Show video =================================  --}}
+
+                  @include('web.modals.show_video')
 
                {{-- ============================================= Pie Chart =============================================  --}}
 
@@ -94,7 +104,11 @@
                   @if(!empty($qualification_names))
                   
                   {{-- <h6 class="p-0">Qualification:</h6> --}}
-                  <p><span><b>Type:</b></span> <span class="text-capitalize"> {{$js->qualificationType}} </span></p>
+                  <p><span><b>Type:</b></span> 
+                  
+                     <span class="text-capitalize">  {{ str_replace( '_', ' ', $js->qualificationType )}} </span>
+
+                  </p>
 
                   <ul class="p-0">
                      @foreach ($qualification_names as $qnKey => $qnValue)
@@ -168,6 +182,8 @@
       </div>
    </div>
    @endforeach
+
+
    <div class="jobseeker_pagination cpagination mb20">{!! $jobSeekers->render() !!}</div>
    @endif 
 </div>
