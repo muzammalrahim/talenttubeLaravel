@@ -492,7 +492,7 @@ $(document).ready(function(){
 
         console.log(' showVideoModal ', video_url);
         // $('#videoShowModal').modal('show');
-        var videoElem  = '<video id="player" class ="w-100" controls>';
+        var videoElem  = '<video id="player" style="height:50vh"  class ="w-100" controls>';
         videoElem     += '<source src="'+video_url+'" type="video/mp4">';
         videoElem     += '</video>';
         $('#videoShowModal .videoBox').html(videoElem);
