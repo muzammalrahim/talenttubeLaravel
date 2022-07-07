@@ -21,14 +21,14 @@
                      <h1> {{$user->company}} </h1>
                   </div>
 
-                  <div class="location p-2">  
+                  <div class="location p-0 p-md-2">  
 
                      <div class="row m-0"> 
-                        <div class="col-12 col-sm-12 col-md-12 col-lg-10">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 px-0 px-md-2">
                            <p class="userLocationSpan text-center location_margin"> {{userLocation($user)}} </p> 
                         </div>
                      </div>
-                     <div class="text-center">
+                     <div class="text-start text-md-center">
                         <button type="button" id="list_info_location" class="orange_btn" onclick="showMap()">
                         <i class="fas fa-edit salaryRangeEdit"></i> 
                      </div>
@@ -125,9 +125,9 @@
 
                         <div class="row">
                            <div class="col-md-12">
-                              <div class="float-right button_about_me d-none">
-                                 <button class="cancel-button" onclick="hideFieldEditor('about_me');">Cancel</button>
-                                 <button class="orange_btn mt-2" onclick="updateProfile('about_me');" >Save</button> 
+                              <div class="float-right button_about_me d-none mt-2">
+                                 <button class="cancel-button ms-2" onclick="hideFieldEditor('about_me');">Cancel</button>
+                                 <button class="orange_btn" onclick="updateProfile('about_me');" >Save</button> 
                               </div>
                            </div>
                         </div>
@@ -146,9 +146,9 @@
 
                         <div class="row">
                            <div class="col-md-12">
-                              <div class="float-right button_interested_in d-none">
-                                 <button class="cancel-button" onclick="hideFieldEditor('interested_in');">Cancel</button>
-                                 <button class="orange_btn mt-2" onclick="updateProfile('interested_in');">Save</button> 
+                              <div class="float-right button_interested_in d-none mt-2">
+                                 <button class="cancel-button ms-2" onclick="hideFieldEditor('interested_in');">Cancel</button>
+                                 <button class="orange_btn" onclick="updateProfile('interested_in');">Save</button> 
                               </div>
                            </div>
                         </div>

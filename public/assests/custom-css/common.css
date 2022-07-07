@@ -491,8 +491,8 @@ select {
         height: 42px;
         position: absolute;
         z-index: 20;
-        top: 88px;
-        right: 25px;
+        top: 87px;
+        right: 10px;
         cursor: pointer;
         background: #00326f;
         padding: 9px 5px;
@@ -647,11 +647,11 @@ div.google-visualization-tooltip {
 }
 
 
-@media (min-width:767px) {
+/*@media (min-width:767px) {
     .location_margin {
         margin-left: 45px;
     }
-}
+}*/
 
 
 @media screen and (max-width: 479px){

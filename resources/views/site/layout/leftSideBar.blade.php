@@ -147,7 +147,7 @@
 </div>
 <!-- Mobile view navigation end here -->
 <nav class="row top-nav-header">
-   <div class="col-md-10 nav nav-tabs body-tab-btn clearfix" id="nav-tab" role="tablist">
+   <div class="col-md-10 col-sm-9 col-9 nav nav-tabs body-tab-btn clearfix" id="nav-tab" role="tablist">
 
       @if (isEmployer($user))
 
@@ -177,7 +177,7 @@
       </a>
    
    </div>
-   <div class="col-md-2 sign-btn">
+   <div class="col-md-2 col-sm-3 col-3 sign-btn px-0 px-md-2">
     <a href="{{ route('logout') }}">
       <button class="orange_btn signout py-0 px-2"  type="button"><i class="fas fa-sign-out-alt"></i>Sign Out</button>
     </a>
