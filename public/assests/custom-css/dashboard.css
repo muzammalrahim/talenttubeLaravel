@@ -2679,7 +2679,7 @@ button i {
         padding: 0px;
     }
     .profile-information {
-        padding: 30px;
+        padding: 30px 30px 15px 30px;
         background: #00326f !important;
     }
     .profile-data-info {
@@ -2688,7 +2688,7 @@ button i {
     }
     .profile-detail h1 {
         color: #ffffff;
-        margin: 20px 0;
+        margin: 20px 0 0 0;
         text-align: left;
     }
     .profile-detail p {
@@ -3642,13 +3642,10 @@ span.v_title {
         font-size: 12px !important;
     }
     .orange_btn{
-        padding: 0px !important;
         font-size: 11px !important;
-        width: 90%;
         float: left;
     }
     .signout{
-        width: 80%;
         float: right;
     }
     .slot-para{
@@ -3785,7 +3782,7 @@ span.v_title {
 }
 @media screen and (max-width: 318px) {
     .sidebaricontoggle{
-        top: 62px;
+        top: 51px;
     }
     .signout{
         float: left;
