@@ -2483,10 +2483,9 @@ button i {
     /* ============= head============= */
     .orange_btn {
         font-size: 14px !important;
-        padding: 0 10px !important;
     }
     .blue_btn {
-        font-size: 15px !important;
+        font-size: 14px !important;
         padding: 7px 10px !important;
     }
     .additional-sidebar button span {
@@ -2593,7 +2592,6 @@ button i {
     }
     .main-content {
         margin-left: 0;
-        overflow: hidden;
     }
     /* ========================concigerge============== */
     .concigerge li {
@@ -2731,7 +2729,6 @@ button i {
     }
     .orange_btn {
         font-size: 14px !important;
-        padding: 0 10px !important;
     }
     .signout i {
         display: none;
@@ -3578,7 +3575,7 @@ span.v_title {
         transition: all 0.3s;
         margin-top: 5px;
         font-size: 11px;
-								text-align: center;
+		text-align: center;
     }
     .job-box-info{
         margin-top: 15px;
@@ -3592,14 +3589,12 @@ span.v_title {
     .block-box .box-footer .block-btn{
 
         float: left;
-        padding: 0 !important;
         margin: 0 !important;
         width: 30%;
         height: 30px;
         font-size: 11px;
     }
     .block-box .box-footer .like-btn{
-        padding: 0 !important;
         margin: 0 !important;
         width: 30%;
         height: 30px;
@@ -3611,15 +3606,13 @@ span.v_title {
         margin-left: 15px !important;
     }
     .block-box .box-footer .detail-btn{
-        padding: 0 !important;
         margin: 0 !important;
-        width: 30%;
+        width: 33%;
         height: 30px;
         font-size: 11px !important;
         float: right;
     }
     .block-box .box-footer .unlike-btn{
-        padding: 0 !important;
         margin: 0 !important;
         width: 30% !important;
         height: 30px;
@@ -3630,7 +3623,7 @@ span.v_title {
 
     .user-details .blocked-user-about p{
         font-size: 11px;
-								word-break: break-all;
+		word-break: break-all;
     }
     .user-details .blocked-user-experience p{
         font-size: 14px;
@@ -3684,7 +3677,8 @@ span.v_title {
         font-size: 11px !important;
     }
     h2{
-        font-size: 15px;
+        font-size: 17px;
+        padding-left: 0px !important;
         width: 85%;
     }
     .concigerge-box{

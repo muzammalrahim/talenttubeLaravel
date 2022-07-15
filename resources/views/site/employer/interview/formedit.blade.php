@@ -6,8 +6,8 @@
 @stop
 @section('content')
 <div class="newJobCont profile profile-section">
-   <h2 class="head icon_head_browse_matches">Interview Concierge - Editing Booking Schedule</h2>
    <div class="filter-section">
+      <h2 class="head icon_head_browse_matches">Interview Concierge - Editing Booking Schedule</h2>
       <form method="POST" name="new_job_form" class="new_booking_form newJob job_validation">
          @csrf
 
@@ -104,7 +104,7 @@
                      $slots = $interview->slots;
                      @endphp
                      @foreach ($slots as $key => $slot)
-                     <div class="slot s{{$key+1}} m_rb20 slotBorder p-2 remslot_{{ $slot->id }}">
+                     <div class="slot s{{$key+1}} slotBorder mb-2 p-2 remslot_{{ $slot->id }}">
                         <div class="font-weight-bold textCenter2 mb-2">Interview Slot <span class="test">{{$key+1}}</span> 
                            <i class="fas fa-trash text-danger fl_right deleteSlotClck pointer" data-toggle="modal" data-target = "#deleteSlotModal"></i>
                         </div>
@@ -112,27 +112,34 @@
                         <input type="hidden" class="companynameInSlot" id="" value="{{$interview->companyname}}">
                         <input type="hidden" class="positionnameInSlot" id="" value="{{$interview->positionname}}">
                         
-                        <div class="d-inline-block mt-2">
-                           <label for="time" class="d-inline-block mt-2 mr-2">Time :</label>
-                           <input type="hidden" class="" name="slot[{{$key+1}}][id]" value="{{$slot->id}}" />
-                           <div class="d-inline-block mt-2"> 
-                              <input type="text" id="time" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown form-control text-center pointer bg-white" name="slot[{{$key+1}}][start]" size="8" value="slot[{{$key+1}}]" required readonly />
+                        <div class="row mt-2">
+                           <div class="col-12 col-md-5 col-lg-5">
+                              <div class="row">
+                                 <label for="time" class="col-2 col-md-2 pt-2">Time:</label>
+                                 <input type="hidden" class="" name="slot[{{$key+1}}][id]" value="{{$slot->id}}" />
+                                 <div class="col-4 col-md-4 pe-0 ps-md-0"> 
+                                    <input type="text" id="time" value="{{$slot->starttime}}" class="timepicker timepicker-without-dropdown form-control text-center pointer bg-white" name="slot[{{$key+1}}][start]" value="slot[{{$key+1}}]" required readonly />
+                                 </div>
+                                 <label for="to" class="col-2 col-md-1 pt-2 ps-md-1">To:</label>
+
+                                 <div class="col-4 col-md-4 ps-md-0 pe-md-0">
+                                    <input type="text" id="to" value="{{$slot->endtime}}" class="timepicker timepicker-without-dropdown form-control text-center pointer bg-white" name="slot[{{$key+1}}][end]" required readonly />
+                                 </div>
+                              </div>
                            </div>
 
-                           <label for="to" class="d-inline-block mt-2 mx-2">To :</label>
+                           <div class="col-12 col-md-7 col-lg-7 ps-md-0">
+                              <div class="row">
+                                 <label for="date" class="col-2 col-md-1 pt-2">Date:</label>
+                                 <div class="col-10 col-md-4">
+                                    <input type="text" id="date" value="{{Carbon\Carbon::parse($slot->date)->format('d-m-Y')}}"   name="slot[{{$key+1}}][date]" class="datepicker form-control pointer bg-white" required readonly />
+                                 </div>
 
-                           <div class="d-inline-block mt-2">
-                              <input type="text" id="to" value="{{$slot->endtime}}" class="timepicker timepicker-without-dropdown form-control text-center pointer bg-white" name="slot[{{$key+1}}][end]" size="8" required readonly />
-                           </div>
-    
-                           <label for="date" class="d-inline-block mt-2 mx-2">Date :</label>
-                           <div class="d-inline-block mt-2">
-                              <input type="text" id="date" value="{{Carbon\Carbon::parse($slot->date)->format('d-m-Y')}}"   name="slot[{{$key+1}}][date]" class="datepicker form-control pointer bg-white" size="20" required readonly />
-                           </div>
-
-                           <label for="maxinterviews" class="d-inline-block mt-2 col-form-label mx-2">Maximum number of interviews:</label>
-                           <div class="d-inline-block mt-2">
-                              {{ Form::select('maximumnumberofinterviewees', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'slot['.($key+1).'][maxNumberofInterviewees]', 'class' => 'selectedInput bg-white form-control icon_show', 'id'=>'maxinterviews']) }}
+                                 <label for="maxinterviews" class="col-form-label col-9 col-md-5 pt-2 ps-md-0 pe-0">Maximum number of interviews:</label>
+                                 <div class="col-3 col-md-2 ps-0">
+                                    {{ Form::select('maximumnumberofinterviewees', getMaximumInterviews(), $slot->maximumnumberofinterviewees, ['name' => 'slot['.($key+1).'][maxNumberofInterviewees]', 'class' => 'selectedInput bg-white form-control icon_show', 'id'=>'maxinterviews']) }}
+                                 </div>
+                              </div>
                            </div>
                         </div>
                         {{--  For sending email to js after updating slot --}}
@@ -155,7 +162,7 @@
                               <div class="slotBookinIndex mb-2">
                                  <p class="font-weight-bold text-dark mb-1">Booking:{{ $loop->index+1 }}</p>
                                  <span class="d-inline-block"><span class="bold"> Name: </span>{{$bookings->name}}</span>
-                                 <span class="d-inline-block mx-3"><span class="bold"> Email: </span>{{$bookings->email}}</span>
+                                 <span class="d-inline-block mx-0 mx-sm-3"><span class="bold"> Email: </span>{{$bookings->email}}</span>
                                  <span class="d-inline-block"><span class="bold"> Mobile: </span>{{$bookings->mobile}}</span>
                               </div>
                               @endforeach
@@ -182,10 +189,10 @@
             </div>
          </div>
          <div class="d-block mb-5">
-            <div class="d-inline-block w-50">
+            <div class="d-inline-block float-start pt-2">
                <span class="blue_btn py-2 px-2 addSlot pointer"> Add Interview slot</span>
             </div>
-            <div class="fomr_btn act_field center d-inline-block w-25">
+            <div class="fomr_btn act_field center d-inline-block float-end">
                <button class=" updateNewBooking orange_btn px-5">Update</button>
             </div>
          </div>
@@ -199,6 +206,11 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
 <style>
+   @media only screen and (max-width: 479px){
+      .sidebaricontoggle {
+         right: 35px !important;
+      }
+   } 
    
 </style>
 @stop
@@ -271,38 +283,37 @@
                        slot  += '   </div>';
                        slot  += '  </div>';*/
 
-         var   slot  = '<div class="slot s'+i+' m_rb20 slotBorder p-2 addNewInterviewSlot">';
+         var   slot  = '<div class="slot s'+i+' mb-2 slotBorder p-2 addNewInterviewSlot">';
                slot  += '<div class="font-weight-bold textCenter2 mb-2">Interview Slot '+i+' ';
                slot  += '<i class="fas fa-trash text-danger fl_right deleteSlot">'
                slot  += '</i>'
                slot  +=  '</div>';
 
-               slot += '<div class="d-inline-block mt-2">';
-
-               slot +=    '<label for="time" class="d-inline-block mt-2 mr-2">Time :</label>';
+               slot += '<div class="row mt-2">';
+               slot += '<div class="col-12 col-md-5 col-lg-5">';
+               slot += '<div class="row">';
+               slot +=    '<label for="time" class="col-2 col-md-2 pt-2">Time:</label>';
                // slot +=       '<input type="hidden" class="" name="slot['+i+'][id]">';
-               slot +=        '<div class="d-inline-block mt-2"> ';
+               slot +=        '<div class="col-4 col-md-4 pe-0 ps-md-0"> ';
                slot +=           '<input type="text" name="slot['+i+'][start1]" id="time" class="timepicker timepicker-without-dropdown form-control text-center pointer bg-white"  size="8" required="" readonly="">';
                slot +=         '</div>';
+               slot +=         '<label for="to" class="col-2 col-md-1 pt-2 ps-md-1">To:</label>';
 
-               slot +=         '<label for="to" class="d-inline-block mt-2 mx-2">To :</label>';
-
-               slot +=         '<div class="d-inline-block mt-2">';
+               slot +=         '<div class="col-4 col-md-4 ps-md-0 pe-md-0">';
                slot +=            '<input type="text" name="slot['+i+'][end1]" id="to" class="timepicker timepicker-without-dropdown form-control text-center pointer bg-white" size="8" required="" readonly="">';
                slot +=         '</div>';
- 
-                        
-               slot +=         '<label for="date" class="d-inline-block mt-2 mx-2">Date :</label>';
-               slot +=         '<div class="d-inline-block mt-2">';
+               slot += '</div>';
+               slot += '</div>';
+
+               slot += '<div class="col-12 col-md-7 col-lg-7 ps-md-0">';
+               slot += '<div class="row">';
+               slot +=         '<label for="date" class="col-2 col-md-1 pt-2">Date:</label>';
+               slot +=         '<div class="col-10 col-md-4">';
                slot +=            '<input type="text" name="slot['+i+'][date1]" class="datepicker form-control pointer bg-white" autocomplete="off" readonly size="20" required />';
                slot +=         '</div>';
-                     
-                     
-               slot +=         '<label for="maxinterviews" class="d-inline-block mt-2 col-form-label mx-2">Maximum number of interviews:</label>';
-
-                        
-                           
-               slot +=         '<div class="d-inline-block mt-2">';
+               slot +=         '<label for="maxinterviews" class="col-form-label col-9 col-md-5 pt-2 ps-md-0 pe-0">Maximum number of interviews:</label>';
+           
+               slot +=         '<div class="col-3 col-md-2 ps-0">';
                slot +=            '<select name="slot['+i+'][maxNumberofInterviewees1]" class="selectedInput bg-white form-control icon_show" id="maxinterviews">';
                slot +=              '<option value="1" selected="selected">1</option>';
                slot +=              '<option value="2">2</option>';
@@ -325,7 +336,9 @@
                slot +=              '<option value="20">20</option>';
                slot +=              '</select>';
                slot +=         '</div>';
-                        
+               slot += '</div>';
+               slot += '</div>';
+                       
                slot +=      '</div>';
 
 

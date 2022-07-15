@@ -11,9 +11,9 @@
 <section class="row">
     <div class="col-md-12">
     <div class="profile profile-section">
-        <div class="row">
+        <div class="row px-3 px-md-0">
             <h2 class="col-6">Job Detail Page</h2>
-            <div class="col-6"> <a href="{{ route('jobs') }}" class="float-right"> <button class="orange_btn"> Return To Jobs</button> </a> </div>
+            <div class="col-5 col-lg-6"> <a href="{{ route('jobs') }}" class="float-right"> <button class="orange_btn"> Return To Jobs</button> </a> </div>
         </div>
         <div class="row">
             @if ($job)
@@ -95,9 +95,9 @@
                     @php
                     $user = Auth::user();
                     @endphp
-                    <div class="box-footer unlike-btn-group clearfix py-4">
+                    <div class="box-footer unlike-btn-group clearfix py-0 py-md-4">
                         @if ($job->code)
-                        <span class="  ml-2 py-3 px-4"><strong>Code:</strong> {{$job->code}}</span>
+                        <span class="px-2 px-md-3"><strong>Code:</strong> {{$job->code}}</span>
                         @endif
                         @if(!isEmployer($user))
                         <button class="unlike-btn mb-2" data-toggle="modal" data-target="#jobApplyModal" onclick="jobApplyFunction({{ $job->id }})"> Apply</button> 
@@ -138,7 +138,18 @@
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 {{-- <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}"> --}}
-
+<style>
+    @media only screen and (max-width: 479px){
+      .sidebaricontoggle {
+         top: 5rem !important;
+      }
+   }
+   @media only screen and (min-width: 480px) and (max-width: 991px){
+      .sidebaricontoggle {
+         top: 6rem !important;
+      }
+   }
+</style>
 @stop
 
 @section('custom_js')

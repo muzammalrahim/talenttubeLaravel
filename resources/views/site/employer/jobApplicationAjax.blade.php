@@ -57,7 +57,7 @@
                   <h6 class="p-0">Recent Job:</h6>
                   <p><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
                </div>
-               <div class="row blocked-user-experience">
+               <div class="row blocked-user-experience blocked-user-about mt-2">
                   <h6 class="p-0">Qualifications:</h6>
                   @php
                   $qualification_names =  getQualificationNames($js->qualification)
@@ -103,9 +103,9 @@
             </div>
          </div>
          <div class="box-footer1 box-footer  clearfix">
-            <div class="block-progrees-ratio1 d-none d-md-block">
+            <div class="block-progrees-ratio1 d-block">
                <div class="job_app_qa job_app_{{$application->id}}">
-                  <div class="ps-3"><button class="ja_load_qa blue_btn" data-appid="{{$application->id}}">Question/Answers</button></div>
+                  <div class="ps-0 ps-md-3"><button class="ja_load_qa blue_btn" data-appid="{{$application->id}}">Question/Answers</button></div>
                   <div class="job_app_qa_box" style="display: none;"></div>
                </div>
             </div>
@@ -125,7 +125,7 @@
 
                <!-- ================================= Video box ================================= -->
             <div class=" employe-btn-group">
-               <a href="#onlineTestModal"  class="requestTest  detail-btn "data-toggle="modal" data-target="#myModal" data-jobAppId="{{$application->id}}">Request Testing</a>
+               <a href="#onlineTestModal"  class="requestTest  detail-btn px-1"data-toggle="modal" data-target="#myModal" data-jobAppId="{{$application->id}}">Request Testing</a>
                @if (in_array($js->id,$likeUsers))
                <a class="active  like-btn" data-jsid="{{$js->id}}">Liked</a>
                @else

@@ -71,15 +71,15 @@
 						<h6 class="py-2">{{$js->username}}</h6>
                </div>
                <div class="block-user-progress ">
-                 
-               </div>
-               <div class="text-center">
-                     
+
+                  <div class="text-center">
+                        
                      @if($js->vidoes->count() > 0)
                      <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
                      </i>
+                     @endif
                   </div>
-                  @endif
+               </div>
             </div>
             <div class="col-md-9 col-lg-10 user-details">
                {{-- ================================= Show video =================================  --}}
@@ -166,7 +166,7 @@
                {{-- @dump($likeUsers) --}}
                @if (in_array($js->id,$likeUsers))
                <div class="unlike-div ">
-                  <button class="unlike-btn ml-2" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
+                  <button class="unlike-btn ml-2" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-down"> </i> UnLike</button>
                </div>
                @else
                   <div class="like-div">
@@ -175,7 +175,7 @@
                @endif
 
                <a href="{{ route('jobSeekerInfo', ['id'=> $js->id]) }}" target="_blank">
-                  <button class="detail-btn"><i class="fas fa-file-alt"></i> View profile</button>
+                  <button class="detail-btn px-1"><i class="fas fa-file-alt"></i> View profile</button>
                </a>
             </div>
          </div>

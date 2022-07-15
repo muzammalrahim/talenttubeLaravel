@@ -115,7 +115,7 @@
                            <a class=" orange_btn  buttonSaveIndustry mt-2 text-center py-2 col-sm-2 col-md-2 pointer col-4 ml-2" onclick="updateNewJobIndustryExperience()">Save</a>
                         </div>
                      </div>
-                     <div class="col-1 col-sm-1"><i class="editIndustry fas fa-edit orange_btn float-right py-2 pointer"></i></div>
+                     <div class="col-1 col-sm-1 mt-3 mt-lg-0"><i class="editIndustry fas fa-edit orange_btn float-right py-2 pointer"></i></div>
                   </div>
                </div>
             </div>
@@ -211,6 +211,16 @@
    .mz{margin: 0!important;}
    .addQuestionOption{
    cursor: pointer;
+   }
+   @media only screen and (max-width: 479px){
+      .sidebaricontoggle {
+         top: 4rem !important;
+      }
+   }
+   @media only screen and (min-width: 480px) and (max-width: 991px){
+      .sidebaricontoggle {
+         top: 6rem !important;
+      }
    }
 </style>
 @stop

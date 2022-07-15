@@ -45,7 +45,7 @@
                         <h6>Location: {{$job->city}},  {{($job->state)}}, {{($job->country)}}</h6>
                      </div>
                      <div class="row Block-user-wrapper">
-                        <div class="col-12 col-sm-6 col-md-4 col-lg-4">
+                        <div class="col-12 col-sm-6 col-md-7 col-lg-4">
                            <ul class="job-box-text concigerge clearfix">
                               <li class="text-info-detail clearfix">
                                  <label class="w-50">Job Type:</label>
@@ -77,7 +77,7 @@
                               </a>
                            </ul>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-8 col-lg-8">
+                        <div class="col-12 col-sm-6 col-md-5 col-lg-8">
                            <ul class="job-box-text concigerge clearfix">
                                <li class="text-info-detail clearfix">
                                  <label>Job details:</label>
@@ -130,7 +130,19 @@
 @stop
 @section('custom_footer_css')
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
+<style>
+   @media only screen and (max-width: 479px){
+      .sidebaricontoggle {
+         top: 4rem !important;
+      }
+   }
+   @media only screen and (min-width: 480px) and (max-width: 991px){
+      .sidebaricontoggle {
+         top: 5rem !important;
+      }
+   }
 
+</style>
 
 @stop
 @section('custom_js')

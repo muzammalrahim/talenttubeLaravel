@@ -11,8 +11,8 @@
     <div class="col-md-12">
         <div class="profile profile-section">
             <div class="row mb-2 mb-sm-2 mb-md-1 ">
-                <h2 class="col-12 col-sm-12 col-md-12 col-lg-6"> Interview Invitations</h2>
-                <div class="col-12 col-sm-12 col-md-12 col-lg-6">   
+                <h2 class="col-12 col-sm-12 col-md-6 col-lg-6 ps-3"> Interview Invitations</h2>
+                <div class="col-12 col-sm-12 col-md-5 col-lg-6">   
                     <a href="{{ route('unhideInterviews') }}" class="unhideInterviews blue_btn float-none float-md-right float-lg-right py-1 "> Click here to Un-Hide your interviews </a>
                 </div>
             </div>
@@ -82,6 +82,12 @@
    .width75p{width: 75%;display: inline-block;}
    .bgColor{background: #dddfe3;}
    .confirmInterview{margin: 15px 0 !important;}*/
+   @media only screen and (max-width: 991px) {
+    .sidebaricontoggle{
+        top: 5rem !important;
+        margin-top: 10px !important;
+    }
+   }
 </style>
 @stop
 @section('custom_js')

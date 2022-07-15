@@ -632,16 +632,43 @@
 
 <style type="text/css">
 
-    html {
+    /*html {
     overflow-x: hidden;
     overflow-y: hidden;
-}
+    }
 
-body { 
-    overflow-x: hidden;
-    overflow-y: hidden;
-}
+    body { 
+        overflow-x: hidden;
+        overflow-y: hidden;
+    }*/
 
+    @media only screen and (max-width: 479px){
+      .sidebaricontoggle {
+         top: 4rem !important;
+      }
+      .block-box .box-footer .unlike-btn {
+        margin-left: 10px !important;
+      }
+   }
+   @media only screen and (min-width: 480px) and (max-width: 991px){
+      .sidebaricontoggle {
+         top: 5rem !important;
+      }
+   }
+   @media only screen and (max-width: 1200px) {
+      .block-box .box-footer1 {
+         flex-direction: row !important;
+      }
+      .block-progrees-ratio1 {
+         width: auto !important;
+      }
+      .employe-btn-group {
+        justify-content: right !important;
+      }
+   }
+   .bj-tr-btn button {
+      margin: 5px !important;
+   }
 </style>
 {{-- 
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
