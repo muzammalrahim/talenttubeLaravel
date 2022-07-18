@@ -564,6 +564,11 @@ var base_url = {!! json_encode(url('/')) !!};
    <style type="text/css">
 
      textarea{ resize: none }
+     @media only screen and (min-width: 768px) and (max-width: 991px) {
+      .sidebaricontoggle{
+         top: 4rem !important;
+      }
+     }
       
       
    </style>

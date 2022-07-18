@@ -37,7 +37,7 @@
         <h2>TALENT MATCHER<span >in the<strong>world.</strong></span></h2>        
         <div class="header-buttons">
                    
-          <div class="interview-con-link d-lg-none d-md-block">
+          <div class="interview-con-link d-lg-none d-md-none d-sm-block">
              <a href="#" data-toggle="modal" data-target="#interviewConciergeModal" class="orange_btn interview-button"><img src="assests/images/Interview-icon.svg" alt="" class="interview-icon"> <img src="assests/images/interview_hover.svg" class="interview_hover_icon" alt="" style="display: none;"> Interview concierge</a>
           </div>
 

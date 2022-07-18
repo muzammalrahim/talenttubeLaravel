@@ -79,7 +79,7 @@
    </div>
 </div>  --}}
 {{-- html for browse job form --}}
-<div class="bj-main">
+<div class="bj-main pt-2 pt-md-0">
    <div class="filter-section">
       {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'filter_form' )) }}
       <input type="hidden" name="page" id="paginate" value="">
@@ -157,7 +157,7 @@
 
                         <div class="filter_industries_list">
                               @foreach ($industries as $indK => $indV)
-                              <option class="" value="{{$indK}}" data-id="{{$indK}}"><span>{{$indV}}</span></option>
+                              <option class="" value="{{$indK}}" data-id="{{$indK}}"><span class="w-100">{{$indV}}</span></option>
                               @endforeach
                         </div>
                         @endif

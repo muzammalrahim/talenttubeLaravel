@@ -154,24 +154,24 @@
          <div class="row b-filter-row top-filter-row">
             <div class="col-md-12 col-sm-12">
                <div class="input-employee clearfix">
-               	<div class="row">
+               	<div class="row pt-2">
 	                  {{-- <label class="col-md-4">Keyword:</label> --}}
-                  	<h5 class="col-md-4 browse-heading">Keyword:</h5>
+                  	<h5 class="col-md-4 col-4 pt-2 browse-heading">Keyword:</h5>
 
-	                  <input type="text" class="form-control col-md-8" name="filter_keyword" aria-label="Recipient's username">
+	                  <input type="text" class="form-control col-md-7 col-7" name="filter_keyword" aria-label="Recipient's username">
                	</div>
                </div>
             </div>
-            <div class="row b-filter-row mt-3">
+            <div class="row b-filter-row">
                <div class="col-md-12 browse-mp">
                   <div class="row">
-                     <div class="col-md-3 col-sm-12 mt-1">
+                     <div class="col-md-3 col-6">
                         <h5 class="browse-heading">Filter by Industry:</h5>
                      </div>
-                     <div class="col-md-1 col-sm-2 col-2 custom-checkbox mt-1">
+                     <div class="col-md-1 col-sm-2 col-2 custom-checkbox">
                         <input type="checkbox" name="filter_industry_status" class="">
                      </div>
-                     <div class="col-md-8 col-sm-12 px-0">
+                     <div class="col-md-8 col-12">
                         {{-- 
                         <div class="indusDiv d-none">
                            --}}
@@ -196,7 +196,7 @@
             </div>
 
 
-            <div class="row b-filter-row mt-3">
+            <div class="row b-filter-row mt-md-3">
                <div class="col-md-12">
                   <div class="row">
                      <div class="col-md-3 col-sm-12 mt-1 b-mob-pad">

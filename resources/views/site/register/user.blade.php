@@ -239,5 +239,12 @@
   .to_show{
     opacity: 1;
   }
+  @media only screen and (max-width: 479px){
+    .Search-btn{
+      width: unset !important;
+      top: 0px !important;
+    }
+  }
+
 </style>
 

@@ -12,10 +12,10 @@
 <section class="row">
   <div class="col-md-12">
     <div class="profile profile-section">
-      <div class="row">
-        <div class="col-11 col-sm-6"><h2>Received Interview Invitations</h2></div>
+      <div class="row mb-md-3">
+        <div class="col-11 col-sm-6 col-lg-6"><h2>Received Interview Invitations</h2></div>
 
-        <div class="col-1 col-sm-6 head icon_head_browse_matches float-right d-none d-sm-block"> 
+        <div class="col-1 col-sm-5 col-lg-6 head icon_head_browse_matches float-right d-none d-sm-block"> 
           <a href="{{ route('unhideInterviews') }}" class="unhideInterviews blue_btn py-1 float-right">Click here to Un-Hide your interviews </a> 
         </div>
       </div>
@@ -62,7 +62,7 @@
                 <span><b> {{$Int_booking->template->template_name}} </b></span>
               </li>
 
-              <li style="height: 50px;overflow-y: auto;">
+              <li style="height: 70px;overflow-y: auto;">
                 <span><b>Instructions:</b></span><span> {{$Int_booking->template->employers_instruction}} </span>
               </li>
 
@@ -132,6 +132,27 @@
 }
 .job-box-info>.interview-btn-call>.interview-tag {
     text-align: center;
+}
+@media only screen and (min-width: 767px) and (max-width: 819px) {
+  .dual-tags {
+    margin: 0 4px 20px !important;
+  }
+  .used-tag{
+    margin: 0px !important;
+  }
+  .box-head {
+    min-height: 74px;
+  }
+}
+@media only screen and (max-width: 479px) {
+    .sidebaricontoggle{
+        top: 4rem !important;
+    }
+}
+@media only screen and (min-width: 480px) and (max-width: 991px){
+   .sidebaricontoggle{
+        top: 6rem !important;
+    } 
 }
 </style>
 

@@ -102,7 +102,7 @@
                </div>
                <div class="col-lg-8 col-md-12 col-sm-12 col-12">
                   <div class="b-card-btn">
-                     <a type="button" class="orange_btn" href="{{route('jobDetail', ['id' => $job->id]) }}"> <i class="fas fa-file-alt"></i> Detail</a>
+                     <a type="button" class="orange_btn text-center" href="{{route('jobDetail', ['id' => $job->id]) }}"> <i class="fas fa-file-alt"></i> Detail</a>
                      {{-- @dd($job->jobApplication->id) --}}
                      @if (isset($job->jobApplication))
                      @if ($job->jobApplication->user_id == $user->id)
