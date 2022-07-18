@@ -82,9 +82,9 @@
                </div>
             </div>
             <div class="col-md-9 col-lg-10 user-details">
+
                {{-- ================================= Show video =================================  --}}
 
-                  @include('web.modals.show_video')
 
                {{-- ============================================= Pie Chart =============================================  --}}
 
@@ -182,6 +182,8 @@
       </div>
    </div>
    @endforeach
+
+   
 
 
    <div class="jobseeker_pagination cpagination mb20">{!! $jobSeekers->render() !!}</div>

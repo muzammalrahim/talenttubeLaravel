@@ -28,14 +28,22 @@
       <!-- =============================================================================================================================== -->
    </div>
    <div class="cl"></div>
+
+
+
 </div>
 
 @include('web.modals.unlike')
 
 
+@include('web.modals.show_video')
+{{-- @include('web.modals.testVideoShowModal') --}}
 
 
 @stop
+
+
+
 @section('custom_js')
 {{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}
 {{-- <script src="{{ asset('js/site/jquery-ui.js') }}"></script> --}}
@@ -622,6 +630,17 @@
    });
 
 
+   $(document).on('click', '.js_video_link', function(){
+        setTimeout(function(){
+            // $('#player').removeClass('w-100');
+
+
+        },1000);
+        
+        $('div#videoShowModal').css({'width':'-webkit-fill-available', 'max-width': 'unset'});
+        // $('#player').css('height', '50vh');
+   });
+
  
    
    
@@ -635,6 +654,7 @@
     /*html {
     overflow-x: hidden;
     overflow-y: hidden;
+
     }
 
     body { 
@@ -669,6 +689,8 @@
    .bj-tr-btn button {
       margin: 5px !important;
    }
+}
+
 </style>
 {{-- 
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
