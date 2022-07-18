@@ -117,9 +117,9 @@
             @endif
             @if (isEmployer())
                {{-- expr --}}
-               <a  href="{{route('jobSeekerInfo',['id'=>$js['id']->id])}}" target="_blank"><button class="block-btn"><i class="fas fa-eye"></i> View profile</button> </a> 
+               <a  href="{{route('jobSeekerInfo',['id'=>$js['id']->id])}}" target="_blank"><button class="block-btn px-1"><i class="fas fa-eye"></i> View profile</button> </a> 
             @else
-               <a  href="{{route('employerInfo',['id'=>$js['id']->id])}}" target="_blank"><button class="block-btn"><i class="fas fa-eye"></i> View profile</button> </a> 
+               <a  href="{{route('employerInfo',['id'=>$js['id']->id])}}" target="_blank"><button class="block-btn px-1"><i class="fas fa-eye"></i> View profile</button> </a> 
             @endif
 
          </div>

@@ -100,6 +100,29 @@
 {{-- 
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 --}}
+<style type="text/css">
+   @media only screen and (max-width: 479px){
+      .sidebaricontoggle {
+         top: 4rem !important;
+      }
+      .block-box .box-footer .unblock-btn {
+         width: auto !important;
+         margin-left: 0 !important;
+         font-size: 16px !important;
+      }
+      .block-box .box-footer .unlike-btn {
+         font-size: 16px !important;
+         margin: 10px 13px 0 3px !important;
+         height: unset !important;
+         width: auto !important;
+      }
+   }
+   @media only screen and (min-width: 480px) and (max-width: 991px){
+      .sidebaricontoggle {
+         top: 5rem !important;
+      }
+   }
+</style>
 @stop
 @section('custom_js')
 {{-- <script src="{{ asset('js/site/jquery.modal.min.js') }}"></script> --}}

@@ -122,17 +122,28 @@
 
 @media only screen and (max-width: 600px) {
 .tableResponsive{
-    width: 495px !important;
+    width: 50rem !important;
     margin: 0 auto !important;
 
 }
 }
 
-@media only screen and (max-width: 420px){
+@media only screen and (max-width: 479px){
     a.blue_btn.my-3.text-center.py-1.col-12.col-md-5.col-lg-5.mx-md-3.mx-lg-3, a.orange_btn.my-3.text-center.py-1.col-12.col-md-5.col-lg-5.mx-md-3.mx-lg-3{
         height: unset !important;
+        font-size: 14px !important;
+        padding: 7px 10px !important;
     }
 }
+
+@media only screen and (max-width: 815px){
+    a.blue_btn.my-3.text-center.py-1.col-12.col-md-5.col-lg-5.mx-md-3.mx-lg-3, a.orange_btn.my-3.text-center.py-1.col-12.col-md-5.col-lg-5.mx-md-3.mx-lg-3{
+        height: unset !important;
+        font-size: 14px !important;
+        padding: 7px 10px !important;
+    }
+}
+
 
 </style>
 @stop
@@ -143,7 +154,7 @@
 {{-- <script src="{{ asset('js/site/profile_photo.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/jquery.magnific-popup.js') }}"></script>  --}}
 {{-- <script src="{{ asset('js/site/gallery_popup/lc_lightbox.lite.js') }}"></script> --}}
-<script type="text/javascript">
+{{-- <script type="text/javascript">
    jQuery(function(){
       function rescaletable(){
          var width = jQuery('.table-responsive').width();
@@ -163,5 +174,5 @@
       rescaletable();
       jQuery( window ).resize(function() { rescaletable(); });
    });
-</script>
+</script> --}}
 @stop

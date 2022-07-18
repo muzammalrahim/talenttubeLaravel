@@ -101,6 +101,18 @@
 {{-- Updated html for like user page end  --}}
 @stop
 @section('custom_footer_css')
+<style type="text/css">
+   @media only screen and (max-width: 479px){
+      .sidebaricontoggle {
+         top: 4rem !important;
+      }
+   }
+   @media only screen and (min-width: 480px) and (max-width: 991px){
+      .sidebaricontoggle {
+         top: 5rem !important;
+      }
+   }
+</style>
 @stop
 @section('custom_js')
 <script src="{{ asset('js/web/profile.js') }}"></script>

@@ -1,4 +1,4 @@
-<div class="modal fade" id="unlikeModal" role="dialog">
+<div class="modal fade px-3 px-md-0" id="unlikeModal" role="dialog">
     <div class="modal-dialog delete-applications">
     
       <!-- Modal content-->
@@ -12,7 +12,7 @@
         </div>
 
         <input type="hidden" id="jobSeekerBlockId" />
-        <div class="dual-footer-btn">
+        <div class="dual-footer-btn mx-3 mx-md-0">
           <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
           <button type="button" class="orange_btn" onclick="unlikeConfirm()" data-dismiss="modal"><i class="fa fa-check"></i>OK</button>
         </div>
