@@ -115,7 +115,7 @@
                         {{-- </div> --}}
 
                         {{-- <div class="col-7"> --}}
-                              <span class="recentjobSpan">{{$user->recentJob}} </span>
+                              <span class="recentjobSpan pe-1">{{$user->recentJob}} </span>
                              <span> at </span> 
                               <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
                               </div>
@@ -208,9 +208,9 @@
 
                         <div class="row">
                            <div class="col-md-12">
-                              <div class="float-right button_about_me d-none">
-                                 <button class="cancel-button" onclick="hideFieldEditor('about_me');">Cancel</button>
-                                 <button class="orange_btn mt-2" onclick="updateProfile('about_me');" >Save</button> 
+                              <div class="float-right button_about_me d-none mt-2">
+                                 <button class="cancel-button ms-2" onclick="hideFieldEditor('about_me');">Cancel</button>
+                                 <button class="orange_btn" onclick="updateProfile('about_me');" >Save</button> 
                               </div>
                            </div>
                         </div>
@@ -229,9 +229,9 @@
 
                         <div class="row">
                            <div class="col-md-12">
-                              <div class="float-right button_interested_in d-none">
-                                 <button class="cancel-button" onclick="hideFieldEditor('interested_in');">Cancel</button>
-                                 <button class="orange_btn mt-2" onclick="updateProfile('interested_in');">Save</button> 
+                              <div class="float-right button_interested_in d-none mt-2">
+                                 <button class="cancel-button ms-2" onclick="hideFieldEditor('interested_in');">Cancel</button>
+                                 <button class="orange_btn" onclick="updateProfile('interested_in');">Save</button> 
                               </div>
                            </div>
                         </div>
@@ -251,7 +251,7 @@
                             <li><i class="qualification-circle"></i><span> Type: {{ ucfirst($user->qualificationType) }}</span></li>
                             <div class="">
                             @include('site.layout.parts.jobSeekerQualificationList') {{-- site/layout/parts/jobSeekerQualificationList --}}  </div>
-                            <div class="button_qualification d-none "> 
+                            <div class="button_qualification d-none mb-2"> 
                                 <button class="btn-info btn-block rounded py-2 btn-sm m-0 addQualification" onclick="addQualification()" >Add New</button> 
                                  <button class="savequalification btn-block orange_btn rounded py-2 " onclick="updateQualification()">Save</button>
                               </div>
@@ -756,6 +756,23 @@ var base_url = {!! json_encode(url('/')) !!};
 
    <style type="text/css">
       textarea{ resize: none }
+      @media only screen and (min-width: 768px) and (max-width: 991px){
+         .sidebaricontoggle{
+            top: 4rem !important;
+         }
+      }
+      .tagsList{
+         width: unset !important;
+      }
+      .tagCategories{
+         width: unset !important;
+      }
+      .tagListCont{
+         width: unset !important;
+      }
+      .text-info-detail p {
+         height: unset !important;
+      }
    </style>
     
 @stop

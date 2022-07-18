@@ -100,7 +100,7 @@
                     </div>
                 </div>
                     <div class="col-md-6">
-                         <div class="form-check custom-checkbox">
+                         <div class="form-check custom-checkbox ps-3">
                               <input class="form-check-input" type="checkbox"  id="flexCheckIndeterminate  agree"  name="privacy_policy" value="1">
                              <label class="form-check-label" for="flexCheckIndeterminate"> I agree to the <a href="{{ route('privacy') }}" target="_blank">Terms , Conditions & Privacy Policy</a>
                               </label>

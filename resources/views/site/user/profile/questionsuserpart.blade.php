@@ -35,9 +35,9 @@
 
     <div class="row">
         <div class="col-md-12">
-            <div class="float-right button_question d-none">
-                <button class="cancel-button" onclick="hideFieldEditor('question');">Cancel</button>
-                <button class="orange_btn mt-2" onclick="updateUserQuestions('question')">Save</button> 
+            <div class="float-right button_question d-none mt-2">
+                <button class="cancel-button ms-2" onclick="hideFieldEditor('question');">Cancel</button>
+                <button class="orange_btn" onclick="updateUserQuestions('question')">Save</button> 
             </div>                           
         </div>
     </div>

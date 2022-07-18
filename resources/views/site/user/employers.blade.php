@@ -10,6 +10,25 @@
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 <link rel="stylesheet" href="{{ asset('css/site/jquery-ui.css') }}">
+<style type="text/css">
+
+/*.showError{
+    margin-top: 20px !important;
+}*/
+@media only screen and (max-width: 479px) {
+    .sidebaricontoggle{
+        top: 4rem !important;
+    }
+    .bj-tr-btn button {
+        margin: 3px 5px !important;
+    }
+}
+@media only screen and (min-width: 480px) and (max-width: 991px) {
+    .sidebaricontoggle{
+        top: 5rem !important;
+    }
+}
+</style>
 
 @stop
 
@@ -420,12 +439,7 @@ $('input[name="filter_location_status"]').change(function() {
 </script>
 @stop
 
-{{-- @section('custom_css')
-<style type="text/css">
+@section('custom_css')
 
-.showError{
-    margin-top: 20px !important;
-}
-</style>
 
-@stop --}}
+@stop

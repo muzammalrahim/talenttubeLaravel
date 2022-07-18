@@ -108,7 +108,7 @@
 
             @if (in_array($js['id']->id,$likeUsers))
                <div class="unlike-div">
-                  <button class="unlike-btn" onclick="unlikefunction('{{ $js['id']->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
+                  <button class="unlike-btn me-1" onclick="unlikefunction('{{ $js['id']->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
                </div>
             @else
                <div class="like-div">

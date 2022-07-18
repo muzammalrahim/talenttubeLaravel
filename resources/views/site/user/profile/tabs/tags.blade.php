@@ -19,11 +19,11 @@
       <div class="newTagInput relative">
          
         <div class="row">
-        	<div class="col-sm-10 p-0">
+        	<div class="col-sm-9 col-8 p-0">
          		<input type="text" class="form-control" name="newTag" value="" />
         	</div>
 
-        	<div class="col-sm-2 mt-2 mt-md-0">	
+        	<div class="col-sm-3 col-4 mt-0 mt-md-0">	
          		<button id="addNewTag" class="orange_btn" data-toggle = "modal" data-target = "#addNewTagModal" style="height:none !important">Add New</button>
         	</div> 		
         </div>
@@ -36,8 +36,8 @@
          </div>
       </div>
    </div>
-   <div class="tagsList">
-      <div class="tagCategories">
+   <div class="tagsList row">
+      <div class="tagCategories col-12 col-md-5">
          <ul class="tagCategoriesList">
             @if(!empty($tagCategories))
             @foreach($tagCategories as $tagCat)
@@ -46,7 +46,7 @@
             @endif
          </ul>
       </div>
-      <div class="tagListCont">
+      <div class="tagListCont col-12 col-md-7">
          <div class="tagListBox">
             <ul class="tagList">
                @if(!empty($tags))

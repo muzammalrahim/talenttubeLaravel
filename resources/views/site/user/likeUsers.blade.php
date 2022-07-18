@@ -2,16 +2,27 @@
 @extends('web.user.usermaster')
 
 @section('custom_css')
-
+<style type="text/css">
+@media only screen and (max-width: 479px) {
+    .sidebaricontoggle{
+        top: 4rem !important;
+    }
+}
+@media only screen and (min-width: 480px) and (max-width: 991px) {
+    .sidebaricontoggle{
+        top: 5rem !important;
+    }
+}
+</style>
 @stop
 
 @section('content')
 
 <section class="row">
    <div class="col-md-12">
-      <h2>Like Users Lists</h2>
    @if ($likeUsers->count() > 0)
    <div class="profile profile-section">
+      <h2>Like Users Lists</h2>
       <div class="row">
          @foreach ($likeUsers as $likeuser)
          <div class="col-sm-12 col-md-12 removeJs_{{ $likeuser->user->id }}">

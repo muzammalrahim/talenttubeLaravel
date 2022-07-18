@@ -9,7 +9,21 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.8/js/select2.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
+<style type="text/css">
+    @media only screen and (max-width: 479px) {
+        .sidebaricontoggle{
+            top: 4rem !important;
+        }
+        .bj-tr-btn button{
+            margin: 3px 5px !important;
+        }
+    }
+    @media only screen and (min-width: 480px) and (max-width: 991px){
+       .sidebaricontoggle{
+            top: 6rem !important;
+        } 
+    }
+</style>
 
   
 @stop
