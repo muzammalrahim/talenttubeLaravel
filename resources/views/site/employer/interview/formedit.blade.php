@@ -205,6 +205,7 @@
 @section('custom_footer_css')
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
 
+
 <style>
    @media only screen and (max-width: 479px){
       .sidebaricontoggle {
