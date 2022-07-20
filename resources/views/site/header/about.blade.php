@@ -30,18 +30,13 @@
          <div class="col-lg-7 col-md-6 col-sm-12 col-12 order-2 order-sm-2 order-2 order-md-1 wow">
            <h3 class="pb-2">About Us</h3>
            <p>
-             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+             Talent Tube is an all in 1 recruitment solution for connecting great tech talent with employers who are looking for those hidden gems in the job market. Often times we overlook talent due to a bland, ill structured resume, that makes it impossible to showcase the candidate’s soft skills, which when incorrectly assessed, can be attributed to up to <span><a href="#">89% of poor hires</a></span>.   
            </p>
            <p>
-             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+             At Talent Tube, we don’t pretend to have ‘better’ talent in our database, but offer an opportunity to partner with Employers, and showcase our candidates attributes in a 360 degree view, which includes video introductions, psychometric testing, AI match making algorithms in addition to traditional methods such as CVs and Cover Letters.
            </p>
-           <h3 class="pt-5 pb-2">Mission</h3>
            <p>
-             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-           </p>
-           <h3 class="pt-5 pb-2">Vission</h3>
-           <p>
-             Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+             Speak to one our consultants today, to conduct a short role briefing, and let us help source and showcase suitable candidates for your technical talent needs. Currently we are specialising in developers, UX/UI designers, testers, IT project managers, Dev Ops and more, but also happy to discuss other recruitment needs in the Australian market. 
            </p>
          </div>
          <div class="col-lg-5 col-md-6 col-sm-12 col-12 order-1 order-sm-1 order-md-2 wow">
