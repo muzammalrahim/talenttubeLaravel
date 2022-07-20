@@ -208,7 +208,7 @@
 <style>
    @media only screen and (max-width: 479px){
       .sidebaricontoggle {
-         right: 35px !important;
+         right: 33px !important;
       }
    } 
    
