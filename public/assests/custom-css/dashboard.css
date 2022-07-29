@@ -3093,6 +3093,13 @@ button i {
     body {
         overflow: auto !important;
     }
+    .profile-section {
+        box-shadow: none !important;
+        overflow-y: inherit;
+    }
+    .profile {
+        padding: 20px 0px !important;
+    }
     .form-control{
         font-size: 11px !important;
     }
