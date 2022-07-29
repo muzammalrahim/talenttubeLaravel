@@ -1298,16 +1298,16 @@ class HomeController extends Controller {
             $data['UserInterview'] = $UserInterview;
             $data['InterviewTempQuestion'] = $InterviewTempQuestion;
             $data['classes_body'] = 'Interview Template';
-            if ($this->agent->isMobile()){
+            /*if ($this->agent->isMobile()){
                 if (isEmployer()) {
                     return view('mobile.employer.interviewInvitation.detail', $data);   //mobile/employer/interviewInvitation/detail
                 }
                 else{
                     return view('mobile.user.interviewInvitation.detail', $data);   // mobile/user/interviewInvitation/detail
                 }
-            }
+            }*/
 
-            else{
+            // else{
 
                 if (isEmployer()) {
                     if  ($UserInterview->emp_id != $user->id){
@@ -1330,7 +1330,7 @@ class HomeController extends Controller {
                 }
             }
                 
-        }
+        // }
         else{
 
             if ($this->agent->isMobile()){

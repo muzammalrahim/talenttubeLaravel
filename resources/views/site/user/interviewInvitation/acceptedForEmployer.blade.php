@@ -3,6 +3,15 @@
 @extends('site.employer.employermaster')
 
 @section('content')
+@section('custom_css')
+<style type="text/css">
+  @media only screen and (min-width: 480px) and (max-width: 991px) {
+    .sidebaricontoggle {
+      right: 47px !important;
+    }
+  }
+</style>
+@stop
 {{--   <div class="head icon_head_browse_matches">Interview Detail 
     @if (isEmployer())
       <a href="{{ route('jobSeekerInfo' ,['id'=> $UserInterview->js->id] ) }}" class="unhideInterviews"> Click here to go to Job Seeker profile </a> 
@@ -56,10 +65,15 @@
 <section class="row profile profile-section">
                 <div class="col-md-12 ">
                   <div class="profile profile-section interview-details-page">
-                    <h2>Interview Detail @if (isEmployer())
-                      <a href="{{ route('jobSeekerInfo' ,['id'=> $UserInterview->js->id] ) }}" class="unhideInterviews blue_btn pt-2 text-decoration-none"> Click here to go to the Job Seeker's profile
-                       </a> 
-                    @endif</h2>
+                    <div class="row">
+                      <h2 class="col-12 col-md-4 ps-3">Interview Detail</h2>
+                      <h2 class="col-12 col-md-7 col-lg-8 py-3 py-md-0">
+                        @if (isEmployer())
+                        <a href="{{ route('jobSeekerInfo' ,['id'=> $UserInterview->js->id] ) }}" class="unhideInterviews blue_btn pt-2 text-decoration-none"> Click here to go to the Job Seeker's profile
+                         </a> 
+                        @endif
+                      </h2>
+                    </div>
                        <div class="row">
                         <div class="col-md-12">
                          @if ($UserInterview->status == 'pending')
