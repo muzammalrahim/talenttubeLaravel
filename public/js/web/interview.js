@@ -30,6 +30,7 @@ $(document).ready(function(){
    
     $('.statusOfInterviewHidden').on('change',function() {
         event.preventDefault();
+        console.log(base_url);
         var formData = $(this).serializeArray();
         var interview_id = $(this).closest('.statusOfInterviewHidden').find('.interview_id').val();
         console.log(' formData ', formData);
