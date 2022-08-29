@@ -3630,7 +3630,7 @@ span.v_title {
 
     .user-details .blocked-user-about p{
         font-size: 11px;
-		word-break: break-all;
+		/*word-break: break-all;*/
     }
     .user-details .blocked-user-experience p{
         font-size: 14px;

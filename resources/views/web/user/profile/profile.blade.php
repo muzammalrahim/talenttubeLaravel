@@ -106,7 +106,7 @@
 
                   {{-- ==================================== Recent job ==================================== --}}
 
-                  <div class="recent-job recentjob clearfix px-0 px-md-3 mt-2">
+                  <div class="recent-job recentjob clearfix px-0 px-md-3 mt-5 mt-md-2">
 
                      {{-- <div class="row m-0">  --}}
                         {{-- <div class="col-5"> --}}
@@ -115,8 +115,8 @@
                         {{-- </div> --}}
 
                         {{-- <div class="col-7"> --}}
-                              <span class="recentjobSpan pe-1">{{$user->recentJob}} </span>
-                             <span> at </span> 
+                              <span class="recentjobSpan">{{$user->recentJob}} </span>
+                             <span class="px-1"> at </span> 
                               <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
                               </div>
                         {{-- </div> --}}

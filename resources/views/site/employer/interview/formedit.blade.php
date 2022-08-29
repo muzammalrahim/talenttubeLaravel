@@ -210,7 +210,14 @@
       .sidebaricontoggle {
          right: 33px !important;
       }
+
+      .profile-section h2 {
+          color: #00326F;
+          width: 80%;
+      }
    } 
+
+
    
 </style>
 @stop
