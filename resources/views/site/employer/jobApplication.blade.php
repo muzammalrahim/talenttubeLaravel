@@ -84,10 +84,10 @@
 
             <div class="col-md-6 col-sm-6 col-12 px-0">
                <div class="searchField_qualification b-filter-row">
-                  <div class="row input-employee">
+                  <div class="row input-employee mb-0">
                      {{-- <div class="searchFieldLabel col-5 pt-2">Qualification: </div> --}}  
                      <label class="col-12 col-sm-4 browse-heading font-weight-normal">Qualifications:</label>
-                     <select class="col-12 col-sm-8 ml-3 ml-sm-0 filter_qualification_type form-control bg-white icon_show" name="ja_filter_qualification_type" data-placeholder="Select Qalification & Trades">
+                     <select class="col-12 col-sm-8 ml-3 ml-sm-0 filter_qualification_type form-control bg-white icon_show" name="ja_filter_qualification_type" onchange="showQualificationSelect2()" data-placeholder="Select Qalification & Trades">
                         <option value="">Select Qalification & Trades</option>
                         <option value="certificate">Certificate or Advanced Diploma</option>
                         <option value="trade">Trade Certificate</option>
@@ -98,14 +98,14 @@
                         ($qualifications = getQualificationsList())
                      @endphp
                      @if(!empty($qualifications))
-                     <div class="filter_qualificaton_degree">
-                        <ul class="qualification_ul item_ul dot_list">
+                     <div class="filter_qualificaton_degree pe-0" style="opacity:0">
+                        <select class="qualification_ul item_ul dot_list form-select icon_show" id="filter_by_qualification">
                            @foreach ($qualifications as $qualif)
-                           <li class="{{$qualif['type']}}" data-id="{{$qualif['id']}}" data-type="ja_filter_qualification[]">
+                           <option class="{{$qualif['type']}}" data-id="{{$qualif['id']}}" data-type="ja_filter_qualification[]" value="{{$qualif['id']}}">
                               <span>{{$qualif['title']}}</span>
-                           </li>
+                           </option>
                            @endforeach
-                        </ul>
+                        </select>
                      </div>
                      @endif
                   </div>
@@ -287,6 +287,22 @@
 <script src="{{ asset('js/site/common.js') }}"></script>
 <script src="{{ asset('js/web/profile.js') }}"></script>
 <script type="text/javascript">
+   this.showQualificationSelect2 = function(){
+      // console.log('on change qualification');
+      var selected = $('.ja_filter_qualification_type option:selected').val();
+      // console.log(selected);
+      if (selected != '') {
+         $('.filter_qualificaton_degree').css('opacity', '1');
+         $('.dropdownSelect2').css('opacity', '1');
+      }
+      else{
+         $('.filter_qualificaton_degree').css('opacity', '0');
+         $('.dropdownSelect2').css('opacity', '0');
+         $("#filter_by_qualification").val('').trigger('change');
+
+      }
+   }
+
    $(document).ready(function() {
       $('#filter_industry').select2();
    
