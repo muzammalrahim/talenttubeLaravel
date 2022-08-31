@@ -70,6 +70,9 @@
                   </div>
                </div>
             </div>
+            <div class="text-end pt-3">
+                <a class="blue_btn px-5 py-1" href="{{ route('intetviewInvitationEmp') }}">Back</a>
+            </div>
             @endforeach  
             @else
             <h3 class="pt-3"> You have not any hidden interview</h3>

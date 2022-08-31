@@ -52,7 +52,7 @@
                {{-- mobile view --}}
                <div class="d-block d-md-none">
                   <div class="d-flex justify-content-between">
-                     <div>
+                     <div class="w-75">
                         <h2 class="text-start">{{$js->username}}</h2>
                      </div>
 

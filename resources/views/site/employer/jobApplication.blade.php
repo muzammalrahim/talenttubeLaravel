@@ -84,7 +84,7 @@
 
             <div class="col-md-6 col-sm-6 col-12 px-0">
                <div class="searchField_qualification b-filter-row">
-                  <div class="row input-employee mb-0">
+                  <div class="row input-employee">
                      {{-- <div class="searchFieldLabel col-5 pt-2">Qualification: </div> --}}  
                      <label class="col-12 col-sm-4 browse-heading font-weight-normal">Qualifications:</label>
                      <select class="col-12 col-sm-8 ml-3 ml-sm-0 filter_qualification_type form-control bg-white icon_show" name="ja_filter_qualification_type" onchange="showQualificationSelect2()" data-placeholder="Select Qalification & Trades">
@@ -94,17 +94,26 @@
                         <option value="degree">University Degree</option>
                         <option value="post_degree">University Post Graduate (Masters or PHD)</option>
                      </select>
+
+
                      @php 
                         ($qualifications = getQualificationsList())
                      @endphp
                      @if(!empty($qualifications))
-                     <div class="filter_qualificaton_degree pe-0" style="opacity:0">
-                        <select class="qualification_ul item_ul dot_list form-select icon_show" id="filter_by_qualification">
+                     <div class="filter_qualificaton_degree pe-0 pt-3" style="opacity:0">
+                        {{-- <ul class="qualification_ul item_ul dot_list">
                            @foreach ($qualifications as $qualif)
-                           <option class="{{$qualif['type']}}" data-id="{{$qualif['id']}}" data-type="ja_filter_qualification[]" value="{{$qualif['id']}}">
+                           <li class="{{$qualif['type']}}" data-id="{{$qualif['id']}}" data-type="ja_filter_qualification[]">
                               <span>{{$qualif['title']}}</span>
-                           </option>
+                           </li>
                            @endforeach
+                        </ul> --}}
+                        <select class="multi-select form-control custom-select" name="ja_filter_qualification[]" multiple="multiple" id="filter_by_qualification">
+                           @foreach ($qualifications as $qualif)
+                              <option value="{{ $qualif['type'] }} data-id={{$qualif['id']}}">
+                                 <span style="width: 100%">{{$qualif['title']}}</span>
+                              </option>
+                          @endforeach
                         </select>
                      </div>
                      @endif
@@ -287,9 +296,12 @@
 <script src="{{ asset('js/site/common.js') }}"></script>
 <script src="{{ asset('js/web/profile.js') }}"></script>
 <script type="text/javascript">
+   $(document).ready(function() {
+       $('#filter_by_qualification').select2();
+   });
    this.showQualificationSelect2 = function(){
       // console.log('on change qualification');
-      var selected = $('.ja_filter_qualification_type option:selected').val();
+      var selected = $('.filter_qualification_type option:selected').val();
       // console.log(selected);
       if (selected != '') {
          $('.filter_qualificaton_degree').css('opacity', '1');
@@ -302,7 +314,6 @@
 
       }
    }
-
    $(document).ready(function() {
       $('#filter_industry').select2();
    
