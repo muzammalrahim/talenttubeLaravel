@@ -8,6 +8,9 @@
         .sidebaricontoggle {
             top: 4rem !important;
         }
+        .main-content {
+            padding-bottom: 0 !important;
+        }
     }
     @media only screen and (min-width: 480px) and (max-width: 991px) {
         .sidebaricontoggle {
@@ -36,7 +39,7 @@
                         <span>
                            <form class="statusOfInterviewHidden d-contents" name="statusOfInterviewHidden">
                               @csrf
-                              <select name="unhide" class=" form-control" style="background: #fff !important;">
+                              <select name="unhide" class=" form-control icon_show" style="background: #fff !important;">
                                  <option value= "select"> Select Status   </option>
                                  <option value= "yes"> Un-Hide Interview </option>
                                  @if ($interview->status == 'pending')
@@ -67,9 +70,15 @@
                   </div>
                </div>
             </div>
+            <div class="text-end pt-3">
+                <a class="blue_btn px-5 py-1" href="{{ route('intetviewInvitationEmp') }}">Back</a>
+            </div>
             @endforeach  
             @else
-            <h3> You have not any hidden interview</h3>
+            <h3 class="pt-3"> You have not any hidden interview</h3>
+            <div class="text-end">
+                <a class="blue_btn px-5 py-1" href="{{ route('intetviewInvitationEmp') }}">Back</a>
+            </div>
             @endif
          </div>
       </div>

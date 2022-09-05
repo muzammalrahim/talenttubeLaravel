@@ -1016,6 +1016,7 @@ class InterviewController extends Controller
         else{
             $UserInterview = UserInterview::where('user_id',  $user->id)->where('hide' , 'yes')->orderBy('created_at' , 'desc')->get();
         }
+
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         $data['controlsession'] = $controlsession;
         $data['title'] = 'My Jobs';

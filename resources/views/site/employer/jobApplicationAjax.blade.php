@@ -19,38 +19,67 @@
             @endif 
          </div>   
          <div class="row Block-user-wrapper">
-            <div class="col-md-2 user-images">
-               <div class="block-user-img">
-                  @php
-                  $profile_image  = asset('images/site/icons/nophoto.jpg');
-                  $profile_image_gallery    = $js->profileImage()->first();
-                  if ($profile_image_gallery) {
-                  $profile_image   = assetGallery2($profile_image_gallery,'small');
-                  }
-                  @endphp
-                  <img src="{{$profile_image}}" class="w-75" alt="" >
-               </div>
-               
-               <div class="block-user-progress ">
-                  <h6 class="text-start">{{$js->username}}</h6>
-
-
-                  {{-- <div class="progress-img"> 
-                     <img src="assests/images/user-progressbar.svg" alt="">
-                  </div> --}}
-                  <div class="text-center">
-                     
-                     @if($js->vidoes->count() > 0)
-                     <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
-                     </i>
+            <div class="col-md-2">
+               <div class="d-none d-md-block  user-images">
+                  <div class="block-user-img">
+                     @php
+                     $profile_image  = asset('images/site/icons/nophoto.jpg');
+                     $profile_image_gallery    = $js->profileImage()->first();
+                     if ($profile_image_gallery) {
+                     $profile_image   = assetGallery2($profile_image_gallery,'small');
+                     }
+                     @endphp
+                     <img src="{{$profile_image}}" class="w-75" alt="" >
                   </div>
-                  @endif
+                  
+                  <div class="block-user-progress ">
+                     <h6 class="text-start">{{$js->username}}</h6>
+
+
+                     {{-- <div class="progress-img"> 
+                        <img src="assests/images/user-progressbar.svg" alt="">
+                     </div> --}}
+                     <div class="text-center">
+                        
+                        @if($js->vidoes->count() > 0)
+                        <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
+                        </i>
+                     </div>
+                     @endif
+                  </div>
                </div>
 
+               {{-- mobile view --}}
+               <div class="d-block d-md-none">
+                  <div class="d-flex justify-content-between">
+                     <div class="w-75">
+                        <h2 class="text-start">{{$js->username}}</h2>
+                     </div>
 
 
-
-
+                     {{-- <div class="progress-img"> 
+                        <img src="assests/images/user-progressbar.svg" alt="">
+                     </div> --}}
+                     <div>
+                        
+                        @if($js->vidoes->count() > 0)
+                        <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
+                        </i>
+                     </div>
+                     @endif
+                  </div>
+                  <div class="block-user-img mx-auto float-none">
+                     @php
+                     $profile_image  = asset('images/site/icons/nophoto.jpg');
+                     $profile_image_gallery    = $js->profileImage()->first();
+                     if ($profile_image_gallery) {
+                     $profile_image   = assetGallery2($profile_image_gallery,'small');
+                     }
+                     @endphp
+                     <img src="{{$profile_image}}" class="w-75" alt="" >
+                  </div>
+                  
+               </div>
             </div>
             <div class="col-md-10 user-details">
                <div class="row blocked-user-about mt-2">
