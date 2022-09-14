@@ -30,7 +30,7 @@
                   <div class="row">
                      {{-- <label class="col-md-4">Keyword:</label> --}}
                      <label class="col-12 col-sm-4 browse-heading font-weight-normal">Keyword:</label>
-                     <input type="text" class="form-control col-12 col-sm-8 ml-3 ml-sm-0" name="filter_keyword">
+                     <input type="text" class="form-control col-12 col-sm-8 ml-3 ml-sm-0" name="ja_filter_keyword">
                   </div>
                </div>
             </div>
@@ -42,7 +42,7 @@
                   <div class="row">
                      <label class="col-12 col-sm-4 browse-heading font-weight-normal">Salary:</label>
                      {{-- <input type="text" class="form-control col-md-8" name="filter_salary" aria-label="Recipient's username"> --}}
-                     <select name="filter_salary" class="form-control col-12 col-sm-8 ml-3 ml-sm-0 bg-white icon_show" id="filter_salary" data-placeholder="Select Salary Range">
+                     <select name="ja_filter_salary" class="form-control col-12 col-sm-8 ml-3 ml-sm-0 bg-white icon_show" id="filter_salary" data-placeholder="Select Salary Range">
                         <option value="">Select Salary Range</option>
                         @foreach(getSalariesRange() as $sk => $salary)
                             <option value="{{$sk}}">{{$salary}}</option>
@@ -100,7 +100,7 @@
                         ($qualifications = getQualificationsList())
                      @endphp
                      @if(!empty($qualifications))
-                     <div class="filter_qualificaton_degree pe-0 pt-3" style="opacity:0">
+                     <div class="filter_qualificaton_degree pe-0 pt-3 position-relative" style="opacity:0">
                         {{-- <ul class="qualification_ul item_ul dot_list">
                            @foreach ($qualifications as $qualif)
                            <li class="{{$qualif['type']}}" data-id="{{$qualif['id']}}" data-type="ja_filter_qualification[]">
@@ -108,13 +108,16 @@
                            </li>
                            @endforeach
                         </ul> --}}
-                        <select class="multi-select form-control custom-select" name="ja_filter_qualification[]" multiple="multiple" id="filter_by_qualification">
+                        <select class="multi-select form-control custom-select icon_show" name="ja_filter_qualification[]" multiple="multiple" id="filter_by_qualification">
                            @foreach ($qualifications as $qualif)
                               <option value="{{ $qualif['type'] }} data-id={{$qualif['id']}}">
                                  <span style="width: 100%">{{$qualif['title']}}</span>
                               </option>
                           @endforeach
                         </select>
+
+                           <i class="fa fa-angle-down qualifications-icon position-absolute"></i>
+
                      </div>
                      @endif
                   </div>
@@ -842,5 +845,13 @@
          top: 5rem !important;
       }
    }
+
+
+   .qualifications-icon{
+      top: 24px;
+      color: #495057;
+      right: 10px;
+   }
+   
 </style>
 @stop
