@@ -68,7 +68,7 @@
                      </div>
                      @endif
                   </div>
-                  <div class="block-user-img mx-auto float-none">
+                  <div class="block-user-img mx-auto float-none border-0">
                      @php
                      $profile_image  = asset('images/site/icons/nophoto.jpg');
                      $profile_image_gallery    = $js->profileImage()->first();

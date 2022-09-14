@@ -33,6 +33,13 @@ class Jobs extends Model {
         $date = Carbon::parse($value);
         return $date->format('Y-m-d H:i');
     }
+
+    public function getDescriptionAttribute($value){
+
+        $remSpecialCharQues = str_replace("\&#39;","'",$value);
+        return $remSpecialCharQues;
+    }
+
     protected $casts = [
         'expiration' => 'datetime'
     ];
