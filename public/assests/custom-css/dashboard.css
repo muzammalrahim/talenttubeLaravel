@@ -3098,7 +3098,7 @@ button i {
         overflow-y: inherit;
     }
     .profile {
-        padding: 20px 0px !important;
+        padding: 20px 10px !important;
     }
     .form-control{
         font-size: 11px !important;

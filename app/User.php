@@ -212,6 +212,12 @@ class User extends Authenticatable
         return $date->format('Y-m-d H:i');
     }
 
+    public function getAboutMeAttribute($value)
+    {
+        $value = str_replace("\&#39;","'", $value);
+        return $value; 
+    }
+
     function scopeJobSeeker($query){
         return $query->where('type','user');
     }
