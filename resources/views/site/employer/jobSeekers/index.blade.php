@@ -55,7 +55,7 @@
 
     // $('.pagination').click(function(){
 
-        $("html").animate({ scrollTop: 0 }, "slow");
+        // $("html").animate({ scrollTop: 0 }, "slow");
         //alert('Animation complete.');
         //return false;
 

@@ -129,8 +129,8 @@
                   </div>
                </div>
                --}}
-               <div class="jobQuestions row d-flex  border border-secondary rounded-2 pt-3">
-                  <h2 class="form_label">Job Questions:</h2>
+               <div class="jobQuestions row d-flex border border-secondary rounded-2 pt-3">
+                  <h2 class="form_label ml-3">Job Questions:</h2>
                   <div class="col-12 col-sm-6 col-md-6 col-lg-6 p-4">
                      <div class="jobQuestion q1 row bg-light rounded">
                         <div class="col-md-12 pt-2">
@@ -570,5 +570,10 @@
    
    
    });
+
+
+
+
+
 </script>
 @stop

@@ -365,7 +365,14 @@ class JobsApplication extends Model{
 
                     if(!empty($salaryRange)){ $query->where('salaryRange', '>=', $salaryRange); }
                     if(!empty($qualification_type)){ $query->where('qualificationType', '=', $qualification_type); }
-                    if(!empty($keyword)){  $query->where('username', 'LIKE', "%{$keyword}%"); }
+                    if(!empty($keyword)){  $query->where('username', 'LIKE', "%{$keyword}%")
+
+                        ->orWhere('recentJob','LIKE', "%{$keyword}%")
+                        ->orWhere('organHeldTitle','LIKE', "%{$keyword}%")
+                        ->orWhere('about_me','LIKE', "%{$keyword}%")
+                        ->orWhere('interested_in','LIKE', "%{$keyword}%");
+
+                         }
                     // Filter by google map location radius.
                     if($filter_location){
                         if(isset($latitude) && isset($longitude)  && isset($radius)){

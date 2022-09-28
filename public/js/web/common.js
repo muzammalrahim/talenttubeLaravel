@@ -324,9 +324,9 @@ $(document).ready(function(){
 
     // ================================= Scroll to top on click pagination =================================
     
-    $(document).click('.pagination', function(){
+   /* $(document).click('.pagination', function(){
         $(window).scrollTop(0);
-    })
+    })*/
 
 
 
