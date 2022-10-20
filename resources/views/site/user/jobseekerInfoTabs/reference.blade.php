@@ -15,5 +15,5 @@
 @endif
 <div class="mt20">
    <a href="{{ route('referencesForAll', ['id' => $js->id, 'name'=>$js->name]) }}" target="_blank" class="seeCompletedReference orange_btn py-2"> View completed reference check feedback here</a> 
-   <button class="blue_btn cop_text"><i class="fas fa-clipboard"></i> Click here to copy the link</button>
+   <button class="blue_btn cop_text mt-2"><i class="fas fa-clipboard"></i> Click here to copy the link</button>
 </div>

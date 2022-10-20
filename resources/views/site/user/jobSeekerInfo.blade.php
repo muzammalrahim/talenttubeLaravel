@@ -7,62 +7,63 @@
 @stop
 @section('content')
 {{-- html for job seeker details starts here --}}
-<section class="row">
-   <div class="col-md-12">
-   <div class="profile profile-section">
-      <h2>Job Seeker Details</h2>
+
+ @php
+   $js = $jobSeeker;
+   @endphp                
+   <!-- Top Filter Row -->
+
+   @if (!isAdmin($user))
+
+      {{-- @include('site.user.match_algo.match_algo') --}}
+
       @php
-      $js = $jobSeeker;
-      @endphp                
-      <!-- Top Filter Row -->
-
-      @if (!isAdmin($user))
-
-         {{-- @include('site.user.match_algo.match_algo') --}}
-
-         @php
-         $dist = calculate_distance($js, $user);
-         $ind_exp = cal_ind_exp($js,$user);
-         $compatibility = compatibility($js, $user); 
-         $user_compat = $compatibility*20;
-         // ========================= excluded 6th question ========================= 
-         $emp_questions = json_decode($js->questions , true);
-         $user_questions = json_decode($user->questions , true);
-         $emp_resident = '';
-         $user_resident = '';
-         
-         if ($emp_questions != null && $user_questions != null) {
-            $emp_match = array_slice($emp_questions, 5, 6, true);
-            foreach ($emp_match as $key => $value) {
-               $emp_resident .= $value;
-            }
-            $user_match = array_slice($user_questions, 5, 6, true);
-            foreach ($user_match as $key => $value) {
-               $user_resident .= $value;
-            }
+      $dist = calculate_distance($js, $user);
+      $ind_exp = cal_ind_exp($js,$user);
+      $compatibility = compatibility($js, $user); 
+      $user_compat = $compatibility*20;
+      // ========================= excluded 6th question ========================= 
+      $emp_questions = json_decode($js->questions , true);
+      $user_questions = json_decode($user->questions , true);
+      $emp_resident = '';
+      $user_resident = '';
+      
+      if ($emp_questions != null && $user_questions != null) {
+         $emp_match = array_slice($emp_questions, 5, 6, true);
+         foreach ($emp_match as $key => $value) {
+            $emp_resident .= $value;
          }
+         $user_match = array_slice($user_questions, 5, 6, true);
+         foreach ($user_match as $key => $value) {
+            $user_resident .= $value;
+         }
+      }
 
-         if ($emp_resident == 'no' && $user_resident == 'no') {
-            $html = '<h4 class="text-danger bold "> No Match Potential </h4>';
-         }
-         else if($dist < 50 && !empty($ind_exp)) {
-            $html = '<h4 class="text-green bold "> Strong Match Potential </h4>';
-         }
-         else if($dist < 50 ) {
-            $html = '<h4 class="text-orange bold "> Moderate Match Potential  </h4>';
+      if ($emp_resident == 'no' && $user_resident == 'no') {
+         $html = '<h4 class="text-danger bold "> No Match Potential </h4>';
+      }
+      else if($dist < 50 && !empty($ind_exp)) {
+         $html = '<h4 class="text-green bold "> Strong Match Potential </h4>';
+      }
+      else if($dist < 50 ) {
+         $html = '<h4 class="text-orange bold "> Moderate Match Potential  </h4>';
 
-         }
-         else if(!empty($ind_exp)){
-            $html = '<h4 class="text-orange bold "> Moderate Match Potential  </h4>';
-         }
-         else{
-            $html = '<h4 class="text-danger bold "> No Match Potential </h4>';
+      }
+      else if(!empty($ind_exp)){
+         $html = '<h4 class="text-orange bold "> Moderate Match Potential  </h4>';
+      }
+      else{
+         $html = '<h4 class="text-danger bold "> No Match Potential </h4>';
 
-         }
-         
-         @endphp
-         
-      @endif
+      }
+      
+      @endphp
+      
+@endif
+     
+<section class="row">
+   <div class="profile profile-section">
+      <h2 class="head icon_head_browse_matches">Job Seeker Details</h2>
       <div class="row">
          <div class="col-sm-12 col-md-12 js_{{ $js->id }}">
             <div class="job-box-info employee-details-info block-box clearfix">
@@ -88,7 +89,6 @@
                      </div>
                   </div>
                   <div class="col-md-10 user-details">
-                     {{-- <div class="blocked-user-about mt-2"> --}}
                         
                         {{-- ========================================== Pie Chart ========================================== --}}
 
@@ -102,9 +102,6 @@
 
                         {{-- ========================================== Pie Chart ========================================== --}}
 
-
-                     {{-- </div> --}}
-                     
                      @php
                      
                      @endphp
@@ -161,9 +158,6 @@
                <div class="box-footer clearfix">
                   <div class="block-progrees-ratio d-none d-md-block">
                   </div>
-                  {{-- <div class="block-div">
-                     <a onclick="blockFunction('{{$js->id}}')"><button class="unblock-btn" data-toggle="modal" data-target="#blockModal"><i class="fas fa-ban"></i> Block</button></a>
-                  </div> --}}
 
                   <div class="block-div">
                      <button class="block-btn" onclick="blockFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
@@ -184,6 +178,7 @@
             </div>
          </div>
       </div>
+      
       <div class="profile">
          <ul class="nav nav-tabs employee-tab-info" id="Profile-tab" role="tablist">
             <span class="line-tab"></span>
@@ -229,6 +224,7 @@
                <h2>Reference</h2>
                <div class="row">
                   @include('site.user.jobseekerInfoTabs.reference')
+                  {{-- site/user/jobseekerInfoTabs/reference --}}
                </div>
             </div>
 
@@ -325,9 +321,9 @@
             </div>
             <!--========================end all tabs-->
          </div>
-         {{-- 
+         
       </div>
-      --}}
+     
    </div>
 
    <!-- ===================================== Modal for block jobseeker =====================================  -->
@@ -346,6 +342,21 @@
 {{-- html for job seekers details ends here --}}
 @stop
 @section('custom_footer_css')
+
+<style type="text/css"> 
+
+   @media only screen and (max-width: 479px){
+      .sidebaricontoggle {
+         top: 4rem !important;
+      }
+   }
+
+   @media only screen and (min-width: 480px) and (max-width: 991px){
+      .sidebaricontoggle {
+         top: 5rem !important;
+      }
+   }
+</style>
 
 @stop
 @section('custom_js')
