@@ -16,7 +16,7 @@
                <div id="title_error" class="error field_error">&nbsp;</div>
             </div>
             <div class="form-group col-md-6">
-               <label for="inputPassword4">Type</label>
+               <label for="inputPassword4">Job Type</label>
                {{ Form::select('type', $jobType, ['placeholder' => 'Select Job Type'], ['class' => 'form-control custom-select icon_show', 'id'=>"inputPassword4"]) }}
                <div id="type_error" class="error field_error">&nbsp;</div>
             </div>

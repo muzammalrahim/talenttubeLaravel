@@ -11,7 +11,7 @@
 <div class="job_edit">
    <form method="POST" name="edit_job_form" class="edit_job_form jobEdut job_validation">
       @csrf
-      <div class="row d-flex">
+      <div class="">
          {{-- 
          <div class=" col-md-6 py-2 ">
             <span class="form_label">Title :</span>
@@ -41,11 +41,11 @@
                <div id="title_error" class="error field_error">&nbsp;</div>
             </div>
             <div class="form-group col-md-6">
-               <label for="inputPassword4">Type</label>
-               <select name="type" class="form-control custom-select" >
-               <option value="part_time" {{($job->type == 'Contract')?'selected="selected"':''}} >contract</option>
-               <option value="full_time" {{($job->type == 'temporary')?'selected="selected"':''}} >temporary</option>
-               <option value="part_time" {{($job->type == 'casual')?'selected="selected"':''}} >casual</option>
+               <label for="inputPassword4"> Job Type </label>
+               <select name="type" class="form-control custom-select icon_show" >
+               <option value="part_time" {{($job->type == 'Contract')?'selected="selected"':''}} >Contract</option>
+               <option value="full_time" {{($job->type == 'temporary')?'selected="selected"':''}} >Temporary</option>
+               <option value="part_time" {{($job->type == 'casual')?'selected="selected"':''}} >Casual</option>
                <option value="full_time" {{($job->type == 'full_time')?'selected="selected"':''}} >Full time</option>
                <option value="part_time" {{($job->type == 'part_time')?'selected="selected"':''}} >Part time</option>
                </select>
@@ -71,7 +71,7 @@
          <div class="form-row">
             <div class="form-group col-md-6">
                <label for="salaryRangeFieldnew">Salary</label>
-               {{ Form::select('salary', $salaryRange, ['placeholder' => 'Select Salary Range','onchange' => '', 'id' => 'salaryRangeFieldnew'],['class' => 'salaryRangeField form-control custom-select',]) }}
+               {{ Form::select('salary', $salaryRange, ['placeholder' => 'Select Salary Range','onchange' => '', 'id' => 'salaryRangeFieldnew'],['class' => 'salaryRangeField form-control icon_show custom-select',]) }}
                <div id="salary_error" class="error field_error to_hide">&nbsp;</div>
             </div>
             <div class="form-group col-md-6">
@@ -227,14 +227,12 @@
                               {{-- <i class="fa fa-trash fa-trash2 col-1  removeIndustry"></i> --}}
                            </div>
                         </div>
-                        <div class="mt-3">
 
-                          
-
-
-                           <a class=" addIndus blue_btn  mt-2 py-2 pointer"  title="Add a Question">+ Add</a>
-                           <a class=" orange_btn  buttonSaveIndustry mt-2 py-2 pointer"style = "cursor:pointer;" onclick="updateNewJobIndustryExperience()">Save</a>
+                        <div class="mt-3 row px-3">
+                           <a class=" addIndus blue_btn mt-2 py-2 pointer text-center col-4 col-sm-2 col-md-2"  title="Add a Question">+ Add</a>
+                           <a class=" orange_btn buttonSaveIndustry mt-2 text-center py-2 col-sm-2 col-md-2 pointer col-4 ml-2"style = "cursor:pointer;" onclick="updateNewJobIndustryExperience()">Save</a>
                         </div>
+
                      </div>
                      <div class="col-1 col-sm-1"><i class="editIndustry fas fa-edit orange_btn float-right py-2 pointer"></i></div>
                   </div>
@@ -367,6 +365,17 @@
    position: absolute;
    right: 10px;
    /*top: 10px*/
+   }
+
+   @media only screen and (max-width: 479px){
+      .sidebaricontoggle {
+         top: 4rem !important;
+      }
+   }
+   @media only screen and (min-width: 480px) and (max-width: 991px){
+      .sidebaricontoggle {
+         top: 6rem !important;
+      }
    }
 </style>
 @stop
