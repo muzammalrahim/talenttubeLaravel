@@ -80,12 +80,66 @@
                   $profile_image   = assetGallery2($profile_image_gallery,'small');
                   }
                   @endphp
-                  <div class="col-md-2 user-images">
-                     <div class="block-user-img ">
-                        <img src="{{$profile_image}}" alt="">
+                  <div class="col-md-2">
+                     <div class="d-none d-md-block  user-images">
+                        <div class="block-user-img">
+                           @php
+                           $profile_image  = asset('images/site/icons/nophoto.jpg');
+                           $profile_image_gallery    = $js->profileImage()->first();
+                           if ($profile_image_gallery) {
+                           $profile_image   = assetGallery2($profile_image_gallery,'small');
+                           }
+                           @endphp
+                           <img src="{{$profile_image}}" class="w-75" alt="" >
+                        </div>
+                        
+                        <div class="block-user-progress ">
+                           <h6 class="text-start">{{$js->username}}</h6>
+
+
+                           {{-- <div class="progress-img"> 
+                              <img src="assests/images/user-progressbar.svg" alt="">
+                           </div> --}}
+                           <div class="text-center">
+                              
+                              @if($js->vidoes->count() > 0)
+                              {{-- <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
+                              </i> --}}
+                              @endif
+                           </div>
+                        </div>
                      </div>
-                     <div class="block-user-progress ">
-                        <h6>{{$js->username}}</h6>
+
+                     {{-- mobile view --}}
+                     <div class="d-block d-md-none">
+                        <div class="d-flex justify-content-between">
+                           <div class="w-75">
+                              <h2 class="text-start">{{$js->username}}</h2>
+                           </div>
+
+
+                           {{-- <div class="progress-img"> 
+                              <img src="assests/images/user-progressbar.svg" alt="">
+                           </div> --}}
+                           <div>
+                              
+                              @if($js->vidoes->count() > 0)
+                              {{-- <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
+                              </i> --}}
+                           </div>
+                           @endif
+                        </div>
+                        <div class="block-user-img mx-auto float-none border-0">
+                           @php
+                           $profile_image  = asset('images/site/icons/nophoto.jpg');
+                           $profile_image_gallery    = $js->profileImage()->first();
+                           if ($profile_image_gallery) {
+                           $profile_image   = assetGallery2($profile_image_gallery,'small');
+                           }
+                           @endphp
+                           <img src="{{$profile_image}}" class="w-75" alt="" >
+                        </div>
+                        
                      </div>
                   </div>
                   <div class="col-md-10 user-details">
@@ -93,10 +147,20 @@
                         {{-- ========================================== Pie Chart ========================================== --}}
 
                         @if (!isAdmin($user))
-                        <div class="progress-img"> 
+                        <div class="progress-img d-none d-sm-block"> 
 
                            @include('web.piechart.pie_chart')
 
+                        </div>
+                        <div class="progress-img d-block d-sm-none mt-3"> 
+
+                           <div class="block-progrees-ratio1 d-md-block">
+                           <ul>
+                           <li><span class="Progress-ratio-icon1">.</span> <span> {{ $user_compat }}% </span> Match </li>
+                           <li><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$user_compat }}% </span> Un-Matched</li>
+                           </ul>
+                           </div>
+                          
                         </div>
                         @endif
 
@@ -179,7 +243,7 @@
          </div>
       </div>
       
-      <div class="profile">
+      <div class="profile profile-section">
          <ul class="nav nav-tabs employee-tab-info" id="Profile-tab" role="tablist">
             <span class="line-tab"></span>
             <li class="nav-item" role="presentation">
@@ -329,6 +393,9 @@
    <!-- ===================================== Modal for block jobseeker =====================================  -->
 
    {{-- @include('web.modals.block') --}}
+
+   @include('web.modals.show_video')
+
    @include('web.modals.unblock')
    
 

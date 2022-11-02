@@ -34,6 +34,7 @@
 </div>
 
 @include('web.modals.unlike')
+   @include('web.modals.unblock')
 
 
 @include('web.modals.show_video')
@@ -669,6 +670,10 @@
       .block-box .box-footer .unlike-btn {
         margin-left: 10px !important;
       }
+
+      .block-btn{
+        width: 25% !important;
+        }
    }
    @media only screen and (min-width: 480px) and (max-width: 991px){
       .sidebaricontoggle {
@@ -690,6 +695,8 @@
       margin: 5px !important;
    }
 }
+
+]
 
 </style>
 {{-- 
