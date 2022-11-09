@@ -674,6 +674,20 @@
       .block-btn{
         width: 25% !important;
         }
+      .block-box .box-footer .unblock-btn{
+        height: 30px;
+      }
+   }
+    @media (max-width: 320px){
+      .block-box .box-footer .block-btn{
+        width: 26%;
+        padding: 6px; 
+      }
+      .block-box .box-footer .unblock-btn{
+        padding: 0px;
+        width: 26%;
+        font-size: 11px !important;
+      }
    }
    @media only screen and (min-width: 480px) and (max-width: 991px){
       .sidebaricontoggle {
