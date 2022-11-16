@@ -1165,7 +1165,7 @@ span.remove:before {
 
 .dual-footer-btn button {
     margin-right: 15px;
-    width: 130px;
+    width: 100px;
 }
 
 .dual-footer-btn button i {
@@ -1173,7 +1173,7 @@ span.remove:before {
 }
 
 .dual-footer-btn .black_btn {
-    margin-top: -5px;
+    margin-top: 0px;
 }
 
 
@@ -1483,7 +1483,7 @@ span.remove:before {
     background-color: #ff8614;
     color: #fff;
     border: 1px solid #ff8614;
-    float: right;
+    /*float: right;*/
     padding: 5px 10px;
     margin: 10px 3px;
     font-size: 16px;
@@ -3617,11 +3617,11 @@ span.v_title {
         width: 34%;
         height: 30px;
         font-size: 11px !important;
-        float: right;
+        /*float: right;*/
     }
     .block-box .box-footer .unlike-btn{
         margin: 0 !important;
-        width: 30% !important;
+        width: 31% !important;
         height: 30px;
         font-size: 11px !important;
         float: right;
