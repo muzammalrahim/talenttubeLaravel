@@ -102,25 +102,24 @@
             </div>
          </div>
          <div class="box-footer1 box-footer  clearfix">
-            <div class="block-progrees-ratio1 d-none d-md-block">
-            </div>
-            <div class=" employe-btn-group">
-               <div class="block-div">
+            <div class=" employe-btn-group" style="float: right !important; width: 100%!important;">
+               <!-- <div class="block-div"> -->
                   <button class="block-btn" onclick="blockEmployerFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
-               </div>
+               <!-- </div> -->
                <a href="{{route('employerInfo', ['id' => $js->id])}}"><button class="detail-btn"><i class="fas fa-file-alt"></i> Detail</button></a>
                @if (in_array($js->id,$likeUsers))
-               <div class="unlike-div">
+               <!-- <div class="unlike-div"> -->
                   <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
-               </div>
+               <!-- </div> -->
                @else
-                  <div class="like-div">
+                  <!-- <div class="like-div"> -->
                      <button class="like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
-                  </div>
+                  <!-- </div> -->
                @endif
          
             </div>
          </div>
+									
       </div>
    </div>
    @endforeach
