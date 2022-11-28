@@ -171,7 +171,7 @@
                      <div class="col-md-1 col-sm-2 col-2 custom-checkbox">
                         <input type="checkbox" name="filter_industry_status" class="">
                      </div>
-                     <div class="col-md-8 col-12">
+                     <div class="col-md-8 col-12 filterSearchinput">
                         {{-- 
                         <div class="indusDiv d-none">
                            --}}

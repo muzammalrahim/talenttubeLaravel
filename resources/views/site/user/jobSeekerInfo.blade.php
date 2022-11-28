@@ -245,14 +245,13 @@
       </div>
       
 						<div class="row">
-							<div class="col-md-4 order-md-2 order-sm-1 profile-data-info"></div>
 								
 							<div class="col-md-8 order-md-1 order-sm-2 first-tap-detail">
 							<div class="profile profile-section">
 										<ul class="nav nav-tabs" id="Profile-tab" role="tablist">
 													<span class="line-tab"></span>
 													<li class="nav-item" role="presentation">
-																<button class="nav-link active" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference"
+																<button class="nav-link active pt-4" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference"
 																			type="button" role="tab" aria-controls="job" aria-selected="false">
 																<i class="fa fa-circle tab-circle-cross"></i>Reference</button>
 													</li>
