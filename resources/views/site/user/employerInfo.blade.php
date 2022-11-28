@@ -120,66 +120,69 @@
                     </div>
                  </div>
                  <div class="box-footer clearfix">
-                    <div class="block-progrees-ratio d-none d-md-block">
-                    </div>
                      <div class="block-div">
                         <button class="block-btn" onclick="blockEmployerFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
                      </div>
                      <a href="{{route('employerInfo', ['id' => $js->id])}}"><button class="detail-btn"><i class="fas fa-file-alt"></i> Detail</button></a>
                      @if (in_array($js->id,$likeUsers))
-                     <div class="unlike-div">
+                     <!-- <div class="unlike-div"> -->
                         <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
-                     </div>
+                     <!-- </div> -->
                      @else
-                        <div class="like-div">
+                        <!-- <div class="like-div"> -->
                            <button class="like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
-                        </div>
+                        <!-- </div> -->
                      @endif
 
                  </div>
               </div>
            </div>
         </div>
-        <div class="profile">
-           <ul class="nav nav-tabs employee-tab-info" id="Profile-tab" role="tablist">
-              <span class="line-tab"></span>
-              <li class="nav-item" role="presentation">
-                 <button class="nav-link active" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
-                    type="button" role="tab" aria-controls="job" aria-selected="false">
-                 <i class="fa fa-circle tab-circle-cross"></i>Jobs</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                 <button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
-                    type="button" role="tab" aria-controls="profile" aria-selected="false">
-                 <i class="fa fa-circle tab-circle-cross"></i>Album</button>
-              </li>
-              <li class="nav-item" role="presentation">
-                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
-                    type="button" role="tab" aria-controls="contact" aria-selected="false">
-                 <i class="fa fa-circle tab-circle-cross"></i>Questions</button>
-              </li>
-           </ul>
-           <div class="tab-content employee-details-infomation" id="myTabContent">
-              <!--=================job tab ============================ -->
-              <div class="tab-pane fade show active job-applied" id="job"  role="tabpanel" aria-labelledby="job-tab">
-                 {{-- <h2>Jobs I Have Applied</h2> --}}
-                 <div class="row">
-                  @include('site.user.employerInfoTabs.jobs')
-                 </div>
-              </div>
-              <!--================== album-tab-->
-              <div class="album-section tab-pane fade Photos " id="profile" role="tabpanel"
-                 aria-labelledby="profile-tab">
-                 @include('site.user.employerInfoTabs.album')
-              </div>
-              <!--====================== question tab===========================-->
-              <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
-                 <h2>Questions</h2>
-                 @include('site.user.employerInfoTabs.emp_questions')  {{-- site/user/employerInfoTabs/emp_questions --}}
-              </div>
-              <!--========================end all tabs-->
-           </div>
-        </div>
+								<div class="row dash-employe-timeline">
+									<div class="col-md-8 order-md-1 order-sm-2 first-tap-detail">
+											<div class="profile">
+													<ul class="nav nav-tabs" id="Profile-tab" role="tablist">
+																<span class="line-tab"></span>
+																<li class="nav-item" role="presentation">
+																			<button class="nav-link active" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
+																						type="button" role="tab" aria-controls="job" aria-selected="false">
+																			<i class="fa fa-circle tab-circle-cross"></i>Jobs</button>
+																</li>
+																<li class="nav-item" role="presentation">
+																			<button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
+																						type="button" role="tab" aria-controls="profile" aria-selected="false">
+																			<i class="fa fa-circle tab-circle-cross"></i>Album</button>
+																</li>
+																<li class="nav-item" role="presentation">
+																			<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+																						type="button" role="tab" aria-controls="contact" aria-selected="false">
+																			<i class="fa fa-circle tab-circle-cross"></i>Questions</button>
+																</li>
+													</ul>
+													<div class="tab-content employee-details-infomation" id="myTabContent">
+																<!--=================job tab ============================ -->
+																<div class="tab-pane fade show active job-applied" id="job"  role="tabpanel" aria-labelledby="job-tab">
+																			{{-- <h2>Jobs I Have Applied</h2> --}}
+																			<div class="row">
+																				@include('site.user.employerInfoTabs.jobs')
+																			</div>
+																</div>
+																<!--================== album-tab-->
+																<div class="album-section tab-pane fade Photos " id="profile" role="tabpanel"
+																			aria-labelledby="profile-tab">
+																			@include('site.user.employerInfoTabs.album')
+																</div>
+																<!--====================== question tab===========================-->
+																<div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
+																			<h2>Questions</h2>
+																			@include('site.user.employerInfoTabs.emp_questions')  {{-- site/user/employerInfoTabs/emp_questions --}}
+																</div>
+																<!--========================end all tabs-->
+													</div>
+										</div>
+									</div>
+								</div>
+       
      </div>
   </section>
 

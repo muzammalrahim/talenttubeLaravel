@@ -349,3 +349,12 @@ body.register.step2>div.jquery-modal.blocker.current>div#jobApplyModal {
 
 .to_hide{ opacity: 0; }
 .to_show{ opacity: 1; }
+.dash-employe-timeline .first-tap-detail{
+	margin-top: 0px !important;
+}
+
+@media only screen and (max-width: 1024px) {
+	.filterSearchinput .select2-container{
+		width: 100% !important;
+	}
+}
