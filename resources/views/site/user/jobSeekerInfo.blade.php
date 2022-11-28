@@ -10,6 +10,7 @@
 
  @php
    $js = $jobSeeker;
+
    @endphp                
    <!-- Top Filter Row -->
 
@@ -243,151 +244,158 @@
          </div>
       </div>
       
-      <div class="profile profile-section">
-         <ul class="nav nav-tabs employee-tab-info" id="Profile-tab" role="tablist">
-            <span class="line-tab"></span>
-            <li class="nav-item" role="presentation">
-               <button class="nav-link active" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference"
-                  type="button" role="tab" aria-controls="job" aria-selected="false">
-               <i class="fa fa-circle tab-circle-cross"></i>Reference</button>
-            </li>
-            <li class="nav-item" role="presentation">
-               <button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
-                  type="button" role="tab" aria-controls="profile" aria-selected="false">
-               <i class="fa fa-circle tab-circle-cross"></i>Album</button>
-            </li>
-            <li class="nav-item" role="presentation">
-               <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
-                  type="button" role="tab" aria-controls="contact" aria-selected="false">
-               <i class="fa fa-circle tab-circle-cross"></i>Questions</button>
-            </li>
-            @if ($controlsession->count() > 0 || isAdmin())
-            @include('site.user.jobseekerInfoTabs.notesAndHistory')
-            @endif
-            <li class="nav-item" role="presentation">
-               <button class="nav-link" id="interview-tab" data-bs-toggle="tab" data-bs-target="#interview"
-                  type="button" role="tab" aria-controls="contact" aria-selected="false">
-               <i class="fa fa-circle tab-circle-cross"></i>Interview</button>
-            </li>
-            <li class="nav-item" role="presentation">
-               <button class="nav-link" id="online_test-tab" data-bs-toggle="tab" data-bs-target="#online_test"
-                  type="button" role="tab" aria-controls="contact" aria-selected="false">
-               <i class="fa fa-circle tab-circle-cross"></i>Online Test</button>
-            </li>
-            <li class="nav-item" role="presentation">
-               <button class="nav-link" id="last_login-tab" data-bs-toggle="tab" data-bs-target="#last_login"
-                  type="button" role="tab" aria-controls="contact" aria-selected="false">
-               <i class="fa fa-circle tab-circle-cross"></i>Last Login</button>
-            </li>
-         </ul>
-         <div class="tab-content employee-details-infomation" id="myTabContent">
+						<div class="row">
+							<div class="col-md-4 order-md-2 order-sm-1 profile-data-info"></div>
+								
+							<div class="col-md-8 order-md-1 order-sm-2 first-tap-detail">
+							<div class="profile profile-section">
+										<ul class="nav nav-tabs" id="Profile-tab" role="tablist">
+													<span class="line-tab"></span>
+													<li class="nav-item" role="presentation">
+																<button class="nav-link active" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference"
+																			type="button" role="tab" aria-controls="job" aria-selected="false">
+																<i class="fa fa-circle tab-circle-cross"></i>Reference</button>
+													</li>
+													<li class="nav-item" role="presentation">
+																<button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
+																			type="button" role="tab" aria-controls="profile" aria-selected="false">
+																<i class="fa fa-circle tab-circle-cross"></i>Album</button>
+													</li>
+													<li class="nav-item" role="presentation">
+																<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+																			type="button" role="tab" aria-controls="contact" aria-selected="false">
+																<i class="fa fa-circle tab-circle-cross"></i>Questions</button>
+													</li>
+													@if ($controlsession->count() > 0 || isAdmin())
+													@include('site.user.jobseekerInfoTabs.notesAndHistory')
+													@endif
+													<li class="nav-item" role="presentation">
+																<button class="nav-link" id="interview-tab" data-bs-toggle="tab" data-bs-target="#interview"
+																			type="button" role="tab" aria-controls="contact" aria-selected="false">
+																<i class="fa fa-circle tab-circle-cross"></i>Interview</button>
+													</li>
+													<li class="nav-item" role="presentation">
+																<button class="nav-link" id="online_test-tab" data-bs-toggle="tab" data-bs-target="#online_test"
+																			type="button" role="tab" aria-controls="contact" aria-selected="false">
+																<i class="fa fa-circle tab-circle-cross"></i>Online Test</button>
+													</li>
+													<li class="nav-item" role="presentation">
+																<button class="nav-link" id="last_login-tab" data-bs-toggle="tab" data-bs-target="#last_login"
+																			type="button" role="tab" aria-controls="contact" aria-selected="false">
+																<i class="fa fa-circle tab-circle-cross"></i>Last Login</button>
+													</li>
+										</ul>
+										<div class="tab-content employee-details-infomation" id="myTabContent">
 
-            <!-- ======================================================= job tab ======================================================= -->
-            
-            <div class="tab-pane fade show active job-applied pt-4" id="reference"  role="tabpanel" aria-labelledby="reference-tab">
-               <h2>Reference</h2>
-               <div class="row">
-                  @include('site.user.jobseekerInfoTabs.reference')
-                  {{-- site/user/jobseekerInfoTabs/reference --}}
-               </div>
-            </div>
+													<!-- ======================================================= job tab ======================================================= -->
+													
+													<div class="tab-pane fade show active job-applied pt-4" id="reference"  role="tabpanel" aria-labelledby="reference-tab">
+																<h2>Reference</h2>
+																<div class="row">
+																			@include('site.user.jobseekerInfoTabs.reference')
+																			{{-- site/user/jobseekerInfoTabs/reference --}}
+																</div>
+													</div>
 
-            <!-- ======================================================= album-tab ======================================================= -->
-            
-            <div class="album-section tab-pane fade Photos " id="profile" role="tabpanel"
-               aria-labelledby="profile-tab">
+													<!-- ======================================================= album-tab ======================================================= -->
+													
+													<div class="album-section tab-pane fade Photos " id="profile" role="tabpanel"
+																aria-labelledby="profile-tab">
 
-               @include('site.user.jobseekerInfoTabs.album')
+																@include('site.user.jobseekerInfoTabs.album')
 
-            </div>
+													</div>
 
-            <!-- ======================================================= question tab ======================================================= -->
+													<!-- ======================================================= question tab ======================================================= -->
 
-            <div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
-               <h2>Questions</h2>
-               <div class="tab_photos tab_cont">
-                  @include('site.user.jobseekerInfoTabs.questions')  {{-- site/user/jobseekerInfoTabs/questions --}}
-               </div>
-            </div>
+													<div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
+																<h2>Questions</h2>
+																<div class="tab_photos tab_cont">
+																			@include('site.user.jobseekerInfoTabs.questions')  {{-- site/user/jobseekerInfoTabs/questions --}}
+																</div>
+													</div>
 
-            @if ($controlsession->count() > 0 || isAdmin())
-            <!-- =============================================== Tab History =============================================== -->
-            
-            <div class="tab-pane fade history-tab" id="history"  role="tabpanel" aria-labelledby="history-tab">
-               <h2>History</h2>
-               <div class="tab_photos tab_cont">
-                  @include('site.user.jobseekerInfoTabs.history')  {{-- site/user/jobseekerInfoTabs/questions --}}
-               </div>
-            </div>
+													@if ($controlsession->count() > 0 || isAdmin())
+													<!-- =============================================== Tab History =============================================== -->
+													
+													<div class="tab-pane fade history-tab" id="history"  role="tabpanel" aria-labelledby="history-tab">
+																<h2>History</h2>
+																<div class="tab_photos tab_cont">
+																			@include('site.user.jobseekerInfoTabs.history')  {{-- site/user/jobseekerInfoTabs/questions --}}
+																</div>
+													</div>
 
-            {{-- <a id="tabs-5" class="tab_link tab_a"></a> --}}
-            {{-- <div class="tab_history tab_cont pt30px"> --}}
-               {{-- @include('site.user.jobseekerInfoTabs.history')  --}}
-               {{-- site/user/jobseekerInfoTabs/history --}}
-            {{-- </div> --}}
-            <!-- =============================================== Tab Notes =============================================== -->
-            {{-- <a id="tabs-6" class="tab_link tab_a"></a>
-            <div class="tab_notes tab_cont pt30px">
-               @include('site.user.jobseekerInfoTabs.addNotes')
-            </div> --}}
+													{{-- <a id="tabs-5" class="tab_link tab_a"></a> --}}
+													{{-- <div class="tab_history tab_cont pt30px"> --}}
+																{{-- @include('site.user.jobseekerInfoTabs.history')  --}}
+																{{-- site/user/jobseekerInfoTabs/history --}}
+													{{-- </div> --}}
+													<!-- =============================================== Tab Notes =============================================== -->
+													{{-- <a id="tabs-6" class="tab_link tab_a"></a>
+													<div class="tab_notes tab_cont pt30px">
+																@include('site.user.jobseekerInfoTabs.addNotes')
+													</div> --}}
 
-            <div class="tab-pane fade notes-tab" id="notes"  role="tabpanel" aria-labelledby="notes-tab">
-               <h2>Notes</h2>
-               <div class="tab_photos tab_cont">
-                  @include('site.user.jobseekerInfoTabs.addNotes')  {{-- site/user/jobseekerInfoTabs/questions --}}
-               </div>
-            </div>
+													<div class="tab-pane fade notes-tab" id="notes"  role="tabpanel" aria-labelledby="notes-tab">
+																<h2>Notes</h2>
+																<div class="tab_photos tab_cont">
+																			@include('site.user.jobseekerInfoTabs.addNotes')  {{-- site/user/jobseekerInfoTabs/questions --}}
+																</div>
+													</div>
 
-            <!-- =============================================== Tab Jobs =============================================== -->
-            {{-- <a id="tabs-8" class="tab_link tab_a"></a>
-            <div class="tab_interviews tab_cont pt30px">
-               @include('site.user.jobseekerInfoTabs.jobApplications') 
-            </div> --}}
+													<!-- =============================================== Tab Jobs =============================================== -->
+													{{-- <a id="tabs-8" class="tab_link tab_a"></a>
+													<div class="tab_interviews tab_cont pt30px">
+																@include('site.user.jobseekerInfoTabs.jobApplications') 
+													</div> --}}
 
-            <div class="tab-pane fade jobs-tab" id="jobs"  role="tabpanel" aria-labelledby="jobs-tab">
-               <h2>Jobs</h2>
-               <div class="tab_photos tab_cont">
-                  @include('site.user.jobseekerInfoTabs.jobApplications')  {{-- site/user/jobseekerInfoTabs/questions --}}
-               </div>
-            </div>
+													<div class="tab-pane fade jobs-tab" id="jobs"  role="tabpanel" aria-labelledby="jobs-tab">
+																<h2>Jobs</h2>
+																<div class="tab_photos tab_cont">
+																			@include('site.user.jobseekerInfoTabs.jobApplications')  {{-- site/user/jobseekerInfoTabs/questions --}}
+																</div>
+													</div>
 
-            @endif
+													@endif
 
-            <div class="tab-pane fade interview-tab pt-4" id="interview"  role="tabpanel" aria-labelledby="interview">
-               <h2>Interviews</h2>
-               <div class="tab_interviews tab_cont pt30px">
-                  {{-- <p>  Hi how are you  </p> --}}
+													<div class="tab-pane fade interview-tab pt-4" id="interview"  role="tabpanel" aria-labelledby="interview">
+																<h2>Interviews</h2>
+																<div class="tab_interviews tab_cont pt30px">
+																			{{-- <p>  Hi how are you  </p> --}}
 
-                  
+																			
 
-   
+				
 
-                  {{-- @dd($UserInterview); --}}
-                  @include('site.user.jobseekerInfoTabs.interviews')
-                  {{--    site/user/jobseekerInfoTabs/interviews  --}}
-               </div>
-            </div>
-            <div class="tab-pane fade online_test-tab pt-4" id="online_test"  role="tabpanel" aria-labelledby="online_test-tab">
-               <h2>Online Tests</h2>
-               <div class="tab_onlineTest tab_cont pt30px">
-                  @include('site.user.jobseekerInfoTabs.onlineTests')
-                  {{--    site/user/jobseekerInfoTabs/onlineTests  --}}
-               </div>
-            </div>
-            <div class="tab-pane fade last_login-tab pt-4" id="last_login"  role="tabpanel" aria-labelledby="last_login-tab">
-               <h2>Last Login</h2>
-               <div class="tab_lastLogin tab_cont pt30px">
-                  {{-- @dump($jobSeeker->last_login); --}}
-                  <p>
-                     {{ $jobSeeker->last_login }}
-                  </p>
-               </div>
-            </div>
-            <!--========================end all tabs-->
-         </div>
-         
-      </div>
-     
+																			{{-- @dd($UserInterview); --}}
+																			@include('site.user.jobseekerInfoTabs.interviews')
+																			{{--    site/user/jobseekerInfoTabs/interviews  --}}
+																</div>
+													</div>
+													<div class="tab-pane fade online_test-tab pt-4" id="online_test"  role="tabpanel" aria-labelledby="online_test-tab">
+																<h2>Online Tests</h2>
+																<div class="tab_onlineTest tab_cont pt30px">
+																			@include('site.user.jobseekerInfoTabs.onlineTests')
+																			{{--    site/user/jobseekerInfoTabs/onlineTests  --}}
+																</div>
+													</div>
+													<div class="tab-pane fade last_login-tab pt-4" id="last_login"  role="tabpanel" aria-labelledby="last_login-tab">
+																<h2>Last Login</h2>
+																<div class="tab_lastLogin tab_cont pt30px">
+																			{{-- @dump($jobSeeker->last_login); --}}
+																			<p>
+																						{{ $jobSeeker->last_login }}
+																			</p>
+																</div>
+													</div>
+													<!--========================end all tabs-->
+										</div>
+										
+							</div>
+						</div>
+						</div>
+
+						
    </div>
 
    <!-- ===================================== Modal for block jobseeker =====================================  -->
