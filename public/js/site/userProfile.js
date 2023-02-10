@@ -1137,7 +1137,7 @@ $(document).ready(function() {
     }
 
 
-    $('.submit-document').on('submit',(function(e) {
+    /*$('.submit-document').on('submit',(function(e) {
         e.preventDefault();
         var formData = new FormData(this);
         formData.append('submit', true);
@@ -1161,10 +1161,6 @@ $(document).ready(function() {
                     var attachments = data.attachments;
                     console.log("Hassaan doing this job : " + attachments );
                     var attach_html = '';
-
-
-
-
                             attach_html += '<div class="attachment_'+attachments.id+' attachment_file">';
                             attach_html +=   '<div class="attachment"><img src="'+base_url+'/images/site/icons/cv.png" /></div>';
                             attach_html +=   '<span class="attach_title">'+attachments.name+'</span>';
@@ -1188,7 +1184,7 @@ $(document).ready(function() {
                 console.log(data);
             }
         });
-    }));
+    }));*/
 
 
 

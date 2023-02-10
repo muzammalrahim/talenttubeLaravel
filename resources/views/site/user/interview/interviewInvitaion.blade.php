@@ -12,12 +12,13 @@
 <section class="row">
   <div class="col-md-12">
     <div class="profile profile-section">
-      <div class="row mb-md-3">
-        <div class="col-11 col-sm-6 col-lg-6"><h2>Received Interview Invitations</h2></div>
+      <div class="row mb-3">
+        <div class="col-12 col-md-6 col-lg-6"><h2>Received Interview Invitations</h2></div>
 
-        <div class="col-1 col-sm-5 col-lg-6 head icon_head_browse_matches float-right d-none d-sm-block"> 
-          <a href="{{ route('unhideInterviews') }}" class="unhideInterviews blue_btn py-1 float-right">Click here to Un-Hide your interviews </a> 
+        <div class="col-12 col-md-6 col-lg-6 head icon_head_browse_matches"> 
+          <a href="{{ route('unhideInterviews') }}" class="unhideInterviews blue_btn py-1 float-md-right">Click here to Un-Hide your interviews </a> 
         </div>
+
       </div>
       <div class="row">
       @if ($Interviews_booking->count() > 0)
@@ -88,9 +89,11 @@
               @else
                 {{-- <a href="{{ route('interviewInvitationUrl',['url' =>$Int_booking->url]) }}" data-jobid="{{$Int_booking->id}}" type="button"
                 class="interview-tag">Click here to respond to this interview</a>  --}}
-                <div class="float-left acceptInterviewDiv_{{ $Int_booking->id }}">
-                  <button type="button" class="blue_btn" data-target = "#acceptOrRejectInterview" data-toggle = "modal" 
-                  onclick="acceptInterviewFun('{{ $Int_booking->url }}', '{{ $Int_booking->id }}')">Click here to respond to this interview</button> 
+                <div class="float-sm-left acceptInterviewDiv_{{ $Int_booking->id }}">
+                  <div>
+                    <button type="button" class="blue_btn w-100" data-target = "#acceptOrRejectInterview" data-toggle = "modal" 
+                    onclick="acceptInterviewFun('{{ $Int_booking->url }}', '{{ $Int_booking->id }}')">Click here to respond to this interview</button> 
+                  </div>
                 </div>
 
                 <span class="pendinginterview-tag used-tag pull-right h-auto font-unset text-capitalize intStatus_{{ $Int_booking->id }}">{{$Int_booking->status}}</span>

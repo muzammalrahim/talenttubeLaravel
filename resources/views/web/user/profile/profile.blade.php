@@ -111,14 +111,14 @@
                      {{-- <div class="row m-0">  --}}
                         {{-- <div class="col-5"> --}}
                            <div class="d-inline-block">
-                              <label class="mb-0">Recent Job:</label>
+                              <label class="mb-0 mr-1">Recent Job:</label>
                         {{-- </div> --}}
 
                         {{-- <div class="col-7"> --}}
-                              <span class="recentjobSpan">{{$user->recentJob}} </span>
-                             <span class="px-1"> at </span> 
-                              <span class="organizationSpan"> {{$user->organHeldTitle}} </span>
-                              </div>
+                              <span class="recentjobSpan text-capitalize">{{$user->recentJob}} </span>
+                              <span class="px-1"> at </span> 
+                              <span class="organizationSpan text-capitalize"> {{$user->organHeldTitle}} </span>
+                           </div>
                         {{-- </div> --}}
                      {{-- </div> --}}
 
@@ -132,8 +132,8 @@
                      {{-- <div class="row m-0"> --}}
                         <div class="d-inline-block">
                         {{-- <div class="col-5"> --}}
-                           <label class="mb-2"> 
-                              Expecting Salary: 
+                           <label class="mb-2 mr-1"> 
+                              Expected Salary: 
                            </label>
                         {{-- </div> --}}
                         {{-- <div class="col-7"> --}}
@@ -311,7 +311,7 @@
                   <!-- ========================================== tag tab ========================================== -->
                   <div class="tab-pane fade tag-tab-info " id="tag"  role="tabpanel" aria-labelledby="tag-tab">
 
-                     @include('site.user.profile.tabs.tags')
+                     @include('site.user.profile.tabs.tags') {{-- site/user/profile/tabs/tags --}}
 
                   </div>
                   <!--=================job tab ============================ -->

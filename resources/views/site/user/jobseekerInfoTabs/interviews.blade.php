@@ -12,19 +12,21 @@
 
 {{-- ========================================================== User Interviews ========================================================== --}}
 
-{{-- @include('site.user.jobseekerInfoTabs.userInterviewForJobseeker') --}}
+
+
+@include('site.user.jobseekerInfoTabs.userInterviewForJobseeker')
    {{-- site/user/jobseekerInfoTabs/userInterviewForJobseeker --}}
 
 {{-- ========================================================== User Interviews ========================================================== --}}
 
 <p> To conduct an interview with <b> {{$jobSeeker->name}}</b>, please click <span style="text-decoration: underline" class="pointer displayInterviewTemplate"> here</span> to see the available interview templates </p>
-{{-- <p> If you want to conduct interview of <b> {{$jobSeeker->name}} </b> <span style="text-decoration: underline" class="pointer displayInterviewTemplate">  Click Here </span>  to see the available templates.</p> --}}
+
 <div class="tempDisplayforemployer hide_it job_row col-md-12 col-12 job-box-info concigerge-box clearfix p-0" style="background-color: #f8f8f8;">
    <form method="POST" name="interviewTemplate" class="interviewTemplate newJob job_validation">
       @csrf
       <div class="row box-head m-0 ">
-         <h3 class="col-3 bold m-auto text-white">Interview Template:</h3>
-         <select class="templateSelect col-9 form-control icon_show" name="templateSelect">
+         <h5 class="col-12 col-sm-6 bold text-white">Interview Template:</h5>
+         <select class="templateSelect col-12 col-sm-6 form-control icon_show" name="templateSelect">
             <option value="0"> Select Template</option>
             @foreach ($interviewTemplate as $template)
             <option value="{{ $template->id }}"> 
@@ -35,12 +37,15 @@
          <span class="btn small leftMargin turquoise interviewLoader"></span>
       </div>
    </form>
+
    {{-- ========================== Get Template and questions through aja and embed them in below div ========================== --}} 
-   <form method="POST" name="interviewTemplateSave" class="interviewTemplateSave newJob job_validation">
+   
+   <form method="POST" name="interviewTemplateSave" enctype="multipart/form-data" action="{{ route('liveInterview') }}" class="newJob job_validation">
+      @csrf
       <div class="templateData p10"></div>
       <input type="hidden" name="user_id" value="{{$jobSeeker->id}}" class="jsId">
-      {{-- <button type="button"> Save response</button> --}}
    </form>
+
 </div>
 <input type="hidden" name="" value="{{$jobSeeker->id}}" class="jsId">
 <script type="text/javascript">
@@ -138,11 +143,10 @@
       });
    
       // ============================================ Live Interview ============================================
-      $(document).on("click" , ".liveInterview" , function(){
+      /*$(document).on("click" , ".liveInterview" , function(){
           var formData = $('.interviewTemplateSave').serializeArray();
           $('.liveInterview').html(getLoader('pp_profile_edit_main_loader liveInterviewTemplateLoader')).prop('disabled',true);
           console.log(' formData ', formData);
-          // return;
           $('.general_error1').html('');
           $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
               $.ajax({
@@ -152,7 +156,6 @@
                   success: function(response){
                   if(response.status == 1){
                       var message = response.message;
-                      // console.log(message);
                       $('.liveInterviewError').removeClass('hide_it').text(message);
                       $('.conductInterviewLoader').addClass('hide_it');
                       $('.liveInterviewTemplateLoader').addClass('hide_it');
@@ -175,6 +178,6 @@
                   }
               }
               });
-      });
+      });*/
    
 </script>

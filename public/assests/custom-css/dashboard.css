@@ -34,7 +34,7 @@ body {
 }
 
 .main-content {
-    background-color: #F7F7F8;
+    background-color: white;
     padding-bottom: 80px;
 }
 
@@ -2582,7 +2582,7 @@ button i {
         width: 209px;
     }
     .recent-job label {
-        font-size: 16px;
+        font-size: 14px;
     }
     .recent-job span {
         font-size: 14px;
@@ -2871,7 +2871,12 @@ button i {
         overflow: auto;
     }
     .file-chooser input {
-        width: 100%;
+        width: 75%;
+        font-size: 10px;
+    }
+    .save-resume-btn{
+        font-size: 10px !important; 
+        width: 25%;
     }
     .file-chooser .send-btn {
         margin: 10px 0;

@@ -22,6 +22,15 @@
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 <link rel="stylesheet" href="{{ asset('css/site/jquery.modal.min.css')}}">
 
+<style type="text/css">
+	@media (max-width: 479px){
+	.sidebaricontoggle {
+	    top: 4rem;
+	    right: 20px;
+		}
+	}
+
+</style>
 @stop
 
 @section('custom_js')

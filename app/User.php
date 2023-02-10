@@ -59,7 +59,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'language' => 'array',
         'hobbies' => 'array',
-        'industry_experience' => 'array'
+        'industry_experience' => 'array',
+        'last_login' => 'datetime:d-M-Y'
     ];
 
 

@@ -49,12 +49,12 @@
    @endphp
    <div class="profile profile-section test-time clearfix">
       
-      <div class="row mb-4">
-        <div class="head icon_head_browse_matches col-9">
+      <div class="row">
+        <div class="head icon_head_browse_matches col-12 col-lg-9">
            <h2>{{$UserOnlineTest->onlineTest->name}} Questions</h2>
         </div>
-        <div class="col-3">
-          <div class="countdown fl_right fw-bold fs-2"> </div>
+        <div class="col-12 col-sm-lg float-right float-lg-none">
+          <div class="countdown fw-bold fs-2"> </div>
         </div>
       </div>
       <h2> <span> <input type="hidden" name="remaining_time" class="timedb" value="{{$UserOnlineTest->rem_time}}"></span></h2>

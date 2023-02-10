@@ -665,7 +665,13 @@ class UserController extends Controller
         $age = 18 + $diff;
         $user->age = $age ;
 
-        // dd($age);
+        $user->title   = $request->title;
+        if ($request->title == 'Mr') {
+            $user->gender = 'male';
+        }
+        else{
+            $user->gender = 'female';                
+        }
 
         if( $user->save() ){
             return redirect(route('users'))->withSuccess( __('admin.record_updated_successfully'));

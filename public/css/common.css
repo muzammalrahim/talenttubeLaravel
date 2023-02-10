@@ -147,7 +147,7 @@ button.btn:disabled, button.btn.disabled {
 /*===========custom pagination css ===========*/
 .cpagination li.page-item {
     display: inline-block;
-    border: 1px solid #ff5f4e;
+/*    border: 1px solid #ff5f4e;*/
     border-radius: 4px;
     vertical-align: text-bottom;
 }

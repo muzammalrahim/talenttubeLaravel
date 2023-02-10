@@ -30,6 +30,44 @@
                     </div>
                 </div>
 
+                <div class="form-group row">    
+
+                    {{ Form::label('Title', null, ['class' => 'col-md-3 form-control-label']) }}
+                    <div class="col-md-9">
+                        <div class="form-check form-check-inline">
+                            <input type="radio" class="form-check-input pointer" value="Mr" name="title" {{($record->title == 'Mr')? 'checked':'' }} >
+                            <label class="form-check-label ml-2 mr-3" for="inlineRadio1">Mr</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            {{-- {{Form::radio('title','Mr',['class'=>'form-check-input pointer', 'checked' => " "{{($record->title == 'Ms')? 'checked':'' }}" " ])}} --}}
+                            <input type="radio" class="form-check-input pointer" value="Ms" name="title" {{($record->title == 'Ms')? 'checked':'' }} >
+                            <label class="form-check-label ml-2 mr-3" for="inlineRadio2">Ms</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            {{-- {{Form::radio('title','Ms',['class'=>'form-check-input pointer'])}} --}}
+                            <input type="radio" class="form-check-input pointer" value="Miss" name="title" {{($record->title == 'Miss')? 'checked':'' }} >
+                            <label class="form-check-label ml-2 mr-3" for="inlineRadio3">Miss</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            {{-- {{Form::radio('title','Miss',['class'=>'form-check-input pointer'])}} --}}
+                            {{-- {{Form::radio('title','Mrs',['class'=>'form-check-input pointer'])}} --}}
+                            <input type="radio" class="form-check-input pointer" value="Mrs" name="title" {{($record->title == 'Mrs')? 'checked':'' }} >
+                            <label class="form-check-label ml-2 mr-3" for="inlineRadio4">Mrs</label>
+                        </div>
+                    </div>
+
+                    {{-- <div class="col-sm-9" style="margin:auto">
+                        <div class="form-check form-check-inline">
+                            {{Form::radio('gender','1',['class'=>'form-check-input'])}}
+                            <label class="form-check-label ml-2" for="inlineRadio1">Male</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            {{Form::radio('gender','2',['class'=>'form-check-input'])}}
+                            <label class="form-check-label ml-2" for="inlineRadio2">Female</label>
+                        </div>
+                    </div> --}}
+                </div>
+
             </div>
 
                 {{-- <div class="col-md-3">

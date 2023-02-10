@@ -246,12 +246,12 @@
       
 						<div class="row">
 								
-							<div class="col-md-8 order-md-1 order-sm-2 first-tap-detail">
+							<div class="col-md-12 order-md-1 order-sm-2 first-tap-detail">
 							<div class="profile profile-section">
 										<ul class="nav nav-tabs" id="Profile-tab" role="tablist">
 													<span class="line-tab"></span>
 													<li class="nav-item" role="presentation">
-																<button class="nav-link active pt-4" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference"
+																<button class="nav-link active" id="reference-tab" data-bs-toggle="tab" data-bs-target="#reference"
 																			type="button" role="tab" aria-controls="job" aria-selected="false">
 																<i class="fa fa-circle tab-circle-cross"></i>Reference</button>
 													</li>
@@ -352,6 +352,7 @@
 																<h2>Jobs</h2>
 																<div class="tab_photos tab_cont">
 																			@include('site.user.jobseekerInfoTabs.jobApplications')  {{-- site/user/jobseekerInfoTabs/questions --}}
+
 																</div>
 													</div>
 
@@ -360,15 +361,8 @@
 													<div class="tab-pane fade interview-tab pt-4" id="interview"  role="tabpanel" aria-labelledby="interview">
 																<h2>Interviews</h2>
 																<div class="tab_interviews tab_cont pt30px">
-																			{{-- <p>  Hi how are you  </p> --}}
-
-																			
-
-				
-
-																			{{-- @dd($UserInterview); --}}
-																			@include('site.user.jobseekerInfoTabs.interviews')
-																			{{--    site/user/jobseekerInfoTabs/interviews  --}}
+                                                   @include('site.user.jobseekerInfoTabs.interviews') {{--    site/user/jobseekerInfoTabs/interviews  --}}
+                                                   
 																</div>
 													</div>
 													<div class="tab-pane fade online_test-tab pt-4" id="online_test"  role="tabpanel" aria-labelledby="online_test-tab">
@@ -383,11 +377,11 @@
 																<div class="tab_lastLogin tab_cont pt30px">
 																			{{-- @dump($jobSeeker->last_login); --}}
 																			<p>
-																						{{ $jobSeeker->last_login }}
+																						{{ \Carbon\Carbon::parse($jobSeeker->last_login)->format('d-M-Y H:i:s') }}
 																			</p>
 																</div>
 													</div>
-													<!--========================end all tabs-->
+													<!--======================== end all tabs-->
 										</div>
 										
 							</div>

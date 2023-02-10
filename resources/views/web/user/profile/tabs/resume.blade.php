@@ -12,11 +12,11 @@
          <section class="multiple-file-pdf" id="mupload5" > 
             <div class="file-chooser clearfix">
 
-               <form id="frm_upload" class="submit-document" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
+               <form id="frm_upload" class="submit-document d-sm-block d-flex" action="route('userUploadResume')" method="post" enctype="multipart/form-data">
                   {{ csrf_field() }}
                     <br>
-                    <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx">
-                    <button class="btn violet save-resume-btn valign-top " name="submit" style="padding: 5px;"><i class="fa fa-save" ></i>Save</button>
+                    <input type="file" name="resume" id="resume" accept=".pdf,.doc,.docx" class="mb-2">
+                    <button class="btn violet save-resume-btn valign-top " name="submit" style="padding: 5px; font-size: 10px;"><i class="fa fa-save" ></i>Save</button>
                 </form>
 
             </div>

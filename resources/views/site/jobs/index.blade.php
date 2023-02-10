@@ -101,7 +101,7 @@
 <div class="modal fade" id="jobApplyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">
   <div class="modal-dialog Apply-modal " role="document">
-    <div class="modal-content ">
+    <div class="modal-content border-0">
       <div class="modal-header Apply-modal-header">
         <div class="m-header  ">
           <h4 class="modal-title Apply-modal-title " id="myModalLabel">

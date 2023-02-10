@@ -1,7 +1,7 @@
-<div class="modal fade" id="jobAppDeleteModal" role="dialog">
+<div class="modal fade px-3 px-md-0" id="jobAppDeleteModal" role="dialog">
     <div class="modal-dialog delete-applications">
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content border-0">
             <div class="modal-header">
                 <i data-dismiss="modal" class="close-box fa fa-times"></i>                      
                 <h1 class="modal-title"><i class="fa fa-trash trash-icon"></i>Delete Job Application</h1>
@@ -14,7 +14,7 @@
 
                 <div class="dual-footer-btn">
                     <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
-                    <button type="button" class="orange_btn" onclick="confirmDeleteJobApp()" data-dismiss="modal" ><i class="fa fa-check"></i>OK</button>
+                    <button type="button" class="orange_btn float-none" onclick="confirmDeleteJobApp()" data-dismiss="modal" ><i class="fa fa-check"></i>OK</button>
                 </div>
             {{-- </div> --}}
 

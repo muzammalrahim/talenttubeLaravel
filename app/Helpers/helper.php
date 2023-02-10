@@ -674,6 +674,10 @@ function remove_spaces($string) {
     return  str_replace(' ', '', $string);
 }
 
+function remove_underscode($string) {
+    return  str_replace('_', ' ', $string);
+}
+
 
 function assetGallery($access,$userId,$type,$file){
     $path = '';

@@ -1,5 +1,5 @@
 
-<div class="application_qa px-2 pt-2">
+<div class="application_qa pt-2">
     @php
         // dd( $application  );
         // dd( $application->answers->first()  );

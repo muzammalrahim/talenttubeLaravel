@@ -156,10 +156,10 @@
 </section>
 
 
-<div class="modal fade" id="interviewConciergeModal" role="dialog">
+<div class="modal fade px-3 px-md-0" id="interviewConciergeModal" role="dialog">
     <div class="modal-dialog delete-applications">
         <!-- Modal content-->
-        <div class="modal-content">
+        <div class="modal-content border-0">
             <div class="modal-header">
                 <i data-dismiss="modal" class="close-box fa fa-times"></i>                      
                 <h1 class="modal-title"><i class="fa fa-trash trash-icon"></i>Cancel Interview Concierge</h1>
@@ -170,9 +170,9 @@
                 </div>
                 <input type="hidden" id="deleteConfirmInterviewConcierge" name="">
 
-                <div class="dual-footer-btn">
+                <div class="dual-footer-btn mx-3 mx-md-0">
                     <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
-                    <button type="button" class="orange_btn" onclick="confirmDeleteInterviewConcierge()" data-dismiss="modal" ><i class="fa fa-check"></i>OK</button>
+                    <button type="button" class="orange_btn float-none" onclick="confirmDeleteInterviewConcierge()" data-dismiss="modal" ><i class="fa fa-check"></i>OK</button>
                 </div>
             {{-- </div> --}}
 

@@ -15,10 +15,10 @@
       </div>
    </div>
    <div class="newTag" id="newTag">
-      <p class="m0">Add more interests here!</p>
+      <p class="">Add more interests here!</p>
       <div class="newTagInput relative">
          
-        <div class="row">
+        <div class="row m-0 p-0">
         	<div class="col-sm-9 col-8 p-0">
          		<input type="text" class="form-control" name="newTag" value="" />
         	</div>

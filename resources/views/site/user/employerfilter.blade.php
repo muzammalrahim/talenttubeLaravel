@@ -199,20 +199,20 @@
             <div class="row b-filter-row mt-md-3">
                <div class="col-md-12">
                   <div class="row">
-                     <div class="col-md-3 col-sm-12 mt-1 b-mob-pad">
+                     <div class="col-md-3 col-6 mt-1 b-mob-pad">
                         <h5 class="browse-heading">Filter by Location:</h5>
                      </div>
-                     <div class="col-1 custom-checkbox mt-1">  
+                     <div class="col-md-1 col-sm-2 col-2 custom-checkbox">  
                         <input type="checkbox" checked class="" name="filter_location_status">
                      </div>
-                     <div class="FilterLocationBox col">
+                     <div class="FilterLocationBox col-md-8 col-12">
                         <div class="location_search_cont row">
                            <div class="col-8 col-sm-9">
                               <input type="text" name="location_search" id="location_search" class="form-control form-control-sm white-text"  placeholder="Type a location">
                            </div>
 
                            <div class="col-2 p-0">
-                              <select class="white-text mdb-select md-form filter_location_radius custom-select" name="filter_location_radius" data-placeholder="Select Location Radius">
+                              <select class="white-text mdb-select md-form filter_location_radius custom-select icon_show bg-white" name="filter_location_radius" data-placeholder="Select Location Radius">
 
                                  <option value="5" selected="selected">5km</option>
                                  <option value="10">10km</option>
@@ -246,7 +246,7 @@
                 <div class="col-md-6">
                    <div class="input-employee clearfix">
                       @if(!empty(getUserRegisterQuestions()))
-                      <select type="text" class="w-100 bg-white" name="filter_question" aria-label="Recipient's username">
+                      <select type="text" class="w-100 bg-white form-control icon_show" name="filter_question" aria-label="Recipient's username">
                          @foreach (getUserRegisterQuestions() as $qk => $question)
                          <option value="{{$qk}}">{{$question}}</option>
                          @endforeach

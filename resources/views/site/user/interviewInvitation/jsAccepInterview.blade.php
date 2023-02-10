@@ -140,7 +140,7 @@
             <input type="hidden" name="userInterviewId" class="userInterviewId" value="{{$UserInterview->id}}"> 
             <p class="errorsInFields qualifType"></p>
             <div class="actionButton">
-               <button class="orange_btn">Save Reponse</button>
+               <button class="orange_btn" type="submi">Save Reponse</button>
             </div>
          </form>
 
