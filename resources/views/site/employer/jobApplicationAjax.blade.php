@@ -117,7 +117,7 @@
                   <h6 class="p-0">Salary Range:</h6>
                   <p>{{getSalariesRangeLavel($js->salaryRange)}}</p>
                </div>
-               <div class="row blocked-user-experience mt-2">
+               <div class="row blocked-user-about mt-2">
                   <h6 class="p-0">Industry Experience:</h6>
                   @if(isset($js->industry_experience))
                   <ul class="p-0">
@@ -129,14 +129,23 @@
                   </ul>
                   @endif
                </div>
+
+               <div class="row blocked-user-experience mt-2">
+                  <h6 class="p-0"> Job Questions/Answers: </h6>
+
+                  <div class="job_app_qa p-0 job_app_{{$application->id}}">
+                     <div class="ps-0"><button class="ja_load_qa blue_btn mt-2" data-appid="{{$application->id}}">Question/Answers</button></div>
+                     <div class="job_app_qa_box" style="display: none;"></div>
+                  </div>
+               </div>
             </div>
          </div>
          <div class="box-footer1 box-footer  clearfix">
             <div class="block-progrees-ratio1 d-block">
-               <div class="job_app_qa job_app_{{$application->id}}">
+               {{-- <div class="job_app_qa job_app_{{$application->id}}">
                   <div class="ps-0 ps-md-3"><button class="ja_load_qa blue_btn" data-appid="{{$application->id}}">Question/Answers</button></div>
                   <div class="job_app_qa_box" style="display: none;"></div>
-               </div>
+               </div> --}}
             </div>
              <!-- ================================= Video box ================================= -->
                <div class="block-progrees-ratio d-block d-md-none">
@@ -153,32 +162,40 @@
                @endif --}}
 
                <!-- ================================= Video box ================================= -->
-            <div class=" employe-btn-group">
-               <a href="#onlineTestModal"  class="requestTest  detail-btn px-1"data-toggle="modal" data-target="#myModal" data-jobAppId="{{$application->id}}">Request Testing</a>
-               @if (in_array($js->id,$likeUsers))
-               <a class="active  like-btn" data-jsid="{{$js->id}}">Liked</a>
-               @else
-               <a class="jsLikeUserBtn  like-btn" data-jsid="{{$js->id}}">Like</a>
-               @endif
+            <div class="employe-btn-group">
+               {{-- <div class="col-12 col-sm-6 col-md-6"> --}}
+                  
+               {{-- Testing --}}
+                  <a href="#onlineTestModal"  class="requestTest  detail-btn px-1"data-toggle="modal" data-target="#myModal" data-jobAppId="{{$application->id}}">Request Testing</a>
+                  {{-- Application Status --}}
+                  @if ($application->status != 'pending')
+                  <div class="jobApplicationStatusCont d-inline-block">
+                     <select name="jobApplicStatus" class="select_aw jobApplicStatus form-control icon_show" data-application_id="{{$application->id}}" style="height: 33px; margin-top: 10px;">
+                     @foreach (jobStatusArray() as $statusK => $statusV)
+                     <option value="{{$statusK}}" {{($application->status == $statusK )?'selected="selected"':''}} >{{$statusV}}</option>
+                     @endforeach
+                     </select>
+                  </div>
+                  @else
+                  <div class="py-3 bold d-inline-block">
+                     <span class="m5">Pending</span>
+                  </div>
+                  @endif
+               {{-- </div> --}}
+               {{-- Like --}}
+               {{-- <div class="col-12 col-sm-6 col-md-6"> --}}
 
-               <a class="block-btn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" target="_blank" >View Profile</a>
-               {{-- <a href="{{ route('jobSeekerInfo', ['id'=> $js->id]) }}" target="_blank">
-                  <button class="detail-btn"><i class="fas fa-file-alt"></i> View profile</button>
-               </a> --}}
-
-               @if ($application->status != 'pending')
-               <div class="jobApplicationStatusCont ">
-                  <select name="jobApplicStatus" class="select_aw jobApplicStatus" data-application_id="{{$application->id}}" style="height: 36px; margin-top: 10px;">
-                  @foreach (jobStatusArray() as $statusK => $statusV)
-                  <option value="{{$statusK}}" {{($application->status == $statusK )?'selected="selected"':''}} >{{$statusV}}</option>
-                  @endforeach
-                  </select>
-               </div>
-               @else
-               <div class="py-3 bold">
-                  <span class="m5">Pending</span>
-               </div>
-               @endif
+                  @if (in_array($js->id,$likeUsers))
+                  <a class="active  like-btn" data-jsid="{{$js->id}}">Liked</a>
+                  @else
+                  <a class="jsLikeUserBtn  like-btn" data-jsid="{{$js->id}}">Like</a>
+                  @endif
+                  {{-- view profile --}}
+                  <a class="block-btn" href="{{route('jobSeekerInfo',['id'=>$js->id])}}" target="_blank" >View Profile</a>
+                  {{-- <a href="{{ route('jobSeekerInfo', ['id'=> $js->id]) }}" target="_blank">
+                     <button class="detail-btn"><i class="fas fa-file-alt"></i> View profile</button>
+                  </a> --}}
+               {{-- </div> --}}
             </div>
          </div>
       </div>

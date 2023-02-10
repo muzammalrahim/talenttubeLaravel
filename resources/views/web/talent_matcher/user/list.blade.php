@@ -23,15 +23,15 @@
                // dump($profile_image);
                }
                @endphp
-               <div class="block-user-img  d-flex">
+               <div class="block-user-img mx-auto float-none border-0">
                   <img src="{{$profile_image}}" alt="" >
                </div>
-               <div class="block-user-progress " >
+               {{-- <div class="block-user-progress " >
                   <h6> {{ $js['id']->company }} </h6>
-               </div>
+               </div> --}}
             </div>
             <div class="col-md-10 user-details">
-               <div class="progress-img">
+               {{-- <div class="progress-img"> --}}
                   
                   {{-- ============================================= Pie Chart =============================================  --}}
 
@@ -39,12 +39,12 @@
 
                   {{-- ============================================= Pie Chart =============================================  --}}
 
-               </div>
+               {{-- </div> --}}
                
                @if (isEmployer())
                   <div class="row blocked-user-about mt-2">
                      <h6 class="p-0">Recent Job:</h6>
-                     <p>{{$js['id']->recentJob}}<b> at </b>{{$js['id']->organHeldTitle}}</p>
+                     <p class="bold">{{$js['id']->recentJob}} at {{$js['id']->organHeldTitle}}</p>
                   </div>
                   <div class="row blocked-user-about mt-2">
                      <h6 class="p-0">Qualifications:</h6>

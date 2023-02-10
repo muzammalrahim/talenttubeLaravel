@@ -24,7 +24,7 @@
                   </div>
                   <div class="row Block-user-wrapper">
                      <div class="col-md-2 user-images">
-                        <div class="block-user-img ">
+                        <div class="block-user-img mx-auto float-none border-0">
                            @php
                            $profile_image  = asset('images/site/icons/nophoto.jpg');
                            $profile_image_gallery    = $js->profileImage()->first();
@@ -38,12 +38,10 @@
                            <img src="{{$profile_image}}" alt="">
 										<h6 class="py-2 fs-6 text-center">{{$js->recentJob}}</h6>
                         </div>
-                        <div class="block-user-progress ">
-                           
-                           {{-- <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div> --}}
-                           <div class="block-progrees-ratio d-block d-md-none  ">
+                        {{-- <div class="block-user-progress ">
+                           <div class="block-progrees-ratio d-block d-md-none">
                            </div>
-                        </div>
+                        </div> --}}
                      </div>
                      <div class="col-md-10 user-details">
                         <div class="row blocked-user-about mt-2">
@@ -112,7 +110,7 @@
       }
       .block-box .box-footer .unlike-btn {
          font-size: 16px !important;
-         margin: 10px 13px 0 3px !important;
+/*         margin: 10px 13px 0 3px !important;*/
          height: unset !important;
          width: auto !important;
       }

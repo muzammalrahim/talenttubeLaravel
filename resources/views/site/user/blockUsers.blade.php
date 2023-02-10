@@ -30,7 +30,7 @@
                         </div>
                         <div class="row Block-user-wrapper">
                             <div class="col-md-2 user-images">
-                                <div class="block-user-img ">
+                                <div class="block-user-img mx-auto float-none border-0">
                                     @php
                                     $profile_image  = asset('images/site/icons/nophoto.jpg');
                                     $profile_image_gallery    = $js->profileImage()->first();

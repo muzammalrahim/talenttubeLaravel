@@ -28,16 +28,17 @@
             <label><span>Location:</span> <span> {{$job->city}},  {{$job->state}}, {{$job->country}}</span></label>
          </div>
          <div class="row Block-user-wrapper">
+            
             <div class="col-md-4 user-images">
-               <div class="block-user-img ">
+               <div class="block-user-img mx-auto float-none border-0">
                   @php
                   $user_gallery  =  $job->jobEmployerLogo;
                   $profile_image =  !empty($user_gallery)?(assetGallery2($user_gallery,'small')):(asset('images/site/icons/nophoto.jpg'));
                   @endphp
                   <img src="{{$profile_image}}" alt="">
-																		<h6 class="py-2">{{ $job->jobEmployer->company}}</h6>
+						<h6 class="py-2 text-center">{{ $job->jobEmployer->company}}</h6>
                </div>
-               <div class="block-user-progress ">
+               {{-- <div class="block-user-progress "> --}}
                   
                   {{--  
                   <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
@@ -48,12 +49,12 @@
                      </ul>
                   </div>
                   --}}
-               </div>
+               {{-- </div> --}}
             </div>
             <div class="col-md-8 user-details">
                <div class="mt-2 row blocked-user-about">
                   <h6 class="p-0">Job Type:</h6>
-                  <p class="p-0">{{ $jobType }}</p>
+                  <p class="p-0 text-capitalize">{{ $jobType }}</p>
                </div>
                <div class="mt-2 row blocked-user-about">
                   <h6 class="p-0">Industry:</h6>

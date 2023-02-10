@@ -43,7 +43,8 @@
                </div>
 
                <div class="row Block-user-wrapper">
-                  <div class="col-md-2 user-images">
+                  
+                  {{-- <div class="col-md-2 user-images">
                      <div class="block-user-img ">
                         @php
                         $profile_image  = asset('images/site/icons/nophoto.jpg');
@@ -61,7 +62,25 @@
                         <h6 class="p-0">{{$js->name}} {{$js->surname}}</h6>
         
                      </div>
+                  </div> --}}
+
+                  <div class="col-md-2 user-images">
+                    <div class="block-user-img mx-auto float-none border-0">
+                        @php
+                        $profile_image  = asset('images/site/icons/nophoto.jpg');
+                        $profile_image_gallery    = $js->profileImage()->first();
+                        // dump($profile_image_gallery);
+                        if ($profile_image_gallery) {
+                            // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+                            $profile_image   = assetGallery2($profile_image_gallery,'small');
+                            // dump($profile_image);
+                        }
+                        @endphp
+                        <img src="{{$profile_image}}" alt="">
+                    </div>
                   </div>
+
+
                   <div class="col-md-10 user-details">
                      <div class="row blocked-user-about mt-2">
                         <h6 class="p-0">About me:</h6>

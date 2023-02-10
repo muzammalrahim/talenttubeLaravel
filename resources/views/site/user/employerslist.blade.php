@@ -52,7 +52,7 @@
          
          <div class="row Block-user-wrapper">
             <div class="col-md-2 user-images">
-               <div class="block-user-img ">
+               <div class="block-user-img mx-auto float-none border-0">
                   @php
                   $profile_image  = asset('images/site/icons/nophoto.jpg');
                   $profile_image_gallery    = $js->profileImage()->first();
@@ -63,15 +63,28 @@
                   @endphp
                   <img src="{{$profile_image}}" alt="" >
                </div>
-               <div class="block-user-progress ">
-                  <h6>{{$js->name}} {{$js->company}}</h6>
+
+               <div class="block-user-progresss d-none d-sm-block">
+                  <h6>{{$js->company}}</h6>
                </div>
+            </div>
+
+            <div class="progress-img d-block d-sm-none mt-3"> 
+               <h6 class="text-center">{{$js->company}}</h6>
+               <div class="block-progrees-ratio1 d-md-block">
+               <ul>
+               <li><span class="Progress-ratio-icon1">.</span> <span> {{ $user_compat }} % </span> Match </li>
+               <li><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$user_compat }} % </span> Un-Matched</li>
+               </ul>
+               </div>
+              
             </div>
             <div class="col-md-10 user-details">
                
                {{-- ============================================= Pie Chart =============================================  --}}
-
+               <div class="d-sm-block d-none"> 
                @include('web.piechart.pie_chart')
+               </div>
 
                {{-- ============================================= Pie Chart =============================================  --}}
 
@@ -108,13 +121,13 @@
                <!-- </div> -->
                <a href="{{route('employerInfo', ['id' => $js->id])}}"><button class="detail-btn"><i class="fas fa-file-alt"></i> Detail</button></a>
                @if (in_array($js->id,$likeUsers))
-               <!-- <div class="unlike-div"> -->
+               <div class="unlike-div" style="display: contents;">
                   <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
-               <!-- </div> -->
+               </div>
                @else
-                  <!-- <div class="like-div"> -->
+                  <div class="like-div" style="display: contents;">
                      <button class="like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
-                  <!-- </div> -->
+                  </div>
                @endif
          
             </div>

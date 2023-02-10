@@ -54,26 +54,26 @@
             <div class="col-md-6">
               <label for="">Title</label>
               <div class="input-group mb-3 seeker-title">
-                <div class="form-check form-check-inline ">
-                  <input class="form-check-input" value="Mr" type="radio" name="title" id="inlineRadio1" checked>
+                <div class="form-check form-check-inline radioClick">
+                  <input class="form-check-input" value="Mr" type="radio" name="checkTitle" id="inlineRadio1" checked>
                   <label class="form-check-label" for="inlineRadio1">Mr</label>
                 </div>
 
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Ms" type="radio" name="title" id="inlineRadio2">
+                <div class="form-check form-check-inline radioClick">
+                  <input class="form-check-input" value="Ms" type="radio" name="checkTitle" id="inlineRadio2">
                   <label class="form-check-label" for="inlineRadio2">Ms</label>
                 </div>
-                <div class="form-check form-check-inline">
-                  <input class="form-check-input" value="Miss" type="radio" name="title" id="inlineRadio3">
+                <div class="form-check form-check-inline radioClick">
+                  <input class="form-check-input" value="Miss" type="radio" name="checkTitle" id="inlineRadio3">
                   <label class="form-check-label" for="inlineRadio3">Miss</label>
                 </div>
 
-                <div class="form-check form-check-inline ">
-                  <input class="form-check-input" value="Mrs" type="radio" name="title" id="inlineRadio4">
+                <div class="form-check form-check-inline radioClick ">
+                  <input class="form-check-input" value="Mrs" type="radio" name="checkTitle" id="inlineRadio4">
                   <label class="form-check-label" for="inlineRadio4">Mrs</label>
                 </div>
               </div>
-              {{-- <input type="hidden" name="title" class="user_title" value="Mr"> --}}
+              <input type="hidden" name="title" class="user_title" value="Mr">
 
             </div>
 

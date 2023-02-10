@@ -19,12 +19,12 @@
                             @php 
                                 $remSpecialCharQues = str_replace("\&#39;","'",$question['title']);
                             @endphp
-                            <span class="">{{$remSpecialCharQues}}</span>
+                            <h4 class="">{{$remSpecialCharQues}}</h4>
                         </div>
                         <div class="form_qstn_options my-2">
                             @if(!empty($question->options && !empty($question) ))
                                 
-                                <select name="answer[{{$question['id']}}][option]" class="w-100 selectpicker">
+                                <select name="answer[{{$question['id']}}][option]" class="selectpicker form-control icon_show bg-white text-dark">
                                     @foreach($question->options as $option)
                                         @php
                                             $remSpecialChar = str_replace("\&#39;","'",$option);
@@ -58,7 +58,9 @@
 
             <div class="ja_description">
                 <div class="form_qstn my-2">
+                    <h4>  
                      {{ jobApplicationMandatoryQuestion() }}
+                    </h4>
                 </div>
 
                 <div class="ja_descriptionAnswer">

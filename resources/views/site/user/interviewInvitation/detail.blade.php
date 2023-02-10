@@ -26,20 +26,20 @@
 
          <div class="row">
             <div class="col-sm-12 col-md-6">
-               <p class="text-dark">Template Name: <b>{{$UserInterview->template->template_name}}</b></p>
+               <p class="text-dark">Template Name: <span class="bold">{{$UserInterview->template->template_name}}</span></p>
             </div>
             <div class="col-sm-12 col-md-6">
                @if ($UserInterview->template->type == 'phone_screeen' )
-               <p class="text-dark"> Template Type: <b class="text-capitalize"> Phone Screen</b> </p>
+               <p class="text-dark"> Template Type: <span class="text-capitalize bold"> Phone Screen</span> </p>
                @else
-               <p class="text-dark text-capitalize">Template Type: <b>{{$UserInterview->template->type}}</b></p>
+               <p class="text-dark text-capitalize">Template Type: <span class="bold">{{$UserInterview->template->type}}</span></p>
             </div>
             <div class="col-sm-12 col-md-6">
-               <p class="text-dark">Employer Instructions: <b>{{$UserInterview->template->employers_instruction}}</b></p>
+               <p class="text-dark">Employer Instructions: <span class="bold">{{$UserInterview->template->employers_instruction}}</span></p>
             </div>
             @endif
             <div class="col-sm-12 col-md-6">
-               <p class="text-dark">Interviewer Name: <b>{{$UserInterview->employer->company}}</b> </p>
+               <p class="text-dark">Interviewer Name: <span class="bold">{{$UserInterview->employer->company}}</span> </p>
             </div>
             @if ($UserInterview->template->employer_video_intro)
             <div class="col-sm-12 col-md-6">
@@ -56,7 +56,7 @@
                @endphp
                @foreach ($tempQuestions as $question)
                <div class="question-ans">
-                  <p class="accordionone text-light"><b>Question {{$loop->index+1}}:</b>{{$question->question}}</p>
+                  <p class="accordionone text-light"><span class="bold text-light mr-1">Question {{$loop->index+1}}:</span>{{$question->question}}</p>
                   @php
                   $answers = App\UserInterviewAnswers::where('question_id', $question->id)->where('userInterview_id', $UserInterview->id)->
                   where('user_id' , $user->id)->first();   
@@ -145,6 +145,11 @@
 <style type="text/css">
     input#exampleFormControlFile1{
         border-radius: 0px !important;
+    }
+    @media (max-width: 479px){
+        .sidebaricontoggle {
+            top: 4rem !important;
+        }
     }
 </style>
 

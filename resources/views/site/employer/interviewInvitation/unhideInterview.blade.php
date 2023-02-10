@@ -24,7 +24,10 @@
 <section class="row">
    <div class="col-md-12">
       <div class="profile profile-section">
-         <h2>Hidden Interviews</h2>
+
+
+        <h2>Hidden Interviews</h2>
+        <a href="{{route('intetviewInvitation')}}" class="blue_btn py-2"> &larr; </a>
          <div class="row">
             @if ($UserInterview->count() > 0)
             @foreach ($UserInterview   as $interview)
@@ -70,15 +73,15 @@
                   </div>
                </div>
             </div>
-            <div class="text-end pt-3">
+            {{-- <div class="text-end pt-3">
                 <a class="blue_btn px-5 py-1" href="{{ route('intetviewInvitationEmp') }}">Back</a>
-            </div>
+            </div> --}}
             @endforeach  
             @else
             <h3 class="pt-3"> You have not any hidden interview</h3>
-            <div class="text-end">
+            {{-- <div class="text-end">
                 <a class="blue_btn px-5 py-1" href="{{ route('intetviewInvitationEmp') }}">Back</a>
-            </div>
+            </div> --}}
             @endif
          </div>
       </div>

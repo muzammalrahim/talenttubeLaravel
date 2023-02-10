@@ -23,8 +23,13 @@
     @foreach($industry_experienceData as  $industry )
     <div class="IndustrySelect">
               <input type="hidden" name="industry_experience[]" class="industry_experience" value="{{$industry}}"/> 
-              <li ><i class="qualification-circle"></i>
+              <li class="d-flex">
+                <div class="circle-div">
+                  <i class="qualification-circle"></i>
+                </div>
+                <div class="qual-div">
                   {{getIndustryName($industry)}} <i class="fa fa-trash removeIndustry d-none float-right"></i>
+                </div>
               </li>
             </div>
     @endforeach

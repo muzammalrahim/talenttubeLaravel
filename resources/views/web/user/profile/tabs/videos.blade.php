@@ -12,7 +12,7 @@
    </li>
 </ul>
 
-<div class="list_videos row" id="video">
+<div class="list_videos row m-0" id="video">
    {{-- <div id="list_videos_public" class="list_videos_public pointer">
       <div id="photo_add_video" class="item add_photo add_video_public item_video">
          <a class="add_photo" onclick="uploadVideoFunction();">
@@ -25,10 +25,10 @@
 
    @if ($videos->count() > 0 )
         @foreach ($videos as $video)
-            <div id="v_{{$video->id}}" class="item profile_photo_frame item_video col-5 pointer position-relative d-inline-block m-3">
+            <div id="v_{{$video->id}}" class="item profile_photo_frame item_video col-5 pointer position-relative d-inline-block my-3">
                <a class="videoFunction" class="video_link" target="_blank">
-                  <div class="v_title_shadow">
-                     <span class="v_title">{{$video->title}}</span>
+                  <div class="v_title_shadow w-auto">
+                     <span class="v_title w-auto">{{$video->title}}</span>
                   </div>
 
                   <span class="viewVideo" onclick="showVideoModalFunction('{{assetVideo($video)}}', '{{ $video->title }}' )" data-bs-toggle="modal" data-bs-target="#videoShowModal" >View Video</span>

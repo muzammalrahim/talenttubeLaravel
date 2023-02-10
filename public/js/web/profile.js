@@ -408,7 +408,7 @@ $(document).ready(function(){
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type:'GET',
-            url: App_url+'/ajax/removeAttachment/',
+            url: base_url+'/ajax/removeAttachment/',
             data: {attachment_id: attachment_id},
             success: function(data){
                 console.log(' data ', data);

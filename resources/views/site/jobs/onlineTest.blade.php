@@ -7,15 +7,15 @@
 
 	<div class="onlineTestBox">
 		@if ($UserOnlineTest == '')
-			<div class="ja_description"> This job requires you to complete a mandatory online test, in order to be considered for the job. Do you agree to continue ? </div>
+			<h4 class="ja_description"> This job requires you to complete a mandatory online test, in order to be considered for the job. Do you agree to continue ? </h4>
 		@endif
 	    
 
 	    @if ($UserOnlineTest != null)
 			{{-- @dump('hi test') --}}
-			<div class="ja_description">
+			<h4 class="ja_description">
 				We can see you’ve completed this same online test previously. Would you like to use your previous results, or would you like to complete the test again?
-			</div>
+			</h4>
 
 	        <div class="j_button fl_right mx-2"><button class="orange_btn py-0 px-2" type="button" onclick="usePreviousResult({{$job->id}})">Use Previous Result</button></div>
 	        <div class="j_button fl_right"><button class="orange_btn py-0 px-2" onclick="proceedTest()" type="button" data-jobid="{{$job->id}}">Redo Test</button></div>

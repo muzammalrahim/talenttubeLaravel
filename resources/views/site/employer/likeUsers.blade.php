@@ -30,7 +30,7 @@
                </div>
                <div class="row Block-user-wrapper">
                   <div class="col-md-2 user-images">
-                     <div class="block-user-img ">
+                     <div class="block-user-img mx-auto float-none border-0">
                         @php
                         $profile_image  = asset('images/site/icons/nophoto.jpg');
                         $profile_image_gallery    = $js->profileImage()->first();
@@ -43,9 +43,7 @@
                         @endphp
                         <img src="{{$profile_image}}" alt=""><h6 class="py-2 fs-6 text-center">{{$js->recentJob}}</h6>
                      </div>
-                     <div class="block-user-progress ">
-                       
-                     </div>
+                     
                   </div>
                   <div class="col-md-10 user-details">
                      <div class="row blocked-user-about mt-2">

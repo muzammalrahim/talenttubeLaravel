@@ -42,20 +42,23 @@
                         <h4 class="text-white">{{$job->title}}</h4>
                         <p class="text-light m-0"><b>Location:</b> {{$job->city}},  {{$job->state}}, {{$job->country}}</p>
                     </div>
+
                     <div class="row Block-user-wrapper">
                         <div class="col-md-2 user-images">
-                            <div class="block-user-img ">
+                            <div class="block-user-img mx-auto float-none border-0">
                                 @php
                                 $user_gallery  =  $job->jobEmployerLogo;
                                 $profile_image =  !empty($user_gallery)?(assetGallery2($user_gallery,'small')):(asset('images/site/icons/nophoto.jpg'));
                                 @endphp
                                 <img src="{{$profile_image}}" alt="">
                             </div>
-                            <div class="block-user-progress ">
+                            {{-- <div class="block-user-progress ">
                                 <h6>{{ $job->jobEmployer->name.' '.$job->jobEmployer->surname }}</h6>
                                 <div class="progress-img"> <img src="assests/images/user-progressbar.svg" alt=""></div>
-                            </div>
+                            </div> --}}
                         </div>
+
+                        
                         <div class="col-md-10 user-details">
                             <div class="row blocked-user-about mt-2">
                                 <h6 class="p-0">Job Type:</h6>
@@ -92,6 +95,8 @@
                             </div>
                         </div>
                     </div>
+
+
                     @php
                     $user = Auth::user();
                     @endphp

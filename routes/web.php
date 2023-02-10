@@ -21,7 +21,7 @@ Route::get('testEmail', function () {
 
     $data = ['message' => 'This is a test!'];
 
-    dd(Mail::to('hassaansaeed1@gmail.com')->send(new TestEmail($data)));
+    dd(Mail::to('creativedev45@gmail.com')->send(new TestEmail($data)));
 });
 
 // Route::get('testEmail1','Site\ReferenceController@testEmail1')->name('testEmail1');

@@ -40,6 +40,13 @@
 @include('web.modals.show_video')
 {{-- @include('web.modals.testVideoShowModal') --}}
 
+<div class="d-none">
+  <form method="POST" class="bulkPDFExportForm" action="{{route('empBulk.GeneratePDF')}}">
+    @csrf
+    <div class="cbx_list">
+    </div>
+  </form>
+</div>
 
 @stop
 

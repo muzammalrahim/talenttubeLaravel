@@ -56,8 +56,8 @@
       if (e.target.id != 'newTag' && $(e.target).parents('#newTag').length == 0) {
          jQuery('.tagSuggestionCont').hide(); 
       }else{
-         console.log(' 2 focusin out '); 
-         jQuery('.tagSuggestionCont').show();
+         console.log(' 2 focusin out ');
+         // jQuery('.tagSuggestionCont').show();
       }
     });
 

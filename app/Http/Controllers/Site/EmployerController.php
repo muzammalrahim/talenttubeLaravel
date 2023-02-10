@@ -1238,14 +1238,30 @@ class EmployerController extends Controller {
         }
         else
         {
-            $UserInterviewCheck = UserInterview::where('temp_id' , $data['temp_id'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
-            // if (!$UserInterviewCheck) {
+
+            $rules = array(
+            'answer*' => 'required|max:255',
+            'answer.*.img' => 'mimetypes:video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi', );
+            $validator = Validator::make( $data , $rules);
+            if ($validator->fails()){
+                return response()->json([
+                    'message' => 'Please upload a valid video format i.e video/x-ms-asf,video/x-flv,video/mp4,application/x-mpegURL,video/MP2T,video/3gpp,video/quicktime,video/x-msvideo,video/x-ms-wmv,video/avi'
+                    // 'status' => 0,
+                    // 'validator' =>  $validator->getMessageBag()->toArray()
+                ]);
+            }
+            else{
+
+                DB::beginTransaction();
+                $UserInterviewCheck = UserInterview::where('temp_id' , $data['temp_id'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
+                // if (!$UserInterviewCheck) {
                 $UserInterview = new UserInterview;
                 $UserInterview->temp_id = $data['temp_id'];
                 $UserInterview->emp_id   = $user->id;
                 $UserInterview->user_id   = $data['user_id'];
                 $UserInterview->status   = 'Interview Confirmed';
                 $UserInterview->hide   = 'no';
+                $UserInterview->interview_type = 'Live Interview';
 
                 $UserInterview->url   = generateRandomString();
                 $UserInterview->save();
@@ -1258,19 +1274,41 @@ class EmployerController extends Controller {
 
                 foreach ($data['answer'] as $key => $value) {
 
-                    $answers = new UserInterviewAnswers;
-                    $answers->emp_id = $user->id;
-                    $answers->userInterview_id  = $UserInterview->id;
-                    $answers->user_id  = $data['user_id'];
-                    $answers->question_id = $key;
-                    $answers->answer = $value;
-                    $answers->save();
-                }
+                    if (isset($value['img'])) {
+                        // dd(' img hai ');
+                        $answers = new UserInterviewAnswers;
+                        $video = $value['img'];
+                        $fileOriginalName = $video->getClientOriginalName();
+                        $fileName = $fileOriginalName;
+                        $storeStatus = Storage::disk('publicMedia')->put( 'interview_bookings/' .$data['user_id']. '/User_interview_id('.$UserInterview->id.')' . '/question_id('.$key.')' . '/video_response/' .  $fileName, 
+                            file_get_contents($video));
+                        $video_response_path = $data['user_id'] . '/User_interview_id('.$UserInterview->id.')' .
+                         '/question_id('.$key.')' . '/video_response/' .  $fileName;
+                        $answers->answer = $video_response_path;
+                        $answers->emp_id = $user->id;
+                        $answers->userInterview_id  = $UserInterview->id;
+                        $answers->user_id  = $data['user_id'];
+                        $answers->question_id = $key;
+                        $answers->save();
 
+                    }else{
+
+                        $answers = new UserInterviewAnswers;
+                        $answers->emp_id = $user->id;
+                        $answers->userInterview_id  = $UserInterview->id;
+                        $answers->user_id  = $data['user_id'];
+                        $answers->question_id = $key;
+                        $answers->answer = $value;
+                        $answers->save();
+                    }
+                }
+                DB::commit();
+                return back();
                 return response()->json([
                     'status' => 1,
                     'message' => 'Reponse added successfully'
                 ]);
+            }
             /*}
 
             else{

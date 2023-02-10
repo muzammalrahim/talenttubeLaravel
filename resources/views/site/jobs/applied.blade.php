@@ -84,11 +84,15 @@
 
                                 <div class="text-info-detail clearfix">
                                     <label>Salary Range:</label>
-                                    <span>{{$job->salary}}</span>
+                                    <span> {{number_format($job->salary)}} </span>
                                 </div>
                                 <div class="text-info-detail clearfix">
                                     <label>Submitted:</label>
-                                    <span>{{$application->created_at->format('d-m-Y')}}</span>
+                                    <span>{{$application->created_at->format('d-M-Y')}}</span>
+                                </div>
+                                <div class="text-info-detail clearfix">
+                                    <label>Employer:</label>
+                                    <span>{{$application->job->jobEmployer->company}}</span>
                                 </div>
                                 <div class="text-info-detail clearfix">
                                     <label>Job Details:</label>
