@@ -5,17 +5,33 @@
     @include('site.user.jobseekerInfoTabs.notesText')
 
 
-    <form method="POST" name="crossReference" class="crossReference newJob job_validation">
+    <form method="POST" name="notesFrom" action="{{ route('saveNote') }}" class="notesFrom newJob job_validation" enctype="multipart/form-data">
         @csrf
-        <textarea id="notes" name="notes" rows="4" cols="50"> </textarea >
-        <p class="errorsInFields text-danger"></p>
-        <div class="fomr_btn act_field">
-               <button class="btn small leftMargin turquoise saveNote">Save Note</button>
+
+        <div class="form-group">
+            <label for="notes">Note</label>
+            <textarea id="notes" name="notes" class="form-control" required="required" rows="4" cols="50"></textarea >
         </div>
 
-        <input type="hidden" name="js_id" value="{{ $jobSeeker->id }}">
+        <div class="row">
+            <label class=""> Attachment</label>
+            <div>   
+                <input type="checkbox" name="attachment" class="filecheckbox" onchange="showNotesFileInput()">
+            </div>
+        </div>
 
-        {{-- @dump($jobSeeker->id) --}}
+        <div class="file-chooser clearfix">
+            <br>
+            {{-- <input type="file" name="notesfile" id="notes-file" class="d-none" accept=".pdf,.doc,.docx" class="mb-2"> --}}
+        </div>
+
+        <p class="errorsInFields text-danger"></p>
+
+        <input type="hidden" name="js_id" value="{{ $jobSeeker->id }}">
+        <div class="fomr_btn act_field">
+               <button class="orange_btn">Save Note</button>
+        </div>
+
     </form>
 </div>
 
@@ -51,13 +67,37 @@
             </div>
             <div class="double_btn">
                 <button class="confirm_close btn small dgrey" onclick="UProfile.cancelGalleryConfirm(); return false;">Cancel</button>
-                <button class="confirm_jobAppDelete_ok confirm_btn btn small marsh">OK</button>
+                <button class="confirm_Note_delete confirm_btn btn small marsh">OK</button>
                 <input type="hidden" name="deleteConfirmJobAppId" id="deleteConfirmJobAppId" value=""/>
                 <div class="cl"></div>
             </div>
         </div>
     </div>
 </div>
+</div>
+
+<div class="modal fade px-3 px-md-0" id="deleteNote" role="dialog">
+    <div class="modal-dialog delete-applications">
+    
+      <!-- Modal content-->
+      <div class="modal-content border-0">
+        <div class="modal-header">
+          <i data-dismiss="modal" class="close-box fa fa-times"></i><i ></i>                      
+          <h1 class="modal-title w-100"><i class="fas fa-trash trash-icon"></i>Delete Note</h1>
+        </div>
+        <div class="modal-body">
+          <strong>Are you sure you wish to continue?</strong>
+        </div>
+
+        <input type="hidden" name="deleteNoteId" id="deleteNoteId" value=""/>
+
+        <div class="dual-footer-btn mx-3 mx-md-0">
+          <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button>
+          <button type="button" class="orange_btn float-none confirm_Note_delete"  data-dismiss="modal"><i class="fa fa-check"></i>OK</button>
+        </div>
+      </div>
+      
+    </div>
 </div>
 
 
@@ -73,8 +113,12 @@ $(document).ready(function() {
     // Save new notes 
     $('.saveNote').on('click',function() {
     event.preventDefault();
-    var formData = $('.crossReference').serializeArray();
-    console.log(formData);
+    
+    var formData = new FormData(this);
+    var SerializeformData = $('.notesFrom').serializeArray();
+    formData.append("file", $("#notes-file")[0].files[0]);
+    formData.append("notes", SerializeformData);
+    // console.log(formData);
     // return;
 
     $('.saveNote').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
@@ -82,10 +126,18 @@ $(document).ready(function() {
     // return;
 
     $('.general_error1').html('');
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
     $.ajax({
         type: 'POST',
         url: base_url+'/ajax/saveNote',
         data: formData,
+        contentType: false,
+        processData: false,
+
         success: function(response){
             // console.log(' data ', data);
             $('.saveNote').html('Save Note').prop('disabled',false);
@@ -117,20 +169,12 @@ $(document).ready(function() {
     $('.tab_notes').on('click','.noteRemoval',function(){
         var note_id = $(this).attr('data-noteid');
         console.log(' noteRemoval click  note_id ', note_id, $(this) );
-        $('.modal.cmodal').removeClass('showLoader').removeClass('showMessage');
-        $('.confirm_close').show();
-        $('#confirmNoteRemoval').modal({
-            fadeDuration: 200,
-            fadeDelay: 2.5,
-            escapeClose: false,
-            clickClose: false,
-        });
-        $('#deleteConfirmJobAppId').val(note_id);
+        $('#deleteNoteId').val(note_id);
     });
 
-    $(document).on('click','.confirm_jobAppDelete_ok',function(){
+    $(document).on('click','.confirm_Note_delete',function(){
         $('.confirmNoteRemoval').addClass('showLoader');
-        var note_id_del = $('#deleteConfirmJobAppId').val();
+        var note_id_del = $('#deleteNoteId').val();
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
         $.ajax({
             type: 'POST',
@@ -148,6 +192,19 @@ $(document).ready(function() {
         });
 
     });
+
+
+    this.showNotesFileInput = function(){
+        var val = $('.filecheckbox').prop('checked');
+        if (val) {
+            $('.file-chooser').html('<input type="file" name="notesfile" id="notes-file" required class="" accept=".pdf,.doc,.docx" class="mb-2">')
+            // $('#notes-file').removeClass('d-none');
+        }else{
+            $('.file-chooser').html('')
+
+            // $('#notes-file').addClass('d-none');
+        }
+    }
 
 });
 

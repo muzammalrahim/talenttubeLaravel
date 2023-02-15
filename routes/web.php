@@ -21,7 +21,7 @@ Route::get('testEmail', function () {
 
     $data = ['message' => 'This is a test!'];
 
-    dd(Mail::to('creativedev45@gmail.com')->send(new TestEmail($data)));
+    dd(Mail::to('hassaansaeed1@gmail.com')->send(new TestEmail($data)));
 });
 
 // Route::get('testEmail1','Site\ReferenceController@testEmail1')->name('testEmail1');
@@ -485,6 +485,8 @@ Route::group(array('middleware' => ['auth']), function(){
     Route::post('ajax/updatePhone', 'Site\SiteUserController@updatePhone');
     Route::post('ajax/updatePassword', 'Site\SiteUserController@updatePassword');
     Route::post('ajax/deleteuser', 'Site\SiteUserController@deleteuser');
+
+    Route::post('ajax/emailnotification', 'Site\SiteUserController@emailnotification');
     // Added by Hassan
     Route::get('ajax/getUserPersonalInfo', 'Site\SiteUserController@getUserPersonalInfo');
     Route::post('ajax/uploadUserGallery', 'Site\SiteUserController@uploadUserGallery');

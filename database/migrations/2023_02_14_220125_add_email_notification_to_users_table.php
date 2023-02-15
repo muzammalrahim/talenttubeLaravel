@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddFileSystemInNotesTable extends Migration
+class AddEmailNotificationToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,8 @@ class AddFileSystemInNotesTable extends Migration
      */
     public function up()
     {
-        Schema::table('notes', function (Blueprint $table) {
-            $table->string('file')->after('user_id')->default('0')->nullable();
-            $table->string('file_path')->after('file')->nullable();
+        Schema::table('users', function (Blueprint $table) {
+            $table->boolean('email_notification')->after('tracker')->default(1);
         });
     }
 
@@ -26,8 +25,8 @@ class AddFileSystemInNotesTable extends Migration
      */
     public function down()
     {
-        Schema::table('notes', function (Blueprint $table) {
-            $table->dropColumn(['file','file_path']);
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('email_notification');
         });
     }
 }

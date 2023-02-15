@@ -192,7 +192,17 @@
                      </div>
                      <div class="row blocked-user-about mt-2">
                         <h6 class="p-0">Qualifications:</h6>
-                        <p><span><b>Type:</b></span> <span class="text-capitalize"> {{$js->qualificationType}}</span> </p>
+
+                        @php 
+                           $jsQualification = ''; 
+                           if ($js->qualificationType == "post_degree") {
+                              $jsQualification = 'post graduate degree';
+                           }else{
+                              $jsQualification = $js->qualificationType;
+                           }
+                        @endphp
+                        
+                        <p><span><b>Type:</b></span> <span class="text-capitalize spanStyleofP"> {{remove_underscode($jsQualification)}}</span> </p>
                         @php
                         $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
                         @endphp
@@ -317,7 +327,7 @@
 													@if ($controlsession->count() > 0 || isAdmin())
 													<!-- =============================================== Tab History =============================================== -->
 													
-													<div class="tab-pane fade history-tab" id="history"  role="tabpanel" aria-labelledby="history-tab">
+													<div class="tab-pane fade history-tab pt-4" id="history"  role="tabpanel" aria-labelledby="history-tab">
 																<h2>History</h2>
 																<div class="tab_photos tab_cont">
 																			@include('site.user.jobseekerInfoTabs.history')  {{-- site/user/jobseekerInfoTabs/questions --}}
@@ -335,9 +345,9 @@
 																@include('site.user.jobseekerInfoTabs.addNotes')
 													</div> --}}
 
-													<div class="tab-pane fade notes-tab" id="notes"  role="tabpanel" aria-labelledby="notes-tab">
+													<div class="tab-pane fade notes-tab pt-4" id="notes"  role="tabpanel" aria-labelledby="notes-tab">
 																<h2>Notes</h2>
-																<div class="tab_photos tab_cont">
+																<div class="tab_notes tab_cont">
 																			@include('site.user.jobseekerInfoTabs.addNotes')  {{-- site/user/jobseekerInfoTabs/questions --}}
 																</div>
 													</div>
@@ -348,7 +358,7 @@
 																@include('site.user.jobseekerInfoTabs.jobApplications') 
 													</div> --}}
 
-													<div class="tab-pane fade jobs-tab" id="jobs"  role="tabpanel" aria-labelledby="jobs-tab">
+													<div class="tab-pane fade jobs-tab pt-4" id="jobs"  role="tabpanel" aria-labelledby="jobs-tab">
 																<h2>Jobs</h2>
 																<div class="tab_photos tab_cont">
 																			@include('site.user.jobseekerInfoTabs.jobApplications')  {{-- site/user/jobseekerInfoTabs/questions --}}
@@ -423,6 +433,13 @@
       .sidebaricontoggle {
          top: 5rem !important;
       }
+   }
+
+   .spanStyleofP{
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      color: #9c9ea0!important;
    }
 </style>
 
