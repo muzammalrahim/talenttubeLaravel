@@ -91,8 +91,21 @@
                 <strong>Success!</strong> Password has been updated successfully!
             </div>
 
-            {{-- =================================================== Password  ============================================== --}}
+            {{-- =================================================== Turn off all the email notification  ============================================== --}}
 
+            <div class="sectionUpdateProfile"><b>Turn off Email Notificaiton</b></div>
+            <div class="form-group row">
+                {{ Form::label('Turn of Email Notification', null, ['class' => 'col-md-3 form-control-label']) }}
+                <div class="col-md-9">
+                    
+                  {{-- <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked> --}}
+
+                  <label class="switch">
+                    <input type="checkbox" class="default" id="turnOffEmailNotification" {{ $user->email_notification == 1 ? 'checked':'' }} onchange="turnOffEmailNotification()">
+                        <span class="slider"></span>
+                    </label>
+                </div>
+            </div>
 
 	        {{-- ================================================= Delete Account =========================================== --}}
 
@@ -258,7 +271,67 @@
 p.emailValidatorErrorText,p.PhoneValidatorErrorText {
     margin: 0px;
 }
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+/*  float:right;*/
+}
 
+/* Hide default HTML checkbox */
+.switch input {display:none;}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+      border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+      border-radius: 20px;
+}
+
+input.default:checked + .slider {
+  background-color: #f48128;
+}
+
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
 </style>
 {{-- <link rel="stylesheet" href="{{ asset('css/site/gallery_popup/lc_lightbox.css') }}"> --}}
 {{-- <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}"> --}}
@@ -436,9 +509,33 @@ p.emailValidatorErrorText,p.PhoneValidatorErrorText {
                     }
                 }
             });
-
-            // });
         }
+
+
+        this.turnOffEmailNotification = function(){
+            var val = $('#turnOffEmailNotification').prop('checked');
+            let notification=1;
+            if (val) {
+                notification = 1
+            }else{
+                notification = 0;
+            }
+            $.ajaxSetup({ headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') } });
+            $.ajax({
+                type: 'POST',
+                url: base_url+'/ajax/emailnotification',
+                data: {'notification': notification},
+                success: function(resp){
+                    if(resp.status == 1){
+                        alert(resp.message);
+                    }
+                    else{
+
+                    }
+                }
+            });
+        }
+
 
     });
 

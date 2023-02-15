@@ -57,6 +57,10 @@ class UserController extends Controller
     }
 
     public function verifiedUsers() {
+
+        // dd( humanReadableDateTime('datetime:d-M-Y'));
+        // dd( date("h:i:sa") );
+
         $data['title'] = 'Job Seekers';
         $data['content_header'] = 'Job Seekers';
         $data['filter_status'] = 'verified';
@@ -606,21 +610,13 @@ class UserController extends Controller
             'state' => 'max:50',
             'city' => 'max:50',
             'age' => 'max:15',
-            // 'bday' => 'max:2',
-            // 'bmonth' => 'max:2',
-            // 'byear' => 'max:4',
-            // 'statusText' => 'max:125',
             'gender' => 'max:25',
-            // 'eye' => 'max:15',
             'family' => 'max:15',
-            // 'educaion' => 'max:15',
             'language' => 'max:15',
             'hobbies' => 'max:15',
             'about_me' => 'max:500',
             'interested_in' => 'max:250',
             'userquestion' => 'max:250',
-            'created_at' => 'max:250',
-            'updated_at' => 'max:250',
             'credit' => 'max:250',
         ]);
         $user->name = $request->name;
@@ -629,27 +625,15 @@ class UserController extends Controller
         $user->country = $request->country;
         $user->state = $request->state;
         $user->city = $request->city;
-        // $user->age = $request->age;
-        // $user->bday = $request->bday;
-        // $user->bmonth = $request->bmonth;
-        // $user->byear = $request->byear;
-        // $user->statusText = $request->statusText;
-        // $user->gender = $request->gender;
-        // $user->eye = $request->eye;
         $user->family = $request->family;
         $user->language = $request->language;
-        // $user->hobbies = $request->hobbies;
         $user->about_me = $request->about_me;
         $user->interested_in = $request->interested_in;
         if(!empty($request->password)){
             $user->password = Hash::make($request->password);
         }
 
-         // dd(  $request->toArray() );
-
         $user->questions = json_encode($request->questions);
-        $user->created_at = $request->created_at;
-        $user->updated_at = $request->updated_at;
         $user->credit = $request->credit;
         $user->qualification = $request->qualification;
         $user->industry_experience = $request->industry_experience;
@@ -1523,7 +1507,12 @@ class UserController extends Controller
                     $rview .= '<h4><i class = "fas fa-times adminNote">  </i></h4>';
                     $rview .= '<p class = "noteText mt-3"> '.$notes->text.' </p>';
                     $rview .= '</div>';
-                    $rview .= '<span class = "newNote d-none" ><input type = "text" note_id = "'.$notes->id.'" user_id = '.$records->id.' class = "form-control newNoteInput"></span';
+                    $rview .= '<span class = "newNote d-none" ><input type = "text" note_id = "'.$notes->id.'" user_id = '.$records->id.' class = "form-control newNoteInput"></span>';
+                    $rview .= '<div class ="attach_btn12121">';
+                    if ($notes->file != "0") {
+                        $rview .= '<a class="" href="'.asset('media/public'.$notes->file_path).'"><i class="fas fa-download"></i> '.$notes->file.' </a>';
+                    }
+                    $rview .= '</div>';
 
                     return $rview;
                 }

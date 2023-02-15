@@ -1035,6 +1035,23 @@ class SiteUserController extends Controller
       }
     }
 
+
+
+    public function emailnotification(Request $request){
+        $user = Auth::user();
+        if ($request->notification == 1) {
+            $user->email_notification = 1;
+        }else{
+            $user->email_notification = 0;
+        }
+        $user->save();
+
+        return response()->json([
+            'status' => '1',
+            'message' => 'Email notification status updated succesfully'
+        ]);
+    }
+
     // =================================================== Delete User Function End Here ================================================
 
 
@@ -2495,8 +2512,9 @@ class SiteUserController extends Controller
     public function saveNote(Request $request){
         $user = Auth::user();
         $data = $request->all();
-        // dd($data);   
+        // dd($data);
         $rules = array( "notes" => "required" );
+        // $rules = array('resume.*' => 'required|file|mimes:ppt,pptx,doc,docx,pdf,xls,xlsx|max:204800');
         $validator = Validator::make( $data , $rules);
         if ($validator->fails()){
             return response()->json([
@@ -2506,8 +2524,45 @@ class SiteUserController extends Controller
         }
 
         else{
-            
+
             $notes = new Notes;
+            if (isset($data['attachment'])) {
+                // dd('attachment on');
+                $notesfile = $request->file('notesfile');
+                $fileName = $notesfile->getClientOriginalName();
+                $storeStatus = Storage::disk('publicMedia')->put('/notes/'.$data['js_id'].'/'.$fileName, file_get_contents($notesfile));
+                $path = '/notes/'.$data['js_id'].'/'.$fileName;
+
+                if ($storeStatus) {
+                    $attachment = new Attachment();
+                    $attachment->user_id =   $user->id;
+                    $attachment->status = 1;
+                    $attachment->name = $fileName;
+                    $attachment->type = $notesfile->getClientOriginalExtension();
+                    $attachment->file = 'notes/'.$data['js_id'] .'/'. $fileName;
+                    $attachment->save();
+
+                    $notes->file = $fileName;
+                    $notes->file_path = $path;
+
+                    // $user->save();
+
+                    // $userAttachments = Attachment::where('user_id', $user->id)->get();
+
+                    /*$output = array(
+                        'status' => '1',
+                        'message' => 'Resume successfully uploaded',
+                        'file' => asset('images/user/' . $user->id . '/notes/' . $fileName),
+                        'attachments' => $userAttachments,
+
+                    );
+                    return response()->json($output);*/
+                }
+            }
+
+            // dd('here');
+            
+            // $notes = new Notes;
             $notes->user_id = $user->id;
             $notes->js_id = $data['js_id'];
             $notes->admin_id = 1;
@@ -2521,7 +2576,7 @@ class SiteUserController extends Controller
             // $data['user'] = User::find($user->id);
             $noteView = view('site.user.jobseekerInfoTabs.notesText', $data);
             $noteHtml = $noteView->render();
-
+            return redirect('jobSeekerInfo/'.$data['js_id']);
             return response()->json([
                 'status' => 1,
                 'data' => 'Note Addedd Successfully',
@@ -2537,8 +2592,8 @@ class SiteUserController extends Controller
     public function deleteNote($noteId){
         // dd($noteId);
         $user = Auth::user();
-        $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
-        if ($controlsession->count() > 0) {
+        // $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+        // if ($controlsession->count() > 0) {
             $note = Notes::find($noteId);
             if($note == null){
                 return response()->json([
@@ -2547,26 +2602,36 @@ class SiteUserController extends Controller
                 ]);
             }
 
-            if( $note->user_id != $user->id ){
+            if (isAdmin()) {
+                $note->delete();
                 return response()->json([
-                    'status' => 0,
-                    'error' => 'You can not removed this note'
+                    'status' => 1,
+                    'message' => 'Note succesfully deleted'
+                ]);
+
+            }
+            else{
+                if( $note->user_id != $user->id ){
+                    return response()->json([
+                        'status' => 0,
+                        'error' => 'You can not removed this note'
+                    ]);
+                }
+
+                $note->delete();
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Note succesfully deleted'
                 ]);
             }
-
-            $note->delete();
-            return response()->json([
-                'status' => 1,
-                'message' => 'Note succesfully deleted'
-            ]);
             
-        }
-        else{
-            return response()->json([
-                'status' => 0,
-                'message' => 'Error occured '
-            ]);
-        }
+        // }
+        // else{
+        //     return response()->json([
+        //         'status' => 0,
+        //         'message' => 'Error occured '
+        //     ]);
+        // }
     }
 
 

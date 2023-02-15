@@ -675,7 +675,9 @@ function remove_spaces($string) {
 }
 
 function remove_underscode($string) {
-    return  str_replace('_', ' ', $string);
+    $string = str_replace('_', ' ', $string);
+    $string = ucfirst($string); 
+    return $string;
 }
 
 
