@@ -48,6 +48,15 @@
   </form>
 </div>
 
+
+<div class="d-none">
+  <form method="POST" class="bulkPDFPremiumExportForm" action="{{route('empBulk.GeneratePremiumPDF')}}">
+    @csrf
+    <div class="cbx_list">
+    </div>
+  </form>
+</div>
+
 @stop
 
 
@@ -638,18 +647,29 @@
    });
 
 
-   $(document).on('click', '.js_video_link', function(){
+    $(document).on('click', '.js_video_link', function(){
         setTimeout(function(){
-            // $('#player').removeClass('w-100');
-
-
         },1000);
-        
         $('div#videoShowModal').css({'width':'-webkit-fill-available', 'max-width': 'unset'});
-        // $('#player').css('height', '50vh');
-   });
+    });
 
- 
+    $(document).on('click','.btnBulkPDFGeneratePremium',function(){
+        var cbx = $('input[name="cbx[]"]:checked').map(function(){
+            return $(this).val();
+        }).toArray();
+        if (cbx.length <1) {
+            alert('Please select checkboxes');
+        }else{
+            var cbx_hidden = '';
+            $.each(cbx,function(key,value){
+                cbx_hidden += '<input type="hidden" name="cbx[]" value="'+value+'"/>'
+            });
+
+            // console.log(cbx_hidden);return;
+            $('.bulkPDFPremiumExportForm .cbx_list').html(cbx_hidden);
+            $('.bulkPDFPremiumExportForm').submit();
+        }
+    })
    
    
 </script>
@@ -658,17 +678,6 @@
 <link rel="stylesheet" href="{{ asset('css/site/profile.css') }}">
 
 <style type="text/css">
-
-    /*html {
-    overflow-x: hidden;
-    overflow-y: hidden;
-
-    }
-
-    body { 
-        overflow-x: hidden;
-        overflow-y: hidden;
-    }*/
 
     @media only screen and (max-width: 479px){
       .sidebaricontoggle {

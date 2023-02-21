@@ -19,9 +19,23 @@ a.contactBtn {
     font-size: 12px;
     text-decoration: none;
     display: inline-block;
-    display: block;
+    display:block;
     margin: 0 auto;
-    width: 80px;
+    width: 70px;
+}
+
+a.cvBtn {
+    background: #384171;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 4px;
+    border: 0px;
+    font-size: 12px;
+    text-decoration: none;
+    display: inline-block;
+    display:block;
+    margin: 0 auto;
+    width: 30px;
 }
 .name_title {
     font-size: 18px;
@@ -65,18 +79,21 @@ td.center.left_info {
   <tr class="updf_row">
     <td width="20%" class="center left_info">
     	<div class="updf_thumb">
-            <img src="{{asset('images/site/icons/nophoto.jpg')}}">
-    		  {{-- @if($user->profileImage)
-					<img src="{{assetGallery2($user->profileImage,'small')}}">
-				@else
-					<img src="{{asset('images/site/icons/nophoto.jpg')}}">
-				@endif --}}
-			</div>
-			<a class="contactBtn" target="_blank" href="{{route('publicuservideo',['id' => $user->id])}}">Watch Video</a>
-		</td>
+    		@if($user->profileImage)
+				<img src="{{assetGallery2($user->profileImage,'small')}}">
+			@else
+				<img src="{{asset('images/site/icons/nophoto.jpg')}}">
+			@endif
+		</div>
+            
+
+		<a class="contactBtn" target="_blank" href="{{route('publicuservideo',['id' => $user->id])}}">Watch Video</a>
+        <a href="{{asset('images/user/'.$user->attachments->file)}}" target="”_blank”" download="" class="cvBtn">CV</a>
+            
+	</td>
 
     <td width="80%" class="updf_detai">
-    		<div class="name_title">{{$user->username}}</div>
+    		<div class="name_title">{{$user->name}} {{$user->surname}}</div>
     		<div class="updf_recent_job">{{$user->recentJob}} at {{$user->organHeldTitle}} </div>
     		<div class="updf_intrested"><span class="label">Interested In:</span> {{$user->interested_in}}</div>
     		<div class="updf_salary_exp"><span class="label">Salary Expectation:</span> {{getSalariesRangeLavel($user->salaryRange)}}</div>

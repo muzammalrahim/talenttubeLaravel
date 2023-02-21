@@ -42,7 +42,8 @@ use PhpOffice\PhpWord\IOFactory;
 use NcJoes\OfficeConverter\OfficeConverter;
 
 // use smalot\pdfparser\src\Smalot\PdfParser;
-
+use FFMpeg;
+use FFMpeg\Format\Audio\Mp3;
 use Session;
 
 
@@ -1743,7 +1744,23 @@ class SiteUserController extends Controller
             $video->user_id = $user->id;
             $video->status = 2;
             // $video->file =  $user->id . '/private/videos/' . $fileName;
-            $video->file = $user->id.'/videos/'.$fileName;
+            $video->file = $user->id.'/videos/'.$fileName; 
+            /*$path_var = 'images/user/'.$user->id.'/private/videos/'.$fileName;
+            
+            $path = public_path($path_var);
+            $video_path = asset($path_var);
+            $ffmpeg = FFMpeg::create();
+            $video_converted = $ffmpeg->open($video_path);
+            $audioFormat = new Mp3();
+            $audioFormat->setAudioBitrate(160);
+            $audio = $video_converted->audio($audioFormat);
+            $storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/audio/' . $fileName, file_get_contents($audio));
+            $audio->save('images/user/'.$user->id.'/private/videos/audio');
+
+            dump($video_path);
+            dd($path);*/
+
+
             $video->save();
 
             $history = new History;

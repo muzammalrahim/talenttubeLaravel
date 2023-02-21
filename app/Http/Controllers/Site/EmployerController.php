@@ -1104,23 +1104,8 @@ class EmployerController extends Controller {
         $data =  $request->toArray();
         // dd($data);
         $user = Auth::user();
-
-        // $rules = array(
-        //         'employers_instruction' => 'required|max:150',
-        //     );
-
-        // $validator = Validator::make($data, $rules);
-        // if ($validator->fails()){
-        //     return response()->json([
-        //         'status' => 0,
-        //         'validator' => $validator->getMessageBag()->toArray()
-        //     ]);
-        // }
-
-
         $empName = $user->company;
 
-        // dd($empName);
         if (!isEmployer($user) && !isAdmin()){ return redirect(route('profile')); }
             $UserInterviewCheck = UserInterview::where('temp_id' , $data['inttTempId'])->where('user_id' , $data['user_id'])->where('emp_id' , $user->id)->first();
             if(!$UserInterviewCheck){
@@ -1131,7 +1116,6 @@ class EmployerController extends Controller {
                 $UserInterview->status   = 'pending';
                 $UserInterview->hide   = 'no';
                 $UserInterview->url   = generateRandomString();
-                // $UserInterview->employers_instruction = my_sanitize_string($data['employers_instruction']);
 
                 if (isAdmin($user)) {
                     $UserInterview->interview_type = 'Correspondance';
@@ -1142,11 +1126,12 @@ class EmployerController extends Controller {
                 $history->type = 'interview_sent';
                 $history->userinterview_id = $UserInterview->id;
                 $history->save();
-
-
                 $jsEmail = $UserInterview->js->email;
 
-                Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));
+                if ($UserInterview->js->email_notification == 1) {
+                    Mail::to($jsEmail)->send(new conductInterviewEmail($empName, $UserInterview->url));
+                }
+
                 return response()->json([
                     'status' => 1,
                     'message' => 'Interview conducted and Email sent to jobseeker successfully',
@@ -1357,6 +1342,34 @@ class EmployerController extends Controller {
           $pdf->setPaper('A4');
           return $pdf->download('JobSeekers.pdf');
           // admin/pdf/bulkJobSeeker
+        }
+      }
+    }
+
+    //====================================================================================================================================//
+    // Premium PDF Generation
+    //====================================================================================================================================//
+
+
+    public function empGeneratePremiumPDF(Request $request){
+      // dd($request->cbx);
+      if(!empty($request->cbx)){
+        $data['title'] = 'Generate PDF';
+        $users = User::whereIn('id', $request->cbx)->with('attachments')->get();
+        // dd($users);
+        $data['users'] = $users;
+        if($request->test){
+            return view('admin.pdf.premium-pdf-jobseekers', $data);
+        }else{
+
+            /*$pdf = \App::make('dompdf.wrapper');
+            $pdf->loadView('admin.pdf.premium-pdf-jobseekers', $data);
+            return $pdf->stream();*/
+
+            $pdf = PDF::loadView('admin.pdf.premium-pdf-jobseekers', $data);
+            $pdf->setPaper('A4');
+            return $pdf->download('JobSeekers.pdf');
+            // admin/pdf/premium-pdf-jobseekers
         }
       }
     }

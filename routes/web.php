@@ -640,6 +640,8 @@ Route::group(array('middleware' => ['auth']), function(){
     Route::post('ajax/use-previous-result', 'Site\SiteUserController@userPreviousResult')->name('userPreviousResult');
     Route::post('employer/bulk/generatePDF', 'Site\EmployerController@empGeneratePDF')->name('empBulk.GeneratePDF');
 
+    Route::post('employer/bulk/generate/premiumPDF', 'Site\EmployerController@empGeneratePremiumPDF')->name('empBulk.GeneratePremiumPDF');
+
     // ================================================ itertaion-11 Talent Matcher ================================================
 
     Route::get('talent-matcher', 'Site\TalentController@talent_matcher')->name('talent_matcher');

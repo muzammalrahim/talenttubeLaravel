@@ -46,81 +46,52 @@
 
 	<p class=""><b>What about Privacy?</b></p>
 	<p>
-		Our recommendation is for you to avoid adding any personal information on your application/profile, that you wouldn’t feel comfortable with the public viewing online. Think of your Talent Tube profile like your Linkedin profile, it’s there for the world to see, and there’s no need to put anything on there that needs to be private. For this reason, we recommend the following precautions for Job Seekers, but it’s totally up to you if you wish to share this info with the world:<br><br>
+		Talent Tube is the name of our inhouse candidate database, designed to help connect our professionals with quality employers in our network. 
+		Unlike many traditional recruitment agency databases, Talent Tube seeks to add a Social Media spin to the process, allowing for a 3-dimentional interactive platform to help show case our professionals. The purpose is to increase your prospects of making a memorable impression on a prospective employer, to help land your next dream job.  
+		We can showcase both full profiles and limited profiles to our Employers, to help generate interest in your experience & suitability for potential roles
 
-		1.	Remove your full name and address from your resume <br>
-		2.	Don’t mention your full name in your video interview (I guess first name is ok, but up to you)<br>
-		3.	We will never ask for your address, so please don’t share with anyone on this platform <br>
-		4.	Never EVER upload any ID documentation onto our system, or respond with any payment/credit card/Paypal details to anyone on this platform. We will never ask you for payment or ID, and we have no idea why a potential employer would need these details via the Talent Tube system, so NEVER share it..<br><br>
-
-		Paid Employers will have access to the full name, resume & the contact details you submit as part of your initial application. You could potentially put a fake name (we don’t mind too much), but if you don’t put any correct contact details, it will be impossible for anyone to contact you. If you’re not prepared to share a contact number and email address, this probably isn’t the right platform for you, as we want people to be able to connect with you. 
-		<br><br>
-
-		After your initial application, you may opt to undertake various online tests offered on our site, or submit your referee details for feedback. All this information will be accessible by potential Employers, and their networks. If you are uncomfortable with this information potentially being shared with the public, please refrain from completing any online tests or reference checks on our platform. <br><br>
-
-
-		We believe exposure is the key to proactively finding the job, so we have built our system in a way that makes it easy for Employers to share your details with people in their network, including those outside the Talent Tube platform. This includes a summary of your experience, qualifications, skills, interests, your video interview, referrals, testing scores and other information you submit, that would make you attractive to a potential Employer. 
-		For example; an Employer might have a friend at another organisation, and send a link to your video interview over to them about a potential job. Another example would be you submit your reference checks, and your former boss leaves a raving reviewing of your time with their business. If you’re not comfortable with your Job Seeker profile potentially going viral, again, this isn’t the right platform for you, and we recommend not creating a Job Seeker account with us.<br><br>
-
-		As of writing this, some hackers have managed to shut a major US pipeline in 2021. I doubt our website security is as good as the US government, so always keep in mind that anything you put on Talent Tube could potentially be stolen by malicious hackers. I can’t take responsibility for that, so think of it like gambling; don’t gamble anything more than you can’t afford to lose.<br><br>
-
-		Likewise, don’t share anything you aren’t prepared for the world to see. I know even passwords can be hacked, so if you’re really concerned about privacy, use a password on here that is not compatible with any other login you currently use. If a user of our website uses your information for anything employment related opportunities, please contact us immediately. We will organise to investigate, and potentially terminate their account. If this has resulted in any damage to you, please call the police or organise to sue them.<br>
-
-		We at Talent Tube cannot take responsibility for the misuse of your information, as we can not control our users, their networks, the people they share with, or potentially hackers. Again, if anything is to be kept private, NEVER upload it to our system.<br>
 
 	</p>
 
-	<p class=""><b>Employers Responsibility</b></p>
+	<p class=""><b> What information is available on my full profile  </b></p>
 
 	<p>
-		For paying Employers, you will have access to our Job Seeker's personal info, including their full name, resume, email and contact number. As part of our Employer User Policy, you are only to use these details to connect Job Seekers with a relevant employment opportunity you have available now or in the near future. Please refrain from sharing the more personal details that are unlocked as part of the paid Employer account, (such as contact details, full name or resumes) without the Job Seekers permission. If you'd like to share Job Seeker profiles within your networks for relevant job opportunities, try and use the more publicly available info, such as the video interview link, candidate snap shot, Job Seeker profile etc. If in doubt about what you can or can't share, please check with the Job Seeker for further advice, as it's their information. <br><br>
-
-		If we learn you are using these details for anything other than connecting Job Seekers with relevant job opportunities, we will terminate your account immediately. If we learn that you are using this information for anything malicious, be it sexual harassment, selling personal info to marketing companies or anything creepy, we will recommend the affected Job Seeker to sue you or contact the relevant authorities if you are breaking the law. If I get rich from this website, I may even opt to sue you myself for being such a loser. I also do not have any control of our Job Seekers behaviour, and will not take responsibility if anyone you hire through our platform causes damage or loss to your organisation.<br>
+		To create a profile on our Talent Tube system, we’ll use the information made available to us, such as your resume, information provided during our phone chat or virtual conference chat, as well data we can find on your LinkedIn & online foot print. We’ll also upload the video you submit, or audio recording that you consented to create with us. If you created the profile on your own, all the information you submitted will be available on your full profile. <br>
 
 	</p>
 
-	<p class=""><b>Job Seeker Responsibility</b></p>
+	<p class=""><b> Who can access the link to my full profile?  </b></p>
 
 	<p>
-		Although we won’t make it a policy, we highly encourage you to get back to Employers if they ask you about a job opportunity that you might not be interested. A little of courtesy goes a long way, and while that particular job may not be of interest to you, another opportunity with that Employer or someone in their network, might be. We can not be held responsible if your information is misused by our users or their networks. If you feel a user on this site is using your information for anything other than potential Employment, please contact us immediately. After an investigation, we may decide to ban a potentially offending Employer. You are more than welcome to report the matter to the local authorities if a crime has taken place, or pursue the matter in the courts. Likewise, we can’t be held responsible if an Employer causes you any loss or damages (eg; an Employer offers you a role, you resign from your current job, and the new Employer renegs their offer). This is totally out of our control, and encourage you to contact Fair Work to investigate and inform you of your rights. They may recommend you take legal or conciliatory action, but we will not be pursing the charges for you.<br>
+		Recruiters at Talent Tube, and recruiters from our affiliated networks (such as the Digital Professionals Hub) will have admin access to your full profile. We’ll use this information as a record for us regarding your skills/experience/qualifications and ideal roles, to help us show case and connect you with potential employment opportunities that may interest you.  <br>
+		In the event an Employer takes an interest to your profile, we will contact you to gage your interest. If you’d like to be considered for the role, we will advise the Employer of your interest & send them a direct link with your full profile, as well as find out the next steps to formalize your application with the Employer.<br>
 
 
 	</p>
 
 
-	<p class=""><b>In short</b></p>
+	<p class=""><b> What information is available on my limited profile?  </b></p>
 
 	<p>
-		I’ve done my best to explain these T&Cs in simple, easy to understand language, without the unnecessary legal terms. I’ll do my best to summarise some of the key points below, but be sure to review the above details for further information. <br><br>
-		
-		<b>Job Seekers:</b> <br>
-
-		• Do not share anything you believe needs to be private. Everything you upload to your profile/application is public. Only upload information you are happy for the public to see <br>
-
-		• We will never ask you for money. EVER. If anyone claims to be from Talent Tube, and is asking you for money, know this is a scam. Likewise, never upload your full address, we don’t ask for it, as it’s not relevant to us <br>
-
-		• I won’t be selling your application data to any marketing companies. EDIT June 2021: The exception to this, is if a marketing company is looking to hire you for a job in their organisation 😊<br>
-
-		• We want users of this site to share your Job Seeker profile and details with their network and beyond, our job is to make you go viral. We want people to contact you on your phone or email about employment opportunities. If this isn’t what you want, don’t sign up.<br>
-
-		• If an Employer uses your information for anything other than Employment related activities, please let us know, and we will organise to investigate. If they are genuinely using your profile for non-employment related activity, we will terminate their account. If they have caused you damage, we at Talent Tube cannot take responsibility, but we highly encourage you to take this up with the relevant authorities or civil courts. <br>
-
-		• If an Employer offers you a job and something goes wrong, again, we can’t be responsible for that. We encourage you to check with Fair Work to see what your rights are, and take the initiative yourself to resolve the matter.<br>
+		We remove your full name, profile photo, contact details and resume from the limited profile. The limited profile is how Employers can browse our database, without the supervision of a Recruiter from our network. If there is some interest in your limited profile from an Employer, we can then contact you to see if you consent to sharing the link to your full profile with that specific Employer. <br>
 
 
 	</p>
 
-	<p class=""><b>Employers:</b></p>
+	<p class=""><b>What measures are in place to stop my current Employer from finding my profile? </b></p>
 
 	<p>
-		• We’ve decided if we are going to make money, it will be through you, so please have your credit card on stand by if you see a Job Seeker you like<br>
+		While we can’t guarantee that this won’t happen, we have both technical and process controls in place to reduce the likelihood of this occurring.  
+		On the technical side, when you or our consultant create your account, the system will pick up the organization entered on your profile. This means that any Employer account from that same organization will be unable to view your profile, regardless of their access level. <br>
+		On the process side, we will not send a link to your full profile to any employer, until we have spoken to you about the opportunity and you consent. If you provide consent to share your full profile, the employer will have direct access to your resume, full name, video interview & contact details.
 
-		• You are prohibited under our terms from contacting or sharing Job Seeker details for anything other than a potential employment opportunity. If we find you doing such a thing, we will terminate your account. The Job Seeker will also have the option to pursue this further with the authorities or the courts. This is not a dating or marketing site, so please find some other app satisfy your non-recruitment related needs.<br>
 
-		• If you must share a Job Seeker details with your network, please ensure the parties you are sharing with may have a genuine and relevant role to the Job Seeker & only share their public profile information. For the specific information that is unlocked as a paid Employer (resume, full name & contact details), please consult with the candidate before sharing. <br>
+	</p>
 
-		• We do not take personal responsibility for Job Seekers you hire through our site that may cause damage or loss to your organisation. You will need to take this up with the authorities or courts if such an event happens, we will not be representing yourself or the Job Seeker in this situation.<r>
+	<p class=""><b> Who can I speak to if I have questions?  </b></p>
 
+	<p>
+		If you have any questions about your profile, wish to make changes to your profile or wish to delete your profile with us, please contact us at admin@talenttube.org 
 
 	</p>
 
