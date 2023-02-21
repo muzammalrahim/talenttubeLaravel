@@ -635,21 +635,22 @@ class InterviewController extends Controller
       public function sendnotification(Request $request){
             // dd($request->toArray());
         if(!empty($request->cbx)){
-                    $users = User::whereIn('id',$request->cbx)->get();
-                    if(!empty($users)){
-                    foreach ($users as $user) {
-                        // dd($request->employerName);
-                        // $details = ['email' => $user->email];
-                        // SendBulkEmailJob::dispatch($details);
-                        // $when = now()->addSeconds(2);
+            $users = User::whereIn('id',$request->cbx)->get();
+            if(!empty($users)){
+                foreach ($users as $user) {
+                    // dd($request->employerName);
+                    // $details = ['email' => $user->email];
+                    // SendBulkEmailJob::dispatch($details);
+                    // $when = now()->addSeconds(2);
+                    if ($user->email_notification == 1) {
                         Mail::to($user->email)->send(new NotiEmailForQueuing($user->name,$request->url,$request->employerName,$request->positionname));
                     }
-                    }
+                }
+            }
 
 
-               return response()->json([
+           return response()->json([
                 'status' => 1,
-
             ]);
 
         }

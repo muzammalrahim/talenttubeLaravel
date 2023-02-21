@@ -261,7 +261,47 @@
    @include('web.modals.qualification_modal')
 
 
-<div id="onlineTestModal" class="modal w100 p0">
+<div class="modal fade" id="myModal" role="dialog">
+   <div class="modal-dialog delete-applications">
+      <!-- Modal content-->
+      <div class="modal-content">
+         <div class="modal-header py-4 px-2">
+            <i data-dismiss="modal" class="close-box fa fa-times"></i>                      
+            <h5 class="modal-title text-start text-white">Send Online Test</h5>
+         </div>
+         <div class="modal-body">
+            <div class="testContent p10">
+                 
+               <form name="sendTestForm" class="sendTestForm">
+                  @csrf
+                  <input type="hidden" name="jobApp_id" class="jobAppIdModal">
+                  <div class="job_age form_field" style="height:120px;">
+                     <span class="w20 dinline_block">Select Test</span>
+                     <div class="w70 dinline_block">
+                        <select name="test_id" class="form-control icon_show">
+                           @foreach ($onlineTest as $test)
+                           <option value="{{$test->id}}"> {{$test->name}} </option>
+                           @endforeach
+                        </select>
+                     </div>
+                  </div>
+               </form>
+              
+               <p class="errorsInFields text-danger"></p>
+               <div class="fomr_btn act_field center">
+                  <button class="btn small turquoise orange_btn" onclick="sendOnlineTestNotification()">Send Test</button>
+               </div>
+            </div>
+         </div>
+         <div class="dual-footer-btn">
+            {{-- <button type="button" class="btn btn-default black_btn" data-dismiss="modal"><i class="fa fa-times"></i>Cancel</button> --}}
+            {{-- <button type="button" class="orange_btn"><i class="fa fa-check"></i>OK</button> --}}
+         </div>
+      </div>
+   </div>
+</div>
+
+<!-- <div id="onlineTestModal" class="modal w100 p0">
    <div class="testHeader">
       <p>Send online Test</p>
    </div>
@@ -287,6 +327,8 @@
    </div>
  
 </div>
+-->
+
 
 @stop
 @section('custom_js')
@@ -300,7 +342,42 @@
 <script src="{{ asset('js/web/profile.js') }}"></script>
 <script type="text/javascript">
    $(document).ready(function() {
-       $('#filter_by_qualification').select2();
+      $('#filter_by_qualification').select2();
+
+         // $(document).on('click' , '.sendTestButton' , function(){
+
+         this.sendOnlineTestNotification = function(){
+            var formData = $('.sendTestForm').serializeArray();
+            // $('.sendTestButton').html(getLoader('pp_profile_edit_main_loader')).prop('disabled',true);
+            console.log(formData); 
+            $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+            $.ajax({
+                  type: 'POST',
+                  url: base_url+'/ajax/sendOnlineTest',
+                  data:formData,
+                  success: function(response){
+                      $('.sendTestButton').html('Send Test').prop('disabled',false);
+                      if( response.status == 1 ){
+                          $('.errorsInFields').text('Test has been sent sucessfully');
+                          $('.errorsInFields').removeClass('to_hide').addClass('to_show');
+                          setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
+                      }else if(response.status == 0){
+                        $('.sendTestButton').html('Send Test').prop('disabled',false);
+                        $('.errorsInFields').text('you have already sent test to this applicant');
+                        $('.errorsInFields').removeClass('to_hide').addClass('to_show');
+
+                        setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
+                      }
+                      else{
+                          $('.sendTestButton').html('Send Test').prop('disabled',false);
+                          $('.errorsInFields').text('Error occured');
+                          setTimeout(() => { $('.errorsInFields').removeClass('to_show').addClass('to_hide').text(''); },4000);
+                      }
+                  }
+            });
+         }
+
+         // });
    });
    this.showQualificationSelect2 = function(){
       // console.log('on change qualification');

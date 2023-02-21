@@ -249,6 +249,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Video','user_id');
     }
 
+    function attachments(){
+        return $this->hasOne('App\Attachment','user_id');
+    }
+
     // function like(){
     //     return $this->belongsTo('App\LikeUser','user_id');
     // }
