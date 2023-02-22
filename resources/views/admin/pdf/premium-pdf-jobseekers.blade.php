@@ -22,6 +22,7 @@ a.contactBtn {
     display:block;
     margin: 0 auto;
     width: 70px;
+    cursor:pointer;
 }
 
 a.cvBtn {
@@ -87,7 +88,7 @@ td.center.left_info {
 		</div>
             
 
-		<a class="contactBtn" target="_blank" href="{{route('publicuservideo',['id' => $user->id])}}">Watch Video</a>
+		<a class="contactBtn" onclick="pdfVideo('{{route('publicuservideo',['id' => $user->id])}}')" {{-- href="{{route('publicuservideo',['id' => $user->id])}}" --}}>Watch Video</a>
         <a href="{{asset('images/user/'.$user->attachments->file)}}" target="”_blank”" download="" class="cvBtn">CV</a>
             
 	</td>
@@ -140,3 +141,9 @@ td.center.left_info {
 
 @stop
 
+<script type="text/javascript">
+    this.pdfVideo = function(url){
+        window.open(url,'popUpWindow','height=420,width=400,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+    }
+    
+</script>

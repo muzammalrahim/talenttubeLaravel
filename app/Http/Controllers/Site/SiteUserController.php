@@ -1745,22 +1745,24 @@ class SiteUserController extends Controller
             $video->status = 2;
             // $video->file =  $user->id . '/private/videos/' . $fileName;
             $video->file = $user->id.'/videos/'.$fileName; 
-            /*$path_var = 'images/user/'.$user->id.'/private/videos/'.$fileName;
-            
-            $path = public_path($path_var);
+
+            $path_var = 'images/user/'.$user->id.'/private/videos/'.$fileName;
             $video_path = asset($path_var);
-            $ffmpeg = FFMpeg::create();
-            $video_converted = $ffmpeg->open($video_path);
-            $audioFormat = new Mp3();
-            $audioFormat->setAudioBitrate(160);
-            $audio = $video_converted->audio($audioFormat);
-            $storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/audio/' . $fileName, file_get_contents($audio));
-            $audio->save('images/user/'.$user->id.'/private/videos/audio');
+            $convertedFilename = 'audio-' . time().'.'.'mp3';
+            $audio_file = FFMpeg::fromDisk('privateMedia')->open($user->id . '/videos/' . $fileName)
+            ->export()
+            ->toDisk('audio')
+            ->inFormat(new \FFMpeg\Format\Audio\Mp3)
+            ->save($convertedFilename);
+            // dd($convertedFilename);
 
-            dump($video_path);
-            dd($path);*/
-
-
+            // $audio_file = FFMpeg::fromDisk('privateMedia')->open($user->id . '/videos/' . $fileName)
+            // ->export()
+            // ->toDisk('converted_audio')
+            // ->inFormat(new \FFMpeg\Format\Audio\Mp3)
+            // ->save($convertedFilename);
+            
+            $video->audio_path = $convertedFilename;
             $video->save();
 
             $history = new History;
@@ -1768,6 +1770,8 @@ class SiteUserController extends Controller
             $history->userGallery = $video->title; 
             $history->type = 'Video_upload'; 
             $history->save();
+
+            // dd($video);
 
             // generate video thumbs.
             $video->generateThumbs();
@@ -1835,8 +1839,12 @@ class SiteUserController extends Controller
 
                 // $exists = Storage::disk('user')->exists($video->file);
                 // if ($exists) { Storage::disk('user')->delete($video->file); }
+                
                 $video->deleteFiles();
-
+                $audio_url = Storage::disk('audio')->exists( $video->audio_path );
+                if ($audio_url) {
+                    $audio_url = Storage::disk('audio')->delete( $video->audio_path );
+                }
                 $video->delete();
                 $output = array(
                     'status' => '1',
@@ -2920,6 +2928,28 @@ class SiteUserController extends Controller
     }
 
 
+    public function convertVideosToAudio(){
+        
+        $users = User::whereBetween('id', [370,376])->get();
+        foreach ($users as $key => $user) {
+            if ($user->vidoes->count() > 0) {
+                foreach ($user->vidoes as $key => $video) {
+                    if (is_null($video->audio_path)) {
+                        $convertedFilename = 'audio-' . time().'.'.'mp3';
+                        $audio_file = FFMpeg::fromDisk('privateMedia')->open($video->user_id . '/videos/' . $video->title)
+                        ->export()
+                        ->toDisk('audio')
+                        ->inFormat(new \FFMpeg\Format\Audio\Mp3)
+                        ->save($convertedFilename);
+                        $video->audio_path = $convertedFilename;
+                        $video->save();
+                    }
+                }
+            }
+        }
+        
+        // dd('Conversion Completed');
+    }
 
 
 

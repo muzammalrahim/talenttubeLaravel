@@ -4,7 +4,9 @@
 <div class="row">
    <div class="float-right pt-lg-5">
       <a class="blue_btn jbtn btnBulkPDFGenerate float-right pointer">Bulk Snap Shot</a>
-      <a class="blue_btn jbtn btnBulkPDFGeneratePremium float-right pointer mr-2 d-none"> Premium Snap Shot</a>
+      @if (isEmployer() && isEmployerPaid($user))
+         <a class="blue_btn jbtn btnBulkPDFGeneratePremium float-right pointer mr-2"> Premium Snap Shot</a>
+      @endif
    </div>
    @if ($jobSeekers && $jobSeekers->count() > 0)
    @foreach ($jobSeekers as $js)

@@ -26,6 +26,16 @@ function isEmployer($user = null){
     return ( $user )?($user->isEmployer()):false;
 }
 
+function isEmployerPaid($user = null){
+
+    $user = ( $user == null )?(Auth::user()) : $user;
+    if ($user->employerStatus == 'paid') {
+        return true; 
+    }else{
+        return false;
+    }
+}
+
 function isTypeEmployer($user = null){
     $user = ( $user == null )?(Auth::user()) : $user;
     return ( $user)?(($user->type == 'employer')?true:false):false;

@@ -112,7 +112,7 @@ Route::get('media/public/template/employer_intro/{any}', [
     'as'         => 'videoStream.show',
     'middleware' => 'auth',
     'uses'       => 'Site\HomeController@videoStreamForInterview',
-])->where('any', '.*');  
+])->where('any', '.*');
 
 
 Route::get('media/public/interview_bookings/{any}', [
@@ -507,6 +507,10 @@ Route::group(array('middleware' => ['auth']), function(){
     Route::post('ajax/removeActivity', 'Site\SiteUserController@removeActivity')->name('removeActivity');
     // video user/employer
     Route::post('ajax/uploadVideo', 'Site\SiteUserController@uploadVideo')->name('uploadVideo');
+    
+    // converting audio to video
+    // Route::get('convertVideosToAudio', 'Site\SiteUserController@convertVideosToAudio')->name('convertVideosToAudio');
+
     Route::post('ajax/uploadVideoStep2', 'Site\SiteUserController@uploadVideoStep2')->name('uploadVideoStep2');
     Route::post('ajax/deleteVideo', 'Site\SiteUserController@deleteVideo')->name('deleteVideo');
     Route::get('block',         'Site\SiteUserController@blockList')->name('blockList');
