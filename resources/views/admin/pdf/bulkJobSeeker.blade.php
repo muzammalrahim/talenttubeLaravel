@@ -22,6 +22,7 @@ a.contactBtn {
     display: block;
     margin: 0 auto;
     width: 80px;
+    cursor:pointer;
 }
 .name_title {
     font-size: 18px;
@@ -59,7 +60,11 @@ td.center.left_info {
 {{-- <div style="border: 2px solid red; padding: 20px; width: 700px;"></div> --}}
 
 <table width="100%" style="width:100%" border="0" cellpadding="0" cellspacing="0" >
-  @foreach ($users as $user)
+    @php
+        $audio_base_url = asset('media/public/audio');
+        // dd($audio_base_url .'/' .$users['0']->vidoes()->first()->audio_path);
+    @endphp
+    @foreach ($users as $user)
 
  {{--   @dump($user->profileImage) --}}
   <tr class="updf_row">
@@ -72,7 +77,10 @@ td.center.left_info {
 					<img src="{{asset('images/site/icons/nophoto.jpg')}}">
 				@endif --}}
 			</div>
-			<a class="contactBtn" target="_blank" href="{{route('publicuservideo',['id' => $user->id])}}">Watch Video</a>
+            {{-- <audio controls>
+                <source src="{{ $audio_base_url .'/' .$user->vidoes()->first()->audio_path }}" type="audio/mpeg">     
+            </audio> --}}
+			<a class="contactBtn" onclick="pdfVideo('{{ $audio_base_url .'/' .$user->vidoes()->first()->audio_path }}')" {{-- href="{{ $audio_base_url .'/' .$user->vidoes()->first()->audio_path }}" --}}> Listen Audio</a>
 		</td>
 
     <td width="80%" class="updf_detai">
@@ -123,3 +131,9 @@ td.center.left_info {
 
 @stop
 
+<script type="text/javascript">
+    this.pdfVideo = function(url){
+        window.open(url,'popUpWindow','height=420,width=400,left=100,top=100,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no, status=yes');
+    }
+    
+</script>

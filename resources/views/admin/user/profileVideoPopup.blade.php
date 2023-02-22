@@ -5,7 +5,7 @@
 	{{-- @dd( $user->vidoes->first() ); --}}
 	<div class="profileVideoShow">
 		@if($user->vidoes)
-			<video class="videoPlayer" controls=""><source src="{{assetVideo($user->vidoes->first())}}"></video>
+			<video class="videoPlayer" style=" height: 400px; margin: 0 auto; width: 100%;" controls=""><source src="{{assetVideo($user->vidoes->first())}}"></video>
 		@endif
 	</div>
 

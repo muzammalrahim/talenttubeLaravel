@@ -1353,25 +1353,24 @@ class EmployerController extends Controller {
 
     public function empGeneratePremiumPDF(Request $request){
       // dd($request->cbx);
-      if(!empty($request->cbx)){
-        $data['title'] = 'Generate PDF';
-        $users = User::whereIn('id', $request->cbx)->with('attachments')->get();
-        // dd($users);
-        $data['users'] = $users;
-        if($request->test){
-            return view('admin.pdf.premium-pdf-jobseekers', $data);
+        if (isEmployer() && isEmployerPaid()) {
+            if(!empty($request->cbx)){
+                $data['title'] = 'Generate PDF';
+                $users = User::whereIn('id', $request->cbx)->with('attachments')->get();
+                // dd($users);
+                $data['users'] = $users;
+                if($request->test){
+                    return view('admin.pdf.premium-pdf-jobseekers', $data);
+                }else{
+                    $pdf = PDF::loadView('admin.pdf.premium-pdf-jobseekers', $data);
+                    $pdf->setPaper('A4');
+                    return $pdf->download('JobSeekers.pdf');
+                // admin/pdf/premium-pdf-jobseekers
+                }
+            }
         }else{
-
-            /*$pdf = \App::make('dompdf.wrapper');
-            $pdf->loadView('admin.pdf.premium-pdf-jobseekers', $data);
-            return $pdf->stream();*/
-
-            $pdf = PDF::loadView('admin.pdf.premium-pdf-jobseekers', $data);
-            $pdf->setPaper('A4');
-            return $pdf->download('JobSeekers.pdf');
-            // admin/pdf/premium-pdf-jobseekers
+            return redirect()->route('jobSeekers');
         }
-      }
     }
 
     //====================================================================================================================================//
