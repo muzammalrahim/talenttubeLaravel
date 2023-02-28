@@ -94,10 +94,9 @@ class UserController extends Controller
     public function getDatatable(Request $request){
       $records = array();
 
-       // dd($request->toArray());
+       // dd($request->toArray());U
       $records = User::select(['id', 'name', 'surname', 'city','email','phone','verified','created_at'])
-        ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
-        ->orderBy('created_at', 'desc');
+        ->whereHas('roles' , function($q){ $q->where('slug', 'user'); });
      if(isset($request->status) && !empty($request->status)){
 
         if($request->status == 'verified')
@@ -151,8 +150,7 @@ class UserController extends Controller
     public function getEmployerDatatable(Request $request){
       $records = array();
       $records = User::select(['id', 'company', 'email', 'created_at','verified','employerStatus'])
-        ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
-        ->orderBy('created_at', 'desc');
+        ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); });
 
      if(isset($request->status) && !empty($request->status)){
         if($request->status == 'verified')

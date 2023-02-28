@@ -51,7 +51,7 @@
             <th>Country</th>
             <th>State</th>
             <th>City</th>
-            <th>Created_at</th>
+            <th>Created At</th>
             {{-- <th>created_by</th> --}}
             <th>Action</th>
         </tr>
@@ -118,7 +118,11 @@ jQuery('#dataTable').DataTable({
         { data: 'created_at', name: 'created_at' },
         // { data: 'created_by', name: 'created_by' },
         { data: 'action', name: 'action'},
-    ]
+    ],
+    columnDefs: [
+        { "orderable": true, "targets": [0,1,6] },
+        { "orderable": false, "targets": [2,3,4,5,7] },
+      ],
 });
 
 

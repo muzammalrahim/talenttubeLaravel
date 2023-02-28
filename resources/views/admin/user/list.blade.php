@@ -362,11 +362,15 @@ jQuery(function() {
     var table = jQuery('#dataTable').DataTable({
         processing: true,
         serverSide: true,
+        ordering:true,
+        order: [/*[ 1, 'asc' ], [ 3, 'asc' ],*/ [ 6, 'asc' ]],
+
         ajax: {
           url: '{!! route('users.dataTable') !!}',
-          data: function (d) {
-                d.status = $('.filter_status').val()
-            }
+          // data: function (d) {
+          //       d.status = $('.filter_status').val();
+
+          //   }
         },
         // ajax: '{!! route('users.dataTable') !!}',
         // data: function (d) {
@@ -375,7 +379,7 @@ jQuery(function() {
         columns: [
             // { data: 'select', name: 'select' },
             { data: 'id', name: 'id' },
-            { data: 'name', name: '' },
+            { data: 'name', name: 'name' },
             { data: 'surname', name: 'surname' },
             { data: 'city', name: 'city' },
             { data: 'email', name: 'email' },
@@ -388,13 +392,16 @@ jQuery(function() {
         ],
      columnDefs: [{
          'targets': 0,
-         'searchable':false,
-         'orderable':false,
+         // 'searchable':false,
+         // 'orderable':false,
          'className': 'dt-body-center',
          'render': function (data, type, full, meta){
              return '<input type="checkbox" name="cbx[]" value="'+ $('<div/>').text(data).html() + '">';
          }
-      }],
+      },
+        { "orderable": false, "targets": [0,4,5,7,8,9,10] },
+        { "orderable": true, "targets": [1,2,3,6] }
+      ],
     });
 
 

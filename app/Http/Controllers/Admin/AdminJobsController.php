@@ -82,8 +82,7 @@ class AdminJobsController extends Controller
     // Ajax GET // Jobs list for dataTable
     //===============================================================================================================//
     function getDatatable(){
-         $records = Jobs::with(['jobEmployer'])
-        ->orderBy('created_at', 'desc');
+         $records = Jobs::with(['jobEmployer']);
       return datatables($records)
 
        ->editColumn('created_at', function ($records) {
@@ -92,13 +91,13 @@ class AdminJobsController extends Controller
       
       ->addColumn('action', function ($records) {
         if (isAdmin()){
-            $rhtml = '<a href="'.route('jobs.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
+            $rhtml = '<a href="'.route('jobs.edit',['id' => $records->id]).'"><button type="button" class="btn btn-primary btn-sm mr-2"style = "margin-bottom:2px; "><i class="far fa-edit"></i></button></a>';
 
-            $rhtml .= '<button type="button" class="btn btn-danger btn-sm btnJobDelete" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
+            $rhtml .= '<button type="button" class="btn btn-danger btn-sm btnJobDelete mr-2" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" ><i class="far fa-trash-alt" style= "padding: 1.5px;"></i></button>';
 
-            $rhtml .= '<a href="'.route('job.exportApplicationCSV',['id' => $records->id]).'" type="button" class="btn btn-success btn-sm" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" >CSV Export</a>';
+            $rhtml .= '<a href="'.route('job.exportApplicationCSV',['id' => $records->id]).'" type="button" class="btn btn-success btn-sm mr-2" data-type="Jobs" data-id='. $records->id.' data-title="'.$records->title.'" >CSV</a>';
 
-             $rhtml .= '<a href="'.route('job_applications').'?job_id='.$records->id.'" type="button" class="btn btn-success btn-sm" data-id='.$records->id.'>Applications</a>';
+             $rhtml .= '<a href="'.route('job_applications').'?job_id='.$records->id.'" type="button" class="btn btn-success btn-sm mr-2" data-id='.$records->id.'>Apps</a>';
              $rhtml .= '<a href="'.route('jobs.pdfExport',['id' => $records->id]).'" type="button" class="btn btn-success btn-sm" data-id='.$records->id.'>PDF</a>';
 
             return $rhtml;
@@ -962,6 +961,7 @@ class AdminJobsController extends Controller
             }
 
             $data['profile_image'] = $profile_image;
+            // return view('admin.pdf.jobWithApplication', $data); /* adminpdf/jobWithApplication */
             $pdf = PDF::loadView('admin.pdf.jobWithApplication', $data);
             $pdf->setPaper('A4');
             return $pdf->download('JobApplications.pdf');

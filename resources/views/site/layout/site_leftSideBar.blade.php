@@ -36,11 +36,32 @@
             </a>
          </li>
 
-         <li>
-            <a href="{{ route('jobSeekers') }}" class="{{(request()->is('jobSeekers'))?'active':''}} sidebar-text-view">
-               <div class="row px-2"><i class="fas fa-user-tie col-2"></i><span class="col-10">Job Seekers</span></div>
-            </a>
-         </li>
+         @php
+            //   =========================================== Paid employer viewing jobseeker ===========================================
+          /*  $isallowed = False;
+            if ($user->employerStatus == 'paid') {
+               $empExpDate = $user->emp_status_exp;
+               $currentDate = \Carbon\Carbon::now();
+               $datetime1 = new DateTime($empExpDate);
+               $datetime2 = new DateTime($currentDate);
+               if ($datetime1 >= $datetime2) {
+                  $isallowed = True;
+               }
+               else{
+                  $isallowed = False;
+                  $user->employerStatus = 'unpaid';
+                  $user->save();
+               }
+            }*/
+            // =========================================== Paid employer viewing jobseeker ===========================================
+         @endphp
+         @if (isEmployerVerified() || isEmployerPaid($user))
+            <li>
+               <a href="{{ route('jobSeekers') }}" class="{{(request()->is('jobSeekers'))?'active':''}} sidebar-text-view">
+                  <div class="row px-2"><i class="fas fa-user-tie col-2"></i><span class="col-10">Job Seekers</span></div>
+               </a>
+            </li>
+         @endif
 
       @else
 

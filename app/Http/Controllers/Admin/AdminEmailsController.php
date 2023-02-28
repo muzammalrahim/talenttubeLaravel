@@ -438,6 +438,29 @@ class AdminEmailsController extends Controller {
       }
     }
 
+    public function adminGeneratePremiumPdf(Request $request) {
+      if(!empty($request->cbx)){
+      // dd($request->cbx);
+      // $str_arr = explode (",", $request->cbx);
+        $userIDs = array();
+        foreach($request->cbx as $userID){
+          $jobApp = JobsApplication::where('id',$userID)->first();
+          $userIDs[] = $jobApp->user_id;
+        }
+        $data['title'] = 'Generate PDF';
+        $users = User::whereIn('id', $userIDs)->get();
+        $data['users'] = $users;
+        if($request->test){
+          return view('admin.pdf.premium-pdf-jobseekers', $data);
+        }else{
+          $pdf = PDF::loadView('admin.pdf.premium-pdf-jobseekers', $data); // admin/pdf/premium-pdf-jobseekers
+          $pdf->setPaper('A4');
+          return $pdf->download('JobSeekers.pdf');
+          // admin/pdf/bulkJobSeeker
+        }
+      }
+    }
+
 
 
 

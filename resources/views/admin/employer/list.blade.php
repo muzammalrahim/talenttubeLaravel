@@ -39,7 +39,7 @@
             <th>Company</th>
             <th>Email</th>
             <th>Profile</th>
-            <th>Created_at</th>
+            <th>Created At</th>
             <th>Action</th>
             {{-- <th>delete</th> --}}
         </tr>
@@ -181,6 +181,8 @@ jQuery(function() {
   jQuery('#dataTable').DataTable({
       processing: true,
       serverSide: true,
+      ordering:true,
+        order: [[ 4, 'desc' ]],
       ajax: {
           url: '{!! route('employers.dataTable') !!}',
           data: function (d) {
@@ -195,6 +197,10 @@ jQuery(function() {
           { data: 'created_at', name: 'created_at' },
           { data: 'action', name: 'action', },
           // { data: 'action', name: 'action', },
+      ],
+      columnDefs:[
+        { "orderable": false, "targets": [2,3,5] },
+        { "orderable": true, "targets": [0,1,4] }
       ]
   });
 

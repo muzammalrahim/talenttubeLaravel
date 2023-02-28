@@ -69,7 +69,11 @@
                      $profile_image   = assetGallery2($profile_image_gallery,'small');
                      }
                      @endphp
-                     <img src="{{$profile_image}}" class="w-75" alt="" >
+                     @if (isEmployerPaid())
+                        <img src="{{$profile_image}}" class="w-75" alt="" >
+                        @else
+                        <img src="{{asset('images/site/icons/nophoto.jpg')}}">
+                     @endif
                   </div>
                   
                   <div class="block-user-progress ">
@@ -81,11 +85,17 @@
                      </div> --}}
                      <div class="text-center">
                         
-                        @if($js->vidoes->count() > 0)
+                        @if($js->vidoes->count() > 0 && isEmployerPaid())
                         <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
                         </i>
+                        @else
+                        <a class="contactBtn" {{-- target="”_blank”" href="{{ asset('media/public/audio') .'/' .$js->vidoes()->first()->audio_path }}" --}} onclick="openWindow('{{ asset('media/public/audio') .'/' .$js->vidoes()->first()->audio_path }}')"> 
+                           {{-- <i class="fas fa-video fa-2x text-center pointer"></i>  --}}
+                           <img src="{{ asset('images/music-solid.svg') }}" class="text-center pointer" style="width: 30px;"> 
+                        </a>
+
+                        @endif
                      </div>
-                     @endif
                   </div>
                </div>
 

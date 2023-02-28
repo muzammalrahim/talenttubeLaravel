@@ -441,6 +441,9 @@
       padding: 0;
       color: #9c9ea0!important;
    }
+   .video_thumb{
+      max-height:200px;
+   }
 </style>
 
 @stop

@@ -24,7 +24,7 @@
       </div>
    </div>
    <div class="cl mb20"></div>
-   @if($isallowed)
+   @if(isEmployerPaid() || isAdmin())
    
 	<div class="row Resume prvate-section">
       <h2>Resume & Contact Details</h2>

@@ -33,40 +33,12 @@
 
                <li><a href="{{ route('jobSeekers') }}" class="{{(request()->is('jobSeekers'))?'active':''}} sidebar-text"><i class="fas fa-link"></i><span>Job Seekers</span></a></li>
 
-               @php
-                  
-                  
-
-
-                  //   =========================================== Paid employer viewing jobseeker ===========================================
-                  $isallowed = False;
-                  if ($user->employerStatus == 'paid') {
-                      $empExpDate = $user->emp_status_exp;
-                      $currentDate = Carbon::now();
-                      $datetime1 = new DateTime($empExpDate);
-                      $datetime2 = new DateTime($currentDate);
-                      // $interval = $datetime1->diff($datetime2);
-                      // dd($interval);
-                      if ($datetime1 >= $datetime2) {
-                          // $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
-                          $isallowed = True;
-                          // $data['attachments'] = $attachments;
-                      }
-                      else{
-                          $isallowed = False;
-                          $user->employerStatus = 'unpaid';
-                          $user->save();
-                      }
-
-                  }
-
-                  // =========================================== Paid employer viewing jobseeker ===========================================
-                
+                  @php
+   
                   @endphp
-                  @if ($isallowed && isMobile())
+                  @if (isEmployerPaid() && isMobile())
                      <li>
                         <a href="{{route('Swipe-jobseekers')}}" class="sidebar-text {{(request()->is('Swipe-jobseekers'))?'active':''}}">
-                        {{-- <span class="icon"></span>Swipe Job Seekers --}}
                            <i class="fas fa-briefcase"></i><span> Swipe Job Seekers</span></a>
                         </a>
                      </li>

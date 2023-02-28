@@ -207,6 +207,7 @@ Route::get('media/private/{userid}/{any}', [
     Route::get('bulk/generateCVS', 'Admin\AdminEmailsController@GenerateCVS');
     Route::post('bulk/generatePDF', 'Admin\AdminEmailsController@GeneratePDF')->name('bulk.GeneratePDF');
     Route::post('bulk/generatePDFApplicant', 'Admin\AdminEmailsController@generatePDFApplicant')->name('bulk.generatePDFApplicant');
+    Route::post('bulk/generatepremium-PDF/Applicant', 'Admin\AdminEmailsController@adminGeneratePremiumPdf')->name('bulk.generatePremiumPDFApplicant');
     Route::get('bulk/generatePDF', 'Admin\AdminEmailsController@GeneratePDF');
     Route::post('bulk/BulkGenerateCVPDF', 'Admin\AdminEmailsController@BulkGenerateCVPDF')->name('bulk.BulkGenerateCVPDF');
     Route::post('bulk/BulkGenerateCVPDFApplicant', 'Admin\AdminEmailsController@BulkGenerateCVPDFApplicant')->name('bulk.BulkGenerateCVPDFApplicant');

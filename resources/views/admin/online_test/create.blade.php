@@ -32,7 +32,7 @@
         <div class="form-group row">
           {{ Form::label('time', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
-            {{ Form::number('time', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'enter maximum time allowed for test in minutes','required'=> 'false')) }}
+            {{ Form::number('time', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'Enter maximum time allowed for test in minutes','required'=> 'false')) }}
           </div>
         </div>
 
