@@ -222,9 +222,9 @@ class JobSeekerController extends Controller {
             $empExpDate = $user->emp_status_exp;
             $currentDate = Carbon::now();
             $datetime1 = new DateTime($empExpDate);
+            $datetime1 = $datetime1->format('d/m/Y');
             $datetime2 = new DateTime($currentDate);
-            // $interval = $datetime1->diff($datetime2);
-            // dd($interval);
+            $datetime2 = $datetime2->format('d/m/Y');
             if ($datetime1 >= $datetime2) {
                 $attachments = Attachment::where('user_id', $jobSeeker->id)->get();
                 $isallowed = True;

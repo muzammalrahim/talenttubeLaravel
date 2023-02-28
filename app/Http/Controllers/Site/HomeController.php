@@ -197,8 +197,6 @@ class HomeController extends Controller {
             // attempt to do the login
             if (Auth::attempt($userdata)){
 				
-                // validation successful
-                // do whatever you want on success
                 if( $request->login_type == 'site_ajax' ){
                      $user = Auth::user();
                     // check if its employee or user.
@@ -206,41 +204,54 @@ class HomeController extends Controller {
 
     					// check if employer has answer the initial question in step2.
     					if($agent->isMobile()){
-
                             $date = date('Y-m-d H:i:s');
                             $user->last_login = $date;
                             // $user->step2 = 4;
                             $user->save();
     						// $redirect_url = ($user->step2 > 3)?(route('mEmployerProfile')):(route('mStep2Employer'));
-                            
                             $redirect_url = '';
                             if ($user->step2 > 3) {
                                 $redirect_url = route('mEmployerProfile');
                             }
                             else{
                                 $redirect_url = route('mStep2Employer');
-                                Mail::to($user->email)->send(new complete_account_steps($user->name));
-                                
+                                Mail::to($user->email)->send(new complete_account_steps($user->name)); 
                             }
-
                             // dd($redirect_url);
-
                             // Mail::to($user->email)->send(new complete_account_steps($user->name));
-                            
     						return array(
     							'status' => 1,
     							'message' => 'login succesfully',
     							'redirect' => $redirect_url
     						);
     					}
-
-                        // dd($user->step2);
                         $date = date('Y-m-d H:i:s');
                         $user->last_login = $date;
+
+                        // Employerpaid
+                        if ($user->employerStatus == 'paid' || $user->employerStatus == 'unpaid') {
+                            $empExpDate = $user->emp_status_exp;
+                            $currentDate = \Carbon\Carbon::now();
+                            $datetime1 = new \DateTime($empExpDate);
+                            $datetime1 = $datetime1->format('d/m/Y');
+                            $datetime2 = new \DateTime($currentDate);
+                            $datetime2 = $datetime2->format('d/m/Y');
+                            // dd($datetime1,$datetime2);
+                            if ($datetime1 >= $datetime2) {
+                                $user->employerStatus = 'paid';
+                            }
+                            else{
+                                $user->employerStatus = 'unpaid';
+                            }
+                        }else{
+                            $user->employerStatus = 'unpaid';
+                        }
+                        // Employerpaid
+
                         $user->save();
 
                         // $redirect_url = ($user->step2 >3)?(route('employerProfile')):(route('step2Employer'));
-                        
+
                         $redirect_url = '';
                         if ($user->step2 >3) {
                             $redirect_url = route('employerProfile');
@@ -250,8 +261,9 @@ class HomeController extends Controller {
                             $redirect_url = route('step2Employer');
                             //(route('employerProfile')):(route('step2Employer'));
                             Mail::to($user->email)->send(new complete_account_steps($user->name));
-
                         }
+
+
 
                         return array(
                             'status'    => 1,
@@ -531,7 +543,8 @@ class HomeController extends Controller {
     // POST request submitted from registeration.
     //====================================================================================================================================//
     public function registerEmployer(Request $request){
-								// dd( $request->toArray() );
+		$currentDate = \Carbon\Carbon::today();
+        $datetime2 = new \DateTime($currentDate);
         $rules = array(
             // 'firstname' => 'required|alpha_num|max:12',
             // 'surname' => 'required|alpha_num|max:12',
@@ -572,6 +585,7 @@ class HomeController extends Controller {
             $user->email_verification   = hash_hmac('sha256', str_random(40), 'creativeTalent');
             $user->type   = 'employer';
             $user->employerStatus = 'unpaid';
+            $user->emp_status_exp = $datetime2;
 
 
             if( $user->save() ){

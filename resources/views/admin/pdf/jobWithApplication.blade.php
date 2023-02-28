@@ -2,27 +2,26 @@
 
 @section('header_css')
 <style type="text/css">
- @page {
+  @page {
     margin: 20px !important;
     padding: 20px 10px !important;
- }
- .container{
-  height:1000px;
-  /*margin: 0px auto;*/
-  width: 100%;
-  font-size: 14px;
- }
- .header{
-  height: 80px;
-  width: 100%;
-  text-align: center;
-  /*border:1px solid black;*/
-
- }
- .page-break {
+  }
+  .container{
+    height:1000px;
+    /*margin: 0px auto;*/
+    width: 100%;
+    font-size: 14px;
+  }
+  .header{
+    height: 80px;
+    width: 100%;
+    text-align: center;
+    /*border:1px solid black;*/
+  }
+  .page-break {
     page-break-after: always;
-}
- .wrapper{
+  }
+  .wrapper{
 
     margin-top: 10px;
  }
@@ -57,15 +56,16 @@
 
  }
  .rounded{
-  /*border-radius: 20px;*/
-  height: 250px;
+  border-radius: 20px;
+/*  height: 250px;*/
  }
 
  .description{
-  height: 250px;
+/*  height: 250px;*/
   width: 67%;
   margin-top: 10px;
-  position: relative;
+/*  position: relative;*/
+text-align: justify;
   left: 25px;
   line-height: 25px;
   /*background: aliceblue;*/
@@ -73,12 +73,13 @@
  }
 
  .table{
-      text-align: left;
+    text-align: left;
     /* float: right; */
     width: 725px;
     margin: 0 auto;
     line-height: 33px;
-  border:1px solid black;
+    border:1px solid black;
+    margin-top: 10px;
 
 
 
@@ -95,6 +96,29 @@
   border-bottom: 1px solid black;
  }*/
 
+.navbar-div{
+/*  display:flex;*/
+  
+}
+.image-div{
+  height: auto;
+  width: 20%;
+  float: left;
+}
+.description-div{
+  width: 80%;
+  padding:0px 20px 20px 20px;
+  text-align: justify
+}
+.image-div img{
+  max-width: 90%;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+.m-0{
+  margin:0px;
+}
 </style>
 
 
@@ -128,57 +152,29 @@
   $jobType = 'Part time';
   }
 
-
-
-
-
-
-
-
   @endphp
 
-
-
-
-{{-- @dump($users) --}}
-{{-- @dump($job->jobEmployer) --}}
-
- {{-- <h1>Test</h1> --}}
-
-{{-- <img src="..." class="rounded float-left" alt="..."> --}}
-
-
 <div class="container">
-
 <div class="header">
-  <h1>Talent Tube Job</h1>
+  <h1><u>Talent Tube Job</u></h1>
 </div>
-
   <div class="navbar">
     <div class="image">
-      <img src="{{$profile_image}}" class="rounded" alt="profile image" width="100%" height="236">
+      <img src="{{$profile_image}}" class="rounded" alt="profile image" width="100%" height="">
     </div>
-
     <div class="description">
-
-        <b style="margin-right: 50px;">Title:</b> {{$value = $job->title }}
+        <b style="margin-right: 42px;">Title:</b> {{$value = $job->title }}
         <br>
-         {{-- @dump($job) --}}
-
           @php 
               $remSpecialCharDesc = str_replace("\&#39;","'", $job->description);
           @endphp
-
          <b>Description: </b> {{$value = $remSpecialCharDesc }}
          <br>
          <b style="margin-right: 15px;">Company: </b>{{$value = $job->jobEmployer->company }}
-
          <br>
-         <b style="margin-right: 17px;">Location: </b>{{$job->jobEmployer->country }}, {{$job->jobEmployer->state }}, {{$job->jobEmployer->city }}
+         <b style="margin-right: 20px;">Location: </b>{{$job->jobEmployer->country }}, {{$job->jobEmployer->state }}, {{$job->jobEmployer->city }}
          {{-- {{$value+ = $job->jobEmployer->city }} --}}
-
   	 </div>
-
 </div> {{-- row --}}
 
    <table class="table">
@@ -239,7 +235,7 @@
     @endphp
     <div class="page-break"></div>
       <div class="header" >
-  <h1>Talent Tube Job Applicants</h1>
+  <h1><u>Talent Tube Job Applicants</u></h1>
   </div>
       {{-- @dump($application->id) --}}
 
@@ -256,10 +252,6 @@
       </div>
 
       {{-- <a class="contactBtn" href="{{route('jobSeekerInfo',['id' => $application->id])}}">Contact Details</a> --}}
-
-
-
-
         <div class="description">
          <b style="margin-right: 40px;">Name:</b> {{$application->jobseeker->name }} {{$application->jobseeker->surname }}
          <br>
@@ -292,14 +284,14 @@
 {{-- @dump($application->answers) --}}
 
                 @foreach($job->questions as $key =>$question)
-                      <h4>{{$question->title}}</h4>
-                    <p>{{$application->answers[$key]->answer}}</p>
+                    <h4 class="m-0">{{$question->title}}</h4>
+                    <p class="m-0">{{$application->answers[$key]->answer}}</p>
                 @endforeach
 
                 <div class="jobAppDescriptionBox">
-                    <h4>{{jobApplicationMandatoryQuestion()}}</h4>
+                    <h4 style="margin:0px">{{jobApplicationMandatoryQuestion()}}</h4>
                     <div class="jobAppDescription">
-                        <p>{{ $application->description}}</p></div>
+                        <p class="m-0">{{ $application->description}}</p></div>
                 </div>
         </td>
 

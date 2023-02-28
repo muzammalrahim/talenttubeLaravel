@@ -18,11 +18,13 @@ a.contactBtn {
     border: 0px;
     font-size: 12px;
     text-decoration: none;
-    display: inline-block;
+/*    display: inline-block;*/
     display:block;
     margin: 0 auto;
-    width: 70px;
+    width: 30px;
     cursor:pointer;
+    margin-right: 10%;
+    
 }
 
 a.cvBtn {
@@ -33,10 +35,11 @@ a.cvBtn {
     border: 0px;
     font-size: 12px;
     text-decoration: none;
-    display: inline-block;
+/*    display: inline-block;*/
     display:block;
     margin: 0 auto;
     width: 30px;
+    margin-left:15%;
 }
 .name_title {
     font-size: 18px;
@@ -64,6 +67,11 @@ tr.updf_row td {
 td.center.left_info {
     text-align: center;
 }
+tr>td>.cv_video{
+    display:inline-flex;
+    gap: 5px; 
+}
+
 </style>
 @stop
 
@@ -87,9 +95,10 @@ td.center.left_info {
 			@endif
 		</div>
             
-
-		<a class="contactBtn" onclick="pdfVideo('{{route('publicuservideo',['id' => $user->id])}}')" {{-- href="{{route('publicuservideo',['id' => $user->id])}}" --}}>Watch Video</a>
-        <a href="{{asset('images/user/'.$user->attachments->file)}}" target="”_blank”" download="" class="cvBtn">CV</a>
+        <div class="cv_video">
+            <a href="{{asset('images/user/'.$user->attachments->file)}}" target="”_blank”" download="" class="cvBtn">CV</a>
+    		<a class="contactBtn" target="”_blank”" {{-- onclick="pdfVideo('{{route('publicuservideo',['id' => $user->id])}}')" --}} href="{{route('publicuservideo',['id' => $user->id])}}">Video</a>
+        </div>
             
 	</td>
 
@@ -99,7 +108,21 @@ td.center.left_info {
     		<div class="updf_intrested"><span class="label">Interested In:</span> {{$user->interested_in}}</div>
     		<div class="updf_salary_exp"><span class="label">Salary Expectation:</span> {{getSalariesRangeLavel($user->salaryRange)}}</div>
     		<div class="updf_location"><span class="label">Location:</span>{{userLocation($user)}}</div>
-    		<div class="updf_qualification">
+            
+            @php 
+               $jsQualification = ''; 
+               if ($user->qualificationType == "post_degree") {
+                  $userQualification = 'post graduate degree';
+               }else{
+                  $userQualification = $user->qualificationType;
+               }
+            @endphp            
+            <div class="updf_location">
+                <span class="label">Qualification Type:</span>
+                {{remove_underscode($userQualification)}}
+            </div>
+    		
+            <div class="updf_qualification">
     				<span class="label">Qualification:</span>
     				@if($user->qualification)
     					@foreach (getQualificationNames($user->qualification) as $qualification)

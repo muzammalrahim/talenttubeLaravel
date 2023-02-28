@@ -51,7 +51,11 @@ class AdminEmployerController extends Controller
 
         $user = User::where('id', $request->id)->where('type', 'employer')->first();
         if ($user) {
+
+            $currentDate = \Carbon\Carbon::yesterday();
+            $datetime2 = new \DateTime($currentDate);
             $user->employerStatus = 'unpaid';
+            $user->emp_status_exp = $datetime2;
             $user->save();
             return response()->json([
                 'status' => 1,

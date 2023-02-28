@@ -27,9 +27,17 @@ function isEmployer($user = null){
 }
 
 function isEmployerPaid($user = null){
-
     $user = ( $user == null )?(Auth::user()) : $user;
     if ($user->employerStatus == 'paid') {
+        return true; 
+    }else{
+        return false;
+    }
+}
+
+function isEmployerVerified($user = null){
+    $user = ( $user == null )?(Auth::user()) : $user;
+    if ($user->verified == 1) {
         return true; 
     }else{
         return false;
@@ -1206,6 +1214,6 @@ function userInterview_answer_video($video){
 
 
 function humanReadableDateTime($dateTime){
-    $dateTime = Carbon::parse($dateTime)->format('F j, Y, g:i a');
+    $dateTime = Carbon::parse($dateTime)->format('d/m/Y, g:i A');
     return $dateTime;
 }

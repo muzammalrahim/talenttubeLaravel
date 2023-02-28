@@ -92,6 +92,7 @@
 
     <div class="mb-2 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkApproved" style="margin-right:5px;">Bulk Assign</a></div>
     <div class="mb-2 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkPDFGenerate">Bulk Snapshot</a></div>
+    <div class="mb-2 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkPDFGeneratePremium">Bulk Premium Snapshot</a></div>
     <div class="mb-2 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnExportCSV">Bulk Export CSV</a></div>
     <div class="mb-2 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkEmail">Bulk Email</a></div>
     <div class="mb-2 bulkButton mr-1"><a class="btn btn-block btn-sm btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
@@ -260,6 +261,13 @@
   </form>
 </div>
 
+<div class="d-none">
+  <form method="POST" class="bulkPDFPremiumExportForm" action="{{route('bulk.generatePremiumPDFApplicant')}}">
+    @csrf
+    <div class="cbx_list">
+    </div>
+  </form>
+</div>
 
 <div id="ModalBulkPool" class="modal fade ModalBulkPool" role="dialog">
   <div class="modal-dialog">
@@ -454,6 +462,8 @@ $(document).on('click','.btnBulkStatus', function(){
 });
     var tableObj = jQuery('#dataTable').DataTable({
         processing: true,
+        order: [/*[ 1, 'asc' ], [ 3, 'asc' ],*/ [ 0, 'asc' ]],
+
         'language': {
             'loadingRecords': '&nbsp;',
             'processing': '<div class="spinner"></div>'
@@ -499,6 +509,9 @@ $(document).on('click','.btnBulkStatus', function(){
              return '<div><input type="checkbox" class="specialinputblue" name="cxx" value="'+ $('<div/>').text(data).html() + '">'+'<input type="checkbox" class="specialinputgreen" name="cyx" value="'+ $('<div/>').text(data).html() + '">'+'<input type="checkbox" class="specialinputred" name="czx" value="'+ $('<div/>').text(data).html() + '"></div>';
          }
       },
+
+        { "orderable": true, "targets": [2,3,4,8,9] },
+        { "orderable": false, "targets": [5,6,7,10,11] },
 
 /*      {
          'targets': 2,
@@ -761,6 +774,23 @@ $(document).on('click','.btnUserResumeInfo', function(){
   });*/
 // });
 
+    $(document).on('click','.btnBulkPDFGeneratePremium',function(){
+        var cbx = $('input[name="cbx[]"]:checked').map(function(){
+            return $(this).val();
+        }).toArray();
+        if (cbx.length <1) {
+            alert('Please select checkboxes');
+        }else{
+            var cbx_hidden = '';
+            $.each(cbx,function(key,value){
+                cbx_hidden += '<input type="hidden" name="cbx[]" value="'+value+'"/>'
+            });
+
+            // console.log(cbx_hidden);return;
+            $('.bulkPDFPremiumExportForm .cbx_list').html(cbx_hidden);
+            $('.bulkPDFPremiumExportForm').submit();
+        }
+    })
 
 </script>
 @stop

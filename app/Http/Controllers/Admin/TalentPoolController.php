@@ -221,16 +221,28 @@ class TalentPoolController extends Controller
     	$UserPool = UserPool::where('pool_id', $request->id)->pluck('user_id');
     	// dd($UserPool);
     	$records = array();
-    	$records = User::select(['id', 'name','email','qualificationType', 'industry_experience' ,'qualification','created_at'])->whereNotIn('id' , $UserPool)
-        ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
-        ->orderBy('created_at', 'desc');
-        
+    	$records = User::select(['id', 'name','surname','email','qualificationType','location', 'city','state','country' ,'industry_experience' ,'qualification','created_at'])->whereNotIn('id' , $UserPool)
+        ->whereHas('roles' , function($q){ $q->where('slug', 'user'); });
         return datatables($records)
+        
+        ->editColumn('id', function ($records) {
+            $rhtml = '<a href="'.route('jobSeekerInfo',['id'=>$records->id]).'" target="_blank" class="pointer"><u> '.$records->id.' </u> </a>';
+            return $rhtml;
+        })
+
+        ->editColumn('name', function ($records) {
+            $rhtml = $records->name .' '. $records->surname;
+            return $rhtml;
+        })
+
+        ->editColumn('location', function ($records) {
+            $rhtml = $records->city .', '. $records->state .', '. $records->country;
+            return $rhtml;
+        })
+
 
         ->editColumn('qualification', function ($records) {
-
         $qualificationsData =  ($records->qualification)?(getQualificationsData($records->qualification)):(array());
-
         if(!empty($qualificationsData))
             foreach($qualificationsData as $qualification)
             {
@@ -242,7 +254,6 @@ class TalentPoolController extends Controller
 
         })
 
-
         ->editColumn('industry_experience', function ($records) {
            if(isset($records->industry_experience)){
                foreach ($records->industry_experience as $ind){
@@ -253,6 +264,7 @@ class TalentPoolController extends Controller
                }
            }
         })
+
 
         // ->addColumn('qualification_type', function ($records) {
         //     if (isAdmin()){
@@ -269,7 +281,7 @@ class TalentPoolController extends Controller
     	})
 
       
-      ->rawColumns(['qualificationType','qualification','industry_experience','action'])
+      ->rawColumns(['id','name','location','qualificationType','qualification','industry_experience','action'])
       ->toJson();
       dump($records);
 

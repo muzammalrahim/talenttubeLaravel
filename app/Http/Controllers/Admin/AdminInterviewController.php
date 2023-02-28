@@ -264,11 +264,25 @@ class AdminInterviewController extends Controller
     // ========================================= Admin Notes Data Table Start =========================================
 
     public function interviewTemplateDataTable(Request $request){
-      $records = array();
-      $records = InterviewTemplate::select(['id', 'template_name', 'type', 'created_at'])
-        // ->whereHas('roles' , function($q){ $q->where('slug', 'employer'); })
-        ->orderBy('created_at', 'desc');
-      return datatables($records)
+        $records = array();
+        $records = InterviewTemplate::select(['id', 'template_name', 'type', 'created_at']);
+        return datatables($records)
+
+        ->editColumn('type', function ($records) {
+            $interviewType = '';
+            switch ($records->type) {
+                case 'phone_screen':
+                    $interviewType = 'Phone Screen';
+                    break;
+                case 'correspondence':
+                    $interviewType = 'Correspondance';
+                    break;
+                default:
+                    $interviewType = $records->type;
+                    break;
+            }
+            return $interviewType;
+        })
 
       ->editColumn('created_at', function ($records) {
         return humanReadableDateTime($records->created_at); // human readable format

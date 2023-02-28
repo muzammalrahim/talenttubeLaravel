@@ -673,7 +673,7 @@ class EmployerController extends Controller {
     //====================================================================================================================================//
     public function jobSeekers(Request $request){
         $user = Auth::user();
-        if (!isEmployer($user)){ return redirect(route('jobs')); }
+        if (!isEmployer($user)  || !isEmployerVerified()){ return redirect(route('jobs')); }
         $data['user']           = $user;
         $data['title']          = 'Job Seekers';
         $data['classes_body']   = 'jobSeekers';
@@ -1360,7 +1360,7 @@ class EmployerController extends Controller {
                 // dd($users);
                 $data['users'] = $users;
                 if($request->test){
-                    return view('admin.pdf.premium-pdf-jobseekers', $data);
+                    return view('admin.pdf.premium-pdf-jobseekers', $data); // admin/pdf/premium-pdf-jobseekers
                 }else{
                     $pdf = PDF::loadView('admin.pdf.premium-pdf-jobseekers', $data);
                     $pdf->setPaper('A4');

@@ -5,11 +5,11 @@
 @section('content_header')
 
 <div class="block row">
-    <div class="col-md-2"><a href=" {{url()->previous()}} " class="seeCompletedReference"><h1 class="m-0 text-dark">{{$content_header}}</h1></a></div>
+    <div class="col-md-6"><a href=" {{url()->previous()}} " class="seeCompletedReference"><h1 class="m-0 text-dark">{{$content_header}}</h1></a></div>
 
 
 
-    <div class="block row col-md-8 text-white">
+    <div class="block row col-md-6 text-white">
 
 
       {{-- <div class="col-md-1.5 bulkButton"><a class="btn btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign Job</a></div>
@@ -53,7 +53,8 @@
             Id
             </th>
             <th>Name</th>
-            <th>Email</th>
+            <th>location</th>
+            {{-- <th>Email</th> --}}
             {{-- <th>Qualification Type</th> --}}
             <th>qualification</th>
             <th>Industry Experience</th>
@@ -111,6 +112,8 @@ jQuery(function() {
     var table = jQuery('#dataTable').DataTable({
         processing: true,
         serverSide: true,
+        order: [/*[ 1, 'asc' ], [ 3, 'asc' ],*/ [ 0, 'desc' ]],
+
         ajax: {
           url: '{!! route('addJobseekerinPool.dataTable') !!}',
           data: {'id': id}
@@ -119,12 +122,18 @@ jQuery(function() {
             // { data: 'select', name: 'select' },
             { data: 'id', name: 'id' },
             { data: 'name', name: 'name' },
-            { data: 'email', name: 'email' },
+            { data: 'location', name: 'location' },
+            // { data: 'email', name: 'email' },
             // { data: 'qualificationType', name: 'qualificationType' },
             { data: 'qualification', name: 'qualification' },
             { data: 'industry_experience', name: 'industry_experience' },
             { data: 'action', name: 'action' }
         ],
+
+        columnDefs: [
+            { "orderable": true, "targets": [0,1] },
+            { "orderable": false, "targets": [2,3,4,5] },
+          ],
 
     });
 

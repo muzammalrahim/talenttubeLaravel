@@ -128,8 +128,8 @@ class AdminReportsController extends Controller
         $user = Auth::user();
         $data['user'] = $user;
         $data['title'] = 'Jobs';
-        $data['content_header'] = 'Jobs';
-        $data['classes_body'] = 'jobs';
+        $data['content_header'] = 'Jobs Reports';
+        $data['classes_body'] = 'jobs Reports';
         $data['jobs'] = Jobs::with('applicationCount')->get();
 
 
@@ -140,8 +140,7 @@ class AdminReportsController extends Controller
     }
 
     function getDatatableReport(){
-         $records = Jobs::with(['jobEmployer'])
-        ->orderBy('created_at', 'desc');
+         $records = Jobs::with(['jobEmployer']);
       return datatables($records)
 
       ->editColumn('created_at', function ($records) {

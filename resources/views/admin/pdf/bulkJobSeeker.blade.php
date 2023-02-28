@@ -80,7 +80,7 @@ td.center.left_info {
             {{-- <audio controls>
                 <source src="{{ $audio_base_url .'/' .$user->vidoes()->first()->audio_path }}" type="audio/mpeg">     
             </audio> --}}
-			<a class="contactBtn" onclick="pdfVideo('{{ $audio_base_url .'/' .$user->vidoes()->first()->audio_path }}')" {{-- href="{{ $audio_base_url .'/' .$user->vidoes()->first()->audio_path }}" --}}> Listen Audio</a>
+			<a class="contactBtn" target="”_blank”" href="{{ $audio_base_url .'/' .$user->vidoes()->first()->audio_path }}" {{-- onclick="pdfVideo('{{ $audio_base_url .'/' .$user->vidoes()->first()->audio_path }}')" --}}> Audio Preview</a>
 		</td>
 
     <td width="80%" class="updf_detai">
@@ -89,7 +89,19 @@ td.center.left_info {
     		<div class="updf_intrested"><span class="label">Interested In:</span> {{$user->interested_in}}</div>
     		<div class="updf_salary_exp"><span class="label">Salary Expectation:</span> {{getSalariesRangeLavel($user->salaryRange)}}</div>
     		<div class="updf_location"><span class="label">Location:</span>{{userLocation($user)}}</div>
-    		<div class="updf_qualification">
+    		@php 
+               $jsQualification = ''; 
+               if ($user->qualificationType == "post_degree") {
+                  $userQualification = 'post graduate degree';
+               }else{
+                  $userQualification = $user->qualificationType;
+               }
+            @endphp            
+            <div class="updf_location">
+                <span class="label">Qualification Type:</span>
+                {{remove_underscode($userQualification)}}
+            </div>
+            <div class="updf_qualification">
     				<span class="label">Qualification:</span>
     				@if($user->qualification)
     					@foreach (getQualificationNames($user->qualification) as $qualification)

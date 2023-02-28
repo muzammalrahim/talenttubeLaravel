@@ -112,6 +112,8 @@ jQuery(function() {
     var table = jQuery('#dataTable').DataTable({
         processing: true,
         serverSide: true,
+        order: [/*[ 1, 'asc' ], [ 3, 'asc' ],*/ [ 3, 'asc' ]],
+
         ajax: {
           url: '{!! route('template.dataTable') !!}',
           data: function (d) {
@@ -126,6 +128,11 @@ jQuery(function() {
             { data: 'created_at', name: 'created_at' },
             { data: 'action', name: 'action' }
         ],
+        
+     columnDefs: [
+        { "orderable": false, "targets": [4] },
+        { "orderable": true, "targets": [0,1,2,3] }
+      ],
     });
 });
 
