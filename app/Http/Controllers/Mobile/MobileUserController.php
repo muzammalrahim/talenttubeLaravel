@@ -1968,8 +1968,8 @@ class MobileUserController extends Controller
 		$user = Auth::user();
 		if (!isEmployer($user)){ return redirect(route('jobs')); }
 
-		if ($user->employerStatus != 'paid') {
-			return redirect(route('MjobSeekers'));
+		if ($user->employerStatus != 'paid' || !isMobileNew()) {
+			return redirect(route('jobSeekers'));
 		}
 
         // // =========================================== Paid employer viewing jobseeker ===========================================
@@ -2039,8 +2039,6 @@ class MobileUserController extends Controller
         $qualification_type = $request->filter_qualification_type; 
         $qualifications = $request->ja_filter_qualification;
 
-        $likeUsers = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
-        $block = BlockUser::where('user_id', $user->id)->pluck('block')->toArray();
         $query = User::with('profileImage','user_tags')->where('type','user')->Where('step2' , '>=' , '7');
         // $tagsQuery = Tags::get();
         if(!empty($block)){
@@ -2199,8 +2197,10 @@ class MobileUserController extends Controller
         // DB::enableQueryLog();
         // print_r( $query->toSql() );exit;
         $jobSeekers =  $query->get();
-        $data['likeUsers'] = $likeUsers;
         $data['jobSeekers'] = $jobSeekers;
+        $data['likeUsers']       = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+        $data['blockUsers']       = BlockUser::where('user_id',$user->id)->pluck('block')->toArray();
+
 		return view('mobile.employer.jobSeekers.swipe_jobseekerList', $data); // mobile/employer/jobSeekers/swipe_jobseekerList
 	}
 

@@ -11,7 +11,7 @@
         <input type="hidden" name="qualification[]" class="userQualification" value="{{$qualification['id']}}">
           <li class="d-flex">
             <div class="circle-div">
-              <i class="qualification-circle"></i>
+              <i class="qualification-sign"> ></i>
             </div>
             <div class="qual-div">
               <span> {{ ucfirst($qualification['title']) }} <i class="fa fa-trash removeQualification d-none float-right"></i> </span>

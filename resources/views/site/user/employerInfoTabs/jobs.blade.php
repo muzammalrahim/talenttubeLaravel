@@ -58,10 +58,10 @@ $jobType = 'Part Time';
          @if (isset($job->jobApplication))
          @if ($job->jobApplication->user_id == $user->id)
          {{-- expr --}}
-         <button class="interview-tag used-tag"><i class="far fa-check-circle"></i> Applied </button>
+         <button class="blue_btn float-right">{{-- <i class="far fa-check-circle"></i> --}} Applied </button>
          @endif
          @else
-         <button data-toggle="modal" data-target="#jobApplyModal" onclick="jobApplyFunction({{ $job->id }})" class="interview-tag used-tag"><i class="far fa-check-circle"></i> Apply </button>
+         <button data-toggle="modal" data-target="#jobApplyModal" onclick="jobApplyFunction({{ $job->id }})" class="interview-tag used-tag rounded"><i class="far fa-check-circle"></i> Apply </button>
          @endif
 
       </div>

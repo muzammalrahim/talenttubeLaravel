@@ -228,10 +228,12 @@
                <div class="block-div">
                   <button class="block-btn" onclick="blockFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
                </div>
-
-               <a href="{{ route('jobSeekerInfo', ['id'=> $js->id]) }}" target="_blank">
+               @if (isEmployerPaid())
+                  {{-- expr --}}
+               <a href="{{ route('jobSeekerInfo', ['id'=> $js->id]) }}" target="_blank" class="float-md-right">
                   <button class="detail-btn px-1"><i class="fas fa-file-alt"></i> View profile</button>
                </a>
+               @endif
             </div>
          </div>
       </div>

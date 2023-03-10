@@ -57,7 +57,6 @@
                   $profile_image  = asset('images/site/icons/nophoto.jpg');
                   $profile_image_gallery    = $js->profileImage()->first();
                   if ($profile_image_gallery) {
-                     // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
                      $profile_image   = assetGallery2($profile_image_gallery,'small');
                   }
                   @endphp
@@ -65,7 +64,7 @@
                </div>
 
                <div class="block-user-progresss d-none d-sm-block">
-                  <h6>{{$js->company}}</h6>
+                  <h6 class="pl-1">{{$js->company}}</h6>
                </div>
             </div>
 
@@ -83,7 +82,7 @@
                
                {{-- ============================================= Pie Chart =============================================  --}}
                <div class="d-sm-block d-none"> 
-               @include('web.piechart.pie_chart')
+               @include('web.piechart.pie_chart') {{-- web/piechart/pie_chart --}}
                </div>
 
                {{-- ============================================= Pie Chart =============================================  --}}
@@ -119,7 +118,7 @@
                <!-- <div class="block-div"> -->
                   <button class="block-btn" onclick="blockEmployerFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
                <!-- </div> -->
-               <a href="{{route('employerInfo', ['id' => $js->id])}}"><button class="detail-btn"><i class="fas fa-file-alt"></i> Detail</button></a>
+               <a href="{{route('employerInfo', ['id' => $js->id])}}"><button class="detail-btn"><i class="fas fa-file-alt"></i> Details</button></a>
                @if (in_array($js->id,$likeUsers))
                <div class="unlike-div" style="display: contents;">
                   <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>

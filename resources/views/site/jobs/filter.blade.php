@@ -79,7 +79,7 @@
    </div>
 </div>  --}}
 {{-- html for browse job form --}}
-<div class="bj-main pt-2 pt-md-0">
+<div class="bj-main pt-2 pt-md-0 mb-2">
    <div class="filter-section">
       {{ Form::open(array('url' => url()->current(), 'method' => 'get', 'id' => 'filter_form' )) }}
       <input type="hidden" name="page" id="paginate" value="">

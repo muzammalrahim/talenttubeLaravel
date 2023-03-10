@@ -33,6 +33,11 @@
 
                <li><a href="{{ route('jobSeekers') }}" class="{{(request()->is('jobSeekers'))?'active':''}} sidebar-text"><i class="fas fa-link"></i><span>Job Seekers</span></a></li>
 
+
+               @if (isEmployerPaid() &&  isMobileNew())
+                  <li><a href="{{ route('swipe.jobseekers') }}" class="{{(request()->is('Swipe-jobseekers'))?'active':''}} sidebar-text"><i class="fas fa-link"></i><span>Swipe Seekers</span></a></li>
+               @endif
+
                   @php
    
                   @endphp

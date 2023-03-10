@@ -95,7 +95,7 @@
 
             <div class="sectionUpdateProfile"><b>Turn off Email Notificaiton</b></div>
             <div class="form-group row">
-                {{ Form::label('Turn of Email Notification', null, ['class' => 'col-md-3 form-control-label']) }}
+                {{ Form::label('Turn off Email Notification', null, ['class' => 'col-md-3 form-control-label']) }}
                 <div class="col-md-9">
                     
                   {{-- <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked> --}}

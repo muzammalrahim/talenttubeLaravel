@@ -81,7 +81,36 @@
                   $profile_image   = assetGallery2($profile_image_gallery,'small');
                   }
                   @endphp
-                  <div class="col-md-2">
+
+                  <div class="col-md-2 user-images">
+                     <div class="block-user-img mx-auto float-none border-0">
+                        @php
+                        $profile_image  = asset('images/site/icons/nophoto.jpg');
+                        $profile_image_gallery    = $js->profileImage()->first();
+                        if ($profile_image_gallery) {
+                           // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+                           $profile_image   = assetGallery2($profile_image_gallery,'small');
+                        }
+                        @endphp
+                        <img src="{{$profile_image}}" alt="" >
+                     </div>
+
+                     <div class="block-user-progresss d-none d-sm-block">
+                        <h6 class="pl-1">{{$js->username}}</h6>
+                     </div>
+                  </div>   
+
+                  <div class="progress-img d-block d-sm-none mt-3"> 
+                     <h6 class="text-center">{{$js->company}}</h6>
+                     <div class="block-progrees-ratio1 d-md-block p-0">
+                     <ul>
+                     <li class="mx-2 p-0"><span class="Progress-ratio-icon1">.</span> <span> {{ $user_compat }} % </span> Match </li>
+                     <li class="p-0"><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$user_compat }} % </span> Un-Matched</li>
+                     </ul>
+                     </div>
+                    
+                  </div>
+                  <!--div class="col-md-2">
                      <div class="d-none d-md-block  user-images">
                         <div class="block-user-img">
                            @php
@@ -96,11 +125,6 @@
                         
                         <div class="block-user-progress ">
                            <h6 class="text-start">{{$js->username}}</h6>
-
-
-                           {{-- <div class="progress-img"> 
-                              <img src="assests/images/user-progressbar.svg" alt="">
-                           </div> --}}
                            <div class="text-center">
                               
                               @if($js->vidoes->count() > 0)
@@ -127,8 +151,8 @@
                               @if($js->vidoes->count() > 0)
                               {{-- <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
                               </i> --}}
+                              @endif
                            </div>
-                           @endif
                         </div>
                         <div class="block-user-img mx-auto float-none border-0">
                            @php
@@ -142,7 +166,9 @@
                         </div>
                         
                      </div>
-                  </div>
+                  </div-->
+
+
                   <div class="col-md-10 user-details">
                         
                         {{-- ========================================== Pie Chart ========================================== --}}
@@ -153,16 +179,7 @@
                            @include('web.piechart.pie_chart')
 
                         </div>
-                        <div class="progress-img d-block d-sm-none mt-3"> 
-
-                           <div class="block-progrees-ratio1 d-md-block">
-                           <ul>
-                           <li><span class="Progress-ratio-icon1">.</span> <span> {{ $user_compat }}% </span> Match </li>
-                           <li><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$user_compat }}% </span> Un-Matched</li>
-                           </ul>
-                           </div>
-                          
-                        </div>
+                        
                         @endif
 
                         {{-- ========================================== Pie Chart ========================================== --}}
@@ -170,27 +187,27 @@
                      @php
                      
                      @endphp
-                     <div class="row blocked-user-about mt-2">
+                     <div class="row blocked-user-about mt-2 pl-3">
                         <h6 class="p-0">Recent Job:</h6>
                         <p><b>{{$js->recentJob}}</b> at <b>{{$js->organHeldTitle}}</b></p>
                      </div>
-                     <div class="row blocked-user-about mt-2">
+                     <div class="row blocked-user-about mt-2 pl-3">
                         <h6 class="p-0">About Me:</h6>
                         <p>{{$js->about_me}}</p>
                      </div>
-                     <div class="row blocked-user-about mt-2">
+                     <div class="row blocked-user-about mt-2 pl-3">
                         <h6 class="p-0">Interested In:</h6>
                         <p>{{$js->interested_in}}</p>
                      </div>
-                     <div class="row blocked-user-about mt-2">
+                     <div class="row blocked-user-about mt-2 pl-3">
                         <h6 class="p-0">Location:</h6>
                         <p>{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
                      </div>
-                     <div class="row blocked-user-about mt-2">
+                     <div class="row blocked-user-about mt-2 pl-3">
                         <h6 class="p-0">Salary Range:</h6>
                         <p>{{getSalariesRangeLavel($js->salaryRange)}}</p>
                      </div>
-                     <div class="row blocked-user-about mt-2">
+                     <div class="row blocked-user-about mt-2 pl-3">
                         <h6 class="p-0">Qualifications:</h6>
 
                         @php 
@@ -216,7 +233,7 @@
                         </ul>
                         @endif
                      </div>
-                     <div class="row blocked-user-experience mt-2">
+                     <div class="row blocked-user-experience mt-2 pl-3">
                         <h6 class="p-0">Industry Experience:</h6>
                         @if(isset($js->industry_experience))
                         <ul class="p-0">
@@ -235,7 +252,11 @@
                   </div>
 
                   <div class="block-div">
-                     <button class="block-btn" onclick="blockFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
+                  @if (in_array($js->id,$blockUsers))
+                        <button class="block-btn" onclick="unblockUser('{{ $js->id }}')" class="unblock-btn" data-toggle="modal" data-target="#unBlockModal"><i class="fas fa-ban"></i> UnBlock</button>
+                  @else
+                        <button class="block-btn" onclick="blockFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
+                  @endif
                   </div>
                   
                   @if (in_array($js->id,$likeUsers))
@@ -444,6 +465,7 @@
    .video_thumb{
       max-height:200px;
    }
+   
 </style>
 
 @stop

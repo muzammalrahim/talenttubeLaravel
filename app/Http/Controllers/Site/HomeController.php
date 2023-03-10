@@ -229,7 +229,7 @@ class HomeController extends Controller {
                         $user->last_login = $date;
 
                         // Employerpaid
-                        if ($user->employerStatus == 'paid' || $user->employerStatus == 'unpaid') {
+                        if ($user->employerStatus == 'paid') {
                             $empExpDate = $user->emp_status_exp;
                             $currentDate = \Carbon\Carbon::now();
                             $datetime1 = new \DateTime($empExpDate);
@@ -260,8 +260,10 @@ class HomeController extends Controller {
                         else{
                             $redirect_url = route('step2Employer');
                             //(route('employerProfile')):(route('step2Employer'));
-                            Mail::to($user->email)->send(new complete_account_steps($user->name));
-                        }
+                            if ($user->email_notification == 1) {
+                                Mail::to($user->email)->send(new complete_account_steps($user->name));
+                            }
+                        }   
 
 
 
@@ -278,7 +280,9 @@ class HomeController extends Controller {
                             $user->last_login = $date;
                             $user->save();
     						$redirect_url = ($user->step2 > 7)?(route('mUsername', $user->username)):(route('mStep2User'));
-                            Mail::to($user->email)->send(new complete_account_steps($user->name));
+                            if ($user->email_notification == 1) {
+                                Mail::to($user->email)->send(new complete_account_steps($user->name));
+                            }
     						return array(
     							'status' => 1,
     							'message' => 'login succesfully',
@@ -290,7 +294,9 @@ class HomeController extends Controller {
                         $user->last_login = $date;
                         $user->save();
                         $redirect_url = ($user->step2 > 7)?(route('username',$user->username)):(route('step2User'));
-                        Mail::to($user->email)->send(new complete_account_steps($user->name));
+                        if ($user->email_notification == 1) {
+                            Mail::to($user->email)->send(new complete_account_steps($user->name));
+                        }
 
                         // dd($redirect_url);
                         return array(

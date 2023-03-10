@@ -104,7 +104,7 @@
 
                 <div class="w_25p fl_right">
                     <div class="j_button fl_right"><a class="jobApplyBtn graybtn jbtn" data-jobid="{{$job->id}}">Apply</a></div>
-                    <div class="j_button fl_right"><a class="jobDetailBtn graybtn jbtn m5" href="{{route('jobDetail', ['id' => $job->id]) }}">Detail</a></div>
+                    <div class="j_button fl_right"><a class="jobDetailBtn graybtn jbtn m5" href="{{route('jobDetail', ['id' => $job->id]) }}">Details</a></div>
                 </div>
             </div>
         </div>

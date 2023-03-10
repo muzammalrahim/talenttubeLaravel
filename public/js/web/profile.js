@@ -854,7 +854,70 @@ $(document).ready(function(){
         });
     }
 
-    
+    this.swipeBlock = function(jobseeker_id){
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/blockJobSeeker/'+jobseeker_id,
+            success: function(data){
+                // btn.prop('disabled',false);
+                if( data.status == 1 ){
+                     var html = '<button class="block-btn w27" onclick="swipeUnBlock('+jobseeker_id+')"><i class="fas fa-ban"></i> UnBlock</button>';
+                    $('.block-div-'+jobseeker_id).html(html);
+                }
+            }
+        });
+    }
+
+    this.swipeUnBlock = function(jobseeker_id){
+        console.log(jobseeker_id);
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/unBlockUser',
+            data: {id: jobseeker_id},
+            success: function(data){
+                if( data.status == 1 ){
+                    var html = '<button class="block-btn w27" onclick="swipeBlock('+jobseeker_id+')"><i class="fas fa-ban"></i> Block</button>';
+                    $('.block-div-'+jobseeker_id).html(html);
+                }
+            }
+        });
+    }
+
+    this.swipeLike = function(jobseeker_id){
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/likeJobSeeker/'+jobseeker_id,
+            success: function(res){
+                if( res.status == 1 ){
+                    var html = '<button class="unlike-btn w27" onclick="swipeUnlike('+jobseeker_id+')"><i class="fas fa-thumbs-up"></i> Unlike</button>';
+                    $('.like-div-'+jobseeker_id).html(html);
+                }else{
+                    // btn.html('error');
+                }
+            }
+        });
+    }
+
+    this.swipeUnlike = function(jobseeker_id){
+        $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+        $.ajax({
+            type: 'POST',
+            url: base_url+'/ajax/unLikeUser',
+            data: {id: jobseeker_id},
+            success: function(data){
+                if( data.status == 1 ){
+                var html = '<button class="like-btn w27" onclick="swipeLike('+jobseeker_id+')"><i class="fas fa-thumbs-up"></i> Like </button>';
+                    $('.like-div-'+jobseeker_id).html(html);
+
+                }else{
+                  $('.jobSeekerBlockId .apiMessage').html(data.error);
+                }
+            }
+        });
+    }
     
 
     // =============================================== interview concierge delete function ===============================================

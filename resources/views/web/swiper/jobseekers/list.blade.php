@@ -73,7 +73,7 @@
                                 <a class="jobDetailBtn blue-btn-mob d-flex justify-content-center align-items-center" target="_blank" href="{{route('jobSeekerInfo', ['id' => $js->id])}}">View Profile</a>
                             </div>
                             <div class="col-4">
-                                <a class="blue-btn-mob viewCvButton d-flex justify-content-center align-items-center" onclick="viewCv()" data-jsId = "{{ $js->id }}" >View CV</a>
+                                <a class="blue-btn-mob viewCvButton d-flex justify-content-center align-items-center" onclick="viewJobseekerCv({{ $js->id }})" data-jsId = "{{ $js->id }}" >View CV</a>
                             </div>
                             <div class="col-4">
                                 <a class="jobDetailBtn blue-btn-mob d-flex justify-content-center align-items-center" href="tel:{{ $js->phone }}">Call Candidate</a>
@@ -129,7 +129,7 @@
 <script type="text/javascript" src="{{ asset('js/web/profile.js') }}"></script>
 
 {{-- Icluded Common file here --}}
-@include('mobile.employer.jobSeekers.Swipe-jobseeker-common')
+@include('web.swiper.jobseekers.swiper-common')
 
 
 <script type="text/javascript">

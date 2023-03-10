@@ -229,6 +229,16 @@ body {
     margin: 0 10px;
 }
 
+.qualification-sign {
+    width: 10px;
+    height: 10px;
+/*    background: #FF9400;*/
+/*    border-radius: 20px;*/
+    display: inline-block;
+    margin: 0 10px;
+    font-weight: bold;
+}
+
 .qualification-li li {
     margin-bottom: 10px;
 }
@@ -903,7 +913,7 @@ span.remove:before {
     border: 2px solid #2672ab;
     margin-bottom: 20px;
     background: #f8f8f8;
-    border-radius: 5px;
+    border-radius: 3px;
 }
 
 .box-head {
@@ -971,6 +981,7 @@ span.remove:before {
     display: block;
     float: left;
     height: 50px;
+    word-break: break-all;
 }
 
 .pending-interview-tag {
@@ -1363,7 +1374,8 @@ span.remove:before {
 
 .block-box .box-footer {
     background: #bfc9d1;
-    border-radius: 2px 2px 0 0;
+    border-radius: 0 0 3px 3px;
+/*    border-radius: 2px 2px 0 0;*/
     position: relative;
     color: #ffffff;
 }
@@ -1375,6 +1387,7 @@ span.remove:before {
     color: #ffffff;
     display: flex;
     align-items: center;
+    border-radius:0px 0px 3px 3px;
 }
 
 .block-box .box-footer .unblock-btn {
@@ -1643,6 +1656,7 @@ button i {
 .bc-footer {
     background: #BFC9D1;
     padding: 10px;
+    border-radius:0px 0px 3px 3px;
 }
 
 .bc-footer h4 {
@@ -3612,7 +3626,7 @@ span.v_title {
         width: 26%;
         height: 30px;
         font-size: 11px;
-        margin-right: 10px !important;
+/*        margin-right: 10px !important;*/
         float: right;
     }
     .block-box .box-footer .scd-like-btn{
@@ -3862,3 +3876,34 @@ span.v_title {
     color: #00326F !important;
 }
 
+.blue-btn-mob:hover{
+    background: #ffffff !important;
+    color: #00326F !important;
+}
+
+.blue-btn-mob {
+    font-size: 9px !important;
+    background: #00326F !important;
+    border-radius: 5px !important;
+    color: #ffffff !important;
+    font-weight: 500;
+    border: 1px solid #00326F !important;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    transition-property: color, background-color, border-color;
+    transition-duration: 0.15s, 0.15s, 0.15s;
+    transition-timing-function: ease-in-out, ease-in-out, ease-in-out;
+    transition-delay: 0s, 0s, 0s;
+    padding: .5rem!important;
+}
+
+@media only screen and (max-width:768px){
+ .line-tab{
+    height:unset !important;
+ }
+ .nav-tabs{
+    background:white !important;
+ }
+ .nav-item > .nav-link{
+    background:none !important;
+ }
+}

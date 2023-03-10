@@ -99,6 +99,12 @@ function isMobile(){
       return $agent->isMobile();
 }
 
+function isMobileNew(){
+
+    $agent = new Agent();
+    return $agent->isMobile();
+}
+
 function isMobileStep2(){
       $agent = new Agent();
       // return false;
