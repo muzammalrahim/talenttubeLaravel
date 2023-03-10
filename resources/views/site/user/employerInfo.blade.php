@@ -55,28 +55,26 @@
                     @endif                        
                  </div>
                  <div class="row Block-user-wrapper">
-                    <div class="col-md-3 user-images">
-                       <div class="block-user-img mx-auto float-none border-0">
-                          @php
-                          $profile_image  = asset('images/site/icons/nophoto.jpg');
-                          $profile_image_gallery    = $js->profileImage()->first();
-                          if ($profile_image_gallery) {
-                          $profile_image   = assetGallery2($profile_image_gallery,'small');
-                          }
-                          @endphp
-                          <img src="{{$profile_image}}" alt="">
-                       </div>
-
-                        <div class="block-user-progresss d-none d-sm-block">
-                           <h6>{{$js->company}}</h6>
+                     <div class="col-md-2 user-images">
+                        <div class="block-user-img mx-auto float-none border-0">
+                           @php
+                           $profile_image  = asset('images/site/icons/nophoto.jpg');
+                           $profile_image_gallery    = $js->profileImage()->first();
+                           if ($profile_image_gallery) {
+                              // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
+                              $profile_image   = assetGallery2($profile_image_gallery,'small');
+                           }
+                           @endphp
+                           <img src="{{$profile_image}}" alt="" >
                         </div>
 
-                        
-                       
-                    </div>
+                        <div class="block-user-progresss d-none d-sm-block">
+                           <h6 class="pl-1">{{$js->company}}</h6>
+                        </div>
+                     </div>
 
-                    <div class="progress-img d-block d-sm-none mt-3"> 
-                        <h6 class="text-center"> {{$js->company}}</h6>
+                     <div class="progress-img d-block d-sm-none mt-3"> 
+                        <h6 class="text-center">{{$js->company}}</h6>
                         <div class="block-progrees-ratio1 d-md-block">
                         <ul>
                         <li><span class="Progress-ratio-icon1">.</span> <span> {{ $user_compat }} % </span> Match </li>
@@ -85,55 +83,41 @@
                         </div>
                        
                      </div>
-                    <div class="col-md-9 user-details">
-                       {{-- ============================================= Pie Chart =============================================  --}}
+                     <div class="col-md-10 user-details">
+                        
+                        {{-- ============================================= Pie Chart =============================================  --}}
                         <div class="d-sm-block d-none"> 
-                       
-                       <div class="w50">
-                          <div id="piechart_{{$js->id}}"></div>
-                       </div>
-                       <script type="text/javascript">
-                          google.charts.load('current', {'packages':['corechart']});
-                          google.charts.setOnLoadCallback(drawChart);
-                            function drawChart() {
-                              var data = google.visualization.arrayToDataTable([
-                              ['Task', 'Potenial'],
-                              ['Match', {{ $user_compat }}],
-                              ['Unmatch',100-{{ $user_compat }}],
-                            ]);
-                            var options = { 'width':300, 'height':160, tooltip: { isHtml: true }, };
-                            var chart = new google.visualization.PieChart(document.getElementById('piechart_'+{{$js->id}}));
-                            chart.draw(data, options);
-                          }
-                       </script>
-                    </div>
-                       {{-- ============================================= Pie Chart =============================================  --}}
-                       <div class="mt-2 row blocked-user-about">
-                          <h6 class="p-0">About me:</h6>
-                          <p class="">{{$js->about_me}}</p>
-                       </div>
-                       <div class="mt-2 row blocked-user-about">
-                          <h6 class="p-0">Interested In:</h6>
-                          <p class="">{{$js->interested_in}}</p>
-                       </div>
-                       <div class="mt-2 row blocked-user-about">
-                          <h6 class="p-0">Location:</h6>
-                          <p class="">{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
-                       </div>
-                       <div class="mt-2 row blocked-user-experience">
-                          <h6 class="p-0">Industry Experience :</h6>
-                          @if(isset($js->industry_experience))
-                          <ul class="p-0">
-                             @foreach ($js->industry_experience as $ind) 
-                             <li class="indsutrySelect">
-                                <p>{{getIndustryName($ind)}} </p>
-                             </li>
-                             @endforeach 
-                          </ul>
-                          @endif 
-                       </div>
-                    </div>
-                 </div>
+                        @include('web.piechart.pie_chart')
+                        </div>
+
+                        {{-- ============================================= Pie Chart =============================================  --}}
+
+                        <div class="row blocked-user-about pl-3">
+                           <h6 class="p-0">About me:</h6>
+                           <p class="">{{$js->about_me}}</p>
+                        </div>
+                        <div class="row blocked-user-about pl-3 mt-2">
+                           <h6 class="p-0">Interested In:</h6>
+                           <p class="">{{$js->interested_in}}</p>
+                        </div>
+                        <div class="row blocked-user-about pl-3 mt-2">
+                           <h6 class="p-0">Location:</h6>
+                           <p class="">{{$js->city}},  {{$js->state}}, {{$js->country}}</p>
+                        </div>
+                        <div class="row blocked-user-experience pl-3 mt-2">
+                           <h6 class="p-0">Industry Experience :</h6>
+                           @if(isset($js->industry_experience))
+                           <ul class="p-0">
+                              @foreach ($js->industry_experience as $ind) 
+                              <li>
+                                 <p>{{getIndustryName($ind)}}</p>
+                              </li>
+                              @endforeach 
+                           </ul>
+                           @endif 
+                        </div>
+                     </div>
+                  </div>
                  <div class="box-footer clearfix">
                      <div class="block-div">
                         <button class="block-btn" onclick="blockEmployerFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
@@ -144,60 +128,60 @@
                         <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>
                      </div>
                      @else
-                        <div class="like-div" style="display: contents;">
-                           <button class="like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
-                        </div>
+                     <div class="like-div" style="display: contents;">
+                        <button class="like-btn" onclick="likeFunction('{{ $js->id }}')" data-jsid = "{{ $js->id }}"><i class="fas fa-thumbs-up"></i> Like</button> 
+                     </div>
                      @endif
 
                  </div>
               </div>
            </div>
         </div>
-								<div class="row dash-employe-timeline">
-									<div class="col-md-8 order-md-1 order-sm-2 first-tap-detail">
-											<div class="profile">
-													<ul class="nav nav-tabs" id="Profile-tab" role="tablist">
-																<span class="line-tab"></span>
-																<li class="nav-item" role="presentation">
-																			<button class="nav-link active" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
-																						type="button" role="tab" aria-controls="job" aria-selected="false">
-																			<i class="fa fa-circle tab-circle-cross"></i>Jobs</button>
-																</li>
-																<li class="nav-item" role="presentation">
-																			<button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
-																						type="button" role="tab" aria-controls="profile" aria-selected="false">
-																			<i class="fa fa-circle tab-circle-cross"></i>Album</button>
-																</li>
-																<li class="nav-item" role="presentation">
-																			<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
-																						type="button" role="tab" aria-controls="contact" aria-selected="false">
-																			<i class="fa fa-circle tab-circle-cross"></i>Questions</button>
-																</li>
-													</ul>
-													<div class="tab-content employee-details-infomation" id="myTabContent">
-																<!--=================job tab ============================ -->
-																<div class="tab-pane fade show active job-applied" id="job"  role="tabpanel" aria-labelledby="job-tab">
-																			{{-- <h2>Jobs I Have Applied</h2> --}}
-																			<div class="row">
-																				@include('site.user.employerInfoTabs.jobs')
-																			</div>
-																</div>
-																<!--================== album-tab-->
-																<div class="album-section tab-pane fade Photos " id="profile" role="tabpanel"
-																			aria-labelledby="profile-tab">
-																			@include('site.user.employerInfoTabs.album')
-																</div>
-																<!--====================== question tab===========================-->
-																<div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
-																			<h2>Questions</h2>
-																			@include('site.user.employerInfoTabs.emp_questions')  {{-- site/user/employerInfoTabs/emp_questions --}}
-																</div>
-																<!--========================end all tabs-->
-													</div>
-										</div>
+			<div class="row dash-employe-timeline">
+				<div class="col-md-8 order-md-1 order-sm-2 first-tap-detail">
+						<div class="profile">
+							<ul class="nav nav-tabs" id="Profile-tab" role="tablist">
+								<span class="line-tab"></span>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link active" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
+														type="button" role="tab" aria-controls="job" aria-selected="false">
+									<i class="fa fa-circle tab-circle-cross"></i>Jobs</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link" id="profile-tab1" data-bs-toggle="tab" data-bs-target="#profile"
+														type="button" role="tab" aria-controls="profile" aria-selected="false">
+									<i class="fa fa-circle tab-circle-cross"></i>Album</button>
+								</li>
+								<li class="nav-item" role="presentation">
+									<button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact"
+														type="button" role="tab" aria-controls="contact" aria-selected="false">
+										<i class="fa fa-circle tab-circle-cross"></i>Questions</button>
+								</li>
+							</ul>
+							<div class="tab-content employee-details-infomation" id="myTabContent">
+								<!--=================job tab ============================ -->
+								<div class="tab-pane fade show active job-applied pt-5" id="job"  role="tabpanel" aria-labelledby="job-tab">
+									{{-- <h2>Jobs I Have Applied</h2> --}}
+									<div class="row">
+										@include('site.user.employerInfoTabs.jobs')
 									</div>
 								</div>
-       
+								<!--================== album-tab-->
+								<div class="album-section tab-pane fade Photos " id="profile" role="tabpanel"
+											aria-labelledby="profile-tab">
+										@include('site.user.employerInfoTabs.album')
+								</div>
+								<!--====================== question tab===========================-->
+								<div class="tab-pane fade questions-tab" id="contact"  role="tabpanel" aria-labelledby="contact-tab">
+										<h2>Questions</h2>
+										@include('site.user.employerInfoTabs.emp_questions')  {{-- site/user/employerInfoTabs/emp_questions --}}
+								</div>
+								<!--========================end all tabs-->
+							</div>
+					</div>
+				</div>
+			</div>
+
      </div>
   </section>
 

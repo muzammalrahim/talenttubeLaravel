@@ -377,6 +377,21 @@
             });
          }
 
+         // $(document).click('.toggle-icon',function(e) {
+         //    console.log('clicked');
+         //    e.preventDefault();
+         //    $(this).toggleClass('active');
+         //    $('.toggle-content').slideToggle();
+         // });
+
+         $(document).on("click" , ".toggle-icon" , function(){
+            $(this).parents('.blocked-user-experience').find('.toggle-content').slideToggle();
+            // setTimeout(function(){
+               $(this).parents('.toggle-div').find('.fa-chevron-up').toggleClass('d-none');
+               $(this).parents('.toggle-div').find('.fa-chevron-down').toggleClass('d-none');
+            // },1000);           
+         });
+
          // });
    });
    this.showQualificationSelect2 = function(){
@@ -876,9 +891,16 @@
            console.log(' filter_location_radius changed.  ');
            drawCircle(new google.maps.LatLng(jQuery("#location_lat").val(), jQuery("#location_long").val()));
        });
+
+
    
    
    });
+
+   // $(document).ready(function() {
+
+   // });
+
 </script>
 @stop
 @section('custom_footer_css')
@@ -922,13 +944,13 @@
          top: 5rem !important;
       }
    }
-
-
    .qualifications-icon{
       top: 24px;
       color: #495057;
       right: 10px;
    }
-   
+   .body-tab-btn a {
+       margin: 0 10px 0 0 !important
+   }
 </style>
 @stop

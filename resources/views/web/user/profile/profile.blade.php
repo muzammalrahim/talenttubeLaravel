@@ -182,7 +182,7 @@
                   <li class="nav-item" role="presentation">
                      <button class="nav-link" id="job-tab" data-bs-toggle="tab" data-bs-target="#job"
                         type="button" role="tab" aria-controls="job" aria-selected="false">
-                     <i class="fa fa-circle tab-circle-cross"></i>Job</button>
+                     <i class="fa fa-circle tab-circle-cross"></i>Jobs</button>
                   </li>
                   <li class="nav-item" role="presentation">
                      <button class="nav-link" id="refrance-tab" data-bs-toggle="tab" data-bs-target="#refrance"
@@ -248,8 +248,17 @@
                         <p class="loader SaveQualification"style="float: left;"></p>
                               <div class="cl"></div>
                         <ul class="qualification-li">
-                            <li><i class="qualification-circle"></i><span> Type: {{ ucfirst($user->qualificationType) }}</span></li>
-                            <div class="">
+                           @php 
+                           $jsQualification = ''; 
+                           if ($user->qualificationType == "post_degree") {
+                              $jsQualification = 'post graduate degree';
+                           }else{
+                              $jsQualification = $user->qualificationType;
+                           }
+                           @endphp
+                           <li><i class="qualification-circle"></i><span class="text-capitalize">Type: {{remove_underscode($jsQualification)}} </span></li>
+                           
+                           <div class="">
                             @include('site.layout.parts.jobSeekerQualificationList') {{-- site/layout/parts/jobSeekerQualificationList --}}  </div>
                             <div class="button_qualification d-none mb-2"> 
                                 <button class="btn-info btn-block rounded py-2 btn-sm m-0 addQualification" onclick="addQualification()" >Add New</button> 

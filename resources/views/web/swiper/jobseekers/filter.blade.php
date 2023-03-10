@@ -57,7 +57,7 @@
                                     <select class="white-text mdb-select md-form colorful-select dropdown-primary filter_qualification_type form-control icon_show mb-1" 
                                     id="swiper_qualification_type" 
                                     name="swiper_qualification_type" data-placeholder="Select Qalification & Trades">
-                                         <option value="">Select Qalification & Trades</option>
+                                         <option vaResetFormlue="">Select Qalification & Trades</option>
                                          <option value="certificate">Certificate or Advanced Diploma</option>
                                          <option value="trade">Trade Certificate</option>
                                          <option value="degree">University Degree</option>
@@ -185,7 +185,7 @@
                             </div>
                             <div class="FilterBox mt-3">
                                 <div class="text-center">
-                                    <button name="ResetForm" data-toggle="collapse" data-target="#collapse1" class="orange_btn" id="ResetForm" type="button">Reset</button>
+                                    <button name="ResetForm" data-toggle="collapse" onclick="locationReload()" data-target="#collapse1" class="orange_btn" id="ResetForm" type="button">Reset</button>
                                     <button name="CreateConfig" data-toggle="collapse" data-target="#collapse1" class="btn blue_btn " id="CreateConfig" type="submit">Submit</button>
                                 </div>
                             </div>

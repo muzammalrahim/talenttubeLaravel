@@ -1,7 +1,7 @@
 
 
 
-<div class="pb-4 mt-2 piechart-div" style="width:210px">
+<div class="pb-4 piechart-div" style="width:204px;margin-top: 5px;">
   <div id="piechart_{{$js->id}}" class="job-box-info"></div>
 </div>
 

@@ -73,7 +73,7 @@
                                  <span class="w-50">{{ ($job->expiration)?($job->expiration->format('d-m-Y')):''}}</span>
                               </li>
                               <a href="{{route('empJobApplications',['id' => $job->id])}}" class="blue_btn py-2">
-                              Applications: <u>{{($job->applicationCount)?($job->applicationCount->aggregate):0}}</u>
+                              Applications: {{($job->applicationCount)?($job->applicationCount->aggregate):0}}
                               </a>
                            </ul>
                         </div>
@@ -87,9 +87,9 @@
                         </div>
                      </div>
                      <div class="box-footer1 box-footer  clearfix">
-                        <div class=" employe-btn-group " style="float: right !important; width: 100%!important;">
+                        <div class="employe-btn-group" style="float: right !important; width: 100%!important;">
                            <button class="block-btn" data-toggle="modal" data-target="#deleteJobAsEmployerModal" onclick="deleteJobAsEmployer('{{ $job->id }}')"><i class="fas fa-trash" ></i> Delete</button>
-                           <a href="{{route('jobDetail',['id' => $job->id])}}"> <button class="detail-btn" ><i class="fas fa-file-alt"></i> Detail</button></a>
+                           <a href="{{route('jobDetail',['id' => $job->id])}}" class="float-md-right"> <button class="detail-btn" ><i class="fas fa-file-alt"></i> Details</button></a>
                            <a href="{{route('employerJobEdit',['id' => $job->id])}}"><button class="like-btn"><i class="fas fa-thumbs-up"></i> Edit</button></a>
                            {{-- <a href="{{route('advertise',['id' => $job->id])}}"> <button class="like-btn">Advertisement</button></a> --}}
                         </div>
@@ -135,12 +135,17 @@
       .sidebaricontoggle {
          top: 4rem !important;
       }
+      .box-footer1>.employe-btn-group>button.block-btn{
+         margin-left:10px !important;
+      }
    }
    @media only screen and (min-width: 480px) and (max-width: 991px){
       .sidebaricontoggle {
          top: 5rem !important;
       }
    }
+
+
 
 </style>
 

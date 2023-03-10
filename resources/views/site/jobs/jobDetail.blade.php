@@ -91,7 +91,7 @@
                                 @php 
                                 $remSpecialCharQues = str_replace("\&#39;","'",$job->description);
                                 @endphp
-                                <p class="">{{$remSpecialCharQues}}</p>
+                                <p class="text-justify">{{$remSpecialCharQues}}</p>
                             </div>
                         </div>
                     </div>
@@ -100,9 +100,9 @@
                     @php
                     $user = Auth::user();
                     @endphp
-                    <div class="box-footer unlike-btn-group clearfix py-0 py-md-4">
+                    <div class="box-footer unlike-btn-group clearfix py-0 py-md-0">
                         @if ($job->code)
-                        <span class="px-2 px-md-3"><strong>Code:</strong> {{$job->code}}</span>
+                        <span class="px-2 px-md-3 mt-3 float-left"><strong>Code:</strong> {{$job->code}}</span>
                         @endif
                         @if(!isEmployer($user))
                         <button class="unlike-btn mb-2" data-toggle="modal" data-target="#jobApplyModal" onclick="jobApplyFunction({{ $job->id }})"> Apply</button> 

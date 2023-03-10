@@ -562,14 +562,26 @@ var base_url = {!! json_encode(url('/')) !!};
 
 @section('custom_css')
    <style type="text/css">
-
-     textarea{ resize: none }
-     @media only screen and (min-width: 768px) and (max-width: 991px) {
-      .sidebaricontoggle{
+      textarea{ resize: none }
+      @media only screen and (min-width: 768px) and (max-width: 991px) {
+         .sidebaricontoggle{
          top: 4rem !important;
+         }
       }
-     }
+
+      @media only screen and (max-width:768px){
+         .line-tab{
+            height:unset !important;
+         }
+         .nav-tabs{
+            background:white !important;
+         }
+         .nav-item > .nav-link{
+            background:none !important;
+         }
+      }
       
+
       
    </style>
   

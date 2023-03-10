@@ -116,10 +116,9 @@
 
     }
 
-    viewCv = function(){
-        var jsId = $('.viewCvButton').attr('data-jsid');
+    this.viewJobseekerCv = function(jsId){
+        // var jsId = $(this).attr('data-jsid');
         // console.log(jsId);
-
         $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
             $.ajax({
                 type: 'POST',

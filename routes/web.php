@@ -546,10 +546,15 @@ Route::group(array('middleware' => ['auth']), function(){
     Route::get('jobSeekerInfo/{id}', 'Site\JobSeekerController@jobSeekerInfo')->name('jobSeekerInfo');
     Route::post('ajax/blockEmployer/{id}', 'Site\JobSeekerController@blockEmployer')->name('blockEmployer');
     Route::post('ajax/likeEmployer/{id}', 'Site\JobSeekerController@likeEmployer')->name('likeEmployer');
+    
+    // Swiper Test 
+    Route::get('Swipe-jobseekers', 'Site\SwiperController@jobseekers')->name('swipe.jobseekers');
+    Route::post('swiper-jobSeekersFilter', 'Site\SwiperController@jobSeekersFilter')->name('swiper.jobSeekersFilter'); 
+    // Swiper Test 
 
-    Route::get('Swipe-jobseekers',        'Mobile\MobileUserController@mSwipeJobseekers')->name('Swipe-jobseekers');
 
-    Route::post('swipeJobSeekersFilter', 'Mobile\MobileUserController@swipeJobSeekersFilter')->name('swipeJobSeekersFilter'); 
+    // Route::get('Swipe-jobseekers',        'Mobile\MobileUserController@mSwipeJobseekers')->name('Swipe-jobseekers-web');
+    // Route::post('swipeJobSeekersFilter', 'Mobile\MobileUserController@swipeJobSeekersFilter')->name('swipeJobSeekersFilter'); 
     
 
     // job

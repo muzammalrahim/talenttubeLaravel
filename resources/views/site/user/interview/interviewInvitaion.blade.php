@@ -54,7 +54,7 @@
               @else
               <li class="text-info-detail clearfix">
                 <label>Interview Type:</label>
-                <span><b class="text-capitalize"> {{$Int_booking->template->type}} </b></span>
+                <span><b class="text-capitalize"> {{remove_underscode($Int_booking->template->type)}} </b></span>
               </li>
               @endif
 

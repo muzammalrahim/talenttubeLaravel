@@ -37,6 +37,9 @@
 </div>
 @endforeach  
 @else
-<h3> <b>{{$jobSeeker->name}}</b> has not taken any test yet</h3>
+<div class="d-inline-block">
+<span class="bold">  {{$jobSeeker->name}} </span><span class="{{-- float-right w-auto --}}">has not taken any test yet</span>
+</div>
+
 @endif   
 </div>

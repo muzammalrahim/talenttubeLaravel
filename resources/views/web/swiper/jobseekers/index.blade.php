@@ -27,7 +27,7 @@
     <div class="filter-div" style="height: 60px;position: relative;">
 
         {{-- <button class="blue_btn" data-target="#swiper-filter-modal" data-toggle ="modal" > Filters <i class="fas fa-angle-down rotate-icon"></i></button> --}}
-        @include('mobile.employer.jobSeekers.filter') {{-- mobile/employer/jobSeekers/filter --}} 
+        @include('web.swiper.jobseekers.filter') {{-- web/swiper/jobseekers/filter --}} 
     </div>
         
 
@@ -36,7 +36,7 @@
     <!-- =============================================================================================================================== -->
 
     <div class="jobSeekers_list">
-        @include('mobile.employer.jobSeekers.swipe_jobseekerList')  <!-- mobile/employer/jobSeekers/swipe_jobseekerList -->
+        @include('web.swiper.jobseekers.list')  <!--  web/swiper/jobseekers/list -->
     </div> 
 
 @stop
@@ -371,7 +371,7 @@ $('#jobSeeker_filter_form').on('submit',function(event){
 
 // function to send ajax call for getting data throug filter/Pagination selection.
 var getData = function(){
-    var url = '{{route('swipeJobSeekersFilter')}}';
+    var url = '{{route('swiper.jobSeekersFilter')}}';
     $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
     var jqxhr = $.post(url, $('#jobSeeker_filter_form').serialize(), function(data){
         // console.log(' success data  ', data);
@@ -467,6 +467,10 @@ this.showQualificationSelect2Swiper = function(){
      $("#filter_by_qualification").val('').trigger('change');
 
   }
+}
+
+this.locationReload = function(){
+    location.reload();
 }
 
 </script>

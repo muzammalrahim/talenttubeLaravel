@@ -132,11 +132,48 @@
 
                <div class="row blocked-user-experience mt-2">
                   <h6 class="p-0"> Job Questions/Answers: </h6>
-
-                  <div class="job_app_qa p-0 job_app_{{$application->id}}">
+                  {{-- Commented for toggle --}}
+                  {{-- <div class="job_app_qa p-0 job_app_{{$application->id}}">
                      <div class="ps-0"><button class="ja_load_qa blue_btn mt-2" data-appid="{{$application->id}}">Question/Answers</button></div>
                      <div class="job_app_qa_box" style="display: none;"></div>
+                  </div> --}}
+
+                  {{-- Test --}}
+                  <div class="toggle-div p-0">
+                     <button class="mt-2 blue_btn toggle-icon">Question/Answers 
+                        <i class="fa fa-chevron-down"></i>
+                        <i class="fa fa-chevron-up d-none"></i>
+                     </button>
                   </div>
+
+                  {{-- <div class="toggle-icon">
+                    <i class="fa fa-chevron-down"></i>
+                    <i class="fa fa-chevron-up"></i>
+                  </div> --}}
+
+                  <div class="test toggle-content p-0" style="display:none">
+                     <div class="application_qa pt-2">
+                        @php $answers = $application->answers; @endphp
+                        @if (!empty($answers))
+                        <div class="jobAnswers">
+                           @foreach ($answers as $answer)
+                           <div class="job_answers">
+                              <p class="jqa_q m-0"> <b> Question: {{ $loop->index+1 }} </b> {{$answer->question->title}}</p>
+                              <p class="jqa_a m-0"> <b> Answer: </b> {{$answer->answer}}</p>
+                           </div>
+                           @endforeach
+                        </div>
+                        @endif
+                        <div class="jobAppDescriptionBox">
+                           <p class="m-0 jqa_q">{{jobApplicationMandatoryQuestion()}}</p>
+                           <p class="m-0 jqa_a text-break">{{ $application->description}}</p>
+                        </div>
+                     </div>
+                  </div>
+                  {{-- Test --}}
+
+                  
+
                </div>
             </div>
          </div>
