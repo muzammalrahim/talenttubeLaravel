@@ -213,7 +213,10 @@
             background-color:#f7f7f8 !important;
          }
       }
-
+      .block-user-img img {
+          min-height: 164px !important;
+          max-height: 164px !important;
+      }
 
    </style>
 @stop

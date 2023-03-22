@@ -5,34 +5,33 @@
             <span class="float-right border border-black m-2 py-1 px-2" onclick="closeVideo()">X</span>
         </div>
       <div class="modal-body videoBox w-100"></div>
-     <!-- <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" onclick="closeVideo()">Close</button>
-      </div>  -->
     </div>
   </div>
 </div>
 
-{{-- <div id="ex1" class="modal">
-  <p>Thanks for clicking. That felt good.</p>
-  <a href="#" rel="modal:close">Close</a>
-</div> --}}
+
+@include('web.modals.jobApplication-questions')
+
+
 
 
 <script type="text/javascript">
 
-    this.change_status = function(app_id, status){
-        console.log(app_id);
+    this.change_status = function(app_id, status,this_e){
+        $(this_e).parents('.jobApp_'+app_id).find('.status-div').removeClass('activestatus');
+        $(this_e).closest('.status-div').addClass('activestatus');
         $.ajax({
           type: 'POST',
-          url: base_url+'/m/ajax/application/status/update/'+app_id,
+          url: base_url+'/ajax/application/status/update/'+app_id,
           data: {status:status},
             success: function(data){
                 if (data.status == 1) {
                     if (data.jobStatus == 'inreview') {
-                        $('.statusUpdated_'+app_id).html('In Review');
+                        $('.statusUpdated_'+app_id).html('(In Review)');
                     }
                     else{
-                        $('.statusUpdated_'+app_id).html(data.jobStatus);    
+                        var jobsstatus = '(' +data.jobStatus+ ')';
+                        $('.statusUpdated_'+app_id).html( jobsstatus );    
                     }
                 }
             }   
@@ -40,67 +39,6 @@
     }
 
     // ============================================== Change Status to in review ============================================== 
-
-    this.inreview = function(){
-        var app_id = $('.inreview').attr('data-appId');
-        var status = $('.inreview').attr('data-status');
-        $.ajax({
-          type: 'POST',
-          url: base_url+'/m/ajax/application/status/inreview',
-          data: {id:app_id,status:status},
-            success: function(data){
-                if (data.status == 1) {
-                    $('.statusUpdated').html(data.jobStatus);
-                }
-            }   
-        });
-    }
-
-    // ============================================== Change Status to interview ============================================== 
-
-    this.interview = function(){
-        var app_id = $('.interview').attr('data-appId');
-        var status = $('.interview').attr('data-status');
-        $.ajax({
-          type: 'POST',
-          url: base_url+'/m/ajax/application/status/interview',
-          data: {id:app_id,status:status},
-            success: function(data){
-                if (data.status == 1) {
-                    $('.statusUpdated').html(data.jobStatus);
-                }
-            }
-        });
-    }
-
-    
-    
-
-
-
-
-    // ============================================== Change Status to unsuccessful ============================================== 
-
-    this.unsuccessful = function(){
-        var app_id = $('.unsuccessful').attr('data-appId');
-        var status = $('.unsuccessful').attr('data-status');
-        // console.log("Application Id" +app_id + "Application Status"+ status); 
-        $.ajax({
-          type: 'POST',
-          url: base_url+'/m/ajax/application/status/unsuccessful',
-          data: {id:app_id,status:status},
-            success: function(data){
-                if (data.status == 1) {
-                    $('.statusUpdated').html(data.jobStatus);
-                }
-            }   
-        });
-    }
-
-    $('.questionsAnswers').click(function(){
-        $('.application_qa').toggleClass('d-none');
-    });
-
 
     profileVideoShow =  function(video_url){
         console.log(' showVideoModal ', video_url);
@@ -143,6 +81,23 @@
     var swiper = new Swiper(".mySwiper", {
 
         navigation: {
+            nextEl: '.swiper-button-next1',
+            prevEl: '.swiper-button-prev1',
+        },
+        pagination: {
+          el: ".swiper-pagination",
+          dynamicBullets: true,
+        },
+
+        longSwipes: false,
+        loopPreventsSlide: false,
+        touchEventsTarget: 'container'
+      });
+
+
+    var swiper = new Swiper(".mySwiper", {
+
+        navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev',
         },
@@ -178,6 +133,10 @@
 .swiper-wrapper {box-sizing: inherit !important;}
 
 .jobSeekers_list{
+    height: calc(var(--vh, 1vh) * 79);
+}
+
+.applications_list{
     height: calc(var(--vh, 1vh) * 79);
 }
 

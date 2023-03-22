@@ -14,7 +14,7 @@
               <i class="qualification-sign"> ></i>
             </div>
             <div class="qual-div">
-              <span> {{ ucfirst($qualification['title']) }} <i class="fa fa-trash removeQualification d-none float-right"></i> </span>
+              <p class="text_interested_in m-0"> {{ ucfirst($qualification['title']) }} <i class="fa fa-trash removeQualification d-none float-right"></i> </p>
             </div>
               
           </li>

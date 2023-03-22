@@ -72,9 +72,15 @@
                                  <label class="w-50">Expiry:</label>
                                  <span class="w-50">{{ ($job->expiration)?($job->expiration->format('d-m-Y')):''}}</span>
                               </li>
-                              <a href="{{route('empJobApplications',['id' => $job->id])}}" class="blue_btn py-2">
+                              @if (isMobileNew())
+                                 <a href="{{route('swipe.empJobApplications',['id' => $job->id])}}" class="blue_btn py-2">
                               Applications: {{($job->applicationCount)?($job->applicationCount->aggregate):0}}
                               </a>
+                              @else
+                                 <a href="{{route('empJobApplications',['id' => $job->id])}}" class="blue_btn py-2">
+                              Applications: {{($job->applicationCount)?($job->applicationCount->aggregate):0}}
+                              </a>
+                              @endif
                            </ul>
                         </div>
                         <div class="col-12 col-sm-6 col-md-5 col-lg-8">

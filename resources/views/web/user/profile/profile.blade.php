@@ -107,21 +107,12 @@
                   {{-- ==================================== Recent job ==================================== --}}
 
                   <div class="recent-job recentjob clearfix px-0 px-md-3 mt-5 mt-md-2">
-
-                     {{-- <div class="row m-0">  --}}
-                        {{-- <div class="col-5"> --}}
-                           <div class="d-inline-block">
-                              <label class="mb-0 mr-1">Recent Job:</label>
-                        {{-- </div> --}}
-
-                        {{-- <div class="col-7"> --}}
-                              <span class="recentjobSpan text-capitalize">{{$user->recentJob}} </span>
-                              <span class="px-1"> at </span> 
-                              <span class="organizationSpan text-capitalize"> {{$user->organHeldTitle}} </span>
-                           </div>
-                        {{-- </div> --}}
-                     {{-- </div> --}}
-
+                     <div class="d-inline-block text-gray">
+                           <div class="mb-0 mr-1 0 d-inline">Recent Job:</div>
+                           <div class="recentjobSpan text-capitalize 0 d-inline">{{$user->recentJob}} </div>
+                           <div class="px-1 0 d-inline"> at </div> 
+                           <div class="organizationSpan text-capitalize 0 d-inline"> {{$user->organHeldTitle}} </div>
+                     </div>
                   </div> 
 
 
@@ -129,18 +120,12 @@
 
 
                   <div class="recent-job clearfix px-0 px-md-3">
-                     {{-- <div class="row m-0"> --}}
-                        <div class="d-inline-block">
-                        {{-- <div class="col-5"> --}}
-                           <label class="mb-2 mr-1"> 
+                        <div class="d-inline-block text-gray">
+                           <div class="mb-2 mr-1 d-inline"> 
                               Expected Salary: 
-                           </label>
-                        {{-- </div> --}}
-                        {{-- <div class="col-7"> --}}
-                           <span>AUD: </span>  <span class="salaryRangeValue"> {{number_format($user->salaryRange),3}} </span>
+                           </div>
+                           <div class="d-inline">AUD: </div>  <div class="salaryRangeValue d-inline"> {{number_format($user->salaryRange),3}} </div>
                         </div>
-                        {{-- </div> --}}
-                     {{-- </div> --}}
                   </div>
 
 
@@ -256,8 +241,17 @@
                               $jsQualification = $user->qualificationType;
                            }
                            @endphp
-                           <li><i class="qualification-circle"></i><span class="text-capitalize">Type: {{remove_underscode($jsQualification)}} </span></li>
+                           {{-- <li><i class="qualification-circle"></i><span class="text-capitalize">Type: {{remove_underscode($jsQualification)}} </span></li> --}}
                            
+                           <li class="d-flex">
+                            <div class="circle-div">
+                              <i class="qualification-circle"></i>
+                            </div>
+                            <div class="qual-div">
+                              <p class="text_interested_in m-0"> Type: {{remove_underscode($jsQualification)}} </p> 
+                            </div>
+                          </li>
+
                            <div class="">
                             @include('site.layout.parts.jobSeekerQualificationList') {{-- site/layout/parts/jobSeekerQualificationList --}}  </div>
                             <div class="button_qualification d-none mb-2"> 

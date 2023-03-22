@@ -64,7 +64,7 @@
                </div>
 
                <div class="block-user-progresss d-none d-sm-block">
-                  <h6 class="pl-1">{{$js->company}}</h6>
+                  <h6 class="pl-1 mt-1">{{$js->company}}</h6>
                </div>
             </div>
 
@@ -118,7 +118,7 @@
                <!-- <div class="block-div"> -->
                   <button class="block-btn" onclick="blockEmployerFunction('{{ $js->id }}')"><i class="fas fa-ban"></i> Block</button>
                <!-- </div> -->
-               <a href="{{route('employerInfo', ['id' => $js->id])}}"><button class="detail-btn"><i class="fas fa-file-alt"></i> Details</button></a>
+               <a href="{{route('employerInfo', ['id' => $js->id])}}"><button class="detail-btn float-right"><i class="fas fa-file-alt"></i> Details</button></a>
                @if (in_array($js->id,$likeUsers))
                <div class="unlike-div" style="display: contents;">
                   <button class="unlike-btn" onclick="unlikefunction('{{ $js->id }}')" data-toggle="modal" data-target="#unlikeModal"><i class="fas fa-thumbs-up"> </i> UnLike</button>

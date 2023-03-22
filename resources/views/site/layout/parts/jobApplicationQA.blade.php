@@ -10,7 +10,6 @@
             @php
                 // $questions = $job->questions;
             @endphp
-
             <div class="jobAnswers">
                 @foreach ($answers as $answer)
                 <div class="job_answers">
@@ -22,7 +21,7 @@
      @endif
 
     <div class="jobAppDescriptionBox">
-        <p class="m-0">{{jobApplicationMandatoryQuestion()}}</p>
+        <p class="m-0"> <b> {{jobApplicationMandatoryQuestion()}} </b></p>
         <p class="m-0">{{ $application->description}}</p>
     </div>
 

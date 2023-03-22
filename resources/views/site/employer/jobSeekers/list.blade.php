@@ -80,19 +80,20 @@
                      <h6 class="text-start">{{$js->username}}</h6>
 
 
-                     {{-- <div class="progress-img"> 
-                        <img src="assests/images/user-progressbar.svg" alt="">
-                     </div> --}}
                      <div class="text-center">
                         
                         @if($js->vidoes->count() > 0 && isEmployerPaid())
                         <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
                         </i>
                         @else
-                        <a class="contactBtn" {{-- target="”_blank”" href="{{ asset('media/public/audio') .'/' .$js->vidoes()->first()->audio_path }}" --}} onclick="openWindow('{{ asset('media/public/audio') .'/' .$js->vidoes()->first()->audio_path }}')"> 
-                           {{-- <i class="fas fa-video fa-2x text-center pointer"></i>  --}}
-                           <img src="{{ asset('images/music-solid.svg') }}" class="text-center pointer" style="width: 30px;"> 
-                        </a>
+                        @if (isset($js->vidoes()->first()->audio_path))
+                           {{-- expr --}}
+                           <a class="contactBtn" {{-- target="”_blank”" href="{{ asset('media/public/audio') .'/' .$js->vidoes()->first()->audio_path }}" --}} onclick="openWindow('{{ asset('media/public/audio') .'/' .$js->vidoes()->first()->audio_path }}')"> 
+                              {{-- <i class="fas fa-video fa-2x text-center pointer"></i>  --}}
+                              <img src="{{ asset('images/music-solid.svg') }}" class="text-center pointer" style="width: 30px;"> 
+                           </a>
+                           
+                        @endif
 
                         @endif
                      </div>
@@ -106,16 +107,9 @@
                         <h2 class="text-start">{{$js->username}}</h2>
                      </div>
 
-
-                     {{-- <div class="progress-img"> 
-                        <img src="assests/images/user-progressbar.svg" alt="">
-                     </div> --}}
-                     <div>
-                        
                         @if($js->vidoes->count() > 0)
                         <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
                         </i>
-                     </div>
                      @endif
                   </div>
                   <div class="block-user-img mx-auto float-none border-0">
