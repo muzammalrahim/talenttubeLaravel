@@ -28,7 +28,7 @@
                   <i class="qualification-circle"></i>
                 </div>
                 <div class="qual-div">
-                  {{getIndustryName($industry)}} <i class="fa fa-trash removeIndustry d-none float-right"></i>
+                  <p class="text_interested_in m-0"> {{getIndustryName($industry)}} </p> <i class="fa fa-trash removeIndustry d-none float-right"></i>
                 </div>
               </li>
             </div>

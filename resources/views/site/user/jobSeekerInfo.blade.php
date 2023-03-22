@@ -465,6 +465,10 @@
    .video_thumb{
       max-height:200px;
    }
+   .block-user-img img {
+          min-height: 164px !important;
+          max-height: 164px !important;
+      }
    
 </style>
 

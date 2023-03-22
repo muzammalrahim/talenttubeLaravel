@@ -1713,8 +1713,8 @@ button i {
 
 .custom-checkbox input[type='checkbox'] {
     appearance: none;
-    height: 15px;
-    width: 15px;
+    height: 14px;
+    width: 14px;
     background: #ffffff !important;
     border: 1px solid #F48128 !important;
     cursor: pointer;
@@ -3895,6 +3895,42 @@ span.v_title {
     transition-delay: 0s, 0s, 0s;
     padding: .5rem!important;
 }
+
+.custom-btn-mob {
+    font-size: 9px !important;
+    border-radius: 5px !important;
+    color: #ffffff !important;
+    font-weight: 500;
+/*    border: 1px solid #00326F !important;*/
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    transition-property: color, background-color, border-color;
+    transition-duration: 0.15s, 0.15s, 0.15s;
+    transition-timing-function: ease-in-out, ease-in-out, ease-in-out;
+    transition-delay: 0s, 0s, 0s;
+    padding: .5rem!important;
+    width: 100%;
+    display: block;
+    text-align: center;
+}
+.view-profile-bg{
+    background: #2672AB;
+}
+
+.view-cv-bg{
+    background: #009D10;
+}
+
+.inreview-bg{
+    background: #F48128;
+}
+.interview-bg{
+    background: #FCC600;
+}
+
+.unsuccessfull-bg{
+    background: #F44336;
+}
+
 
 @media only screen and (max-width:768px){
  .line-tab{

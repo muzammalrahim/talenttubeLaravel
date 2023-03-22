@@ -42,10 +42,10 @@
                      <div class="text-center">
                         
                         @if($js->vidoes->count() > 0)
-                        <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
-                        </i>
+                           <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
+                           </i>
+                        @endif
                      </div>
-                     @endif
                   </div>
                </div>
 
@@ -60,13 +60,11 @@
                      {{-- <div class="progress-img"> 
                         <img src="assests/images/user-progressbar.svg" alt="">
                      </div> --}}
-                     <div>
                         
                         @if($js->vidoes->count() > 0)
-                        <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
-                        </i>
-                     </div>
-                     @endif
+                           <i class="fas fa-video js_video_link pointer fa-2x text-center" onclick="showVideoModalFunction('{{assetVideo($js->vidoes->first())}}')" data-bs-target="#videoShowModal" data-bs-toggle="modal" target="_blank" style="color: #00326F; cursor: pointer;">
+                           </i>
+                        @endif
                   </div>
                   <div class="block-user-img mx-auto float-none border-0">
                      @php

@@ -9,6 +9,9 @@ use App\User;
 use App\BlockUser;
 use App\LikeUser;
 use App\ControlSession;
+use App\Jobs;
+use App\OnlineTest;
+use App\JobsApplication;
 
 use Carbon\Carbon;
 use DateTime;
@@ -254,6 +257,79 @@ class SwiperController extends Controller
         $data['blockUsers']       = BlockUser::where('user_id',$user->id)->pluck('block')->toArray();
 
         return view('web.swiper.jobseekers.list', $data); // mobile/employer/jobSeekers/swipe_jobseekerList
+    }
+
+
+
+    public function employersjobApplications($id){
+        $user = Auth::user();
+        if(isEmployer($user)){
+
+            $job =  Jobs::find($id);
+            // $applications    = JobsApplication::with(['job','jobseeker'])->where('job_id',$id)->orderBy('goldstar', 'DESC')->orderBy('preffer', 'DESC')->paginate(1);
+            // $data['applications'] = $applications;
+            $data['job']   = $job;
+            $data['user']   = $user;
+            $onlineTest = OnlineTest::get();
+            $data['onlineTest']   = $onlineTest;
+            $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
+            $data['controlsession'] = $controlsession;
+            $data['title']  = 'Job Detail';
+            $data['classes_body'] = 'jobdetail';
+            return view('web.swiper.employer-jobApplications.index', $data); // web/swiper/employer-jobApplications/index
+        }
+    }
+
+    public function employersjobAppFilter(Request $request){
+        $user = Auth::user();
+        if(isEmployer($user)){
+            $applications = new JobsApplication();
+            $applications = $applications->getFilterApplicationSwiper($request);
+            // dd($applications);
+            // $UserOnlineTest = UserOnlineTest::where('jobApp_id', $application->id)->first();
+            // dd($UserOnlineTest);
+            $likeUsers              = LikeUser::where('user_id',$user->id)->pluck('like')->toArray();
+            $blockUsers             = BlockUser::where('user_id',$user->id)->pluck('block')->toArray();
+            $data['applications'] = $applications;
+            $data['user']       = $user;
+            $data['title']      = 'Job Detail';
+            $data['likeUsers']  =  $likeUsers;
+            $data['blockUsers']  =  $blockUsers;
+            $data['classes_body'] = 'jobdetail';
+            return view('web.swiper.employer-jobApplications.list', $data);
+            // web.swiper.employer-jobApplications.list
+        }
+    }
+
+    public function change_status(Request $request, $id){
+        $data = $request->toArray();
+        $user = Auth::user();
+        $JobsApplication = JobsApplication::where('id', $id)->first();
+        if ($JobsApplication) {
+            if($JobsApplication->job->jobEmployer->id == $user->id){
+                $JobsApplication->status = $data['status'];
+                $JobsApplication->save();
+                return response()->json([
+                    'status' => 1,
+                    'message' => 'Status saved successfully',
+                    'jobStatus' => $JobsApplication->status
+
+                ]);
+            }
+            else{
+                return response()->json([
+                    'status' => 0,
+                    'message' => 'User is not authenticated',
+
+                ]);
+            }
+        }
+        else{
+            return response()->json([
+                'status' => 0,
+                'message' => 'Job Application does not exist',
+            ]);
+        } 
     }
 
 

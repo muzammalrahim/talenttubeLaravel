@@ -28,6 +28,22 @@
         top: 5rem !important;
     }
 }
+/*.block-user-img{
+        min-height: 164px !important;
+        max-height: 164px !important;
+        border: 2px solid #2672ab !important;
+        margin-top: 5px;
+}*/
+.block-user-img img{
+    /*height: auto;
+    margin: 0px auto;
+    max-height: 100%;
+    max-width: 100% !important;
+    width: auto;*/
+
+    min-height: 164px !important;
+    max-height: 164px !important;
+}
 </style>
 
 @stop

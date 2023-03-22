@@ -552,19 +552,24 @@ Route::group(array('middleware' => ['auth']), function(){
     Route::post('swiper-jobSeekersFilter', 'Site\SwiperController@jobSeekersFilter')->name('swiper.jobSeekersFilter'); 
     // Swiper Test 
 
+    Route::get('swiper-employer/job/{id}/applications', 'Site\SwiperController@employersjobApplications')->name('swipe.empJobApplications');
+    Route::post('swiper-employer/jobAppFilter', 'Site\SwiperController@employersjobAppFilter')->name('swiper.jobAppFilter');
+    Route::post('ajax/application/status/update/{id}', 'Site\SwiperController@change_status')->name('change_status');
+    
 
     // Route::get('Swipe-jobseekers',        'Mobile\MobileUserController@mSwipeJobseekers')->name('Swipe-jobseekers-web');
     // Route::post('swipeJobSeekersFilter', 'Mobile\MobileUserController@swipeJobSeekersFilter')->name('swipeJobSeekersFilter'); 
     
 
-    // job
+    // Job Applications
+    Route::get('employer/job/{id}/applications', 'Site\EmployerController@empJobApplications')->name('empJobApplications');
+    Route::post('employer/jobAppFilter', 'Site\EmployerController@jobAppFilter')->name('jobAppFilter');
+    
 
     Route::get('employer/job/new',    'Site\EmployerController@newJob')->name('newJob');
     Route::post('ajax/job/new',    'Site\EmployerController@addNewJob')->name('addNewJob');
     Route::get('employer/jobs',    'Site\EmployerController@jobs')->name('employerJobs');
     Route::get('employer/jobsEdit/{id}',    'Site\EmployerController@jobEdit')->name('employerJobEdit');
-    Route::get('employer/job/{id}/applications', 'Site\EmployerController@empJobApplications')->name('empJobApplications');
-    Route::post('employer/jobAppFilter', 'Site\EmployerController@jobAppFilter')->name('jobAppFilter');
     Route::post('ajax/job/{id}',    'Site\EmployerController@updateJob')->name('employerJobUpdate');
     // jobslisting
     Route::get('jobs', 'Site\SiteUserController@jobs')->name('jobs');
