@@ -1352,12 +1352,10 @@ class EmployerController extends Controller {
 
 
     public function empGeneratePremiumPDF(Request $request){
-      // dd($request->cbx);
-        if (isEmployer() && isEmployerPaid()) {
+        if (isEmployer() && isEmployerPaid() || isAdmin()) {
             if(!empty($request->cbx)){
                 $data['title'] = 'Generate PDF';
                 $users = User::whereIn('id', $request->cbx)->with('attachments')->get();
-                // dd($users);
                 $data['users'] = $users;
                 if($request->test){
                     return view('admin.pdf.premium-pdf-jobseekers', $data); // admin/pdf/premium-pdf-jobseekers

@@ -125,14 +125,10 @@ class AdminReferenceController extends Controller
     public function view_reference(Request $request, $id){
 
         $reference =  crossreference::where('id' , $id)->where('refStatus', 'Reference Completed')->first();
-        
-        // dd($reference);
-
         $data['reference'] = $reference;
         $data['title'] = 'Refenence Info';
         $data['content_header'] = 'Refenence Info';
         return view('admin.crossReference.reference_info', $data);  // admin/crossReference/reference_info
-
         // dd($crossreference);
     }
 

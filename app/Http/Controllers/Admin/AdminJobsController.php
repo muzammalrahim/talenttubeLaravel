@@ -776,12 +776,15 @@ class AdminJobsController extends Controller
 
         ->addColumn('profile', function ($records) {
             if (isAdmin()){
-                $rhtml = '<a class="fas fa-user btn-sm btnUserInfo" href="'.route('jobSeekerInfo',['id'=>$records->jobseeker->id]).'" target="_blank" > </a>';
-                $rhtml .= '<i class="fas fa-video btn-sm btnUserVideoInfo pointer" user-id='. $records->jobseeker->id.' ></i>';
+                $rhtml = '<div class="row">';
+                $rhtml .= '<a class="fas fa-user btn-sm btnUserInfo col-6" href="'.route('jobSeekerInfo',['id'=>$records->jobseeker->id]).'" target="_blank" > </a>';
+                $rhtml .= '<i class="fas fa-video btn-sm btnUserVideoInfo pointer col-6" user-id='. $records->jobseeker->id.' ></i>';
 
-                $rhtml .= '<a class = "btn-sm userTestsModal pointer" data-toggle ="modal" jobApp_id = '.$records->id.' data-target= "#getTestsModal"><img src="https://img.icons8.com/ios-filled/20/000000/test-results.png"/></a>';
+                $rhtml .= '<a class = "btn-sm userTestsModal pointer col-6" data-toggle ="modal" jobApp_id = '.$records->id.' data-target= "#getTestsModal"><img src="https://img.icons8.com/ios-filled/20/000000/test-results.png"/></a>';
 
-                $rhtml .= '<a class="btnUserResumeInfo pointer" user-id='. $records->jobseeker->id.' > <img src="https://img.icons8.com/nolan/20/parse-from-clipboard.png"/></a>'; 
+                $rhtml .= '<a class="btnUserResumeInfo pointer col-6" user-id='. $records->jobseeker->id.' > <img src="https://img.icons8.com/nolan/20/parse-from-clipboard.png"/></a>';
+                $rhtml .= '</div>';
+
                 return $rhtml;
             }})
         ->editColumn('user_id', function ($records) {

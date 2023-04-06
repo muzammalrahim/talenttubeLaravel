@@ -78,7 +78,7 @@
                   $profile_image  = asset('images/site/icons/nophoto.jpg');
                   $profile_image_gallery    = $js->profileImage()->first();
                   if ($profile_image_gallery) {
-                  $profile_image   = assetGallery2($profile_image_gallery,'small');
+                  $profile_image   = assetGallery2($profile_image_gallery,'');
                   }
                   @endphp
 
@@ -89,7 +89,7 @@
                         $profile_image_gallery    = $js->profileImage()->first();
                         if ($profile_image_gallery) {
                            // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
-                           $profile_image   = assetGallery2($profile_image_gallery,'small');
+                           $profile_image   = assetGallery2($profile_image_gallery,'');
                         }
                         @endphp
                         <img src="{{$profile_image}}" alt="" >
@@ -103,10 +103,13 @@
                   <div class="progress-img d-block d-sm-none mt-3"> 
                      <h6 class="text-center">{{$js->company}}</h6>
                      <div class="block-progrees-ratio1 d-md-block p-0">
+                     @if (!isAdmin())
                      <ul>
-                     <li class="mx-2 p-0"><span class="Progress-ratio-icon1">.</span> <span> {{ $user_compat }} % </span> Match </li>
-                     <li class="p-0"><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$user_compat }} % </span> Un-Matched</li>
+                        {{-- expr --}}
+                     <li class="mx-2 p-0"><span class="Progress-ratio-icon1">.</span> <span> {{ $user_compat }}% </span> Match </li>
+                     <li class="p-0"><span class="Progress-ratio-icon2">.</span> <span> {{ 100-$user_compat }}% </span> Un-Matched</li>
                      </ul>
+                     @endif
                      </div>
                     
                   </div>
@@ -219,7 +222,7 @@
                            }
                         @endphp
                         
-                        <p><span><b>Type:</b></span> <span class="text-capitalize spanStyleofP"> {{remove_underscode($jsQualification)}}</span> </p>
+                        <p class="text-capitalize"><b>Type: </b>{{remove_underscode($jsQualification)}}</p>
                         @php
                         $qualificationsData =  ($js->qualification)?(getQualificationsData($js->qualification)):(array());
                         @endphp
@@ -227,7 +230,7 @@
                         <ul class="p-0">
                            @foreach($qualificationsData as $qualification)
                            <li class="QualificationSelect">
-                              <p>{{$qualification['title']}}</p>
+                              <p>> {{$qualification['title']}}</p>
                            </li>
                            @endforeach
                         </ul>
@@ -448,6 +451,10 @@
       .sidebaricontoggle {
          top: 4rem !important;
       }
+      .block-user-img img {
+         width:auto !important;
+      }
+
    }
 
    @media only screen and (min-width: 480px) and (max-width: 991px){
@@ -465,11 +472,12 @@
    .video_thumb{
       max-height:200px;
    }
-   .block-user-img img {
+/*   @media only screen and (min-width: 768px){*/
+      .block-user-img img {
           min-height: 164px !important;
           max-height: 164px !important;
       }
-   
+/*   }*/
 </style>
 
 @stop

@@ -17,7 +17,7 @@
         </select>
       </div> --}}
 
-    <div class="block row col-md-8 text-white">
+    <div class="block row col-md-10 text-white">
 
 
       <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkApproved" style="margin-right: 5px;">Bulk Assign Job</a></div>
@@ -26,6 +26,8 @@
       <div class="col-md-1.5 bulkButton"><a  class="btn btn-sm btn-block btn-primary btnBulkEmail">Bulk Email</a></div>
       <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkCompileCV">Bulk Compile CV</a></div>
       <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary bulkPool">Bulk Pool</a></div>
+      <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary btnBulkPDFGeneratePremium"> Premium Snap Shot </a></div>
+
       {{-- <div class="col-md-1.5 bulkButton"><a class="btn btn-sm btn-block btn-primary bulkSms" onclick="bulkSmsFunction()">Bulk SMS</a></div> --}}
       {{-- <div class="col-md-2"><a class="btn btn-block btn-primary ">Bulk Apply To Job</a></div> --}}
     </div>
@@ -245,20 +247,14 @@
   <div class="modal-dialog">
     <!-- Modal content-->
     {{-- <div class="modal-header bg-white text-black"> Add Jobseekers in Talent Pool</div> --}}
-
     <form class="addBulkJobSeekerInPool" name="addBulkJobSeekerInPool">
       <div class="modal-content">
            <div class="modal-header">Add Jobseekers in Talent Pool<button type="button" class="close" data-dismiss="modal">&times;</button></div>
            <div class="modal-body p-3 bulkPoolContent">
               <div class="poolsInModal">
-
-
               </div>
-
               <div class="cbx_list"></div>
-
            </div>
-
            <p class="d-none usersAddedMessage px-3"> Users are added in pool successfully </p>
            <div class="modal-footer text-center margin_auto">
                   <button type="button" class="btn btn-success btn-md addInPoolConfirm">Confirm</button>
@@ -267,6 +263,14 @@
       </div>
     </form>
   </div>
+</div>
+
+<div class="d-none">
+  <form method="POST" class="bulkPDFPremiumExportForm" action="{{route('empBulk.GeneratePremiumPDF')}}">
+    @csrf
+    <div class="cbx_list">
+    </div>
+  </form>
 </div>
 
 
@@ -754,13 +758,9 @@ this.bulkSmsFunction = function(){
 
 // ================================================== Bulk Pool Confirm ==================================================
 
-
-
 $(document).on('click', '.addInPoolConfirm', function(){
-
   var formdata = $('.addBulkJobSeekerInPool').serializeArray();
   console.log(formdata);
-
   $.ajaxSetup({headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
       $.ajax({
             type: 'POST',
@@ -775,17 +775,28 @@ $(document).on('click', '.addInPoolConfirm', function(){
                   setTimeout(function() { 
                       $('.usersAddedMessage').addClass('d-none');
                       $('.ModalBulkPool').modal('hide');
-                      
                   }, 3000);
-
               }
       });
-
-
-
 });
 
 
+$(document).on('click','.btnBulkPDFGeneratePremium',function(){
+    var cbx = $('input[name="cbx[]"]:checked').map(function(){
+        return $(this).val();
+    }).toArray();
+    if (cbx.length <1) {
+        alert('Please select checkboxes');
+    }else{
+        var cbx_hidden = '';
+        $.each(cbx,function(key,value){
+            cbx_hidden += '<input type="hidden" name="cbx[]" value="'+value+'"/>'
+        });
+        // console.log(cbx_hidden);return;
+        $('.bulkPDFPremiumExportForm .cbx_list').html(cbx_hidden);
+        $('.bulkPDFPremiumExportForm').submit();
+    }
+})
 
 
 

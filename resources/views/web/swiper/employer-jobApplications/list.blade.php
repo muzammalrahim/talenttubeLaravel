@@ -15,24 +15,35 @@
                @endphp
             <div class="swiper-slide shadow bg-white rounded job_row jobApp_{{$application->id}} overflow-hidden" style="">
                 <div class="w-100 text-center" style="height: 50px;margin: 10px 0px;"> 
-                        <div class="swiper-navigation-buttons">                    
-                            <div class="navigation-div float-right">
-                                <div class="swiper-button-next swiperButton" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-3c6e55462a735cf8" aria-disabled="false">  
-                                </div>
-                            </div>
-
-                            {{-- @include('site.layout.parts.jobSeekerProfileStar') --}}
-                            <span class="d-inline-block mt-2 bold"> {{$js->name}} {{$js->surname}} </span>
-                            @if ($application->status == "inreview")
-                                <span class="d-inline-block mt-2 bold text-capitalize statusUpdated_{{ $application->id }}"> ( In Review ) </span>
-                            @else
-                                <span class="d-inline-block mt-2 bold text-capitalize statusUpdated_{{ $application->id }}"> ( {{$application->status}} ) </span>
-                            @endif
-                            <div class="navigation-div float-left">
+                        <div class="swiper-navigation-buttons row">                    
+                            
+                            <div class="navigation-div col-2">
                                 <div class="swiper-button-prev swiperButton" tabindex="0" role="button" aria-label="Prev slide" aria-controls="swiper-wrapper-3c6e55462a735cf8" aria-disabled="false">
                                     
                                 </div>
                             </div>
+
+
+                            <div class="col-8">
+                                
+                                <span class="d-inline-block mt-2 bold"> {{$js->name}} {{$js->surname}} </span>
+                                @if ($application->status == "inreview")
+                                    <span class="d-inline-block mt-2 bold text-capitalize statusUpdated_{{ $application->id }}"> ( In Review ) </span>
+                                @else
+                                    <span class="d-inline-block mt-2 bold text-capitalize statusUpdated_{{ $application->id }}"> ( {{$application->status}} ) </span>
+                                @endif
+
+                                <br>
+                                <div class="position-relative">
+                                    @include('web.swiper.employer-jobApplications.jobSeekerProfileStar')
+                                </div>
+                            </div>
+
+                            <div class="navigation-div col-2">
+                                <div class="swiper-button-next swiperButton" tabindex="0" role="button" aria-label="Next slide" aria-controls="swiper-wrapper-3c6e55462a735cf8" aria-disabled="false">  
+                                </div>
+                            </div>
+                            
                         </div>
                 </div>
                 <div class="">
@@ -71,8 +82,10 @@
                                     </div>
                                 </div>
                                 @if($js->vidoes->count() > 0)
-                                <a onclick="profileVideoShow('{{assetVideo($js->vidoes->first())}}')" class="js_video_link" target="_blank">
+                                <a onclick="profileVideoShow('{{assetVideo($js->vidoes->first())}}')" class="js_video_link position-relative" target="_blank">
                                     {{-- {!! generateVideoThumbsm($js->vidoes->first()) !!} --}}
+                                    <img src="{{ asset('/assests/images/playicon.png') }}" class="mr-1 videoPlayButton"> 
+
                                     <img class="img-fluid imageSizeModal z-depth-1 item_video" id="pic_main_img" src="{{$profile_image}}">
                                 </a>
                                 @endif

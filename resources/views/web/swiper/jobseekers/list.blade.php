@@ -23,7 +23,7 @@
                         $profile_image_gallery    = $js->profileImage()->first();
                         if ($profile_image_gallery) {
                             // $profile_image   = assetGallery($profile_image_gallery->access,$js->id,'',$profile_image_gallery->image);
-                            $profile_image   = assetGallery2($profile_image_gallery,'small');
+                            $profile_image   = assetGallery2($profile_image_gallery,'');
                         }
                         $profile_imageBig  = asset('images/site/icons/nophoto.jpg');
                         $profile_imageBig_gallery    = $js->profileImage()->first();
@@ -52,7 +52,14 @@
                                     </div>
                                 </div>
                                 @if($js->vidoes->count() > 0)
-                                <a onclick="profileVideoShow('{{assetVideo($js->vidoes->first())}}')" class="js_video_link" target="_blank">{!! generateVideoThumbsm($js->vidoes->first()) !!}</a>
+                                <a onclick="profileVideoShow('{{assetVideo($js->vidoes->first())}}')" class="js_video_link position-relative" target="_blank">
+                                    {{-- {!! generateVideoThumbsm($js->vidoes->first()) !!} --}}
+
+                                    <img src="{{ asset('/assests/images/playicon.png') }}" class="mr-1 videoPlayButton"> 
+                                    <img class="img-fluid imageSizeModal z-depth-1 item_video" id="pic_main_img" src="{{$profile_image}}">
+
+
+                                </a>
                                 @endif
                             </div>
                             

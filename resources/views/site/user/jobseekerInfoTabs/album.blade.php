@@ -26,12 +26,20 @@
    <div class="cl mb20"></div>
    @if(isEmployerPaid() || isAdmin())
    
-	<div class="row Resume prvate-section">
+	<div class="row Resume prvate-section d-none d-md-flex">
       <h2>Resume & Contact Details</h2>
       <div class="col-md-6 Resume-email"><label>Email:<span>{{$js->email}}</span></label></div>
       <div class="col-md-6 Resume-email"><label>First Name:<span>{{$js->name}}</span></label></div>
+      <div class="col-md-6 Resume-contact"><label>Contact#:<span>{{$js->phone}}</span></label></div>
+      <div class="col-md-6 Resume-email"><label>Last Name:<span>{{$js->surname}}</span></label></div>
+   </div>
+
+   <div class="row Resume prvate-section d-block d-md-none">
+      <h2>Resume & Contact Details</h2>
+      <div class="col-md-6 Resume-contact"><label>First Name:<span>{{$js->name}}</span></label></div>
       <div class="col-md-6 Resume-email"><label>Last Name:<span>{{$js->surname}}</span></label></div>
       <div class="col-md-6 Resume-contact"><label>Contact#:<span>{{$js->phone}}</span></label></div>
+      <div class="col-md-6 Resume-email"><label>Email:<span>{{$js->email}}</span></label></div>
    </div>
    
    <br>

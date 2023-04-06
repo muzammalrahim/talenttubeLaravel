@@ -69,13 +69,10 @@ class SiteUserController extends Controller
                 
                 if ($user->step2 < 8) {
                     if (isMobile()) {
-                    return redirect(route('mStep2User'));
-                    
-                  }
-                  else{
-                    return redirect(route('step2User'));
-                    
-                  }
+                        return redirect(route('mStep2User'));
+                    }else{
+                        return redirect(route('step2User'));
+                    }
                 }
             }
         
@@ -939,8 +936,8 @@ class SiteUserController extends Controller
                 return response()->json([
                         'status' => 1,
                         'data' => array(
-                            'email_User' => $user->email,
-                            'logout_Route' => route('logout')
+                            'email_User' => $user->email
+                            // 'logout_Route' => route('logout')
                         )
                 ]);
             }
