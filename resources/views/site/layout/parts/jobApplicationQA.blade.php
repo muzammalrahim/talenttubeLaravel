@@ -13,15 +13,15 @@
             <div class="jobAnswers">
                 @foreach ($answers as $answer)
                 <div class="job_answers">
-                    <p class="jqa_q m-0"> <b> Question: {{ $loop->index+1 }} </b> {{$answer->question->title}}</p>
-                    <p class="jqa_a m-0"> <b> Answer: </b> {{$answer->answer}}</p>
+                    <p class="jqa_q m-0 bold">  Question: {{ $loop->index+1 }}  {{$answer->question->title}}</p>
+                    <p class="jqa_a m-0">  {{$answer->answer}}</p>
                 </div>
                 @endforeach
             </div>
      @endif
 
     <div class="jobAppDescriptionBox">
-        <p class="m-0"> <b> {{jobApplicationMandatoryQuestion()}} </b></p>
+        <p class="m-0 bold">  {{jobApplicationMandatoryQuestion()}} </p>
         <p class="m-0">{{ $application->description}}</p>
     </div>
 

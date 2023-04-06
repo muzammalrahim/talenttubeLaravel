@@ -15,6 +15,13 @@
       </div>
 
       <div class="form-group row">
+          {{ Form::label('surname', null, ['class' => 'col-md-2 form-control-label']) }}
+          <div class="col-md-10">
+            {{ Form::text('surname', $value = null, $attributes = array('class'=>'form-control', 'placeholder' => 'name','required'=> 'false')) }}
+          </div>
+      </div>
+
+      <div class="form-group row">
           {{ Form::label('email', null, ['class' => 'col-md-2 form-control-label']) }}
           <div class="col-md-10">
             {{ Form::text('email', $value = null , $attributes = array('class'=>'form-control', 'placeholder' => 'email','required'=> 'false')) }}

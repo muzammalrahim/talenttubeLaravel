@@ -53,6 +53,7 @@ class AdminController extends Controller
         $data['title'] = 'Dashboard Page Title';
         $data['content_header'] = 'Dashboard Content Header';
         $data['content'] = 'this is page content';
+        // dd('heerere');
         return view('admin.dashboard', $data);
     }
 

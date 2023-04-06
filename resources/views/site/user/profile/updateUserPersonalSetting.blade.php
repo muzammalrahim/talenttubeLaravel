@@ -372,7 +372,7 @@ input:checked + .slider:before {
                         console.log('email updated successfully');
                         // $('.SaveEmailSpinner').remove();
                         // location.reload();
-                        window.location = resp.data.logout_Route;
+                        // window.location = resp.data.logout_Route;
                         // $('#updateEmail').attr("disabled",true);
                         $('.EmailAlert').show().delay(3000).fadeOut('slow');
                     }

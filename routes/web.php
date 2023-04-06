@@ -16,6 +16,11 @@ use App\Mail\TestEmail;
 
 Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
+
+Route::get('/userspublic/videoInfo{any}', function () {
+    // This route does not require authentication
+})->withoutMiddleware(['auth']);
+
 Route::get('testEmail', function () {
 
 
@@ -29,6 +34,7 @@ Route::get('testEmail', function () {
 Route::get('interview-invitation/{url}','Site\HomeController@interviewInvitationUrl')->name('interviewInvitationUrl');
 Route::get('userinterviewconcierge/url', 'Site\HomeController@userUniqueurl')->name('userinterviewconcierge.url');
 Route::get('userspublic/videoInfo', 'Site\HomeController@profileVideoPopup')->name('publicuservideo');
+
 
 // ================================================ Save interview from unique url ================================================ 
 Route::post('ajax/booking/saveInterviewSlot',    'Site\HomeController@saveInterviewSlot')->name('saveSlot');
@@ -90,20 +96,20 @@ Route::get('/clear', function() {
 Route::get('images/user/{userid}/gallery/{any}', [
     'as'         => 'images.show',
     'uses'       => 'Site\HomeController@imgshow',
-    'middleware' => 'auth',
+    // 'middleware' => 'auth',
 ])->where('any', '.*');
 
 Route::get('images/user/{userid}/private/{any}', [
     'as'         => 'files.show',
     'uses'       => 'Site\HomeController@fileshow',
-    'middleware' => 'auth',
+    // 'middleware' => 'auth',
 ])->where('any', '.*');
 
 
 // Media access video streaming
 Route::get('stream/{userid}/videos/{any}', [
     'as'         => 'videoStream.show',
-    'middleware' => 'auth',
+    // 'middleware' => 'auth',
     'uses'       => 'Site\HomeController@videoStream',
 ])->where('any', '.*'); 
 

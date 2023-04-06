@@ -118,13 +118,19 @@ class TalentPoolController extends Controller
       $records = array();
       $records = UserPool::select(['user_id','created_at'])->where('pool_id', $request->id)
         // ->whereHas('roles' , function($q){ $q->where('slug', 'user'); })
-        ->orderBy('created_at', 'desc');
+        ;
       return datatables($records)
 
       ->editColumn('created_at', function ($records) {
         return humanReadableDateTime($records->created_at); // human readable format
       })
 
+      ->addColumn('name', function ($records) {
+        if (isAdmin()){
+                $rhtml = '<p>'.$records->user->name.'</p>';
+            return $rhtml;
+        }
+      })
 
 
       ->addColumn('surname', function ($records) {
@@ -189,7 +195,7 @@ class TalentPoolController extends Controller
 
 
       
-      ->rawColumns(['surname', 'city', 'email','phone','created_at','profile','videoInfo','resume','action'])
+      ->rawColumns(['name','surname', 'city', 'email','phone','created_at','profile','videoInfo','resume','action'])
       ->toJson();
 
     }

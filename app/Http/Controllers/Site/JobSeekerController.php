@@ -199,7 +199,7 @@ class JobSeekerController extends Controller {
         $data['user'] = $user;
         // dd($user);
         if (!isEmployer($user) && (!isAdmin($user)) ){ return redirect(route('profile')); }
-        if (!isEmployerPaid()) { return redirect(route('profile')); }
+        if (!isEmployerPaid() && !isAdmin()) { return redirect(route('profile')); }
         $jobSeeker = User::JobSeeker()->where('id',$jobSeekerId)->first();
         $controlsession = ControlSession::where('user_id', $user->id)->where('admin_id', '1')->get();
         $notes = Notes::where('admin_id', '1')->where('js_id' , $jobSeekerId)->get();
@@ -280,7 +280,6 @@ class JobSeekerController extends Controller {
         $data['UserInterview'] = $UserInterview;
         // $data['InterviewTempQuestion'] = $InterviewTempQuestion;
 
-        // dd($days);
 
         return view('site.user.jobSeekerInfo', $data);      //  site/user/jobSeekerInfo
     }

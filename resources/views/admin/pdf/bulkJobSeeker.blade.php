@@ -85,7 +85,7 @@ td.center.left_info {
 
     <td width="80%" class="updf_detai">
     		<div class="name_title">{{$user->username}}</div>
-    		<div class="updf_recent_job">{{$user->recentJob}} at {{$user->organHeldTitle}} </div>
+    		<div class="updf_recent_job">{{$user->recentJob}} {{-- at {{$user->organHeldTitle}} --}} </div>
     		<div class="updf_intrested"><span class="label">Interested In:</span> {{$user->interested_in}}</div>
     		<div class="updf_salary_exp"><span class="label">Salary Expectation:</span> {{getSalariesRangeLavel($user->salaryRange)}}</div>
     		<div class="updf_location"><span class="label">Location:</span>{{userLocation($user)}}</div>

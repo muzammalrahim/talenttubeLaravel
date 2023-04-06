@@ -1,6 +1,6 @@
 .swiper-button-next, .swiper-button-prev {
     position: relative;
-    top: var(--swiper-navigation-top-offset,50%);
+    top: var(--swiper-navigation-top-offset,0%);
     width: calc(var(--swiper-navigation-size)/ 44 * 37);
     height: 37px;
     margin-top: calc(0px - (var(--swiper-navigation-size)/ 2)) !important;
@@ -68,4 +68,17 @@
     border: 2px solid #00326f;
     border-radius: 5px;
     padding: 2px;
+}
+.goldstar img, .silverstar img{
+    width: 22px !important;
+}
+.videoPlayButton{
+    position: absolute;
+    z-index: 9999;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 38%;
+    top: 25%;
 }

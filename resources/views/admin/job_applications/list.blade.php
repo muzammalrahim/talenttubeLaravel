@@ -118,7 +118,7 @@
     <thead>
         <tr style = "text-align: center">
             <th><label>Bulk Select</label><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th>
-            <th><label class="adminStatus">Status</label><input name="selecta_all" class="specialinputblue" value="1" id="cxx_all" type="checkbox" /><input name="selecta_all" class="specialinputgreen" value="1" id="cyx_all" type="checkbox" /><input name="selecta_all" class="specialinputred" value="1" id="czx_all" type="checkbox" /></th>
+            <th><label class="adminStatus">Status</label><input name="selecta_all" class="specialinputblue" title="Review" value="1" id="cxx_all" type="checkbox" /><input name="selecta_all" class="specialinputgreen" title="Interview" value="1" id="cyx_all" type="checkbox" /><input name="selecta_all" class="specialinputred" title="Unsuccessful" value="1" id="czx_all" type="checkbox" /></th>
 
             {{-- <th><label>Bulk Pool</label><input name="select_all" value="1" id="cbxp_all" type="checkbox" /></th> --}}
 
@@ -506,7 +506,7 @@ $(document).on('click','.btnBulkStatus', function(){
          'orderable':false,
          'className': 'dt-body-center',
          'render': function (data, type, full, meta){
-             return '<div><input type="checkbox" class="specialinputblue" name="cxx" value="'+ $('<div/>').text(data).html() + '">'+'<input type="checkbox" class="specialinputgreen" name="cyx" value="'+ $('<div/>').text(data).html() + '">'+'<input type="checkbox" class="specialinputred" name="czx" value="'+ $('<div/>').text(data).html() + '"></div>';
+             return '<div><input type="checkbox" class="specialinputblue" title="Review" name="cxx" value="'+ $('<div/>').text(data).html() + '">'+'<input type="checkbox" class="specialinputgreen" title = "Interview" name="cyx" value="'+ $('<div/>').text(data).html() + '">'+'<input type="checkbox" class="specialinputred" name="czx" title = "Unsuccessful" value="'+ $('<div/>').text(data).html() + '"></div>';
          }
       },
 

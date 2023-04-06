@@ -602,6 +602,7 @@ class UserController extends Controller
 
         $this->validate($request, [
             'name' => 'required|max:255',
+            'surname' => 'required|max:255',
             'email' => 'email',
             'phone' => 'max:15',
             'country' => 'max:50',
@@ -618,6 +619,7 @@ class UserController extends Controller
             'credit' => 'max:250',
         ]);
         $user->name = $request->name;
+        $user->surname = $request->surname;
         $user->email = $request->email;
         $user->phone = $request->phone;
         $user->country = $request->country;

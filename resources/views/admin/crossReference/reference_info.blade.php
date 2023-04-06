@@ -46,23 +46,14 @@
                             </div>
 
                             <div class="card-body">
-
                                 <div class="tab-content" id="custom-tabs-one-tabContent">
-
-                                    @if ($reference->refType == 'Work Reference'){
+                                    @if ($reference->refType == 'Work Reference')
                                         @include('admin.crossReference.tabs.workreference_tab') {{-- admin/crossReference/tabs/workreference_tab --}} 
-
                                     @elseif($reference->refType == 'Personal Reference')
-                                    
                                         @include('admin.crossReference.tabs.personalreference_tab') {{-- admin/crossReference/tabs/personalreference_tab --}} 
                                     @else
                                         @include('admin.crossReference.tabs.educationalreference_tab')
-
-                                    }
-
                                     @endif
-
-
                                 </div> <!-- tab-content end -->
                             </div>
 

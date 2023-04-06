@@ -1,8 +1,11 @@
 @extends('web.user.usermaster') {{-- mobile/user/usermaster --}}
+    @section('custom_css')
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/swiper/swipers.css') }}">
+    @endsection
 @section('content')
     
     @section('custom_css')
-    <style type="text/css">
+    {{-- <style type="text/css">
         .swiper-button-next, .swiper-button-prev {
             position: relative;
             top: var(--swiper-navigation-top-offset,50%);
@@ -20,7 +23,7 @@
             padding: 15px 10px;
             margin-bottom: 15px;
         }
-    </style>
+    </style> --}}
     @endsection
     {{-- <h6 class="h6 jobAppH6">Job Seekeers</h6> --}}
     <!-- =============================================================================================================================== -->

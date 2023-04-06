@@ -47,11 +47,12 @@
         <tr style = "text-align: center">
             {{-- <th>select</th> --}}
             <th><input name="select_all" value="1" id="cbx_all" type="checkbox" /></th>
-            <th>surname</th>
+            <th>Name</th>
+            <th>Surname</th>
             <th>City</th>
             <th>email</th>
             <th>Phone</th>
-            <th>created_at</th>
+            <th>Created At</th>
             <th>Profile</th>
             <th>View Video</th>
             <th>View Resume</th>
@@ -305,6 +306,8 @@ jQuery(function() {
     var table = jQuery('#dataTable').DataTable({
         processing: true,
         serverSide: true,
+        ordering:true,
+         order: [/*[ 1, 'asc' ], [ 3, 'asc' ],*/ [ 6, 'asc' ]],
         ajax: {
           url: '{!! route('userPool.dataTable') !!}',
           data: {'id': id}
@@ -316,6 +319,7 @@ jQuery(function() {
         columns: [
             // { data: 'select', name: 'select' },
             { data: 'user_id', name: 'user_id' },
+            { data: 'name', name: 'name' },
             { data: 'surname', name: 'surname' },
             { data: 'city', name: 'city' },
             { data: 'email', name: 'email' },
@@ -326,15 +330,19 @@ jQuery(function() {
             { data: 'resume', name: 'resume' },
             { data: 'action', name: 'action' }
         ],
-     columnDefs: [{
-         'targets': 0,
-         'searchable':false,
-         'orderable':false,
-         'className': 'dt-body-center',
-         'render': function (data, type, full, meta){
-             return '<input type="checkbox" name="cbx[]" value="'+ $('<div/>').text(data).html() + '">';
-         }
-      }],
+        columnDefs: [{
+            'targets': 0,
+            'searchable':false,
+            'orderable':false,
+            'className': 'dt-body-center',
+            'render': function (data, type, full, meta){
+                return '<input type="checkbox" name="cbx[]" value="'+ $('<div/>').text(data).html() + '">';
+            }
+            
+        },
+            { "orderable": false, "targets": [0,3,4,5,7,8,9,10] },
+            { "orderable": true, "targets": [1,2,6] }
+        ],
     });
 
 
