@@ -121,6 +121,12 @@ td.center.left_info {
     			<span class="label">About:</span>
     			{{$user->about_me}}
     		</div>
+        <div class="updf_aboutme">
+            <span class="label">Skills:</span>
+            @foreach($user->tags as $tag)
+                {{$tag->title}}
+            @endforeach
+        </div>
     </td>
   </tr>
   @endforeach

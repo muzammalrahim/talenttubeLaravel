@@ -97,7 +97,7 @@ tr>td>.cv_video{
             
         <div class="cv_video">
             <a href="{{asset('images/user/'.$user->attachments->file)}}" target="”_blank”" download="" class="cvBtn">CV</a>
-    		<a class="contactBtn" target="”_blank”" {{-- onclick="pdfVideo('{{route('publicuservideo',['id' => $user->id])}}')" --}} href="{{route('publicuservideo',['id' => $user->id])}}">Video</a>
+    		<a class="contactBtn" target="”_blank”" {{-- onclick="pdfVideo('{{route('publicuservideo',['id' => $user->id])}}')" --}} href="{{route('publicuservideo',['id' => $user->id])}}">Digital</a>
         </div>
             
 	</td>
@@ -142,6 +142,13 @@ tr>td>.cv_video{
     			<span class="label">About:</span>
     			{{$user->about_me}}
     		</div>
+
+        <div class="updf_aboutme">
+            <span class="label">Skills:</span>
+            @foreach($user->tags as $tag)
+                {{ $tag->title }},
+            @endforeach
+        </div>
     </td>
   </tr>
   @endforeach

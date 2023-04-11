@@ -150,6 +150,8 @@ Route::get('media/private/{userid}/{any}', [
     })->name('logout');
 
     // Backend Admin with Authentication
+//Route::get('dashboard','Admin\AdminController@dashboard')->name('adminDashboard');
+
     Route::group(array('prefix' => 'admin', 'middleware' => ['auth','admin']), function(){
     Route::get('dashboard','Admin\AdminController@dashboard')->name('adminDashboard');
     Route::get('adminDashboard','Admin\AdminController@dashboard');
