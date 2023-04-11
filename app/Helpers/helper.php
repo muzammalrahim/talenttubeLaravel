@@ -240,7 +240,7 @@ function getIndustries(){
         'aviation'                      => 'Aviation',
         'accounting_finance'            => 'Accounting and Finance',
         'administration_office_support' => 'Administration and Office support',
-        'advertising_arts_media'        => 'Advertising, Arts and Media',
+        'advertising_arts_media'        =>  'Advertising and Media',//'Advertising, Arts and Media'
         'automotive'                    => 'Automotive',
         'banking_financial_services'    => 'Banking and Financial Services',
         'call_centre_customer_service'  => 'Call Centre and Customer Service',
@@ -269,7 +269,7 @@ function getIndustries(){
         'legal'                         => 'Legal',
         'law_enforcement'               => 'Law enforcement and private security',
         'manufacturing'                 => 'Manufacturing',
-        'marketing_communications'      => 'Marketing and Communications',
+        'marketing_communications'      => 'Digital Marketing',//Marketing and communications
         'mining_resources_energy'       => 'Mining, Resources and Energy',
         'real_estate_property'          => 'Real Estate and Property',
         'retail_consumer_products'      => 'Retail and Consumer products',
@@ -281,6 +281,17 @@ function getIndustries(){
         'telecommunications'            => 'Telecommunications',
         'trades_services'               => 'Trades and Services',
         'transport_logistics'           => 'Transport and Logistics',
+        'creative_arts'                 => 'Creative Arts',
+        'marketing'                     => 'Marketing (Traditional)',
+        'public_relations_corporate_affairs'  => 'Public Relations & Corporate Affairs',
+        'communications'                => 'Communications',
+        'event_management'              => 'Event Management',
+        'brand_management'              => 'Brand Management',
+        'market_research_analysis'      => 'Market Research & Analysis',
+        'product_development_management' => 'Product Development & Management',
+        'graphic_design'                => 'Graphic Design',
+        'journalism_writing'            => 'Journalism & Writing'
+
 
 
     );
@@ -324,7 +335,8 @@ function getQualificationsList(){
         array(
             'id' => '3',
             'type' => 'degree',
-            'title' => 'Arts, Music, Film, Media, Animation & Graphic Design'
+//            'title' => 'Arts, Music, Film, Media, Animation & Graphic Design'
+            'title' => 'Fine Arts'
         ),
         array(
             'id' => '4',
@@ -339,7 +351,8 @@ function getQualificationsList(){
         array(
             'id' => '6',
             'type' => 'degree',
-            'title' => 'Economics, Finance, Taxation & Accounting'
+//            'title' => 'Economics, Finance, Taxation & Accounting'
+            'title' => 'Accounting & Taxation'
         ),
         array(
             'id' => '7',
@@ -374,7 +387,8 @@ function getQualificationsList(){
         array(
             'id' => '13',
             'type' => 'degree',
-            'title' => 'Financial Services (Banking, Insurance, Planning & Advice)'
+//            'title' => 'Financial Services (Banking, Insurance, Planning & Advice)'
+            'title' => 'Finance Services'
         ),
         array(
             'id' => '14',
@@ -389,7 +403,8 @@ function getQualificationsList(){
         array(
             'id' => '16',
             'type' => 'degree',
-            'title' => 'Human Resources & Business/People Management'
+//            'title' => 'Human Resources & Business/People Management'
+            'title' => 'Business & People Management'
         ),
         array(
             'id' => '17',
@@ -444,7 +459,8 @@ function getQualificationsList(){
         array(
             'id' => '27',
             'type' => 'degree',
-            'title' => 'Public Relations, Marketing, Social Media & Advertising'
+//            'title' => 'Public Relations, Marketing, Social Media & Advertising'
+            'title' => 'Marketing'
         ),
         array(
             'id' => '28',
@@ -570,6 +586,72 @@ function getQualificationsList(){
             'id'    =>  '51',
             'type' => 'trade',
             'title' => 'Utilities (gas, water, waste management, rail etc)'
+        ),
+
+        array(
+            'id' => '52',
+            'type' => 'degree',
+            'title' => 'Communications & Public Relations'
+        ),
+
+        array(
+            'id' => '53',
+            'type' => 'degree',
+            'title' => 'Multimedia & Design'
+        ),
+
+        array(
+            'id' => '54',
+            'type' => 'degree',
+            'title' => 'Media & Advertising'
+        ),
+
+        array(
+            'id' => '55',
+            'type' => 'degree',
+            'title' => 'Human Resources'
+        ),
+
+        array(
+            'id' => '56',
+            'type' => 'degree',
+            'title' => 'Commerce'
+        ),
+
+        array(
+            'id' => '57',
+            'type' => 'degree',
+            'title' => 'Film, Television & production'
+        ),
+
+        array(
+            'id' => '58',
+            'type' => 'degree',
+            'title' => 'Music, Performance & Sound Design'
+        ),
+
+        array(
+            'id' => '59',
+            'type' => 'degree',
+            'title' => 'Bachelor of Arts'
+        ),
+
+        array(
+            'id' => '60',
+            'type' => 'degree',
+            'title' => 'Animation production & 3d Arts'
+        ),
+
+        array(
+            'id' => '61',
+            'type' => 'degree',
+            'title' => 'Economics & Trade'
+        ),
+
+        array(
+            'id' => '62',
+            'type' => 'degree',
+            'title' => 'Finance & Banking'
         )
     );
 }
@@ -583,8 +665,18 @@ function getSalariesRange(){
         '80000' => '80,000 and above',
         '90000' => '90,000 and above',
         '100000' => '100,000 and above',
+        '110000' => '110,000 and above',
         '120000' => '120,000 and above',
-        '150000' => '150,000 + ',
+        '130000' => '130,000 and above',
+        '140000' => '140,000 and above',
+        '150000' => '150,000 and above',
+//⦁	Update 150,000 + to 150,000 and above
+        '160,000' => '160,000 and above',
+        '170,000' => '170,000 and above',
+        '180,000' => '180,000 and above',
+        '190,000' => '190,000 and above',
+        '200,000' => '200,000 and above',
+
     );
     return $salaries;
 }
@@ -597,9 +689,18 @@ function getSalariesRange1(){
         '70000' => '70,000 to 80000',
         '80000' => '80,000 to 90000',
         '90000' => '90,000 to 10000',
-        '100000' => '100,000 to 120000',
-        '120000' => '120,000 to 150000',
-        '150000' => '150,000 + ',
+        '100000' => '100,000 and above',
+        '110000' => '110,000 and above',
+        '120000' => '120,000 and above',
+        '130000' => '130,000 and above',
+        '140000' => '140,000 and above',
+        '150000' => '150,000 and above',
+//⦁	Update 150,000 + to 150,000 and above
+        '160,000' => '160,000 and above',
+        '170,000' => '170,000 and above',
+        '180,000' => '180,000 and above',
+        '190,000' => '190,000 and above',
+        '200,000' => '200,000 and above',
     );
     return $salaries;
 }

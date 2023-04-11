@@ -1727,7 +1727,7 @@ class SiteUserController extends Controller
         if (
             $mime == "video/x-flv"             || $mime == "video/mp4"             || $mime == "application/x-mpegURL" ||
             $mime == "video/MP2T"             || $mime == "video/3gpp"             || $mime == "video/quicktime" ||
-            $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"
+            $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"            || $mime == 'video/mp3'
         ) {
 			$fileOriginalName = $video->getClientOriginalName();
             // $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
