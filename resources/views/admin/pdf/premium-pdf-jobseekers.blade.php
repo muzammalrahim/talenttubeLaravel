@@ -146,7 +146,10 @@ tr>td>.cv_video{
         <div class="updf_aboutme">
             <span class="label">Skills:</span>
             @foreach($user->tags as $tag)
-                {{ $tag->title }},
+                {{ $tag->title }}
+                @if(!$loop->last)
+                    ,
+                @endif
             @endforeach
         </div>
     </td>

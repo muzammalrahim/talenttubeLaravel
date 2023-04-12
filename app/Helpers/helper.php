@@ -240,7 +240,7 @@ function getIndustries(){
         'aviation'                      => 'Aviation',
         'accounting_finance'            => 'Accounting and Finance',
         'administration_office_support' => 'Administration and Office support',
-        'advertising_arts_media'        =>  'Advertising and Media',//'Advertising, Arts and Media'
+        'advertising_arts_media'        => 'Advertising and Media',//'Advertising, Arts and Media'
         'automotive'                    => 'Automotive',
         'banking_financial_services'    => 'Banking and Financial Services',
         'call_centre_customer_service'  => 'Call Centre and Customer Service',

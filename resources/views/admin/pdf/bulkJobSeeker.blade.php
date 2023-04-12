@@ -125,6 +125,9 @@ td.center.left_info {
             <span class="label">Skills:</span>
             @foreach($user->tags as $tag)
                 {{$tag->title}}
+                @if(!$loop->last)
+                    ,
+                @endif
             @endforeach
         </div>
     </td>
