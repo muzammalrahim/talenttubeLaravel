@@ -1,5 +1,5 @@
 @extends('web.user.usermaster') {{-- site/user/usermaster --}}
-
+{{dd('something')}}
 @section('content')
    <div class="main-content col-lg-10 col-md-12 col-sm-12">
       <!--================== Mobile view sidebar ========================================================= -->

@@ -18,5 +18,7 @@ storage/media/*
 storage/media/.*
 /storage/media/.*
 .idea/*
+/.idea
+/.vscode
 .htaccess
 changelog.text

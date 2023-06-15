@@ -233,7 +233,41 @@ $.fn.ajaxSubmit = function(options) {
         // see:  http://groups.google.com/group/jquery-dev/browse_thread/thread/36395b7ab510dd5d
         if (options.closeKeepAlive) {
             $.get(options.closeKeepAlive, function() {
-                jqxhr = fileUploadIframe(a);
+                jqxhr = file
+                if ( isset($request->videoUpload) && $request->videoUpload == "step2") {
+                    $html  = '<div id="v_'.$video->id.'" class="item profile_photo_frame item_video" style="display: inline-block;width:170px">';
+                    $html .=    '<a onclick="UProfile.showVideoModal(\''.assetVideo($video).'\')" class="video_link pointer" target="_blank">';
+                    $html .=        '<div class="v_title_shadow"><span class="v_title">'.$video->title.'</span></div>';
+                    $html .=        generateVideoThumbs($video);
+                    $html .=    '</a>';
+                    $html .=    '<span title="Delete video" class="icon_delete" data-vid="12" onclick="deleteVideoFun('.$video->id.')">';
+                    $html .=        '<span class="icon_delete_photo"></span>';
+                    $html .=        '<span class="icon_delete_photo_hover"></span>';
+                    $html .=    '</span>';
+                    $html .=    '<div class="v_error error hide_it"></div>';
+                    $html .=  '</div>';
+                }
+
+            else{
+                    $html   = '<div id="v_'.$video->id.'" class="item profile_photo_frame col-5 m-3 item_video pointer position-relative d-inline-block">';
+                    $html  .=   '<a class="videoFunction" class="video_link" target="_blank">';
+                    $html  .=      '<div class="v_title_shadow">';
+                    $html  .=         '<span class="v_title">'.$video->title.'</span>';
+                    $html  .=      '</div>';
+
+                    $html  .=      '<span class="viewVideo" onclick="showVideoModalFunction(\''.assetVideo($video). '\', \'' .$video->title.'\' )" data-bs-toggle="modal" data-bs-target="#videoShowModal" >View Video</span>';
+
+                    $html  .=      '<span class="deleteVideoSpan" onclick="deleteVideoFun('.$video->id.')" data-toggle="modal" data-target ="#deleteVideoModal">Delete Video</span>';
+
+                    $html  .=      generateVideoThumbs($video);
+                    $html  .=   '</a>';
+                    $html  .=   '<span title="Delete video" class="icon_delete" data-vid="'.$video->id.'">';
+                    $html  .=      '<span class="icon_delete_photo"></span>';
+                    $html  .=      '<span class="icon_delete_photo_hover"></span>';
+                    $html  .=   '</span>';
+                    $html  .=   '<div class="v_error error hide_it"></div>';
+                    $html  .= '</div>';
+                }UploadIframe(a);
             });
         }
         else {
