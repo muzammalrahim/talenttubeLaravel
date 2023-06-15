@@ -524,7 +524,7 @@ $(function(){
     $jq('#user_step7_done').click(function(){
         // $jq('#join_slogan').text('Final Section');
         
-        var check = $('.profile_photo_frame').hasClass('item_video'); 
+        // var check = $('.profile_photo_frame').hasClass('item_video');
         if(!check){
             alert('Please add video');
         }

@@ -143,15 +143,12 @@ tr>td>.cv_video{
     			{{$user->about_me}}
     		</div>
 
-        <div class="updf_aboutme">
-            <span class="label">Skills:</span>
-            @foreach($user->tags as $tag)
-                {{ $tag->title }}
-                @if(!$loop->last)
-                    ,
-                @endif
-            @endforeach
-        </div>
+            <div class="updf_aboutme">
+                <span class="label">Skills:</span>
+                @foreach($user->tags as $tag)
+                    {{ $tag->title }}{{!$loop->last? ',':''}}
+                @endforeach
+            </div>
     </td>
   </tr>
   @endforeach

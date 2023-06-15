@@ -1,7 +1,6 @@
 @extends('web.user.usermaster') {{-- site/user/usermaster --}}
 
 @section('content')
-
 <div class="tab-content" id="nav-tabContent">
    
    <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">

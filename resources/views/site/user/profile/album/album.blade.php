@@ -1,5 +1,5 @@
 
-
+{{dd('user side')}}
 @include('site.user.profile.album.gallery')         {{--    site/user/profile/album/gallery     --}}
 @include('site.user.profile.album.private')         {{--    site/user/profile/album/private     --}}     
 

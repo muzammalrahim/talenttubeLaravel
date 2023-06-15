@@ -1,4 +1,4 @@
-
+{{dd('something')}}
 <div class="tab-pane fade" id="custom-tabs-one-private" role="tabpanel" aria-labelledby="custom-tabs-one-private-tab">
 
     <div class="mb-2 bg-secondary text-white text-center"><b>Images</b> </div>

@@ -671,11 +671,11 @@ function getSalariesRange(){
         '140000' => '140,000 and above',
         '150000' => '150,000 and above',
 //⦁	Update 150,000 + to 150,000 and above
-        '160,000' => '160,000 and above',
-        '170,000' => '170,000 and above',
-        '180,000' => '180,000 and above',
-        '190,000' => '190,000 and above',
-        '200,000' => '200,000 and above',
+        '160000' => '160,000 and above',
+        '170000' => '170,000 and above',
+        '180000' => '180,000 and above',
+        '190000' => '190,000 and above',
+        '200000' => '200,000 and above',
 
     );
     return $salaries;

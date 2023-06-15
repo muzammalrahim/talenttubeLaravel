@@ -1706,14 +1706,17 @@ class SiteUserController extends Controller
     // Add new user activity.
     // POST Ajax request submitted from profile area.
     //====================================================================================================================================//
-    public function uploadVideo(Request $request){
+    public function uploadVideo(Request   $request){
 
         $user = Auth::user();
         $video = $request->file('video');
 
         // dd($request->all());
         // $rules = array('video.*' => 'required|file|max:20000');
-        $rules = array('video' => 'required|file|max:50000');
+        $rules = array(
+//            'video' => 'required|file|max:50000'
+            'video' => 'required|file|mimes:mp4,avi,mov,wmv,wav,mp3|max:50000'
+        );
         // $rules = array('video.*' => 'required|file|max:2');
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -1727,45 +1730,67 @@ class SiteUserController extends Controller
         if (
             $mime == "video/x-flv"             || $mime == "video/mp4"             || $mime == "application/x-mpegURL" ||
             $mime == "video/MP2T"             || $mime == "video/3gpp"             || $mime == "video/quicktime" ||
-            $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"            || $mime == 'video/mp3'
+            $mime == "video/x-msvideo"     || $mime == "video/x-ms-wmv"            || $mime == 'video/mp3' || $mime == 'audio/mp3'
+            || $mime == "audio/mpeg"         || $mime == "audio/wav"
         ) {
-			$fileOriginalName = $video->getClientOriginalName();
+
+            $fileOriginalName = $video->getClientOriginalName();
             // $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
-			$fileName = $fileOriginalName;
-			$storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
-            // store video in private folder by default.
-			$storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
-            $video = new Video();
-            $video->title = $fileName;
-            $video->type = $mime;
-            $video->user_id = $user->id;
-            $video->status = 2;
-            // $video->file =  $user->id . '/private/videos/' . $fileName;
-            $video->file = $user->id.'/videos/'.$fileName; 
+            $fileName = $fileOriginalName;
+            if($video->getMimeType() == 'video/mp4' || $video->getMimeType() == 'video/quicktime') {
+//                dd('video');
+                $fileOriginalName = $video->getClientOriginalName();
+                // $fileName = 'video-' . time() . '.' . $video->getClientOriginalExtension();
+                $fileName = $fileOriginalName;
+                $storeStatus = Storage::disk('user')->put($user->id . '/private/videos/' . $fileName, file_get_contents($video), 'public');
+                // store video in private folder by default.
+                $storeStatus = Storage::disk('privateMedia')->put($user->id . '/videos/' . $fileName, file_get_contents($video));
+                $video = new Video();
+                $video->title = $fileName;
+                $video->type = $mime;
+                $video->user_id = $user->id;
+                $video->status = 2;
+                // $video->file =  $user->id . '/private/videos/' . $fileName;
+                $video->file = $user->id . '/videos/' . $fileName;
 
-            $path_var = 'images/user/'.$user->id.'/private/videos/'.$fileName;
-            $video_path = asset($path_var);
-            $convertedFilename = 'audio-' . time().'.'.'mp3';
-            $audio_file = FFMpeg::fromDisk('privateMedia')->open($user->id . '/videos/' . $fileName)
-            ->export()
-            ->toDisk('audio')
-            ->inFormat(new \FFMpeg\Format\Audio\Mp3)
-            ->save($convertedFilename);
-            // dd($convertedFilename);
+                $path_var = 'images/user/' . $user->id . '/private/videos/' . $fileName;
+                $video_path = asset($path_var);
+                $convertedFilename = 'audio-' . time() . '.' . 'mp3';
+                $audio_file = FFMpeg::fromDisk('privateMedia')->open($user->id . '/videos/' . $fileName)
+                    ->export()
+                    ->toDisk('audio')
+                    ->inFormat(new Mp3)
+                    ->save($convertedFilename);
+                // dd($convertedFilename);
 
-            // $audio_file = FFMpeg::fromDisk('privateMedia')->open($user->id . '/videos/' . $fileName)
-            // ->export()
-            // ->toDisk('converted_audio')
-            // ->inFormat(new \FFMpeg\Format\Audio\Mp3)
-            // ->save($convertedFilename);
-            
-            $video->audio_path = $convertedFilename;
-            $video->save();
+                // $audio_file = FFMpeg::fromDisk('privateMedia')->open($user->id . '/videos/' . $fileName)
+                // ->export()
+                // ->toDisk('converted_audio')
+                // ->inFormat(new \FFMpeg\Format\Audio\Mp3)
+                // ->save($convertedFilename);
+
+                $video->audio_path = $convertedFilename;
+                $video->save();
+            }
+            elseif($video->getMimeType() == 'audio/mpeg' || $video->getMimeType() == 'audio/mp3' || $video->getMimeType() == 'audio/wav') {
+//                dd('audio');
+                $storeStatus = Storage::disk('audio')->put($user->id.'/audio/'.$fileName, file_get_contents($video), 'public');
+//                $storeStatus = Storage::disk('public')->put('audio/' . $fileName, file_get_contents($video), 'public');
+
+                $video = new Video();
+                $video->title = $fileName;
+                $video->type = $mime;
+                $video->user_id = $user->id;
+                $video->status = 1;
+                if($storeStatus) {
+                    $video->file = 'media/public/audio/'.$fileName;
+                }
+            }
 
             $history = new History;
-            $history->user_id = $user->id; 
-            $history->userGallery = $video->title; 
-            $history->type = 'Video_upload'; 
+            $history->user_id = $user->id;
+            $history->userGallery = $video->title;
+            $history->type = 'Video_upload';
             $history->save();
 
             // dd($video);
@@ -1807,7 +1832,7 @@ class SiteUserController extends Controller
                 $html  .=   '<div class="v_error error hide_it"></div>';
                 $html  .= '</div>';
             }
-            
+
 
 
             return response()->json([
