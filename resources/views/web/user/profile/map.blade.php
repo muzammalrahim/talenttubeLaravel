@@ -8,7 +8,7 @@
         console.log(' filter_location_status ');
         (this.checked)?(jQuery('.location_search_cont').removeClass('hide_it')):(jQuery('.location_search_cont').addClass('hide_it'));
     });
-
+// changes
     function showMap(){
         if(toggle){
             jQuery('.location_search_cont').removeClass('hide_it');
